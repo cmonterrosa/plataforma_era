@@ -1,11 +1,13 @@
 module Authentication
-  mattr_accessor :login_regex, :bad_login_message, 
+  mattr_accessor :login_regex_centrotrabajo, :login_regex, :bad_login_message,
     :name_regex, :bad_name_message,
     :email_name_regex, :domain_head_regex, :domain_tld_regex, :email_regex, :bad_email_message
 
   self.login_regex       = /\A\w[\w\.\-_@]+\z/                     # ASCII, strict
   # self.login_regex       = /\A[[:alnum:]][[:alnum:]\.\-_@]+\z/     # Unicode, strict
   # self.login_regex       = /\A[^[:cntrl:]\\<>\/&]*\z/              # Unicode, permissive
+
+  self.login_regex_centrotrabajo = /^\d{2}\w{7}[a-zA-Z]{1}$|\A\w[\w\.\-_@]+\z/
 
   self.bad_login_message = "use only letters, numbers, and .-_@ please.".freeze
 
