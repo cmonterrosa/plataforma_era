@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>Educar con Responsabilidad Ambiental - Secretaria de Educación de Chiapas</title>
+  <%= stylesheet_link_tag "oficial"%>
+</head>
+
+<style>
+body {
+/*background: url("/images/pjech/fondo_alternativa.jpg");*/
+background-repeat: no-repeat;
+/*background-repeat: repeat-x;*/
+}
+
+table
+{
+margin-left: auto;
+margin-right: auto;
+}
+
+td
+{
+padding:2px;
+}
+
+.input {
+    border: 1px solid #006;
+    background: #ffc;
+}
+
+
+div.centered{
+    display:block;
+
+    /*set the div in the center of the screen*/
+    position:absolute;
+    top:25%;
+    left:15%;
+    width:1024px;
+  }
+
+</style>
+
+<body onload="document.getElementById('login').focus()" style="background: url('/images/fondos/era.jpg');">
+  <div class="centered">
+    <table width="1024px" align="center">
+      <tr>
+          <td rowspan="6"><%=image_tag("logos/logo_era_transparente_letras.png", :border => 0)%></td>
+          <td align="left"><%=image_tag("barras/barra_inciar.png", :border => 0)%></td>
+      </tr>
+        <% form_tag session_path do -%>
+        <tr>
+          <td class="titulocalendario" align="left">Usuario:</td>
+        </tr>
+        <tr>
+          <td><%= text_field_tag 'login', @login, :class => "input" %></td>
+        </tr>
+        <tr>
+          <td class="titulocalendario">Contraseña:</td>
+        </tr>
+        <tr>
+           <td><%= password_field_tag 'password', nil, :class => "input"%></td>
+        </tr>
+        <!-- boton -->
+        <tr>
+            <td valign="bottom"><input title="inicio de sesión" alt="inicio de sesión" type="image"  src="/images/botones/btn_entrar.png"/></td>
+        </tr>
+        <%end%>
+      </table>
+    </div>
+  </body>
+</html>
+
+
