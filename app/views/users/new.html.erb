@@ -1,4 +1,7 @@
-<h1>Registro de usuarios</h1>
+
+<div class="titulocalendario">
+  <p>Registro de usuarios</p>
+</div>
 <% @user.password = @user.password_confirmation = nil %>
 
 <%= error_messages_for :user %>
@@ -12,10 +15,10 @@
 <p><%= f.label :email %><br/>
 <%= f.text_field :email %></p>
 
-<p><%= f.label :password %><br/>
+<p><%= f.label "contraseña" %><br/>
 <%= f.password_field :password %></p>
 
-<p><%= f.label :password_confirmation, 'Confirm Password' %><br/>
+<p><%= f.label :password_confirmation, 'Confirmar contraseña' %><br/>
 <%= f.password_field :password_confirmation %></p>
 
 <p><%= submit_tag 'Registrar' %></p>
