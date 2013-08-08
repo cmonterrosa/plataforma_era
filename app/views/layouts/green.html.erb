@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Educar con Responsabilidad Ambiental</title>
+  <link rel="stylesheet" href="/stylesheets/green/style.css">
+  <%=javascript_include_tag "green/style.css"%>
+  <%= stylesheet_link_tag "oficial"%>
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+  <script src="javascripts/green/slides.min.jquery.js"></script>
+
+	<!--[if IE]>
+	<script type="text/javascript">
+	(function(){
+	var html5elmeents = "address|article|aside|audio|canvas|command|datalist|details|dialog|figure|figcaption|footer|header|hgroup|keygen|mark|meter|menu|nav|progress|ruby|section|time|video".split('|');
+	for(var i = 0; i < html5elmeents.length; i++){
+	document.createElement(html5elmeents[i]);
+	}
+	}
+	)();
+	</script>
+	<![endif]-->
+</head>
+
+<body>
+	<div id="header-wrap">
+		<header class="group">
+			
+                        <h2><a href="index.html" title="burstudio">ERA</a></h2>
+			<div id="call">
+				<h3>Conectado como:</h3>
+				<h4 class="green">07EPRO209E</h4>
+			</div><!-- end call -->
+
+			<nav class="group">
+				<ul>
+					<li class="home"><a href="#" title="">Inicio</a></li>
+					<li><a href="#" title="">Encuesta</a></li>
+					<li><a href="#" title="">Materiales</a></li>
+					<li><a href="#" title="">Opiniones</a></li>
+                                        <li><a href="/logout" title="">Cerrar Sesión</a></li>
+					<li class="last">
+						<div>
+							<input type="text" name="search" placeholder="Buscar" />
+							<input type="submit" name="search" value="go" class="search"/>
+						</div>
+					</li>
+				</ul>
+			</nav>
+		</header>
+	</div><!-- end header wrap -->
+
+
+<div id="container">
+		<div id="slides">
+                   <%=yield%>
+			<div class="slides_container">
+                         
+                            <!--
+				<div>
+
+						<img src="/images/green/slide1.png" alt="slide1" />
+
+					<div class="slide-right">
+						<h1 class="slide-heading">Artthatworks 1 dolor sit amet, consectetur adipiscing elit.</h1>
+						<p class="info">Vestibulum a diam lorem. Fusce viverra commodo rhoncus. Nam ipsum magna, faucibus non semper et, vestibulum quis arcu. Nulla in tellus eu nunc cursus scelerisque ac nec nibh.</p>
+						<p><a href="#" class="readmore">read more</a></p>
+					</div>
+				</div>
+				<div>
+
+						<img src="/images/green/slide1.png" alt="slide1" />
+
+					<div class="slide-right">
+						<h1 class="slide-heading">Artthatworks 2 dolor sit amet, consectetur adipiscing elit.</h1>
+						<p class="info">Vestibulum a diam lorem. Fusce viverra commodo rhoncus. Nam ipsum magna, faucibus non semper et, vestibulum quis arcu. Nulla in tellus eu nunc cursus scelerisque ac nec nibh.</p>
+						<p><a href="#" class="readmore">read more</a></p>
+					</div>
+				</div>
+				<div>
+
+						<img src="/images/green/slide1.png" alt="slide1" />
+
+					<div class="slide-right">
+						<h1 class="slide-heading">Artthatworks 3 dolor sit amet, consectetur adipiscing elit.</h1>
+						<p class="info">Vestibulum a diam lorem. Fusce viverra commodo rhoncus. Nam ipsum magna, faucibus non semper et, vestibulum quis arcu. Nulla in tellus eu nunc cursus scelerisque ac nec nibh.</p>
+						<p><a href="#" class="readmore">read more</a></p>
+					</div>
+				</div>
+
+                            -->
+
+			</div><!-- end slies container -->
+		</div><!-- end slides -->
+                <!--
+		<div id="service">
+
+				<div id="web">
+					<img src="/images/green/web.png" />
+					<h3>Web <strong><span class="green">Design</span></strong></h3>
+					<p>Nunc viverttra erat et turpis viverra pellentesque. Maecenas ullamcorper, nibh tristique ullamcorper lacinia, tellus nisi blandit elit, id pulvinar tortor.</p>
+					<p><a href="#" class="readmore">read more</a></p>
+				</div><!-- end web 
+
+				<div id="vector">
+					<img src="/images/green/vector.png" />
+					<h3>Vector <strong><span class="green">Design</span></strong></h3>
+					<p>Nunc viverttra erat et turpis viverra pellentesque. Maecenas ullamcorper, nibh tristique ullamcorper lacinia, tellus nisi blandit elit, id pulvinar tortor.</p>
+					<p><a href="#" class="readmore">read more</a></p>
+				</div><!-- end vector
+
+
+		</div>
+                          -->
+
+
+                <!-- end service-->
+
+		<div id="media" class="group">
+                        <!--
+			<div id="video">
+				<h4><strong>Multimedia</strong></h4>
+				<h5>&nbsp;</h5>
+				<a href="/multimedia" class="play"><img src="/images/green/play.png" alt="play" /></a>
+			</div>
+                        -->
+                        <!--
+			<div id="twitter">
+				<h4>Twitter <strong><span class="green">Feed</span></strong></h4>
+				<p class="tweet">Mashable Video: Principal Resigns After Allegedly Posing as a Student on Facebook -<a href="#" class="t-link">http://on.mash.to/IVYWYJ</a></p>
+				<p class="time">9 hours ago</p>
+			</div>
+                        -->
+                        <!--
+			<div id="facebook">
+				<h4>Síguenos en <strong><span class="green">Facebook</span></strong></h4>
+			</div>
+                        -->
+		</div><!-- end media -->
+	</div> <!--! end container -->
+
+	<div id="widget-wrap" class="group">
+		<div id="widget">
+			<div id="links" class="group">
+				<h4 class="white">Otras <strong>ligas de interés</strong></h4>
+				<ul>
+					<li><a href="#">www.semarnat.gob.mx</a></li>
+					<li><a href="#">www.escuelaverde.com</a></li>
+					<li><a href="#">www.chiapas.gob.mx</a></li>
+					<li><a href="#">www.educacionchiapas.gob.mx</a></li>
+					<li><a href="#">www.conafor.gob.mx</a></li>
+				</ul>
+			</div>
+
+                        <div id="video">
+				<h4><strong>Multimedia</strong></h4>
+				<h5>&nbsp;</h5>
+				<a href="/multimedia" class="play"><img src="/images/green/play.png" alt="play" /></a>
+			</div>
+                        <!--
+			<div id="blog">
+				<h4 class="footer-header white">Últimas publicaciones del <strong>Blog</strong></h4>
+				<img src="/images/green/blog.png" alt="blog" />
+				<p class="title">Maecenas iaculis lorem vel dui vulputate non consequat mi congue.</p>
+				<p class="date">05.30.2012</p>
+				<p><a href="#" class="readmore">leer más</a></p>
+			</div><!-- end blog
+                        -->
+
+			<div id="location">
+				<h4 class="footer-header white">Donde <strong>nos encontramos</strong></h4>
+				<img src="/images/green/map.png" alt="map" />
+				<p class="address">Unidad Administrativa, Col. Maya
+				</br> Tuxtla Gutiérrez</p>
+			</div><!-- end location -->
+		</div><!-- end widget -->
+	</div> <!--! end widget-wrap -->
+
+	<div id="client-wrap" class="group">
+		<div id="client">
+			<ul>
+				<li><a href="http://www.semarnat.gob.mx"><img src="/images/logos/conafor.png" alt="" /></a></li>
+				<li><img src="/images/green/client-2.jpg" alt="" /></li>
+				<li><img src="/images/green/client-3.jpg" alt="" /></li>
+				<li><img src="/images/green/client-4.jpg" alt="" /></li>
+				<li><img src="/images/green/client-5.jpg" alt="" /></li>
+			</ul>
+		</div><!-- end client -->
+	</div><!-- end client-wrap -->
+
+	<footer class="group">
+		<div id="footer-left">
+			<p>Copyright <a href="#" class="green">www.educacionchiapas.gob.mx</a> </br>
+			Diseñado por: <a href="#" class="green">Dirección de Informática</a></p>
+		</div>
+
+		<div id="footer-right">
+			<ul>
+				<li><a href="#">Home</a></li>
+				<li><a href="#">Services</a></li>
+				<li><a href="#">About Us</a></li>
+				<li><a href="#">Testimonials</a></li>
+				<li><a href="#">Contact Us</a></li>
+			</ul>
+		</div>
+
+		<a href="#header-wrap"><img src="/images/green/back-top.png" alt="back-top" class="back-top" /></a>
+	</footer>
+
+
+<script>
+		$(function(){
+			$('#slides').slides({
+				preload: true,
+				generateNextPrev: true,
+			});
+		});
+</script>
+
+</body>
+</html>
