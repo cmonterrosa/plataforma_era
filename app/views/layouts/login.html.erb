@@ -46,7 +46,7 @@ div.centered{
   <div class="centered">
     <table width="1024px" align="center">
       <tr>
-          <td rowspan="6"><%=image_tag("logos/logo_era_transparente_letras.png", :border => 0)%></td>
+          <td rowspan="8"><%=image_tag("logos/logo_era_transparente_letras.png", :border => 0)%></td>
           <td align="left"><%=image_tag("barras/barra_inciar.png", :border => 0)%></td>
       </tr>
         <% form_tag session_path do -%>
@@ -66,6 +66,16 @@ div.centered{
         <tr>
             <td valign="bottom"><input title="inicio de sesión" alt="inicio de sesión" type="image"  src="/images/botones/btn_entrar.png"/></td>
         </tr>
+        <!-- boton -->
+        <tr>
+            <td valign="bottom">&nbsp;</td>
+        </tr>
+
+        <!-- boton -->
+        <tr>
+            <td valign="bottom"><%=link_to "¿No estas registrado?", :action => "new", :controller => "users"%></td>
+        </tr>
+
         <%end%>
       </table>
     </div>
