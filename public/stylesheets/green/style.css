@@ -165,6 +165,13 @@ nav ul li.home{
 	background: url(/images/green/home.png) no-repeat 50% 50%;
 }
 
+nav ul li.logout{
+	border-left: none;
+	text-indent: -9999px;
+	background: url(/images/green/exit_white.png) no-repeat 50% 50%;
+}
+
+
 nav ul li.last{
 	border-left: none;
 	border-right: none;
@@ -191,6 +198,15 @@ nav ul li.home a:hover{
 	border-bottom-left-radius: 30px;
 	background: #5fae53 url(/images/green/home.png) no-repeat 50% 50%;
 }
+
+nav ul li.logout a:hover{
+	-webkit-border-top-left-radius: 30px;
+	-webkit-border-bottom-left-radius: 30px;
+	border-top-left-radius: 30px;
+	border-bottom-left-radius: 30px;
+	background: #5fae53 url(/images/green/exit_white.png) no-repeat 50% 50%;
+}
+
 nav ul li div input[type=text]{
 	-webkit-border-radius: 20px;
 	-moz-border-radius: 20px;
