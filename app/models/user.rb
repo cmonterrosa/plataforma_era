@@ -60,6 +60,7 @@ class User < ActiveRecord::Base
     self.activation_code = nil
     save(false)
   end
+  
 
   # Returns true if the user has just been activated.
   def recently_activated?
