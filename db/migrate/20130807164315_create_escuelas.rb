@@ -10,7 +10,6 @@ class CreateEscuelas < ActiveRecord::Migration
         t.string :localidad, :limit => 120
         t.string :municipio, :limit => 140
         t.string :domicilio, :limit => 160
-        t.string :categoria, :limit => 140
         t.string :correo_electronico, :limit => 90
         t.string :nombre_director, :limit => 130
         t.string :telefono_director, :limit => 100
@@ -18,9 +17,11 @@ class CreateEscuelas < ActiveRecord::Migration
         t.integer :total_personal_administrativo
         t.integer :total_personal_apoyo
         t.integer :nivel_id
+        t.integer :categoria_escuela_id
     end
     add_index :escuelas, :clave, :unique => true
     add_index :escuelas, :nivel_id, :name => "nivel"
+    add_index :escuelas, :categoria_escuela_id, :name => "categoria_escuela"
   end
 
   def self.down
