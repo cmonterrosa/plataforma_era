@@ -1,0 +1,21 @@
+<div class="container">
+  <% form_for :escuela, @escuela, :url => { :action => "new_or_edit", :id => @escuela }, :html => {:class => "formee"} do |f| -%>
+      <fieldset>
+        <legend>Registro de Escuelas</legend>
+    	<div class="login">
+
+           <div class="grid-6-12">
+               <label>Clave del Centro de Trabajo: <em class="formee-req">*</em></label>
+               <!-- <input type="text" value="Escriba la clave completa" /> -->
+               <%=f.text_field :clave%>
+            </div>
+
+            <div class="grid-6-12 clear">
+            </div>
+            <div class="grid-6-12">
+                   <input class="right" type="submit" title="CAPTURAR" value="CAPTURAR" />
+            </div>
+        </div>
+    </fieldset>
+  <%end%>
+</div>
