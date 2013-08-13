@@ -165,12 +165,6 @@ nav ul li.home{
 	background: url(/images/green/home.png) no-repeat 50% 50%;
 }
 
-nav ul li.logout{
-	border-left: none;
-	text-indent: -9999px;
-	background: url(/images/green/exit_white.png) no-repeat 50% 50%;
-}
-
 
 nav ul li.last{
 	border-left: none;
@@ -183,7 +177,7 @@ nav ul li a{
 	padding: 0 30px;
 	height: 50px;
 	line-height: 50px;
-	font-size: 15px;
+	font-size: 13px;
 	color: #fff;
 	text-shadow: 0 1px 0 #387031;
 }
@@ -199,13 +193,6 @@ nav ul li.home a:hover{
 	background: #5fae53 url(/images/green/home.png) no-repeat 50% 50%;
 }
 
-nav ul li.logout a:hover{
-	-webkit-border-top-left-radius: 30px;
-	-webkit-border-bottom-left-radius: 30px;
-	border-top-left-radius: 30px;
-	border-bottom-left-radius: 30px;
-	background: #5fae53 url(/images/green/exit_white.png) no-repeat 50% 50%;
-}
 
 nav ul li div input[type=text]{
 	-webkit-border-radius: 20px;
