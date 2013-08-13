@@ -8,7 +8,7 @@
       </div>
 
 
-  <% form_for :escuela, @escuela, :url => { :action => "new_or_edit", :id => @escuela }, :html => {:class => "formee"} do |f| -%>
+  <% form_for :escuela, @escuela, :url => { :action => "save", :id => @escuela }, :html => {:class => "formee"} do |f| -%>
       <fieldset>
         <legend>Registro de Escuelas</legend>
 
@@ -54,11 +54,20 @@
             <div class="grid-12-12">
                 <label>Categoría: <em class="formee-req">*</em></label>
                 <ul class="formee-list">
-                    <li><input name="unitaria" type="checkbox" /> <label>UNITARIA</label></li>
-                    <li><input name="bidocente" type="checkbox" /> <label>BIDOCENTE</label></li>
-                    <li><input name="multigrado" type="checkbox" /> <label>MULTIGRADO</label></li>
-                    <li><input name="organizacion_completa" type="checkbox" /> <label>ORGANIZACIÓN COMPLETA</label></li>
-                </ul>
+
+                  <% for categoria in CategoriaEscuela.find(:all) %>
+                      <li><%= check_box_tag 'escuela[categoria_escuela_id]', categoria.id, (@escuela.categoria_escuela_id== categoria.id)? %><label><%=categoria.descripcion%></label></li>
+                  <%end%>
+
+
+                    
+                    <!--
+                    <li><=check_box("categoria", "unitaria")%> <label>UNITARIA</label></li>
+                    <li><=check_box_tag 'categoria', 'bidocente', (@escuela.categoria == 'bidocente')%> <label>BIDOCENTE</label></li>
+                    <li><=check_box_tag 'categoria', 'multigrado', (@escuela.categoria == 'multigrado')%> <label>MULTIGRADO</label></li>
+                    <li><=check_box_tag 'categoria', 'organizacion_completa', (@escuela.categoria == 'organizacion_completa')%> <label>ORGANIZACION_COMPLETA</label></li>
+                    -->
+                  </ul>
             </div>
 
         <!-- programa -->
