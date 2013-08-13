@@ -15,8 +15,10 @@ class RegistroController < ApplicationController
   end
 
   def save
-    @escuela = Escuela.new(params[:escuela])
-    @proyecto = Proyecto.new(params[:proyecto])
+    @escuela = Escuela.find_by_clave(params[:escuela][:clave])
+    @escuela ||= Escuela.new(params[:escuela])
+    @proyecto = @escuela.proyecto
+    @proyecto ||= Proyecto.new(params[:proyecto])
     @escuela.proyecto = @proyecto
     if @escuela.save
       flash[:notice] = "Registro guardado correctamente"
