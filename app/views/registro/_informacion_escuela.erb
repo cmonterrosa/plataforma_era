@@ -8,7 +8,7 @@
       </div>
 
 
-  <% form_for :escuela, @escuela, :url => { :action => "save", :id => @escuela }, :html => {:class => "formee"} do |f| -%>
+  <% form_for :escuela, @escuela, :url => { :action => "save", :id => @escuela, :clave => @escuela.clave }, :html => {:class => "formee"} do |f| -%>
       <fieldset>
         <legend>Registro de Escuelas</legend>
 
@@ -56,7 +56,7 @@
                 <ul class="formee-list">
 
                   <% for categoria in CategoriaEscuela.find(:all) %>
-                      <li><%= check_box_tag 'escuela[categoria_escuela_id]', categoria.id, (@escuela.categoria_escuela_id== categoria.id)? %><label><%=categoria.descripcion%></label></li>
+                      <li><%= check_box_tag 'escuela[categoria_escuela_id]', categoria.id, escuela_has_categoria?(@escuela, categoria) %><label><%=categoria.descripcion%></label></li>
                   <%end%>
 
 
