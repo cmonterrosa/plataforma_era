@@ -25,7 +25,7 @@ Structure
 
 /* Form Structure */
 
-.formee {margin:0;padding:0;}
+.formee {margin:0;padding:0 15px;}
 .formee fieldset {
 	border: 1px solid #d4d4d4;
 	position: relative;
