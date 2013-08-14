@@ -1,0 +1,90 @@
+@charset "utf-8";
+.fnd_index {
+	background-image: url(/images/era/fnds/fondo1.jpg);
+	background-repeat: no-repeat;
+	background-position: center top;
+	height: 1012px;
+	width: 900px;
+}
+.fnd_transp {
+	background-image: url(/images/era/fnd_transp.png);
+	background-repeat: no-repeat;
+	height: 150px;
+	width: 900px;
+}
+.Txt_piepagina {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #002C41;
+	text-align: center;
+}
+.Txt_arbol {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #002C41;
+	text-align: center;
+	font-weight: bold;
+}
+.Txt_cont_acercade {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	color: #333333;
+	text-align: justify;
+	margin-right: 10px;
+	margin-left: 10px;
+}
+
+
+.fnd_menu {
+	background-image: url(/images/era/menu.png);
+	background-repeat: no-repeat;
+	height: 43px;
+	width: 512px;
+}
+.TxtMenu {
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	color: #FFFFFF;
+	font-weight: bold;
+}
+.fnd_sub_menu {
+	background-image: url(/images/era/bar_sub_menu.png);
+	background-repeat: no-repeat;
+	height: 80px;
+	width: 890px;
+	background-position: right;
+}
+.fnd_bar_sub {
+	background-image: url(/images/era/bar_sub.png);
+	background-repeat: no-repeat;
+	height: 50px;
+	width: 900px;
+}
+
+.fnd_slider {
+	background-image: url(/images/era/fnd_slider.png);
+	background-repeat: no-repeat;
+	background-position: center;
+	height: 467px;
+	width: 890px;
+}
+.fnd_cert {
+	background-image: url(/images/era/fnds/fondo11.jpg);
+	background-repeat: no-repeat;
+	background-position: center top;
+	/*height: 1012px;*/
+	width: 900px;
+}
+.Txt_Adv {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 36px;
+	font-weight: bold;
+	color: #FF0000;
+	text-align: center;
+}
+.Txt_cont {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	color: #333333;
+	text-align: justify;
+}
