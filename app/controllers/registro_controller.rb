@@ -1,4 +1,6 @@
 class RegistroController < ApplicationController
+  layout 'green'
+  
   def index
     redirect_to :action => "new_or_edit"
   end
