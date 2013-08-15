@@ -1,5 +1,6 @@
 class RegistroController < ApplicationController
-  layout 'green'
+  layout 'era'
+  before_filter "login_required"
   
   def index
     redirect_to :action => "new_or_edit"

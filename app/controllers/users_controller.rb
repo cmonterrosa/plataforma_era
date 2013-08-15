@@ -11,14 +11,29 @@ class UsersController < ApplicationController
   def create
     logout_keeping_session!
     @user = User.new(params[:user])
-    success = @user && @user.save
-    if success && @user.errors.empty?
-      redirect_back_or_default('/')
-      flash[:notice] = "Thanks for signing up!  We're sending you an email with your activation code."
-    else
-      flash[:error]  = "We couldn't set up that account, sorry.  Please try again, or contact an admin (link is above)."
+    @escuela = Escuela.find_by_clave(@user.login.upcase) if @user.login
+    if User.find_by_login(@user.login)
+      flash[:error]  = "Escuela ya existe registrada"
       render :action => 'new'
+    else
+       @user.activated_at = Time.now
+        if @escuela
+            success = @user && @user.save
+              if success && @user.errors.empty?
+                redirect_back_or_default('/')
+                  flash[:notice] = "ESCUELA #{@escuela.nombre} REGISTRADA"
+              else
+                flash[:error]  = "No se puedo crear la cuenta, verifique los datos."
+                render :action => 'new'
+              end
+        else
+            flash[:error]  = "No existe escuela con esa clave, intente de nuevo"
+            render :action => 'new'
+        end
     end
+
+
+
   end
 
   def activate

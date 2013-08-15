@@ -2,15 +2,18 @@
 class SessionsController < ApplicationController
   # Be sure to include AuthenticationSystem in Application Controller instead
   include AuthenticatedSystem
-  layout 'login'
+  layout 'era'
 
   # render new.erb.html
   def new
+    @user = User.new
   end
 
   def create
     logout_keeping_session!
-    user = User.authenticate(params[:login], params[:password])
+    login = (params[:user][:login]) ? params[:user][:login].downcase : nil
+    password = (params[:user][:password])
+    user = User.authenticate(login, password)
     if user
       # Protects against session fixation attacks, causes request forgery
       # protection if user resubmits an earlier form using back
@@ -38,7 +41,7 @@ class SessionsController < ApplicationController
 protected
   # Track failed login attempts
   def note_failed_signin
-    flash[:error] = "Couldn't log you in as '#{params[:login]}'"
+    flash[:error] = "No se pudo ingresar"
     logger.warn "Failed login for '#{params[:login]}' from #{request.remote_ip} at #{Time.now.utc}"
   end
 end
