@@ -1,25 +1,68 @@
+<div class="container">
+<% form_for :user, @user, :url => { :action => "create", :controller => "users"}, :html => {:class => "formee"} do |f| -%>
+      <fieldset>
+        <legend>Nuevo usuario</legend>
+    	<div class="login">
+          <div class="grid-12-12">
+               <% @user.password = @user.password_confirmation = nil %>
+               <%= error_messages_for :user %>
+          </div>
 
-<div class="titulocalendario">
-  <p>Registro de usuarios</p>
+           <div class="grid-6-12">
+               <label>Clave de escuela: (En letras minúsculas) <em class="formee-req">*</em></label>
+               <!-- <input type="text" value="Escriba la clave completa" /> -->
+               <%=f.text_field :login%>
+            </div>
+            <div class="grid-12-12 clear">
+            </div>
+
+          <div class="grid-6-12">
+               <label>Nombre completo: <em class="formee-req">*</em></label>
+               <!-- <input type="text" value="Escriba la clave completa" /> -->
+               <%=f.text_field :nombre%>
+            </div>
+           <div class="grid-12-12 clear">
+           </div>
+
+            <div class="grid-6-12">
+               <label>Correo electrónico:</label>
+               <!-- <input type="text" value="Escriba la clave completa" /> -->
+               <%=f.text_field :email%>
+            </div>
+           <div class="grid-12-12 clear">
+           </div>
+
+           <div class="grid-6-12">
+               <label>Contraseña: <em class="formee-req">*</em></label>
+               <!-- <input type="text" value="Escriba la clave completa" /> -->
+               <%=f.password_field :password%>
+            </div>
+
+           <div class="grid-12-12 clear">
+            </div>
+
+           <div class="grid-6-12">
+               <label>Confirmar contraseña: <em class="formee-req">*</em></label>
+               <!-- <input type="text" value="Escriba la clave completa" /> -->
+               <%=f.password_field :password_confirmation%>
+            </div>
+
+           <div class="grid-12-12 clear">
+            </div>
+
+
+           <div class="grid-6-12">
+                   <input class="right" type="submit" title="CREAR USUARIO" value="CREAR USUARIO" />
+           </div>
+        </div>
+    </fieldset>
+  <%end%>
 </div>
-<% @user.password = @user.password_confirmation = nil %>
 
-<%= error_messages_for :user %>
-<% form_for :user, :url => users_path do |f| -%>
-<p><%= f.label :login %><br/>
-<%= f.text_field :login %></p>
 
-<p><%= f.label :nombre %><br/>
-<%= f.text_field :nombre %></p>
 
-<p><%= f.label :email %><br/>
-<%= f.text_field :email %></p>
 
-<p><%= f.label "contraseña" %><br/>
-<%= f.password_field :password %></p>
 
-<p><%= f.label :password_confirmation, 'Confirmar contraseña' %><br/>
-<%= f.password_field :password_confirmation %></p>
 
-<p><%= submit_tag 'Registrar' %></p>
-<% end -%>
+
+

@@ -1,16 +1,39 @@
-<h1>Log In</h1>
+<div class="container">
+<% form_for :user, @user, :url => { :action => "create", :controller => "sessions"}, :html => {:class => "formee"} do |f| -%>
+      <fieldset>
+        <legend>Ingreso</legend>
+    	<div class="login">
 
-<% form_tag session_path do -%>
-<p><%= label_tag 'login' %><br />
-<%= text_field_tag 'login', @login %></p>
+           <div class="grid-4-12">
+               <label>Usuario:</label>
+               <!-- <input type="text" value="Escriba la clave completa" /> -->
+               <%=f.text_field :login%>
+            </div>
+            <div class="grid-12-12 clear">
+            </div>
 
-<p><%= label_tag 'password' %><br/>
-<%= password_field_tag 'password', nil %></p>
+           
 
-<!-- Uncomment this if you want this functionality
-<p><%= label_tag 'remember_me', 'Remember me' %>
-<%= check_box_tag 'remember_me', '1', @remember_me %></p>
--->
+          <div class="grid-4-12">
+               <label>Contraseña:</label>
+               <!-- <input type="text" value="Escriba la clave completa" /> -->
+               <%=f.password_field :password%>
+            </div>
 
-<p><%= submit_tag 'Log in' %></p>
-<% end -%>
+           <div class="grid-12-12 clear">
+            </div>
+
+             
+           <div class="grid-4-12">
+                   <input class="right" type="submit" title="INICIAR SESION" value="INICIAR SESIÓN" />
+            </div>
+
+            <div class="grid-12-12">
+              <%=link_to "¿No estás registrado? ", {:action => "new", :controller => "users"}, :style => "font-size:16px; font-weight:bold;"%> <span style="font-size:18px;"> | </span>  <%=link_to " ¿Olvidaste tu contraseña? ", {:action => "new", :controller => "users"}, :style => "font-size:16px; font-weight:bold;"%>
+            </div>
+        </div>
+    </fieldset>
+  <%end%>
+</div>
+
+

@@ -19,6 +19,7 @@ body {
 <link rel="stylesheet" type="text/css" href="/stylesheets/era/estilo.css" />
 
 
+ <%=javascript_include_tag "green/style.css"%>
 <!-- formee -->
 <%=javascript_include_tag "formee/jquery-1.6.4.min.js"%>
 <%=javascript_include_tag "formee/formee.js"%>
@@ -201,11 +202,30 @@ a:active {
       </tr>
 
       <!-- Contenido principal -->
-      <tr>
-        <td align="center">
-            <%=yield%>
-        </td>
+   
+
+      <tr><th>
+		<div id="slides">
+                  <%if flash[:notice]%>
+                       <div class="formee-msg-success">
+                         	<h3>Operacion realizada exitosamente:</h3>
+                                <ul>
+                                    <li><%=flash[:notice]%></li>
+                                </ul>
+                       </div>
+                  <%elsif flash[:error]%>
+                        <div class="formee-msg-error"><h3><%=flash[:error]%></h3></div>
+                  <%else%>
+                    <p></p>
+                  <%end%>
+                  <!-- contenido -->
+                  <%=yield%>
+
+
+		</div>
+        </th>
       </tr>
+
 
       
       <!-- termina contenido principal -->
