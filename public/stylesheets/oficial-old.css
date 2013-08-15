@@ -1,0 +1,263 @@
+/* imagenes sin borde */
+a img {
+        border: 0;
+}
+.titulo {
+    font-size: 18px;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
+    background-color: #d33934;
+}
+
+.Session {font-size: 24px; font-weight: bold; font-family: Arial, Helvetica, sans-serif; color: #FFF; }
+/*.subtitulo {font-size: 14px; font-family: Verdana, Arial, Helvetica, sans-serif; color: #666666; }*/
+.subtitulo {font-size: 14px; font-family: Verdana, Arial, Helvetica, sans-serif; color: black; }
+
+.pregunta {font-size: 12px; font-family: Verdana, Arial, Helvetica, sans-serif; color: #666666; }
+.Estilo4 {font-size: 11px; font-weight: bold; font-family: Verdana, Arial, Helvetica, sans-serif; color: #666666; }
+.Estilo5 {font-size: 11px; font-weight: bold; font-family: Verdana, Arial, Helvetica, sans-serif; color: #333333; }
+.menu {font-size: 14px; ; font-family: Verdana, Geneva, sans-serif; color: #666666; }
+.text{
+    font-size:13px;
+    font-family:  Verdana, Geneva, sans-serif;
+    color: #333;
+    text-transform:uppercase;
+}
+body {
+	background-color: #E8E8E8;
+}
+
+h1{
+    font-size: 16px;
+    font-family: Verdana, Geneva, sans-serif;
+    /*color: #F68934;*/
+}
+a {
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 12px;
+	color: #666;
+}
+a:visited {
+	color: #666;
+	text-decoration: none;
+}
+a:hover {
+	color: #F68934;
+	text-decoration: none;
+}
+a:active {
+	color: #666;
+	text-decoration: none;
+}
+a:link {
+	text-decoration: none;
+}
+.Estilo11 {font-family: sans-serif; font-size: 10px;}
+.Estilo26 {font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10px; color: #FFFFFF; font-weight: bold; }
+.Estilo12 {font-size: 16px; font-weight: bold; font-family: Arial, Helvetica, sans-serif; color: #666666; }
+
+.sesionesdiarias {font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; color: #A80000;}
+
+
+.loginlabels {
+    font-family: "Trebuchet MS", sans-serif;
+    font-size: 12px; color: #FFFFFF;
+    font-weight: bold;
+}
+
+
+.loginlayout {
+    font-family: "Trebuchet MS", sans-serif;
+    font-size: 14px; color: #FFFFFF;
+    font-weight: bold;
+}
+
+.titulocalendario {
+    /*font-family: "Trebuchet MS", sans-serif;*/
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 18px; color: #d33934;
+    font-weight: bold;
+    text-decoration:none;
+    text-shadow:1px 1px 0px #ffffff;
+}
+
+#scroll{
+    /*
+overflow: auto;
+width:950px;
+height: 200px;
+text-align: center;
+*/
+}
+
+#botones {
+	position:inherit;
+	width:300px;
+	height:40px;
+	z-index:1;
+	left: 0px;
+	top: 0px;
+}
+
+
+
+
+a.boton {
+	-moz-box-shadow:inset 0px 1px 0px 0px #ffffff;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;
+	box-shadow:inset 0px 1px 0px 0px #ffffff;
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #dfdfdf) );
+	background:-moz-linear-gradient( center top, #ededed 5%, #dfdfdf 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#dfdfdf');
+	background-color:#ededed;
+	-moz-border-radius:6px;
+	-webkit-border-radius:6px;
+	border-radius:40px;
+	border:1px solid #dcdcdc;
+	display:inline-block;
+	color:#777777;
+	font-family:arial;
+	font-size:12px;
+	font-weight:bold;
+	padding:6px 24px;
+	text-decoration:none;
+	text-shadow:1px 1px 0px #ffffff;
+}.classname:hover {
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #dfdfdf), color-stop(1, #ededed) );
+	background:-moz-linear-gradient( center top, #dfdfdf 5%, #ededed 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#dfdfdf', endColorstr='#ededed');
+	background-color:#dfdfdf;
+}.classname:active {
+	position:relative;
+	top:1px;
+}
+
+
+/* notificaciones */
+
+.notice {
+	background: #FFF6BF;
+	border-top: 2px solid #FFD324;
+	border-bottom: 2px solid #FFD324;
+	text-align: center;
+	margin: 10px auto;
+	padding: 5px 20px;
+	}
+
+/* css for timepicker */
+.ui-timepicker-div .ui-widget-header { margin-bottom: 8px; }
+.ui-timepicker-div dl { text-align: left; }
+.ui-timepicker-div dl dt { height: 25px; margin-bottom: -25px; }
+.ui-timepicker-div dl dd { margin: 0 10px 10px 65px; }
+.ui-timepicker-div td { font-size: 80%; }
+.ui-tpicker-grid-label { background: none; border: none; margin: 0; padding: 0; }
+/* agregado */
+.ui-widget { font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif; font-size: .9em; }
+
+
+/* Estilo para tabla con gradiente */
+
+table.table1{
+    font-family: "Trebuchet MS", sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 1.4em;
+    font-style: normal;
+    border-collapse:separate;
+}
+.table1 thead th{
+    padding:15px;
+    color:#fff;
+    text-shadow:1px 1px 1px #568F23;
+    border:1px solid #510C0C;
+    border-bottom:3px solid #510C0C;
+    background-image: linear-gradient(bottom, rgb(133,29,10) 41%, rgb(112,51,10) 71%);
+    background-image: -o-linear-gradient(bottom, rgb(133,29,10) 41%, rgb(112,51,10) 71%);
+    background-image: -moz-linear-gradient(bottom, rgb(133,29,10) 41%, rgb(112,51,10) 71%);
+    background-image: -webkit-linear-gradient(bottom, rgb(133,29,10) 41%, rgb(112,51,10) 71%);
+    background-image: -ms-linear-gradient(bottom, rgb(133,29,10) 41%, rgb(112,51,10) 71%);
+    background-image: -webkit-gradient(
+	linear,
+	left bottom,
+	left top,
+	color-stop(0.41, rgb(133,29,10)),
+	color-stop(0.71, rgb(112,51,10))
+);
+    border-top-left-radius:5px;
+    border-top-right-radius:5px;
+}
+
+.table1 thead th:empty{
+    background:transparent;
+    border:none;
+}
+
+.table1 tfoot td{
+    color: #4A0E08;
+    font-size:32px;
+    text-align:center;
+    padding:10px 0px;
+    text-shadow:1px 1px 1px #444;
+}
+.table1 tfoot th{
+    color:#666;
+}
+
+.table1 tbody td{
+    padding:10px;
+    text-align:center;
+    background-color:#EBEAD8;
+    border: 2px solid #E7EFE0;
+    -moz-border-radius:2px;
+    -webkit-border-radius:2px;
+    border-radius:2px;
+    color:#666;
+    text-shadow:1px 1px 1px #fff;
+}
+
+/* Estilo para checkbox*/
+
+.regular-checkbox {
+    -webkit-appearance: none;
+    background-color: #fafafa;
+    border: 1px solid #cacece;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);
+    padding: 9px;
+    border-radius: 3px;
+    display: inline-block;
+    position: relative;
+}
+
+/* Firma de Invitaciones */
+  table.firmaInvitacion { background-color: #ffffff; font-size:20px; border:10px solid #d33934;-webkit-border-radius:13px;-moz-border-radius:13px;-ms-border-radius:13px;-o-border-radius:13px;border-radius:13px; }
+  table.firmaInvitacion td, table.firmaInvitacoin th { border-bottom:1px dotted black;padding:5px; }
+
+
+.ultima_conexion {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 10pt;
+	color: navy;
+	padding-top: 10px;
+	padding-bottom: 3px;
+}
+
+/* Menu principal con colores */
+.imagehover {
+    /*font-family: Verdana, Geneva, sans-serif;*/
+    font-family: "Times New Roman",Georgia,Serif;
+    font-size: 14px;
+    color: #666666;
+    font-weight: bold;
+}
+
+.imagehover a {
+ font-family: Verdana, Geneva, sans-serif;
+ font-size: 14px;
+ color: #666666;
+ font-weight: bold;
+}
+.imagehover a:hover {
+color: #ffffff;
+background-color:#d33934;
+}
