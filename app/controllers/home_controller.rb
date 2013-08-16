@@ -18,15 +18,19 @@ class HomeController < ApplicationController
   end
 
   def certificacion_proyecto
-
+    redirect_to :action => "certificacion_manual"
   end
 
   def certificacion_evidencias
-
+       redirect_to :action => "certificacion_manual"
   end
 
   def certificacion_resultado
-    
+     redirect_to :action => "certificacion_manual"
+  end
+
+  def certificacion_avances
+    redirect_to :action => "certificacion_manual"
   end
 
 end

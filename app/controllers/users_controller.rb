@@ -60,11 +60,11 @@ class UsersController < ApplicationController
     respond_to do |format|
         if user
           user.create_reset_code
-          flash[:notice] = "Reset code sent to #{user.email}"
+          flash[:notice] = "Código de recuperacón enviado a: #{user.email}"
           format.html { redirect_to login_path }
           format.xml { render :xml => user.email, :status => :created }
         else
-          flash[:error] = "#{params[:user][:email]} does not exist in system"
+          flash[:error] = "#{params[:user][:email]} no existe en el sistema"
           format.html { redirect_to login_path }
           format.xml { render :xml => user.email, :status => :unprocessable_entity }
         end
@@ -78,7 +78,7 @@ class UsersController < ApplicationController
     if @user.update_attributes(:password => params[:user][:password], :password_confirmation => params[:user][:password_confirmation])
       self.current_user = @user
       @user.delete_reset_code
-      flash[:notice] = "Password reset successfully for #{@user.email}"
+      flash[:notice] = "Contraseña cambiada correctamente para: #{@user.email}"
       redirect_to root_url
     else
       render :action => :reset
