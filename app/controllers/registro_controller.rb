@@ -7,7 +7,12 @@ class RegistroController < ApplicationController
   end
 
   def index
-    @escuela = Escuela.new
+    if current_user
+       if @escuela = Escuela.find_by_clave(current_user.login.upcase)
+          redirect_to :action => "new_or_edit", :escuela => {:clave => @escuela.clave}, :method => :get
+       end
+    end
+    @escuela ||= Escuela.new
   end
   
   def new_or_edit
@@ -29,7 +34,7 @@ class RegistroController < ApplicationController
     @escuela.proyecto = @proyecto
     if @escuela.save && @proyecto.save
       flash[:notice] = "Registro guardado correctamente"
-      redirect_to :controller => "home"
+      redirect_to :controller => "constancia", :action => "generar", :id => @escuela
     else
       flash[:error] = "No se puedo guardar, verifique el registro"
       render :action => "new_or_edit"
