@@ -15,3 +15,5 @@ config.action_controller.perform_caching             = false
 
 # Don't care if the mailer can't send
 config.action_mailer.raise_delivery_errors = false
+SITE_URL="certificacion_era.educacionchiapas.gob.mx"
+REPORTS_DIR = "#{RAILS_ROOT}/app/reports"
