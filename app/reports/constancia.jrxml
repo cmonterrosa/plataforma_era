@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="constancia" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="184"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="P_ESCUELA" class="java.lang.String"/>
 	<parameter name="P_UBICACION" class="java.lang.String"/>
 	<parameter name="P_CT" class="java.lang.String"/>
@@ -14,28 +14,28 @@
 		<band height="572" splitType="Stretch">
 			<image>
 				<reportElement x="0" y="0" width="902" height="572"/>
-				<imageExpression class="java.lang.String"><![CDATA["/home/cmonterrosa/NetBeansProjects/plataforma_era/app/reports/images/constancia_firmas.jpg"]]></imageExpression>
+				<imageExpression><![CDATA["/images/constancia_firmas.jpg"]]></imageExpression>
 			</image>
 			<textField>
 				<reportElement x="143" y="327" width="251" height="13"/>
 				<textElement textAlignment="Center" verticalAlignment="Bottom">
 					<font fontName="Arial" size="10"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{P_UBICACION}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{P_UBICACION}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="509" y="327" width="202" height="13"/>
 				<textElement textAlignment="Center">
 					<font fontName="Arial" size="10"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{P_CT}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{P_CT}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="76" y="308" width="624" height="13"/>
 				<textElement textAlignment="Center" verticalAlignment="Bottom">
 					<font fontName="Arial" size="10"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{P_ESCUELA}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{P_ESCUELA}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
