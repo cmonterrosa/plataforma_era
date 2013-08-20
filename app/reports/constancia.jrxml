@@ -12,10 +12,6 @@
 	<field name="login" class="java.lang.String"/>
 	<title>
 		<band height="572" splitType="Stretch">
-			<image>
-				<reportElement x="0" y="0" width="752" height="572"/>
-				<imageExpression><![CDATA["/images/constancia_firmas.jpg"]]></imageExpression>
-			</image>
 			<textField>
 				<reportElement x="143" y="321" width="251" height="13"/>
 				<textElement textAlignment="Center" verticalAlignment="Bottom">
