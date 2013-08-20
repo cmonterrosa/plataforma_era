@@ -13,25 +13,25 @@
 	<title>
 		<band height="572" splitType="Stretch">
 			<image>
-				<reportElement x="11" y="19" width="726" height="543"/>
+				<reportElement x="0" y="0" width="752" height="572"/>
 				<imageExpression><![CDATA["/images/constancia_firmas.jpg"]]></imageExpression>
 			</image>
 			<textField>
-				<reportElement x="143" y="327" width="251" height="13"/>
+				<reportElement x="143" y="321" width="251" height="13"/>
 				<textElement textAlignment="Center" verticalAlignment="Bottom">
 					<font fontName="Arial" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{P_UBICACION}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="509" y="327" width="202" height="13"/>
+				<reportElement x="496" y="322" width="202" height="13"/>
 				<textElement textAlignment="Center">
 					<font fontName="Arial" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{P_CT}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="76" y="308" width="624" height="13"/>
+				<reportElement x="76" y="303" width="624" height="13"/>
 				<textElement textAlignment="Center" verticalAlignment="Bottom">
 					<font fontName="Arial" size="10"/>
 				</textElement>
