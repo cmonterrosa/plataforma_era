@@ -14,7 +14,7 @@
 		<band height="572" splitType="Stretch">
 			<image>
 				<reportElement x="0" y="0" width="752" height="572"/>
-				<imageExpression><![CDATA["/Users/cmonterrosa/Downloads/plataforma_era/app/reports/images/constancia_firmas.jpg"]]></imageExpression>
+				<imageExpression><![CDATA["images/constancia_firmas.jpg"]]></imageExpression>
 			</image>
 			<textField>
 				<reportElement x="143" y="321" width="251" height="13"/>
