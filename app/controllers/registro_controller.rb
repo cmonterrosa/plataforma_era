@@ -23,6 +23,10 @@ class RegistroController < ApplicationController
     @proyecto = @escuela.proyecto if @escuela
   end
 
+  def menu_reportes
+    @escuela = Escuela.find(params[:id])
+  end
+
   def save
     @escuela = Escuela.find_by_clave(params[:clave]) if params[:clave]
     @escuela ||= Escuela.new
@@ -34,7 +38,8 @@ class RegistroController < ApplicationController
     @escuela.proyecto = @proyecto
     if @escuela.save && @proyecto.save
       flash[:notice] = "Registro guardado correctamente"
-      redirect_to :controller => "constancia", :action => "generar", :id => @escuela
+      #redirect_to :controller => "constancia", :action => "generar", :id => @escuela
+       redirect_to :action => "menu_reportes", :id => @escuela
     else
       flash[:error] = "No se puedo guardar, verifique el registro"
       render :action => "new_or_edit"
