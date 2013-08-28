@@ -1,0 +1,70 @@
+<% form_for(@tipo_reporte) do |f| %>
+  <%= f.error_messages %>
+
+  <table width="100%" border="0" cellspacing="1" >
+  <tr align="center">
+    <td>
+      <table width="100%">
+        <tr>
+          <td width="1%" bgcolor="#E8E8E8">&nbsp;</td>
+          <td width="99% bgcolor="#E8E8E8">DOCENTE</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>¿El personal docente asiste y se capacita en materia de Salud y Medio Ambiente?</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>¿Los conocimientos adquiridos son aplicados?</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td><%= f.text_field :conocimientos_adquiridos %></td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>¿La escuela desarrolla proyectos para la aplicación de conocimientos en materia de Salud y Medio Ambiente?</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td><%= f.text_field :desarrola_proyectos %></td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr align="center">
+    <td>
+      <table width="100%" border="0" cellspacing="1">
+        <tr>
+          <td width="1%" bgcolor="#E8E8E8">&nbsp;</td>
+          <td width="99%" bgcolor="#E8E8E8">ALUMNOS</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>¿Los alumnos se involucran en las actividades y proyectos en los que participa la escuela?</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td><%= f.text_field :actividades_proyectos %></td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>¿Los alumnos se capacitan en materia de Salud y Medio Ambiente?</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td><%= f.text_field :capacitacion_salud_ambiente %></td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+  <p>
+    <%= f.submit 'Guardar' %>
+  </p>
+<% end %>

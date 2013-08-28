@@ -1,6 +1,5 @@
 <h1>Mis reportes bimestrales</h1>
 
-
 <table>
   <tr>
     <th>Descripcion</th>
@@ -19,7 +18,6 @@
   <%end%>
 </table>
 
-
 <br />
-<%=button_to "Nuevo Reporte", :action => "new_or_edit"%>
+<%=button_to "Nuevo Reporte", :controller => 'dcompetencias', :action => "new_or_edit", :id => @reporte %>
 
