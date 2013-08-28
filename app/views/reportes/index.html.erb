@@ -1,0 +1,25 @@
+<h1>Mis reportes bimestrales</h1>
+
+
+<table>
+  <tr>
+    <th>Descripcion</th>
+    <th>Ciclo escolar</th>
+    <th>Fecha de captura</th>
+    <th>&nbsp;</th>
+  </tr>
+
+  <%for reporte in @reportes do%>
+  <tr>
+    <th><%=reporte.tiporeporte.descripcion%></th>
+    <th><%=reporte.tiporeporte.cicloescolar%></th>
+    <th><%=reporte.created_at%></th>
+    <th><%=button_to "Detalle", :action => "show", :id => reporte%></th>
+  </tr>
+  <%end%>
+</table>
+
+
+<br />
+<%=button_to "Nuevo Reporte", :action => "new_or_edit"%>
+
