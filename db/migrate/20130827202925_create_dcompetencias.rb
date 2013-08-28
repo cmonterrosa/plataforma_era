@@ -18,11 +18,12 @@ class CreateDcompetencias < ActiveRecord::Migration
               REFERENCES reportes(id)
               ON DELETE RESTRICT
               ON UPDATE CASCADE"
+    add_index :dcompetencias, :reporte_id, :name => "dcompetencias_reporte"
   end
 
   def self.down
-    execute "ALTER TABLE dcompetencias
-              DROP CONSTRAINT reportes_dcompetencias"
+#    execute "ALTER TABLE dcompetencias
+#              DROP CONSTRAINT reportes_dcompetencias"
 
     drop_table :dcompetencias
   end
