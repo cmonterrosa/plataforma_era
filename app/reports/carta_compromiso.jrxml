@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="carta_compromiso" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="168"/>
-	<property name="ireport.y" value="0"/>
-	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
-	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
-	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
-	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="432"/>
+	<style name="Title" isDefault="false" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="SubTitle" isDefault="false" forecolor="#666666" fontName="Arial" fontSize="18"/>
+	<style name="Column header" isDefault="false" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" isDefault="false" fontName="Arial" fontSize="12"/>
 	<parameter name="P_FECHA" class="java.lang.String"/>
 	<parameter name="P_PROCEDENCIA" class="java.lang.String"/>
 	<parameter name="P_DIRECTOR" class="java.lang.String"/>
@@ -30,7 +30,7 @@
 			<staticText>
 				<reportElement x="149" y="37" width="388" height="20"/>
 				<textElement textAlignment="Right">
-					<font fontName="Droid Serif" size="11" pdfFontName="Helvetica-BoldOblique"/>
+					<font fontName="Serif" size="11" pdfFontName="Helvetica"/>
 				</textElement>
 				<text><![CDATA[COORDINACIÓN DE PROGRAMAS ESPECIALES Y COMPENSATORIOS]]></text>
 			</staticText>
@@ -40,35 +40,35 @@
 			<staticText>
 				<reportElement x="15" y="95" width="523" height="20"/>
 				<textElement textAlignment="Center">
-					<font fontName="Droid Serif" size="13" isBold="true" pdfFontName="Helvetica-Bold"/>
+					<font fontName="Serif" size="13" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[CARTA COMPROMISO]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
 				<reportElement mode="Transparent" x="16" y="132" width="521" height="32"/>
 				<textElement textAlignment="Right">
-					<font fontName="Droid Serif" size="10" isBold="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<font fontName="Serif" size="10" isBold="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{P_PROCEDENCIA} + ", CHIAPAS; " + "\n" + $P{P_FECHA} + "."]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="19" y="181" width="165" height="20"/>
 				<textElement>
-					<font fontName="Droid Serif" size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+					<font fontName="Serif" size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[A QUIEN CORRESPONDA:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement style="Title" x="149" y="5" width="391" height="32"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="Droid Serif" size="13" pdfFontName="Times-Bold"/>
+					<font fontName="Serif" size="13" pdfFontName="Times-Bold"/>
 				</textElement>
 				<text><![CDATA[SECRETARÍA DE EDUCACIÓN]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement mode="Transparent" x="20" y="217" width="517" height="154"/>
 				<textElement textAlignment="Justified" verticalAlignment="Middle">
-					<font fontName="Droid Serif" size="11" isBold="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<font fontName="Serif" size="11" isBold="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["En el marco de la política pública del Gobierno del Estado 'Chiapas Sustentable', la Secretaría de Educación, ha establecido en el Plan Estatal de Desarrollo, el Programa 'Educar con Responsabilidad Ambiental', que tiene como propósito: Ubicar a nuestros Centros de Trabajo  como el motor de la salud y la sustentabilidad, coordinando esfuerzos, para una mayor consciencia ambiental. Considerando el rol que juega el director en el contexto educativo, a través de los consejos técnicos, como promotor de una mejora constante en los centros escolares." + "\n\n" +
 "Por lo anterior, la estructura educativa (directivos, docentes, alumnos y padres de familia), nos comprometemos a colaborar con las acciones de la Nueva Escuela Chiapaneca y participar en la Certificación de las escuelas saludables y sustentables (ESyS)"]]></textFieldExpression>
@@ -76,7 +76,7 @@
 			<staticText>
 				<reportElement mode="Opaque" x="35" y="389" width="160" height="19"/>
 				<textElement textAlignment="Center">
-					<font fontName="Droid Serif" size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+					<font fontName="Serif" size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[DATOS DE LA ESCUELA:]]></text>
 			</staticText>
@@ -93,7 +93,7 @@
 			<staticText>
 				<reportElement x="149" y="57" width="391" height="20"/>
 				<textElement textAlignment="Right">
-					<font fontName="Droid Serif" size="10" pdfFontName="Helvetica-BoldOblique"/>
+					<font fontName="Serif" size="10" pdfFontName="Helvetica"/>
 				</textElement>
 				<text><![CDATA[EDUCAR CON RESPONSABILIDAD AMBIENTAL]]></text>
 			</staticText>
@@ -103,82 +103,92 @@
 			</image>
 			<textField isBlankWhenNull="true">
 				<reportElement x="184" y="420" width="343" height="20"/>
-				<textElement/>
+				<textElement verticalAlignment="Bottom">
+					<font isUnderline="true"/>
+				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{P_DIRECTOR}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="35" y="420" width="137" height="20"/>
-				<textElement>
-					<font fontName="Droid Serif" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Serif" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[NOMBRE DEL DIRECTOR:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="35" y="454" width="137" height="20"/>
-				<textElement>
-					<font fontName="Droid Serif" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Serif" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[NOMBRE DE LA ESCUELA:]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="184" y="454" width="343" height="20"/>
-				<textElement/>
+				<textElement verticalAlignment="Bottom">
+					<font isUnderline="true"/>
+				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{P_ESCUELA}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="35" y="488" width="41" height="20"/>
-				<textElement>
-					<font fontName="Droid Serif" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Serif" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[CLAVE:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="87" y="488" width="97" height="20"/>
-				<textElement/>
+				<reportElement x="81" y="488" width="97" height="20"/>
+				<textElement verticalAlignment="Bottom">
+					<font isUnderline="true"/>
+				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{P_CLAVE}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="195" y="488" width="79" height="20"/>
-				<textElement>
-					<font fontName="Droid Serif" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Serif" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[LOCALIDAD:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
 				<reportElement x="274" y="488" width="253" height="20"/>
-				<textElement/>
+				<textElement verticalAlignment="Bottom">
+					<font isUnderline="true"/>
+				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{P_LOCALIDAD}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="35" y="522" width="70" height="20"/>
-				<textElement>
-					<font fontName="Droid Serif" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Serif" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[MUNICIPIO:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
 				<reportElement x="105" y="522" width="422" height="20"/>
-				<textElement/>
+				<textElement verticalAlignment="Bottom">
+					<font isUnderline="true"/>
+				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{P_MUNICIPIO}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="258" y="568" width="269" height="20"/>
+				<reportElement x="258" y="552" width="269" height="20"/>
 				<textElement textAlignment="Center">
-					<font fontName="Droid Serif" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+					<font fontName="Serif" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[SELLO]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="35" y="568" width="78" height="20"/>
 				<textElement>
-					<font fontName="Droid Serif" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+					<font fontName="Serif" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[VTO. BNO]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="35" y="621" width="178" height="20"/>
 				<textElement>
-					<font fontName="Droid Serif" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+					<font fontName="Serif" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[SUPERVISOR ESCOLAR]]></text>
 			</staticText>
