@@ -1,0 +1,13 @@
+<h1>Reporte - Alta</h1>
+
+<% form_for(@tipo_reporte) do |f| %>
+  <%= f.error_messages %>
+  
+  <%= render :partial => 'form' %>
+
+  <p>
+    <%= f.submit 'Guardar' %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', tipo_reportes_path %>
