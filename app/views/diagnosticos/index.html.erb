@@ -1,18 +1,18 @@
-<h1>Diagnóstico</h1>
-
-<p>
-  El DIAGNÓSTICO tiene por objeto propiciar la reflexión sobre las actividades que está desarrollando la  escuela y las que podría realizar. Hacer el diagnóstico de manera cuidadosa le permitirá encontrar con mayor facilidad las oportunidades de mejora  y establecer metas en el Proyecto  Ambiental.
-</p>
-  <p>RECOMENDACIONES
-Responder a todas las preguntas y apartados
-Al finalizar una captura siempre dar click en el botón guardar antes de oprimir el botón siguiente.
-  </p>
-
-<%unless Diagnostico.find_by_escuela_id(Escuela.find_by_clave(current_user.login.upcase))%>
-<%=button_to "INICIAR DIAGNOSTICO", :action => "new_or_edit"%>
-<%end%>
+<div class="formee">
+  <h4>DIAGNÓSTICO</h4>
+  <h5 style="text-align: justify;" >
+    El Diágnostico tiene por objeto propiciar la reflexión sobre las actividades que está desarrollando la  escuela y las que podría realizar. Hacer el diagnóstico de manera cuidadosa le permitirá encontrar con mayor facilidad las oportunidades de mejora  y establecer metas en el Proyecto  Ambiental.
+  </h5>
+  <h5>&nbsp;</h5>
+  <h5>RECOMENDACIONES:</h5>
+  <h5>Responder a todas las preguntas y apartados.</h5>
+  <h5>Al finalizar una captura siempre dar click en el botón guardar antes de oprimir el botón siguiente.</h5>
+  <h5>&nbsp;</h5>
+  <%unless Diagnostico.find_by_escuela_id(Escuela.find_by_clave(current_user.login.upcase))%>
+    <%=button_to "INICIAR DIAGNOSTICO", :action => "new_or_edit"%>
+  <%end%>
   
-
-<%if @diagnostico = Diagnostico.find_by_escuela_id(Escuela.find_by_clave(current_user.login.upcase))%>
-  <%=link_to "COMPETENCIAS", :controller => "competencias", :action => "new_or_edit", :id => @diagnostico%> |   <%=link_to "ENTORNO SALUDABLES", :controller => "competencias", :action => "new_or_edit"%> |   <%=link_to "HUELLA ECOLOGICA", :controller => "competencias", :action => "new_or_edit"%>
-<%end%>
+  <%if @diagnostico = Diagnostico.find_by_escuela_id(Escuela.find_by_clave(current_user.login.upcase))%>
+    <h5><%=link_to "COMPETENCIAS", :controller => "competencias", :action => "new_or_edit", :id => @diagnostico %>   |   <%=link_to "ENTORNO SALUDABLES", :controller => "competencias", :action => "new_or_edit"%> |   <%=link_to "HUELLA ECOLOGICA", :controller => "competencias", :action => "new_or_edit"%> </h5>
+  <%end%>
+</div>
