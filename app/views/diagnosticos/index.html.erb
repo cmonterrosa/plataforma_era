@@ -1,0 +1,18 @@
+<h1>Diagnóstico</h1>
+
+<p>
+  El DIAGNÓSTICO tiene por objeto propiciar la reflexión sobre las actividades que está desarrollando la  escuela y las que podría realizar. Hacer el diagnóstico de manera cuidadosa le permitirá encontrar con mayor facilidad las oportunidades de mejora  y establecer metas en el Proyecto  Ambiental.
+</p>
+  <p>RECOMENDACIONES
+Responder a todas las preguntas y apartados
+Al finalizar una captura siempre dar click en el botón guardar antes de oprimir el botón siguiente.
+  </p>
+
+<%unless Diagnostico.find_by_escuela_id(Escuela.find_by_clave(current_user.login.upcase))%>
+<%=button_to "INICIAR DIAGNOSTICO", :action => "new_or_edit"%>
+<%end%>
+  
+
+<%if @diagnostico = Diagnostico.find_by_escuela_id(Escuela.find_by_clave(current_user.login.upcase))%>
+  <%=link_to "COMPETENCIAS", :controller => "competencias", :action => "new_or_edit", :id => @diagnostico%> |   <%=link_to "ENTORNO SALUDABLES", :controller => "competencias", :action => "new_or_edit"%> |   <%=link_to "HUELLA ECOLOGICA", :controller => "competencias", :action => "new_or_edit"%>
+<%end%>

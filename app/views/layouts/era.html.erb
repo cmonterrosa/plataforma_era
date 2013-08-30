@@ -23,6 +23,7 @@ body {
 <!-- formee -->
 <%=javascript_include_tag "formee/jquery-1.6.4.min.js"%>
 <%=javascript_include_tag "formee/formee.js"%>
+<%=javascript_include_tag :defaults%>
 <%= stylesheet_link_tag "formee/formee-structure.css"%>
 <%= stylesheet_link_tag "formee/formee-style.css"%>
 
@@ -142,12 +143,12 @@ a:active {
 
 <body onload="MM_preloadImages('/images/era/iconos/facebook_322.png','/images/era/iconos/twitter_322.png','/images/era/iconos/skype_322.png','/images/era/iconos/youtube_322.png','/images/era/iconos/blogger_322.png','/images/era/iconos/myspace_322.png','/images/era/iconos/picasa_322.png','/images/era/btns_cert/btn_man2.png','/images/era/btns_cert/btn_reg2.png','/images/era/btns_cert/btn_que2.png','/images/era/btns_cert/btn_dia2.png','/images/era/btns_cert/btn_pro2.png','/images/era/btns_cert/btn_ava2.png','/images/era/btns_cert/btn_res2.png')">
 <table width="900" border="0" align="center" cellpadding="0" cellspacing="0">
-  <%#*<tr>%>
-    <%#*<td colspan="3"><img src="/images/era/ban.jpg" width="900" height="104" /></td>%>
-  <%#*</tr>%>
-  <%#*<tr>%>
-    <%#*<td colspan="3"><img src="/images/era/space.png" width="10" height="5" /></td>%>
-  <%#*</tr>%>
+  <tr>
+    <td colspan="3"><img src="/images/era/ban.jpg" width="900" height="104" /></td>
+  </tr>
+  <tr>
+    <td colspan="3"><img src="/images/era/space.png" width="10" height="5" /></td>
+  </tr>
   <tr>
     <td colspan="3" valign="top" class="fnd_cert"><table width="900" border="0" cellpadding="0" cellspacing="0">
       <tr>
@@ -202,7 +203,9 @@ a:active {
           <tr>
             <td><a href="/home/certificacion_esys" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Image38','','/images/era/btns_cert/btn_que2.png',1)"><img src="/images/era/btns_cert/btn_que1.png" name="Image38" width="100" height="33" border="0" id="Image38" /></a></td>
             <td><a href="/home/certificacion_manual" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Image39','','/images/era/btns_cert/btn_man2.png',1)"><img src="/images/era/btns_cert/btn_man1.png" name="Image39" width="100" height="33" border="0" id="Image39" /></a></td>
-            <td><a href="/" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Image32','','/images/era/btns_cert/btn_reg2.png',1)"><img src="/images/era/btns_cert/btn_reg1.png" name="Image32" width="100" height="33" border="0" id="Image32" /></a></td>
+            <td><a href="/registro" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Image32','','/images/era/btns_cert/btn_reg2.png',1)"><img src="/images/era/btns_cert/btn_reg1.png" name="Image32" width="100" height="33" border="0" id="Image32" /></a></td>
+              <td><a href="/diagnosticos" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Image32','','/images/era/btns_cert/btn_dia2.png',1)"><img src="/images/era/btns_cert/btn_dia1.png" name="Image32" width="100" height="33" border="0" id="Image32" /></a></td>
+
             <td><img src="/images/era/space.png" name="Image34" width="100" height="33" border="0" id="Image34" /></td>
             <td><img src="/images/era/space.png" name="Image34" width="100" height="33" border="0" id="Image34" /></td>
           </tr>

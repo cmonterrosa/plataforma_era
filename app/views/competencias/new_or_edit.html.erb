@@ -1,0 +1,102 @@
+<% form_for :competencia, @competencia, :url => { :action => "save", :id => @competencia, :diagnostico => @diagnostico.id } do |f| -%>
+<table width="100%" border="0" align="center" cellpadding="2" cellspacing="1">
+    <tr bgcolor="#CCCCCC" class="titulo">
+      <td colspan="3" align="center">SECCIÓN 1: DESARROLLO DE COMPETENCIAS</td>
+    </tr>
+
+
+    <tr align="center">
+      <td align="center">
+        <table width="100%" border="0" cellpadding="4" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
+          <tr bgcolor="#E8E8E8" class="subtitulo">
+            <td colspan="2" align="center">DOCENTES</td>
+        </tr>
+        <tr class="pregunta">
+          <td width="50%" align="center">¿El personal docente asiste y se capacita en materia de salud y medio ambiente?</td>
+          <td width="50%" align="center">¿Los conocimientos adquiridos son aplicados?</td>
+        </tr>
+        <tr>
+            <td align="center">
+                <table width="100%">
+                  <tr>
+                    <td width="49%">SALUD</td>
+                    <td>&nbsp;</td>
+                    <td width="49%">MEDIO AMBIENTE</td>
+                  </tr>
+                  <tr>
+                    <td>SI <%= f.radio_button :doc_capacitan_salud, "SI", :onclick => "enable_disable_desc('competencia_doc_capacitan_salud_si', 'competencia_doc_capacitan_salud_no', 'competencia_doc_capacitan_salud_desc');"%>&nbsp;&nbsp;NO<%= f.radio_button :doc_capacitan_salud, "NO", :onclick => "enable_disable_desc('competencia_doc_capacitan_salud_si', 'competencia_doc_capacitan_salud_no', 'competencia_doc_capacitan_salud_desc');"%></td>
+                    <td>&nbsp;</td>
+                    <td>SI <%= f.radio_button :doc_capacitan_ma, "SI", :onclick => "enable_disable_desc('competencia_doc_capacitan_ma_si', 'competencia_doc_capacitan_ma_no', 'competencia_doc_capacitan_ma_desc');"%>&nbsp;&nbsp;NO<%= f.radio_button :doc_capacitan_ma, "NO",:onclick => "enable_disable_desc('competencia_doc_capacitan_ma_si', 'competencia_doc_capacitan_ma_no', 'competencia_doc_capacitan_ma_desc');"%></td>
+                  </tr>
+                  <tr>
+                    <td><%=f.select :doc_capacitan_salud_desc, ["TALLERES", "CURSOS", "DIPLOMADOS"], :disabled => true%></td>
+                    <td>&nbsp;</td>
+                    <td><%=f.select :doc_capacitan_ma_desc, ["TALLERES", "CURSOS", "DIPLOMADOS"], :disabled => true%></td>
+                  </tr>
+                </table>
+            </td>
+            <td align="center">
+                   SI <%= f.radio_button :aplica_conocimientos, "SI", :onclick => "enable_disable_desc('competencia_aplica_conocimientos_si', 'competencia_aplica_conocimientos_no', 'competencia_aplica_conocimientos_desc');"%>&nbsp;&nbsp;NO<%= f.radio_button :aplica_conocimientos, "NO", :onclick => "enable_disable_desc('competencia_aplica_conocimientos_si', 'competencia_aplica_conocimientos_no', 'competencia_aplica_conocimientos_desc');"%>
+                  <%=f.text_area :aplica_conocimientos_desc, :size => "50x4", :placeholder => "Especifique", :disabled => true%>
+            </td>
+        </tr>
+        <tr>
+          <td colspan="2">&nbsp;</td>
+        </tr>
+        <tr class="pregunta">
+           <td width="50%" align="center">¿La escuela desarrolla proyectos para la aplicación de conocimientos en materia de salud y medio ambiente?</td>
+           <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td align="center">
+                   SI <%= f.radio_button :esc_desarrolla_proy, "SI"%>&nbsp;&nbsp;NO<%= f.radio_button :esc_desarrolla_proy, "NO"%>
+                  <%=f.text_area :esc_desarrolla_proy_desc, :size => "50x4", :placeholder => "Especifique"%>
+          </td>
+          <td>&nbsp;</td>
+        </tr>
+      </table>
+      </td>
+    </tr>
+    <tr>
+      <td align="center">
+        <table width="100%" border="0" cellpadding="4" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
+          <tr bgcolor="#E8E8E8" class="subtitulo">
+          <td colspan="2" align="center">ALUMNOS</td>
+        </tr>
+        <tr class="pregunta">
+          <td width="50%"  align="justify">¿Los alumnos de involucran en las actividades y proyectos en los que participa la escuela?</td>
+          <td width="50%" align="center">¿Los alumnos se capacitan en materia de salud y medio ambiente?</td>
+        </tr>
+        <tr>
+           <td align="center">
+                   SI <%= f.radio_button :alu_involucran_proy, "SI"%>&nbsp;&nbsp;NO<%= f.radio_button :alu_involucran_proy, "NO"%>
+                  <%=f.text_area :alu_involucran_proy_desc, :size => "50x4", :placeholder => "Especifique"%>
+            </td>
+            <td align="center">
+                   SI <%= f.radio_button :alu_capacitan_salud_ma, "SI"%>&nbsp;&nbsp;NO<%= f.radio_button :alu_capacitan_salud_ma, "NO"%>
+                  <%=f.text_area :alu_capacitan_salud_ma_desc, :size => "50x4", :placeholder => "Especifique"%>
+            </td>
+          </tr>
+      </table></td>
+    </tr>
+    <tr>
+      <td align="right">
+        <table>
+          <tr>
+            <td>
+              <input title="guardar y regresar" alt=" Guardar y regresar a la sección anterior " type="image"  src="/images/botones/btn_guardar.png" width="150" height="40" style="margin-left:90px;"/>
+            </td>
+            <td>
+              <%= link_to image_tag("botones/btn_regresar.png", :width => 170, :height=>"40", :border =>0, :style => "margin-left:90px;" ) , :controller => "integrantes", :action => "list", :id => @competencia%>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+<% end %>
+<script>
+enable_disable_desc('competencia_doc_capacitan_salud_si', 'competencia_doc_capacitan_salud_no', 'competencia_doc_capacitan_salud_desc');
+enable_disable_desc('competencia_doc_capacitan_ma_si', 'competencia_doc_capacitan_ma_no', 'competencia_doc_capacitan_ma_desc');
+enable_disable_desc('competencia_aplica_conocimientos_si', 'competencia_aplica_conocimientos_no', 'competencia_aplica_conocimientos_desc');
+</script>
