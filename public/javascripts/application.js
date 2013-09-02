@@ -8,5 +8,5 @@ function enable_disable_desc(obj1, obj2, obj3){
         if(document.getElementById(obj2).checked)
             document.getElementById(obj3).disabled = true;
         else
-            document.getElementById(obj3).disabled = false;
+            document.getElementById(obj3).disabled = true;
 }
