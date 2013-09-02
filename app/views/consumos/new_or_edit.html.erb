@@ -1,0 +1,147 @@
+<% form_for :consumo, @consumo, :url => { :action => "save", :id => @consumo, :diagnostico => @diagnostico.id }, :html => {:class => "formee"} do |f| -%>
+<table width="100%" border="0" align="center" cellpadding="2" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
+  <tr class="titulo">
+    <td align="center"><h4>SECCIÓN 4: CONSUMO RESPONSABLE SALUDABLE</h4></td>
+  </tr>
+  <tr align="center">
+    <td align="center">
+      <table width="100%" border="0" cellpadding="4" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
+        <tr>
+          <td width="49%" align="justify"><label>¿La institución cuenta con desayunos escolares.?</label></td>
+          <td>&nbsp;</td>
+          <td width="49%" align="justify"><label>¿Tipo de establecimiento.?</label></td>
+        </tr>
+        <tr>
+          <td align="center">
+            <label>SI <%= f.radio_button :desayunos_escolares, "SI"%>&nbsp;&nbsp;NO <%= f.radio_button :desayunos_escolares, "NO"%></label>
+          </td>
+          <td>&nbsp;</td>
+          <td><%=f.select :tipo_establecimiento, ["CAFETERÍA", "COOPERATIVA ESCOLAR", "CASETA ESCOLAR"], {:include_blank => ":: SELECCIONA UNA OPCIÓN"}, {:disabled => false} %></td>
+        </tr>
+        <tr>
+        <td colspan="3">&nbsp;</td>
+        </tr>
+        <tr>
+          <td width="49%" align="justify"><label>¿Aplican los Lineamientos Generales para el Expendio de alimentos y bebidas en los establecimientos de consumo escolar. DE AUCERDO A LA NORMA OFICIAL MEXICANA NOM-043-SSA2-2005.?</label></td>
+          <td>&nbsp;</td>
+          <td width="49%" align="justify"><label>¿El personal que atiende estos establecimientos se capacita para el manejo y preparación de alimentos?</label></td>
+        </tr>
+        <tr>
+          <td align="center">
+            <label>SI <%= f.radio_button :aplican_norma_ofic_mex, "SI"%>&nbsp;&nbsp;NO <%= f.radio_button :aplican_norma_ofic_mex, "NO"%></label>
+          </td>
+          <td>&nbsp;</td>
+          <td align="center">
+            <label>SI <%= f.radio_button :capacita_manejo_prep_alimentos, "SI"%>&nbsp;&nbsp;NO <%= f.radio_button :capacita_manejo_prep_alimentos, "NO"%></label>
+          </td>
+        </tr>
+        <tr>
+        <td colspan="3">&nbsp;</td>
+        </tr>
+        <tr>
+          <td width="49%" align="justify"><label>¿Se ha disminuido el expendio de alimentos chatarras.?</label></td>
+          <td>&nbsp;</td>
+          <td width="49%" align="justify"><label>¿Los alimentos sugeridos en la dieta escolar son preparados de acuerdo a la Norma Oficial Mexicana NOM-043-SSA2-2005, de Plato del Buen Comer.?</label></td>
+        </tr>
+        <tr>
+          <td align="center">
+            <label>SI <%= f.radio_button :disminuido_alim_chatarras, "SI"%>&nbsp;&nbsp;NO <%= f.radio_button :disminuido_alim_chatarras, "NO"%></label>
+          </td>
+          <td>&nbsp;</td>
+          <td align="center">
+            <label>SI <%= f.radio_button :alim_norma_ofic_mex, "SI"%>&nbsp;&nbsp;NO <%= f.radio_button :alim_norma_ofic_mex, "NO"%></label>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3">&nbsp;</td>
+        </tr>
+        <tr>
+          <td width="49%" align="justify"><label>¿Se sugiere a los alumnos que consuman alimentos bajos en sodio y en grasas.?</label></td>
+          <td>&nbsp;</td>
+          <td width="49%" align="justify"><label>¿Se expende agua simple, potable o prepara para el consumo diaria.?</label></td>
+        </tr>
+        <tr>
+          <td align="center">
+            <label>
+              SI <%= f.radio_button :alim_bajos_sodio_grasa, "SI", :onclick => "enable_disable_desc('consumo_alim_bajos_sodio_grasa_si', 'consumo_alim_bajos_sodio_grasa_no', 'consumo_alim_bajos_sodio_grasa_desc');"%>&nbsp;&nbsp;
+              NO <%= f.radio_button :alim_bajos_sodio_grasa, "NO", :onclick => "enable_disable_desc('consumo_alim_bajos_sodio_grasa_si', 'consumo_alim_bajos_sodio_grasa_no', 'consumo_alim_bajos_sodio_grasa_desc');"%>
+            </label>
+            <%= f.text_area :alim_bajos_sodio_grasa_desc, :placeholder => "Especifique...", :disabled => true %>
+          </td>
+          <td>&nbsp;</td>
+          <td align="center">
+            <label>SI <%= f.radio_button :agua_simple_potable, "SI"%>&nbsp;&nbsp;NO <%= f.radio_button :agua_simple_potable, "NO"%></label>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3">&nbsp;</td>
+        </tr>
+        <tr>
+          <td width="49%" align="justify"><label>¿Los alimentos se preparan de manera higiénica.?</label></td>
+          <td>&nbsp;</td>
+          <td width="49%" align="justify"><label>¿Los utensilios de cocina con esterilizados adecuadamente.?</label></td>
+        </tr>
+        <tr>
+          <td align="center">
+            <label> SI <%= f.radio_button :alim_preparan_higienica, "SI" %>&nbsp;&nbsp;NO <%= f.radio_button :alim_preparan_higienica, "NO" %> </label>
+          </td>
+          <td>&nbsp;</td>
+          <td align="center">
+            <label>SI <%= f.radio_button :utensilios_esterilizados, "SI"%>&nbsp;&nbsp;NO <%= f.radio_button :utensilios_esterilizados, "NO"%></label>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3">&nbsp;</td>
+        </tr>
+        <tr>
+          <td width="49%" align="justify"><label>¿Cuenta con recipientes de residuos sólidos. Órganicos, Inórganicos.?</label></td>
+          <td>&nbsp;</td>
+          <td width="49%" align="justify"><label>¿Qué tipo de material usa para servir los alimentos.?</label></td>
+        </tr>
+        <tr>
+          <td align="center">
+            <label> SI <%= f.radio_button :recipientes_residuos_solidos, "SI" %>&nbsp;&nbsp;NO <%= f.radio_button :recipientes_residuos_solidos, "NO" %> </label>
+          </td>
+          <td>&nbsp;</td>
+          <td><%= f.select :material_servir_alim, ["PLATO/VASO DE UNICEL", "PLATO/VASO DE UNICEL", "PLATO/VASO DE PLÁSTICO", "PLATO/VASO DE LOZA"], {:include_blank => ":: SELECCIONA UNA OPCIÓN"}, {:disabled => false} %></td>
+        </tr>
+        <tr>
+          <td colspan="3">&nbsp;</td>
+        </tr>
+        <tr>
+          <td width="49%" align="justify"><label>¿Los establecimientos escolares utilizan popotes.?</label></td>
+          <td>&nbsp;</td>
+          <td width="49%" align="justify"><label>¿Los establecimientos están libres de fauna nociva (roedores, cucarachas y otros).?</label></td>
+        </tr>
+        <tr>
+          <td align="center">
+            <label> SI <%= f.radio_button :utilizan_popotes, "SI" %>&nbsp;&nbsp;NO <%= f.radio_button :utilizan_popotes, "NO" %> </label>
+          </td>
+          <td>&nbsp;</td>
+          <td align="center">
+            <label>SI <%= f.radio_button :libres_fauna_nociva, "SI"%>&nbsp;&nbsp;NO <%= f.radio_button :libres_fauna_nociva, "NO"%></label>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td align="right">
+      <table>
+        <tr>
+          <td>
+            <input title="guardar y regresar" alt=" Guardar y regresar a la sección anterior " type="image"  src="/images/botones/btn_guardar.png" width="150" height="40" style="margin-left:90px;"/>
+          </td>
+          <td>
+            <%= link_to image_tag("botones/btn_regresar.png", :width => 170, :height=>"40", :border =>0, :style => "margin-left:90px;" ) , :controller => diagnosticos_path, :id => @diagnostico.id%>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<% end %>
+
+<script type="text/javascript">
+enable_disable_desc('consumo_alim_bajos_sodio_grasa_si', 'consumo_alim_bajos_sodio_grasa_no', 'consumo_alim_bajos_sodio_grasa_desc');
+</script>
