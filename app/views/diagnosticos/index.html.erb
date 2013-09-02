@@ -1,18 +1,66 @@
-<div class="formee">
-  <h4>DIAGNÓSTICO</h4>
-  <h5 style="text-align: justify;" >
-    El Diágnostico tiene por objeto propiciar la reflexión sobre las actividades que está desarrollando la  escuela y las que podría realizar. Hacer el diagnóstico de manera cuidadosa le permitirá encontrar con mayor facilidad las oportunidades de mejora  y establecer metas en el Proyecto  Ambiental.
-  </h5>
-  <h5>&nbsp;</h5>
-  <h5>RECOMENDACIONES:</h5>
-  <h5>Responder a todas las preguntas y apartados.</h5>
-  <h5>Al finalizar una captura siempre dar click en el botón guardar antes de oprimir el botón siguiente.</h5>
-  <h5>&nbsp;</h5>
+<table>
+     <tr>
+        <td>&nbsp;</td>
+        <td colspan="3"><img src="/images/era/space.png" alt="" width="10" height="10" /></td>
+      </tr>
+      <tr>
+        <td colspan="3"><img src="/images/era/btns_cert/tit_4.png" width="299" height="43" /></td>
+      </tr>
+      <tr>
+        <td colspan="3"><img src="/images/era/space.png" alt="" width="10" height="10" /></td>
+      </tr>
+      <tr>
+        <td colspan="3" align="center">&nbsp;</td>
+      </tr>
+      <tr>
+        <td colspan="3">&nbsp;</td>
+      </tr>
+      <tr>
+        <td colspan="3">&nbsp;</td>
+      </tr>
+      <tr>
+        <td colspan="3">&nbsp;</td>
+      </tr>
+</table>
+
+
+
+  <div class="contenidodiagnostico">
+    <p>
+      El Diagnóstico tiene por objeto propiciar la reflexión sobre las actividades que está desarrollando la  escuela y las que podría realizar. Hacer el diagnóstico de manera cuidadosa le permitirá encontrar con mayor facilidad las oportunidades de mejora  y establecer metas en el Proyecto  Ambiental.
+    </p>
+  </div>
+
+   <div class="subtitulodiagnostico">
+    <h5>RECOMENDACIONES</h5>
+  </div>
+
+  <div class="contenidodiagnostico">
+    <p>
+Responder a todas las preguntas y apartados.
+    </p>
+    <p>
+      Al finalizar una captura siempre dar click en el botón guardar antes de oprimir el botón siguiente.
+    </p>
+  </div>
+
+
+
+
+  <!-- Si no existe el diagnostico creado -->
+
   <%unless Diagnostico.find_by_escuela_id(Escuela.find_by_clave(current_user.login.upcase))%>
-    <%=button_to "INICIAR DIAGNOSTICO", :action => "new_or_edit"%>
+    <div class="formee" style="margin-left:2cm;">
+     <%=button_to "INICIAR DIAGNOSTICO", :action => "new_or_edit"%>
+    </div>
   <%end%>
+
   
   <%if @diagnostico = Diagnostico.find_by_escuela_id(Escuela.find_by_clave(current_user.login.upcase))%>
-    <h5><%=link_to "COMPETENCIAS", :controller => "competencias", :action => "new_or_edit", :id => @diagnostico %>   |   <%=link_to "ENTORNO SALUDABLES", :controller => "competencias", :action => "new_or_edit"%> |   <%=link_to "HUELLA ECOLOGICA", :controller => "competencias", :action => "new_or_edit"%> </h5>
-  <%end%>
-</div>
+  <!-- menu -->
+  <%= render :partial => "menu"%>
+
+  <h5><%=link_to "COMPETENCIAS", :controller => "competencias", :action => "new_or_edit", :id => @diagnostico %>   |   <%=link_to "ENTORNO SALUDABLES", :controller => "competencias", :action => "new_or_edit"%> |   <%=link_to "HUELLA ECOLOGICA", :controller => "competencias", :action => "new_or_edit"%> </h5>
+
+<%end%>
+
