@@ -1,0 +1,118 @@
+<% form_for :entorno, @entorno, :url => { :action => "save", :id => @entorno, :diagnostico => @diagnostico.id }, :html => {:class => "formee"} do |f| -%>
+<table width="100%" border="0" align="center" cellpadding="2" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
+  <tr class="titulo">
+    <td align="center"><h4>SECCIÓN 2: ENTORNO SALUDABLE</h4></td>
+  </tr>
+  <tr align="center">
+    <td align="center">
+      <table width="100%" border="0" cellpadding="4" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
+        <tr>
+          <td width="49%" align="justify"><label>¿Existen Áreas Verdes en la escuela.?</label></td>
+          <td>&nbsp;</td>
+          <td width="49%" align="justify"><label>¿Se llevan a cabo actividades para el cuidado, preservación y reforestación de las Áreas Verdes.?</label></td>
+        </tr>
+        <tr>
+          <td align="center">
+            <label>
+              SI <%= f.radio_button :areas_verdes_esc, "SI", :onclick => "enable_disable_desc('entorno_areas_verdes_esc_si', 'entorno_areas_verdes_esc_no', 'entorno_areas_verdes_esc_desc');"%>&nbsp;&nbsp;
+              NO <%= f.radio_button :areas_verdes_esc, "NO", :onclick => "enable_disable_desc('entorno_areas_verdes_esc_si', 'entorno_areas_verdes_esc_no', 'entorno_areas_verdes_esc_desc');"%>
+            </label>
+            <%=f.text_area :areas_verdes_esc_desc, :placeholder => "Especifique...", :disabled => true %>
+          </td>
+          <td>&nbsp;</td>
+          <td align="center" >
+            <label>
+              SI <%= f.radio_button :cuidado_preserv_reforest, "SI", :onclick => "enable_disable_desc('entorno_cuidado_preserv_reforest_si', 'entorno_cuidado_preserv_reforest_no', 'entorno_cuidado_preserv_reforest_desc');"%>&nbsp;&nbsp;
+              NO <%= f.radio_button :cuidado_preserv_reforest, "NO", :onclick => "enable_disable_desc('entorno_cuidado_preserv_reforest_si', 'entorno_cuidado_preserv_reforest_no', 'entorno_cuidado_preserv_reforest_desc');"%>
+            </label>
+            <%=f.text_area :cuidado_preserv_reforest_desc, :placeholder => "Especifique...", :disabled => true %>
+          </td>
+        </tr>
+        <tr>
+        <td colspan="3">&nbsp;</td>
+        </tr>
+        <tr>
+          <td width="49%" align="justify"><label>¿La escuela adopta Áreas Verdes?</label></td>
+          <td>&nbsp;</td>
+          <td width="49%" align="justify"><label>¿La institución educativa promueve el cuidado de la salud en la comunidad escolar?</label></td>
+        </tr>
+        <tr>
+          <td align="center">
+            <label>
+              SI <%= f.radio_button :adopta_areas_verdes, "SI", :onclick => "enable_disable_desc('entorno_adopta_areas_verdes_si', 'entorno_adopta_areas_verdes_no', 'entorno_adopta_areas_verdes_desc');"%>&nbsp;&nbsp;
+              NO <%= f.radio_button :adopta_areas_verdes, "NO", :onclick => "enable_disable_desc('entorno_adopta_areas_verdes_si', 'entorno_adopta_areas_verdes_no', 'entorno_adopta_areas_verdes_desc');"%>
+            </label>
+            <%=f.text_area :adopta_areas_verdes_desc, :placeholder => "Especifique...", :disabled => true%>
+          </td>
+          <td>&nbsp;</td>
+          <td align="center">
+            <label>
+              SI <%= f.radio_button :promueve_cuidado_salud, "SI", :onclick => "enable_disable_desc('entorno_promueve_cuidado_salud_si', 'entorno_promueve_cuidado_salud_no', 'entorno_promueve_cuidado_salud_desc');"%>&nbsp;&nbsp;
+              NO <%= f.radio_button :promueve_cuidado_salud, "NO", :onclick => "enable_disable_desc('entorno_promueve_cuidado_salud_si', 'entorno_promueve_cuidado_salud_no', 'entorno_promueve_cuidado_salud_desc');"%>
+            </label>
+            <%= f.text_area :promueve_cuidado_salud_desc, :placeholder => "Especifique...", :disabled => true%>
+          </td>
+        </tr>
+        <tr>
+        <td colspan="3">&nbsp;</td>
+        </tr>
+        <tr>
+          <td width="49%" align="justify"><label>¿La escuela promueve la activavión de la cartilla.?</label></td>
+          <td>&nbsp;</td>
+          <td width="49%" align="justify"><label>¿La escuela propicia la participación del Sector Salud en temas relacionados al cuidado de la salud.?</label></td>
+        </tr>
+        <tr>
+          <td align="center">
+            <label>
+              SI <%= f.radio_button :promueve_cuidado_salud, "SI", :onclick => "enable_disable_desc('entorno_promueve_cuidado_salud_si', 'entorno_promueve_cuidado_salud_no', 'entorno_promueve_cuidado_salud_desc');"%>&nbsp;&nbsp;
+              NO <%= f.radio_button :promueve_cuidado_salud, "NO", :onclick => "enable_disable_desc('entorno_promueve_cuidado_salud_si', 'entorno_promueve_cuidado_salud_no', 'entorno_promueve_cuidado_salud_desc');"%>
+            </label>
+          </td>
+          <td>&nbsp;</td>
+            <td><%=f.select :participacion_sector_salud, ["HIGIENE PERSONAL", "ALIMENTACIÓN", "EDUCACIÓN SEXUAL Y REPRODUCTIVA", "DROGADICCIÓN", "BULLYNG"], {:include_blank => ":: SELECCIONA UNA OPCIÓN"}, {:disabled => false} %></td>
+        </tr>
+        <tr>
+          <td colspan="3">&nbsp;</td>
+        </tr>
+        <tr>
+          <td width="49%" align="justify"><label>¿La escuela promueve la activación física en la comunidad educativa.?</label></td>
+          <td>&nbsp;</td>
+          <td width="49%" align="justify"><label>¿Cual es el tiempo destinado para la activación física escolar.?</label></td>
+        </tr>
+        <tr>
+          <td align="center">
+            <label>
+              SI <%= f.radio_button :promueve_activacion_fisica, "SI", :onclick => "enable_disable_desc('entorno_promueve_activacion_fisica_si', 'entorno_promueve_activacion_fisica_no', 'entorno_tiempo_activacion_fisica');"%>&nbsp;&nbsp;
+              NO <%= f.radio_button :promueve_activacion_fisica, "NO", :onclick => "enable_disable_desc('entorno_promueve_activacion_fisica_si', 'entorno_promueve_activacion_fisica_no', 'entorno_tiempo_activacion_fisica');"%>
+            </label>
+          </td>
+          <td>&nbsp;</td>
+            <td><%= f.text_area :tiempo_activacion_fisica, :placeholder => "Especifique...", :disabled => true %></td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td align="right">
+      <table>
+        <tr>
+          <td>
+            <input title="guardar y regresar" alt=" Guardar y regresar a la sección anterior " type="image"  src="/images/botones/btn_guardar.png" width="150" height="40" style="margin-left:90px;"/>
+          </td>
+          <td>
+            <%= link_to image_tag("botones/btn_regresar.png", :width => 170, :height=>"40", :border =>0, :style => "margin-left:90px;" ) , :controller => diagnosticos_path, :id => @diagnostico.id%>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<% end %>
+
+<script type="text/javascript">
+enable_disable_desc('entorno_areas_verdes_esc_si', 'entorno_areas_verdes_esc_no', 'entorno_areas_verdes_esc_desc');
+enable_disable_desc('entorno_cuidado_preserv_reforest_si', 'entorno_cuidado_preserv_reforest_no', 'entorno_cuidado_preserv_reforest_desc');
+enable_disable_desc('entorno_adopta_areas_verdes_si', 'entorno_adopta_areas_verdes_no', 'entorno_adopta_areas_verdes_desc');
+enable_disable_desc('entorno_promueve_cuidado_salud_si', 'entorno_promueve_cuidado_salud_no', 'entorno_promueve_cuidado_salud_desc');
+enable_disable_desc('entorno_promueve_activacion_fisica_si', 'entorno_promueve_activacion_fisica_no', 'entorno_tiempo_activacion_fisica');
+</script>
