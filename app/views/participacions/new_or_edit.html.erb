@@ -1,0 +1,101 @@
+<% form_for :participacion, @participacion, :url => { :action => "save", :id => @participacion, :diagnostico => @diagnostico.id }, :html => {:class => "formee"} do |f| -%>
+<table width="100%" border="0" align="center" cellpadding="2" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
+  <tr class="titulo">
+    <td align="center"><h4>SECCIÓN 5: PARTICIPACIÓN CIUDADANA</h4></td>
+  </tr>
+  <tr align="center">
+    <td align="center">
+      <table width="100%" border="0" cellpadding="4" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
+        <tr>
+          <td width="49%" align="justify"><label>¿En la comunidad existe el apoyo de proyectos productivos por parte del gobierno del estado.?</label></td>
+          <td>&nbsp;</td>
+          <td width="49%" align="justify"><label>¿Los padres de familia se involucran en actividades comunitarias. (Reforestación campañas de descacharramiento, campañas de salud).?</label></td>
+        </tr>
+        <tr>
+          <td align="center">
+            <label>
+              SI <%= f.radio_button :apoyo_proy_product, "SI", :onclick => "enable_disable_desc('participacion_apoyo_proy_product_si', 'participacion_apoyo_proy_product_no', 'participacion_apoyo_proy_product_desc');"%>&nbsp;&nbsp;
+              NO <%= f.radio_button :apoyo_proy_product, "NO", :onclick => "enable_disable_desc('participacion_apoyo_proy_product_si', 'participacion_apoyo_proy_product_no', 'participacion_apoyo_proy_product_desc');"%>
+            </label>
+            <%= f.text_area :apoyo_proy_product_desc, :placeholder => "Especifique...", :disabled => true %>
+          </td>
+          <td>&nbsp;</td>
+          <td align="center">
+            <label>
+              SI <%= f.radio_button :familia_involucran_actividades, "SI", :onclick => "enable_disable_desc('participacion_familia_involucran_actividades_si', 'participacion_familia_involucran_actividades_no', 'participacion_familia_involucran_actividades_desc');"%>&nbsp;&nbsp;
+              NO <%= f.radio_button :familia_involucran_actividades, "NO", :onclick => "enable_disable_desc('participacion_familia_involucran_actividades_si', 'participacion_familia_involucran_actividades_no', 'participacion_familia_involucran_actividades_desc');"%>
+            </label>
+            <%= f.text_area :familia_involucran_actividades_desc, :placeholder => "Especifique...", :disabled => true %>
+          </td>
+        </tr>
+        <tr>
+        <td colspan="3">&nbsp;</td>
+        </tr>
+        <tr>
+          <td width="49%" align="justify"><label>¿La escuela promueve la participación colectiva en proyectos sustentables que beneficien la comunidad.?</label></td>
+          <td>&nbsp;</td>
+          <td width="49%" align="justify"><label>¿La escuela organiza grupo de padres de familia, para capacitarlos en temas de salud y medio ambiente?</label></td>
+        </tr>
+        <tr>
+          <td align="center">
+            <label>
+              SI <%= f.radio_button :esc_participa_proy, "SI", :onclick => "enable_disable_desc('participacion_esc_participa_proy_si', 'participacion_esc_participa_proy_no', 'participacion_esc_participa_proy_desc');"%>&nbsp;&nbsp;
+              NO <%= f.radio_button :esc_participa_proy, "NO", :onclick => "enable_disable_desc('participacion_esc_participa_proy_si', 'participacion_esc_participa_proy_no', 'participacion_esc_participa_proy_desc');"%>
+            </label>
+            <%= f.text_area :esc_participa_proy_desc, :placeholder => "Especifique...", :disabled => true %>
+          </td>
+          <td>&nbsp;</td>
+          <td align="center">
+            <label>
+              SI <%= f.radio_button :esc_capacita_salud_ma, "SI", :onclick => "enable_disable_desc('participacion_esc_capacita_salud_ma_si', 'participacion_esc_capacita_salud_ma_no', 'participacion_esc_capacita_salud_ma_desc');"%>&nbsp;&nbsp;
+              NO <%= f.radio_button :esc_capacita_salud_ma, "NO", :onclick => "enable_disable_desc('participacion_esc_capacita_salud_ma_si', 'participacion_esc_capacita_salud_ma_no', 'participacion_esc_capacita_salud_ma_desc');"%>
+            </label>
+            <%= f.text_area :esc_capacita_salud_ma_desc, :placeholder => "Especifique...", :disabled => true %>
+          </td>
+        </tr>
+        <tr>
+        <td colspan="3">&nbsp;</td>
+        </tr>
+        <tr>
+          <td width="49%" align="justify"><label>¿Los padres de familia participan activa y responsablemente en proyectos que beneficien a la escuela.?</label></td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td align="center">
+            <label>
+              SI <%= f.radio_button :padres_participan_proy, "SI", :onclick => "enable_disable_desc('participacion_padres_participan_proy_si', 'participacion_padres_participan_proy_no', 'participacion_padres_participan_proy_desc');"%>&nbsp;&nbsp;
+              NO <%= f.radio_button :padres_participan_proy, "NO", :onclick => "enable_disable_desc('participacion_padres_participan_proy_si', 'participacion_padres_participan_proy_no', 'participacion_padres_participan_proy_desc');"%>
+            </label>
+            <%= f.text_area :padres_participan_proy_desc, :placeholder => "Especifique...", :disabled => true %>
+          </td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td align="right">
+      <table>
+        <tr>
+          <td>
+            <input title="guardar y regresar" alt=" Guardar y regresar a la sección anterior " type="image"  src="/images/botones/btn_guardar.png" width="150" height="40" style="margin-left:90px;"/>
+          </td>
+          <td>
+            <%= link_to image_tag("botones/btn_regresar.png", :width => 170, :height=>"40", :border =>0, :style => "margin-left:90px;" ) , :controller => diagnosticos_path, :id => @diagnostico.id%>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<% end %>
+
+<script type="text/javascript">
+enable_disable_desc('participacion_apoyo_proy_product_si', 'participacion_apoyo_proy_product_no', 'participacion_apoyo_proy_product_desc');
+enable_disable_desc('participacion_familia_involucran_actividades_si', 'participacion_familia_involucran_actividades_no', 'participacion_familia_involucran_actividades_desc');
+enable_disable_desc('participacion_esc_participa_proy_si', 'participacion_esc_participa_proy_no', 'participacion_esc_participa_proy_desc');
+enable_disable_desc('participacion_esc_capacita_salud_ma_si', 'participacion_esc_capacita_salud_ma_no', 'participacion_esc_capacita_salud_ma_desc');
+enable_disable_desc('participacion_padres_participan_proy_si', 'participacion_padres_participan_proy_no', 'participacion_padres_participan_proy_desc');
+</script>
