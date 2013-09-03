@@ -66,7 +66,7 @@ class CreateHuellas < ActiveRecord::Migration
       t.string :reutiliza_agua_desc, :limit => 255
 
       t.string :recip_residuos_solid, :limit => 3
-      t.integer :recip_residuos_solid_numero
+      t.integer :recip_residuos_solid_num
 
       t.string :separa_residuos_org_inorg, :limit => 3
 

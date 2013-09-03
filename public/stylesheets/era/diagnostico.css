@@ -29,6 +29,27 @@
 
 }
 
+.titulo_electronicos
+{
+    text-align: center;
+    font-family: helvetica;
+    font-size: 16px;
+    /*font-weight:bold;*/
+    color: navy;
+    /*background: #99CCFF; */
+    background-image: url(/images/era/bar_sub.png);
+}
+
+.titulo_aguas
+{
+    text-align: center;
+    font-family: helvetica;
+    font-size: 16px;
+    color: white;
+    background: navy;
+}
+
+
 
 .contenidodiagnostico {
     border: 0px solid #39F;
