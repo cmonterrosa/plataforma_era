@@ -4,4 +4,5 @@ class Diagnostico < ActiveRecord::Base
    has_one :entorno
    has_one :consumo
    has_one :participacion
+   has_one :huella
 end

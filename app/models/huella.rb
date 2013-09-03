@@ -1,3 +1,3 @@
 class Huella < ActiveRecord::Base
-  has_many :
+  belongs_to :diagnostico
 end

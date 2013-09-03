@@ -1,0 +1,314 @@
+<% form_for :huella, @huella, :url => { :action => "save", :id => @huella, :diagnostico => @diagnostico.id }, :html => {:class => "formee"} do |f| -%>
+<table width="100%" border="0" align="center" cellpadding="2" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
+  <tr class="titulo">
+    <td align="center"><h4>EJE 4: HUELLA ECOLÓGICA</h4></td>
+  </tr>
+  <tr align="center">
+    <td align="center">
+      <table width="100%" border="0" cellpadding="4" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
+        <tr>
+          <td colspan="3" align="center"><label>¿La escuela da mantenimiento correctivo y preventivo a las instalaciones eléctricas, hidráulicas y de gas?</label></td>
+        </tr>
+        <tr>
+          <td align="center" colspan="3">
+            <label>
+              SI <%= f.radio_button :mant_instalaciones, "SI"%>&nbsp;&nbsp;
+              NO <%= f.radio_button :mant_instalaciones, "NO"%>
+            </label>
+          </td>
+        </tr>
+
+        <tr>
+          <td colspan="3">&nbsp;</td>
+        </tr>
+
+        <!-- NUEVO RENGLON -->
+        <tr>
+          <td colspan="3" align="justify"><label>¿La escuela cuenta con equipos eléctricos y electrónicos para el desempeño de sus actividades administrativas y escolares?</label></td>
+        </tr>
+
+        <!-- computadoras -->
+        <tr>
+          <th ROWSPAN=2 BGCOLOR="#99CCFF">COMPUTADORAS</th>
+          <td>CUANTAS:</td>
+          <td><%=f.select :computadoras_num, (0..99), {}, :onchange => "validate_exists(this, 'huella_computadoras_hrs_diarias');"%></td>
+          
+        </tr>
+
+        <tr>
+          <td>HORAS AL DIA:</td>
+          <td><%=f.select :computadoras_hrs_diarias, (0..24)%></td>
+        </tr>
+
+        <tr>
+          <td colspan="3">&nbsp;</td>
+        </tr>
+
+         <!-- impresoras -->
+        <tr>
+          <th rowspan="2" class="titulo_electronicos">IMPRESORAS</th>
+          <td>CUANTAS:</td>
+          <td><%=f.select :impresoras_num, (0..99)%></td>
+
+        </tr>
+
+        <tr>
+          <td>HORAS AL DIA:</td>
+          <td><%=f.select :impresoras_hrs_diarias, (0..24)%></td>
+        </tr>
+
+        <tr>
+          <td colspan="3">&nbsp;</td>
+        </tr>
+
+        <!-- Proyectores -->
+        <tr>
+          <th rowspan="2" class="titulo_electronicos">PROYECTORES</th>
+          <td>CUANTOS:</td>
+          <td><%=f.select :proyectores_num, (0..99)%></td>
+
+        </tr>
+
+        <tr>
+          <td>HORAS AL DIA:</td>
+          <td><%=f.select :proyectores_hrs_diarias, (0..24)%></td>
+        </tr>
+
+        <tr>
+          <td colspan="3">&nbsp;</td>
+        </tr>
+
+        <!-- Reguladores -->
+        <tr>
+          <th rowspan="2" class="titulo_electronicos">REGULADORES</th>
+          <td>CUANTOS:</td>
+          <td><%=f.select :reguladores_num, (0..99)%></td>
+
+        </tr>
+
+        <tr>
+          <td>HORAS AL DIA:</td>
+          <td><%=f.select :reguladores_hrs_diarias, (0..24)%></td>
+        </tr>
+
+        <tr>
+          <td colspan="3">&nbsp;</td>
+        </tr>
+
+        <!-- VENTILADORES -->
+        <tr>
+          <th rowspan="2" class="titulo_electronicos">VENTILADORES</th>
+          <td>CUANTOS:</td>
+          <td><%=f.select :ventiladores_num, (0..99)%></td>
+
+        </tr>
+
+        <tr>
+          <td>HORAS AL DIA:</td>
+          <td><%=f.select :ventiladores_hrs_diarias, (0..24)%></td>
+        </tr>
+
+        <tr>
+          <td colspan="3">&nbsp;</td>
+        </tr>
+
+        <!-- AIRE ACONDICIONADO -->
+        <tr>
+          <th rowspan="2" class="titulo_electronicos">AIRES ACONDICIONADOS</th>
+          <td>CUANTOS:</td>
+          <td><%=f.select :climas_num, (0..99)%></td>
+
+        </tr>
+
+        <tr>
+          <td>HORAS AL DIA:</td>
+          <td><%=f.select :climas_hrs_diarias, (0..24)%></td>
+        </tr>
+
+        <tr>
+          <td colspan="3">&nbsp;</td>
+        </tr>
+
+
+        <!-- ENFRIADORES -->
+        <tr>
+          <th rowspan="2" class="titulo_electronicos">ENFRIADORES</th>
+          <td>CUANTOS:</td>
+          <td><%=f.select :enfriadores_num, (0..99)%></td>
+
+        </tr>
+
+        <tr>
+          <td>HORAS AL DIA:</td>
+          <td><%=f.select :enfriadores_hrs_diarias, (0..24)%></td>
+        </tr>
+
+        <tr>
+          <td colspan="3">&nbsp;</td>
+        </tr>
+
+        <!-- CAFETERAS -->
+        <tr>
+          <th rowspan="2" class="titulo_electronicos">CAFETERAS</th>
+          <td>CUANTOS:</td>
+          <td><%=f.select :cafeteras_num, (0..99)%></td>
+
+        </tr>
+
+        <tr>
+          <td>HORAS AL DIA:</td>
+          <td><%=f.select :cafeteras_hrs_diarias, (0..24)%></td>
+        </tr>
+
+        <tr>
+          <td colspan="3">&nbsp;</td>
+        </tr>
+
+        <!-- REFRIGERADORES -->
+        <tr>
+          <th rowspan="2" class="titulo_electronicos">REFRIGERADORES</th>
+          <td>CUANTOS:</td>
+          <td><%=f.select :refrigeradores_num, (0..99)%></td>
+
+        </tr>
+
+        <tr>
+          <td>HORAS AL DIA:</td>
+          <td><%=f.select :refrigeradores_hrs_diarias, (0..24)%></td>
+        </tr>
+
+        <tr>
+          <td colspan="3">&nbsp;</td>
+        </tr>
+
+        <!-- BOMBA DE AGUA -->
+        <tr>
+          <th rowspan="2" class="titulo_electronicos">BOMBAS DE AGUA</th>
+          <td>CUANTOS:</td>
+          <td><%=f.select :bombas_agua_num, (0..99)%></td>
+
+        </tr>
+
+        <tr>
+          <td>HORAS AL DIA:</td>
+          <td><%=f.select :bombas_agua_hrs_diarias, (0..24)%></td>
+        </tr>
+
+        <tr>
+          <td colspan="3">&nbsp;</td>
+        </tr>
+
+         <!-- APARATOS DE SONIDO -->
+        <tr>
+          <th rowspan="2" class="titulo_electronicos">APARATOS DE SONIDO</th>
+          <td>CUANTOS:</td>
+          <td><%=f.select :aparatos_sonido_num, (0..99)%></td>
+
+        </tr>
+
+        <tr>
+          <td>HORAS AL DIA:</td>
+          <td><%=f.select :aparatos_sonido_hrs_diarias, (0..24)%></td>
+        </tr>
+
+        <tr>
+          <td colspan="3">&nbsp;</td>
+        </tr>
+
+
+
+        
+
+        <tr>
+          <td align="center">
+            <%#*<label>%>
+              <%#*SI <%= f.radio_button :adopta_areas_verdes, "SI", :onclick => "enable_disable_desc('entorno_adopta_areas_verdes_si', 'entorno_adopta_areas_verdes_no', 'entorno_adopta_areas_verdes_desc');"%>&nbsp;&nbsp;
+              <%#*NO <%= f.radio_button :adopta_areas_verdes, "NO", :onclick => "enable_disable_desc('entorno_adopta_areas_verdes_si', 'entorno_adopta_areas_verdes_no', 'entorno_adopta_areas_verdes_desc');"%>
+            <%#*</label>%>
+            <%#=f.text_area :adopta_areas_verdes_desc, :placeholder => "Especifique...", :disabled => true%>
+          </td>
+          <td>&nbsp;</td>
+          <td align="center">
+            <%#*<label>%>
+              <%#*SI <%= f.radio_button :promueve_cuidado_salud, "SI", :onclick => "enable_disable_desc('entorno_promueve_cuidado_salud_si', 'entorno_promueve_cuidado_salud_no', 'entorno_promueve_cuidado_salud_desc');"%>&nbsp;&nbsp;
+              <%#*NO <%= f.radio_button :promueve_cuidado_salud, "NO", :onclick => "enable_disable_desc('entorno_promueve_cuidado_salud_si', 'entorno_promueve_cuidado_salud_no', 'entorno_promueve_cuidado_salud_desc');"%>
+            <%#*</label>%>
+            <%#= f.text_area :promueve_cuidado_salud_desc, :placeholder => "Especifique...", :disabled => true%>
+          </td>
+        </tr>
+
+        <tr>
+          <td colspan="3">&nbsp;</td>
+        </tr>
+
+        <tr>
+          <td width="49%" align="justify"><label>¿Desconectan los equipos y/o electrónicos cuando no son utilizados?</label></td>
+          <td>&nbsp;</td>
+          <td width="49%" align="justify"><label>¿Utilizan lámparas ahorradoras de energía?</label></td>
+        </tr>
+        <tr>
+          <td align="center">
+            <label>
+              SI <%= f.radio_button :desconectan_equipos_elec, "SI"%>&nbsp;&nbsp;
+              NO <%= f.radio_button :desconectan_equipos_elec, "NO"%>
+            </label>
+          </td>
+          <td>&nbsp;</td>
+          <td align="center">
+            <label>
+              SI <%= f.radio_button :utilizan_lamp_ahorradoras, "SI"%>&nbsp;&nbsp;
+              NO <%= f.radio_button :utilizan_lamp_ahorradoras, "NO"%>
+            </label>
+          </td>
+
+
+            <%#*<td><%=f.select :participacion_sector_salud, ["HIGIENE PERSONAL", "ALIMENTACIÓN", "EDUCACIÓN SEXUAL Y REPRODUCTIVA", "DROGADICCIÓN", "BULLYNG"], {:include_blank => ":: SELECCIONA UNA OPCIÓN"}, {:disabled => false} %></td>%>
+        </tr>
+        <tr>
+          <td colspan="3">&nbsp;</td>
+        </tr>
+        <tr>
+          <td width="49%" align="justify"><label>¿La escuela promueve la activación física en la comunidad educativa.?</label></td>
+          <td>&nbsp;</td>
+          <td width="49%" align="justify"><label>¿Cual es el tiempo destinado para la activación física escolar.?</label></td>
+        </tr>
+        <tr>
+          <td align="center">
+            <%#*<label>%>
+              <%#*SI <%= f.radio_button :promueve_activacion_fisica, "SI", :onclick => "enable_disable_desc('entorno_promueve_activacion_fisica_si', 'entorno_promueve_activacion_fisica_no', 'entorno_tiempo_activacion_fisica');"%>&nbsp;&nbsp;
+              <%#*NO <%= f.radio_button :promueve_activacion_fisica, "NO", :onclick => "enable_disable_desc('entorno_promueve_activacion_fisica_si', 'entorno_promueve_activacion_fisica_no', 'entorno_tiempo_activacion_fisica');"%>
+            <%#*</label>%>
+          </td>
+          <td>&nbsp;</td>
+            <%#*<td><%= f.text_area :tiempo_activacion_fisica, :placeholder => "Especifique...", :disabled => true %></td>%>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td align="right">
+      <table>
+        <tr>
+          <td>
+            <input title="guardar y regresar" alt=" Guardar y regresar a la sección anterior " type="image"  src="/images/botones/btn_guardar.png" width="150" height="40" style="margin-left:90px;"/>
+          </td>
+          <td>
+            <%= link_to image_tag("botones/btn_regresar.png", :width => 170, :height=>"40", :border =>0, :style => "margin-left:90px;" ) , :controller => diagnosticos_path, :id => @diagnostico.id%>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<% end %>
+
+<script type="text/javascript">
+
+validate_exists_initial('huella_computadoras_num', 'huella_computadoras_hrs_diarias');
+
+<%#*enable_disable_desc('entorno_areas_verdes_esc_si', 'entorno_areas_verdes_esc_no', 'entorno_areas_verdes_esc_desc');%>
+<%#*enable_disable_desc('entorno_cuidado_preserv_reforest_si', 'entorno_cuidado_preserv_reforest_no', 'entorno_cuidado_preserv_reforest_desc');%>
+<%#*enable_disable_desc('entorno_adopta_areas_verdes_si', 'entorno_adopta_areas_verdes_no', 'entorno_adopta_areas_verdes_desc');%>
+<%#*enable_disable_desc('entorno_promueve_cuidado_salud_si', 'entorno_promueve_cuidado_salud_no', 'entorno_promueve_cuidado_salud_desc');%>
+<%#*enable_disable_desc('entorno_promueve_activacion_fisica_si', 'entorno_promueve_activacion_fisica_no', 'entorno_tiempo_activacion_fisica');%>
+</script>
