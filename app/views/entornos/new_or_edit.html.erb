@@ -1,11 +1,11 @@
 <% form_for :entorno, @entorno, :url => { :action => "save", :id => @entorno, :diagnostico => @diagnostico.id }, :html => {:class => "formee"} do |f| -%>
-<table width="100%" border="0" align="center" cellpadding="2" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
-  <tr class="titulo">
-    <td align="center"><h4>SECCIÓN 2: ENTORNO SALUDABLE</h4></td>
+<table class="principal" width="100%" border="0" align="center" cellpadding="2" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
+  <tr bgcolor="#003366" style="opacity: 0.7;">
+    <td align="center"><h4>EJE 2: ENTORNO SALUDABLE</h4></td>
   </tr>
   <tr align="center">
     <td align="center">
-      <table width="100%" border="0" cellpadding="4" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
+      <table class="subprincipal" width="100%" border="0" cellpadding="4" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
         <tr>
           <td width="49%" align="justify"><label>¿Existen Áreas Verdes en la escuela.?</label></td>
           <td>&nbsp;</td>
@@ -93,15 +93,23 @@
     </td>
   </tr>
   <tr>
+    <td colspan="3">&nbsp;</td>
+  </tr>
+  <tr>
     <td align="right">
       <table>
         <tr>
           <td>
-            <input title="guardar y regresar" alt=" Guardar y regresar a la sección anterior " type="image"  src="/images/botones/btn_guardar.png" width="150" height="40" style="margin-left:90px;"/>
+            <%#*<input title="guardar y regresar" alt=" Guardar y regresar a la sección anterior " type="image"  src="/images/botones/btn_guardar.png" width="150" height="40" style="margin-left:90px;"/>%>
+            <a href="#" onclick="document.forms[0].submit();return false;" id="button4" class="buttonText"><img src="/images/formee/form-ic-success.png"/>&nbsp;&nbsp;Guardar y Regresar</a>
           </td>
           <td>
-            <%= link_to image_tag("botones/btn_regresar.png", :width => 170, :height=>"40", :border =>0, :style => "margin-left:90px;" ) , :controller => diagnosticos_path, :id => @diagnostico.id%>
+            <%#= link_to image_tag("botones/btn_regresar.png", :width => 170, :height=>"40", :border =>0, :style => "margin-left:90px;" ) , :controller => diagnosticos_path, :id => @diagnostico.id%>
+            <a href="<%= diagnosticos_path%>" id="buttonc" class="buttonText"><img src="/images/formee/form-ic-error.png"/>&nbsp;&nbsp;Regresar sin Guardar</a>
           </td>
+        </tr>
+        <tr>
+          <td colspan="2" >&nbsp;</td>
         </tr>
       </table>
     </td>

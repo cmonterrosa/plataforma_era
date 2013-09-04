@@ -27,7 +27,7 @@ function validate_exists(obj1, obj2){
 }
 
 function validate_exists_initial(obj1, obj2){
-    alert(parseInt(document.getElementById(obj1).value));
+//    alert(parseInt(document.getElementById(obj1).value));
      if(parseInt(document.getElementById(obj1).value) > 0)
      {
        document.getElementById(obj2).disabled = false;

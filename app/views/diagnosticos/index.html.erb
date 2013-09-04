@@ -1,66 +1,88 @@
 <table>
-     <tr>
-        <td>&nbsp;</td>
-        <td colspan="3"><img src="/images/era/space.png" alt="" width="10" height="10" /></td>
+<tr>
+  <td colspan="3"><img src="/images/era/btns_cert/tit_4.png" width="299" height="43" /></td>
+</tr>
+<tr>
+  <td colspan="3"><img src="/images/era/space.png" alt="" width="10" height="10" /></td>
+</tr>
+<tr align="center" >
+  <td colspan="3">
+    <table class="subprincipal" cellspacing="5" width="80%" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
+      <tr class="tdiagnostico">
+        <td><label>El Diágnostico tiene por objeto propiciar la reflexión sobre las actividades que está desarrollando la  escuela y las que podría realizar. Hacer el diagnóstico de manera cuidadosa le permitirá encontrar con mayor facilidad las oportunidades de mejora  y establecer metas en el Proyecto  Ambiental.</label></td>
       </tr>
-      <tr>
-        <td colspan="3"><img src="/images/era/btns_cert/tit_4.png" width="299" height="43" /></td>
+      <tr class="tdiagnostico">
+        <td>
+          <label>RECOMENDACIONES:</label>
+        </td>
       </tr>
-      <tr>
-        <td colspan="3"><img src="/images/era/space.png" alt="" width="10" height="10" /></td>
+      <tr class="tdiagnostico" >
+        <td>
+          <label>Responder a todas las preguntas y apartados.</label>
+          <label>Al finalizar una captura siempre dar click en el botón guardar antes de oprimir el botón siguiente.</label>
+        </td>
       </tr>
-      <tr>
-        <td colspan="3" align="center">&nbsp;</td>
-      </tr>
-      <tr>
-        <td colspan="3">&nbsp;</td>
-      </tr>
-      <tr>
-        <td colspan="3">&nbsp;</td>
-      </tr>
-      <tr>
-        <td colspan="3">&nbsp;</td>
-      </tr>
-</table>
-
-
-
-  <div class="contenidodiagnostico">
-    <p>
-      El Diagnóstico tiene por objeto propiciar la reflexión sobre las actividades que está desarrollando la  escuela y las que podría realizar. Hacer el diagnóstico de manera cuidadosa le permitirá encontrar con mayor facilidad las oportunidades de mejora  y establecer metas en el Proyecto  Ambiental.
-    </p>
-  </div>
-
-   <div class="subtitulodiagnostico">
-    <h5>RECOMENDACIONES</h5>
-  </div>
-
-  <div class="contenidodiagnostico">
-    <p>
-Responder a todas las preguntas y apartados.
-    </p>
-    <p>
-      Al finalizar una captura siempre dar click en el botón guardar antes de oprimir el botón siguiente.
-    </p>
-  </div>
-
-
-
-
-  <!-- Si no existe el diagnostico creado -->
-
-  <%unless Diagnostico.find_by_escuela_id(Escuela.find_by_clave(current_user.login.upcase))%>
-    <div class="formee" style="margin-left:2cm;">
-     <%=button_to "INICIAR DIAGNOSTICO", :action => "new_or_edit"%>
+    </table>
+  </td>
+</tr>
+<tr>
+  <td colspan="3">&nbsp;</td>
+</tr>
+<!-- Si no existe el diagnostico creado -->
+<%unless Diagnostico.find_by_escuela_id(Escuela.find_by_clave(current_user.login.upcase))%>
+<tr>
+  <td colspan="3"><img src="/images/era/space.png" width="10" height="20px" /></td>
+</tr>
+<tr align="center" >
+  <td colspan="3">
+    <div class="formee">
+      <%=button_to "INICIAR DIAGNOSTICO", :action => "new_or_edit"%>
     </div>
-  <%end%>
-
-  
-  <%if @diagnostico = Diagnostico.find_by_escuela_id(Escuela.find_by_clave(current_user.login.upcase))%>
-  <!-- menu -->
-  <%= render :partial => "menu"%>
-
-  <h5><%=link_to "COMPETENCIAS", :controller => "competencias", :action => "new_or_edit", :id => @diagnostico %>   |   <%=link_to "ENTORNO SALUDABLES", :controller => "competencias", :action => "new_or_edit"%> |   <%=link_to "HUELLA ECOLOGICA", :controller => "competencias", :action => "new_or_edit"%> </h5>
-
+  </td>
+</tr>
+<tr>
+  <td colspan="3"><img src="/images/era/space.png" width="10" height="200px" /></td>
+</tr>
 <%end%>
-
+<tr align="center" >
+  <td>
+<%if @diagnostico = Diagnostico.find_by_escuela_id(Escuela.find_by_clave(current_user.login.upcase))%>
+  <table border="0" cellpadding="0" cellspacing="0" >
+    <tr align="center" >
+      <td><a href="/competencias/new_or_edit/<%=@diagnostico.id%>" type="image" id="button5" class="buttonText"><img src="/images/era/iconos/4.png" alt="Desarrollo de Competencias" onmouseover="this.src='/images/era/iconos/4a.png'" onmouseout="this.src='/images/era/iconos/4.png'"/>Desarrollo&nbsp;de&nbsp;Competencias</a></td>
+      <td>&nbsp;</td>
+      <%if @diagnostico.competencia%>
+      <td><a href="/entornos/new_or_edit/<%=@diagnostico.id%>" type="image" id="button5" class="buttonText"><img src="/images/era/iconos/1.png" alt="Entorno Saludable" onmouseover="this.src='/images/era/iconos/1a.png'" onmouseout="this.src='/images/era/iconos/1.png'"/>Entorno&nbsp;Saludable</a></td>
+      <%else%>
+      <td>&nbsp;</td>
+      <%end%>
+      <td>&nbsp;</td>
+      <%if @diagnostico.entorno%>
+      <td><a href="/huellas/new_or_edit/<%=@diagnostico.id%>" type="image" id="button5" class="buttonText"><img src="/images/era/iconos/2.png" alt="Huella Ecologica" onmouseover="this.src='/images/era/iconos/2a.png'" onmouseout="this.src='/images/era/iconos/2.png'"/>&nbsp;Huella&nbsp;Ecológica&nbsp;</a></td>
+      <%else%>
+      <td>&nbsp;</td>
+      <%end%>
+    </tr>
+    <tr>
+      <td colspan="5"><img src="/images/era/space.png" width="10px" height="30px" /></td>
+    </tr>
+    <tr align="center">
+      <%if @diagnostico.huella%>
+      <td><a href="/consumos/new_or_edit/<%=@diagnostico.id%>" type="image" id="button5" class="buttonText"><img src="/images/era/iconos/3.png" alt="Consumo Saludable" onmouseover="this.src='/images/era/iconos/3a.png'" onmouseout="this.src='/images/era/iconos/3.png'"/>Consumo&nbsp;Saludable&nbsp;Responsable</a></td>
+      <%else%>
+      <td>&nbsp;</td>
+      <%end%>
+      <td>&nbsp;</td>
+      <%if @diagnostico.consumo%>
+      <td><a href="/participacions/new_or_edit/<%=@diagnostico.id%>" type="image" id="button5" class="buttonText"><img src="/images/era/iconos/5.png" alt="Participación Ciudadana" onmouseover="this.src='/images/era/iconos/5a.png'" onmouseout="this.src='/images/era/iconos/5.png'"/>Participación&nbsp;Ciudadana</a></td>
+      <%else%>
+      <td>&nbsp;</td>
+      <%end%>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+    </tr>
+  </table>   
+<%end%>
+  </td>
+</tr>
+</table>

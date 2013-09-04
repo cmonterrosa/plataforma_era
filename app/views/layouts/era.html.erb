@@ -29,7 +29,7 @@ body {
 <%= stylesheet_link_tag "era/diagnostico.css"%>
 
 <!-- para menu -->
-<link href='http://fonts.googleapis.com/css?family=Terminal+Dosis' rel='stylesheet' type='text/css' />
+<%#*<link href='http://fonts.googleapis.com/css?family=Terminal+Dosis' rel='stylesheet' type='text/css' />%>
 
 <style type="text/css">
 /* fix  ff bugs */
@@ -172,10 +172,10 @@ a:active {
                    <td width="34" align="center"><img src="/images/era/iconos/ico_arbol.png" alt="1" width="34" height="17" /></td>
                    <td width="180" class="Txt_arbol"><a href="/home" class="Txt_arbol"><%=h (@esc = Escuela.find_by_clave(current_user.login)) ? @esc.nombre : nil%></a></td>
                    <td width="34" align="center"><img src="/images/era/iconos/ico_arbol.png" alt="1" width="34" height="17" /></td>
-                   <td width="120" class="Txt_arbol"><a href="/home" class="Txt_arbol"><%=link_to "Cerrar Sesión", :action => "destroy", :controller => "sessions"%></a></td>
+                   <td width="120" class="Txt_arbol"><a href="/home" class="Txt_arbol"><%=link_to "Cerrar Sesión", {:action => "destroy", :controller => "sessions"}, :style => "color:darkgreen; text-decoration: none;"%></a></td>
               <%else%>
                    <td width="34" align="center"><img src="/images/era/iconos/ico_arbol.png" alt="1" width="34" height="17" /></td>
-                   <td width="120" class="Txt_arbol"><a href="/home" class="Txt_arbol"><%=link_to "Iniciar Sesión", :action => "new", :controller => "sessions"%></a></td>
+                   <td width="120" class="Txt_arbol"><a href="/home" class="Txt_arbol"><%=link_to "Iniciar Sesión", {:action => "new", :controller => "sessions"}, :style => "color:darkgreen; text-decoration: none;"%></a></td>
               <%end%>
 
             <td>&nbsp;</td>
@@ -253,44 +253,44 @@ a:active {
 
 
       <!-- termina contenido principal -->
+      <%#*<tr>%>
+        <%#*<td colspan="3">&nbsp;</td>%>
+      <%#*</tr>%>
+      <%#*<tr>%>
+        <%#*<td colspan="3">&nbsp;</td>%>
+      <%#*</tr>%>
+      <%#*<tr>%>
+        <%#*<td colspan="3">&nbsp;</td>%>
+      <%#*</tr>%>
+      <%#*<tr>%>
+        <%#*<td colspan="3">&nbsp;</td>%>
+      <%#*</tr>%>
+      <%#*<tr>%>
+        <%#*<td colspan="3">&nbsp;</td>%>
+      <%#*</tr>%>
+      <%#*<tr>%>
+        <%#*<td colspan="3">&nbsp;</td>%>
+      <%#*</tr>%>
+      <%#*<tr>%>
+        <%#*<td colspan="3">&nbsp;</td>%>
+      <%#*</tr>%>
+      <%#*<tr>%>
+        <%#*<td colspan="3">&nbsp;</td>%>
+      <%#*</tr>%>
+      <%#*<tr>%>
+        <%#*<td colspan="3">&nbsp;</td>%>
+      <%#*</tr>%>
+      <%#*<tr>%>
+        <%#*<td colspan="3">&nbsp;</td>%>
+      <%#*</tr>%>
+      <%#*<tr>%>
+        <%#*<td colspan="3">&nbsp;</td>%>
+      <%#*</tr>%>
+      <%#*<tr>%>
+        <%#*<td colspan="3">&nbsp;</td>%>
+      <%#*</tr>%>
       <tr>
-        <td colspan="3">&nbsp;</td>
-      </tr>
-      <tr>
-        <td colspan="3">&nbsp;</td>
-      </tr>
-      <tr>
-        <td colspan="3">&nbsp;</td>
-      </tr>
-      <tr>
-        <td colspan="3">&nbsp;</td>
-      </tr>
-      <tr>
-        <td colspan="3">&nbsp;</td>
-      </tr>
-      <tr>
-        <td colspan="3">&nbsp;</td>
-      </tr>
-      <tr>
-        <td colspan="3">&nbsp;</td>
-      </tr>
-      <tr>
-        <td colspan="3">&nbsp;</td>
-      </tr>
-      <tr>
-        <td colspan="3">&nbsp;</td>
-      </tr>
-      <tr>
-        <td colspan="3">&nbsp;</td>
-      </tr>
-      <tr>
-        <td colspan="3">&nbsp;</td>
-      </tr>
-      <tr>
-        <td colspan="3">&nbsp;</td>
-      </tr>
-      <tr>
-        <td colspan="3">&nbsp;</td>
+        <td colspan="3"><img src="/images/era/space.png" width="10" height="30px" /></td>
       </tr>
       <tr>
         <td colspan="3" align="center" valign="middle" class="fnd_transp"><table width="850" border="0" cellspacing="0" cellpadding="0">

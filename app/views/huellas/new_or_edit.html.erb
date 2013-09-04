@@ -1,11 +1,11 @@
 <% form_for :huella, @huella, :url => { :action => "save", :id => @huella, :diagnostico => @diagnostico.id }, :html => {:class => "formee"} do |f| -%>
-<table width="100%" border="0" align="center" cellpadding="2" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
-  <tr class="titulo">
+<table class="principal" width="100%" border="0" align="center" cellpadding="2" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
+  <tr bgcolor="#003366" style="opacity: 0.7;">
     <td align="center"><h4>EJE 4: HUELLA ECOLÓGICA</h4></td>
   </tr>
   <tr align="center">
     <td align="center">
-      <table width="100%" border="0" cellpadding="4" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
+      <table class="subprincipal" width="100%" border="0" cellpadding="4" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
         <tr>
           <td colspan="3" align="center"><label>¿La escuela da mantenimiento correctivo y preventivo a las instalaciones eléctricas, hidráulicas y de gas?</label></td>
         </tr>
@@ -267,15 +267,11 @@
         </tr>
         <tr>
           <td align="center">
-            <label>
-              <%= f.select :tipo_agua_id, TipoAgua.all.collect{|a| [a.descripcion, a.id]}%>
-            </label>
+            <%= f.select :tipo_agua_id, TipoAgua.all.collect{|a| [a.descripcion, a.id]}%>
           </td>
           <td>&nbsp;</td>
           <td align="center">
-            <label>
-              <%= f.select :potabilidad_agua_id, PotabilidadAgua.all.collect{|a| [a.descripcion, a.id]}%>
-            </label>
+            <%= f.select :potabilidad_agua_id, PotabilidadAgua.all.collect{|a| [a.descripcion, a.id]}%>
           </td>
         </tr>
 
@@ -297,7 +293,7 @@
         
         <!-- SANITARIOS -->
         <tr>
-          <th rowspan="2" class="titulo_aguas">SANITARIOS</th>
+          <th rowspan="2" class="titulo_electronicos">SANITARIOS</th>
           <td>CUANTOS:</td>
           <td><%=f.select :sanitarios_num, (0..99)%></td>
 
@@ -316,7 +312,7 @@
 
         <!-- BEBEDEROS -->
         <tr>
-          <th rowspan="2" class="titulo_aguas">BEBEDEROS</th>
+          <th rowspan="2" class="titulo_electronicos">BEBEDEROS</th>
           <td>CUANTOS:</td>
           <td><%=f.select :bebederos_num, (0..99)%></td>
 
@@ -335,7 +331,7 @@
 
         <!-- TOMAS DE AGUA -->
         <tr>
-          <th rowspan="2" class="titulo_aguas">TOMAS DE AGUA</th>
+          <th rowspan="2" class="titulo_electronicos">TOMAS DE AGUA</th>
           <td>CUANTAS:</td>
           <td><%=f.select :bebederos_num, (0..99)%></td>
 
@@ -354,7 +350,7 @@
 
         <!-- CISTERNAS -->
         <tr>
-          <th rowspan="2" class="titulo_aguas">CISTERNAS</th>
+          <th rowspan="2" class="titulo_electronicos">CISTERNAS</th>
           <td>CUANTAS:</td>
           <td><%=f.select :cisternas_num, (0..99)%></td>
 
@@ -407,10 +403,10 @@
         <tr>
           <td align="center">
             <label>
-              SI <%= f.radio_button :recip_residuos_solid, "SI", :onclick => "enable_how_many(this,huella_recip_residuos_solid_num);"%>&nbsp;&nbsp;
-              NO <%= f.radio_button :recip_residuos_solid, "NO", :onclick => "enable_how_many(huella_recip_residuos_solid_no,huella_recip_residuos_solid_num);"%>
+              SI <%= f.radio_button :recip_residuos_solid, "SI", :onclick => "enable_disable_desc('huella_recip_residuos_solid_si', 'huella_recip_residuos_solid_no', 'huella_recip_residuos_solid_num');"%>&nbsp;&nbsp;
+              NO <%= f.radio_button :recip_residuos_solid, "NO", :onclick => "enable_disable_desc('huella_recip_residuos_solid_si', 'huella_recip_residuos_solid_no', 'huella_recip_residuos_solid_num');"%>
             </label>
-            <strong>¿Cuantos?</strong> &nbsp;&nbsp;<%=f.select :recip_residuos_solid_num, (0..99)%>
+            <label>¿Cuantos?</label><%=f.select :recip_residuos_solid_num, (0..99), {}, :disabled => true%>
           </td>
           <td>&nbsp;</td>
           <td align="center">
@@ -441,10 +437,10 @@
           <td>&nbsp;</td>
           <td align="center">
             <label>
-              SI <%= f.radio_button :cuenta_recipientes_org_inorg, "SI"%>&nbsp;&nbsp;
-              NO <%= f.radio_button :cuenta_recipientes_org_inorg, "NO"%>
+              SI <%= f.radio_button :cuenta_recipientes_org_inorg, "SI", :onclick => "enable_disable_desc('huella_cuenta_recipientes_org_inorg_si', 'huella_cuenta_recipientes_org_inorg_no', 'huella_cuenta_recipientes_org_inorg_num');"%>&nbsp;&nbsp;
+              NO <%= f.radio_button :cuenta_recipientes_org_inorg, "NO", :onclick => "enable_disable_desc('huella_cuenta_recipientes_org_inorg_si', 'huella_cuenta_recipientes_org_inorg_no', 'huella_cuenta_recipientes_org_inorg_num');"%>
             </label>
-             <strong>¿Cuantos?</strong> &nbsp;&nbsp;<%=f.select :cuenta_recipientes_org_inorg_num, (0..99)%>
+             <label>¿Cuantos?</label><%=f.select :cuenta_recipientes_org_inorg_num, (0..99), {}, :disabled => true%>
           </td>
         </tr>
 
@@ -461,16 +457,14 @@
         <tr>
           <td align="center">
             <label>
-              SI <%= f.radio_button :aparatos_pilas, "SI"%>&nbsp;&nbsp;
-              NO <%= f.radio_button :aparatos_pilas, "NO"%>
+              SI <%= f.radio_button :aparatos_pilas, "SI", :onclick => "enable_disable_desc('huella_aparatos_pilas_si', 'huella_aparatos_pilas_no', 'huella_aparatos_pilas_num');"%>&nbsp;&nbsp;
+              NO <%= f.radio_button :aparatos_pilas, "NO", :onclick => "enable_disable_desc('huella_aparatos_pilas_si', 'huella_aparatos_pilas_no', 'huella_aparatos_pilas_num');"%>
             </label>
-            <strong>¿Cuantos?</strong> &nbsp;&nbsp;<%=f.select :aparatos_pilas_num, (0..99)%>
+            <label>¿Cuantos?</label> <%=f.select :aparatos_pilas_num, (0..99), {}, :disabled => true %>
           </td>
           <td>&nbsp;</td>
           <td align="center">
-            <label>
-              <%= f.text_area :meca_elim_residuos_solid, :placeholder => "Especifique..."%>
-            </label>
+            <%= f.text_area :meca_elim_residuos_solid, :placeholder => "Especifique..."%>
           </td>
         </tr>
 
@@ -485,13 +479,12 @@
         <tr>
           <td colspan="3" align="center">
             <label>
-              SI <%= f.radio_button :act_reutiliza_residuos, "SI"%>&nbsp;&nbsp;
-              NO <%= f.radio_button :act_reutiliza_residuos, "NO"%>
+              SI <%= f.radio_button :act_reutiliza_residuos, "SI", :onclick => "enable_disable_desc('huella_act_reutiliza_residuos_si', 'huella_act_reutiliza_residuos_no', 'huella_act_reutiliza_residuos_desc');"%>&nbsp;&nbsp;
+              NO <%= f.radio_button :act_reutiliza_residuos, "NO", :onclick => "enable_disable_desc('huella_act_reutiliza_residuos_si', 'huella_act_reutiliza_residuos_no', 'huella_act_reutiliza_residuos_desc');"%>
             </label>
               <%= f.text_area :act_reutiliza_residuos_desc, :placeholder => "Especifique..."%>
           </td>
         </tr>
-
         <tr>
           <td colspan="3">&nbsp;</td>
         </tr>
@@ -499,15 +492,23 @@
     </td>
   </tr>
   <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
     <td align="right">
       <table>
         <tr>
           <td>
-            <input title="guardar y regresar" alt=" Guardar y regresar a la sección anterior " type="image"  src="/images/botones/btn_guardar.png" width="150" height="40" style="margin-left:90px;"/>
+            <%#*<input title="guardar y regresar" alt=" Guardar y regresar a la sección anterior " type="image"  src="/images/botones/btn_guardar.png" width="150" height="40" style="margin-left:90px;"/>%>
+            <a href="#" onclick="document.forms[0].submit();return false;" id="button4" class="buttonText"><img src="/images/formee/form-ic-success.png"/>&nbsp;&nbsp;Guardar y Regresar</a>
           </td>
           <td>
-            <%= link_to image_tag("botones/btn_regresar.png", :width => 170, :height=>"40", :border =>0, :style => "margin-left:90px;" ) , :controller => diagnosticos_path, :id => @diagnostico.id%>
+            <%#= link_to image_tag("botones/btn_regresar.png", :width => 170, :height=>"40", :border =>0, :style => "margin-left:90px;" ) , :controller => diagnosticos_path, :id => @diagnostico.id%>
+            <a href="<%= diagnosticos_path%>" id="buttonc" class="buttonText"><img src="/images/formee/form-ic-error.png"/>&nbsp;&nbsp;Regresar sin Guardar</a>
           </td>
+        </tr>
+        <tr>
+          <td colspan="2" >&nbsp;</td>
         </tr>
       </table>
     </td>
@@ -529,10 +530,9 @@ validate_exists_initial('huella_refrigeradores_num', 'huella_refrigeradores_hrs_
 validate_exists_initial('huella_bombas_agua_num', 'huella_bombas_agua_hrs_diarias');
 validate_exists_initial('huella_aparatos_sonido_num', 'huella_aparatos_sonido_hrs_diarias');
 
+enable_disable_desc('huella_act_reutiliza_residuos_si', 'huella_act_reutiliza_residuos_no', 'huella_act_reutiliza_residuos_desc');
+enable_disable_desc('huella_aparatos_pilas_si', 'huella_aparatos_pilas_no', 'huella_aparatos_pilas_num');
+enable_disable_desc('huella_cuenta_recipientes_org_inorg_si', 'huella_cuenta_recipientes_org_inorg_no', 'huella_cuenta_recipientes_org_inorg_num');
+enable_disable_desc('huella_recip_residuos_solid_si', 'huella_recip_residuos_solid_no', 'huella_recip_residuos_solid_num');
 
-<%#*enable_disable_desc('entorno_areas_verdes_esc_si', 'entorno_areas_verdes_esc_no', 'entorno_areas_verdes_esc_desc');%>
-<%#*enable_disable_desc('entorno_cuidado_preserv_reforest_si', 'entorno_cuidado_preserv_reforest_no', 'entorno_cuidado_preserv_reforest_desc');%>
-<%#*enable_disable_desc('entorno_adopta_areas_verdes_si', 'entorno_adopta_areas_verdes_no', 'entorno_adopta_areas_verdes_desc');%>
-<%#*enable_disable_desc('entorno_promueve_cuidado_salud_si', 'entorno_promueve_cuidado_salud_no', 'entorno_promueve_cuidado_salud_desc');%>
-<%#*enable_disable_desc('entorno_promueve_activacion_fisica_si', 'entorno_promueve_activacion_fisica_no', 'entorno_tiempo_activacion_fisica');%>
 </script>
