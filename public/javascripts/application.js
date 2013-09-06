@@ -37,3 +37,25 @@ function validate_exists_initial(obj1, obj2){
        document.getElementById(obj2).disabled = true;
      }
 }
+
+function enable_disable_checkbox(obj1, obj2){
+//    alert(parseInt(document.getElementById(obj1).value));
+     if(parseInt(document.getElementById(obj1).value) > 0)
+     {
+       document.getElementById(obj2).disabled = false;
+     }
+     else
+     {
+       document.getElementById(obj2).disabled = true;
+     }
+
+function enable_disabled_checkbox(obj1, obj2, obj3){
+    combo = document.getElementById(obj1);
+    checkbox_si = document.getElementById(obj2);
+    checkbox_no = document.getElementById(obj3);
+
+    if(combo.value > 0){
+        
+    }
+}
+}

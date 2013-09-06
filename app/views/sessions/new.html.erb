@@ -2,8 +2,6 @@
 <% form_for :user, @user, :url => { :action => "create", :controller => "sessions"}, :html => {:class => "formee"} do |f| -%>
       <fieldset>
         <legend>Ingreso</legend>
-    	<div class="login">
-
            <div class="grid-4-12">
                <label>Clave de la escuela:</label>
                <!-- <input type="text" value="Escriba la clave completa" /> -->
@@ -31,7 +29,6 @@
             <div class="grid-12-12">
               <%=link_to "¿No estás registrado? ", {:action => "new", :controller => "users"}, :style => "font-size:14px;color:#003366; text-decoration: none;"%> <span style="font-size:18px;"> | </span>  <%=link_to " ¿Olvidaste tu contraseña? ", {:action => "forgot", :controller => "users"}, :style => "font-size:14px;color:#003366; text-decoration: none;"%>
             </div>
-        </div>
     </fieldset>
   <%end%>
 </div>

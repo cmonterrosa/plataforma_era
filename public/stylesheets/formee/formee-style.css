@@ -115,19 +115,23 @@ form .formee-txt:focus, .formee input[type="text"]:focus, .formee input[type="pa
 	margin:0 0 .3em 0;
 }
 .formee-msg-info {
-	background: #d1ecf7 url(/images/formee/form-ic-info.png) no-repeat 12px 23px;
+/*	background: #d1ecf7 url(/images/formee/form-ic-info.png) no-repeat 12px 23px;*/
+      background: #d1ecf7 url(/images/formee/form-ic-info.png) no-repeat 12px 7px;
 	border-color:#bcdfef;
 }
 .formee-msg-warning {
-	background: #fff6bf url(/images/formee/form-ic-warning.png) no-repeat 12px 23px;
+/*	background: #fff6bf url(/images/formee/form-ic-warning.png) no-repeat 12px 23px;*/
+      background: #fff6bf url(/images/formee/form-ic-warning.png) no-repeat 12px 7px;
 	border-color:#fceb77;
 }
 .formee-msg-error {
-	background: #fad0d0 url(/images/formee/form-ic-error.png) no-repeat 12px 23px;
+/*	background: #fad0d0 url(/images/formee/form-ic-error.png) no-repeat 12px 23px;*/
+      background: #fad0d0 url(/images/formee/form-ic-error.png) no-repeat 12px 7px;
 	border-color:#f6abab;
 }
 .formee-msg-success {
-	background: #e5f8ce url(/images/formee/form-ic-success.png) no-repeat 12px 23px;
+/*	background: #e5f8ce url(/images/formee/form-ic-success.png) no-repeat 12px 23px;*/
+      background: #e5f8ce url(/images/formee/form-ic-success.png) no-repeat 12px 7px;
 	border-color:#d0f1a6;
 }
 
@@ -229,16 +233,8 @@ a {
   text-decoration: none;
 }
 
-/*.buttonText input[type="image"]{
-  margin: 15px 10px 0 0;
-  cursor: pointer;
-  text-align: center;
-  display:inline-block;
-  border:1px solid #D4D4D4;
-}*/
-
 #button4 {
-  background: #62b548; /*url(/images/formee/form-ic-success.png) no-repeat 12px 12px;*/
+  background: #62b548;
   color: white;
   text-shadow: 0px 2px 0px rgba(0, 0, 0, 0.3);
   font-size: 18px;
@@ -258,9 +254,13 @@ a {
   border-radius: 5px;
 
   /*Shadow*/
-  -webkit-box-shadow: 0px 6px 0px rgba(0, 0, 0, 0.8);
-  -moz-box-shadow: 0px 6px 0px rgba(0, 0, 0, 0.8);
-  box-shadow: 0px 6px 0px rgba(0, 0, 0, 0.8);
+/*  -webkit-box-shadow: 0px 6px 0px rgba(0, 0, 0, 0.6);
+  -moz-box-shadow: 0px 6px 0px rgba(0, 0, 0, 0.6);
+  box-shadow: 0px 6px 0px rgba(0, 0, 0, 0.6);*/
+
+-webkit-box-shadow: 0px 6px 0px rgba(0, 90, 0, 0.8);
+-moz-box-shadow:    0px 6px 0px rgba(0, 90, 0, 0.8);
+box-shadow:         0px 6px 0px rgba(0, 90, 0, 0.8);
 
   /*Gradient*/
   background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2));
@@ -277,12 +277,10 @@ a {
   font-size: 18px;
   height: 38px;
   width: 220px;
-/*  margin: 40px 0 0 40px;*/
   margin: 0px 0 0 20px;
   overflow: hidden;
   display: block;
   text-align: center;
-/*  line-height: 58px;*/
   line-height: 45px;
 
   /*Rounded Corners*/
@@ -291,9 +289,9 @@ a {
   border-radius: 5px;
 
   /*Shadow*/
-  -webkit-box-shadow: 0px 6px 0px rgba(0, 0, 0, 0.8);
-  -moz-box-shadow: 0px 6px 0px rgba(0, 0, 0, 0.8);
-  box-shadow: 0px 6px 0px rgba(0, 0, 0, 0.8);
+  -webkit-box-shadow: 0px 6px 0px rgba(90, 0, 0, 0.8);
+  -moz-box-shadow:    0px 6px 0px rgba(90, 0, 0, 0.8);
+  box-shadow:         0px 6px 0px rgba(90, 0, 0, 0.8);
 
   /*Gradient*/
   background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2));
@@ -304,13 +302,34 @@ a {
 }
 
 
-#button4:hover, #buttonc:hover{
+#button4:hover{
   margin-top: 3px;
   text-decoration: none;
+
   /*Shadow*/
-  -webkit-box-shadow: 0px 4px 0px rgba(0, 0, 0, 0.8);
-  -moz-box-shadow: 0px 4px 0px rgba(0, 0, 0, 0.8);
-  box-shadow: 0px 4px 0px rgba(0, 0, 0, 0.8);
+/*  -webkit-box-shadow: 0px 4px 0px rgba(0, 0, 0, 0.6);
+  -moz-box-shadow: 0px 4px 0px rgba(0, 0, 0, 0.6);
+  box-shadow: 0px 4px 0px rgba(0, 0, 0, 0.6);*/
+
+  -webkit-box-shadow: 0px 3px 0px rgba(0, 130, 0, 0.8);
+  -moz-box-shadow:    0px 3px 0px rgba(0, 130, 0, 0.8);
+  box-shadow:         0px 3px 0px rgba(0, 130, 0, 0.8);
+
+  /*Gradient*/
+  background-image: -webkit-linear-gradient(bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4));
+  background-image: -moz-linear-gradient(bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4));
+  background-image: -o-linear-gradient(bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4));
+  background-image: -ms-linear-gradient(bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4));
+  background-image: linear-gradient(bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4));
+}
+
+#buttonc:hover{
+  margin-top: 3px;
+  text-decoration: none;
+
+  -webkit-box-shadow: 0px 3px 0px rgba(150, 0, 0, 0.8);
+  -moz-box-shadow:    0px 3px 0px rgba(150, 0, 0, 0.8);
+  box-shadow:         0px 3px 0px rgba(150, 0, 0, 0.8);
 
   /*Gradient*/
   background-image: -webkit-linear-gradient(bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4));
@@ -321,22 +340,16 @@ a {
 }
 
 #button5 {
-/*  background: #5393c2;  #5c5c5c;*/
-/*  color: #387031;*/
-color:  #387031;
-/*text-shadow: white 0.1em 0.1em 0.2em;*/
-text-shadow: 0 0 0.2em #FFF, 0 0 0.2em #FFF, 0 0 0.2em #FFF;
+  color:  #387031;
+  text-shadow: 0 0 0.2em #FFF, 0 0 0.2em #FFF, 0 0 0.2em #FFF;
   font-weight: bold;
-/*  text-shadow: 0px 2px 0px rgba(0, 0, 0, 0.3);*/
   font-size: 15px;
   height: auto;
   width: 250px;
-/*  margin: 40px 0 0 40px;*/
   margin: 0px 0 0 20px;
   overflow: hidden;
   display: block;
   text-align: center;
-/*  line-height: 58px;*/
   line-height: 45px;
 
   /*Rounded Corners*/
@@ -345,9 +358,9 @@ text-shadow: 0 0 0.2em #FFF, 0 0 0.2em #FFF, 0 0 0.2em #FFF;
   border-radius: 5px;
 
   /*Shadow*/
-  -webkit-box-shadow: 0px 4px 0px rgba(0, 0, 0, 0.8);
-  -moz-box-shadow: 0px 4px 0px rgba(0, 0, 0, 0.8);
-  box-shadow: 0px 4px 0px rgba(0, 0, 0, 0.8);
+  -webkit-box-shadow: 0px 4px 0px rgba(0, 0, 0, 0.6);
+  -moz-box-shadow: 0px 4px 0px rgba(0, 0, 0, 0.6);
+  box-shadow: 0px 4px 0px rgba(0, 0, 0, 0.6);
 
   /*Gradient*/
   background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2));
@@ -359,15 +372,14 @@ text-shadow: 0 0 0.2em #FFF, 0 0 0.2em #FFF, 0 0 0.2em #FFF;
 
 #button5:hover {
   color: green;
-/*  text-shadow: white 0.1em 0.1em 0.2em;*/
-text-shadow: 0 0 0.2em #FFF, 0 0 0.2em #FFF, 0 0 0.2em #FFF;
-/*  font-weight: bold;*/
+  text-shadow: 0 0 0.2em #FFF, 0 0 0.2em #FFF, 0 0 0.2em #FFF;
   margin-top: 3px;
   text-decoration: none;
+
   /*Shadow*/
-  -webkit-box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.8);
-  -moz-box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.8);
-  box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.8);
+  -webkit-box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.6);
+  -moz-box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.6);
+  box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.6);
 
   /*Gradient*/
   background-image: -webkit-linear-gradient(bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4));

@@ -143,7 +143,8 @@ a:active {
 	text-decoration: none;
 }
 -->
-</style></head>
+</style>
+</head>
 
 <body onload="MM_preloadImages('/images/era/iconos/facebook_322.png','/images/era/iconos/twitter_322.png','/images/era/iconos/skype_322.png','/images/era/iconos/youtube_322.png','/images/era/iconos/blogger_322.png','/images/era/iconos/myspace_322.png','/images/era/iconos/picasa_322.png','/images/era/btns_cert/btn_man2.png','/images/era/btns_cert/btn_reg2.png','/images/era/btns_cert/btn_que2.png','/images/era/btns_cert/btn_dia2.png','/images/era/btns_cert/btn_pro2.png','/images/era/btns_cert/btn_ava2.png','/images/era/btns_cert/btn_res2.png')">
 <table width="900" border="0" align="center" cellpadding="0" cellspacing="0">
@@ -154,192 +155,149 @@ a:active {
     <td colspan="3"><img src="/images/era/space.png" width="10" height="5" /></td>
   </tr>
   <tr>
-    <td colspan="3" valign="top" class="fnd_cert"><table width="900" border="0" cellpadding="0" cellspacing="0">
-      <tr>
-        <td colspan="3"><img src="/images/era/space.png" alt="" width="10" height="10" /></td>
+    <td colspan="3" valign="top" class="fnd_cert">
+      <table width="900" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td colspan="3"><img src="/images/era/space.png" alt="" width="10" height="10" /></td>
         </tr>
-      <tr>
-        <td colspan="3">
-        <table width="600" border="0" cellspacing="0" cellpadding="0">
-          <tr>
-            <td width="50" align="right"><img src="/images/era/iconos/ico_arbol.png" alt="2" width="34" height="17" /></td>
-            <td width="40" class="Txt_arbol"><a href="http://era.educacionchiapas.gob.mx" class="Txt_arbol">Inicio</a></td>
-            <td width="34" align="center"><img src="/images/era/iconos/ico_arbol.png" alt="1" width="34" height="17" /></td>
-            <td width="120" class="Txt_arbol"><a href="http://era.educacionchiapas.gob.mx:3000" class="Txt_arbol">Certificación ESyS</a></td>
-
-            <!-- nombre de escuela -->
-              <%if logged_in?%>
-                   <td width="34" align="center"><img src="/images/era/iconos/ico_arbol.png" alt="1" width="34" height="17" /></td>
-                   <td width="180" class="Txt_arbol"><a href="/home" class="Txt_arbol"><%=h (@esc = Escuela.find_by_clave(current_user.login)) ? @esc.nombre : nil%></a></td>
-                   <td width="34" align="center"><img src="/images/era/iconos/ico_arbol.png" alt="1" width="34" height="17" /></td>
-                   <td width="120" class="Txt_arbol"><a href="/home" class="Txt_arbol"><%=link_to "Cerrar Sesión", {:action => "destroy", :controller => "sessions"}, :style => "color:darkgreen; text-decoration: none;"%></a></td>
-              <%else%>
-                   <td width="34" align="center"><img src="/images/era/iconos/ico_arbol.png" alt="1" width="34" height="17" /></td>
-                   <td width="120" class="Txt_arbol"><a href="/home" class="Txt_arbol"><%=link_to "Iniciar Sesión", {:action => "new", :controller => "sessions"}, :style => "color:darkgreen; text-decoration: none;"%></a></td>
-              <%end%>
-
-            <td>&nbsp;</td>
-          </tr>
-        </table>
-        </td>
-        </tr>
-      <tr>
-        <td width="606">&nbsp;</td>
-        <td colspan="2" rowspan="5" align="center"><a href="<%=h "http://#{SITE_URL}"%>"><img src="/images/era/logo.png" width="282" height="154" /></a></td>
-        </tr>
-      <tr>
-        <td>&nbsp;</td>
-        </tr>
-      <tr>
-        <td>&nbsp;</td>
-        </tr>
-      <tr>
-        <td>&nbsp;</td>
-      </tr>
-      <tr>
-        <td valign="bottom"><img src="/images/era/btn_ESyS.png" width="512" height="43" /></td>
-        </tr>
-      <tr>
-        <td colspan="3"><img src="/images/era/space.png" width="10" height="10" /></td>
-        </tr>
-      <tr>
-        <td colspan="3" align="center" valign="middle" class="fnd_bar_sub"><table width="875" border="0" cellpadding="0" cellspacing="0">
-          <tr>
-            <td><a href="/home/certificacion_esys" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Image38','','/images/era/btns_cert/btn_que2.png',1)"><img src="/images/era/btns_cert/btn_que1.png" name="Image38" width="100" height="33" border="0" id="Image38" /></a></td>
-            <td><a href="/home/certificacion_manual" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Image39','','/images/era/btns_cert/btn_man2.png',1)"><img src="/images/era/btns_cert/btn_man1.png" name="Image39" width="100" height="33" border="0" id="Image39" /></a></td>
-            <td><a href="/registro" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Image32','','/images/era/btns_cert/btn_reg2.png',1)"><img src="/images/era/btns_cert/btn_reg1.png" name="Image32" width="100" height="33" border="0" id="Image32" /></a></td>
-              <td><a href="/diagnosticos" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Image32','','/images/era/btns_cert/btn_dia2.png',1)"><img src="/images/era/btns_cert/btn_dia1.png" name="Image32" width="100" height="33" border="0" id="Image32" /></a></td>
-
-            <td><img src="/images/era/space.png" name="Image34" width="100" height="33" border="0" id="Image34" /></td>
-            <td><img src="/images/era/space.png" name="Image34" width="100" height="33" border="0" id="Image34" /></td>
-          </tr>
-        </table></td>
-        </tr>
-      <%#*<tr>%>
-        <%#*<td colspan="3"><img src="/images/era/space.png" alt="" width="10" height="10" /></td>%>
-      <%#*</tr>%>
-
-      <!-- Contenido principal -->
-
-
-      <tr>
-        <td colspan="3">
-
-		
-                  <%if flash[:notice]%>
-                       <div class="formee-msg-success">
-                         	<h3>Operación realizada exitosamente:</h3>
-                                <ul>
-                                    <li><%=flash[:notice]%></li>
-                                </ul>
-                       </div>
-                  <%elsif flash[:error]%>
-                        <div class="formee-msg-error">
-                          <h3>Error:</h3>
-                             <ul>
-                                 <li><%=flash[:error]%></li>
-                             </ul>
-                        </div>
-                  <%else%>
-                    <p></p>
-                  <%end%>
-                  <!-- contenido -->
-                  <%=yield%>
-
-
-        </td>
-      </tr>
-
-
-
-      <!-- termina contenido principal -->
-      <%#*<tr>%>
-        <%#*<td colspan="3">&nbsp;</td>%>
-      <%#*</tr>%>
-      <%#*<tr>%>
-        <%#*<td colspan="3">&nbsp;</td>%>
-      <%#*</tr>%>
-      <%#*<tr>%>
-        <%#*<td colspan="3">&nbsp;</td>%>
-      <%#*</tr>%>
-      <%#*<tr>%>
-        <%#*<td colspan="3">&nbsp;</td>%>
-      <%#*</tr>%>
-      <%#*<tr>%>
-        <%#*<td colspan="3">&nbsp;</td>%>
-      <%#*</tr>%>
-      <%#*<tr>%>
-        <%#*<td colspan="3">&nbsp;</td>%>
-      <%#*</tr>%>
-      <%#*<tr>%>
-        <%#*<td colspan="3">&nbsp;</td>%>
-      <%#*</tr>%>
-      <%#*<tr>%>
-        <%#*<td colspan="3">&nbsp;</td>%>
-      <%#*</tr>%>
-      <%#*<tr>%>
-        <%#*<td colspan="3">&nbsp;</td>%>
-      <%#*</tr>%>
-      <%#*<tr>%>
-        <%#*<td colspan="3">&nbsp;</td>%>
-      <%#*</tr>%>
-      <%#*<tr>%>
-        <%#*<td colspan="3">&nbsp;</td>%>
-      <%#*</tr>%>
-      <%#*<tr>%>
-        <%#*<td colspan="3">&nbsp;</td>%>
-      <%#*</tr>%>
-      <tr>
-        <td colspan="3"><img src="/images/era/space.png" width="10" height="30px" /></td>
-      </tr>
-      <tr>
-        <td colspan="3" align="center" valign="middle" class="fnd_transp"><table width="850" border="0" cellspacing="0" cellpadding="0">
-          <tr>
-            <td width="200" rowspan="5"><img src="/images/era/logo_blanco.png" width="182" height="99" /></td>
-            <td align="right"><table border="0" cellspacing="0" cellpadding="0">
-
-
+        <tr>
+          <td colspan="3">
+            <table width="600" border="0" cellspacing="0" cellpadding="0">
               <tr>
-                <td width="520" valign="bottom" class="Txt_prof"><a href="contactanos.html" class="Txt_prof">Contáctanos</a></td>
-                <td width="40"><a href="#" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Image24','','/images/era/iconos/facebook_322.png',1)"><img src="/images/era/iconos/facebook_32.png" alt="2" name="Image24" width="32" height="32" border="0" id="Image24" /></a></td>
-                <td width="40"><a href="#" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Image25','','/images/era/iconos/twitter_322.png',1)"><img src="/images/era/iconos/twitter_32.png" alt="6" name="Image25" width="32" height="32" border="0" id="Image25" /></a></td>
-                <td width="40"><a href="#" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Image27','','/images/era/iconos/youtube_322.png',1)"><img src="/images/era/iconos/youtube_32.png" alt="7" name="Image27" width="32" height="32" border="0" id="Image27" /></a></td>
+                <td width="50" align="right"><img src="/images/era/iconos/ico_arbol.png" alt="2" width="34" height="17" /></td>
+                <td width="40" class="Txt_arbol"><a href="http://era.educacionchiapas.gob.mx" class="Txt_arbol">Inicio</a></td>
+                <td width="34" align="center"><img src="/images/era/iconos/ico_arbol.png" alt="1" width="34" height="17" /></td>
+                <td width="120" class="Txt_arbol"><a href="http://era.educacionchiapas.gob.mx:3000" class="Txt_arbol">Certificación ESyS</a></td>
+
+                <!-- nombre de escuela -->
+                <%if logged_in?%>
+                <td width="34" align="center"><img src="/images/era/iconos/ico_arbol.png" alt="1" width="34" height="17" /></td>
+                <td width="180" class="Txt_arbol"><a href="/home" class="Txt_arbol"><%=h (@esc = Escuela.find_by_clave(current_user.login)) ? @esc.nombre : nil%></a></td>
+                <td width="34" align="center"><img src="/images/era/iconos/ico_arbol.png" alt="1" width="34" height="17" /></td>
+                <td width="120" class="Txt_arbol"><a href="/home" class="Txt_arbol"><%=link_to "Cerrar Sesión", {:action => "destroy", :controller => "sessions"}, :style => "color:darkgreen; text-decoration: none;"%></a></td>
+                <%else%>
+                <td width="34" align="center"><img src="/images/era/iconos/ico_arbol.png" alt="1" width="34" height="17" /></td>
+                <td width="120" class="Txt_arbol"><a href="/home" class="Txt_arbol"><%=link_to "Iniciar Sesión", {:action => "new", :controller => "sessions"}, :style => "color:darkgreen; text-decoration: none;"%></a></td>
+                <%end%>
+
+                <td>&nbsp;</td>
               </tr>
-
-
-
-
-
-            </table></td>
-            </tr>
-          <tr>
-            <td align="right"><img src="/images/era/space.png" alt="" width="10" height="10" /></td>
-          </tr>
-          <tr>
-            <td><div align="center"><img src="/images/era/linea.png" width="650" height="2" /></div></td>
-            </tr>
-          <tr>
-            <td align="center"><img src="/images/era/space.png" alt="" width="10" height="10" /></td>
-          </tr>
-          <tr>
-            <td align="center"><span class="Txt_piepagina">Edificio Anexo de la Subsecretaria de Educación Federalizada (SEF),
-3er. Piso<br />
-Calzada Mayor Julio Sabines S/N,
-Col. 24 de Junio, Tuxtla Gutiérrez, Chiapas.<br />
-Teléfono: (961) 61 70800 Ext. 41270<br />
-Correo Electrónico: <a href="mailto:era.chiapas@gmail.com" class="Txt_piepagina">era.chiapas@gmail.com</a></span></td>
-            </tr>
-        </table></td>
-      </tr>
-      <tr>
-        <td colspan="3"><img src="/images/era/space.png" alt="" width="10" height="10" /></td>
+            </table>
+          </td>
         </tr>
-      <tr>
-        <td colspan="3" align="right"><img src="/images/era/pie_pag.jpg" width="900" height="185" /></td>
+        <tr>
+          <td width="606">&nbsp;</td>
+          <td colspan="2" rowspan="5" align="center"><a href="<%=h "http://#{SITE_URL}"%>"><img src="/images/era/logo.png" width="282" height="154" /></a></td>
         </tr>
-    </table></td>
+        <tr>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td valign="bottom"><img src="/images/era/btn_ESyS.png" width="512" height="43" /></td>
+        </tr>
+        <tr>
+          <td colspan="3"><img src="/images/era/space.png" width="10" height="10" /></td>
+        </tr>
+        <tr>
+          <td colspan="3" align="center" valign="middle" class="fnd_bar_sub">
+            <table width="875" border="0" cellpadding="0" cellspacing="0">
+              <tr>
+                <td><a href="/home/certificacion_esys" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Image38','','/images/era/btns_cert/btn_que2.png',1)"><img src="/images/era/btns_cert/btn_que1.png" name="Image38" width="100" height="33" border="0" id="Image38" /></a></td>
+                <td><a href="/home/certificacion_manual" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Image39','','/images/era/btns_cert/btn_man2.png',1)"><img src="/images/era/btns_cert/btn_man1.png" name="Image39" width="100" height="33" border="0" id="Image39" /></a></td>
+                <td><a href="/registro" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Image32','','/images/era/btns_cert/btn_reg2.png',1)"><img src="/images/era/btns_cert/btn_reg1.png" name="Image32" width="100" height="33" border="0" id="Image32" /></a></td>
+                <td><a href="/diagnosticos" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Image32','','/images/era/btns_cert/btn_dia2.png',1)"><img src="/images/era/btns_cert/btn_dia1.png" name="Image32" width="100" height="33" border="0" id="Image32" /></a></td>
+                <td><img src="/images/era/space.png" name="Image34" width="100" height="33" border="0" id="Image34" /></td>
+                <td><img src="/images/era/space.png" name="Image34" width="100" height="33" border="0" id="Image34" /></td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+
+        <!-- Contenido principal -->
+        <tr>
+          <td colspan="3">
+            <%if flash[:notice]%>
+            <div class="formee-msg-success">
+              <h3>Operación realizada exitosamente:</h3>
+              <ul>
+                <li><%=flash[:notice]%></li>
+              </ul>
+            </div>
+            <%elsif flash[:error]%>
+            <div class="formee-msg-error">
+              <h3>Error:</h3>
+              <ul>
+                <li><%=flash[:error]%></li>
+              </ul>
+            </div>
+            <%else%>
+            <%#*<p></p>%>
+            <%end%>
+          
+            <%=yield%>
+
+          </td>
+        </tr>
+        <!-- termina contenido principal -->
+
+        <tr>
+          <td colspan="3"><img src="/images/era/space.png" width="10" height="30px" /></td>
+        </tr>
+        <tr>
+          <td colspan="3" align="center" valign="middle" class="fnd_transp">
+            <table width="850" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td width="200" rowspan="5"><img src="/images/era/logo_blanco.png" width="182" height="99" /></td>
+                <td align="right">
+                  <table border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                      <td width="520" valign="bottom" class="Txt_prof"><a href="contactanos.html" class="Txt_prof">Contáctanos</a></td>
+                      <td width="40"><a href="#" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Image24','','/images/era/iconos/facebook_322.png',1)"><img src="/images/era/iconos/facebook_32.png" alt="2" name="Image24" width="32" height="32" border="0" id="Image24" /></a></td>
+                      <td width="40"><a href="#" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Image25','','/images/era/iconos/twitter_322.png',1)"><img src="/images/era/iconos/twitter_32.png" alt="6" name="Image25" width="32" height="32" border="0" id="Image25" /></a></td>
+                      <td width="40"><a href="#" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Image27','','/images/era/iconos/youtube_322.png',1)"><img src="/images/era/iconos/youtube_32.png" alt="7" name="Image27" width="32" height="32" border="0" id="Image27" /></a></td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+              <tr>
+                <td align="right"><img src="/images/era/space.png" alt="" width="10" height="10" /></td>
+              </tr>
+              <tr>
+                <td><div align="center"><img src="/images/era/linea.png" width="650" height="2" /></div></td>
+              </tr>
+              <tr>
+                <td align="center"><img src="/images/era/space.png" alt="" width="10" height="10" /></td>
+              </tr>
+              <tr>
+                <td align="center">
+                  <span class="Txt_piepagina">
+                    Edificio Anexo de la Subsecretaria de Educación Federalizada (SEF),
+                    3er. Piso<br />
+                    Calzada Mayor Julio Sabines S/N,
+                    Col. 24 de Junio, Tuxtla Gutiérrez, Chiapas.<br />
+                    Teléfono: (961) 61 70800 Ext. 41270<br />
+                    Correo Electrónico: <a href="mailto:era.chiapas@gmail.com" class="Txt_piepagina">era.chiapas@gmail.com</a>
+                  </span>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3"><img src="/images/era/space.png" alt="" width="10" height="10" /></td>
+        </tr>
+        <tr>
+          <td colspan="3" align="right"><img src="/images/era/pie_pag.jpg" width="900" height="185" /></td>
+        </tr>
+      </table>
+    </td>
   </tr>
 </table>
-<div align="center"></div>
 </body>
 </html>
