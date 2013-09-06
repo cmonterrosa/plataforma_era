@@ -383,8 +383,8 @@
           <td>&nbsp;</td>
           <td align="center">
             <label>
-              SI <%= f.radio_button :reutiliza_agua, "SI", :onclick => "enable_disable_desc('consumo_alim_bajos_sodio_grasa_si', 'consumo_alim_bajos_sodio_grasa_no', 'consumo_alim_bajos_sodio_grasa_desc');"%>&nbsp;&nbsp;
-              NO <%= f.radio_button :reutiliza_agua, "NO", :onclick => "enable_disable_desc('consumo_alim_bajos_sodio_grasa_si', 'consumo_alim_bajos_sodio_grasa_no', 'consumo_alim_bajos_sodio_grasa_desc');"%>
+              SI <%= f.radio_button :reutiliza_agua, "SI", :onclick => "enable_disable_desc('huella_reutiliza_agua_si', 'huella_reutiliza_agua_no', 'huella_reutiliza_agua_desc');"%>&nbsp;&nbsp;
+              NO <%= f.radio_button :reutiliza_agua, "NO", :onclick => "enable_disable_desc('huella_reutiliza_agua_si', 'huella_reutiliza_agua_no', 'huella_reutiliza_agua_desc');"%>
             </label>
             <%= f.text_area :reutiliza_agua_desc, :placeholder => "Especifique...", :disabled => true %>
           </td>
@@ -531,6 +531,7 @@ validate_exists_initial('huella_bombas_agua_num', 'huella_bombas_agua_hrs_diaria
 validate_exists_initial('huella_aparatos_sonido_num', 'huella_aparatos_sonido_hrs_diarias');
 
 enable_disable_desc('huella_act_reutiliza_residuos_si', 'huella_act_reutiliza_residuos_no', 'huella_act_reutiliza_residuos_desc');
+enable_disable_desc('huella_reutiliza_agua_si', 'huella_reutiliza_agua_no', 'huella_reutiliza_agua_desc');
 enable_disable_desc('huella_aparatos_pilas_si', 'huella_aparatos_pilas_no', 'huella_aparatos_pilas_num');
 enable_disable_desc('huella_cuenta_recipientes_org_inorg_si', 'huella_cuenta_recipientes_org_inorg_no', 'huella_cuenta_recipientes_org_inorg_num');
 enable_disable_desc('huella_recip_residuos_solid_si', 'huella_recip_residuos_solid_no', 'huella_recip_residuos_solid_num');
