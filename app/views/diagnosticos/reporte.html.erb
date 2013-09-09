@@ -1,0 +1,228 @@
+<div class="formee">
+  <table class="subreport" width="100%" border="0" align="center" cellpadding="1" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
+    <tr>
+      <td align="center"><h4>REPORTE GENERAL DEL DIAGNOSTICO INSTITUCIONAL</h4></td>
+    </tr>
+
+    <!-- EJE 1: DESARROLLO DE COMPETENCIAS -->
+    <tr>
+      <td>
+        <table class="subreport" width="100%" border="0" align="center" cellpadding="2" cellspacing="2" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;" >
+          <tr bgcolor="#EAEAEA" >
+            <td align="center" style=" padding: 5px 0 5px 0;" ><h5>EJE 1: DESARROLLO DE COMPETENCIAS</h5></td>
+          </tr>
+          <tr >
+            <td bgcolor="#E7EFE0"align="center"><h5>DOCENTES</h5></td>
+          </tr>
+          <tr>
+            <td align="justify">
+              <label>¿El personal docente asiste y se capacita en materia de salud y medio ambiente?</label>
+              <table>
+                <tr>
+                  <td><label>Temas de Salud:</label></td>
+                  <td width="30%" >&nbsp;</td>
+                  <td><label>Temas de Medio Ambiente:</label></td>
+                </tr>
+                <tr>
+                  <td>
+                    <label>
+                      <%if @competencia.doc_capacitan_salud == 'SI'%>
+                        <%= @competencia.doc_capacitan_salued_desc %>
+                      <%else%>
+                        No.
+                      <%end%>
+                    </label>
+                  </td>
+                  <td>&nbsp;</td>
+                  <td>
+                    <label>
+                      <%if @competencia.doc_capacitan_ma == 'SI'%>
+                        <%= @competencia.doc_capacitan_ma_desc %>
+                      <%else%>
+                        No.
+                      <%end%>
+                    </label>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td align="justify">
+              <label>¿Los conocimientos adquiridos son aplicados?</label>
+              <label>
+                <%if @competencia.aplica_conocimientos == 'SI'%>
+                  <%= @competencia.aplica_conocimientos_desc %>
+                <%else%>
+                  No.
+                <%end%>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td align="justify">
+              <label>¿La escuela desarrolla proyectos para la aplicación de conocimientos en materia de salud y medio ambiente?</label>
+              <label>
+                <%if @competencia.esc_desarrolla_proy == 'SI'%>
+                  <%= @competencia.esc_desarrolla_proy_desc %>
+                <%else%>
+                  No.
+                <%end%>
+              </label>
+            </td>
+          </tr>
+          <tr bgcolor="#E7EFE0">
+            <td align="center"><h5>ALUMNOS</h5></td>
+          </tr>
+          <tr>
+            <td align="justify">
+              <label>¿Los alumnos de involucran en las actividades y proyectos en los que participa la escuela?</label>
+              <label>
+                <%if @competencia.alu_involucran_proy == 'SI'%>
+                  <%= @competencia.alu_involucran_proy_desc %>
+                <%else%>
+                  No.
+                <%end%>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td align="justify">
+              <label>¿Los alumnos se capacitan en materia de salud y medio ambiente?</label>
+              <label>
+                <%if @competencia.alu_capacitan_salud_ma == 'SI'%>
+                  <%= @competencia.alu_capacitan_salud_ma_desc %>
+                <%else%>
+                  No.
+                <%end%>
+              </label>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td>&nbsp;</td>
+    </tr>
+
+    <!-- EJE 2: ENTORNO SALUDABLE -->
+    <tr>
+      <td>
+        <table class="subreport" width="100%" border="0" align="center" cellpadding="2" cellspacing="2" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;" >
+          <tr bgcolor="#EAEAEA" >
+            <td align="center" style=" padding: 5px 0 5px 0;" ><h5>EJE 2: ENTORNO SALUDABLE</h5></td>
+          </tr>
+          <tr align="center">
+            <td align="center">&nbsp;</td>
+          </tr>
+          <tr>
+            <td align="justify">
+              <label>¿Existen Áreas Verdes en la escuela.?</label>
+              <label>
+                <%if @entorno.areas_verdes_esc == 'SI'%>
+                  <%= @entorno.areas_verdes_esc_desc %>
+                <%else%>
+                  No.
+                <%end%>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td align="justify">
+              <label>¿Se llevan a cabo actividades para el cuidado, preservación y reforestación de las Áreas Verdes.?</label>
+              <label>
+                <%if @entorno.cuidado_preserv_reforest == 'SI'%>
+                  <%= @entorno.cuidado_preserv_reforest_desc %>
+                <%else%>
+                  No.
+                <%end%>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td align="justify">
+              <label>¿La escuela adopta Áreas Verdes?</label>
+              <label>
+                <%if @entorno.adopta_areas_verdes == 'SI'%>
+                  <%= @entorno.adopta_areas_verdes_desc %>
+                <%else%>
+                  No.
+                <%end%>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td align="justify">
+              <label>¿La institución educativa promueve el cuidado de la salud en la comunidad escolar?</label>
+              <label>
+                <%if @entorno.promueve_cuidado_salud == 'SI'%>
+                  <%= @entorno.promueve_cuidado_salud_desc %>
+                <%else%>
+                  No.
+                <%end%>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td align="justify">
+              <label>¿La escuela promueve la activavión de la cartilla.?</label>
+              <label>
+                <%if @entorno.promueve_cuidado_salud == 'SI'%>
+                  <%= @entorno.promueve_cuidado_salud_desc %>
+                <%else%>
+                  No.
+                <%end%>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td align="justify">
+              <label>¿La escuela propicia la participación del Sector Salud en temas relacionados al cuidado de la salud.?</label>
+              <label>
+                <%if @entorno.participacion_sector_salud %>
+                  <%= @entorno.participacion_sector_salud %>
+                <%else%>
+                  No.
+                <%end%>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td align="justify">
+              <label>¿La escuela promueve la activación física en la comunidad educativa.?</label>
+              <label>
+                <%if @entorno.promueve_activacion_fisica == 'SI'%>
+                  <%= @entorno.promueve_activacion_fisica %>
+                <%else%>
+                  No.
+                <%end%>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td align="justify">
+              <label>¿Cual es el tiempo destinado para la activación física escolar.?</label>
+              <label>
+                <%if @entorno.tiempo_activacion_fisica %>
+                  <%= @entorno.tiempo_activacion_fisica %>
+                <%else%>
+                  No.
+                <%end%>
+              </label>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td>&nbsp;</td>
+    </tr>
+
+  </table>
+</div>

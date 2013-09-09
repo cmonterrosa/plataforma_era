@@ -216,8 +216,16 @@ table.subprincipal {
   -webkit-border-radius: 4px;
   border-radius: 4px;
 }
+
+table.subreport {
+/*  background-color: #E6F8E0;*/
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+}
+
 table.subprincipal h5{
-    color: #FFFFFF;
+    color: black;
     font-weight:bold;
 }
 
