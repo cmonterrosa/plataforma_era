@@ -1,10 +1,9 @@
-require 'pdfkit'
-
 class DiagnosticosController < ApplicationController
   layout :set_layout
 
   before_filter :login_required
 
+  
   def index
 
   end
@@ -21,10 +20,13 @@ class DiagnosticosController < ApplicationController
     @diagnostico = Diagnostico.find(params[:id]) if params[:id]
     @competencia = @diagnostico.competencia if @diagnostico.competencia
     @entorno = @diagnostico.entorno if @diagnostico.entorno
-
-    kit = PDFKit.new("http://localhost:3000/diagnosticos/reporte/#{@diagnostico.id}")
-    kit.to_file("#{RAILS_ROOT}/tmp/reporte_#{@diagnostico.id}")
+    @huella = @diagnostico.huella if @diagnostico.huella
+    @consumo = @diagnostico.consumo if @diagnostico.consumo
+    @participacion = @diagnostico.participacion if @diagnostico.participacion
+     
   end
+
+  private
 
   def set_layout
     if action_name == 'reporte'

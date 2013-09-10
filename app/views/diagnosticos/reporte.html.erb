@@ -1,4 +1,4 @@
-<div class="formee">
+<div class="formee" id="pdf_link">
   <table class="subreport" width="100%" border="0" align="center" cellpadding="1" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
     <tr>
       <td align="center"><h4>REPORTE GENERAL DEL DIAGNOSTICO INSTITUCIONAL</h4></td>
@@ -7,7 +7,7 @@
     <!-- EJE 1: DESARROLLO DE COMPETENCIAS -->
     <tr>
       <td>
-        <table class="subreport" width="100%" border="0" align="center" cellpadding="2" cellspacing="2" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;" >
+        <table class="subreport" width="100%" border="0" align="center" cellpadding="2" cellspacing="5" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;" >
           <tr bgcolor="#EAEAEA" >
             <td align="center" style=" padding: 5px 0 5px 0;" ><h5>EJE 1: DESARROLLO DE COMPETENCIAS</h5></td>
           </tr>
@@ -16,7 +16,7 @@
           </tr>
           <tr>
             <td align="justify">
-              <label>¿El personal docente asiste y se capacita en materia de salud y medio ambiente?</label>
+              <label style=" font-weight: bold;" >¿El personal docente asiste y se capacita en materia de salud y medio ambiente?</label>
               <table>
                 <tr>
                   <td><label>Temas de Salud:</label></td>
@@ -29,7 +29,7 @@
                       <%if @competencia.doc_capacitan_salud == 'SI'%>
                         <%= @competencia.doc_capacitan_salued_desc %>
                       <%else%>
-                        No.
+                        NO.
                       <%end%>
                     </label>
                   </td>
@@ -39,7 +39,7 @@
                       <%if @competencia.doc_capacitan_ma == 'SI'%>
                         <%= @competencia.doc_capacitan_ma_desc %>
                       <%else%>
-                        No.
+                        NO.
                       <%end%>
                     </label>
                   </td>
@@ -52,12 +52,12 @@
           </tr>
           <tr>
             <td align="justify">
-              <label>¿Los conocimientos adquiridos son aplicados?</label>
+              <label style=" font-weight: bold;" >¿Los conocimientos adquiridos son aplicados?</label>
               <label>
                 <%if @competencia.aplica_conocimientos == 'SI'%>
                   <%= @competencia.aplica_conocimientos_desc %>
                 <%else%>
-                  No.
+                  NO.
                 <%end%>
               </label>
             </td>
@@ -67,12 +67,12 @@
           </tr>
           <tr>
             <td align="justify">
-              <label>¿La escuela desarrolla proyectos para la aplicación de conocimientos en materia de salud y medio ambiente?</label>
+              <label style=" font-weight: bold;" >¿La escuela desarrolla proyectos para la aplicación de conocimientos en materia de salud y medio ambiente?</label>
               <label>
                 <%if @competencia.esc_desarrolla_proy == 'SI'%>
                   <%= @competencia.esc_desarrolla_proy_desc %>
                 <%else%>
-                  No.
+                  NO.
                 <%end%>
               </label>
             </td>
@@ -82,24 +82,24 @@
           </tr>
           <tr>
             <td align="justify">
-              <label>¿Los alumnos de involucran en las actividades y proyectos en los que participa la escuela?</label>
+              <label style=" font-weight: bold;" >¿Los alumnos de involucran en las actividades y proyectos en los que participa la escuela?</label>
               <label>
                 <%if @competencia.alu_involucran_proy == 'SI'%>
                   <%= @competencia.alu_involucran_proy_desc %>
                 <%else%>
-                  No.
+                  NO.
                 <%end%>
               </label>
             </td>
           </tr>
           <tr>
             <td align="justify">
-              <label>¿Los alumnos se capacitan en materia de salud y medio ambiente?</label>
+              <label style=" font-weight: bold;" >¿Los alumnos se capacitan en materia de salud y medio ambiente?</label>
               <label>
                 <%if @competencia.alu_capacitan_salud_ma == 'SI'%>
                   <%= @competencia.alu_capacitan_salud_ma_desc %>
                 <%else%>
-                  No.
+                  NO.
                 <%end%>
               </label>
             </td>
@@ -114,7 +114,7 @@
     <!-- EJE 2: ENTORNO SALUDABLE -->
     <tr>
       <td>
-        <table class="subreport" width="100%" border="0" align="center" cellpadding="2" cellspacing="2" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;" >
+        <table class="subreport" width="100%" border="0" align="center" cellpadding="2" cellspacing="5" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;" >
           <tr bgcolor="#EAEAEA" >
             <td align="center" style=" padding: 5px 0 5px 0;" ><h5>EJE 2: ENTORNO SALUDABLE</h5></td>
           </tr>
@@ -123,96 +123,96 @@
           </tr>
           <tr>
             <td align="justify">
-              <label>¿Existen Áreas Verdes en la escuela.?</label>
+              <label style=" font-weight: bold;" >¿Existen Áreas Verdes en la escuela.?</label>
               <label>
                 <%if @entorno.areas_verdes_esc == 'SI'%>
                   <%= @entorno.areas_verdes_esc_desc %>
                 <%else%>
-                  No.
+                  NO.
                 <%end%>
               </label>
             </td>
           </tr>
           <tr>
             <td align="justify">
-              <label>¿Se llevan a cabo actividades para el cuidado, preservación y reforestación de las Áreas Verdes.?</label>
+              <label style=" font-weight: bold;" >¿Se llevan a cabo actividades para el cuidado, preservación y reforestación de las Áreas Verdes.?</label>
               <label>
                 <%if @entorno.cuidado_preserv_reforest == 'SI'%>
                   <%= @entorno.cuidado_preserv_reforest_desc %>
                 <%else%>
-                  No.
+                  NO.
                 <%end%>
               </label>
             </td>
           </tr>
           <tr>
             <td align="justify">
-              <label>¿La escuela adopta Áreas Verdes?</label>
+              <label style=" font-weight: bold;" >¿La escuela adopta Áreas Verdes?</label>
               <label>
                 <%if @entorno.adopta_areas_verdes == 'SI'%>
                   <%= @entorno.adopta_areas_verdes_desc %>
                 <%else%>
-                  No.
+                  NO.
                 <%end%>
               </label>
             </td>
           </tr>
           <tr>
             <td align="justify">
-              <label>¿La institución educativa promueve el cuidado de la salud en la comunidad escolar?</label>
+              <label style=" font-weight: bold;" >¿La institución educativa promueve el cuidado de la salud en la comunidad escolar?</label>
               <label>
                 <%if @entorno.promueve_cuidado_salud == 'SI'%>
                   <%= @entorno.promueve_cuidado_salud_desc %>
                 <%else%>
-                  No.
+                  NO.
                 <%end%>
               </label>
             </td>
           </tr>
           <tr>
             <td align="justify">
-              <label>¿La escuela promueve la activavión de la cartilla.?</label>
+              <label style=" font-weight: bold;" >¿La escuela promueve la activavión de la cartilla.?</label>
               <label>
                 <%if @entorno.promueve_cuidado_salud == 'SI'%>
                   <%= @entorno.promueve_cuidado_salud_desc %>
                 <%else%>
-                  No.
+                  NO.
                 <%end%>
               </label>
             </td>
           </tr>
           <tr>
             <td align="justify">
-              <label>¿La escuela propicia la participación del Sector Salud en temas relacionados al cuidado de la salud.?</label>
+              <label style=" font-weight: bold;" >¿La escuela propicia la participación del Sector Salud en temas relacionados al cuidado de la salud.?</label>
               <label>
                 <%if @entorno.participacion_sector_salud %>
                   <%= @entorno.participacion_sector_salud %>
                 <%else%>
-                  No.
+                  NO.
                 <%end%>
               </label>
             </td>
           </tr>
           <tr>
             <td align="justify">
-              <label>¿La escuela promueve la activación física en la comunidad educativa.?</label>
+              <label style=" font-weight: bold;" >¿La escuela promueve la activación física en la comunidad educativa.?</label>
               <label>
                 <%if @entorno.promueve_activacion_fisica == 'SI'%>
                   <%= @entorno.promueve_activacion_fisica %>
                 <%else%>
-                  No.
+                  NO.
                 <%end%>
               </label>
             </td>
           </tr>
           <tr>
             <td align="justify">
-              <label>¿Cual es el tiempo destinado para la activación física escolar.?</label>
+              <label style=" font-weight: bold;" >¿Cual es el tiempo destinado para la activación física escolar.?</label>
               <label>
                 <%if @entorno.tiempo_activacion_fisica %>
                   <%= @entorno.tiempo_activacion_fisica %>
                 <%else%>
-                  No.
+                  NO.
                 <%end%>
               </label>
             </td>
@@ -224,5 +224,584 @@
       <td>&nbsp;</td>
     </tr>
 
+    <!-- EJE 3: HUELLA ECOLOGICA -->
+    <tr>
+      <td>
+        <table class="subreport" width="100%" border="0" align="center" cellpadding="2" cellspacing="5" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;" >
+          <tr bgcolor="#EAEAEA" style=" padding: 5px 0 5px 0;">
+            <td align="center"><h5>EJE 3: HUELLA ECOLÓGICA</h5></td>
+          </tr>
+          <tr>
+            <td align="justify">
+              <label style=" font-weight: bold;" >¿La escuela da mantenimiento correctivo y preventivo a las instalaciones eléctricas, hidráulicas y de gas?</label>
+              <label>
+                <%if @huella.mant_instalaciones %>
+                  <%= @huella.mant_instalaciones %>
+                <%else%>
+                  NO.
+                <%end%>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td align="justify">
+              <label style=" font-weight: bold;" >¿La escuela cuenta con equipos eléctricos y electrónicos para el desempeño de sus actividades administrativas y escolares?</label>
+              <table align="center">
+                <tr bgcolor="#E7EFE0">
+                  <td><label>Descrición</label></td>
+                  <td width="20%">&nbsp;</td>
+                  <td><label>Núm. de Equipos</label></td>
+                  <td width="20%">&nbsp;</td>
+                  <td><label>Horas al Día</label></td>
+                </tr>
+                <tr>
+                  <td><label>Computadoras</label></td>
+                  <td>&nbsp;</td>
+                  <td><label><%= @huella.computadoras_num %></label></td>
+                  <td>&nbsp;</td>
+                  <td><label><%= @huella.computadoras_hrs_diarias %></label></td>
+                </tr>
+                <tr>
+                  <td><label>Impresoras</label></td>
+                  <td>&nbsp;</td>
+                  <td><label><%= @huella.impresoras_num %></label></td>
+                  <td>&nbsp;</td>
+                  <td><label><%= @huella.impresoras_hrs_diarias %></label></td>
+                </tr>
+                <tr>
+                  <td><label>Proyectores</label></td>
+                  <td>&nbsp;</td>
+                  <td><label><%= @huella.proyectores_num %></label></td>
+                  <td>&nbsp;</td>
+                  <td><label><%= @huella.proyectores_hrs_diarias %></label></td>
+                </tr>
+                <tr>
+                  <td><label>Reguladores</label></td>
+                  <td>&nbsp;</td>
+                  <td><label><%= @huella.reguladores_num %></label></td>
+                  <td>&nbsp;</td>
+                  <td><label><%= @huella.reguladores_hrs_diarias %></label></td>
+                </tr>
+                <tr>
+                  <td><label>Ventiladores</label></td>
+                  <td>&nbsp;</td>
+                  <td><label><%= @huella.ventiladores_num %></label></td>
+                  <td>&nbsp;</td>
+                  <td><label><%= @huella.ventiladores_hrs_diarias %></label></td>
+                </tr>
+                <tr>
+                  <td><label>Aires acondicionados</label></td>
+                  <td>&nbsp;</td>
+                  <td><label><%= @huella.climas_num %></label></td>
+                  <td>&nbsp;</td>
+                  <td><label><%= @huella.climas_hrs_diarias %></label></td>
+                </tr>
+                <tr>
+                  <td><label>Enfriadores</label></td>
+                  <td>&nbsp;</td>
+                  <td><label><%= @huella.enfriadores_num %></label></td>
+                  <td>&nbsp;</td>
+                  <td><label><%= @huella.enfriadores_hrs_diarias %></label></td>
+                </tr>
+                <tr>
+                  <td><label>Cafeteras</label></td>
+                  <td>&nbsp;</td>
+                  <td><label><%= @huella.cafeteras_num %></label></td>
+                  <td>&nbsp;</td>
+                  <td><label><%= @huella.cafeteras_hrs_diarias %></label></td>
+                </tr>
+                <tr>
+                  <td><label>Refrigeradores</label></td>
+                  <td>&nbsp;</td>
+                  <td><label><%= @huella.refrigeradores_num %></label></td>
+                  <td>&nbsp;</td>
+                  <td><label><%= @huella.refrigeradores_hrs_diarias %></label></td>
+                </tr>
+                <tr>
+                  <td><label>Bombas de agua</label></td>
+                  <td>&nbsp;</td>
+                  <td><label><%= @huella.bombas_agua_num %></label></td>
+                  <td>&nbsp;</td>
+                  <td><label><%= @huella.bombas_agua_hrs_diarias %></label></td>
+                </tr>
+                <tr>
+                  <td><label>Aparatos de sonido</label></td>
+                  <td>&nbsp;</td>
+                  <td><label><%= @huella.aparatos_sonido_num %></label></td>
+                  <td>&nbsp;</td>
+                  <td><label><%= @huella.aparatos_sonido_hrs_diarias %></label></td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td align="justify">
+              <label style=" font-weight: bold;" >¿Desconectan los equipos y/o electrónicos cuando no son utilizados?</label>
+              <label>
+                <%if @huella.desconectan_equipos_elec %>
+                  <%= @huella.desconectan_equipos_elec %>
+                <%else%>
+                  NO.
+                <%end%>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td align="justify">
+              <label style=" font-weight: bold;" >¿Utilizan lámparas ahorradoras de energía?</label>
+              <label>
+                <%if @huella.utilizan_lamp_ahorradoras %>
+                  <%= @huella.utilizan_lamp_ahorradoras %>
+                <%else%>
+                  NO.
+                <%end%>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td align="justify">
+              <label style=" font-weight: bold;" >¿Se aprovecha la luz natural para las actividades diarias?</label>
+              <label>
+                <%if @huella.aprovecha_luz_natural %>
+                  <%= @huella.aprovecha_luz_natural %>
+                <%else%>
+                  NO.
+                <%end%>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td align="justify">
+              <label style=" font-weight: bold;" >Disponibilidad de agua</label>
+              <label>
+                <%if @huella.tipo_agua %>
+                  <%= @huella.tipo_agua.descripcion %>
+                <%else%>
+                  NO.
+                <%end%>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td align="justify">
+              <label style=" font-weight: bold;" >Potabilidad de agua</label>
+              <label>
+                <%if @huella.potabilidad_agua %>
+                  <%= @huella.potabilidad_agua.descripcion %>
+                <%else%>
+                  NO.
+                <%end%>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td align="justify">
+              <label style=" font-weight: bold;" >¿La escuela cuenta con?</label>
+              <table align="center">
+                <tr bgcolor="#E7EFE0">
+                  <td><label>Desripción</label></td>
+                  <td width="30%">&nbsp;</td>
+                  <td><label>Núm. de Equipos</label></td>
+                  <td width="30%">&nbsp;</td>
+                  <td><label>Fugas</label></td>
+                </tr>
+                <tr>
+                  <td><label>Sanitarios</label></td>
+                  <td>&nbsp;</td>
+                  <td><label><%= @huella.sanitarios_num %></label></td>
+                  <td>&nbsp;</td>
+                  <td><label><%= @huella.sanitarios_fugas %></label></td>
+                </tr>
+                <tr>
+                  <td><label>Bebederos</label></td>
+                  <td>&nbsp;</td>
+                  <td><label><%= @huella.bebederos_num %></label></td>
+                  <td>&nbsp;</td>
+                  <td><label><%= @huella.bebederos_fugas %></label></td>
+                </tr>
+                <tr>
+                  <td><label>Tomas de agua</label></td>
+                  <td>&nbsp;</td>
+                  <td><label><%= @huella.tomas_agua_num %></label></td>
+                  <td>&nbsp;</td>
+                  <td><label><%= @huella.tomas_agua_fugas %></label></td>
+                </tr>
+                <tr>
+                  <td><label>Cisternas</label></td>
+                  <td>&nbsp;</td>
+                  <td><label><%= @huella.cisternas_num %></label></td>
+                  <td>&nbsp;</td>
+                  <td><label><%= @huella.cisternas_fugas %></label></td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td align="justify">
+              <label style=" font-weight: bold;" >¿Cuenta con sistema de captación de aguas pluviales?</label>
+              <label>
+                <%if @huella.captacion_agua_pluv %>
+                  <%= @huella.captacion_agua_pluv %>
+                <%else%>
+                  NO.
+                <%end%>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td align="justify">
+              <label style=" font-weight: bold;" >¿Reutiliza el agua en otras actividades?</label>
+              <label>
+                <%if @huella.reutiliza_agua %>
+                  <%= @huella.reutiliza_agua_desc %>
+                <%else%>
+                  NO.
+                <%end%>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td align="justify">
+              <label style=" font-weight: bold;" >¿Cuenta con recipientes para el manejo de residuos sólidos?</label>
+              <label>
+                <%if @huella.recip_residuos_solid %>
+                  <%= @huella.recip_residuos_solid_num %>
+                <%else%>
+                  NO.
+                <%end%>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td align="justify">
+              <label style=" font-weight: bold;" >¿Se lleva a cabo la separación de residuos sólidos en orgánicos e inorgánicos?</label>
+              <label>
+                <%if @huella.separa_residuos_org_inorg %>
+                  <%= @huella.separa_residuos_org_inorg %>
+                <%else%>
+                  NO.
+                <%end%>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td align="justify">
+              <label style=" font-weight: bold;" >¿Con los residuos sólidos orgánicos elaboras compostas?</label>
+              <label>
+                <%if @huella.elabora_compostas_residuos %>
+                  <%= @huella.elabora_compostas_residuos %>
+                <%else%>
+                  NO.
+                <%end%>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td align="justify">
+              <label style=" font-weight: bold;" >¿Dentro de las aulas se cuenta con recipientes para residuos sólidos (orgánicos e inorgánicos)?</label>
+              <label>
+                <%if @huella.cuenta_recipientes_org_inorg %>
+                  <%= @huella.cuenta_recipientes_org_inorg_num %>
+                <%else%>
+                  NO.
+                <%end%>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td align="justify">
+              <label style=" font-weight: bold;" >¿Cuenta con aparatos que utilizan pilas?</label>
+              <label>
+                <%if @huella.aparatos_pilas %>
+                  <%= @huella.aparatos_pilas_num %>
+                <%else%>
+                  NO.
+                <%end%>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td align="justify">
+              <label style=" font-weight: bold;" >¿Cuál es el mecanismo de eliminación de los residuos sólidos?</label>
+              <label>
+                <%if @huella.meca_elim_residuos_solid %>
+                  <%= @huella.meca_elim_residuos_solid %>
+                <%else%>
+                  NO.
+                <%end%>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td align="justify">
+              <label style=" font-weight: bold;" >¿Se llevan a cabo actividades para la reutilización de residuos sólidos?</label>
+              <label>
+                <%if @huella.act_reutiliza_residuos %>
+                  <%= @huella.act_reutiliza_residuos_desc %>
+                <%else%>
+                  NO.
+                <%end%>
+              </label>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td>&nbsp;</td>
+    </tr>
+    
+    <!-- EJE 4: CONSUMO RESPONSABLE SALUDABLE -->
+    <tr>
+      <td>
+        <table class="subreport" width="100%" border="0" align="center" cellpadding="2" cellspacing="5" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;" >
+          <tr bgcolor="#EAEAEA" style=" padding: 5px 0 5px 0;">
+            <td align="center"><h5>EJE 4: CONSUMO RESPONSABLE SALUDABLE</h5></td>
+          </tr>
+          <tr>
+            <td align="justify">
+              <label style="font-weight: bold;" >¿La institución cuenta con desayunos escolares.?</label>
+              <label>
+                <%if @consumo.desayunos_escolares %>
+                  <%= @consumo.desayunos_escolares %>
+                <%else%>
+                  NO.
+                <%end%>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td align="justify">
+              <label style="font-weight: bold;" >¿Tipo de establecimiento.?</label>
+              <label>
+                <%if @consumo.tipo_establecimiento %>
+                  <%= @consumo.tipo_establecimiento %>
+                <%else%>
+                  NO.
+                <%end%>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td align="justify">
+              <label style="font-weight: bold;" >¿Aplican los Lineamientos Generales para el Expendio de alimentos y bebidas en los establecimientos de consumo escolar. DE AUCERDO A LA NORMA OFICIAL MEXICANA NOM-043-SSA2-2005.?</label>
+              <label>
+                <%if @consumo.aplican_norma_ofic_mex %>
+                  <%= @consumo.aplican_norma_ofic_mex %>
+                <%else%>
+                  NO.
+                <%end%>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td align="justify">
+              <label style="font-weight: bold;">¿El personal que atiende estos establecimientos se capacita para el manejo y preparación de alimentos?</label>
+              <label>
+                <%if @consumo.capacita_manejo_prep_alimentos %>
+                  <%= @consumo.capacita_manejo_prep_alimentos %>
+                <%else%>
+                  NO.
+                <%end%>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td align="justify">
+              <label style="font-weight: bold;">¿Se ha disminuido el expendio de alimentos chatarras.?</label>
+              <label>
+                <%if @consumo.disminuido_alim_chatarras %>
+                  <%= @consumo.disminuido_alim_chatarras %>
+                <%else%>
+                  NO.
+                <%end%>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td align="justify">
+              <label style="font-weight: bold;">¿Los alimentos sugeridos en la dieta escolar son preparados de acuerdo a la Norma Oficial Mexicana NOM-043-SSA2-2005, de Plato del Buen Comer.?</label>
+              <label>
+                <%if @consumo.alim_norma_ofic_mex %>
+                  <%= @consumo.alim_norma_ofic_mex %>
+                <%else%>
+                  NO.
+                <%end%>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td align="justify">
+              <label style="font-weight: bold;">¿Se sugiere a los alumnos que consuman alimentos bajos en sodio y en grasas.?</label>
+              <label>
+                <%if @consumo.alim_bajos_sodio_grasa %>
+                  <%= @consumo.alim_bajos_sodio_grasa_desc %>
+                <%else%>
+                  NO.
+                <%end%>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td align="justify">
+              <label style="font-weight: bold;" >¿Se expende agua simple, potable o prepara para el consumo diaria.?</label>
+              <label>
+                <%if @consumo.agua_simple_potable %>
+                  <%= @consumo.agua_simple_potable %>
+                <%else%>
+                  NO.
+                <%end%>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td align="justify">
+              <label style="font-weight: bold;" >¿Los alimentos se preparan de manera higiénica.?</label>
+              <label>
+                <%if @consumo.alim_preparan_higienica %>
+                  <%= @consumo.alim_preparan_higienica %>
+                <%else%>
+                  NO.
+                <%end%>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td align="justify">
+              <label style="font-weight: bold;" >¿Los utensilios de cocina con esterilizados adecuadamente.?</label>
+              <label>
+                <%if @consumo.utensilios_esterilizados %>
+                  <%= @consumo.utensilios_esterilizados %>
+                <%else%>
+                  NO.
+                <%end%>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td align="justify">
+              <label style="font-weight: bold;" >¿Cuenta con recipientes de residuos sólidos. Órganicos, Inórganicos.?</label>
+              <label>
+                <%if @consumo.recipientes_residuos_solidos %>
+                  <%= @consumo.recipientes_residuos_solidos %>
+                <%else%>
+                  NO.
+                <%end%>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td align="justify">
+              <label style="font-weight: bold;" >¿Qué tipo de material usa para servir los alimentos.?</label>
+              <label>
+                <%if @consumo.material_servir_alim %>
+                  <%= @consumo.material_servir_alim %>
+                <%else%>
+                  NO.
+                <%end%>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td align="justify">
+              <label style="font-weight: bold;" >¿Los establecimientos escolares utilizan popotes.?</label>
+              <label>
+                <%if @consumo.utilizan_popotes %>
+                  <%= @consumo.utilizan_popotes %>
+                <%else%>
+                  NO.
+                <%end%>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td align="justify">
+              <label style="font-weight: bold;" >¿Los establecimientos están libres de fauna nociva (roedores, cucarachas y otros).?</label>
+              <label>
+                <%if @consumo.libres_fauna_nociva %>
+                  <%= @consumo.libres_fauna_nociva %>
+                <%else%>
+                  NO.
+                <%end%>
+              </label>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td>&nbsp;</td>
+    </tr>
+
+    <!-- EJE 5: PARTICIPACIÓN CIUDADANA -->
+    <tr>
+      <td>
+        <table class="subreport" width="100%" border="0" align="center" cellpadding="2" cellspacing="5" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;" >
+          <tr bgcolor="#EAEAEA" style=" padding: 5px 0 5px 0;" >
+            <td align="center"><h5>EJE 5: PARTICIPACIÓN CIUDADANA</h5></td>
+          </tr>
+          <tr>
+            <td align="justify">
+              <label style="font-weight: bold;">¿En la comunidad existe el apoyo de proyectos productivos por parte del gobierno del estado.?</label>
+              <label>
+                <%if @participacion.apoyo_proy_product %>
+                  <%= @participacion.apoyo_proy_product_desc %>
+                <%else%>
+                  NO.
+                <%end%>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td align="justify">
+              <label style="font-weight: bold;">¿Los padres de familia se involucran en actividades comunitarias. (Reforestación campañas de descacharramiento, campañas de salud).?</label>
+              <label>
+                <%if @participacion.familia_involucran_actividades %>
+                  <%= @participacion.familia_involucran_actividades_desc %>
+                <%else%>
+                  NO.
+                <%end%>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td align="justify">
+              <label style="font-weight: bold;">¿La escuela promueve la participación colectiva en proyectos sustentables que beneficien la comunidad.?</label>
+              <label>
+                <%if @participacion.esc_participa_proy %>
+                  <%= @participacion.esc_participa_proy_desc %>
+                <%else%>
+                  NO.
+                <%end%>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td align="justify">
+              <label style="font-weight: bold;">¿La escuela organiza grupo de padres de familia, para capacitarlos en temas de salud y medio ambiente?</label>
+              <label>
+                <%if @participacion.esc_capacita_salud_ma %>
+                  <%= @participacion.esc_capacita_salud_ma_desc %>
+                <%else%>
+                  NO.
+                <%end%>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td align="justify">
+              <label style="font-weight: bold;">¿Los padres de familia participan activa y responsablemente en proyectos que beneficien a la escuela.?</label>
+              <label>
+                <%if @participacion.padres_participan_proy %>
+                  <%= @participacion.padres_participan_proy_desc %>
+                <%else%>
+                  NO.
+                <%end%>
+              </label>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
   </table>
 </div>
