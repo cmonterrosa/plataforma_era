@@ -1,37 +1,40 @@
 <div class="container">
-<% form_for :user, @user, :url => { :action => "create", :controller => "sessions"}, :html => {:class => "formee"} do |f| -%>
-      <fieldset>
-        <legend>Ingreso</legend>
-           <div class="grid-4-12">
-               <label>Clave de la escuela:</label>
-               <!-- <input type="text" value="Escriba la clave completa" /> -->
-               <%=f.text_field :login%>
-            </div>
-            <div class="grid-12-12 clear">
-            </div>
+  <% form_for :user, @user, :url => { :action => "create", :controller => "sessions"}, :html => {:class => "formee"} do |f| -%>
+  <table width="50%" align="center" >
+    <tr>
+      <td>
+        <fieldset>
+          <legend>Ingreso</legend>
+          <div class="grid-login">
+            <label>Clave de la escuela:</label>
+            <%=f.text_field :login%>
+          </div>
 
-           
+          <div class="grid-12-12 clear"></div>
 
-          <div class="grid-4-12">
-               <label>Contraseña:</label>
-               <!-- <input type="text" value="Escriba la clave completa" /> -->
-               <%=f.password_field :password%>
-            </div>
+          <div class="grid-login">
+            <label>Contraseña:</label>
+            <%=f.password_field :password%>
+          </div>
 
-           <div class="grid-12-12 clear">
-            </div>
+          <div class="grid-12-12 clear"></div>
 
-             
-           <div class="grid-4-12">
-                   <input class="right" type="submit" title="INICIAR SESION" value="INICIAR SESIÓN" />
-            </div>
+          <div class="grid-login">
+            <input class="right" type="submit" title="INICIAR SESION" value="INICIAR SESIÓN" />
+          </div>
 
-            <div class="grid-12-12">
-              <%=link_to "¿No estás registrado? ", {:action => "new", :controller => "users"}, :style => "font-size:14px;color:#003366; text-decoration: none;"%> <span style="font-size:18px;"> | </span>  <%=link_to " ¿Olvidaste tu contraseña? ", {:action => "forgot", :controller => "users"}, :style => "font-size:14px;color:#003366; text-decoration: none;"%>
-            </div>
-    </fieldset>
+          <div class="grid-12-12 clear"></div>
+            
+          <div class="grid-12-12">
+            <%=link_to "¿No estás registrado? ", {:action => "new", :controller => "users"}, :style => "font-size:14px;color:#003366; text-decoration: none;"%> <span style="font-size:18px;"> | </span>  <%=link_to " ¿Olvidaste tu contraseña? ", {:action => "forgot", :controller => "users"}, :style => "font-size:14px;color:#003366; text-decoration: none;"%>
+          </div>
+
+        </fieldset>
+      </td>
+    </tr>
+  </table>
   <%end%>
 </div>
-
+      
 
 

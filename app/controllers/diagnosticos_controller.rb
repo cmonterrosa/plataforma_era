@@ -5,7 +5,6 @@ class DiagnosticosController < ApplicationController
 
   
   def index
-
   end
 
   def new_or_edit
@@ -15,7 +14,7 @@ class DiagnosticosController < ApplicationController
     end
     redirect_to :action => "index"
   end
-
+    
   def reporte
     @diagnostico = Diagnostico.find(params[:id]) if params[:id]
     @competencia = @diagnostico.competencia if @diagnostico.competencia
@@ -23,9 +22,8 @@ class DiagnosticosController < ApplicationController
     @huella = @diagnostico.huella if @diagnostico.huella
     @consumo = @diagnostico.consumo if @diagnostico.consumo
     @participacion = @diagnostico.participacion if @diagnostico.participacion
-     
   end
-
+  
   private
 
   def set_layout
@@ -35,4 +33,5 @@ class DiagnosticosController < ApplicationController
       'era'
     end
   end
+
 end

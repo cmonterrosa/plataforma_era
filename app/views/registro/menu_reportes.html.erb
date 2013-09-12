@@ -1,30 +1,29 @@
-<h1 align="center">Impresión de documentos</h1>
-
-<!-- constancia -->
 <div class="container">
-  <% form_for :escuela, @escuela, :url => { :action => "generar", :controller => "constancia", :id => @escuela }, :html => {:class => "formee"} do |f| -%>
-      <fieldset>
+  <div class="formee">
+    
+    <h4 style="text-align: center;">IMPRESIÓN DE DOCUMENTOS</h4>
+    
+    <div class="grid-center"><hr /></div>
 
-    	<div class="login">
-            <div class="grid-6-12">
-                   <input class="right" type="submit" title="IMPRIMIR CONSTANCIA DE INSCRIPCION" value="IMPRIMIR CONSTANCIA DE INSCRIPCION" />
-            </div>
-        </div>
+    <div class="grid-6-12 clear"></div>
+    
+    <!-- constancia -->
+    <% form_for :escuela, @escuela, :url => { :action => "generar", :controller => "constancia", :id => @escuela }, :html => { :target => "_blank"} do |f| -%>
+    <fieldset>
+      <div class="grid-center">
+        <input type="submit" title="IMPRIMIR CONSTANCIA DE INSCRIPCION" value="IMPRIMIR CONSTANCIA DE INSCRIPCION" />
+      </div>
+    <%end%>
+
+    <div class="grid-6-12 clear"></div>
+    
+    <!-- carta compromiso -->
+    <% form_for :escuela, @escuela, :url => { :action => "carta_compromiso_basica", :controller => "constancia", :id => @escuela }, :html => { :target => "_blank"} do |f| -%>
+      <div class="grid-center">
+        <input type="submit" title="IMPRIMIR CARTA COMPROMISO" value="IMPRIMIR CARTA COMPROMISO" />
+      </div>
     </fieldset>
-  <%end%>
-</div>
-
-
-<!-- carta compromiso -->
-<div class="container">
-  <% form_for :escuela, @escuela, :url => { :action => "carta_compromiso_basica", :controller => "constancia", :id => @escuela }, :html => {:class => "formee"} do |f| -%>
-      <fieldset>
-
-    	<div class="login">
-            <div class="grid-6-12">
-                     <input class="right" type="submit" title="IMPRIMIR CARTA COMPROMISO" value="IMPRIMIR CARTA COMPROMISO" />
-            </div>
-        </div>
-    </fieldset>
-  <%end%>
+    <%end%>
+    
+  </div>
 </div>

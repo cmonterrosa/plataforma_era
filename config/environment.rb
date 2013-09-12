@@ -5,11 +5,10 @@ RAILS_GEM_VERSION = '2.3.15' unless defined? RAILS_GEM_VERSION
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
-
+require "pdfkit"
+  
 Rails::Initializer.run do |config|
 
-  require "pdfkit"
-  config.middleware.use PDFKit::Middleware
   # Settings in config/environments/* take precedence over those specified here.
   # Application configuration should go into files in config/initializers
   # -- all .rb files in that directory are automatically loaded.
@@ -43,5 +42,7 @@ Rails::Initializer.run do |config|
   # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}')]
   config.i18n.default_locale = :esMX
   SITE_URL = "localhost:3010"
-
+  
+  config.middleware.use "PDFKit::Middleware", :print_media_type => true
+  
 end

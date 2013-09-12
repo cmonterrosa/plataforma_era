@@ -80,6 +80,29 @@ Structure
 *padding: 0.8% 0.25% 1%;
 }
 
+.grid-center{
+    text-align: center;
+    margin-left:1%;
+	margin-right:1%;
+/*	padding: 0.8% 0.5% 1% 20%;*/
+	height:100%;
+/*ie7*/
+*margin-left:.8%;
+*margin-right:.8%;
+*padding: 0.8% 0.25% 1%;
+}
+
+.grid-login{
+    margin-left:1%;
+    margin-right:1%;
+    padding: 0.8% 0.5% 1% 22%;
+    height:100%;
+/*ie7*/
+*margin-left:.8%;
+*margin-right:.8%;
+*padding: 0.8% 0.25% 1%;
+}
+
 /* 12-column Grid (thanks for Fluid 960 Grid System) */
 .grid-1-12 {width: 5.333%;}
 .grid-2-12 {width: 13.666%;}
@@ -94,6 +117,7 @@ Structure
 .grid-11-12 {width: 88.666%;}
 .grid-12-12 {width: 97%;}
 .grid-form {width: 47%;}
+.grid-login {width: 50%;}
 
 
 /* first item */ .formee .alpha {margin-left:0;}

@@ -1,135 +1,128 @@
 <div class="container">
 
-      <div class="formee-msg-info">
-    	<h3>Información importante</h3>
-        <ul>
-            <li>Los campos marcados con <em class="formee-req">*</em> son obligatorios.</li>
-        </ul>
-      </div>
-
+  <div class="formee-msg-info">
+    <h3>Información importante</h3>
+    <ul>
+      <li>Los campos marcados con <em class="formee-req">*</em> son obligatorios.</li>
+    </ul>
+  </div>
 
   <% form_for :escuela, @escuela, :url => { :action => "save", :id => @escuela, :clave => @escuela.clave }, :html => {:class => "formee"} do |f| -%>
-      <fieldset>
-        <legend>Registro de Escuelas</legend>
+  <fieldset>
+    <legend>Registro de Escuelas</legend>
 
-    	   <div id="prellenado" style="background:#ebf7aa;">
-              <div class="grid-4-12">
-                <label>Clave <em class="formee-req">*</em></label>
-                  <%=f.text_field :clave, :disabled => true%>
-              </div>
+    <div id="prellenado" style="background:#ebf7aa;">
+      <div class="grid-4-12">
+        <label>Clave <em class="formee-req">*</em></label>
+        <%=f.text_field :clave, :disabled => true%>
+      </div>
 
-              <div class="grid-8-12">
-                <label>Nombre del Centro de Trabajo <em class="formee-req">*</em></label>
-                  <%=f.text_field :nombre, :disabled => true%>
-              </div>
+      <div class="grid-8-12">
+        <label>Nombre del Centro de Trabajo <em class="formee-req">*</em></label>
+        <%=f.text_field :nombre, :disabled => true%>
+      </div>
 
-              <div class="grid-6-12">
-                <label>Zona Escolar <em class="formee-req">*</em></label>
-                  <%=f.text_field :zona_escolar, :disabled => true%>
-              </div>
+      <div class="grid-6-12">
+        <label>Zona Escolar <em class="formee-req">*</em></label>
+        <%=f.text_field :zona_escolar, :disabled => true%>
+      </div>
 
-              <div class="grid-6-12">
-                <label>Sector <em class="formee-req">*</em></label>
-                  <%=f.text_field :sector, :disabled => true%>
-              </div>
+      <div class="grid-6-12">
+        <label>Sector <em class="formee-req">*</em></label>
+        <%=f.text_field :sector, :disabled => true%>
+      </div>
 
-              <div class="grid-6-12">
-                <label>Localidad <em class="formee-req">*</em></label>
-                <%=f.text_field :localidad, :disabled => true%>
-              </div>
+      <div class="grid-6-12">
+        <label>Localidad <em class="formee-req">*</em></label>
+        <%=f.text_field :localidad, :disabled => true%>
+      </div>
 
-              <div class="grid-6-12">
-                <label>Municipio <em class="formee-req">*</em></label>
-                  <%=f.text_field :municipio, :disabled => true%>
-              </div>
+      <div class="grid-6-12">
+        <label>Municipio <em class="formee-req">*</em></label>
+        <%=f.text_field :municipio, :disabled => true%>
+      </div>
+    </div>
 
-            </div>
-
-              <div class="grid-6-12 clear">
-              </div>
+    <div class="grid-6-12 clear"></div>
         
-        
+    <!-- categoria -->
+    <div class="grid-12-12">
+      <label>Categoría: <em class="formee-req">*</em></label>
+        <ul class="formee-list">
+          <% for categoria in CategoriaEscuela.find(:all) %>
+            <li><%= check_box_tag 'escuela[categoria_escuela_id]', categoria.id, escuela_has_categoria?(@escuela, categoria) %><label><%=categoria.descripcion%></label></li>
+          <%end%>
+        </ul>
+    </div>
 
-            <!-- categoria -->
-            <div class="grid-12-12">
-                <label>Categoría: <em class="formee-req">*</em></label>
-                <ul class="formee-list">
+    <!-- programa -->
+    <div class="grid-12-12">
+      <label>La institución educativa participa en algún programa: ¿Cúal?</label>
+      <%=text_field :proyecto, :participa_programa%>
+    </div>
 
-                  <% for categoria in CategoriaEscuela.find(:all) %>
-                      <li><%= check_box_tag 'escuela[categoria_escuela_id]', categoria.id, escuela_has_categoria?(@escuela, categoria) %><label><%=categoria.descripcion%></label></li>
-                  <%end%>
-                </ul>
-            </div>
+    <!-- director -->
+    <div class="grid-12-12">
+      <label>Nombre del director: <em class="formee-req">*</em></label>
+      <%=f.text_field  :nombre_director%>
+    </div>
 
-        <!-- programa -->
-        <div class="grid-12-12">
-               <label>La institución educativa participa en algún programa: ¿Cúal?</label>
-               <%=text_field :proyecto, :participa_programa%>
-        </div>
+    <div class="grid-6-12">
+      <label>Teléfono del director: </label>
+      <%=f.text_field :telefono_director%>
+    </div>
 
-        <!-- director -->
-        <div class="grid-12-12">
-               <label>Nombre del director: <em class="formee-req">*</em></label>
-               <%=f.text_field  :nombre_director%>
-        </div>
+    <div class="grid-6-12">
+      <label>Correo electrónico de la escuela: <em class="formee-req">*</em></label>
+      <%=f.text_field :correo_electronico%>
+    </div>
 
+    <!-- nombre del proyecto -->
+    <div class="grid-12-12">
+      <label>Nombre del proyecto: <em class="formee-req">*</em></label>
+      <%=text_field  :proyecto, :nombre%>
+    </div>
 
-        <div class="grid-6-12">
-               <label>Teléfono del director: </label>
-               <%=f.text_field :telefono_director%>
-        </div>
+    <!-- responsables -->
+    <div class="grid-12-12">
+      <label>Nombre(s) del (los) responsable (s) del proyecto: <em class="formee-req">*</em></label>
+      <%=text_area  :proyecto, :responsables%>
+    </div>
 
-         <div class="grid-6-12">
-               <label>Correo electrónico de la escuela: <em class="formee-req">*</em></label>
-               <%=f.text_field :correo_electronico%>
-        </div>
+    <!-- telefono y correo electronico de responsables -->
+    <div class="grid-6-12">
+      <label>Teléfono: </label>
+      <%=text_field :proyecto, :telefono_responsable%>
+    </div>
 
-         <!-- nombre del proyecto -->
-        <div class="grid-12-12">
-               <label>Nombre del proyecto: <em class="formee-req">*</em></label>
-               <%=text_field  :proyecto, :nombre%>
-        </div>
+    <div class="grid-6-12">
+      <label>Correo electrónico: </label>
+      <%=text_field :proyecto, :correo_electronico_responsable%>
+    </div>
 
-        <!-- responsables -->
-        <div class="grid-12-12">
-               <label>Nombre(s) del (los) responsable (s) del proyecto: <em class="formee-req">*</em></label>
-               <%=text_area  :proyecto, :responsables%>
-        </div>
+    <!-- total de personal -->
+    <div class="grid-4-12">
+      <label>Total personal docente: </label>
+      <%=f.text_field :total_personal_docente%>
+    </div>
 
-        <!-- telefono y correo electronico de responsables -->
-        <div class="grid-6-12">
-               <label>Teléfono: </label>
-               <%=text_field :proyecto, :telefono_responsable%>
-        </div>
+    <div class="grid-4-12">
+      <label>Total personal administrativo: </label>
+      <%=f.text_field :total_personal_administrativo%>
+    </div>
 
-         <div class="grid-6-12">
-               <label>Correo electrónico: </label>
-               <%=text_field :proyecto, :correo_electronico_responsable%>
-        </div>
+    <div class="grid-4-12">
+      <label>Total personal de apoyo: </label>
+      <%=f.text_field :total_personal_apoyo%>
+    </div>
 
-        <!-- total de personal -->
-        <div class="grid-4-12">
-               <label>Total personal docente: </label>
-               <%=f.text_field :total_personal_docente%>
-        </div>
+    <!-- submit -->
+    <div class="grid-12-12">
+      <input class="right" type="submit" title="GUARDAR REGISTRO Y GENERAR DOCUMENTOS" value="GUARDAR REGISTRO Y GENERAR DOCUMENTOS" />
+    </div>
 
-        <div class="grid-4-12">
-               <label>Total personal administrativo: </label>
-               <%=f.text_field :total_personal_administrativo%>
-        </div>
-
-        <div class="grid-4-12">
-               <label>Total personal de apoyo: </label>
-               <%=f.text_field :total_personal_apoyo%>
-        </div>
-
-        <!-- submit -->
-        <div class="grid-12-12">
-               <input class="right" type="submit" title="GUARDAR REGISTRO Y GENERAR DOCUMENTOS" value="GUARDAR REGISTRO Y GENERAR DOCUMENTOS" />
-        </div>
-
-       </div>
-    </fieldset>
+  </fieldset>
+       
   <%end%>
 </div>
 

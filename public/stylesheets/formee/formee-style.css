@@ -47,6 +47,7 @@ Style
 	letter-spacing: -.035em;
 	color:#2b2b2b;
 	font-weight: normal;
+      font-weight: bold;
 }
 /* form elements  */
 .formee-lbl, .formee label {
@@ -396,3 +397,54 @@ box-shadow:         0px 6px 0px rgba(0, 90, 0, 0.8);
   background-image: -ms-linear-gradient(bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4));
   background-image: linear-gradient(bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4));
 }
+
+
+@media print {
+    body { background-color: #FFF; }
+  #container {
+        width: auto;
+        margin: 0;
+        padding: 0;
+        border: none;
+    }
+
+    #line_items {
+        page-break-before: always;
+    }
+    #pdf_link {
+        display: none;
+    }  
+}  
+/*@media print {
+  #line-items {
+    page-break-before: always;
+  }
+
+  #plazs_list{
+      display: none;
+  }
+
+  #pdf-link {
+    display: none;
+  }
+
+  #table-hide {
+    display: none;
+  }
+
+  #table-h {
+    display: inline;
+  }
+
+  #toplinks {
+        font-family: Verdana, Arial, Helvetica, sans-serif;
+        font-size: 10px;
+        font-weight: bold;
+        background-image: url(nav_bg.gif);
+        background-repeat: repeat-x;
+        padding: 3px 0;
+        overflow: hidden;
+        text-align: center;
+        width: 950px;
+  }
+}*/
