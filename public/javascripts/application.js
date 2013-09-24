@@ -55,7 +55,7 @@ function enable_disabled_checkbox(obj1, obj2, obj3){
     checkbox_no = document.getElementById(obj3);
 
     if(combo.value > 0){
-        
+
     }
 }
 }
