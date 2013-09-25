@@ -1,6 +1,6 @@
 class RegistroController < ApplicationController
   layout 'era'
-  before_filter "login_required"
+  require_role [:escuela, :coordinador, :adminplat, :admin]
   
   def index
     redirect_to :action => "new_or_edit"
@@ -37,9 +37,10 @@ class RegistroController < ApplicationController
     @proyecto.clave = @escuela.clave if @escuela.clave
     @escuela.proyecto = @proyecto
     if @escuela.save && @proyecto.save
+      @escuela.update_bitacora!("esc-datos", current_user)
       flash[:notice] = "Registro guardado correctamente"
       #redirect_to :controller => "constancia", :action => "generar", :id => @escuela
-       redirect_to :action => "menu_reportes", :id => @escuela
+      redirect_to :action => "menu_reportes", :id => @escuela
     else
       flash[:error] = "No se puedo guardar, verifique el registro"
       render :action => "new_or_edit"

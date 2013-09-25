@@ -9,8 +9,14 @@ class DiagnosticosController < ApplicationController
 
   def new_or_edit
     unless Diagnostico.find_by_escuela_id(Escuela.find_by_clave(current_user.login.upcase))
-      @diagnostico = Diagnostico.new(:escuela_id => Escuela.find_by_clave(current_user.login.upcase).id)
-      (@diagnostico.save)? flash[:notice] = "Bienvenido a la captura del diagnóstico" : flash[:error] = "No se pudo crear objeto, verifique"
+      @escuela = Escuela.find_by_clave(current_user.login.upcase)
+      @diagnostico = Diagnostico.new(:escuela_id => @escuela.id, :user_id => current_user.id)
+      if @diagnostico.save
+        @escuela.update_bitacora!("diag-inic", current_user)
+        flash[:notice] = "Bienvenido a la captura del diagnóstico"
+      else
+        flash[:error] = "No se pudo crear objeto, verifique"
+      end
     end
     redirect_to :action => "index"
   end
@@ -27,11 +33,7 @@ class DiagnosticosController < ApplicationController
   private
 
   def set_layout
-    if action_name == 'reporte'
-      'reporte'
-    else
-      'era'
-    end
+    (action_name == 'reporte')? 'reporte' : 'era'
   end
 
 end

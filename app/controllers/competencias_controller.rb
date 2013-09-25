@@ -12,6 +12,7 @@ def save
   @competencia.update_attributes(params[:competencia])
   @competencia.diagnostico = Diagnostico.find(params[:diagnostico])
   if @competencia.save
+
     flash[:notice] = "Registro guardado correctamente"
     redirect_to :controller => "diagnosticos"
   else
