@@ -1,4 +1,4 @@
-<% form_for :competencia, @competencia, :url => { :action => "save", :id => @competencia, :diagnostico => @diagnostico.id }, :html => {:class => "formee"} do |f| -%>
+<% form_for :competencia, @competencia, :url => { :action => "save", :id => @competencia, :diagnostico => @diagnostico.id }, :html => {:class => "formee", :name => "competencia"} do |f| -%>
 <table class="principal" width="100%" border="0" align="center" cellpadding="2" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
   <tr bgcolor="#003366" style="opacity: 0.7;" >
     <td align="center"><h4>EJE 1: DESARROLLO DE COMPETENCIAS</h4></td>
@@ -118,7 +118,7 @@
         <tr>
           <td>
             <%#*<input title="guardar y regresar" alt=" Guardar y regresar a la sección anterior " type="image"  src="/images/botones/btn_guardar.png" width="150" height="40" style="margin-left:90px;"/>%>
-            <a href="#" onclick="document.forms[0].submit();return false;" id="button4" class="buttonText"><img src="/images/formee/form-ic-success.png"/>&nbsp;&nbsp;Guardar y Regresar</a>
+            <a href="#" onclick="submit_form(); return false;" id="button4" class="buttonText"><img src="/images/formee/form-ic-success.png"/>&nbsp;&nbsp;Guardar y Regresar</a>
           </td>
           <td>
             <a href="<%= diagnosticos_path%>" id="buttonc" class="buttonText"><img src="/images/formee/form-ic-error.png"/>&nbsp;&nbsp;Regresar sin Guardar</a>
