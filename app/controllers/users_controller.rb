@@ -20,8 +20,9 @@ class UsersController < ApplicationController
         if @escuela
             success = @user && @user.save
               if success && @user.errors.empty?
-                redirect_back_or_default('/')
-                  flash[:notice] = "ESCUELA #{@escuela.nombre} REGISTRADA"
+                redirect_back_or_default('/registro')
+                @escuela.update_bitacora!("esc-regis", @user)
+                flash[:notice] = "ESCUELA #{@escuela.nombre} REGISTRADA"
               else
                 flash[:error]  = "No se puedo crear la cuenta, verifique los datos."
                 render :action => 'new'
