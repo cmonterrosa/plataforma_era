@@ -9,7 +9,7 @@
 
   <% form_for :escuela, @escuela, :url => { :action => "save", :id => @escuela, :clave => @escuela.clave }, :html => {:class => "formee"} do |f| -%>
   <fieldset>
-    <legend>Registro de Escuelas</legend>
+    <legend>Registro&nbsp;de&nbsp;Escuelas</legend>
 
     <div id="prellenado" style="background:#ebf7aa;">
       <div class="grid-4-12">
@@ -42,19 +42,14 @@
         <%=f.text_field :municipio, :disabled => true%>
       </div>
     </div>
-
-    <div class="grid-6-12 clear"></div>
-        
+    
     <!-- categoria -->
-    <div class="grid-12-12">
+    <div class="grid-6-12">
       <label>Categoría: <em class="formee-req">*</em></label>
-        <ul class="formee-list">
-          <% for categoria in CategoriaEscuela.find(:all) %>
-            <li><%= check_box_tag 'escuela[categoria_escuela_id]', categoria.id, escuela_has_categoria?(@escuela, categoria) %><label><%=categoria.descripcion%></label></li>
-          <%end%>
-        </ul>
+      <%=f.select(:categoria_escuela_id, CategoriaEscuela.all.collect {|p| [ p.descripcion, p.id ] })%>
     </div>
-
+    <div class="grid-6-12 clear"></div>
+    
     <!-- programa -->
     <div class="grid-12-12">
       <label>La institución educativa participa en algún programa: ¿Cúal?</label>
@@ -126,6 +121,21 @@
   <%end%>
 </div>
 
+<script type="text/javascript">
+
+  <%#*var f29 = new LiveValidation('escuela_categoria_escuela_id');%>
+  <%#*f29.add(Validate.Exclusion, { within: ['', null]});%>
+
+  var nombre_director = new LiveValidation( 'escuela_nombre_director', {onlyOnSubmit: true} );
+  nombre_director.add( Validate.Presence );
+  var proyecto_nombre = new LiveValidation( 'proyecto_nombre', {onlyOnSubmit: true } );
+  proyecto_nombre.add( Validate.Presence );
+  var correo_electronico = new LiveValidation( 'escuela_correo_electronico' );
+  correo_electronico.add( Validate.Presence, {onlyOnSubmit: true } );
+  correo_electronico.add( Validate.Email );
+  var proyecto_responsable = new LiveValidation( 'proyecto_responsables', {onlyOnSubmit: true } );
+  proyecto_responsable.add( Validate.Presence );
+</script>
 
 
 
