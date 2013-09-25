@@ -161,7 +161,7 @@ Structure
 }
 /*.formee textarea {height: 10em;}*/
 .formee textarea {height: 5em;}
-.formee select {padding:5px;height:2em;}
+.formee select {padding:5px;height:2.1em;}
 .formee-list .formee-lbl, .formee-list label {
 	display: inline;
 	height: auto;

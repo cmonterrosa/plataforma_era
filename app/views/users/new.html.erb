@@ -49,9 +49,23 @@
 <%end%>
 </div>
 
+<script type="text/javascript">
 
+  <%#*var f29 = new LiveValidation('escuela_categoria_escuela_id');%>
+  <%#*f29.add(Validate.Exclusion, { within: ['', null]});%>
 
-
+  var login = new LiveValidation( 'user_login', {onlyOnSubmit: true} );
+  login.add( Validate.Presence );
+  var nombre = new LiveValidation( 'user_nombre', {onlyOnSubmit: true } );
+  nombre.add( Validate.Presence );
+  var email = new LiveValidation( 'user_email' );
+  email.add( Validate.Email );
+  var password = new LiveValidation( 'user_password' );
+  password.add( Validate.Presence, {onlyOnSubmit: true } );
+  password.add( Validate.Length, { minimum: 6 } );
+  var password_confirmation = new LiveValidation( 'user_password_confirmation' );
+  password_confirmation.add( Validate.Confirmation, { match: 'user_password'} );
+</script>
 
 
 

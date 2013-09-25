@@ -2,6 +2,7 @@ class Competencia < ActiveRecord::Base
   belongs_to :diagnostico
 
   before_save :check
+#  before_save :change_to_upcase
 
   def check
     self.doc_capacitan_salud_desc = "" if self.doc_capacitan_salud == "NO"
@@ -11,5 +12,9 @@ class Competencia < ActiveRecord::Base
     self.alu_involucran_proy_desc = "" if self.alu_involucran_proy == "NO"
     self.alu_capacitan_salud_ma_desc = "" if self.alu_capacitan_salud_ma == "NO"
   end
+
+#  def change_to_upcase
+#    self.attribute_names.values.upcase!
+#  end
 
 end
