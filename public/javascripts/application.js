@@ -58,4 +58,27 @@ function enable_disabled_checkbox(obj1, obj2, obj3){
 
     }
 }
+
+function submit_form(){
+    alert(document.forms[0].ATTRIBUTE_NODE);
+
+    numero=document.forms[0].elements.length;
+    for(a=0;a<numero;a++) {
+        document.forms[0].elements[a].value = document.forms[0].elements[a].value.toUpperCase();
+    }
+
+    document.forms['competencia'].submit();
+    return false;
+}
+
+function change_to_upcase(){
+    numero=document.forms[0].elements.length;
+    for(a=0;a<numero;a++) {
+        document.forms[0].elements[a].value = document.forms[0].elements[a].value.toUpperCase();
+    }
+    document.forms[0].submit();
+    window.location = "/diagnosticos"
+}
+
+
 }
