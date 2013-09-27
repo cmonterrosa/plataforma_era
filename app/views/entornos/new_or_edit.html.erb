@@ -101,7 +101,7 @@
         <tr>
           <td>
             <%#*<input title="guardar y regresar" alt=" Guardar y regresar a la sección anterior " type="image"  src="/images/botones/btn_guardar.png" width="150" height="40" style="margin-left:90px;"/>%>
-            <a href="#" onclick="document.forms[0].submit();return false;" id="button4" class="buttonText"><img src="/images/formee/form-ic-success.png"/>&nbsp;&nbsp;Guardar y Regresar</a>
+            <a href="#" onclick="submit_form();" id="button4" class="buttonText"><img src="/images/formee/form-ic-success.png"/>&nbsp;&nbsp;Guardar y Regresar</a>
           </td>
           <td>
             <%#= link_to image_tag("botones/btn_regresar.png", :width => 170, :height=>"40", :border =>0, :style => "margin-left:90px;" ) , :controller => diagnosticos_path, :id => @diagnostico.id%>

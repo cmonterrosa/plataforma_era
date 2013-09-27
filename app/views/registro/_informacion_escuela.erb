@@ -125,10 +125,6 @@
 </div>
 
 <script type="text/javascript">
-
-  <%#*var f29 = new LiveValidation('escuela_categoria_escuela_id');%>
-  <%#*f29.add(Validate.Exclusion, { within: ['', null]});%>
-
   var nombre_director = new LiveValidation( 'escuela_nombre_director', {onlyOnSubmit: true} );
   nombre_director.add( Validate.Presence );
   var proyecto_nombre = new LiveValidation( 'proyecto_nombre', {onlyOnSubmit: true } );

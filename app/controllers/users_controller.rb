@@ -1,9 +1,6 @@
 class UsersController < ApplicationController
-  # Be sure to include AuthenticationSystem in Application Controller instead
-  include AuthenticatedSystem
-  
+#  include AuthenticatedSystem
 
-  # render new.rhtml
   def new
     @user = User.new
   end
@@ -16,25 +13,22 @@ class UsersController < ApplicationController
       flash[:error]  = "Escuela ya existe registrada"
       render :action => 'new'
     else
-       @user.activated_at = Time.now
-        if @escuela
-            success = @user && @user.save
-              if success && @user.errors.empty?
-                redirect_back_or_default('/registro')
-                @escuela.update_bitacora!("esc-regis", @user)
-                flash[:notice] = "ESCUELA #{@escuela.nombre} REGISTRADA"
-              else
-                flash[:error]  = "No se puedo crear la cuenta, verifique los datos."
-                render :action => 'new'
-              end
+      @user.activated_at = Time.now
+      if @escuela
+        success = @user && @user.save
+        if success && @user.errors.empty?
+          redirect_back_or_default('/registro')
+          @escuela.update_bitacora!("esc-regis", @user)
+          flash[:notice] = "ESCUELA #{@escuela.nombre} REGISTRADA"
         else
-            flash[:error]  = "No existe escuela con esa clave, intente de nuevo"
-            render :action => 'new'
+          flash[:error]  = "No se puedo crear la cuenta, verifique los datos."
+          render :action => 'new'
         end
+      else
+        flash[:error]  = "No existe escuela con esa clave, intente de nuevo"
+        render :action => 'new'
+      end
     end
-
-
-
   end
 
   def activate
@@ -74,20 +68,17 @@ class UsersController < ApplicationController
   end
 
   def reset
-  @user = User.find_by_reset_code(params[:reset_code]) unless params[:reset_code].nil?
-  if request.post?
-    if @user.update_attributes(:password => params[:user][:password], :password_confirmation => params[:user][:password_confirmation])
-      self.current_user = @user
-      @user.delete_reset_code
-      flash[:notice] = "Contraseña cambiada correctamente para: #{@user.email}"
-      redirect_to root_url
-    else
-      render :action => :reset
+    @user = User.find_by_reset_code(params[:reset_code]) unless params[:reset_code].nil?
+    if request.post?
+      if @user.update_attributes(:password => params[:user][:password], :password_confirmation => params[:user][:password_confirmation])
+        self.current_user = @user
+        @user.delete_reset_code
+        flash[:notice] = "Contraseña cambiada correctamente para: #{@user.email}"
+        redirect_to root_url
+      else
+        render :action => :reset
+      end
     end
   end
-end
-
-
-
 
 end

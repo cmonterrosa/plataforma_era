@@ -1,5 +1,6 @@
 class ParticipacionsController < ApplicationController
-
+  before_filter :login_required
+  
   def new_or_edit
     @diagnostico = Diagnostico.find(params[:id]) if params[:id]
     @diagnostico ||= Diagnostico.new

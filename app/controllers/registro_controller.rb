@@ -1,6 +1,7 @@
 class RegistroController < ApplicationController
   layout 'era'
-  require_role [:escuela, :coordinador, :adminplat, :admin]
+  before_filter :login_required
+#  require_role [:escuela, :coordinador, :adminplat, :admin]
   
   def index
     redirect_to :action => "new_or_edit"

@@ -1,8 +1,6 @@
 class DiagnosticosController < ApplicationController
   layout :set_layout
-
   before_filter :login_required
-
   
   def index
   end
