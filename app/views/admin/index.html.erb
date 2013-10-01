@@ -1,2 +1,31 @@
-<h1>Admin#index</h1>
-<p>Find me in app/views/admin/index.html.erb</p>
+<!-- Menú de administrador -->
+<div class="titulos">
+  <p>
+    Administración
+  </p>
+</div>
+
+<table width="60%" border="0" cellspacing="0" cellpadding="0" align="center">
+    <tr align="center">
+
+       <!-- Búsqueda de Escuela -->
+       <td><%=link_to image_tag('admin/escuela.png', :size => "128x128", :mouseover => 'admin/escuela.png') , {:action => "show_users", :controller => "admin"}, :title => "Atención extraordinaria"%></td
+     
+       <!-- Perfiles -->
+        <td><%=link_to image_tag('admin/usuarios.png', :size => "128x128", :size => "128x128", :mouseover => 'admin/usuarios.png') , {:action => "show_roles", :controller => "admin"}, :title => "Atención personal"%></td
+  </tr>
+
+  <!-- TITULOS -->
+  <tr align="center">
+    <td class="menu">Escuelas</td>
+    <td class="menu">Perfiles</td>
+  
+  </tr>
+</table>
+<br/>
+
+<!--
+<div class="titulocalendario">
+  <= link_to image_tag("botones/regresar_menu_ant.png", :border =>0) , :controller => "home", :action => "index"%><br />
+</div>
+-->
