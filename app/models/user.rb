@@ -39,12 +39,13 @@ class User < ActiveRecord::Base
   #validates_uniqueness_of   :email
   #validates_format_of       :email,    :with => Authentication.email_regex, :message => Authentication.bad_email_message
 
-  before_create :make_activation_code 
+  before_create :make_activation_code
+  before_create :assign_role_by_default
 
   # HACK HACK HACK -- how to do attr_accessible from here?
   # prevents a user from submitting a crafted form that bypasses activation
   # anything else you want your user to change should be added here.
-  attr_accessible :login, :email, :nombre, :password, :password_confirmation
+  attr_accessible :login, :email, :nombre, :password, :password_confirmation, :blocked
 
 
   def before_save
@@ -75,6 +76,15 @@ class User < ActiveRecord::Base
   
   def recently_activated?
     @activated
+  end
+
+  def is_blocked?
+    (self.blocked == true)? true : false
+  end
+  
+  def nombre_full
+    nombre = (Escuela.find_by_clave(self.login)) ? Escuela.find_by_clave(self.login).nombre : "-------------"
+    "#{self.login.upcase} | #{nombre}"
   end
 
   # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
@@ -113,6 +123,12 @@ def delete_reset_code
   self.attributes = {:reset_code => nil}
   save(false)
 end
+
+ def assign_role_by_default
+      self.roles << Role.find_by_name("escuela")
+      #--- Si es el primer usuario creado lo hacemos administrador ---
+      self.roles << Role.find_by_name("admin") if User.count(:id) < 1
+ end
 
 
 
