@@ -58,9 +58,17 @@
 	position:relative;
         
 }
-a{
+a, a:hover{
 	/*color: #fff;*/
 	text-decoration: none;
+}
+a.fancybox, a.fancybox:hover{
+	text-decoration: none;
+      color: #ff0000;
+      text-shadow: 0 0 0.2em #FFF, 0 0 0.2em #FFF, 0 0 0.2em #FFF;
+      text-align: center;
+      font-family: helvetica;
+      font-size: 12px;
 }
 .clr{
 	clear: both;

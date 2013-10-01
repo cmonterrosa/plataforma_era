@@ -3,6 +3,7 @@ class DiagnosticosController < ApplicationController
   before_filter :login_required
   
   def index
+    @competencias = Competencia.find(:all)
   end
 
   def new_or_edit

@@ -10,41 +10,39 @@
           <td colspan="3" align="center"><h5>DOCENTES</h5></td>
         </tr>
         <tr>
-          <td width="49%" align="justify"><label>¿El personal docente asiste y se capacita en materia de salud y medio ambiente?</label></td>
+          <td colspan="3" align="justify"><label>¿El personal docente asiste y se capacita en materia de salud y medio ambiente?<em class="formee-req"> *</em></label></td>
+        </tr>
+        <tr>
+          <td width="49%" align="center"><label>Salud</label></td>
           <td>&nbsp;</td>
-          <td width="49%" align="justify"><label>¿Los conocimientos adquiridos son aplicados?</label></td>
+          <td width="49%" align="center"><label>Medio Ambiente</label></td>
         </tr>
         <tr>
           <td align="center">
-            <table border="0" width="100%">
-              <tr>
-                <td width="49%" align="center"><label>Salud</label></td>
-                <td>&nbsp;</td>
-                <td width="49%" align="center"><label>Medio Ambiente</label></td>
-              </tr>
-              <tr>
-                <td align="center">
-                  <label>
-                    SI <%= f.radio_button :doc_capacitan_salud, "SI", :onclick => "enable_disable_desc('competencia_doc_capacitan_salud_si', 'competencia_doc_capacitan_salud_no', 'competencia_doc_capacitan_salud_desc');"%>&nbsp;&nbsp;
-                    NO <%= f.radio_button :doc_capacitan_salud, "NO", :onclick => "enable_disable_desc('competencia_doc_capacitan_salud_si', 'competencia_doc_capacitan_salud_no', 'competencia_doc_capacitan_salud_desc');"%>
-                  </label>
-                </td>
-                <td>&nbsp;</td>
-                <td align="center">
-                  <label>
-                    SI <%= f.radio_button :doc_capacitan_ma, "SI", :onclick => "enable_disable_desc('competencia_doc_capacitan_ma_si', 'competencia_doc_capacitan_ma_no', 'competencia_doc_capacitan_ma_desc');"%>&nbsp;&nbsp;
-                    NO <%= f.radio_button :doc_capacitan_ma, "NO", :onclick => "enable_disable_desc('competencia_doc_capacitan_ma_si', 'competencia_doc_capacitan_ma_no', 'competencia_doc_capacitan_ma_desc');"%>
-                  </label>
-                </td>
-              </tr>
-              <tr>
-                <td><%=f.select :doc_capacitan_salud_desc, ["TALLERES", "CURSOS", "DIPLOMADOS"], {}, {:disabled => true} %></td>
-                <td>&nbsp;</td>
-                <td><%=f.select :doc_capacitan_ma_desc, ["TALLERES", "CURSOS", "DIPLOMADOS"], {}, {:disabled => true} %></td>
-              </tr>
-            </table>
+            <label>
+              SI <%= f.radio_button :doc_capacitan_salud, "SI", :onclick => "enable_disable_desc('competencia_doc_capacitan_salud_si', 'competencia_doc_capacitan_salud_no', 'competencia_doc_capacitan_salud_desc');"%>&nbsp;&nbsp;
+              NO <%= f.radio_button :doc_capacitan_salud, "NO", :onclick => "enable_disable_desc('competencia_doc_capacitan_salud_si', 'competencia_doc_capacitan_salud_no', 'competencia_doc_capacitan_salud_desc');"%>
+            </label>
+            <%= f.text_area :doc_capacitan_salud_desc, :placeholder => "Especifique...", :disabled => true %>
           </td>
           <td>&nbsp;</td>
+          <td align="center">
+            <label>
+              SI <%= f.radio_button :doc_capacitan_ma, "SI", :onclick => "enable_disable_desc('competencia_doc_capacitan_ma_si', 'competencia_doc_capacitan_ma_no', 'competencia_doc_capacitan_ma_desc');"%>&nbsp;&nbsp;
+              NO <%= f.radio_button :doc_capacitan_ma, "NO", :onclick => "enable_disable_desc('competencia_doc_capacitan_ma_si', 'competencia_doc_capacitan_ma_no', 'competencia_doc_capacitan_ma_desc');"%>
+            </label>
+            <%= f.text_area :doc_capacitan_ma_desc, :placeholder => "Especifique...", :disabled => true %>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3">&nbsp;</td>
+        </tr>
+        <tr>
+          <td width="49%" align="justify"><label>¿Los conocimientos adquiridos son aplicados?</label></td>
+          <td>&nbsp;</td>
+          <td width="49%" align="justify"><label>¿La escuela desarrolla proyectos para la aplicación de conocimientos en materia de salud y medio ambiente?</label></td>
+        </tr>
+        <tr>
           <td align="center" >
             <label>
               SI <%= f.radio_button :aplica_conocimientos, "SI", :onclick => "enable_disable_desc('competencia_aplica_conocimientos_si', 'competencia_aplica_conocimientos_no', 'competencia_aplica_conocimientos_desc');"%>&nbsp;&nbsp;
@@ -52,16 +50,7 @@
             </label>
             <%= f.text_area :aplica_conocimientos_desc, :placeholder => "Especifique...", :disabled => true %>
           </td>
-        </tr>
-        <tr>
-          <td colspan="3">&nbsp;</td>
-        </tr>
-        <tr>
-          <td width="49%" align="justify"><label>¿La escuela desarrolla proyectos para la aplicación de conocimientos en materia de salud y medio ambiente?</label></td>
           <td>&nbsp;</td>
-          <td>&nbsp;</td>
-        </tr>
-        <tr>
           <td align="center">
             <label>
               SI <%= f.radio_button :esc_desarrolla_proy, "SI", :onclick => "enable_disable_desc('competencia_esc_desarrolla_proy_si', 'competencia_esc_desarrolla_proy_no', 'competencia_esc_desarrolla_proy_desc');"%>&nbsp;&nbsp;
@@ -69,8 +58,6 @@
             </label>
             <%= f.text_area :esc_desarrolla_proy_desc, :placeholder => "Especifique...", :disabled => true %>
           </td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
         </tr>
       </table>
     </td>
@@ -141,4 +128,18 @@ enable_disable_desc('competencia_aplica_conocimientos_si', 'competencia_aplica_c
 enable_disable_desc('competencia_esc_desarrolla_proy_si', 'competencia_esc_desarrolla_proy_no', 'competencia_esc_desarrolla_proy_desc');
 enable_disable_desc('competencia_alu_involucran_proy_si', 'competencia_alu_involucran_proy_no', 'competencia_alu_involucran_proy_desc');
 enable_disable_desc('competencia_alu_capacitan_salud_ma_si', 'competencia_alu_capacitan_salud_ma_no', 'competencia_alu_capacitan_salud_ma_desc');
+
+var doc_capacitan_salud_si = new LiveValidation( 'competencia_doc_capacitan_salud_si', {onlyOnSubmit: true} );
+doc_capacitan_salud_si.add( Validate.Presence );
+var doc_capacitan_salud_no = new LiveValidation( 'competencia_doc_capacitan_salud_no', {onlyOnSubmit: true} );
+doc_capacitan_salud_no.add( Validate.Presence );
+var doc_capacitan_salud_desc = new LiveValidation( 'competencia_doc_capacitan_salud_desc', {onlyOnSubmit: true} );
+doc_capacitan_salud_desc.add( Validate.Presence );
+<%#*var proyecto_nombre = new LiveValidation( 'proyecto_nombre', {onlyOnSubmit: true } );%>
+<%#*proyecto_nombre.add( Validate.Presence );%>
+<%#*var correo_electronico = new LiveValidation( 'escuela_correo_electronico' );%>
+<%#*correo_electronico.add( Validate.Presence, {onlyOnSubmit: true } );%>
+<%#*correo_electronico.add( Validate.Email );%>
+<%#*var proyecto_responsable = new LiveValidation( 'proyecto_responsables', {onlyOnSubmit: true } );%>
+<%#*proyecto_responsable.add( Validate.Presence );%>
 </script>
