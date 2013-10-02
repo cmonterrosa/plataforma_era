@@ -179,16 +179,16 @@ Structure
 	display: block;
 	height: auto;
 /*	margin: 0 1.5% 0.8em;*/
-      margin: 1% 6% 0% 6%;
+      margin: 1% 6% 1% 6%;
 	clear:both;
 }
 .formee-msg-info li, .formee-msg-warning li, .formee-msg-error li, .formee-msg-success li {
 	list-style: none;
 	padding:0;	
-	margin-bottom: .4%;
+	margin-bottom: -1.6%;
 /*	font-size:1.4em;*/
       font-size:0.9em;
-	line-height:1.1em;
+	line-height:1.5em;
 	vertical-align: top;
 }
 

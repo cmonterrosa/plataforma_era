@@ -1,3 +1,10 @@
+<div class="formee-msg-info">
+  <h3>Información importante</h3>
+    <ul>
+      <li>Los campos marcados con <em class="formee-req">*</em> son obligatorios.</li>
+    </ul>
+</div>
+
 <% form_for :competencia, @competencia, :url => { :action => "save", :id => @competencia, :diagnostico => @diagnostico.id }, :html => {:class => "formee", :name => "competencia"} do |f| -%>
 <table class="principal" width="100%" border="0" align="center" cellpadding="2" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
   <tr bgcolor="#003366" style="opacity: 0.7;" >
@@ -21,42 +28,42 @@
           <td align="center">
             <label>
               SI <%= f.radio_button :doc_capacitan_salud, "SI" %>&nbsp;&nbsp;
-              NO <%= f.radio_button :doc_capacitan_salud, "NO", :checked => true %>
+              NO <%= f.radio_button :doc_capacitan_salud, "NO" %>
             </label>
             <%= f.text_area :doc_capacitan_salud_desc, :placeholder => "Especifique..." %>
           </td>
           <td>&nbsp;</td>
           <td align="center">
             <label>
-              SI <%= f.radio_button :doc_capacitan_ma, "SI", :onclick => "enable_disable_desc('competencia_doc_capacitan_ma_si', 'competencia_doc_capacitan_ma_no', 'competencia_doc_capacitan_ma_desc');"%>&nbsp;&nbsp;
-              NO <%= f.radio_button :doc_capacitan_ma, "NO", :onclick => "enable_disable_desc('competencia_doc_capacitan_ma_si', 'competencia_doc_capacitan_ma_no', 'competencia_doc_capacitan_ma_desc');"%>
+              SI <%= f.radio_button :doc_capacitan_ma, "SI" %>&nbsp;&nbsp;
+              NO <%= f.radio_button :doc_capacitan_ma, "NO" %>
             </label>
-            <%= f.text_area :doc_capacitan_ma_desc, :placeholder => "Especifique...", :disabled => true %>
+            <%= f.text_area :doc_capacitan_ma_desc, :placeholder => "Especifique..." %>
           </td>
         </tr>
         <tr>
           <td colspan="3">&nbsp;</td>
         </tr>
         <tr>
-          <td width="49%" align="justify"><label>¿Los conocimientos adquiridos son aplicados?</label></td>
+          <td width="49%" align="justify"><label>¿Los conocimientos adquiridos son aplicados?<em class="formee-req"> *</em></label></td>
           <td>&nbsp;</td>
-          <td width="49%" align="justify"><label>¿La escuela desarrolla proyectos para la aplicación de conocimientos en materia de salud y medio ambiente?</label></td>
+          <td width="49%" align="justify"><label>¿La escuela desarrolla proyectos para la aplicación de conocimientos en materia de salud y medio ambiente?<em class="formee-req"> *</em></label></td>
         </tr>
         <tr>
           <td align="center" >
             <label>
-              SI <%= f.radio_button :aplica_conocimientos, "SI", :onclick => "enable_disable_desc('competencia_aplica_conocimientos_si', 'competencia_aplica_conocimientos_no', 'competencia_aplica_conocimientos_desc');"%>&nbsp;&nbsp;
-              NO <%= f.radio_button :aplica_conocimientos, "NO", :onclick => "enable_disable_desc('competencia_aplica_conocimientos_si', 'competencia_aplica_conocimientos_no', 'competencia_aplica_conocimientos_desc');"%>
+              SI <%= f.radio_button :aplica_conocimientos, "SI" %>&nbsp;&nbsp;
+              NO <%= f.radio_button :aplica_conocimientos, "NO" %>
             </label>
-            <%= f.text_area :aplica_conocimientos_desc, :placeholder => "Especifique...", :disabled => true %>
+            <%= f.text_area :aplica_conocimientos_desc, :placeholder => "Especifique..." %>
           </td>
           <td>&nbsp;</td>
           <td align="center">
             <label>
-              SI <%= f.radio_button :esc_desarrolla_proy, "SI", :onclick => "enable_disable_desc('competencia_esc_desarrolla_proy_si', 'competencia_esc_desarrolla_proy_no', 'competencia_esc_desarrolla_proy_desc');"%>&nbsp;&nbsp;
-              NO <%= f.radio_button :esc_desarrolla_proy, "NO", :onclick => "enable_disable_desc('competencia_esc_desarrolla_proy_si', 'competencia_esc_desarrolla_proy_no', 'competencia_esc_desarrolla_proy_desc');"%>
+              SI <%= f.radio_button :esc_desarrolla_proy, "SI" %>&nbsp;&nbsp;
+              NO <%= f.radio_button :esc_desarrolla_proy, "NO" %>
             </label>
-            <%= f.text_area :esc_desarrolla_proy_desc, :placeholder => "Especifique...", :disabled => true %>
+            <%= f.text_area :esc_desarrolla_proy_desc, :placeholder => "Especifique..." %>
           </td>
         </tr>
       </table>
@@ -72,25 +79,25 @@
           <td colspan="3" align="center"><h5>ALUMNOS</h5></td>
         </tr>
         <tr>
-          <td width="49%"  align="justify"><label>¿Los alumnos de involucran en las actividades y proyectos en los que participa la escuela?</label></td>
+          <td width="49%"  align="justify"><label>¿Los alumnos de involucran en las actividades y proyectos en los que participa la escuela?<em class="formee-req"> *</em></label></td>
           <td>&nbsp;</td>
-          <td width="49%" align="justify"><label>¿Los alumnos se capacitan en materia de salud y medio ambiente?</label></td>
+          <td width="49%" align="justify"><label>¿Los alumnos se capacitan en materia de salud y medio ambiente?<em class="formee-req"> *</em></label></td>
         </tr>
         <tr>
           <td align="center">
             <label>
-              SI <%= f.radio_button :alu_involucran_proy, "SI", :onclick => "enable_disable_desc('competencia_alu_involucran_proy_si', 'competencia_alu_involucran_proy_no', 'competencia_alu_involucran_proy_desc');"%>&nbsp;&nbsp;
-              NO<%= f.radio_button :alu_involucran_proy, "NO", :onclick => "enable_disable_desc('competencia_alu_involucran_proy_si', 'competencia_alu_involucran_proy_no', 'competencia_alu_involucran_proy_desc');"%>
+              SI <%= f.radio_button :alu_involucran_proy, "SI" %>&nbsp;&nbsp;
+              NO<%= f.radio_button :alu_involucran_proy, "NO" %>
             </label>
-            <%= f.text_area :alu_involucran_proy_desc, :placeholder => "Especifique...", :disabled => true %>
+            <%= f.text_area :alu_involucran_proy_desc, :placeholder => "Especifique..." %>
           </td>
           <td>&nbsp;</td>
           <td align="center">
             <label>
-              SI <%= f.radio_button :alu_capacitan_salud_ma, "SI", :onclick => "enable_disable_desc('competencia_alu_capacitan_salud_ma_si', 'competencia_alu_capacitan_salud_ma_no', 'competencia_alu_capacitan_salud_ma_desc');"%>&nbsp;&nbsp;
-              NO<%= f.radio_button :alu_capacitan_salud_ma, "NO", :onclick => "enable_disable_desc('competencia_alu_capacitan_salud_ma_si', 'competencia_alu_capacitan_salud_ma_no', 'competencia_alu_capacitan_salud_ma_desc');"%>
+              SI <%= f.radio_button :alu_capacitan_salud_ma, "SI" %>&nbsp;&nbsp;
+              NO<%= f.radio_button :alu_capacitan_salud_ma, "NO" %>
             </label>
-            <%=f.text_area :alu_capacitan_salud_ma_desc, :placeholder => "Especifique...", :disabled => true %>
+            <%=f.text_area :alu_capacitan_salud_ma_desc, :placeholder => "Especifique..." %>
           </td>
         </tr>
       </table>
@@ -104,13 +111,10 @@
       <table>
         <tr>
           <td>
-            <%#*<input title="guardar y regresar" alt=" Guardar y regresar a la sección anterior " type="image"  src="/images/botones/btn_guardar.png" width="150" height="40" style="margin-left:90px;"/>%>
             <input id="button4" onclick="to_uppercase();" class="buttonText" type="submit" title="Guardar y Regresar" value="Guardar y Regresar" />
-            <%#*<a href="#" onclick="submit_form('competencia');" id="button4" class="buttonText"><img src="/images/formee/form-ic-success.png"/>&nbsp;&nbsp;Guardar y Regresar</a>%>
           </td>
           <td>
             <a href="<%= diagnosticos_path%>" id="buttonc" class="buttonText"><img src="/images/formee/form-ic-error.png"/>&nbsp;&nbsp;Regresar sin Guardar</a>
-            <%#= link_to image_tag("botones/btn_regresar.png", :width => 170, :height=>"40", :border =>0, :style => "margin-left:90px;" ) , :controller => diagnosticos_path, :id => @diagnostico.id%>
           </td>
         </tr>
         <tr>
@@ -124,12 +128,22 @@
 
 <script type="text/javascript">
 <%#*enable_disable_desc('competencia_doc_capacitan_salud_si', 'competencia_doc_capacitan_salud_no', 'competencia_doc_capacitan_salud_desc');%>
-enable_disable_desc('competencia_doc_capacitan_ma_si', 'competencia_doc_capacitan_ma_no', 'competencia_doc_capacitan_ma_desc');
-enable_disable_desc('competencia_aplica_conocimientos_si', 'competencia_aplica_conocimientos_no', 'competencia_aplica_conocimientos_desc');
-enable_disable_desc('competencia_esc_desarrolla_proy_si', 'competencia_esc_desarrolla_proy_no', 'competencia_esc_desarrolla_proy_desc');
-enable_disable_desc('competencia_alu_involucran_proy_si', 'competencia_alu_involucran_proy_no', 'competencia_alu_involucran_proy_desc');
-enable_disable_desc('competencia_alu_capacitan_salud_ma_si', 'competencia_alu_capacitan_salud_ma_no', 'competencia_alu_capacitan_salud_ma_desc');
+<%#*enable_disable_desc('competencia_doc_capacitan_ma_si', 'competencia_doc_capacitan_ma_no', 'competencia_doc_capacitan_ma_desc');%>
+<%#*enable_disable_desc('competencia_aplica_conocimientos_si', 'competencia_aplica_conocimientos_no', 'competencia_aplica_conocimientos_desc');%>
+<%#*enable_disable_desc('competencia_esc_desarrolla_proy_si', 'competencia_esc_desarrolla_proy_no', 'competencia_esc_desarrolla_proy_desc');%>
+<%#*enable_disable_desc('competencia_alu_involucran_proy_si', 'competencia_alu_involucran_proy_no', 'competencia_alu_involucran_proy_desc');%>
+<%#*enable_disable_desc('competencia_alu_capacitan_salud_ma_si', 'competencia_alu_capacitan_salud_ma_no', 'competencia_alu_capacitan_salud_ma_desc');%>
 
 var doc_capacitan_salud_desc = new LiveValidation( 'competencia_doc_capacitan_salud_desc', {onlyOnSubmit: true} );
 doc_capacitan_salud_desc.add( Validate.Presence );
+var doc_capacitan_ma_desc = new LiveValidation( 'competencia_doc_capacitan_ma_desc', {onlyOnSubmit: true} );
+doc_capacitan_ma_desc.add( Validate.Presence );
+var aplica_conocimientos_desc = new LiveValidation( 'competencia_aplica_conocimientos_desc', {onlyOnSubmit: true} );
+aplica_conocimientos_desc.add( Validate.Presence );
+var esc_desarrolla_proy_desc = new LiveValidation( 'competencia_esc_desarrolla_proy_desc', {onlyOnSubmit: true} );
+esc_desarrolla_proy_desc.add( Validate.Presence );
+var alu_involucran_proy_desc = new LiveValidation( 'competencia_alu_involucran_proy_desc', {onlyOnSubmit: true} );
+alu_involucran_proy_desc.add( Validate.Presence );
+var alu_capacitan_salud_ma_desc = new LiveValidation( 'competencia_alu_capacitan_salud_ma_desc', {onlyOnSubmit: true} );
+alu_capacitan_salud_ma_desc.add( Validate.Presence );
 </script>

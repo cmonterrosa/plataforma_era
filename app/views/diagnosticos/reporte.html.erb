@@ -27,9 +27,9 @@
                   <td>
                     <label>
                       <%if @competencia.doc_capacitan_salud == 'SI'%>
-                        <%= @competencia.doc_capacitan_salud_desc %>
+                        SI: <%= @competencia.doc_capacitan_salud_desc %>
                       <%else%>
-                        NO.
+                        NO: <%= @competencia.doc_capacitan_salud_desc %>
                       <%end%>
                     </label>
                   </td>
@@ -37,9 +37,9 @@
                   <td>
                     <label>
                       <%if @competencia.doc_capacitan_ma == 'SI'%>
-                        <%= @competencia.doc_capacitan_ma_desc %>
+                        SI: <%= @competencia.doc_capacitan_ma_desc %>
                       <%else%>
-                        NO.
+                        NO: <%= @competencia.doc_capacitan_ma_desc %>
                       <%end%>
                     </label>
                   </td>
@@ -55,9 +55,9 @@
               <label style=" font-weight: bold;" >¿Los conocimientos adquiridos son aplicados?</label>
               <label>
                 <%if @competencia.aplica_conocimientos == 'SI'%>
-                  <%= @competencia.aplica_conocimientos_desc %>
+                  SI: <%= @competencia.aplica_conocimientos_desc %>
                 <%else%>
-                  NO.
+                  NO: <%= @competencia.aplica_conocimientos_desc %>
                 <%end%>
               </label>
             </td>
@@ -70,9 +70,9 @@
               <label style=" font-weight: bold;" >¿La escuela desarrolla proyectos para la aplicación de conocimientos en materia de salud y medio ambiente?</label>
               <label>
                 <%if @competencia.esc_desarrolla_proy == 'SI'%>
-                  <%= @competencia.esc_desarrolla_proy_desc %>
+                  SI: <%= @competencia.esc_desarrolla_proy_desc %>
                 <%else%>
-                  NO.
+                  NO: <%= @competencia.esc_desarrolla_proy_desc %>
                 <%end%>
               </label>
             </td>
@@ -85,9 +85,9 @@
               <label style=" font-weight: bold;" >¿Los alumnos de involucran en las actividades y proyectos en los que participa la escuela?</label>
               <label>
                 <%if @competencia.alu_involucran_proy == 'SI'%>
-                  <%= @competencia.alu_involucran_proy_desc %>
+                  SI: <%= @competencia.alu_involucran_proy_desc %>
                 <%else%>
-                  NO.
+                  NO: <%= @competencia.alu_involucran_proy_desc %>
                 <%end%>
               </label>
             </td>

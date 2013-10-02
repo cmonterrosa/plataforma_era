@@ -589,11 +589,12 @@ var Validate = {
      *													  (DEFAULT: "Can't be empty!")
      */
     Presence: function(value, paramsObj){
-      	var paramsObj = paramsObj || {};
+        var paramsObj = paramsObj || {};
+        var value = value.toString().trim(value);
 //    	var message = paramsObj.failureMessage || "Can't be empty!";
-    	var message = paramsObj.failureMessage || "No puede estar en blanco!";
-    	if(value === '' || value === null || value === undefined || trim(value) != '') Validate.fail(message);
-    	return true;
+        var message = paramsObj.failureMessage || "No puede estar en blanco!";
+        if(value === '' || value === null || value === undefined) Validate.fail(message);
+            return true;
     },
     
     /**
@@ -820,7 +821,8 @@ var Validate = {
      */
     Exclusion: function(value, paramsObj){
       var paramsObj = paramsObj || {};
-      paramsObj.failureMessage = paramsObj.failureMessage || "Must not be included in the list!";
+//      paramsObj.failureMessage = paramsObj.failureMessage || "Must not be included in the list!";
+      paramsObj.failureMessage = paramsObj.failureMessage || "Seleccione una opción válida!";
       paramsObj.negate = true;
       Validate.Inclusion(value, paramsObj);
       return true;

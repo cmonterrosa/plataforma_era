@@ -105,16 +105,16 @@ form .formee-txt:focus, .formee input[type="text"]:focus, .formee input[type="pa
 .formee-msg-info, .formee-msg-warning, .formee-msg-error, .formee-msg-success {
 	color:#2b2b2b;
 	/*corner*/
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-	border-radius: 4px;
+	-moz-border-radius: 16px 4px 16px 4px;
+	-webkit-border-radius: 16px 4px 16px 4px;
+	border-radius: 16px 4px 16px 4px;
 }
 .formee-msg-info h3, .formee-msg-warning h3, .formee-msg-error h3, .formee-msg-success h3 {
-	font-size:1.2em;
-	line-height:1.1em;
+	font-size:0.95em;
+	line-height:1.5em;
 	letter-spacing:-.02em;
 	padding:0;
-	margin:0 0 .3em 0;
+	margin:0 0 -1em 0;
 }
 .formee-msg-info {
 /*	background: #d1ecf7 url(/images/formee/form-ic-info.png) no-repeat 12px 23px;*/
@@ -250,33 +250,21 @@ a {
   font-size: 18px;
   height: 38px;
   width: 210px;
-/*  margin: 40px 0 0 40px;*/
   margin: 0px 0 0 20px;
   overflow: hidden;
   display: block;
   text-align: right;
   text-transform: inherit;
   font-weight: normal;
-/*  line-height: 58px;*/
-/*  line-height: 45px;*/
+  border-color: #62b548;
 
-  /*Rounded Corners*/
-/*  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;*/
-
-  /*Shadow*/
-/*  -webkit-box-shadow: 0px 6px 0px rgba(0, 0, 0, 0.6);
-  -moz-box-shadow: 0px 6px 0px rgba(0, 0, 0, 0.6);
-  box-shadow: 0px 6px 0px rgba(0, 0, 0, 0.6);*/
-
--webkit-box-shadow: 0px 6px 0px rgba(0, 90, 0, 0.8);
--moz-box-shadow:    0px 6px 0px rgba(0, 90, 0, 0.8);
-box-shadow:         0px 6px 0px rgba(0, 90, 0, 0.8);
+  -webkit-box-shadow: 0px 6px 0px rgba(0, 90, 0, 0.8);
+  -moz-box-shadow:    0px 6px 0px rgba(0, 90, 0, 0.8);
+  box-shadow:         0px 6px 0px rgba(0, 90, 0, 0.8);
 
   /*Gradient*/
 /*  background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2));*/
-  background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2));
+/*  background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2));*/
   background-image: -o-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2));
   background-image: -ms-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2));
   background-image: linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2));
@@ -295,15 +283,15 @@ box-shadow:         0px 6px 0px rgba(0, 90, 0, 0.8);
   text-align: center;
   line-height: 45px;
 
-  /*Rounded Corners*/
+/*  Rounded Corners*/
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px;
 
   /*Shadow*/
-  -webkit-box-shadow: 0px 6px 0px rgba(90, 0, 0, 0.8);
-  -moz-box-shadow:    0px 6px 0px rgba(90, 0, 0, 0.8);
-  box-shadow:         0px 6px 0px rgba(90, 0, 0, 0.8);
+  -webkit-box-shadow: 0px 6px 0px rgba(80, 0, 0, 0.8);
+  -moz-box-shadow:    0px 6px 0px rgba(80, 0, 0, 0.8);
+  box-shadow:         0px 6px 0px rgba(80, 0, 0, 0.8);
 
   /*Gradient*/
 /*  background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2));*/
@@ -323,13 +311,13 @@ box-shadow:         0px 6px 0px rgba(0, 90, 0, 0.8);
   -moz-box-shadow: 0px 4px 0px rgba(0, 0, 0, 0.6);
   box-shadow: 0px 4px 0px rgba(0, 0, 0, 0.6);*/
 
-  -webkit-box-shadow: 0px 3px 0px rgba(0, 130, 0, 0.8);
-  -moz-box-shadow:    0px 3px 0px rgba(0, 130, 0, 0.8);
-  box-shadow:         0px 3px 0px rgba(0, 130, 0, 0.8);
+  -webkit-box-shadow: 0px 3px 0px rgba(0, 110, 0, 0.8);
+  -moz-box-shadow:    0px 3px 0px rgba(0, 110, 0, 0.8);
+  box-shadow:         0px 3px 0px rgba(0, 110, 0, 0.8);
 
   /*Gradient*/
 /*  background-image: -webkit-linear-gradient(bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4));*/
-  background-image: -moz-linear-gradient(bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4));
+/*  background-image: -moz-linear-gradient(bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4));*/
   background-image: -o-linear-gradient(bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4));
   background-image: -ms-linear-gradient(bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4));
   background-image: linear-gradient(bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4));
@@ -401,7 +389,6 @@ box-shadow:         0px 6px 0px rgba(0, 90, 0, 0.8);
   background-image: linear-gradient(bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4));
 }
 
-
 @media print {
     body { background-color: #FFF; }
   #container {
@@ -418,36 +405,3 @@ box-shadow:         0px 6px 0px rgba(0, 90, 0, 0.8);
         display: none;
     }  
 }  
-/*@media print {
-  #line-items {
-    page-break-before: always;
-  }
-
-  #plazs_list{
-      display: none;
-  }
-
-  #pdf-link {
-    display: none;
-  }
-
-  #table-hide {
-    display: none;
-  }
-
-  #table-h {
-    display: inline;
-  }
-
-  #toplinks {
-        font-family: Verdana, Arial, Helvetica, sans-serif;
-        font-size: 10px;
-        font-weight: bold;
-        background-image: url(nav_bg.gif);
-        background-repeat: repeat-x;
-        padding: 3px 0;
-        overflow: hidden;
-        text-align: center;
-        width: 950px;
-  }
-}*/
