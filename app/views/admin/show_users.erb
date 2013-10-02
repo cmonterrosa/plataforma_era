@@ -70,7 +70,7 @@
         <td style="vertical-align: middle;"><%=h (Escuela.find_by_clave(user.login)? Escuela.find_by_clave(user.login).nombre : "---")%></td>
      
       <!-- Acciones -->
-      <td style="vertical-align: middle;"><%=button_to "Detalles", {:action => "detail_user", :controller => "admin", :id => user}, :class => 'boton'%></td>
+      <td style="vertical-align: middle;"><%=button_to "Detalles", {:action => "show", :controller => "escuelas", :id => user}, :class => 'boton'%></td>
       <td style="vertical-align: middle;"><%=button_to "Editar", {:action => "edit_user", :controller => "admin", :id => user}, :class => 'boton'%></td>
       <%if user.is_blocked?%>
         <td style="vertical-align: middle;"><%=button_to "Desbloquear", {:action => "block_user", :id => user}, :confirm => "¿Esta seguro que desea bloquearlo?", :method => :delete, :class => 'boton'%></td>
@@ -83,14 +83,17 @@
   </table>
 </div>
 
+
+
 <%if current_user.has_role?("admin")%>
-  <br /><%=button_to "Crear usuario", {:action => "new_from_admin", :controller => "users"}, :class => 'boton'  -%>
+  <div class="titulos">
+    <br /><%= link_to image_tag("botones/btn_nuevo_usuario.png", :border =>0) , :controller => "admin", :action => "new_from_admin"%><br /><br /><br />
+  </div>
 <%end%>
-<br /><br />
 
 
 <div class="titulos">
-<%= link_to image_tag("botones/btn_regresar.png", :border =>0) , :controller => "home", :action => "index"%><br />
+<%= link_to image_tag("botones/btn_regresar.png", :border =>0) , :controller => "admin", :action => "index"%><br />
 </div>
 
 
