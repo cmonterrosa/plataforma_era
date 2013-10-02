@@ -10,7 +10,7 @@
           <td colspan="3" align="center"><h5>DOCENTES</h5></td>
         </tr>
         <tr>
-          <td colspan="3" align="justify"><label>¿El personal docente asiste y se capacita en materia de salud y medio ambiente?<em class="formee-req"> *</em></label></td>
+          <td colspan="3" align="center"><label>¿El personal docente asiste y se capacita en materia de salud y medio ambiente?<em class="formee-req"> *</em></label></td>
         </tr>
         <tr>
           <td width="49%" align="center"><label>Salud</label></td>
@@ -20,10 +20,10 @@
         <tr>
           <td align="center">
             <label>
-              SI <%= f.radio_button :doc_capacitan_salud, "SI", :onclick => "enable_disable_desc('competencia_doc_capacitan_salud_si', 'competencia_doc_capacitan_salud_no', 'competencia_doc_capacitan_salud_desc');"%>&nbsp;&nbsp;
-              NO <%= f.radio_button :doc_capacitan_salud, "NO", :onclick => "enable_disable_desc('competencia_doc_capacitan_salud_si', 'competencia_doc_capacitan_salud_no', 'competencia_doc_capacitan_salud_desc');"%>
+              SI <%= f.radio_button :doc_capacitan_salud, "SI" %>&nbsp;&nbsp;
+              NO <%= f.radio_button :doc_capacitan_salud, "NO", :checked => true %>
             </label>
-            <%= f.text_area :doc_capacitan_salud_desc, :placeholder => "Especifique...", :disabled => true %>
+            <%= f.text_area :doc_capacitan_salud_desc, :placeholder => "Especifique..." %>
           </td>
           <td>&nbsp;</td>
           <td align="center">
@@ -105,7 +105,8 @@
         <tr>
           <td>
             <%#*<input title="guardar y regresar" alt=" Guardar y regresar a la sección anterior " type="image"  src="/images/botones/btn_guardar.png" width="150" height="40" style="margin-left:90px;"/>%>
-            <a href="#" onclick="submit_form();" id="button4" class="buttonText"><img src="/images/formee/form-ic-success.png"/>&nbsp;&nbsp;Guardar y Regresar</a>
+            <input id="button4" onclick="to_uppercase();" class="buttonText" type="submit" title="Guardar y Regresar" value="Guardar y Regresar" />
+            <%#*<a href="#" onclick="submit_form('competencia');" id="button4" class="buttonText"><img src="/images/formee/form-ic-success.png"/>&nbsp;&nbsp;Guardar y Regresar</a>%>
           </td>
           <td>
             <a href="<%= diagnosticos_path%>" id="buttonc" class="buttonText"><img src="/images/formee/form-ic-error.png"/>&nbsp;&nbsp;Regresar sin Guardar</a>
@@ -122,24 +123,13 @@
 <% end %>
 
 <script type="text/javascript">
-enable_disable_desc('competencia_doc_capacitan_salud_si', 'competencia_doc_capacitan_salud_no', 'competencia_doc_capacitan_salud_desc');
+<%#*enable_disable_desc('competencia_doc_capacitan_salud_si', 'competencia_doc_capacitan_salud_no', 'competencia_doc_capacitan_salud_desc');%>
 enable_disable_desc('competencia_doc_capacitan_ma_si', 'competencia_doc_capacitan_ma_no', 'competencia_doc_capacitan_ma_desc');
 enable_disable_desc('competencia_aplica_conocimientos_si', 'competencia_aplica_conocimientos_no', 'competencia_aplica_conocimientos_desc');
 enable_disable_desc('competencia_esc_desarrolla_proy_si', 'competencia_esc_desarrolla_proy_no', 'competencia_esc_desarrolla_proy_desc');
 enable_disable_desc('competencia_alu_involucran_proy_si', 'competencia_alu_involucran_proy_no', 'competencia_alu_involucran_proy_desc');
 enable_disable_desc('competencia_alu_capacitan_salud_ma_si', 'competencia_alu_capacitan_salud_ma_no', 'competencia_alu_capacitan_salud_ma_desc');
 
-var doc_capacitan_salud_si = new LiveValidation( 'competencia_doc_capacitan_salud_si', {onlyOnSubmit: true} );
-doc_capacitan_salud_si.add( Validate.Presence );
-var doc_capacitan_salud_no = new LiveValidation( 'competencia_doc_capacitan_salud_no', {onlyOnSubmit: true} );
-doc_capacitan_salud_no.add( Validate.Presence );
 var doc_capacitan_salud_desc = new LiveValidation( 'competencia_doc_capacitan_salud_desc', {onlyOnSubmit: true} );
 doc_capacitan_salud_desc.add( Validate.Presence );
-<%#*var proyecto_nombre = new LiveValidation( 'proyecto_nombre', {onlyOnSubmit: true } );%>
-<%#*proyecto_nombre.add( Validate.Presence );%>
-<%#*var correo_electronico = new LiveValidation( 'escuela_correo_electronico' );%>
-<%#*correo_electronico.add( Validate.Presence, {onlyOnSubmit: true } );%>
-<%#*correo_electronico.add( Validate.Email );%>
-<%#*var proyecto_responsable = new LiveValidation( 'proyecto_responsables', {onlyOnSubmit: true } );%>
-<%#*proyecto_responsable.add( Validate.Presence );%>
 </script>
