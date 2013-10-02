@@ -106,10 +106,10 @@ LiveValidation.prototype = {
 	  // hooks
 	  this.beforeValidation = options.beforeValidation || function(){};
 	  this.beforeValid = options.beforeValid || function(){};
-      this.onValid = options.onValid || function(){ this.insertMessage(this.createMessageSpan()); this.addFieldClass(); };
+      this.onValid = options.onValid || function(){this.insertMessage(this.createMessageSpan());this.addFieldClass();};
 	  this.afterValid = options.afterValid || function(){};
 	  this.beforeInvalid = options.beforeInvalid || function(){};
-      this.onInvalid = options.onInvalid || function(){ this.insertMessage(this.createMessageSpan()); this.addFieldClass(); };	
+      this.onInvalid = options.onInvalid || function(){this.insertMessage(this.createMessageSpan());this.addFieldClass();};	
 	  this.afterInvalid = options.afterInvalid || function(){};	
 	  this.afterValidation = options.afterValidation || function(){};
       // add to form if it has been provided
@@ -124,19 +124,19 @@ LiveValidation.prototype = {
       this.oldOnClick = this.element.onclick || function(){};
       this.oldOnChange = this.element.onchange || function(){};
       this.oldOnKeyup = this.element.onkeyup || function(){};
-      this.element.onfocus = function(e){ self.doOnFocus(e); return self.oldOnFocus.call(this, e); }
+      this.element.onfocus = function(e){self.doOnFocus(e);return self.oldOnFocus.call(this, e);}
       if(!this.onlyOnSubmit){
         switch(this.elementType){
           case LiveValidation.CHECKBOX:
-            this.element.onclick = function(e){ self.validate(); return self.oldOnClick.call(this, e); }
+            this.element.onclick = function(e){self.validate();return self.oldOnClick.call(this, e);}
           // let it run into the next to add a change event too
           case LiveValidation.SELECT:
           case LiveValidation.FILE:
-            this.element.onchange = function(e){ self.validate(); return self.oldOnChange.call(this, e); }
+            this.element.onchange = function(e){self.validate();return self.oldOnChange.call(this, e);}
             break;
           default:
-            if(!this.onlyOnBlur) this.element.onkeyup = function(e){ self.deferValidation(); return self.oldOnKeyup.call(this, e); }
-      	    this.element.onblur = function(e){ self.doOnBlur(e); return self.oldOnBlur.call(this, e); }
+            if(!this.onlyOnBlur) this.element.onkeyup = function(e){self.deferValidation();return self.oldOnKeyup.call(this, e);}
+      	    this.element.onblur = function(e){self.doOnBlur(e);return self.oldOnBlur.call(this, e);}
         }
       }
     },
@@ -179,7 +179,7 @@ LiveValidation.prototype = {
      * @return {Object} - the LiveValidation object itself so that calls can be chained
      */
     add: function(validationFunction, validationParamsObj){
-      this.validations.push( {type: validationFunction, params: validationParamsObj || {} } );
+      this.validations.push( {type: validationFunction, params: validationParamsObj || {}} );
       return this;
     },
     
@@ -208,7 +208,7 @@ LiveValidation.prototype = {
       if(this.wait >= 300) this.removeMessageAndFieldClass();
       var self = this;
       if(this.timeout) clearTimeout(self.timeout);
-      this.timeout = setTimeout( function(){ self.validate() }, self.wait); 
+      this.timeout = setTimeout( function(){self.validate()}, self.wait); 
     },
         
     /**
@@ -592,7 +592,7 @@ var Validate = {
       	var paramsObj = paramsObj || {};
 //    	var message = paramsObj.failureMessage || "Can't be empty!";
     	var message = paramsObj.failureMessage || "No puede estar en blanco!";
-    	if(value === '' || value === null || value === undefined) Validate.fail(message);
+    	if(value === '' || value === null || value === undefined || trim(value) != '') Validate.fail(message);
     	return true;
     },
     
@@ -698,7 +698,7 @@ var Validate = {
     	var paramsObj = paramsObj || {};
 //    	var message = paramsObj.failureMessage || "Must be a valid email address!";
     	var message = paramsObj.failureMessage || "Debe ser una dirección de correo válida!";
-    	Validate.Format(value, { failureMessage: message, pattern: /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i } );
+    	Validate.Format(value, {failureMessage: message, pattern: /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i} );
     	return true;
     },
     
@@ -881,7 +881,7 @@ var Validate = {
      */
 	Custom: function(value, paramsObj){
 		var paramsObj = paramsObj || {};
-		var against = paramsObj.against || function(){ return true; };
+		var against = paramsObj.against || function(){return true;};
 		var args = paramsObj.args || {};
 		var message = paramsObj.failureMessage || "Not valid!";
 	    if(!against(value, args)) Validate.fail(message);

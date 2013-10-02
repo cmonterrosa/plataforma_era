@@ -32,11 +32,10 @@ function validate_exists_initial(obj1, obj2){
 }
 
 // Convierte a mayuscula los campos del formulario y lo envia
-function submit_form(){
+function to_uppercase(){
     numero=document.forms[0].elements.length;
     for(a=0;a<numero;a++) {
+        if(document.forms[0].elements[a].type != 'submit')
         document.forms[0].elements[a].value = document.forms[0].elements[a].value.toUpperCase();
-    }
-    document.forms[0].submit();
-    return false;
+    }    
 }
