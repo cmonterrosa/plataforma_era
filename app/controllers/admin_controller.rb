@@ -9,6 +9,43 @@ class AdminController < ApplicationController
   
   ### Control de usuarios #####
 
+  def new_from_admin
+    @user = User.new
+  end
+
+  # create user from admin role not need activation
+  def save_new_user
+    @user = User.new(params[:user])
+    @user.activated_at = Time.now
+    ## Main Role ###
+    @user.roles << Role.find(params[:role][:id])
+    success = @user && @user.save
+    if success && @user.errors.empty?
+      flash[:notice] = "Usuario creado correctamente"
+      redirect_to :action => "show_users", :controller => "admin"
+    else
+      flash[:notice]  = "No se puedo crear usuario, verifique los datos"
+      render :action => 'new_from_admin'
+    end
+  end
+
+  def edit_user
+    @user = User.find(params[:id])
+  end
+
+  def save
+    @user = User.find(params[:id])
+    @user.update_attributes(params[:user])
+    @user.activated_at ||= Time.now
+    success = @user && @user.save
+    if success && @user.errors.empty?
+      flash[:notice] = "Los datos se actualizaron correctamente"
+      redirect_to :controller => "admin", :action => "show_users"
+    else
+      flash[:notice]  = "No se pudieron modificar tus datos, verifica"
+      render :action => 'edit'
+    end
+  end
 
   def show_roles
     @roles = Role.find(:all)
@@ -35,7 +72,7 @@ class AdminController < ApplicationController
    redirect_to :action => "show_users"
  end
 
-   #------- Administracion de Usuarios ---------
+   #------- Administracion de Roles ---------
   def members_by_role
      @role = Role.find(params[:id])
      @users = []
