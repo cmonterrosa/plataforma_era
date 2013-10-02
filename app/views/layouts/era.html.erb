@@ -213,6 +213,14 @@ a:active {
           <td colspan="3" align="center" valign="middle" class="fnd_bar_sub">
             <table width="875" border="0" cellpadding="0" cellspacing="0">
               <tr>
+
+                <!-- Menu de administracion -->
+                 <%if logged_in?%>
+                  <%if current_user.has_role?("admin")%>
+                      <td><a href="/admin" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Image38','','/images/era/btns_cert/btn_admin2.png',1)"><img src="/images/era/btns_cert/btn_admin1.png" name="Image38" width="100" height="33" border="0" id="Image38" /></a></td>
+                  <%end%>
+                 <%end%>
+
                 <td><a href="/home/certificacion_esys" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Image38','','/images/era/btns_cert/btn_que2.png',1)"><img src="/images/era/btns_cert/btn_que1.png" name="Image38" width="100" height="33" border="0" id="Image38" /></a></td>
                 <td><a href="/home/certificacion_manual" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Image39','','/images/era/btns_cert/btn_man2.png',1)"><img src="/images/era/btns_cert/btn_man1.png" name="Image39" width="100" height="33" border="0" id="Image39" /></a></td>
                 <td><a href="/registro" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Image32','','/images/era/btns_cert/btn_reg2.png',1)"><img src="/images/era/btns_cert/btn_reg1.png" name="Image32" width="100" height="33" border="0" id="Image32" /></a></td>
