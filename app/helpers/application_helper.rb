@@ -5,4 +5,12 @@ module ApplicationHelper
     @categoria = CategoriaEscuela.find(categoria)
     (@escuela.categoria_escuela_id == @categoria.id) ? (return true) : (return false)
   end
+
+  def invert_class(clase)
+    if clase == 1
+      return 0
+    else
+      return 1
+    end
+  end
 end
