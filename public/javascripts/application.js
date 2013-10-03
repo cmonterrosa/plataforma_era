@@ -39,3 +39,7 @@ function to_uppercase(){
         document.forms[0].elements[a].value = document.forms[0].elements[a].value.toUpperCase();
     }    
 }
+
+function enable_textarea(radio, texarea){
+
+}
