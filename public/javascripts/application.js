@@ -40,6 +40,10 @@ function to_uppercase(){
     }    
 }
 
-function enable_textarea(radio, texarea){
+function enabled_textarea(radio, textarea){
+    var radio_si = radio+'_si'
+    var radio_no = radio+'_no'
 
+    if(radio == '' || document.getElementById(radio_si).checked || document.getElementById(radio_no).checked)
+        document.getElementById(textarea).disabled = false;
 }

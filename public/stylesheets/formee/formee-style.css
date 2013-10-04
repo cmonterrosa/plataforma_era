@@ -191,7 +191,7 @@ form .formee-txt:focus, .formee input[type="text"]:focus, .formee input[type="pa
     font-family: helvetica;
     font-size: 16px;
     text-align: justify;
-    display: block;
+/*    display: block;*/
     height: auto;
     margin: 0.1em 0 0.1em;
 }

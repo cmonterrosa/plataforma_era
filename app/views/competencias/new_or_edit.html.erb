@@ -27,22 +27,18 @@
         <tr>
           <td align="center">
             <span id="doc_capacitan_salud" class="InputGroup">
-            <label>
-              SI <%= f.radio_button :doc_capacitan_salud, "SI" %>&nbsp;&nbsp;
-              NO <%= f.radio_button :doc_capacitan_salud, "NO" %>
-            </label>
+            <label>SI <%= f.radio_button :doc_capacitan_salud, "SI", :onclick => "enabled_textarea('', 'competencia_doc_capacitan_salud_desc');" %></label>&nbsp;&nbsp;
+            <label>NO <%= f.radio_button :doc_capacitan_salud, "NO", :onclick => "enabled_textarea('', 'competencia_doc_capacitan_salud_desc');" %></label>
             </span>
-            <%= f.text_area :doc_capacitan_salud_desc, :placeholder => "Especifique..." %>
+            <%= f.text_area :doc_capacitan_salud_desc, :placeholder => "Especifique...", :disabled => 'disabled' %>
           </td>
           <td>&nbsp;</td>
           <td align="center">
             <span id="r_doc_capacitan_ma" class="InputGroup">
-            <label>
-              SI <%= f.radio_button :doc_capacitan_ma, "SI" %>&nbsp;&nbsp;
-              NO <%= f.radio_button :doc_capacitan_ma, "NO" %>
-            </label>
+            <label>SI <%= f.radio_button :doc_capacitan_ma, "SI", :onclick => "enabled_textarea('', 'competencia_doc_capacitan_ma_desc');" %></label>&nbsp;&nbsp;
+            <label>NO <%= f.radio_button :doc_capacitan_ma, "NO", :onclick => "enabled_textarea('', 'competencia_doc_capacitan_ma_desc');" %></label>
             </span>
-            <%= f.text_area :doc_capacitan_ma_desc, :placeholder => "Especifique..." %>
+            <%= f.text_area :doc_capacitan_ma_desc, :placeholder => "Especifique...", :disabled => 'disabled' %>
           </td>
         </tr>
         <tr>
@@ -56,22 +52,18 @@
         <tr>
           <td align="center" >
             <span id="r_aplica_conocimientos" class="InputGroup">
-            <label>
-              SI <%= f.radio_button :aplica_conocimientos, "SI" %>&nbsp;&nbsp;
-              NO <%= f.radio_button :aplica_conocimientos, "NO" %>
-            </label>
+            <label>SI <%= f.radio_button :aplica_conocimientos, "SI", :onclick => "enabled_textarea('', 'competencia_aplica_conocimientos_desc');" %></label>&nbsp;&nbsp;
+            <label>NO <%= f.radio_button :aplica_conocimientos, "NO", :onclick => "enabled_textarea('', 'competencia_aplica_conocimientos_desc');" %></label>
             </span>
-            <%= f.text_area :aplica_conocimientos_desc, :placeholder => "Especifique..." %>
+            <%= f.text_area :aplica_conocimientos_desc, :placeholder => "Especifique...", :disabled => 'disabled' %>
           </td>
           <td>&nbsp;</td>
           <td align="center">
             <span id="r_esc_desarrolla_proy" class="InputGroup">
-            <label>
-              SI <%= f.radio_button :esc_desarrolla_proy, "SI" %>&nbsp;&nbsp;
-              NO <%= f.radio_button :esc_desarrolla_proy, "NO" %>
-            </label>
+            <label>SI <%= f.radio_button :esc_desarrolla_proy, "SI", :onclick => "enabled_textarea('', 'competencia_esc_desarrolla_proy_desc');" %></label>&nbsp;&nbsp;
+            <label>NO <%= f.radio_button :esc_desarrolla_proy, "NO", :onclick => "enabled_textarea('', 'competencia_esc_desarrolla_proy_desc');" %></label>
             </span>
-            <%= f.text_area :esc_desarrolla_proy_desc, :placeholder => "Especifique..." %>
+            <%= f.text_area :esc_desarrolla_proy_desc, :placeholder => "Especifique...", :disabled => 'disabled' %>
           </td>
         </tr>
       </table>
@@ -94,22 +86,18 @@
         <tr>
           <td align="center">
             <span id="r_alu_involucran_proy" class="InputGroup">
-            <label>
-              SI <%= f.radio_button :alu_involucran_proy, "SI" %>&nbsp;&nbsp;
-              NO<%= f.radio_button :alu_involucran_proy, "NO" %>
-            </label>
+            <label>SI <%= f.radio_button :alu_involucran_proy, "SI", :onclick => "enabled_textarea('', 'competencia_alu_involucran_proy_desc');" %></label>&nbsp;&nbsp;
+            <label>NO <%= f.radio_button :alu_involucran_proy, "NO", :onclick => "enabled_textarea('', 'competencia_alu_involucran_proy_desc');" %></label>
             </span>
-            <%= f.text_area :alu_involucran_proy_desc, :placeholder => "Especifique..." %>
+            <%= f.text_area :alu_involucran_proy_desc, :placeholder => "Especifique...", :disabled => 'disabled' %>
           </td>
           <td>&nbsp;</td>
           <td align="center">
             <span id="r_alu_capacitan_salud_ma" class="InputGroup">
-            <label>
-              SI <%= f.radio_button :alu_capacitan_salud_ma, "SI" %>&nbsp;&nbsp;
-              NO<%= f.radio_button :alu_capacitan_salud_ma, "NO" %>
-            </label>
+            <label>SI <%= f.radio_button :alu_capacitan_salud_ma, "SI", :onclick => "enabled_textarea('', 'competencia_alu_capacitan_salud_ma_desc');" %></label>&nbsp;&nbsp;
+            <label>NO <%= f.radio_button :alu_capacitan_salud_ma, "NO", :onclick => "enabled_textarea('', 'competencia_alu_capacitan_salud_ma_desc');" %></label>
             </span>
-            <%=f.text_area :alu_capacitan_salud_ma_desc, :placeholder => "Especifique..." %>
+            <%=f.text_area :alu_capacitan_salud_ma_desc, :placeholder => "Especifique...", :disabled => 'disabled' %>
           </td>
         </tr>
       </table>
@@ -139,13 +127,12 @@
 <% end %>
 
 <script type="text/javascript">
-<%#*enable_disable_desc('competencia_doc_capacitan_salud_si', 'competencia_doc_capacitan_salud_no', 'competencia_doc_capacitan_salud_desc');%>
-<%#*enable_disable_desc('competencia_doc_capacitan_ma_si', 'competencia_doc_capacitan_ma_no', 'competencia_doc_capacitan_ma_desc');%>
-<%#*enable_disable_desc('competencia_aplica_conocimientos_si', 'competencia_aplica_conocimientos_no', 'competencia_aplica_conocimientos_desc');%>
-<%#*enable_disable_desc('competencia_esc_desarrolla_proy_si', 'competencia_esc_desarrolla_proy_no', 'competencia_esc_desarrolla_proy_desc');%>
-<%#*enable_disable_desc('competencia_alu_involucran_proy_si', 'competencia_alu_involucran_proy_no', 'competencia_alu_involucran_proy_desc');%>
-<%#*enable_disable_desc('competencia_alu_capacitan_salud_ma_si', 'competencia_alu_capacitan_salud_ma_no', 'competencia_alu_capacitan_salud_ma_desc');%>
-enable_textarea();
+enabled_textarea('competencia_alu_involucran_proy','competencia_alu_involucran_proy_desc');
+enabled_textarea('competencia_alu_capacitan_salud_ma','competencia_alu_capacitan_salud_ma_desc');
+enabled_textarea('competencia_esc_desarrolla_proy','competencia_esc_desarrolla_proy_desc');
+enabled_textarea('competencia_aplica_conocimientos','competencia_aplica_conocimientos_desc');
+enabled_textarea('competencia_doc_capacitan_salud','competencia_doc_capacitan_salud_desc');
+enabled_textarea('competencia_doc_capacitan_ma','competencia_doc_capacitan_ma_desc');
 
 var doc_capacitan_salud_desc = new LiveValidation( 'competencia_doc_capacitan_salud_desc', {onlyOnSubmit: true} );
 doc_capacitan_salud_desc.add( Validate.Presence );

@@ -141,7 +141,7 @@ Structure
 
 /* form elements  */
 .formee-lbl, .formee label {
-	display: block;
+	display: inline-block;
 	height: auto;
 	margin: 0.1em 0 0.1em;
 }
@@ -195,6 +195,14 @@ Structure
 
 /* form button  */
 .formee-button, .formee input[type="submit"], .formee input[type="button"], .formee input[type="reset"] {
+  padding:8px 15px 9px;
+  cursor: pointer;
+  text-align: center;
+  display:inline-block;
+  border:1px solid #D4D4D4;
+}
+
+.formee input[type="radio"]{
   padding:8px 15px 9px;
   cursor: pointer;
   text-align: center;

@@ -25,6 +25,10 @@ input:focus, select:focus {
     -moz-border-radius: 7px;
 }
 
+/*.InputGroup label{
+    display: inline-flex;
+}*/
+
 .ErrorField {
     border-color: #D00;
     color: #D00;
