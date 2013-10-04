@@ -13,6 +13,10 @@ class CreateEntornos < ActiveRecord::Migration
       t.string :participacion_sector_salud, :limit => 50
       t.string :promueve_activacion_fisica, :limit => 3
       t.string :tiempo_activacion_fisica, :limit => 200
+      t.string :tipo_suelo, :limit => 255               # Agregado
+      t.string :esc_espacio_fisico, :limit => 255       #
+      t.string :alrededores_cuenta_av, :limit => 255    #
+      t.string :aire_libre_contaminantes, :limit => 255 # Fin Agredo
       t.timestamps
       t.integer :diagnostico_id
     end

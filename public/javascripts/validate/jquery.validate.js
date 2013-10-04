@@ -13,7 +13,11 @@
             live: true
         }, options);
         var SelfID = jQuery(this).attr("id");
-        
+        var unix_time = new Date();
+        unix_time = parseInt(unix_time.getTime() / 1000);
+        if (!jQuery(this).parents('form:first').attr("id")) {
+            jQuery(this).parents('form:first').attr("id", "Form_" + unix_time);
+        }
         var FormID = jQuery(this).parents('form:first').attr("id");
         if (!((typeof(ValidationErrors[FormID]) == 'object') && (ValidationErrors[FormID] instanceof Array))) {
             ValidationErrors[FormID] = new Array();
@@ -22,11 +26,11 @@
             if (jQuery(this).find('input').length > 0) {
                 jQuery(this).find('input').bind('blur', function(){
                     if (validate_field("#" + SelfID, options)) {
-                        if (options.callback_success) 
+                        if (options.callback_success)
                             options.callback_success(this);
                     }
                     else {
-                        if (options.callback_failure) 
+                        if (options.callback_failure)
                             options.callback_failure(this);
                     }
                 });
@@ -48,9 +52,9 @@
             }
         }
         jQuery(this).parents("form").submit(function(){
-            if (validate_field('#' + SelfID)) 
+            if (validate_field('#' + SelfID))
                 return true;
-            else 
+            else
                 return false;
         });
         function validate_field(id){
@@ -62,13 +66,13 @@
                     jQuery(id).after('<span class="' + options['error_class'] + '">' + options['message'] + '</span>');
                     jQuery(id).addClass(options['error_field_class']);
                 }
-                if (ValidationErrors[FormID].join("|").search(id) == -1) 
+                if (ValidationErrors[FormID].join("|").search(id) == -1)
                     ValidationErrors[FormID].push(id);
                 return false;
             }
             else {
                 for (var i = 0; i < ValidationErrors[FormID].length; i++) {
-                    if (ValidationErrors[FormID][i] == id) 
+                    if (ValidationErrors[FormID][i] == id)
                         ValidationErrors[FormID].splice(i, 1);
                 }
                 return true;
@@ -79,7 +83,7 @@
         jQuery(this).each(function(){
             if (this.tagName == "FORM") {
                 jQuery(this).submit(function(){
-                    if (ValidationErrors[jQuery(this).attr("id")].length == 0) 
+                    if (ValidationErrors[jQuery(this).attr("id")].length == 0)
                         callback();
 					return false;
                 });

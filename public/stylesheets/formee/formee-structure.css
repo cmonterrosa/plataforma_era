@@ -203,11 +203,11 @@ Structure
 }
 
 .formee input[type="radio"]{
-  padding:8px 15px 9px;
+  padding: 8px 15px 9px;
   cursor: pointer;
   text-align: center;
-  display:inline-block;
-  border:1px solid #D4D4D4;
+  display: inline-block;
+  border: 1px solid #D4D4D4;
 }
 
 /* lista de chk e rdo */

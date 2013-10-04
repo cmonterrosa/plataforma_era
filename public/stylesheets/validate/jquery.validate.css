@@ -17,7 +17,8 @@ input:focus, select:focus {
 }
 
 .InputGroup {
-    display: inline-block;
+/*    display: inline-block;*/
+    display: inherit;
     padding: 3px 4px;
 /*    border: 1px solid #FFF;*/
     border: 1px solid #C6C6C6;

@@ -26,7 +26,7 @@
         </tr>
         <tr>
           <td align="center">
-            <span id="doc_capacitan_salud" class="InputGroup">
+            <span id="r_doc_capacitan_salud" class="InputGroup">
             <label>SI <%= f.radio_button :doc_capacitan_salud, "SI", :onclick => "enabled_textarea('', 'competencia_doc_capacitan_salud_desc');" %></label>&nbsp;&nbsp;
             <label>NO <%= f.radio_button :doc_capacitan_salud, "NO", :onclick => "enabled_textarea('', 'competencia_doc_capacitan_salud_desc');" %></label>
             </span>
@@ -45,7 +45,7 @@
           <td colspan="3">&nbsp;</td>
         </tr>
         <tr>
-          <td width="49%" align="justify"><label>¿Los conocimientos adquiridos son aplicados?<em class="formee-req"> *</em></label></td>
+          <td width="49%" align="justify"><label>¿En qué acciones aplica los conocimientos adquiridos?<em class="formee-req"> *</em></label></td>
           <td>&nbsp;</td>
           <td width="49%" align="justify"><label>¿La escuela desarrolla proyectos para la aplicación de conocimientos en materia de salud y medio ambiente?<em class="formee-req"> *</em></label></td>
         </tr>
@@ -66,6 +66,75 @@
             <%= f.text_area :esc_desarrolla_proy_desc, :placeholder => "Especifique...", :disabled => 'disabled' %>
           </td>
         </tr>
+        <tr>
+          <td colspan="3">&nbsp;</td>
+        </tr>
+        <tr>
+          <td width="49%" align="justify"><label>¿La escuela promueve el desarrollo de proyectos que ponga en práctica los conocimientos adquiridos sobre la salud y medio ambiente?<em class="formee-req"> *</em></label></td>
+          <td>&nbsp;</td>
+          <td width="49%" align="justify"><label>¿El personal docente ha participado en cursos sobre temas ambientales y de salud, promovidos por la Coordinación de Formación Continua?<em class="formee-req"> *</em></label></td>
+        </tr>
+        <tr>
+          <td align="center" >
+            <span id="r_esc_prom_des_proy" class="InputGroup">
+            <label>SI <%= f.radio_button :esc_prom_des_proy, "SI", :onclick => "enabled_textarea('', 'competencia_esc_prom_des_proy_desc');" %></label>&nbsp;&nbsp;
+            <label>NO <%= f.radio_button :esc_prom_des_proy, "NO", :onclick => "enabled_textarea('', 'competencia_esc_prom_des_proy_desc');" %></label>
+            </span>
+            <%= f.text_area :esc_prom_des_proy_desc, :placeholder => "Especifique...", :disabled => 'disabled' %>
+          </td>
+          <td>&nbsp;</td>
+          <td align="center">
+            <span id="r_doc_part_temas_ma_s" class="InputGroup">
+            <label>SI <%= f.radio_button :doc_part_temas_ma_s, "SI", :onclick => "enabled_textarea('', 'competencia_doc_part_temas_ma_s_desc');" %></label>&nbsp;&nbsp;
+            <label>NO <%= f.radio_button :doc_part_temas_ma_s, "NO", :onclick => "enabled_textarea('', 'competencia_doc_part_temas_ma_s_desc');" %></label>
+            </span>
+            <%= f.text_area :doc_part_temas_ma_s_desc, :placeholder => "Especifique...", :disabled => 'disabled' %>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3">&nbsp;</td>
+        </tr>
+        <tr>
+          <td width="49%" align="justify"><label>¿La comunidad docente muestra interés en el desarrollo de proyectos, para la mejora de las competencias y aprendizajes esperados en sus alumnos?<em class="formee-req"> *</em></label></td>
+          <td>&nbsp;</td>
+          <td width="49%" align="justify"><label>¿La comunidad docente se suma a las acciones educativas que impliquen  tareas extraescolares?<em class="formee-req"> *</em></label></td>
+        </tr>
+        <tr>
+          <td align="center" >
+            <span id="r_doc_interes_proy" class="InputGroup">
+            <label>SI <%= f.radio_button :doc_interes_proy, "SI", :onclick => "enabled_textarea('', 'competencia_doc_interes_proy_desc');" %></label>&nbsp;&nbsp;
+            <label>NO <%= f.radio_button :doc_interes_proy, "NO", :onclick => "enabled_textarea('', 'competencia_doc_interes_proy_desc');" %></label>
+            </span>
+            <%= f.text_area :doc_interes_proy_desc, :placeholder => "Especifique...", :disabled => 'disabled' %>
+          </td>
+          <td>&nbsp;</td>
+          <td align="center">
+            <span id="r_doc_suma_acc_edu" class="InputGroup">
+            <label>SI <%= f.radio_button :doc_suma_acc_edu, "SI", :onclick => "enabled_textarea('', 'competencia_doc_suma_acc_edu_desc');" %></label>&nbsp;&nbsp;
+            <label>NO <%= f.radio_button :doc_suma_acc_edu, "NO", :onclick => "enabled_textarea('', 'competencia_doc_suma_acc_edu_desc');" %></label>
+            </span>
+            <%= f.text_area :doc_suma_acc_edu_desc, :placeholder => "Especifique...", :disabled => 'disabled' %>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3">&nbsp;</td>
+        </tr>
+        <tr>
+          <td width="49%" align="justify"><label>¿La escuela promueve cursos, talleres, diplomados, en temas de relevancia social a sus docentes?<em class="formee-req"> *</em></label></td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td align="center">
+            <span id="r_esc_prom_cursos" class="InputGroup">
+            <label>SI <%= f.radio_button :esc_prom_cursos, "SI", :onclick => "enabled_textarea('', 'competencia_esc_prom_cursos_desc');" %></label>&nbsp;&nbsp;
+            <label>NO <%= f.radio_button :esc_prom_cursos, "NO", :onclick => "enabled_textarea('', 'competencia_esc_prom_cursos_desc');" %></label>
+            </span>
+            <%= f.text_area :esc_prom_cursos_desc, :placeholder => "Especifique...", :disabled => 'disabled' %>
+          </td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
       </table>
     </td>
   </tr>
@@ -81,7 +150,7 @@
         <tr>
           <td width="49%"  align="justify"><label>¿Los alumnos de involucran en las actividades y proyectos en los que participa la escuela?<em class="formee-req"> *</em></label></td>
           <td>&nbsp;</td>
-          <td width="49%" align="justify"><label>¿Los alumnos se capacitan en materia de salud y medio ambiente?<em class="formee-req"> *</em></label></td>
+          <td width="49%" align="justify"><label>¿En el desarrollo de proyectos los alumnos muestran interés y participan activamente?<em class="formee-req"> *</em></label></td>
         </tr>
         <tr>
           <td align="center">
@@ -93,11 +162,36 @@
           </td>
           <td>&nbsp;</td>
           <td align="center">
+            <span id="r_alu_interes_proy" class="InputGroup">
+            <label>SI <%= f.radio_button :alu_interes_proy, "SI", :onclick => "enabled_textarea('', 'competencia_alu_interes_proy_desc');" %></label>&nbsp;&nbsp;
+            <label>NO <%= f.radio_button :alu_interes_proy, "NO", :onclick => "enabled_textarea('', 'competencia_alu_interes_proy_desc');" %></label>
+            </span>
+            <%=f.text_area :alu_interes_proy_desc, :placeholder => "Especifique...", :disabled => 'disabled' %>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3">&nbsp;</td>
+        </tr>
+        <tr>
+          <td width="49%" align="justify"><label>¿Los alumnos se capacitan en materia de salud y medio ambiente?<em class="formee-req"> *</em></label></td>
+          <td>&nbsp;</td>
+          <td width="49%" align="justify"><label>¿En los aprendizajes esperados, el alumno desarrolla las competencias esperadas y las pone en práctica?</label></td>
+        </tr>
+        <tr>
+          <td align="center">
             <span id="r_alu_capacitan_salud_ma" class="InputGroup">
             <label>SI <%= f.radio_button :alu_capacitan_salud_ma, "SI", :onclick => "enabled_textarea('', 'competencia_alu_capacitan_salud_ma_desc');" %></label>&nbsp;&nbsp;
             <label>NO <%= f.radio_button :alu_capacitan_salud_ma, "NO", :onclick => "enabled_textarea('', 'competencia_alu_capacitan_salud_ma_desc');" %></label>
             </span>
             <%=f.text_area :alu_capacitan_salud_ma_desc, :placeholder => "Especifique...", :disabled => 'disabled' %>
+          </td>
+          <td>&nbsp;</td>
+          <td align="center">
+            <span id="r_alu_des_competencias" class="InputGroup">
+            <label>SI <%= f.radio_button :alu_des_competencias, "SI", :onclick => "enabled_textarea('', 'competencia_alu_des_competencias_desc');" %></label>&nbsp;&nbsp;
+            <label>NO <%= f.radio_button :alu_des_competencias, "NO", :onclick => "enabled_textarea('', 'competencia_alu_des_competencias_desc');" %></label>
+            </span>
+            <%=f.text_area :alu_des_competencias_desc, :placeholder => "Especifique...", :disabled => 'disabled' %>
           </td>
         </tr>
       </table>
@@ -127,12 +221,20 @@
 <% end %>
 
 <script type="text/javascript">
-enabled_textarea('competencia_alu_involucran_proy','competencia_alu_involucran_proy_desc');
-enabled_textarea('competencia_alu_capacitan_salud_ma','competencia_alu_capacitan_salud_ma_desc');
-enabled_textarea('competencia_esc_desarrolla_proy','competencia_esc_desarrolla_proy_desc');
-enabled_textarea('competencia_aplica_conocimientos','competencia_aplica_conocimientos_desc');
 enabled_textarea('competencia_doc_capacitan_salud','competencia_doc_capacitan_salud_desc');
 enabled_textarea('competencia_doc_capacitan_ma','competencia_doc_capacitan_ma_desc');
+enabled_textarea('competencia_esc_desarrolla_proy','competencia_esc_desarrolla_proy_desc');
+enabled_textarea('competencia_aplica_conocimientos','competencia_aplica_conocimientos_desc');
+enabled_textarea('competencia_doc_part_temas_ma_s','competencia_doc_part_temas_ma_s_desc');
+enabled_textarea('competencia_esc_prom_des_proy','competencia_esc_prom_des_proy_desc');
+enabled_textarea('competencia_doc_interes_proy','competencia_doc_interes_proy_desc');
+enabled_textarea('competencia_doc_suma_acc_edu','competencia_doc_suma_acc_edu_desc');
+enabled_textarea('competencia_esc_prom_cursos','competencia_esc_prom_cursos_desc');
+
+enabled_textarea('competencia_alu_interes_proy','competencia_alu_interes_proy_desc');
+enabled_textarea('competencia_alu_involucran_proy','competencia_alu_involucran_proy_desc');
+enabled_textarea('competencia_alu_capacitan_salud_ma','competencia_alu_capacitan_salud_ma_desc');
+enabled_textarea('competencia_alu_des_competencias','competencia_alu_des_competencias_desc');
 
 var doc_capacitan_salud_desc = new LiveValidation( 'competencia_doc_capacitan_salud_desc', {onlyOnSubmit: true} );
 doc_capacitan_salud_desc.add( Validate.Presence );
@@ -142,17 +244,40 @@ var aplica_conocimientos_desc = new LiveValidation( 'competencia_aplica_conocimi
 aplica_conocimientos_desc.add( Validate.Presence );
 var esc_desarrolla_proy_desc = new LiveValidation( 'competencia_esc_desarrolla_proy_desc', {onlyOnSubmit: true} );
 esc_desarrolla_proy_desc.add( Validate.Presence );
+var esc_prom_des_proy_desc = new LiveValidation( 'competencia_esc_prom_des_proy_desc', {onlyOnSubmit: true} );
+esc_prom_des_proy_desc.add( Validate.Presence );
+var doc_part_temas_ma_s_desc = new LiveValidation( 'competencia_doc_part_temas_ma_s_desc', {onlyOnSubmit: true} );
+doc_part_temas_ma_s_desc.add( Validate.Presence );
+var doc_interes_proy_desc = new LiveValidation( 'competencia_doc_interes_proy_desc', {onlyOnSubmit: true} );
+doc_interes_proy_desc.add( Validate.Presence );
+var doc_suma_acc_edu_desc = new LiveValidation( 'competencia_doc_suma_acc_edu_desc', {onlyOnSubmit: true} );
+doc_suma_acc_edu_desc.add( Validate.Presence );
+var doc_suma_acc_edu_desc = new LiveValidation( 'competencia_esc_prom_cursos_desc', {onlyOnSubmit: true} );
+doc_suma_acc_edu_desc.add( Validate.Presence );
+
 var alu_involucran_proy_desc = new LiveValidation( 'competencia_alu_involucran_proy_desc', {onlyOnSubmit: true} );
 alu_involucran_proy_desc.add( Validate.Presence );
+var alu_interes_proy_desc = new LiveValidation( 'competencia_alu_interes_proy_desc', {onlyOnSubmit: true} );
+alu_interes_proy_desc.add( Validate.Presence );
 var alu_capacitan_salud_ma_desc = new LiveValidation( 'competencia_alu_capacitan_salud_ma_desc', {onlyOnSubmit: true} );
 alu_capacitan_salud_ma_desc.add( Validate.Presence );
+var alu_des_competencias_desc = new LiveValidation( 'competencia_alu_des_competencias_desc', {onlyOnSubmit: true} );
+alu_des_competencias_desc.add( Validate.Presence );
 
 jQuery(function(){
-  jQuery("#doc_capacitan_salud").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
+  jQuery("#r_doc_capacitan_salud").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
   jQuery("#r_doc_capacitan_ma").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
   jQuery("#r_aplica_conocimientos").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
   jQuery("#r_esc_desarrolla_proy").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
+  jQuery("#r_esc_prom_des_proy").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
+  jQuery("#r_doc_part_temas_ma_s").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
+  jQuery("#r_doc_interes_proy").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
+  jQuery("#r_doc_suma_acc_edu").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
+  jQuery("#r_esc_prom_cursos").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
+
   jQuery("#r_alu_involucran_proy").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
+  jQuery("#r_alu_interes_proy").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
   jQuery("#r_alu_capacitan_salud_ma").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
+  jQuery("#r_alu_des_competencias").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
 });
 </script>

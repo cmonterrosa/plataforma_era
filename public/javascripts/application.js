@@ -41,9 +41,6 @@ function to_uppercase(){
 }
 
 function enabled_textarea(radio, textarea){
-    var radio_si = radio+'_si'
-    var radio_no = radio+'_no'
-
-    if(radio == '' || document.getElementById(radio_si).checked || document.getElementById(radio_no).checked)
+    if(radio == '' || document.getElementById(radio+'_si').checked || document.getElementById(radio+'_no').checked)
         document.getElementById(textarea).disabled = false;
 }
