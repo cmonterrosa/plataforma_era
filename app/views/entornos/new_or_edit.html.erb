@@ -89,6 +89,32 @@
           <td>&nbsp;</td>
             <td><%= f.text_area :tiempo_activacion_fisica, :placeholder => "Especifique...", :disabled => 'disabled' %></td>
         </tr>
+        <tr>
+          <td colspan="3">&nbsp;</td>
+        </tr>
+        <tr>
+          <td width="49%" align="justify"><label>¿El tipo de suelo es el apropiado para siembra de árboles o cultivo de hortalizas?</label></td>
+          <td>&nbsp;</td>
+          <td width="49%" align="justify"><label>¿La escuela cuenta con espacio físico para la reforestación, preparación de jardines o huertos escolares?</label></td>
+        </tr>
+        <tr>
+          <td><%= f.text_area :tipo_suelo, :placeholder => "Especifique..."%></td>
+          <td>&nbsp;</td>
+          <td><%= f.text_area :esc_espacio_fisico, :placeholder => "Especifique..."%></td>
+        </tr>
+        <tr>
+          <td colspan="3">&nbsp;</td>
+        </tr>
+        <tr>
+          <td width="49%" align="justify"><label>¿En los alrededores o espacios anexos a la escuela se cuenta con áreas verdes?</label></td>
+          <td>&nbsp;</td>
+          <td width="49%" align="justify"><label>¿El aire que se respira se considera libre de contaminantes?</label></td>
+        </tr>
+        <tr>
+          <td><%= f.text_area :alrededores_cuenta_av, :placeholder => "Especifique..."%></td>
+          <td>&nbsp;</td>
+          <td><%= f.text_area :aire_libre_contaminantes, :placeholder => "Especifique..."%></td>
+        </tr>
       </table>
     </td>
   </tr>
@@ -117,6 +143,10 @@
 
 <script type="text/javascript">
 enabled_textarea('entorno_areas_verdes_esc','entorno_areas_verdes_esc_desc');
+enabled_textarea('entorno_cuidado_preserv_reforest','entorno_cuidado_preserv_reforest_desc');
+enabled_textarea('entorno_adopta_areas_verdes','entorno_adopta_areas_verdes_desc');
+enabled_textarea('entorno_promueve_cuidado_salud','entorno_promueve_cuidado_salud_desc');
+enabled_textarea('entorno_promueve_activacion_fisica','entorno_tiempo_activacion_fisica');
 
 var areas_verdes_esc_desc = new LiveValidation( 'entorno_areas_verdes_esc_desc', {onlyOnSubmit: true} );
 areas_verdes_esc_desc.add( Validate.Presence );
@@ -130,8 +160,21 @@ var participacion_sector_salud = new LiveValidation( 'entorno_participacion_sect
 participacion_sector_salud.add( Validate.Exclusion, { within: [':: SELECCIONA UNA OPCIÓN'] });
 var tiempo_activacion_fisica = new LiveValidation( 'entorno_tiempo_activacion_fisica', {onlyOnSubmit: true} );
 tiempo_activacion_fisica.add( Validate.Presence );
+var tipo_suelo = new LiveValidation( 'entorno_tipo_suelo', {onlyOnSubmit: true} );
+tipo_suelo.add( Validate.Presence );
+var esc_espacio_fisico = new LiveValidation( 'entorno_esc_espacio_fisico', {onlyOnSubmit: true} );
+esc_espacio_fisico.add( Validate.Presence );
+var alrededores_cuenta_av = new LiveValidation( 'entorno_alrededores_cuenta_av', {onlyOnSubmit: true} );
+alrededores_cuenta_av.add( Validate.Presence );
+var aire_libre_contaminantes = new LiveValidation( 'entorno_aire_libre_contaminantes', {onlyOnSubmit: true} );
+aire_libre_contaminantes.add( Validate.Presence );
 
 jQuery(function(){
-  jQuery("#r_entorno_areas_verdes_esc").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
+  jQuery("#r_areas_verdes_esc").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
+  jQuery("#r_cuidado_preserv_reforest").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
+  jQuery("#r_adopta_areas_verdes").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
+  jQuery("#r_promueve_cuidado_salud").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
+  jQuery("#r_promueve_activacion_cartilla").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
+  jQuery("#r_promueve_activacion_fisica").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
 });
 </script>
