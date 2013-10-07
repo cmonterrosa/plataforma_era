@@ -75,8 +75,8 @@ class CreateHuellas < ActiveRecord::Migration
       t.string :cuenta_recipientes_org_inorg, :limit => 3
       t.integer :cuenta_recipientes_org_inorg_num
 
-      t.string :aparatos_pilas, :limit => 3
-      t.integer :aparatos_pilas_num
+#      t.string :aparatos_pilas, :limit => 3
+#      t.integer :aparatos_pilas_num
 
       t.string :meca_elim_residuos_solid, :limit => 255
 

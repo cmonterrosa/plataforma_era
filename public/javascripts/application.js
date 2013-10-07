@@ -40,7 +40,15 @@ function to_uppercase(){
     }    
 }
 
-function enabled_textarea(radio, textarea){
+//function enabled_textarea(radio, textarea){
+//    if(radio == '' || document.getElementById(radio+'_si').checked || document.getElementById(radio+'_no').checked)
+//        document.getElementById(textarea).disabled = false;
+//}
+
+function enabled_textarea(radio, obj){
     if(radio == '' || document.getElementById(radio+'_si').checked || document.getElementById(radio+'_no').checked)
-        document.getElementById(textarea).disabled = false;
+        document.getElementById(obj).disabled = false;
+    
+    if(document.getElementById(radio+'_no').checked & document.getElementById(obj).type == 'select-one')
+        document.getElementById(obj).disabled = 'disabled';
 }
