@@ -8,37 +8,37 @@ class CreateHuellas < ActiveRecord::Migration
       #### APARATOS ELECTRONICOS ########
 
       t.integer :computadoras_num
-      t.string :computadoras_hrs_diarias, :limit => 3
+      t.integer :computadoras_hrs_diarias
 
       t.integer :impresoras_num
-      t.string :impresoras_hrs_diarias, :limit => 3
+      t.integer :impresoras_hrs_diarias
 
       t.integer :proyectores_num
-      t.string :proyectores_hrs_diarias, :limit => 3
+      t.integer :proyectores_hrs_diarias
 
       t.integer :reguladores_num
-      t.string :reguladores_hrs_diarias, :limit => 3
+      t.integer :reguladores_hrs_diarias
 
       t.integer :ventiladores_num
-      t.string :ventiladores_hrs_diarias, :limit => 3
+      t.string :ventiladores_hrs_diarias
 
       t.integer :climas_num
-      t.string :climas_hrs_diarias, :limit => 3
+      t.integer :climas_hrs_diarias
 
       t.integer :enfriadores_num
-      t.string :enfriadores_hrs_diarias, :limit => 3
+      t.integer :enfriadores_hrs_diarias
 
       t.integer :cafeteras_num
-      t.string :cafeteras_hrs_diarias, :limit => 3
+      t.integer :cafeteras_hrs_diarias
 
       t.integer :refrigeradores_num
-      t.string :refrigeradores_hrs_diarias, :limit => 3
+      t.integer :refrigeradores_hrs_diarias
 
       t.integer :bombas_agua_num
-      t.string :bombas_agua_hrs_diarias, :limit => 3
+      t.integer :bombas_agua_hrs_diarias
 
       t.integer :aparatos_sonido_num
-      t.string :aparatos_sonido_hrs_diarias, :limit => 3
+      t.integer :aparatos_sonido_hrs_diarias
 
       t.string :desconectan_equipos_elec, :limit => 3
       t.string :utilizan_lamp_ahorradoras, :limit => 3

@@ -52,3 +52,19 @@ function enabled_textarea(radio, obj){
     if(document.getElementById(radio+'_no').checked & document.getElementById(obj).type == 'select-one')
         document.getElementById(obj).disabled = 'disabled';
 }
+
+function enable_fugas(select){
+    var nombre = select.split("_num");
+    if(document.getElementById(select).value > 0){
+        document.getElementById(nombre[0]+'_fugas_si').disabled = false;
+        document.getElementById(nombre[0]+'_fugas_no').disabled = false;
+        if(document.getElementById(nombre[0]+'_fugas_si').checked == false)
+            document.getElementById(nombre[0]+'_fugas_no').checked = 'checked';
+    }
+    else{
+        document.getElementById(nombre[0]+'_fugas_si').checked = false;
+        document.getElementById(nombre[0]+'_fugas_no').checked = false;
+        document.getElementById(nombre[0]+'_fugas_si').disabled = 'disabled';
+        document.getElementById(nombre[0]+'_fugas_no').disabled = 'disabled';
+    }
+}

@@ -31,13 +31,13 @@
         <tr>
           <th rowspan="2" class="titulo_electronicos">COMPUTADORAS</th>
           <td>CUANTAS:</td>
-          <td><%=f.select :computadoras_num, (0..25), {}, :onchange => "validate_exists(this, 'huella_computadoras_hrs_diarias');"%></td>
+          <td><%= f.select :computadoras_num, (0..25), {}, :onchange => "validate_exists(this, 'huella_computadoras_hrs_diarias');"%></td>
           
         </tr>
 
         <tr>
           <td>HORAS AL DIA:</td>
-          <td><%=f.select :computadoras_hrs_diarias, (0..24)%></td>
+          <td><%= f.select :computadoras_hrs_diarias, (0..24)%></td>
         </tr>
 
         <tr>
@@ -295,14 +295,17 @@
         <tr>
           <th rowspan="2" class="titulo_electronicos">SANITARIOS</th>
           <td>CUANTOS:</td>
-          <td><%=f.select :sanitarios_num, (0..99)%></td>
+          <td><%=f.select :sanitarios_num, (0..5), {}, :onchange => "enable_fugas('huella_sanitarios_num');" %></td>
 
         </tr>
 
         <tr>
           <td>FUGAS:</td>
-          <td> SI <%= f.radio_button :sanitarios_fugas, "SI"%>&nbsp;&nbsp;
+          <td>
+            <span class="InputGroup">
+              SI <%= f.radio_button :sanitarios_fugas, "SI"%>&nbsp;&nbsp;
               NO <%= f.radio_button :sanitarios_fugas, "NO"%>
+            </span>
           </td>
         </tr>
 
@@ -314,14 +317,17 @@
         <tr>
           <th rowspan="2" class="titulo_electronicos">BEBEDEROS</th>
           <td>CUANTOS:</td>
-          <td><%=f.select :bebederos_num, (0..99)%></td>
+          <td><%=f.select :bebederos_num, (0..5), {}, :onchange => "enable_fugas('huella_bebederos_num');" %></td>
 
         </tr>
 
         <tr>
           <td>FUGAS:</td>
-          <td> SI <%= f.radio_button :bebederos_fugas, "SI"%>&nbsp;&nbsp;
+          <td>
+            <span class="InputGroup">
+              SI <%= f.radio_button :bebederos_fugas, "SI"%>&nbsp;&nbsp;
               NO <%= f.radio_button :bebederos_fugas, "NO"%>
+            </span>
           </td>
         </tr>
 
@@ -333,14 +339,17 @@
         <tr>
           <th rowspan="2" class="titulo_electronicos">TOMAS DE AGUA</th>
           <td>CUANTAS:</td>
-          <td><%=f.select :tomas_agua_num, (0..99)%></td>
+          <td><%=f.select :tomas_agua_num, (0..5), {}, :onchange => "enable_fugas('huella_tomas_agua_num');" %></td>
 
         </tr>
 
         <tr>
           <td>FUGAS:</td>
-          <td> SI <%= f.radio_button :tomas_agua_fugas, "SI"%>&nbsp;&nbsp;
+          <td>
+            <span class="InputGroup">
+              SI <%= f.radio_button :tomas_agua_fugas, "SI"%>&nbsp;&nbsp;
               NO <%= f.radio_button :tomas_agua_fugas, "NO"%>
+            </span>
           </td>
         </tr>
 
@@ -352,14 +361,17 @@
         <tr>
           <th rowspan="2" class="titulo_electronicos">CISTERNAS</th>
           <td>CUANTAS:</td>
-          <td><%=f.select :cisternas_num, (0..99)%></td>
+          <td><%=f.select :cisternas_num, (0..5), {}, :onchange => "enable_fugas('huella_cisternas_num');" %></td>
 
         </tr>
 
         <tr>
           <td>FUGAS:</td>
-          <td> SI <%= f.radio_button :cisternas_fugas, "SI"%>&nbsp;&nbsp;
+          <td>
+            <span class="InputGroup">
+              SI <%= f.radio_button :cisternas_fugas, "SI"%>&nbsp;&nbsp;
               NO <%= f.radio_button :cisternas_fugas, "NO"%>
+            </span>
           </td>
         </tr>
 
@@ -382,11 +394,11 @@
           </td>
           <td>&nbsp;</td>
           <td align="center">
-            <label>
-              SI <%= f.radio_button :reutiliza_agua, "SI", :onclick => "enable_disable_desc('huella_reutiliza_agua_si', 'huella_reutiliza_agua_no', 'huella_reutiliza_agua_desc');"%>&nbsp;&nbsp;
-              NO <%= f.radio_button :reutiliza_agua, "NO", :onclick => "enable_disable_desc('huella_reutiliza_agua_si', 'huella_reutiliza_agua_no', 'huella_reutiliza_agua_desc');"%>
-            </label>
-            <%= f.text_area :reutiliza_agua_desc, :placeholder => "Especifique...", :disabled => true %>
+            <span id="r_reutiliza_agua" class="InputGroup">
+            <label>SI <%= f.radio_button :reutiliza_agua, "SI", :onclick => "enabled_textarea('', 'huella_reutiliza_agua_desc');" %></label>&nbsp;&nbsp;
+            <label>NO <%= f.radio_button :reutiliza_agua, "NO", :onclick => "enabled_textarea('', 'huella_reutiliza_agua_desc');" %></label>
+            </span>
+            <%= f.text_area :reutiliza_agua_desc, :placeholder => "Especifique...", :disabled => 'disabled' %>
           </td>
         </tr>
 
@@ -402,12 +414,11 @@
         </tr>
         <tr>
           <td align="center">
-            <span id=""
-            <label>
-              SI <%= f.radio_button :recip_residuos_solid, "SI", :onclick => "enable_disable_desc('huella_recip_residuos_solid_si', 'huella_recip_residuos_solid_no', 'huella_recip_residuos_solid_num');"%>&nbsp;&nbsp;
-              NO <%= f.radio_button :recip_residuos_solid, "NO", :onclick => "enable_disable_desc('huella_recip_residuos_solid_si', 'huella_recip_residuos_solid_no', 'huella_recip_residuos_solid_num');"%>
-            </label>
-            <label>¿Cuantos?</label><%=f.select :recip_residuos_solid_num, (0..99), {}, :disabled => true%>
+            <span id="r_recip_residuos_solid" class="InputGroup">
+            <label>SI <%= f.radio_button :recip_residuos_solid, "SI", :onclick => "enabled_textarea('huella_recip_residuos_solid', 'huella_recip_residuos_solid_num');" %></label>&nbsp;&nbsp;
+            <label>NO <%= f.radio_button :recip_residuos_solid, "NO", :onclick => "enabled_textarea('huella_recip_residuos_solid', 'huella_recip_residuos_solid_num');" %></label>
+            </span>
+            <label>¿Cuantos?</label><%=f.select :recip_residuos_solid_num, (1..10), {}, :disabled => true%>
           </td>
           <td>&nbsp;</td>
           <td align="center">
@@ -437,11 +448,11 @@
           </td>
           <td>&nbsp;</td>
           <td align="center">
-            <label>
-              SI <%= f.radio_button :cuenta_recipientes_org_inorg, "SI", :onclick => "enable_disable_desc('huella_cuenta_recipientes_org_inorg_si', 'huella_cuenta_recipientes_org_inorg_no', 'huella_cuenta_recipientes_org_inorg_num');"%>&nbsp;&nbsp;
-              NO <%= f.radio_button :cuenta_recipientes_org_inorg, "NO", :onclick => "enable_disable_desc('huella_cuenta_recipientes_org_inorg_si', 'huella_cuenta_recipientes_org_inorg_no', 'huella_cuenta_recipientes_org_inorg_num');"%>
-            </label>
-             <label>¿Cuantos?</label><%=f.select :cuenta_recipientes_org_inorg_num, (0..99), {}, :disabled => true%>
+            <span id="r_cuenta_recipientes_org_inorg" class="InputGroup">
+            <label>SI <%= f.radio_button :cuenta_recipientes_org_inorg, "SI", :onclick => "enabled_textarea('huella_cuenta_recipientes_org_inorg', 'huella_cuenta_recipientes_org_inorg_num');" %></label>&nbsp;&nbsp;
+            <label>NO <%= f.radio_button :cuenta_recipientes_org_inorg, "NO", :onclick => "enabled_textarea('huella_cuenta_recipientes_org_inorg', 'huella_cuenta_recipientes_org_inorg_num');" %></label>
+            </span>
+             <label>¿Cuantos?</label><%=f.select :cuenta_recipientes_org_inorg_num, (1..10), {}, :disabled => true%>
           </td>
         </tr>
 
@@ -451,7 +462,7 @@
 
         <!-- nueva linea -->
         <tr>
-          <td width="49%" align="justify"><label>¿Cuenta con aparatos que utilizan pilas?</label></td>
+          <td bgcolor="#ACACAC" width="49%" align="justify"><label>¿Cuenta con aparatos que utilizan pilas?</label></td>
           <td>&nbsp;</td>
           <td width="49%" align="justify"><label>¿Cuál es el mecanismo de eliminación de los residuos sólidos?</label></td>
         </tr>
@@ -480,8 +491,8 @@
         <tr>
           <td colspan="3" align="center">
             <span id ="r_act_reutiliza_residuos" class="InputGroup">
-            <label>SI <%= f.radio_button :act_reutiliza_residuos, "SI", :onclick => "enabled_textarea('', 'huella_act_reutiliza_residuos_desc');"  %></label>&nbsp;&nbsp;
-            <label>NO <%= f.radio_button :act_reutiliza_residuos, "NO", :onclick => "enabled_textarea('', 'huella_act_reutiliza_residuos_desc');"  %></label>
+            <label>SI <%= f.radio_button :act_reutiliza_residuos, "SI", :onclick => "enabled_textarea('', 'huella_act_reutiliza_residuos_desc');" %></label>&nbsp;&nbsp;
+            <label>NO <%= f.radio_button :act_reutiliza_residuos, "NO", :onclick => "enabled_textarea('', 'huella_act_reutiliza_residuos_desc');" %></label>
             </span>
               <%= f.text_area :act_reutiliza_residuos_desc, :placeholder => "Especifique...", :disabled => 'disabled' %>
           </td>
@@ -529,18 +540,26 @@ validate_exists_initial('huella_refrigeradores_num', 'huella_refrigeradores_hrs_
 validate_exists_initial('huella_bombas_agua_num', 'huella_bombas_agua_hrs_diarias');
 validate_exists_initial('huella_aparatos_sonido_num', 'huella_aparatos_sonido_hrs_diarias');
 
+enable_fugas('huella_sanitarios_num');
+enable_fugas('huella_bebederos_num');
+enable_fugas('huella_tomas_agua_num');
+enable_fugas('huella_cisternas_num');
+
 enabled_textarea('huella_act_reutiliza_residuos', 'huella_act_reutiliza_residuos_desc');
 enabled_textarea('huella_reutiliza_agua', 'huella_reutiliza_agua_desc');
 enabled_textarea('huella_aparatos_pilas', 'huella_aparatos_pilas_num');
 enabled_textarea('huella_cuenta_recipientes_org_inorg', 'huella_cuenta_recipientes_org_inorg_num');
 enabled_textarea('huella_recip_residuos_solid', 'huella_recip_residuos_solid_num');
-enabled_textarea('huella_aparatos_pilas', 'huella_aparatos_pilas_num');
+enabled_textarea('huella_cuenta_recipientes_org_inorg', 'huella_cuenta_recipientes_org_inorg_num');
 enabled_textarea('huella_act_reutiliza_residuos', 'huella_act_reutiliza_residuos_desc');
+enabled_textarea('huella_aparatos_pilas', 'huella_aparatos_pilas_num');
 
 var meca_elim_residuos_solid = new LiveValidation( 'huella_meca_elim_residuos_solid', {onlyOnSubmit: true} );
 meca_elim_residuos_solid.add( Validate.Presence );
 var act_reutiliza_residuos_desc = new LiveValidation( 'huella_act_reutiliza_residuos_desc', {onlyOnSubmit: true} );
 act_reutiliza_residuos_desc.add( Validate.Presence );
+var reutiliza_agua_desc = new LiveValidation( 'huella_reutiliza_agua_desc', {onlyOnSubmit: true} );
+reutiliza_agua_desc.add( Validate.Presence );
 
 jQuery(function(){
   jQuery("#r_mant_instalaciones").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
@@ -552,10 +571,8 @@ jQuery(function(){
   jQuery("#r_elabora_compostas_residuos").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
   jQuery("#r_aparatos_pilas").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
   jQuery("#r_act_reutiliza_residuos").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
-  <%#*jQuery("#r_esc_prom_cursos").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });%>
-  <%#*jQuery("#r_alu_involucran_proy").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });%>
-  <%#*jQuery("#r_alu_interes_proy").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });%>
-  <%#*jQuery("#r_alu_capacitan_salud_ma").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });%>
-  <%#*jQuery("#r_alu_des_competencias").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });%>
+  jQuery("#r_cuenta_recipientes_org_inorg").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
+  jQuery("#r_recip_residuos_solid").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
+  jQuery("#r_reutiliza_agua").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
 });
 </script>
