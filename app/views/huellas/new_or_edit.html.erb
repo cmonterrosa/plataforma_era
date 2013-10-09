@@ -462,17 +462,25 @@
 
         <!-- nueva linea -->
         <tr>
-          <td bgcolor="#ACACAC" width="49%" align="justify"><label>¿Cuenta con aparatos que utilizan pilas?</label></td>
+          <td width="49%" align="justify"><label>¿Se llevan a cabo actividades para la reutilización de residuos sólidos?</label></td>
+          <!--<td bgcolor="#ACACAC" width="49%" align="justify"><label>¿Cuenta con aparatos que utilizan pilas?</label></td>-->
           <td>&nbsp;</td>
           <td width="49%" align="justify"><label>¿Cuál es el mecanismo de eliminación de los residuos sólidos?</label></td>
         </tr>
         <tr>
           <td align="center">
-            <span id="r_aparatos_pilas" class="InputGroup">
-            <label>SI <%= f.radio_button :aparatos_pilas, "SI", :onclick => "enabled_textarea('huella_aparatos_pilas', 'huella_aparatos_pilas_num');" %></label>&nbsp;&nbsp;
-            <label>NO <%= f.radio_button :aparatos_pilas, "NO", :onclick => "enabled_textarea('huella_aparatos_pilas', 'huella_aparatos_pilas_num');"%></label>
+            <span id ="r_act_reutiliza_residuos" class="InputGroup">
+            <label>SI <%= f.radio_button :act_reutiliza_residuos, "SI", :onclick => "enabled_textarea('', 'huella_act_reutiliza_residuos_desc');" %></label>&nbsp;&nbsp;
+            <label>NO <%= f.radio_button :act_reutiliza_residuos, "NO", :onclick => "enabled_textarea('', 'huella_act_reutiliza_residuos_desc');" %></label>
             </span>
-            <label>¿Cuantos?</label> <%=f.select :aparatos_pilas_num, (1..10), {}, :disabled => 'disabled' %>
+              <%= f.text_area :act_reutiliza_residuos_desc, :placeholder => "Especifique...", :disabled => 'disabled' %>
+
+            <!--<span id="r_aparatos_pilas" class="InputGroup">
+            <%#*<label>SI <%= f.radio_button :aparatos_pilas, "SI", :onclick => "enabled_textarea('huella_aparatos_pilas', 'huella_aparatos_pilas_num');" %></label>&nbsp;&nbsp;%>
+            <%#*<label>NO <%= f.radio_button :aparatos_pilas, "NO", :onclick => "enabled_textarea('huella_aparatos_pilas', 'huella_aparatos_pilas_num');" %></label>%>
+            </span>
+            <%#*<label>¿Cuantos?</label> <%= f.select :aparatos_pilas_num, (1..10), {}, :disabled => "disabled" %> -->
+
           </td>
           <td>&nbsp;</td>
           <td align="center">
@@ -485,18 +493,18 @@
         </tr>
 
         <!-- ultima linea -->
-        <tr>
+        <!--<tr>
           <td colspan="3" align="justify"><label>¿Se llevan a cabo actividades para la reutilización de residuos sólidos?</label></td>
         </tr>
         <tr>
           <td colspan="3" align="center">
             <span id ="r_act_reutiliza_residuos" class="InputGroup">
-            <label>SI <%= f.radio_button :act_reutiliza_residuos, "SI", :onclick => "enabled_textarea('', 'huella_act_reutiliza_residuos_desc');" %></label>&nbsp;&nbsp;
-            <label>NO <%= f.radio_button :act_reutiliza_residuos, "NO", :onclick => "enabled_textarea('', 'huella_act_reutiliza_residuos_desc');" %></label>
+            <%#*<label>SI <%= f.radio_button :act_reutiliza_residuos, "SI", :onclick => "enabled_textarea('', 'huella_act_reutiliza_residuos_desc');" %></label>&nbsp;&nbsp;%>
+            <%#*<label>NO <%= f.radio_button :act_reutiliza_residuos, "NO", :onclick => "enabled_textarea('', 'huella_act_reutiliza_residuos_desc');" %></label>%>
             </span>
-              <%= f.text_area :act_reutiliza_residuos_desc, :placeholder => "Especifique...", :disabled => 'disabled' %>
+              <%#= f.text_area :act_reutiliza_residuos_desc, :placeholder => "Especifique...", :disabled => 'disabled' %>
           </td>
-        </tr>
+        </tr>-->
         <tr>
           <td colspan="3">&nbsp;</td>
         </tr>
@@ -547,12 +555,11 @@ enable_fugas('huella_cisternas_num');
 
 enabled_textarea('huella_act_reutiliza_residuos', 'huella_act_reutiliza_residuos_desc');
 enabled_textarea('huella_reutiliza_agua', 'huella_reutiliza_agua_desc');
-enabled_textarea('huella_aparatos_pilas', 'huella_aparatos_pilas_num');
 enabled_textarea('huella_cuenta_recipientes_org_inorg', 'huella_cuenta_recipientes_org_inorg_num');
 enabled_textarea('huella_recip_residuos_solid', 'huella_recip_residuos_solid_num');
 enabled_textarea('huella_cuenta_recipientes_org_inorg', 'huella_cuenta_recipientes_org_inorg_num');
 enabled_textarea('huella_act_reutiliza_residuos', 'huella_act_reutiliza_residuos_desc');
-enabled_textarea('huella_aparatos_pilas', 'huella_aparatos_pilas_num');
+<%#*enabled_textarea('huella_aparatos_pilas', 'huella_aparatos_pilas_num');%>
 
 var meca_elim_residuos_solid = new LiveValidation( 'huella_meca_elim_residuos_solid', {onlyOnSubmit: true} );
 meca_elim_residuos_solid.add( Validate.Presence );
@@ -569,7 +576,7 @@ jQuery(function(){
   jQuery("#r_captacion_agua_pluv").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
   jQuery("#r_separa_residuos_org_inorg").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
   jQuery("#r_elabora_compostas_residuos").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
-  jQuery("#r_aparatos_pilas").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
+  <%#*jQuery("#r_aparatos_pilas").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });%>
   jQuery("#r_act_reutiliza_residuos").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
   jQuery("#r_cuenta_recipientes_org_inorg").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
   jQuery("#r_recip_residuos_solid").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
