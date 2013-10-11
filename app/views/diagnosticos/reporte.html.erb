@@ -3,11 +3,10 @@
     <tr>
       <td align="center"><h4>REPORTE GENERAL DEL DIAGNOSTICO INSTITUCIONAL</h4></td>
     </tr>
-
     <!-- EJE 1: DESARROLLO DE COMPETENCIAS -->
     <tr>
       <td>
-        <table class="subreport" width="100%" border="0" align="center" cellpadding="2" cellspacing="5" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;" >
+        <table class="subreport" width="100%" border="0" align="center" cellpadding="2" cellspacing="2" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;" >
           <tr bgcolor="#EAEAEA" >
             <td align="center" style=" padding: 5px 0 5px 0;" ><h5>EJE 1: DESARROLLO DE COMPETENCIAS</h5></td>
           </tr>
@@ -20,7 +19,7 @@
               <table width="80%" align="center" >
                 <tr>
                   <td><label>Temas de Salud:</label></td>
-                  <td width="30%" >&nbsp;</td>
+                  <td width="10%" >&nbsp;</td>
                   <td><label>Temas de Medio Ambiente:</label></td>
                 </tr>
                 <tr>
@@ -51,8 +50,10 @@
             <td>&nbsp;</td>
           </tr>
           <tr>
+            <td align="justify"><label style=" font-weight: bold;" >¿En qué acciones aplica los conocimientos adquiridos?</label></td>
+          </tr>
+          <tr>
             <td align="justify">
-              <label style=" font-weight: bold;" >¿Los conocimientos adquiridos son aplicados?</label>
               <label>
                 <%if @competencia.aplica_conocimientos == 'SI'%>
                   SI: <%= @competencia.aplica_conocimientos_desc %>
@@ -66,8 +67,10 @@
             <td>&nbsp;</td>
           </tr>
           <tr>
+            <td align="justify"><label style=" font-weight: bold;" >¿La escuela desarrolla proyectos para la aplicación de conocimientos en materia de salud y medio ambiente?</label></td>
+          </tr>
+          <tr>
             <td align="justify">
-              <label style=" font-weight: bold;" >¿La escuela desarrolla proyectos para la aplicación de conocimientos en materia de salud y medio ambiente?</label>
               <label>
                 <%if @competencia.esc_desarrolla_proy == 'SI'%>
                   SI: <%= @competencia.esc_desarrolla_proy_desc %>
@@ -77,12 +80,102 @@
               </label>
             </td>
           </tr>
+          <tr>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td align="justify"><label style=" font-weight: bold;" >¿La escuela promueve el desarrollo de proyectos que ponga en práctica los conocimientos adquiridos sobre la salud y medio ambiente?</label></td>
+          </tr>
+          <tr>
+            <td align="justify">
+              <label>
+                <%if @competencia.esc_prom_des_proy == 'SI'%>
+                  SI: <%= @competencia.esc_prom_des_proy_desc %>
+                <%else%>
+                  NO: <%= @competencia.esc_prom_des_proy_desc %>
+                <%end%>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td align="justify"><label style=" font-weight: bold;" >¿El personal docente ha participado en cursos sobre temas ambientales y de salud, promovidos por la Coordinación de Formación Continua?</label></td>
+          </tr>
+          <tr>
+            <td align="justify">
+              <label>
+                <%if @competencia.doc_part_temas_ma_s == 'SI'%>
+                  SI: <%= @competencia.doc_part_temas_ma_s_desc %>
+                <%else%>
+                  NO: <%= @competencia.doc_part_temas_ma_s_desc %>
+                <%end%>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td align="justify"><label style=" font-weight: bold;" >¿La comunidad docente muestra interés en el desarrollo de proyectos, para la mejora de las competencias y aprendizajes esperados en sus alumnos?</label></td>
+          </tr>
+          <tr>
+            <td align="justify">
+              <label>
+                <%if @competencia.doc_interes_proy == 'SI'%>
+                  SI: <%= @competencia.doc_interes_proy_desc %>
+                <%else%>
+                  NO: <%= @competencia.doc_interes_proy_desc %>
+                <%end%>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td align="justify"><label style=" font-weight: bold;" >¿La comunidad docente se suma a las acciones educativas que impliquen tareas extraescolares?</label></td>
+          </tr>
+          <tr>
+            <td align="justify">
+              <label>
+                <%if @competencia.doc_suma_acc_edu == 'SI'%>
+                  SI: <%= @competencia.doc_suma_acc_edu_desc %>
+                <%else%>
+                  NO: <%= @competencia.doc_suma_acc_edu_desc %>
+                <%end%>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td align="justify"><label style=" font-weight: bold;" >¿La escuela promueve cursos, talleres, diplomados, en temas de relevancia social a sus docentes?</label></td>
+          </tr>
+          <tr>
+            <td align="justify">
+              <label>
+                <%if @competencia.esc_prom_cursos == 'SI'%>
+                  SI: <%= @competencia.esc_prom_cursos_desc %>
+                <%else%>
+                  NO: <%= @competencia.esc_prom_cursos_desc %>
+                <%end%>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+          </tr>
           <tr bgcolor="#E7EFE0">
             <td align="center"><h5>ALUMNOS</h5></td>
           </tr>
           <tr>
+            <td align="justify"><label style=" font-weight: bold;" >¿Los alumnos se involucran en las actividades y proyectos en los que participa la escuela?</label></td>
+          </tr>
+          <tr>
             <td align="justify">
-              <label style=" font-weight: bold;" >¿Los alumnos de involucran en las actividades y proyectos en los que participa la escuela?</label>
               <label>
                 <%if @competencia.alu_involucran_proy == 'SI'%>
                   SI: <%= @competencia.alu_involucran_proy_desc %>
@@ -93,13 +186,52 @@
             </td>
           </tr>
           <tr>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td align="justify"><label style=" font-weight: bold;" >¿En el desarrollo de proyectos los alumnos muestran interés y participan activamente?</label></td>
+          </tr>
+          <tr>
             <td align="justify">
-              <label style=" font-weight: bold;" >¿Los alumnos se capacitan en materia de salud y medio ambiente?</label>
+              <label>
+                <%if @competencia.alu_interes_proy == 'SI'%>
+                  SI: <%= @competencia.alu_interes_proy_desc %>
+                <%else%>
+                  NO: <%= @competencia.alu_interes_proy_desc %>
+                <%end%>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td align="justify"><label style=" font-weight: bold;" >¿Los alumnos se capacitan en materia de salud y medio ambiente?</label></td>
+          </tr>
+          <tr>
+            <td>
               <label>
                 <%if @competencia.alu_capacitan_salud_ma == 'SI'%>
-                  <%= @competencia.alu_capacitan_salud_ma_desc %>
+                  SI: <%= @competencia.alu_capacitan_salud_ma_desc %>
                 <%else%>
-                  NO.
+                  NO: <%= @competencia.alu_capacitan_salud_ma_desc %>
+                <%end%>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td align="justify"><label style=" font-weight: bold;" >¿En los aprendizajes esperados, el alumno desarrolla las competencias esperadas y las pone en práctica?</label></td>
+          </tr>
+          <tr>
+            <td>
+              <label>
+                <%if @competencia.alu_des_competencias == 'SI'%>
+                  SI: <%= @competencia.alu_des_competencias_desc %>
+                <%else%>
+                  NO: <%= @competencia.alu_des_competencias_desc %>
                 <%end%>
               </label>
             </td>
@@ -110,109 +242,210 @@
     <tr>
       <td>&nbsp;</td>
     </tr>
-
     <!-- EJE 2: ENTORNO SALUDABLE -->
     <tr>
       <td>
-        <table class="subreport" width="100%" border="0" align="center" cellpadding="2" cellspacing="5" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;" >
+        <table class="subreport" width="100%" border="0" align="center" cellpadding="2" cellspacing="2" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;" >
           <tr bgcolor="#EAEAEA" >
             <td align="center" style=" padding: 5px 0 5px 0;" ><h5>EJE 2: ENTORNO SALUDABLE</h5></td>
           </tr>
-          <tr align="center">
-            <td align="center">&nbsp;</td>
+          <tr>
+            <td align="justify"><label style=" font-weight: bold;" >¿Existen Áreas Verdes en la escuela?</label></td>
           </tr>
           <tr>
             <td align="justify">
-              <label style=" font-weight: bold;" >¿Existen Áreas Verdes en la escuela.?</label>
               <label>
                 <%if @entorno.areas_verdes_esc == 'SI'%>
-                  <%= @entorno.areas_verdes_esc_desc %>
+                  SI: <%= @entorno.areas_verdes_esc_desc %>
                 <%else%>
-                  NO.
+                  NO: <%= @entorno.areas_verdes_esc_desc %>
                 <%end%>
               </label>
             </td>
           </tr>
           <tr>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td align="justify"><label style=" font-weight: bold;" >¿Se llevan a cabo actividades para el cuidado, preservación y reforestación de las Áreas Verdes?</label></td>
+          </tr>
+          <tr>
             <td align="justify">
-              <label style=" font-weight: bold;" >¿Se llevan a cabo actividades para el cuidado, preservación y reforestación de las Áreas Verdes.?</label>
               <label>
                 <%if @entorno.cuidado_preserv_reforest == 'SI'%>
-                  <%= @entorno.cuidado_preserv_reforest_desc %>
+                  SI: <%= @entorno.cuidado_preserv_reforest_desc %>
                 <%else%>
-                  NO.
+                  NO: <%= @entorno.cuidado_preserv_reforest_desc %>
                 <%end%>
               </label>
             </td>
           </tr>
           <tr>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td align="justify"><label style=" font-weight: bold;" >¿La escuela adopta Áreas Verdes?</label></td>
+          </tr>
+          <tr>
             <td align="justify">
-              <label style=" font-weight: bold;" >¿La escuela adopta Áreas Verdes?</label>
               <label>
                 <%if @entorno.adopta_areas_verdes == 'SI'%>
-                  <%= @entorno.adopta_areas_verdes_desc %>
+                  SI: <%= @entorno.adopta_areas_verdes_desc %>
                 <%else%>
-                  NO.
+                  NO: <%= @entorno.adopta_areas_verdes_desc %>
                 <%end%>
               </label>
             </td>
           </tr>
           <tr>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td align="justify"><label style=" font-weight: bold;" >¿La institución educativa promueve el cuidado de la salud en la comunidad escolar?</label></td>
+          </tr>
+          <tr>
             <td align="justify">
-              <label style=" font-weight: bold;" >¿La institución educativa promueve el cuidado de la salud en la comunidad escolar?</label>
               <label>
                 <%if @entorno.promueve_cuidado_salud == 'SI'%>
-                  <%= @entorno.promueve_cuidado_salud_desc %>
+                  SI: <%= @entorno.promueve_cuidado_salud_desc %>
                 <%else%>
-                  NO.
+                  NO: <%= @entorno.promueve_cuidado_salud_desc %>
                 <%end%>
               </label>
             </td>
           </tr>
           <tr>
-            <td align="justify">
-              <label style=" font-weight: bold;" >¿La escuela promueve la activavión de la cartilla.?</label>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td align="justify"><label style=" font-weight: bold;" >¿La escuela promueve la activavión de la cartilla de salud?</label></td>
+          </tr>
+          <tr>
+            <td>
               <label>
                 <%if @entorno.promueve_cuidado_salud == 'SI'%>
-                  <%= @entorno.promueve_cuidado_salud_desc %>
+                  SI: <%= @entorno.promueve_cuidado_salud_desc %>
                 <%else%>
-                  NO.
+                  NO: <%= @entorno.promueve_cuidado_salud_desc %>
                 <%end%>
               </label>
             </td>
           </tr>
           <tr>
-            <td align="justify">
-              <label style=" font-weight: bold;" >¿La escuela propicia la participación del Sector Salud en temas relacionados al cuidado de la salud.?</label>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td align="justify"><label style=" font-weight: bold;" >¿La escuela propicia la participación del Sector Salud en temas relacionados al cuidado de la salud?</label></td>
+          </tr>
+          <tr>
+            <td>
               <label>
                 <%if @entorno.participacion_sector_salud %>
-                  <%= @entorno.participacion_sector_salud %>
+                  SI: <%= @entorno.participacion_sector_salud %>
                 <%else%>
-                  NO.
+                  NO: <%= @entorno.participacion_sector_salud %>
                 <%end%>
               </label>
             </td>
           </tr>
           <tr>
-            <td align="justify">
-              <label style=" font-weight: bold;" >¿La escuela promueve la activación física en la comunidad educativa.?</label>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td align="justify"><label style=" font-weight: bold;" >¿La escuela promueve la activación física en la comunidad educativa?</label></td>
+          </tr>
+          <tr>
+            <td>
               <label>
                 <%if @entorno.promueve_activacion_fisica == 'SI'%>
-                  <%= @entorno.promueve_activacion_fisica %>
+                  SI: <%= @entorno.promueve_activacion_fisica %>
                 <%else%>
-                  NO.
+                  NO: <%= @entorno.promueve_activacion_fisica %>
                 <%end%>
               </label>
             </td>
           </tr>
           <tr>
-            <td align="justify">
-              <label style=" font-weight: bold;" >¿Cual es el tiempo destinado para la activación física escolar.?</label>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td align="justify"><label style=" font-weight: bold;" >¿Cual es el tiempo destinado para la activación física escolar?</label></td>
+          </tr>
+          <tr>
+            <td>
               <label>
                 <%if @entorno.tiempo_activacion_fisica %>
-                  <%= @entorno.tiempo_activacion_fisica %>
+                  SI: <%= @entorno.tiempo_activacion_fisica %>
                 <%else%>
-                  NO.
+                  NO: <%= @entorno.tiempo_activacion_fisica %>
+                <%end%>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td align="justify"><label style=" font-weight: bold;" >¿El tipo de suelo es el apropiado para siembra de árboles o cultivo de hortalizas?</label></td>
+          </tr>
+          <tr>
+            <td>
+              <label>
+                <%if @entorno.tipo_suelo %>
+                  SI: <%= @entorno.tipo_suelo %>
+                <%else%>
+                  NO: <%= @entorno.tipo_suelo %>
+                <%end%>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td align="justify"><label style=" font-weight: bold;" >¿La escuela cuenta con espacio físico para la reforestación, preparación de jardines o huertos escolares?</label></td>
+          </tr>
+          <tr>
+            <td>
+              <label>
+                <%if @entorno.esc_espacio_fisico %>
+                  SI: <%= @entorno.esc_espacio_fisico %>
+                <%else%>
+                  NO: <%= @entorno.esc_espacio_fisico %>
+                <%end%>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td align="justify"><label style=" font-weight: bold;" >¿En los alrededores o espacios anexos a la escuela se cuenta con áreas verdes?</label></td>
+          </tr>
+          <tr>
+            <td>
+              <label>
+                <%if @entorno.alrededores_cuenta_av %>
+                  SI: <%= @entorno.alrededores_cuenta_av %>
+                <%else%>
+                  NO: <%= @entorno.alrededores_cuenta_av %>
+                <%end%>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td align="justify"><label style=" font-weight: bold;" >¿El aire que se respira se considera libre de contaminantes?</label></td>
+          </tr>
+          <tr>
+            <td>
+              <label>
+                <%if @entorno.aire_libre_contaminantes %>
+                  SI: <%= @entorno.aire_libre_contaminantes %>
+                <%else%>
+                  NO: <%= @entorno.aire_libre_contaminantes %>
                 <%end%>
               </label>
             </td>
@@ -508,18 +741,18 @@
               </label>
             </td>
           </tr>
-          <tr>
-            <td align="justify">
-              <label style=" font-weight: bold;" >¿Cuenta con aparatos que utilizan pilas?</label>
-              <label>
-                <%if @huella.aparatos_pilas %>
-                  <%= @huella.aparatos_pilas_num %>
-                <%else%>
-                  NO.
-                <%end%>
-              </label>
-            </td>
-          </tr>
+          <%#*<tr>%>
+            <%#*<td align="justify">%>
+              <%#*<label style=" font-weight: bold;" >¿Cuenta con aparatos que utilizan pilas?</label>%>
+              <%#*<label>%>
+                <%#if @huella.aparatos_pilas %>
+                  <%#= @huella.aparatos_pilas_num %>
+                <%#else%>
+                  <%#*NO.%>
+                <%#end%>
+              <%#*</label>%>
+            <%#*</td>%>
+          <%#*</tr>%>
           <tr>
             <td align="justify">
               <label style=" font-weight: bold;" >¿Cuál es el mecanismo de eliminación de los residuos sólidos?</label>
@@ -630,18 +863,18 @@
               </label>
             </td>
           </tr>
-          <tr>
-            <td align="justify">
-              <label style="font-weight: bold;">¿Se sugiere a los alumnos que consuman alimentos bajos en sodio y en grasas.?</label>
-              <label>
-                <%if @consumo.alim_bajos_sodio_grasa %>
-                  <%= @consumo.alim_bajos_sodio_grasa_desc %>
-                <%else%>
-                  NO.
-                <%end%>
-              </label>
-            </td>
-          </tr>
+          <%#*<tr>%>
+            <%#*<td align="justify">%>
+              <%#*<label style="font-weight: bold;">¿Se sugiere a los alumnos que consuman alimentos bajos en sodio y en grasas.?</label>%>
+              <%#*<label>%>
+                <%#if @consumo.alim_bajos_sodio_grasa %>
+                  <%#= @consumo.alim_bajos_sodio_grasa_desc %>
+                <%#else%>
+                  <%#*NO.%>
+                <%#end%>
+              <%#*</label>%>
+            <%#*</td>%>
+          <%#*</tr>%>
           <tr>
             <td align="justify">
               <label style="font-weight: bold;" >¿Se expende agua simple, potable o prepara para el consumo diaria.?</label>
@@ -732,7 +965,6 @@
     <tr>
       <td>&nbsp;</td>
     </tr>
-
     <!-- EJE 5: PARTICIPACIÓN CIUDADANA -->
     <tr>
       <td>
@@ -740,18 +972,18 @@
           <tr bgcolor="#EAEAEA" style=" padding: 5px 0 5px 0;" >
             <td align="center"><h5>EJE 5: PARTICIPACIÓN CIUDADANA</h5></td>
           </tr>
-          <tr>
-            <td align="justify">
-              <label style="font-weight: bold;">¿En la comunidad existe el apoyo de proyectos productivos por parte del gobierno del estado.?</label>
-              <label>
-                <%if @participacion.apoyo_proy_product %>
-                  <%= @participacion.apoyo_proy_product_desc %>
-                <%else%>
-                  NO.
-                <%end%>
-              </label>
-            </td>
-          </tr>
+          <%#*<tr>%>
+            <%#*<td align="justify">%>
+              <%#*<label style="font-weight: bold;">¿En la comunidad existe el apoyo de proyectos productivos por parte del gobierno del estado.?</label>%>
+              <%#*<label>%>
+                <%#if @participacion.apoyo_proy_product %>
+                  <%#= @participacion.apoyo_proy_product_desc %>
+                <%#else%>
+                  <%#*NO.%>
+                <%#end%>
+              <%#*</label>%>
+            <%#*</td>%>
+          <%#*</tr>%>
           <tr>
             <td align="justify">
               <label style="font-weight: bold;">¿Los padres de familia se involucran en actividades comunitarias. (Reforestación campañas de descacharramiento, campañas de salud).?</label>
