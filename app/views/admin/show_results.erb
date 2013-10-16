@@ -52,7 +52,9 @@
       </td>
 
       <td style="vertical-align: middle;"><%=h(user.login.upcase)%></td>
-        <td style="vertical-align: middle;"><%=h (Escuela.find_by_clave(user.login)? Escuela.find_by_clave(user.login).nombre : "---")%></td>
+      <%escuela = Escuela.find_by_clave(user.login)? Escuela.find_by_clave(user.login) : nil %>
+      <td style="vertical-align: middle;"><%=h (escuela)? escuela.nombre : "----"%></td>
+
 
       <!-- Acciones -->
       <td style="vertical-align: middle;"><%=button_to "Detalles", {:action => "show", :controller => "escuelas", :id => user}, :class => 'boton'%></td>
@@ -62,6 +64,16 @@
       <%else%>
         <td style="vertical-align: middle;"><%=button_to "Bloquear", {:action => "block_user", :id => user}, :confirm => "¿Esta seguro que desea bloquearlo?", :method => :delete, :class => 'boton'%></td>
       <%end%>
+
+       <!-- Diagnostico -->
+      <%if escuela%>
+        <%if Diagnostico.find_by_escuela_id(escuela.id)%>
+             <td style="vertical-align: middle;"><%=button_to "Diagnostico", {:action => "show_diagnostico", :id => escuela}, :class => 'boton'%></td>
+        <%end%>
+      <%end%>
+
+
+
     <%clase = invert_class(clase)%>
     </tr>
     <%end%>

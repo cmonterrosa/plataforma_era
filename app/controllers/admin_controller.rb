@@ -121,4 +121,14 @@ class AdminController < ApplicationController
     @roles = Role.find(:all)
   end
 
+  def show_diagnostico
+    @escuela = Escuela.find(params[:id]) if params[:id]
+    if @escuela && @diagnostico = Diagnostico.find_by_escuela_id(@escuela.id)
+      redirect_to :action => "reporte", :controller => "diagnosticos", :id => @diagnostico
+    else
+      flash[:error] = "Centro Escolar no cuenta con diagnóstico"
+      redirect_to :action => "show_users", :id => @diagnostico
+    end
+  end
+
 end
