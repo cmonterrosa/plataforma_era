@@ -58,7 +58,8 @@
     <!-- programa -->
     <div class="grid-12-12">
       <label>La institución educativa participa en algún programa: ¿Cúal?</label>
-      <%=text_field :proyecto, :participa_programa%>
+       <!-- <=text_field :proyecto, :participa_programa%> -->
+       <%=select(:proyecto, :programa_id, Programa.find(:all).collect {|p| [ p.descripcion, p.id ] })%>
     </div>
 
     <!-- director -->
