@@ -7,7 +7,7 @@
     </ul>
   </div>
 
-  <% form_for :escuela, @escuela, :url => { :action => "save", :id => @escuela, :clave => @escuela.clave }, :html => {:class => "formee"} do |f| -%>
+  <% form_for :escuela, @escuela, :url => { :action => "save", :id => @escuela, :clave => @escuela.clave }, :html => {:class => "formee", :name => "escuela"} do |f| -%>
   <fieldset>
     <legend>Registro&nbsp;de&nbsp;Escuelas</legend>
 
@@ -49,10 +49,12 @@
     <!-- categoria -->
     <div class="grid-6-12">
       <label>Categoría: <em class="formee-req">*</em></label>
-      <%=f.select(:categoria_escuela_id, CategoriaEscuela.all.collect {|p| [ p.descripcion, p.id ] })%>
+      <%=f.select :categoria_escuela_id, CategoriaEscuela.all.collect {|p| [ p.descripcion, p.clave ] }, {}, :onchange => "showDescription(this,'escuela_categoria_desc','');"%>
     </div>
-    <div class="grid-6-12 clear"></div>
-    
+    <div class="grid-6-12">
+      <%=f.text_area :categoria_desc, :placeholder => "Especifique...", :disabled => 'disabled', :style => "display: none;" %>
+    </div>
+        
     <!-- programa -->
     <div class="grid-12-12">
       <label>La institución educativa participa en algún programa: ¿Cúal?</label>
@@ -116,7 +118,7 @@
 
     <!-- submit -->
     <div class="grid-12-12">
-      <input class="right" type="submit" title="GUARDAR REGISTRO Y GENERAR DOCUMENTOS" value="GUARDAR REGISTRO Y GENERAR DOCUMENTOS" />
+      <input class="right" type="submit" onclick="to_uppercase();" title="GUARDAR REGISTRO Y GENERAR DOCUMENTOS" value="GUARDAR REGISTRO Y GENERAR DOCUMENTOS" />
     </div>
 
   </fieldset>
@@ -125,6 +127,10 @@
 </div>
 
 <script type="text/javascript">
+  showDescription('escuela[categoria_escuela_id]','escuela_categoria_desc','');
+
+  var categoria_desc = new LiveValidation( 'escuela_categoria_desc', {onlyOnSubmit: true} );
+  categoria_desc.add( Validate.Presence );
   var nombre_director = new LiveValidation( 'escuela_nombre_director', {onlyOnSubmit: true} );
   nombre_director.add( Validate.Presence );
   var proyecto_nombre = new LiveValidation( 'proyecto_nombre', {onlyOnSubmit: true } );

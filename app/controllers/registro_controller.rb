@@ -1,6 +1,7 @@
 class RegistroController < ApplicationController
   layout 'era'
   before_filter :login_required
+  skip_before_filter :verify_authenticity_token, :only => :save
 #  require_role [:escuela, :coordinador, :adminplat, :admin]
   
   def index
@@ -10,6 +11,7 @@ class RegistroController < ApplicationController
   def index
     if current_user
        if @escuela = Escuela.find_by_clave(current_user.login.upcase)
+#         @escuela.categoria_escuela_id = @escuela.categoria.clave
           redirect_to :action => "new_or_edit", :escuela => {:clave => @escuela.clave}, :method => :get
        end
     end
@@ -21,6 +23,7 @@ class RegistroController < ApplicationController
       flash[:error] = "No existe escuela"
       redirect_to :controller => "home"
     end
+    @escuela.categoria_escuela_id = @escuela.categoria_escuela.clave
     @proyecto = @escuela.proyecto if @escuela
   end
 
@@ -32,7 +35,7 @@ class RegistroController < ApplicationController
     @escuela = Escuela.find_by_clave(params[:clave]) if params[:clave]
     @escuela ||= Escuela.new
     @escuela.update_attributes(params[:escuela])
-    @escuela.categoria_escuela = CategoriaEscuela.find(params[:escuela][:categoria_escuela_id]) if params[:escuela][:categoria_escuela_id]
+    @escuela.categoria_escuela = CategoriaEscuela.find_by_clave(params[:escuela][:categoria_escuela_id]) if params[:escuela][:categoria_escuela_id]
     @proyecto = (@escuela.proyecto) ? @escuela.proyecto : Proyecto.new
     @proyecto.update_attributes(params[:proyecto])
     @proyecto.clave = @escuela.clave if @escuela.clave

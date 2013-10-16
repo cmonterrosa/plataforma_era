@@ -17,6 +17,7 @@ class CreateEscuelas < ActiveRecord::Migration
         t.string :correo_electronico, :limit => 90
         t.string :nombre_director, :limit => 130
         t.string :telefono_director, :limit => 100
+        t.string :categoria_desc, :limit => 20
         t.integer :total_personal_docente
         t.integer :total_personal_administrativo
         t.integer :total_personal_apoyo

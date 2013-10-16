@@ -33,17 +33,12 @@ function validate_exists_initial(obj1, obj2){
 
 // Convierte a mayuscula los campos del formulario y lo envia
 function to_uppercase(){
-    numero=document.forms[0].elements.length;
+    var numero = document.forms[0].elements.length;
     for(a=0;a<numero;a++) {
-        if(document.forms[0].elements[a].type != 'submit')
-        document.forms[0].elements[a].value = document.forms[0].elements[a].value.toUpperCase();
+        if(document.forms[0].elements[a].type == 'text' || document.forms[0].elements[a].type == 'textarea')
+            document.forms[0].elements[a].value = document.forms[0].elements[a].value.toUpperCase();
     }    
 }
-
-//function enabled_textarea(radio, textarea){
-//    if(radio == '' || document.getElementById(radio+'_si').checked || document.getElementById(radio+'_no').checked)
-//        document.getElementById(textarea).disabled = false;
-//}
 
 function enabled_textarea(radio, obj){
     if(radio == '' || document.getElementById(radio+'_si').checked || document.getElementById(radio+'_no').checked)
@@ -66,5 +61,35 @@ function enable_fugas(select){
         document.getElementById(nombre[0]+'_fugas_no').checked = false;
         document.getElementById(nombre[0]+'_fugas_si').disabled = 'disabled';
         document.getElementById(nombre[0]+'_fugas_no').disabled = 'disabled';
+    }
+}
+
+function showDescription(select, textfield1, textfield2)
+{
+    if(typeof select == "object")
+        var selectElemen = select;
+    else
+        selectElemen = document.forms[0].elements[select];
+
+    var textfieldElemen = document.forms[0].elements[textfield1];
+    var tamano = selectElemen.length;
+
+    for(i = 0; i < tamano; i++){
+        if((selectElemen[i].value == 'otros' || selectElemen[i].value == 'si') && selectElemen[i].selected){
+            textfieldElemen.style.display = '';
+            textfieldElemen.disabled = false;
+            break;
+        }
+        else
+            if(typeof select == "object"){
+                textfieldElemen.style.display = 'none';
+                textfieldElemen.value = "";
+                textfieldElemen.disabled = true;
+                if(textfield2 != ""){
+                    textfieldElemen.style.display = 'none';
+                    document.forms[0].elements[textfield2].disabled = true;
+                    document.forms[0].elements[textfield2].value = "";
+                }
+            }
     }
 }
