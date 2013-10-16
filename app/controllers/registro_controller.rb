@@ -23,7 +23,7 @@ class RegistroController < ApplicationController
       flash[:error] = "No existe escuela"
       redirect_to :controller => "home"
     end
-    @escuela.categoria_escuela_id = @escuela.categoria_escuela.clave
+    @escuela.categoria_escuela_id = @escuela.categoria_escuela.clave if @escuela.categoria_escuela
     @proyecto = @escuela.proyecto if @escuela
   end
 
