@@ -75,21 +75,16 @@ function showDescription(select, textfield1, textfield2)
     var tamano = selectElemen.length;
 
     for(i = 0; i < tamano; i++){
-        if((selectElemen[i].value == 'otros' || selectElemen[i].value == 'si') && selectElemen[i].selected){
+        if((selectElemen[i].value == 'OTR' || selectElemen[i].value == 'si') && selectElemen[i].selected && (typeof select != "object")){
             textfieldElemen.style.display = '';
             textfieldElemen.disabled = false;
             break;
         }
-        else
-            if(typeof select == "object"){
+        else{
+                textfieldElemen.value = '';
                 textfieldElemen.style.display = 'none';
-                textfieldElemen.value = "";
                 textfieldElemen.disabled = true;
-                if(textfield2 != ""){
-                    textfieldElemen.style.display = 'none';
-                    document.forms[0].elements[textfield2].disabled = true;
-                    document.forms[0].elements[textfield2].value = "";
-                }
-            }
+
+        }
     }
 }

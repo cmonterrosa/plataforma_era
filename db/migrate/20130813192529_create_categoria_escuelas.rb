@@ -6,14 +6,14 @@ class CreateCategoriaEscuelas < ActiveRecord::Migration
     end
 
    ##### DEFAULT VALUES ######
-    CategoriaEscuela.create(:clave => "multigrado", :descripcion => "MULTIGRADO")
-    CategoriaEscuela.create(:clave => "unitario", :descripcion => "UNITARIO")
-    CategoriaEscuela.create(:clave => "bidocente", :descripcion => "BIDOCENTE")
-    CategoriaEscuela.create(:clave => "tridocente", :descripcion => "TRIDOCENTE")
-    CategoriaEscuela.create(:clave => "tetradocente", :descripcion => "TETRADOCENTE")
-    CategoriaEscuela.create(:clave => "pentadocente", :descripcion => "PENTADOCENTE")
-    CategoriaEscuela.create(:clave => "org_completa", :descripcion => "ORGANIZACIÓN COMPLETA")
-    CategoriaEscuela.create(:clave => "otros", :descripcion => "OTROS")
+    CategoriaEscuela.create(:clave => "MUL", :descripcion => "MULTIGRADO")
+    CategoriaEscuela.create(:clave => "UNI", :descripcion => "UNITARIO")
+    CategoriaEscuela.create(:clave => "BID", :descripcion => "BIDOCENTE")
+    CategoriaEscuela.create(:clave => "TRI", :descripcion => "TRIDOCENTE")
+    CategoriaEscuela.create(:clave => "TET", :descripcion => "TETRADOCENTE")
+    CategoriaEscuela.create(:clave => "PEN", :descripcion => "PENTADOCENTE")
+    CategoriaEscuela.create(:clave => "OCO", :descripcion => "ORGANIZACIÓN COMPLETA")
+    CategoriaEscuela.create(:clave => "OTR", :descripcion => "OTROS")
    end
 
   def self.down

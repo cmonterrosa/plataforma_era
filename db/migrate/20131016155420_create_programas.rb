@@ -6,14 +6,13 @@ class CreateProgramas < ActiveRecord::Migration
     end
 
     ## Creamos registros por defecto ##
-    Programa.create(:clave => "NIN", :descripcion => "NINGUNO")
     Programa.create(:clave => "PEC",:descripcion => "ESCUELAS DE CALIDAD (PEC)")
     Programa.create(:clave => "PNL",:descripcion => "NACIONAL DE LECTURA Y ESCRITURA (PNL)")
     Programa.create(:clave => "ESS",:descripcion => "ESCUELA SEGURA")
     Programa.create(:clave => "TCO",:descripcion => "TIEMPO COMPLETO")
     Programa.create(:clave => "SAB",:descripcion => "SIEMPRE ABIERTA")
     Programa.create(:clave => "PER",:descripcion => "PLAN ESTRATÉGICO PARA LA CALIDAD DE LA EDUCACIÓN (PERCE)")
-    Programa.create(:clave => "OTR",:descripcion => "OTRO")
+    Programa.create(:clave => "OTR",:descripcion => "OTROS")
 
     ### Columna relacion con proyecto #####
     add_column :proyectos, :programa_id, :integer

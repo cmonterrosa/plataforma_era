@@ -8,5 +8,4 @@ class EscuelasController < ApplicationController
       redirect_to :action => "show_users", :controller => "admin"
     end
   end
-
 end
