@@ -1,8 +1,7 @@
 class CargaCatalogoEscuelasChiapas < ActiveRecord::Migration
   def self.up
 
-#      ## Agregamos columnas a tabla de escuelas ##
-      add_column :escuelas, :turno, :integer
+#     ## Agregamos columnas a tabla de escuelas ##
       add_column :escuelas, :cct_zona, :string, :limit => 12
       add_column :escuelas, :cct_sector, :string, :limit => 12
 #      #-- Alumnos
@@ -34,6 +33,8 @@ class CargaCatalogoEscuelasChiapas < ActiveRecord::Migration
 
       ## Indices ###
       add_index :escuelas, :cct_zona, :name => "cct_zona"
+      ## Descripcion de nivel
+      add_index :nivels, :descripcion, :name => "descripcion_nivel"
 
       #---- Cargamos el catalogo de escuelas ------
       contador=1
@@ -42,7 +43,7 @@ class CargaCatalogoEscuelasChiapas < ActiveRecord::Migration
       #CLAVE_ESC, NOMBRE DE LA ESCUELA, TURNO,	NOMBRE DEL MUNICIPIO,	NOMBRE DE LA LOCALIDAD,	DOMICILIO DE LA ESCUELA,	TELEFON,	ZONESC,	CCT ZONA,	SECTOR,	CCT SECTOR,	ESCUELAS	ALU_HOM	ALU_MUJ	ALUMNOS	GRUPOS	DTE_HOM	DTE_MUJ	DOCENTES	DSG_H	DSG_M	DSG_T	PERS_APOYO_H	PERS_APOYO_M	PERS_APOYO_T	DESCRIPCION NIVEL	NOMBRE DE LA MODALDAD	REG_ECO	DESC_REG	INC. P/CER
 
      begin
-      clave,nombre,turno,municipio,localidad,domicilio,telefono,zona_escolar,cct_zona,sector,cct_sector,escuelas, alu_hom, alu_muj, total_alumnos, grupos, doc_hom, doc_muj, total_docentes, dsg_hom, dsg_muj, total_dsg, apoyo_hom, apoyo_muj, total_personal_apoyo, nivel_descripcion, modalidad, region, region_descripcion, inc_cer = line.split(",")
+      clave,nombre,turno,municipio,localidad,domicilio,telefono,zona_escolar,cct_zona,sector,cct_sector,escuelas, alu_hom, alu_muj, total_alumnos, grupos, doc_hom, doc_muj, total_docentes, dsg_hom, dsg_muj, total_dsg, apoyo_hom, apoyo_muj, total_personal_apoyo, nivel_descripcion, modalidad, region, region_descripcion, inc_cer = line.split("|")
       @e = Escuela.new(:clave => clave,
                   :nombre => nombre,
                   :turno => turno,
@@ -74,6 +75,9 @@ class CargaCatalogoEscuelasChiapas < ActiveRecord::Migration
                   :region_descripcion => region_descripcion,
                   :inc_cer => inc_cer
                  )
+         ## LE PEGAMOS NIVEL EDUCATIVO ####
+         nivel = Nivel.find_by_descripcion(nivel_descripcion)
+         @e.nivel_id = nivel.id if nivel
          if @e.save
             puts "=> E #{contador}"
             contador+=1
