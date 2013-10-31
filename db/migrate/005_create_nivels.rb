@@ -9,13 +9,13 @@ class CreateNivels < ActiveRecord::Migration
     Nivel.create(:clave => 1, :descripcion => "INICIAL")
     Nivel.create(:clave => 2, :descripcion => "ESPECIAL")
     Nivel.create(:clave => 3, :descripcion => "PREESCOLAR")
-    Nivel.create(:clave => 4, :descripcion => "PRIMARIAL")
+    Nivel.create(:clave => 4, :descripcion => "PRIMARIA")
     Nivel.create(:clave => 5, :descripcion => "SECUNDARIA")
     Nivel.create(:clave => 6, :descripcion => "CAPACITACION PARA EL TRABAJO")
-    Nivel.create(:clave => 7, :descripcion => "PROFESIONAL MEDIO")
+    Nivel.create(:clave => 7, :descripcion => "PROFESIONALMEDIO")
     Nivel.create(:clave => 8, :descripcion => "BACHILLERATO")
     Nivel.create(:clave => 9, :descripcion => "NORMAL LICENCIATURA")
-    Nivel.create(:clave => 10, :descripcion => "UNIVERSIARIO Y TECNOLOGICO")
+    Nivel.create(:clave => 10, :descripcion => "UNIVERSITARIO Y TECNOLOGICO")
 
   end
 
