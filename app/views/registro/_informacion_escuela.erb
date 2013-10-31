@@ -36,7 +36,7 @@
       
       <div class="grid-4-12">
         <label style=" font-weight: bold;">Nivel:</label>
-        <label style=" font-style: italic;"><%= @escuela.nivel_id %></label>
+        <label style=" font-style: italic;"><%= @escuela.nivel.descripcion %></label>
       </div>
       <div class="grid-8-12">
         <label style=" font-weight: bold;">Modalidad:</label>
@@ -65,7 +65,7 @@
     <!-- categoria -->
     <div class="grid-6-12">
       <label>Categoría: <em class="formee-req">*</em></label>
-      <%=f.select :categoria_escuela_id, CategoriaEscuela.all.collect {|p| [ p.descripcion, p.clave ] }, {:selected => @select_ce}, :onchange => "showDescription(this,'escuela_categoria_desc','');" %>
+      <%=f.select :categoria_escuela_id, CategoriaEscuela.all.collect {|p| [ p.descripcion, p.clave ] }, {:selected => @select_ce}, :onchange => "showDescription(this,'escuela_categoria_desc');" %>
     </div>
     <div class="grid-6-12">
       <%=f.text_area :categoria_desc, :placeholder => "Especifique...", :disabled => 'disabled', :style => "display: none;" %>
@@ -75,8 +75,8 @@
     
     <!-- programa -->
     <div class="grid-6-12">
-      <label>La institución educativa participa en algún programa: ¿Cúal?</label>
-       <%= f.select :programa_id, Programa.find(:all).collect {|p| [ p.descripcion, p.clave ] }, {:selected => @select_p}, :onchange => "showDescription(this,'escuela_programa_desc','');" %>
+      <label>La institución educativa participa en algún programa: ¿Cúal? <em class="formee-req">*</em></label>
+       <%= f.select :programa_id, Programa.find(:all).collect {|p| [ p.descripcion, p.clave ] }, {:selected => @select_p}, :onchange => "showDescription(this,'escuela_programa_desc');" %>
     </div>
     <div class="grid-6-12">
       <%= f.text_area :programa_desc, :placeholder => "Especifique...", :disabled => 'disabled', :style => "display: none;" %>
@@ -117,31 +117,39 @@
     </div>
 
     <div class="grid-6-12">
-      <label>Correo electrónico: </label>
+      <label>Correo electrónico (proyecto): <em class="formee-req">*</em></label>
       <%= f.text_field :email_responsable_proyecto%>
     </div>
 
     <!-- total de personal -->
     <div class="grid-3-12">
-      <label>Total personal docente: </label>
-      <%= f.text_field :total_personal_docente%>
+      <label>Total personal docente: <em class="formee-req">*</em></label>
+      <%= f.text_field :total_personal_docente %>
+    </div>
+    
+    <div class="grid-3-12">
+      <label>Total de alumnos: <em class="formee-req">*</em></label><br />
+        <div class="grid-5-12">
+        <label>Mujeres: </label>
+        <%= f.text_field :total_personal_alumn_m %>
+        </div>
+      <div class="grid-2-12"></div>
+        <div class="grid-5-12">
+        <label>Hombres: </label>
+        <%= f.text_field :total_personal_alumn_h %>
+        </div>
     </div>
 
     <div class="grid-3-12">
-      <label>Total de alumnos: </label>
-      <%= f.text_field :total_personal_docente%>
+      <label>Total personal admvo: <em class="formee-req">*</em></label>
+      <%= f.text_field :total_personal_admvo %>
     </div>
 
     <div class="grid-3-12">
-      <label>Total personal admvo: </label>
-      <%= f.text_field :total_personal_admvo%>
+      <label>Total personal de apoyo: <em class="formee-req">*</em></label>
+      <%= f.text_field :total_personal_apoyo %>
     </div>
-
-    <div class="grid-3-12">
-      <label>Total personal de apoyo: </label>
-      <%= f.text_field :total_personal_apoyo%>
-    </div>
-
+    
     <!-- submit -->
     <div class="grid-12-12">
       <input class="right" type="submit" onclick="to_uppercase();" title="GUARDAR REGISTRO Y GENERAR DOCUMENTOS" value="GUARDAR REGISTRO Y GENERAR DOCUMENTOS" />
@@ -153,11 +161,13 @@
 </div>
 
 <script type="text/javascript">
-  showDescription('escuela[categoria_escuela_id]','escuela_categoria_desc','');
-  showDescription('escuela[programa_id]','escuela_programa_desc','');
+  showDescription('escuela[categoria_escuela_id]','escuela_categoria_desc');
+  showDescription('escuela[programa_id]','escuela_programa_desc');
 
   var categoria_desc = new LiveValidation( 'escuela_categoria_desc', {onlyOnSubmit: true} );
   categoria_desc.add( Validate.Presence );
+  var programa_desc = new LiveValidation( 'escuela_programa_desc', {onlyOnSubmit: true} );
+  programa_desc.add( Validate.Presence );
   var nombre_director = new LiveValidation( 'escuela_nombre_director', {onlyOnSubmit: true} );
   nombre_director.add( Validate.Presence );
   var proyecto_nombre = new LiveValidation( 'escuela_nombre_proyecto', {onlyOnSubmit: true } );
@@ -166,7 +176,24 @@
   email.add( Validate.Presence, {onlyOnSubmit: true } );
   email.add( Validate.Email );
   var email_responsable_proyecto = new LiveValidation( 'escuela_email_responsable_proyecto' );
-    email_responsable_proyecto.add( Validate.Email );
-  var proyecto_responsable = new LiveValidation( 'escuela_responsables_proyecto', {onlyOnSubmit: true } );
-  proyecto_responsable.add( Validate.Presence );
+  email_responsable_proyecto.add( Validate.Email );
+  email_responsable_proyecto.add( Validate.Presence, {onlyOnSubmit: true } );
+  var responsables_proyecto = new LiveValidation( 'escuela_responsables_proyecto', {onlyOnSubmit: true } );
+  responsables_proyecto.add( Validate.Presence );
+  var total_personal_docente = new LiveValidation( 'escuela_total_personal_docente');
+  total_personal_docente.add( Validate.Presence );
+  total_personal_docente.add( Validate.Numericality, { minimum: 1, onlyInteger: true } );
+  var total_personal_alumn_m = new LiveValidation( 'escuela_total_personal_alumn_m');
+  total_personal_alumn_m.add( Validate.Presence );
+  total_personal_alumn_m.add( Validate.Numericality, { minimum: 1, onlyInteger: true } );
+  var total_personal_alumn_h = new LiveValidation( 'escuela_total_personal_alumn_h');
+  total_personal_alumn_h.add( Validate.Presence );
+  total_personal_alumn_h.add( Validate.Numericality, { minimum: 1, onlyInteger: true } );
+  var total_personal_admvo = new LiveValidation( 'escuela_total_personal_admvo');
+  total_personal_admvo.add( Validate.Presence );
+  total_personal_admvo.add( Validate.Numericality, { minimum: 1, onlyInteger: true } );
+  var total_personal_apoyo = new LiveValidation( 'escuela_total_personal_apoyo');
+  total_personal_apoyo.add( Validate.Presence );
+  total_personal_apoyo.add( Validate.Numericality, { minimum: 1, onlyInteger: true } );
+
 </script>

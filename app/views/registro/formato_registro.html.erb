@@ -33,7 +33,7 @@
 
       <div class="grid-4-12">
         <label style=" font-weight: bold;">Nivel:</label>
-        <label style=" font-style: italic;"><%= @escuela.nivel_id %></label>
+        <label style=" font-style: italic;"><%= @escuela.nivel.descripcion %></label>
       </div>
       <div class="grid-8-12">
         <label style=" font-weight: bold;">Modalidad:</label>
@@ -75,7 +75,7 @@
 
     <!-- programa -->
     <div class="grid-6-12">
-      <label>La institución educativa participa en algún programa: ¿Cúal?</label>
+      <label>La institución educativa participa en algún programa: ¿Cúal?<em class="formee-req">*</em></label>
        <%#= f.select :programa_id, Programa.find(:all).collect {|p| [ p.descripcion, p.clave ] }, {:selected => @select_p}, :onchange => "showDescription(this,'escuela_programa_desc','');" %>
        <%= f.text_field :programa_id, :value => @escuela.programa.descripcion, :class => "rpt" %>
     </div>
@@ -120,39 +120,42 @@
     </div>
 
     <div class="grid-6-12">
-      <label>Correo electrónico: </label>
+      <label>Correo electrónico (proyecto): <em class="formee-req">*</em></label>
       <%= f.text_field :email_responsable_proyecto, :class => "rpt" %>
     </div>
 
     <!-- total de personal -->
     <div class="grid-3-12">
-      <label>Total personal docente: </label>
-      <%= f.text_field :total_personal_docente, :class => "rpt" %>
+      <label>Total personal docente: <em class="formee-req">*</em></label>
+      <%= f.text_field :total_personal_docente, :class => "rpt"  %>
     </div>
 
     <div class="grid-3-12">
-      <label>Total de alumnos: </label>
-      <%= f.text_field :total_personal_docente, :class => "rpt" %>
+      <label>Total de alumnos: <em class="formee-req">*</em></label><br />
+        <div class="grid-5-12">
+        <label>Mujeres: </label>
+        <%= f.text_field :total_personal_alumn_m, :class => "rpt"  %>
+        </div>
+      <div class="grid-2-12"></div>
+        <div class="grid-5-12">
+        <label>Hombres: </label>
+        <%= f.text_field :total_personal_alumn_h, :class => "rpt"  %>
+        </div>
     </div>
 
     <div class="grid-3-12">
-      <label>Total personal admvo: </label>
-      <%= f.text_field :total_personal_admvo, :class => "rpt" %>
+      <label>Total personal admvo: <em class="formee-req">*</em></label>
+      <%= f.text_field :total_personal_admvo, :class => "rpt"  %>
     </div>
 
     <div class="grid-3-12">
-      <label>Total personal de apoyo: </label>
-      <%= f.text_field :total_personal_apoyo, :class => "rpt" %>
+      <label>Total personal de apoyo: <em class="formee-req">*</em></label>
+      <%= f.text_field :total_personal_apoyo, :class => "rpt"  %>
     </div>
-
+    
   </fieldset>
         <%end%>
       </td>
     </tr>
   </table>
 </div>
-
-<script type="text/javascript">
-  <%#*showDescription('escuela[categoria_escuela_id]','escuela_categoria_desc','');%>
-  <%#*showDescription('escuela[programa_id]','escuela_programa_desc','');%>
-</script>

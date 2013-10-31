@@ -15,11 +15,11 @@ class CreateProgramas < ActiveRecord::Migration
     Programa.create(:clave => "OTR",:descripcion => "OTROS")
 
     ### Columna relacion con proyecto #####
-    add_column :proyectos, :programa_id, :integer
+#    add_column :proyectos, :programa_id, :integer
   end
 
   def self.down
     drop_table :programas
-     remove_columns :proyectos, :programa_id
+#     remove_columns :proyectos, :programa_id
   end
 end

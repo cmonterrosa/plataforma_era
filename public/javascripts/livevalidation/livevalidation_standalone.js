@@ -630,11 +630,12 @@ var Validate = {
         var minimum = ((paramsObj.minimum) || (paramsObj.minimum == 0)) ? paramsObj.minimum : null;;
         var maximum = ((paramsObj.maximum) || (paramsObj.maximum == 0)) ? paramsObj.maximum : null;
     	var is = ((paramsObj.is) || (paramsObj.is == 0)) ? paramsObj.is : null;
-        var notANumberMessage = paramsObj.notANumberMessage || "Must be a number!";
+//        var notANumberMessage = paramsObj.notANumberMessage || "Must be a number!";
+        var notANumberMessage = paramsObj.notANumberMessage || "Debe ser un numero!";
         var notAnIntegerMessage = paramsObj.notAnIntegerMessage || "Must be an integer!";
     	var wrongNumberMessage = paramsObj.wrongNumberMessage || "Must be " + is + "!";
-    	var tooLowMessage = paramsObj.tooLowMessage || "Must not be less than " + minimum + "!";
-//    	var tooLowMessage = paramsObj.tooLowMessage || "No debe ser menor que " + minimum + "!";
+//    	var tooLowMessage = paramsObj.tooLowMessage || "Must not be less than " + minimum + "!";
+    	var tooLowMessage = paramsObj.tooLowMessage || "No debe ser menor que " + minimum + "!";
     	var tooHighMessage = paramsObj.tooHighMessage || "Must not be more than " + maximum + "!";
         if (!isFinite(value)) Validate.fail(notANumberMessage);
         if (paramsObj.onlyInteger && (/\.0+$|\.$/.test(String(suppliedValue))  || value != parseInt(value)) ) Validate.fail(notAnIntegerMessage);

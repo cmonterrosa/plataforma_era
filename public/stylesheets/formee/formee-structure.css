@@ -181,7 +181,9 @@ Structure
     background: #f2f2f2;
     color: #424242;
 }
-.formee select {padding:5px;height:2.1em;}
+.formee select {padding: 5px; height: 2.1em;}
+/*.formee select[multiple="multiple"] {padding:5px;height:8em;}*/
+.formee select[multiple="multiple"] {padding: 5px; height: auto;}
 .formee-list .formee-lbl, .formee-list label {
 	display: inline;
 	height: auto;
@@ -192,17 +194,19 @@ Structure
 	top:3px;
 }
 
-.formee-msg-info, .formee-msg-warning, .formee-msg-error, .formee-msg-success {
+.formee-msg-info, .formee-msg-warning, .formee-msg-error, .formee-msg-success, .formee-msg-suggest {
 /*	padding:20px 20px 15px 38px;*/
-      padding:2px 5px 0px 35px;
+        padding:2px 20px 0px 35px;
 	border: 1px solid #ccc;
 	display: block;
 	height: auto;
+        width: auto;
 /*	margin: 0 1.5% 0.8em;*/
-      margin: 1% 6% 1% 6%;
+      margin: 1% 2% 1% 2%;
 	clear:both;
+        text-align: justify;
 }
-.formee-msg-info li, .formee-msg-warning li, .formee-msg-error li, .formee-msg-success li {
+.formee-msg-info li, .formee-msg-warning li, .formee-msg-error li, .formee-msg-success li, .formee-msg-suggest {
 	list-style: none;
 	padding:0;	
 	margin-bottom: -1.6%;

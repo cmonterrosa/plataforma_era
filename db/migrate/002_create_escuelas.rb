@@ -25,7 +25,8 @@ class CreateEscuelas < ActiveRecord::Migration
         t.string :region, :limit => 90
         t.string :dsr, :limit => 4
         t.integer :total_personal_docente
-        t.integer :total_personal_alumn
+        t.integer :total_personal_alumn_m
+        t.integer :total_personal_alumn_h
         t.integer :total_personal_admvo
         t.integer :total_personal_apoyo
 

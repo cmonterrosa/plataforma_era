@@ -34,6 +34,8 @@ class RegistroController < ApplicationController
   def save
     @escuela = Escuela.find_by_clave(params[:clave]) if params[:clave]
     @escuela ||= Escuela.new
+    @escuela.categoria_desc = '' unless params[:escuela][:categoria_desc]
+    @escuela.programa_desc = '' unless params[:escuela][:programa_desc]
     @escuela.update_attributes(params[:escuela])
     @escuela.categoria_escuela = CategoriaEscuela.find_by_clave(params[:escuela][:categoria_escuela_id]) if params[:escuela][:categoria_escuela_id]
     @escuela.programa = Programa.find_by_clave(params[:escuela][:programa_id]) if params[:escuela][:programa_id]

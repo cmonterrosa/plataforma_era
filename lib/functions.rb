@@ -9,4 +9,13 @@ module Functions
     return @selected
   end
 
+  def multiple_selected(relacion)
+    if relacion.empty?
+      @selected=[]
+    else
+      @selected=relacion.collect{|cat|cat.clave}
+    end
+    return @selected
+  end
+
 end
