@@ -10,12 +10,17 @@ class RegistroController < ApplicationController
   end
 
   def index
-    if current_user
-       if @escuela = Escuela.find_by_clave(current_user.login.upcase)
-          redirect_to :action => "new_or_edit", :escuela => {:clave => @escuela.clave}, :method => :get
+    if current_user.has_role?("directivo")
+      redirect_to :action => "show_escuelas", :controller => "admin"
+    else
+      ## Si es una escuela #####
+       if current_user
+          if @escuela = Escuela.find_by_clave(current_user.login.upcase)
+              redirect_to :action => "new_or_edit", :escuela => {:clave => @escuela.clave}, :method => :get
+          end
        end
+       @escuela ||= Escuela.new
     end
-    @escuela ||= Escuela.new
   end
   
   def new_or_edit

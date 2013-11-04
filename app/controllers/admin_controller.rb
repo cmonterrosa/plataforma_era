@@ -1,5 +1,6 @@
 class AdminController < ApplicationController
   protect_from_forgery
+  require_role [:directivo], :only => [:show_escuelas]
   #require_role [:admin]
   
   def index
@@ -53,6 +54,11 @@ class AdminController < ApplicationController
 
   def show_users
     @usuarios = User.find(:all, :order => "created_at")
+  end
+
+  def show_escuelas
+    @escuelas = Escuela.find(:all, :conditions => ["cct_zona = ?", current_user.login.upcase], :order => "nombre")
+   # render :text => @escuelas.collect{|x|x.inspect}
   end
 
   def show_results

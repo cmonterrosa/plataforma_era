@@ -127,7 +127,7 @@ end
  def assign_role_by_default
       self.roles << Role.find_by_name("escuela")
       #--- Si es el primer usuario creado lo hacemos administrador ---
-      self.roles << Role.find_by_name("admin") if User.count(:id) < 1
+      self.roles << Role.find_by_name("admin") if User.count(:id) <= 1
  end
 
 

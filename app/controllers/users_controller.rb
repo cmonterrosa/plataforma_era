@@ -9,23 +9,31 @@ class UsersController < ApplicationController
     logout_keeping_session!
     @user = User.new(params[:user])
     @escuela = Escuela.find_by_clave(@user.login.upcase) if @user.login
+    @directivo = Directivo.find_by_clave(@user.login.upcase) if @user.login
     if User.find_by_login(@user.login)
       flash[:error]  = "Escuela ya existe registrada"
       render :action => 'new'
     else
       @user.activated_at = Time.now
-      if @escuela
+      if @escuela || @directivo
         success = @user && @user.save
         if success && @user.errors.empty?
           redirect_back_or_default('/registro')
-          @escuela.update_bitacora!("esc-regis", @user)
-          flash[:notice] = "ESCUELA #{@escuela.nombre} REGISTRADA"
+          if @directivo
+            @directivo.update_bitacora!("dir-regis", @user)
+            @user.roles << Role.find_by_name("directivo")
+            @user.save
+            flash[:notice] = "DIRECTIVO REGISTRADO"
+          else
+            @escuela.update_bitacora!("esc-regis", @user)
+            flash[:notice] = "ESCUELA #{@escuela.nombre} REGISTRADA"
+          end
         else
           flash[:error]  = "No se puedo crear la cuenta, verifique los datos."
           render :action => 'new'
         end
       else
-        flash[:error]  = "No existe escuela con esa clave, intente de nuevo"
+        flash[:error]  = "No existe centro de trabajo con esa clave, intente de nuevo"
         render :action => 'new'
       end
     end

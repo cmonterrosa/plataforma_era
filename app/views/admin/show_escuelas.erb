@@ -1,0 +1,63 @@
+<p style="text-align: center;">
+   <%= link_to image_tag("admin/reload.png", :border =>0) , {:action => "show_users"}, :title => "Recargar"%>
+</p>
+
+
+<!-- contenido -->
+
+
+<div id="divlista">
+    <table width="90%" border="0" cellspacing="0" cellpadding="0" class="sample" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid" align="center">
+      <tr style="background-color:gray; color:white">
+        <th style="vertical-align: middle;">&nbsp;</th>
+        <th style="vertical-align: middle;">Clave</th>
+        <th style="vertical-align: middle;">Nombre de Escuela</th>
+        <th style="vertical-align: middle;">Estatus</th>
+        <th style="vertical-align: center;" colspan="3">Acciones</th>
+      </tr>
+    <%clase=0%>
+    <%@escuelas.each do |escuela|%>
+    <tr class="d<%=invert_class(clase)%>">
+      <td style="vertical-align: middle;">&nbsp;</td>
+       <td style="vertical-align: middle;"><%=h (escuela.clave)%></td>
+      <td style="vertical-align: middle;"><%=h (escuela)? escuela.nombre : "----"%></td>
+
+      <%if User.find_by_login(escuela.clave)%>
+        <td style="vertical-align: middle;"><%=h (escuela.estatu_id) ? Estatu.find(escuela.estatu_id).descripcion : "N/A"%></td>
+        <!-- Acciones -->
+        <td style="vertical-align: middle;"><%=button_to "Detalles", {:action => "show", :controller => "escuelas", :id => 1}, :class => 'boton'%></td>
+        <td style="vertical-align: middle;"><%=button_to "Editar", {:action => "edit_user", :controller => "admin", :id => 1}, :class => 'boton'%></td>
+        <td style="vertical-align: middle;"><%=button_to "Desbloquear", {:action => "block_user", :id => 1}, :confirm => "¿Esta seguro que desea bloquearlo?", :method => :delete, :class => 'boton'%></td>
+      <%else%>
+        <td style="vertical-align: middle;" colspan="4">Aún sin registrar</td>
+      <%end%>
+      <!-- Diagnostico -->
+      <%if escuela%>
+        <%if Diagnostico.find_by_escuela_id(escuela.id)%>
+             <td style="vertical-align: middle;"><%=button_to "Diagnostico", {:action => "show_diagnostico", :id => 1}, :class => 'boton'%></td>
+        <%end%>
+      <%end%>
+
+
+
+
+    <%clase = invert_class(clase)%>
+    </tr>
+    <%end%>
+  </table>
+</div>
+
+
+
+<%if current_user.has_role?("admin")%>
+  <div class="titulos">
+    <br /><%= link_to image_tag("botones/btn_nuevo_usuario.png", :border =>0) , :controller => "admin", :action => "new_from_admin"%><br /><br /><br />
+  </div>
+<%end%>
+
+
+<div class="titulos">
+<%= link_to image_tag("botones/btn_regresar.png", :border =>0) , :controller => "admin", :action => "index"%><br />
+</div>
+
+
