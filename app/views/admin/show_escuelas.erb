@@ -1,5 +1,16 @@
+<script type="text/javascript">
+		jQuery(document).ready(function() {
+			/*
+			 *  Simple image gallery. Uses default settings
+			 */
+
+			jQuery('.fancybox').fancybox();
+               });
+</script>
+
+
 <p style="text-align: center;">
-   <%= link_to image_tag("admin/reload.png", :border =>0) , {:action => "show_users"}, :title => "Recargar"%>
+   <%= link_to image_tag("admin/reload.png", :border =>0) , {:action => "show_escuelas"}, :title => "Recargar"%>
 </p>
 
 
@@ -13,21 +24,29 @@
         <th style="vertical-align: middle;">Clave</th>
         <th style="vertical-align: middle;">Nombre de Escuela</th>
         <th style="vertical-align: middle;">Estatus</th>
-        <th style="vertical-align: center;" colspan="3">Acciones</th>
+        <th style="vertical-align: center;" colspan="5">&nbsp;</th>
       </tr>
     <%clase=0%>
     <%@escuelas.each do |escuela|%>
     <tr class="d<%=invert_class(clase)%>">
       <td style="vertical-align: middle;">&nbsp;</td>
-       <td style="vertical-align: middle;"><%=h (escuela.clave)%></td>
+      <td style="vertical-align: middle;"><%=h (escuela.clave)%></td>
       <td style="vertical-align: middle;"><%=h (escuela)? escuela.nombre : "----"%></td>
 
-      <%if User.find_by_login(escuela.clave)%>
+      <%if user= User.find_by_login(escuela.clave)%>
         <td style="vertical-align: middle;"><%=h (escuela.estatu_id) ? Estatu.find(escuela.estatu_id).descripcion : "N/A"%></td>
         <!-- Acciones -->
-        <td style="vertical-align: middle;"><%=button_to "Detalles", {:action => "show", :controller => "escuelas", :id => 1}, :class => 'boton'%></td>
-        <td style="vertical-align: middle;"><%=button_to "Editar", {:action => "edit_user", :controller => "admin", :id => 1}, :class => 'boton'%></td>
-        <td style="vertical-align: middle;"><%=button_to "Desbloquear", {:action => "block_user", :id => 1}, :confirm => "¿Esta seguro que desea bloquearlo?", :method => :delete, :class => 'boton'%></td>
+        <td style="vertical-align: middle;">
+         <%=link_to "Resumen", {:action => 'show', :controller => 'escuelas', :id => user},  :title => "Resumen de la escuela", :class => "fancybox fancybox.iframe"%>
+        </td>
+        <td style="vertical-align: middle;"><%=button_to "Detalles", {:action => "show", :controller => "escuelas", :id => user}, :class => 'fancy'%></td>
+        <td style="vertical-align: middle;"><%=button_to "Editar", {:action => "edit_user", :controller => "admin", :id => user}, :class => 'boton'%></td>
+      <%if user.is_blocked?%>
+        <td style="vertical-align: middle;"><%=button_to "Desbloquear", {:action => "block_user", :id => user}, :confirm => "¿Esta seguro que desea bloquearlo?", :method => :delete, :class => 'boton'%></td>
+      <%else%>
+        <td style="vertical-align: middle;"><%=button_to "Bloquear", {:action => "block_user", :id => user}, :confirm => "¿Esta seguro que desea bloquearlo?", :method => :delete, :class => 'boton'%></td>
+      <%end%>
+
       <%else%>
         <td style="vertical-align: middle;" colspan="4">Aún sin registrar</td>
       <%end%>
