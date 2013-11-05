@@ -158,7 +158,7 @@ a:active {
 <body onload="MM_preloadImages('/images/era/iconos/facebook_322.png','/images/era/iconos/twitter_322.png','/images/era/iconos/skype_322.png','/images/era/iconos/youtube_322.png','/images/era/iconos/blogger_322.png','/images/era/iconos/myspace_322.png','/images/era/iconos/picasa_322.png','/images/era/btns_cert/btn_man2.png','/images/era/btns_cert/btn_reg2.png','/images/era/btns_cert/btn_que2.png','/images/era/btns_cert/btn_dia2.png','/images/era/btns_cert/btn_pro2.png','/images/era/btns_cert/btn_ava2.png','/images/era/btns_cert/btn_res2.png')">
 <table width="900" border="0" align="center" cellpadding="0" cellspacing="0">
   <tr>
-    <td colspan="3"><img src="/images/era/ban.jpg" width="900" height="104" /></td>
+    <td colspan="3"><a href="/"><img src="/images/era/ban.jpg" width="900" height="104" /></a></td>
   </tr>
   <tr>
     <td colspan="3"><img src="/images/era/space.png" width="10" height="5" /></td>
@@ -176,17 +176,27 @@ a:active {
                 <td width="50" align="right"><img src="/images/era/iconos/ico_arbol.png" alt="2" width="34" height="17" /></td>
                 <td width="40" class="Txt_arbol"><a href="http://era.educacionchiapas.gob.mx" class="Txt_arbol">Inicio</a></td>
                 <td width="34" align="center"><img src="/images/era/iconos/ico_arbol.png" alt="1" width="34" height="17" /></td>
-                <td width="120" class="Txt_arbol"><a href="http://era.educacionchiapas.gob.mx:3000" class="Txt_arbol">Certificación ESyS</a></td>
+                <td width="120" class="Txt_arbol"><a href="http://esys.educacionchiapas.gob.mx" class="Txt_arbol">Certificación ESyS</a></td>
 
                 <!-- nombre de escuela -->
                 <%if logged_in?%>
                 <td width="34" align="center"><img src="/images/era/iconos/ico_arbol.png" alt="1" width="34" height="17" /></td>
-                <td width="180" class="Txt_arbol"><a href="/home" class="Txt_arbol"><%=h (@esc = Escuela.find_by_clave(current_user.login)) ? @esc.nombre : nil%></a></td>
-                <td width="34" align="center"><img src="/images/era/iconos/ico_arbol.png" alt="1" width="34" height="17" /></td>
-                <td width="120" class="Txt_arbol"><a href="/home" class="Txt_arbol"><%=link_to "Cerrar Sesión", {:action => "destroy", :controller => "sessions"}, :style => "color:darkgreen; text-decoration: none;"%></a></td>
+
+                <!-- Nombre de quien esta loggeado -->
+                <td width="180" class="Txt_arbol">
+                  <a href="/home" class="Txt_arbol">
+                    <%if current_user.has_role?("directivo")%>
+                      <%nombre= (@esc = Directivo.find_by_clave(current_user.login)) ? @esc.descripcion : nil%>
+                      <%nombre ||= (@esc = Escuela.find_by_clave(current_user.login)) ? @esc.nombre : nil %>
+                      <%=h nombre%>
+                    <%end%>
+                  </a>
+                </td>
+                  <td width="34" align="center"><img src="/images/era/iconos/ico_arbol.png" alt="1" width="34" height="17" /></td>
+                  <td width="120" class="Txt_arbol"><a href="/home" class="Txt_arbol"><%=link_to "Cerrar Sesión", {:action => "destroy", :controller => "sessions"}, :style => "color:darkgreen; text-decoration: none;"%></a></td>
                 <%else%>
-                <td width="34" align="center"><img src="/images/era/iconos/ico_arbol.png" alt="1" width="34" height="17" /></td>
-                <td width="120" class="Txt_arbol"><a href="/home" class="Txt_arbol"><%=link_to "Iniciar Sesión", {:action => "new", :controller => "sessions"}, :style => "color:darkgreen; text-decoration: none;"%></a></td>
+                  <td width="34" align="center"><img src="/images/era/iconos/ico_arbol.png" alt="1" width="34" height="17" /></td>
+                  <td width="120" class="Txt_arbol"><a href="/home" class="Txt_arbol"><%=link_to "Iniciar Sesión", {:action => "new", :controller => "sessions"}, :style => "color:darkgreen; text-decoration: none;"%></a></td>
                 <%end%>
 
                 <td>&nbsp;</td>
