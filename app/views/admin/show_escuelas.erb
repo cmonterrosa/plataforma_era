@@ -37,7 +37,7 @@
         <td style="vertical-align: middle;"><%=h (escuela.estatu_id) ? Estatu.find(escuela.estatu_id).descripcion : "N/A"%></td>
         <!-- Acciones -->
         <td style="vertical-align: middle;">
-         <%=link_to "Resumen", {:action => 'show', :controller => 'escuelas', :id => user},  :title => "Resumen de la escuela", :class => "fancybox fancybox.iframe"%>
+         <%=link_to "Resumen", {:action => 'show_fancy', :controller => 'escuelas', :id => user},  :title => "Resumen de la escuela", :class => "fancybox fancybox.iframe"%>
         </td>
         <td style="vertical-align: middle;"><%=button_to "Detalles", {:action => "show", :controller => "escuelas", :id => user}, :class => 'fancy'%></td>
         <td style="vertical-align: middle;"><%=button_to "Editar", {:action => "edit_user", :controller => "admin", :id => user}, :class => 'boton'%></td>
@@ -53,7 +53,7 @@
       <!-- Diagnostico -->
       <%if escuela%>
         <%if Diagnostico.find_by_escuela_id(escuela.id)%>
-             <td style="vertical-align: middle;"><%=button_to "Diagnostico", {:action => "show_diagnostico", :id => 1}, :class => 'boton'%></td>
+             <td style="vertical-align: middle;"><%=button_to "Diagnostico", {:action => "show_diagnostico", :id => escuela}, :class => 'boton'%></td>
         <%end%>
       <%end%>
 

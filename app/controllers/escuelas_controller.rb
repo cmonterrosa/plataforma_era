@@ -8,4 +8,11 @@ class EscuelasController < ApplicationController
       redirect_to :action => "show_users", :controller => "admin"
     end
   end
+
+  def show_fancy
+    @user ||= User.find(params[:id])
+    @user ||= current_user
+    @escuela ||= Escuela.find_by_clave(@user.login) if @user
+    return render(:partial => 'show', :layout => false)
+  end
 end
