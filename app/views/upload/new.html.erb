@@ -1,0 +1,64 @@
+<%#*<h1>Nuevo documento</h1>%>
+
+<%# form_for(@uploaded_file, :url => {:action => "create", :id => @tramite}, :html => { :multipart => true }) do |f| %>
+  <%#= f.error_messages %>
+ 
+  <%#*<p>%>
+    <%#=f.label "Tipo:"%><br />
+    <%#= f.select :tipodoc_id, Tipodoc.all.collect{|a| [a.descripcion, a.id]}, :prompt => 'Seleccione una opción'%>
+  <%#*</p>%>
+
+  <%#*<p>%>
+    <%#= f.label "Archivo:" %><br />
+    <%#= f.file_field :inputfile %>
+  <%#*</p>%>
+  <%#*<p>%>
+    <%#= f.submit 'Cargar' %>
+  <%#*</p>%>
+<%# end %>
+
+
+<div class="container">
+
+
+    <div class="formee-msg-info">
+    <h3>Información importante:</h3>
+    <ul>
+      <li>Los campos marcados con <em class="formee-req">*</em> son obligatorios.</li>
+    </ul>
+    <ul> <li>El tamaño de un archivo no debe excederse los 16 MB.</li></ul>
+  </div>
+
+
+<%form_for(@uploaded_file, :url => {:action => "create"}, :html => { :multipart => true, :class => "formee" }) do |f| -%>
+    <fieldset>
+
+    <legend>CARGAR&nbsp;NUEVO&nbsp;ARCHIVO</legend>
+    
+    <div class="grid-form">
+      <label>Tipo de archivo: <em class="formee-req">*</em></label>
+      <%= f.select :tipodoc_id, Tipodoc.all.collect{|a| [a.descripcion, a.id]}, :prompt => 'Seleccione una opción'%>
+    </div>
+    <div class="grid-12-12 clear"></div>
+
+    <div class="grid-form">
+      <label>Archivo: <em class="formee-req">*</em></label>
+       <%= f.file_field :inputfile %>
+    </div>
+    <div class="grid-12-12 clear"></div>
+
+    <div class="grid-form">
+       <label>Descripción: <em class="formee-req">*</em></label>
+      <%= f.text_area :descripcion, :placeholder => "Escriba la descripción del archivo" %>
+    </div>
+
+    <div class="grid-12-12 clear"></div>
+
+    <div class="grid-form">
+      <input class="right" type="submit" title="CARGAR ARCHIVO" value="CARGAR ARCHIVO" />
+    </div>
+  </fieldset>
+<%end%>
+</div>
+
+<%= link_to image_tag("botones/regresar_menu_ant.png", :border =>0) ,  :action => "index", :id => @tramite%><br />
