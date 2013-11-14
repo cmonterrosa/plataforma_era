@@ -137,4 +137,21 @@ class AdminController < ApplicationController
     end
   end
 
+  ############## COMENTARIOS #####################
+
+  def show_comentarios
+    @comentarios = Comentario.find(:all)
+  end
+
+  def show_comentario_detalle
+    @comentario = Comentario.find(params[:id])
+    return render(:partial => 'buzon/show', :layout => "only_jquery")
+  end
+
+  def destroy_comentario
+    @comentario = Comentario.find(params[:id])
+    (@comentario.destroy) ? flash[:notice] = "Comentario eliminado correctamente" : flash[:error] = "No se pudo eliminar comentario"
+    redirect_to :action => "show_comentarios"
+  end
+
 end

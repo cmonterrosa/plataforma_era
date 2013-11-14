@@ -12,14 +12,19 @@
        <td><%=link_to image_tag('admin/escuela.png', :size => "128x128", :mouseover => 'admin/escuela.png') , {:action => "show_users", :controller => "admin"}, :title => "Atención extraordinaria"%></td
      
        <!-- Perfiles -->
-        <td><%=link_to image_tag('admin/usuarios.png', :size => "128x128", :size => "128x128", :mouseover => 'admin/usuarios.png') , {:action => "show_roles", :controller => "admin"}, :title => "Atención personal"%></td
-  </tr>
+       <td><%=link_to image_tag('admin/usuarios.png', :size => "128x128", :size => "128x128", :mouseover => 'admin/usuarios.png') , {:action => "show_roles", :controller => "admin"}, :title => "Atención personal"%></td
+  
+       <!-- Perfiles -->
+       <td><%=link_to image_tag('admin/comentarios.png', :size => "128x128", :size => "128x128", :mouseover => 'admin/comentarios.png') , {:action => "show_comentarios", :controller => "admin"}, :title => "Mostrar comentarios"%></td
+
+
+    </tr>
 
   <!-- TITULOS -->
   <tr align="center">
     <td class="menu">Escuelas</td>
     <td class="menu">Perfiles</td>
-  
+    <td class="menu">Comentarios</td>
   </tr>
 </table>
 <br/>

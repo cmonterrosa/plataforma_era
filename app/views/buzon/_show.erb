@@ -1,0 +1,54 @@
+<div class="container">
+
+    <fieldset>
+
+    <legend>DETALLE&nbsp;DE&nbsp;COMENTARIO</legend>
+
+    <div class="grid-12-12 clear"></div>
+
+    <div class="grid-form">
+       <label>Usuario: </label>
+       <%=h (@comentario.user)? (@comentario.user.login.upcase) : "---"%>
+    </div>
+
+    <%if @escuela = Escuela.find_by_clave(@comentario.user.login)%>
+      <div class="grid-12-12 clear"></div>
+      <div class="grid-form">
+        <label>Escuela: </label>
+        <%=h (@escuela.nombre)? (@escuela.nombre) : "---"%>
+      </div>
+    <%end%>
+
+    <div class="grid-12-12 clear"></div>
+
+    <div class="grid-form">
+       <label>Asunto: </label>
+       <%=h @comentario.asunto%>
+    </div>
+
+
+    <div class="grid-12-12 clear"></div>
+
+    <div class="grid-form">
+       <label>Descripción: </label>
+      <%=h @comentario.descripcion %>
+    </div>
+
+    <div class="grid-12-12 clear"></div>
+
+     <div class="grid-12-12 clear"></div>
+
+    <div class="grid-form">
+       <label>Fecha/hora: </label>
+      <%=h @comentario.created_at.strftime("%d de %B de %Y - %H:%M") %>
+    </div>
+
+
+  </fieldset>
+
+</div>
+
+
+<!-- buton de regresar deshabilitado -->
+<!--<= link_to image_tag("botones/regresar_menu_ant.png", :border =>0) ,  :action => "index", :id => @tramite%><br /> -->
+

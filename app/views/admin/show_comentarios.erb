@@ -1,0 +1,46 @@
+
+<p style="text-align: center;">
+   <%= link_to image_tag("admin/reload.png", :border =>0) , {:action => "show_comentarios"}, :title => "Recargar"%>
+</p>
+
+
+<!-- contenido -->
+<div id="divlista">
+    <table width="90%" border="0" cellspacing="0" cellpadding="0" class="sample" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid" align="center">
+      <tr style="background-color:gray; color:white">
+        <th style="vertical-align: middle;">&nbsp;</th>
+        <th style="vertical-align: middle;">Clave/Usuario</th>
+        <th style="vertical-align: middle;">Asunto</th>
+        <th style="vertical-align: middle;">Fecha/Hora</th>
+        <th style="vertical-align: center;" colspan="2">&nbsp;</th>
+      </tr>
+    <%clase=0%>
+    <%@comentarios.each do |comentario|%>
+    <tr class="d<%=invert_class(clase)%>">
+      <td style="vertical-align: middle;">&nbsp;</td>
+      <td style="vertical-align: middle;"><%=h (comentario.user) ? (comentario.user.login.upcase): "--"%></td>
+      <td style="vertical-align: middle;"><%=h (comentario.asunto)? comentario.asunto : "----"%></td>
+      <td style="vertical-align: middle;"><%=h (comentario.created_at)? comentario.created_at.strftime('%d de %B de %Y - %H:%M') : "----"%></td>
+
+      <!-- Acciones -->
+      <!-- Detalle -->
+      <td style="vertical-align: middle;">
+         <%=link_to "Resumen", {:action => 'show_comentario_detalle', :controller => 'admin', :id => comentario},  :title => "Detalle del comentario", :class => "fancybox fancybox.iframe"%>
+      </td>
+      <td style="vertical-align: middle;"><%=button_to "Eliminar", {:action => "destroy_comentario", :id => comentario}, :confirm => "¿Esta seguro que desea eliminar el comentario?", :method => :delete, :class => 'boton'%></td>
+      <%clase = invert_class(clase)%>
+    </tr>
+    <%end%>
+  </table>
+</div>
+
+
+<p>
+  &nbsp;
+</p>
+
+<div class="titulos">
+<%= link_to image_tag("botones/btn_regresar.png", :border =>0) , :controller => "admin", :action => "index"%><br />
+</div>
+
+

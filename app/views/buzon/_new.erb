@@ -38,4 +38,14 @@
 <%end%>
 </div>
 
-<%= link_to image_tag("botones/regresar_menu_ant.png", :border =>0) ,  :action => "index", :id => @tramite%><br />
+
+<!-- buton de regresar deshabilitado -->
+<!--<= link_to image_tag("botones/regresar_menu_ant.png", :border =>0) ,  :action => "index", :id => @tramite%><br /> -->
+
+
+<script type="text/javascript">
+  var comentario_asunto = new LiveValidation( 'comentario_asunto', {onlyOnSubmit: true} );
+  comentario_asunto.add( Validate.Presence );
+  var comentario_descripcion = new LiveValidation( 'comentario_descripcion', {onlyOnSubmit: true} );
+  comentario_descripcion.add( Validate.Presence );
+</script>
