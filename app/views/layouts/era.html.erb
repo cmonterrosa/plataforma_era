@@ -207,6 +207,7 @@ a:active {
                       <%nombre= (@esc = Directivo.find_by_clave(current_user.login)) ? @esc.descripcion : nil%>
                     <%end%>
                     <%nombre ||= (@esc = Escuela.find_by_clave(current_user.login)) ? @esc.nombre : nil %>
+                    <%nombre ||= current_user.nombre %>
                     <%=h nombre%>
                   </a>
                 </td>
