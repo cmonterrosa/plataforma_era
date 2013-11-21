@@ -35,7 +35,7 @@
         <th style="vertical-align: middle;">&nbsp;</th>
         <th style="vertical-align: middle;">Login</th>
         <th style="vertical-align: middle;">Nombre de Escuela</th>
-        <th style="vertical-align: center;" colspan="3">Acciones</th>
+        <th style="vertical-align: center;" colspan="4">Acciones</th>
       </tr>
     <%clase=0%>
     <%@usuarios.each do |user|%>
@@ -52,8 +52,16 @@
       </td>
 
       <td style="vertical-align: middle;"><%=h(user.login.upcase)%></td>
+
+      <!-- Nombre de la escuela o usuario -->
       <%escuela = Escuela.find_by_clave(user.login)? Escuela.find_by_clave(user.login) : nil %>
-      <td style="vertical-align: middle;"><%=h (escuela)? escuela.nombre : "----"%></td>
+      <%nombre= (escuela)? escuela.nombre : nil%>
+      <%if user.has_role?("directivo")%>
+          <%directivo= (Directivo.find_by_clave(user.login)) ? (Directivo.find_by_clave(user.login).descripcion) : nil%>
+          <%nombre ||= (directivo) ? "#{directivo} (Directivo)" : nil%>
+      <%end%>
+      <%nombre ||= "#{user.nombre} (Usuario)"%>
+      <td style="vertical-align: middle;"><%=h nombre%></td>
 
 
       <!-- Acciones -->

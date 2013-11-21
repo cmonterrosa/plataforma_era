@@ -13,6 +13,10 @@ class EscuelasController < ApplicationController
     @user ||= User.find(params[:id])
     @user ||= current_user
     @escuela ||= Escuela.find_by_clave(@user.login) if @user
-    return render(:partial => 'show', :layout => false)
+    return render(:partial => 'show', :layout => "only_jquery")
+  end
+
+  def show_diagnostico
+    return render(:partial => 'show_diagnostico', :layout => "only_jquery")
   end
 end
