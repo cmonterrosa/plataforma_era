@@ -1,0 +1,51 @@
+<div class="container">
+
+
+    <div class="formee-msg-info">
+    <h3>Gracias por su opinión, es muy importante para nosotros</h3>
+    <ul>
+      <li>Los campos marcados con <em class="formee-req">*</em> son obligatorios.</li>
+    </ul>
+    </div>
+
+
+<%form_for(@comentario, :url => {:action => "save"}, :html => {:class => "formee" }) do |f| -%>
+    <fieldset>
+
+      <legend>NUEVO&nbsp;COMENTARIO</legend>
+      
+      <div class="grid-12-12 clear"></div>
+
+      <div class="grid-form">
+       <label>Asunto: <em class="formee-req">*</em></label>
+       <%= f.text_area :asunto, :placeholder => "Escriba brevemente el asunto" %>
+      </div>
+
+    
+    <div class="grid-12-12 clear"></div>
+
+    <div class="grid-form">
+       <label>Descripción: <em class="formee-req">*</em></label>
+      <%= f.text_area :descripcion, :placeholder => "Escriba la descripción detallada" %>
+    </div>
+
+    <div class="grid-12-12 clear"></div>
+
+    <div class="grid-form">
+      <input class="right" type="submit" title="ENVIAR" value="ENVIAR" />
+    </div>
+  </fieldset>
+<%end%>
+</div>
+
+
+<!-- buton de regresar deshabilitado -->
+<!--<= link_to image_tag("botones/regresar_menu_ant.png", :border =>0) ,  :action => "index", :id => @tramite%><br /> -->
+
+
+<script type="text/javascript">
+  var comentario_asunto = new LiveValidation( 'comentario_asunto', {onlyOnSubmit: true} );
+  comentario_asunto.add( Validate.Presence );
+  var comentario_descripcion = new LiveValidation( 'comentario_descripcion', {onlyOnSubmit: true} );
+  comentario_descripcion.add( Validate.Presence );
+</script>

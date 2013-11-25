@@ -10,15 +10,23 @@ class UserMailer < ActionMailer::Base
   def activation(user)
     setup_email(user)
     @subject    += 'Your account has been activated!'
-    @body[:url]  = "http://YOURSITE/"
+    @body[:url]  = "http://#{SITE_URL}/"
+  end
+
+ 
+  def reset_notification(user)
+    setup_email(user)
+    @subject    += 'Liga para recuperación de contraseña'
+    @body[:url]  = "http://#{SITE_URL}/reset/#{user.reset_code}"
   end
   
   protected
     def setup_email(user)
-      @recipients  = "#{user.email}"
-      @from        = "ADMINEMAIL"
-      @subject     = "[YOURSITE] "
-      @sent_on     = Time.now
+      @recipients = "#{user.email}"
+      @from = "EDUCAR CON RESPONSABILIDAD AMBIENTAL <plataforma.era@gmail.com>"
+      @sent_on  = Time.now
       @body[:user] = user
+      @subject   = " "
+      @content_type = "text/html"
     end
 end

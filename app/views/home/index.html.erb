@@ -1,11 +1,13 @@
 <%unless logged_in?%>
-<tr>
-  <td>&nbsp;</td>
-  <td>&nbsp;</td>
-  <td><%=link_to (image_tag 'botones/btn_registro.png'), :action => "new", :controller => "users"%></td>
+<tr><th>&nbsp;</th></tr>
+<tr width="80%">
+  <!-- <td><=link_to (image_tag 'botones/btn_registro.png'), :action => "new", :controller => "users"%></td> -->
+  <td align="center"><%=link_to image_tag("era/btn_iniciasesion.png", :size => "175x105", :mouseover => "era/btn_iniciasesion2.png", :border => 0), {:controller => "sessions", :action => "new" }, :title => "INGRESA A LA PLATAFORMA"%></td>
+  <td align="center"><%=link_to image_tag("era/btn_registro.png", :size => "175x105", :mouseover => "era/btn_registro2.png", :border => 0), {:controller => "users", :action => "new" }, :title => "REGISTRA A TU ESCUELA, ES FÁCIL y RÁPIDO"%></td>
 </tr>
 <%end%>
 
+<br />
 
 <tr>
         <td colspan="3"><img src="/images/era/btns_cert/tit_1.png" width="299" height="43" /></td>
@@ -37,9 +39,7 @@
                   </p>
                   
 
-                  <!--
-                  <p>A través de la propuesta educativa  La Nueva Escuela Chiapaneca  se plantea  la formación de ciudadanos comprometidos con la sustentabilidad y el cuidado de  la salud, considerando  como su principal  estrategia generar  una nueva cultura  ambiental, a través del conocimiento, la ética, las competencias y las acciones  que posibiliten un aprendizaje sobre la realidad local y alcázar una mejor  comprensión de las causas, conexiones y consecuencias de los  problemas ambientales y posibles soluciones;  estableciendo como mecanismo para lograr los objetivos en manados de esta  propuesta educativa, la certificación de escuelas saludables y sustentables  ESyS.</p>
-                  -->
+                  <!-- <p>A través de la propuesta educativa  La Nueva Escuela Chiapaneca  se plantea  la formación de ciudadanos comprometidos con la sustentabilidad y el cuidado de  la salud, considerando  como su principal  estrategia generar  una nueva cultura  ambiental, a través del conocimiento, la ética, las competencias y las acciones  que posibiliten un aprendizaje sobre la realidad local y alcázar una mejor  comprensión de las causas, conexiones y consecuencias de los  problemas ambientales y posibles soluciones;  estableciendo como mecanismo para lograr los objetivos en manados de esta  propuesta educativa, la certificación de escuelas saludables y sustentables  ESyS.</p> -->
                   <!--
                   <strong>OBJETIVO GENERAL </strong>:Formar a niñas, niños y jóvenes con una sólida  educación ambiental, con experiencia en realización de proyectos desde su  escuela, fomentando valores, actitudes y prácticas saludables y sustentables,  las cuales impacten en su entorno inmediato y los  empoderen para ejercer una responsabilidad  ambiental  dentro de su comunidad., a  través del Desarrollo de Competencias, el Manejo de los Entornos Saludables, la  Huella Ecológica,  el Consumo Responsable  y la Participación Comunitaria.
                   -->

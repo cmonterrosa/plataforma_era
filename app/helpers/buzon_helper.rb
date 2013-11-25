@@ -1,0 +1,2 @@
+module BuzonHelper
+end
