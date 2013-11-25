@@ -632,7 +632,8 @@ var Validate = {
     	var is = ((paramsObj.is) || (paramsObj.is == 0)) ? paramsObj.is : null;
 //        var notANumberMessage = paramsObj.notANumberMessage || "Must be a number!";
         var notANumberMessage = paramsObj.notANumberMessage || "Debe ser un numero!";
-        var notAnIntegerMessage = paramsObj.notAnIntegerMessage || "Must be an integer!";
+//        var notAnIntegerMessage = paramsObj.notAnIntegerMessage || "Must be an integer!";
+        var notAnIntegerMessage = paramsObj.notAnIntegerMessage || "Debe ser un numero!";
     	var wrongNumberMessage = paramsObj.wrongNumberMessage || "Must be " + is + "!";
 //    	var tooLowMessage = paramsObj.tooLowMessage || "Must not be less than " + minimum + "!";
     	var tooLowMessage = paramsObj.tooLowMessage || "No debe ser menor que " + minimum + "!";
@@ -823,12 +824,12 @@ var Validate = {
     Exclusion: function(value, paramsObj){
       var paramsObj = paramsObj || {};
 //      paramsObj.failureMessage = paramsObj.failureMessage || "Must not be included in the list!";
-      paramsObj.failureMessage = paramsObj.failureMessage || "Seleccione una opción válida!";
+      paramsObj.failureMessage = paramsObj.failureMessage || "Opción no válida!";
       paramsObj.negate = true;
       Validate.Inclusion(value, paramsObj);
       return true;
     },
-    
+
     /**
      *	validates that the value matches that in another field
      *	

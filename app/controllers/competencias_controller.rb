@@ -31,42 +31,42 @@ class CompetenciasController < ApplicationController
       params[:csaluds].each { |op| @csaluds << Csalud.find_by_clave(op)  }
       @competencia.csaluds = Csalud.find(@csaluds)
     end
-    @competencia.csaluds.destroy if params[:competencia][:capacitan_salud_id] == '2'
+    @competencia.csaluds.destroy if params[:competencia][:capacitan_salud] == 'NO'
 
     if params[:cmambientes]
       @cmambientes = []
       params[:cmambientes].each { |op| @cmambientes << Cmambiente.find_by_clave(op)  }
       @competencia.cmambientes = Cmambiente.find(@cmambientes)
     end
-    @competencia.cmambientes.destroy if params[:competencia][:capacitan_mambiente_id] == '2'
+    @competencia.cmambientes.destroy if params[:competencia][:capacitan_mambiente] == 'NO'
 
     if params[:pedagogicas]
       @pedagogicas = []
       params[:pedagogicas].each { |op| @pedagogicas << Pedagogica.find_by_clave(op)  }
       @competencia.pedagogicas = Pedagogica.find(@pedagogicas)
     end
-    @competencia.pedagogicas.destroy if params[:competencia][:aplica_conocimiento_id] == '2'
+    @competencia.pedagogicas.destroy if params[:competencia][:aplica_conocimiento] == 'NO'
 
     if params[:tambientals]
       @tambientals = []
       params[:tambientals].each { |op| @tambientals << Tambiental.find_by_clave(op)  }
       @competencia.tambientals = Tambiental.find(@tambientals)
     end
-    @competencia.tambientals.destroy if params[:competencia][:participa_tambiental_id] == '2'
+    @competencia.tambientals.destroy if params[:competencia][:participa_tambiental] == 'NO'
 
     if params[:cactividads]
       @cactividads = []
       params[:cactividads].each { |op| @cactividads << Cactividad.find_by_clave(op)  }
       @competencia.cactividads = Cactividad.find(@cactividads)
     end
-    @competencia.cactividads.destroy if params[:competencia][:involucran_cactividad_id] == '2'
+    @competencia.cactividads.destroy if params[:competencia][:involucran_cactividad] == 'NO'
 
     if params[:saludmas]
       @saludmas = []
       params[:saludmas].each { |op| @saludmas << Saludma.find_by_clave(op)  }
       @competencia.saludmas = Saludma.find(@saludmas)
     end
-    @competencia.saludmas.destroy if params[:competencia][:capacitan_saludma_id] == '2'
+    @competencia.saludmas.destroy if params[:competencia][:capacitan_saludma] == 'NO'
     
     if @competencia.save
       flash[:notice] = "Registro guardado correctamente"

@@ -1,7 +1,9 @@
-<% form_for :participacion, @participacion, :url => { :action => "save", :id => @participacion, :diagnostico => @diagnostico.id }, :html => {:class => "formee"} do |f| -%>
+<%= render :partial => "informacion_participacions"%>
+
+<% form_for :participacion, @participacion, :url => { :action => "save", :id => @participacion, :diagnostico => @diagnostico.id }, :html => {:class => "formee", :id => "participacion"} do |f| -%>
 <table class="principal" width="100%" border="0" align="center" cellpadding="2" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
   <tr bgcolor="#003366" style="opacity: 0.7;">
-    <td align="center"><h4>EJE 5: PARTICIPACIÓN CIUDADANA</h4></td>
+    <td align="center"><h4>EJE 5: PARTICIPACIÓN COMUNITARIA</h4></td>
   </tr>
   <tr align="center">
     <td align="center">
@@ -14,20 +16,43 @@
         <tr>
           <td align="center">
             <span id="r_proy_vincula_comunidad" class="InputGroup">
-            <label>SI <%= f.radio_button :proy_vincula_comunidad, "SI", :onclick => "enabled_textarea('', 'participacion_proy_vincula_comunidad_desc');" %></label>&nbsp;&nbsp;
-            <label>NO <%= f.radio_button :proy_vincula_comunidad, "NO", :onclick => "enabled_textarea('', 'participacion_proy_vincula_comunidad_desc');" %></label>
+            <label>SI <%= f.radio_button :proy_vincula_comunidad, "SI", :onclick => "showTextarea(this, 'participacion_proy_vincula_comunidad_desc');" %></label>&nbsp;&nbsp;
+            <label>NO <%= f.radio_button :proy_vincula_comunidad, "NO", :onclick => "showTextarea(this, 'participacion_proy_vincula_comunidad_desc');" %></label>
             </span>
-            <%= f.text_area :proy_vincula_comunidad_desc, :placeholder => "Especifique...", :disabled => 'disabled' %>
+            <%= f.text_area :proy_vincula_comunidad_desc, :placeholder => "Especifique...", :disabled => 'disabled', :style => "display: none;" %>
+
+            <!-- Aviso -->
+            <% unless @participacion.proy_vincula_comunidad.nil? %>
+            <%#*<a title="Sugerencias" onclick="showSuggest('showSuggest_salud_ma');" style=" cursor: pointer;" ><img alt="Sugerencia" src="/images/formee/suggest2.png"/></a>%>
+            <div id="showSuggest_" class="formee-msg-suggest" >
+              Para la elaboración del Proyecto  Institucional se considera “vinculación con la comunidad”, la participación de la comunidad en
+              general en torno a las necesidades del contexto escolar.
+            </div>
+            <% end %>
           </td>
           <td>&nbsp;</td>
           <td align="center">
             <span id="r_familia_involucran_actividades" class="InputGroup">
-            <label>
-              SI <%= f.radio_button :familia_involucran_actividades, "SI", :onclick => "enabled_textarea('', 'participacion_familia_involucran_actividades_desc');" %>&nbsp;&nbsp;
-              NO <%= f.radio_button :familia_involucran_actividades, "NO", :onclick => "enabled_textarea('', 'participacion_familia_involucran_actividades_desc');" %>
-            </label>
+            <label>SI <%= f.radio_button :familia_involucran_actividades, "SI", :onclick => "showSelectDescription2(this, 'acomunitaria_id', 'participacion_familia_involucran_actividades_desc');" %></label>&nbsp;&nbsp;
+            <label>NO <%= f.radio_button :familia_involucran_actividades, "NO", :onclick => "showSelectDescription2(this, 'acomunitaria_id', 'participacion_familia_involucran_actividades_desc');" %></label>
+            <%#*<label>SI <%= f.radio_button :familia_involucran_actividades, "SI", :onclick => "showSelect(this, 'acomunitarias', 'participacion_familia_involucran_actividades_desc');" ></label>&nbsp;&nbsp;%>
+            <%#*<label>NO <%= f.radio_button :familia_involucran_actividades, "NO", :onclick => "showSelect(this, 'acomunitarias', 'participacion_familia_involucran_actividades_desc');" ></label>%>
+            
             </span>
-            <%= f.text_area :familia_involucran_actividades_desc, :placeholder => "Especifique...", :disabled => 'disabled' %>
+            <span id="acomunitarias" style="display: none;">
+              <%= f.select :acomunitaria_id, Acomunitaria.all.collect {|p| [ p.descripcion, p.clave ] }, {:selected => @s_acomunitaria}, {:disabled => true, :style => "display: none;", :class => 'acomunitarias', :onchange => "showSelectDescription2('participacion_familia_involucran_actividades', this, 'participacion_familia_involucran_actividades_desc');"}  %>
+            </span>
+            <%= f.text_area :familia_involucran_actividades_desc, :placeholder => "Especifique...", :disabled => 'disabled', :style => "display: none;" %>
+
+            <!-- Aviso -->
+            <% unless @participacion.familia_involucran_actividades.nil? %>
+            <%#*<a title="Sugerencias" onclick="showSuggest('showSuggest_salud_ma');" style=" cursor: pointer;" ><img alt="Sugerencia" src="/images/formee/suggest2.png"/></a>%>
+            <div id="showSuggest_" class="formee-msg-suggest" >
+              Puede solicitar apoyo al personal  de instituciones como: Secretaría de Educación, Secretaría de Salud, Secretaría de Medio
+              Ambiente y Recursos Naturales (SEMARNAT), Comisión Nacional Forestal (CONAFOR), entre otras. (Ver página 31 del Manual de
+              Certificación).
+            </div>
+            <% end %>
           </td>
         </tr>
         <tr>
@@ -36,23 +61,36 @@
         <tr>
           <td width="49%" align="justify"><label>¿La escuela promueve la participación colectiva en proyectos sustentables que beneficien la comunidad?</label></td>
           <td>&nbsp;</td>
-          <td width="49%" align="justify"><label>¿La escuela organiza grupo de padres de familia, para capacitarlos en temas de salud y medio ambiente?</label></td>
+          <td width="49%" align="justify"><label>¿La escuela organiza grupos de trabajo  con padres de familia, para capacitarlos en temas de salud y medio ambiente?</label></td>
         </tr>
         <tr>
           <td align="center">
             <span id="r_esc_participa_proy" class="InputGroup" >
-            <label>SI <%= f.radio_button :esc_participa_proy, "SI", :onclick => "enabled_textarea('', 'participacion_esc_participa_proy_desc');" %></label>&nbsp;&nbsp;
-            <label>NO <%= f.radio_button :esc_participa_proy, "NO", :onclick => "enabled_textarea('', 'participacion_esc_participa_proy_desc');" %></label>
+            <label>SI <%= f.radio_button :esc_participa_proy, "SI", :onclick => "showSelectDescription2(this, 'participacions', 'participacion_esc_participa_proy_desc');" %></label>&nbsp;&nbsp;
+            <label>NO <%= f.radio_button :esc_participa_proy, "NO", :onclick => "showSelectDescription2(this, 'participacions', 'participacion_esc_participa_proy_desc');" %></label>
             </span>
-            <%= f.text_area :esc_participa_proy_desc, :placeholder => "Especifique...", :disabled => 'disabled' %>
+            <span id="participacions" style="display: none;">
+              <%= f.select :pcolectiva_id, Pcolectiva.all.collect {|p| [ p.descripcion, p.clave ] }, {:selected => @s_pcolectiva}, {:disabled => true, :style => "display: none;", :class => "participacions", :onchange => "showSelectDescription2('participacion_esc_participa_proy', this, 'participacion_esc_participa_proy_desc');"}  %>
+            </span>
+            <%= f.text_area :esc_participa_proy_desc, :placeholder => "Especifique...", :disabled => 'disabled', :style => "display: none;" %>
+
+            <!-- Aviso -->
+            <% unless @participacion.esc_participa_proy.nil? %>
+            <%#*<a title="Sugerencias" onclick="showSuggest('showSuggest_salud_ma');" style=" cursor: pointer;" ><img alt="Sugerencia" src="/images/formee/suggest2.png"/></a>%>
+            <div id="showSuggest_" class="formee-msg-suggest" >
+              Puede elaborar un Proyecto  Institucional integral que permita incluir y hacer participe  a toda la comunidad escolar; genere
+              redes de trabajo con los diferentes miembros de ésta para el fortalecimiento de  lazos con su medio social, que beneficie al
+              medio ambiente de la comunidad de manera general.
+            </div>
+            <% end %>
           </td>
           <td>&nbsp;</td>
           <td align="center">
             <span id="r_esc_capacita_salud_ma" class="InputGroup">
-            <label>SI <%= f.radio_button :esc_capacita_salud_ma, "SI", :onclick => "enabled_textarea('', 'participacion_esc_capacita_salud_ma_desc');" %></label>&nbsp;&nbsp;
-            <label>NO <%= f.radio_button :esc_capacita_salud_ma, "NO", :onclick => "enabled_textarea('', 'participacion_esc_capacita_salud_ma_desc');" %></label>
+            <label>SI <%= f.radio_button :esc_capacita_salud_ma, "SI", :onclick => "showTextarea(this, 'participacion_esc_capacita_salud_ma_desc');" %></label>&nbsp;&nbsp;
+            <label>NO <%= f.radio_button :esc_capacita_salud_ma, "NO", :onclick => "showTextarea(this, 'participacion_esc_capacita_salud_ma_desc');" %></label>
             </span>
-            <%= f.text_area :esc_capacita_salud_ma_desc, :placeholder => "Especifique...", :disabled => 'disabled' %>
+            <%= f.text_area :esc_capacita_salud_ma_desc, :placeholder => "Especifique...", :disabled => 'disabled', :style => "display: none;" %>
           </td>
         </tr>
         <tr>
@@ -66,35 +104,43 @@
         <tr>
           <td align="center">
             <span id="r_padres_participan_proy" class="InputGroup">
-            <label>SI <%= f.radio_button :padres_participan_proy, "SI", :onclick => "enabled_textarea('', 'participacion_padres_participan_proy_desc');" %></label>&nbsp;&nbsp;
-            <label>NO <%= f.radio_button :padres_participan_proy, "NO", :onclick => "enabled_textarea('', 'participacion_padres_participan_proy_desc');" %></label>
+            <label>SI <%= f.radio_button :padres_participan_proy, "SI", :onclick => "showTextarea(this, 'participacion_padres_participan_proy_desc');" %></label>&nbsp;&nbsp;
+            <label>NO <%= f.radio_button :padres_participan_proy, "NO", :onclick => "showTextarea(this, 'participacion_padres_participan_proy_desc');" %></label>
             </span>
-            <%= f.text_area :padres_participan_proy_desc, :placeholder => "Especifique...", :disabled => 'disabled' %>
+            <%= f.text_area :padres_participan_proy_desc, :placeholder => "Especifique...", :disabled => 'disabled', :style => "display: none;" %>
           </td>
           <td>&nbsp;</td>
           <td align="center">
             <span id="r_familia_participa_acciones" class="InputGroup">
-            <label>SI <%= f.radio_button :familia_participa_acciones, "SI", :onclick => "enabled_textarea('', 'participacion_familia_participa_acciones_desc');" %></label>&nbsp;&nbsp;
-            <label>NO <%= f.radio_button :familia_participa_acciones, "NO", :onclick => "enabled_textarea('', 'participacion_familia_participa_acciones_desc');" %></label>
+            <label>SI <%= f.radio_button :familia_participa_acciones, "SI", :onclick => "showTextarea(this, 'participacion_familia_participa_acciones_desc');" %></label>&nbsp;&nbsp;
+            <label>NO <%= f.radio_button :familia_participa_acciones, "NO", :onclick => "showTextarea(this, 'participacion_familia_participa_acciones_desc');" %></label>
             </span>
-            <%= f.text_area :familia_participa_acciones_desc, :placeholder => "Especifique...", :disabled => 'disabled' %>
+            <%= f.text_area :familia_participa_acciones_desc, :placeholder => "Especifique...", :disabled => 'disabled', :style => "display: none;" %>
           </td>
         </tr>
         <tr>
         <td colspan="3">&nbsp;</td>
         </tr>
         <tr>
-          <td width="49%" align="justify"><label>¿Qué acciones de mejora pueden  realizar los padres familia en beneficio del medio ambiente?</label></td>
+          <td width="49%" align="justify"><label>¿En las acciones de mejora de la salud y medio ambiente participan los padres de familia?</label></td>
           <td>&nbsp;</td>
           <td width="49%" align="justify"><label>¿Los padres de familia se involucran en el aprovechamiento escolar de sus hijos?</label></td>
         </tr>
         <tr>
           <td align="center">
-            <%= f.text_area :acciones_padres_ma_desc, :placeholder => "Especifique..." %>
+            <span id="r_acciones_padres_ma" class="InputGroup">
+            <label>SI <%= f.radio_button :acciones_padres_ma, "SI", :onclick => "showTextarea(this, 'participacion_acciones_padres_ma_desc');" %></label>&nbsp;&nbsp;
+            <label>NO <%= f.radio_button :acciones_padres_ma, "NO", :onclick => "showTextarea(this, 'participacion_acciones_padres_ma_desc');" %></label>
+            </span>
+            <%= f.text_area :acciones_padres_ma_desc, :placeholder => "Especifique...", :disabled => 'disabled', :style => "display: none;" %>
           </td>
           <td>&nbsp;</td>
           <td align="center">
-            <%= f.text_area :padres_aprov_esc_hijos_desc, :placeholder => "Especifique..." %>
+            <span id="r_padres_aprov_esc_hijos" class="InputGroup">
+            <label>SI <%= f.radio_button :padres_aprov_esc_hijos, "SI", :onclick => "showTextarea(this, 'participacion_padres_aprov_esc_hijos_desc');" %></label>&nbsp;&nbsp;
+            <label>NO <%= f.radio_button :padres_aprov_esc_hijos, "NO", :onclick => "showTextarea(this, 'participacion_padres_aprov_esc_hijos_desc');" %></label>
+            </span>
+            <%= f.text_area :padres_aprov_esc_hijos_desc, :placeholder => "Especifique...", :disabled => 'disabled', :style => "display: none;" %>
           </td>
         </tr>
         <tr>
@@ -107,7 +153,11 @@
         </tr>
         <tr>
           <td align="center">
-            <%= f.text_area :promueven_aprendizajes_desc, :placeholder => "Especifique..." %>
+            <span id="r_promueven_aprendizajes" class="InputGroup">
+            <label>SI <%= f.radio_button :promueven_aprendizajes, "SI", :onclick => "showTextarea(this, 'participacion_promueven_aprendizajes_desc');" %></label>&nbsp;&nbsp;
+            <label>NO <%= f.radio_button :promueven_aprendizajes, "NO", :onclick => "showTextarea(this, 'participacion_promueven_aprendizajes_desc');" %></label>
+            </span>
+            <%= f.text_area :promueven_aprendizajes_desc, :placeholder => "Especifique...", :disabled => 'disabled', :style => "display: none;" %>
           </td>
           <td>&nbsp;</td>
           <td>&nbsp;</td>
@@ -139,12 +189,15 @@
 <% end %>
 
 <script type="text/javascript">
-enabled_textarea('participacion_proy_vincula_comunidad','participacion_proy_vincula_comunidad_desc');
-enabled_textarea('participacion_familia_involucran_actividades','participacion_familia_involucran_actividades_desc');
-enabled_textarea('participacion_esc_participa_proy','participacion_esc_participa_proy_desc');
-enabled_textarea('participacion_esc_capacita_salud_ma','participacion_esc_capacita_salud_ma_desc');
-enabled_textarea('participacion_padres_participan_proy','participacion_padres_participan_proy_desc');
-enabled_textarea('participacion_familia_participa_acciones','participacion_familia_participa_acciones_desc');
+showTextarea('participacion_proy_vincula_comunidad','participacion_proy_vincula_comunidad_desc');
+showSelect('participacion_familia_involucran_actividades', 'acomunitarias', 'participacion_familia_involucran_actividades_desc');
+showSelect('participacion_esc_participa_proy', 'participacions', 'participacion_esc_participa_proy_desc');
+showTextarea('participacion_esc_capacita_salud_ma','participacion_esc_capacita_salud_ma_desc');
+showTextarea('participacion_padres_participan_proy','participacion_padres_participan_proy_desc');
+showTextarea('participacion_familia_participa_acciones','participacion_familia_participa_acciones_desc');
+showTextarea('participacion_acciones_padres_ma', 'participacion_acciones_padres_ma_desc');
+showTextarea('participacion_padres_aprov_esc_hijos', 'participacion_padres_aprov_esc_hijos_desc');
+showTextarea('participacion_promueven_aprendizajes', 'participacion_promueven_aprendizajes_desc');
 
 var proy_vincula_comunidad_desc = new LiveValidation( 'participacion_proy_vincula_comunidad_desc', {onlyOnSubmit: true} );
 proy_vincula_comunidad_desc.add( Validate.Presence );
@@ -172,5 +225,8 @@ jQuery(function(){
   jQuery("#r_esc_capacita_salud_ma").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
   jQuery("#r_padres_participan_proy").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
   jQuery("#r_familia_participa_acciones").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
+  jQuery("#r_acciones_padres_ma").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
+  jQuery("#r_padres_aprov_esc_hijos").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
+  jQuery("#r_promueven_aprendizajes").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
 });
 </script>

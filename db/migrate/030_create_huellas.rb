@@ -2,9 +2,11 @@ class CreateHuellas < ActiveRecord::Migration
   def self.up
     create_table :huellas do |t|
 
-      t.string :mant_instalaciones, :limit => 3
+      t.string :mantto_inst, :limit => 3
+      t.string :mantto_inst_desc, :limit => 255
+      t.string :tienen_equipos, :limit => 3
+      t.string :tienen_equipos_desc, :limit => 255
      
-
       #### APARATOS ELECTRONICOS ########
 
       t.integer :computadoras_num
@@ -40,13 +42,24 @@ class CreateHuellas < ActiveRecord::Migration
       t.integer :aparatos_sonido_num
       t.integer :aparatos_sonido_hrs_diarias
 
-      t.string :desconectan_equipos_elec, :limit => 3
-      t.string :utilizan_lamp_ahorradoras, :limit => 3
-      t.string :aprovecha_luz_natural, :limit => 3
+      t.string :desc_epos_elec, :limit => 3
+      t.string :desc_epos_elec_desc, :limit => 255
+
+      t.string :util_lamp_ahorr, :limit => 3
+      t.string :util_lamp_ahorr_desc, :limit => 255
+      
+      t.string :aprov_luz_natural, :limit => 3
+      t.string :aprov_luz_natural_desc, :limit => 255
+
+      t.string :sist_almac_agua, :limit => 3
+      t.string :sist_almac_agua_desc, :limit => 255
+
+      t.string :servicios_comun, :limit => 3
+      t.string :servicios_comun_desc, :limit => 255
 
       ####### Tipo de agua #######
-      t.integer :tipo_agua_id
-      t.integer :potabilidad_agua_id
+      t.string :potab_agua
+      t.string :potab_agua_desc
 
       t.integer :sanitarios_num
       t.string :sanitarios_fugas, :limit => 3
@@ -68,17 +81,17 @@ class CreateHuellas < ActiveRecord::Migration
       t.string :recip_residuos_solid, :limit => 3
       t.integer :recip_residuos_solid_num
 
-      t.string :separa_residuos_org_inorg, :limit => 3
+      t.string :sep_residuos_org_inorg, :limit => 3
+      t.string :sep_residuos_org_inorg_desc, :limit => 255
 
-      t.string :elabora_compostas_residuos, :limit => 3
+      t.string :elab_comp_residuos, :limit => 3
+      t.string :elab_comp_residuos_desc, :limit => 255
 
-      t.string :cuenta_recipientes_org_inorg, :limit => 3
-      t.integer :cuenta_recipientes_org_inorg_num
+      t.string :cta_recip_org_inorg, :limit => 3
+      t.integer :cta_recip_org_inorg_num
 
-#      t.string :aparatos_pilas, :limit => 3
-#      t.integer :aparatos_pilas_num
-
-      t.string :meca_elim_residuos_solid, :limit => 255
+      t.string :meca_elim_residuos_solid, :limit => 3
+      t.string :meca_elim_residuos_solid_desc, :limit => 255
 
       t.string :act_reutiliza_residuos, :limit => 3
       t.string :act_reutiliza_residuos_desc, :limit => 255
