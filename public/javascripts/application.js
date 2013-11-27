@@ -1,17 +1,6 @@
 // Place your application-specific JavaScript functions and classes here
 // This file is automatically included by javascript_include_tag :defaults
 
-// Habilita / Deshabilita textarea 
-function enable_disable_desc(obj1, obj2, obj3){
-    if(document.getElementById(obj1).checked)
-        document.getElementById(obj3).disabled = false;
-    else
-        if(document.getElementById(obj2).checked)
-            document.getElementById(obj3).disabled = true;
-        else
-            document.getElementById(obj3).disabled = true;
-}
-
 // Valida si selecciona elementos enteros
 function setElectronics(obj1, obj2){
     var select_num;
@@ -37,26 +26,33 @@ function to_uppercase(){
     }    
 }
 
-function enable_fugas(select){
-    var nombre = select.split("_num");
-    if(document.getElementById(select).value > 0){
-        document.getElementById(nombre[0]+'_fugas_si').disabled = false;
-        document.getElementById(nombre[0]+'_fugas_no').disabled = false;
-        if(document.getElementById(nombre[0]+'_fugas_si').checked == false)
-            document.getElementById(nombre[0]+'_fugas_no').checked = 'checked';
-    }
-    else{
-        document.getElementById(nombre[0]+'_fugas_si').checked = false;
-        document.getElementById(nombre[0]+'_fugas_no').checked = false;
-        document.getElementById(nombre[0]+'_fugas_si').disabled = 'disabled';
-        document.getElementById(nombre[0]+'_fugas_no').disabled = 'disabled';
-    }
-}
-
 function showSuggest(id){
     var element = document.getElementById(id);
     var visible = element.style.display;
     visible == 'none' ? element.style.display ='block' : element.style.display = 'none';
+}
+
+function showDescription(obj_select, obj_desc)
+{
+    if(typeof obj_select == "object")
+        var select = obj_select;
+    else
+        select = document.forms[0].elements[obj_select];
+
+    var desc = document.forms[0].elements[obj_desc];
+    var tamano = select.length;
+
+    for(i = 0; i < tamano; i++){
+        if(select[i].value == 'OTR' && select[i].selected){
+            enableTextarea(desc);
+            if(typeof obj_select == "object") clearTextarea(desc);
+            break;
+        }
+        else{
+            disableTextarea(desc);
+            if(typeof obj_select == "object") clearTextarea(desc);
+        }
+    }
 }
 
 function showTextarea(obj_radio, obj_desc){
@@ -70,41 +66,11 @@ function showTextarea(obj_radio, obj_desc){
         else
             radio = document.forms[0].elements[obj_radio+'_no'];
 
-    if(radio.checked){
+    if(radio.checked)
         enableTextarea(desc);
-//        clearTextarea(desc);
-//        desc.disabled = false;
-    }
     
-    if(radio.id.match('si') & radio.checked & desc.type == 'select-one'){
+    if(radio.id.match('si') & radio.checked & desc.type == 'select-one')
         disableTextarea(desc);
-//        clearTextarea(desc);
-//        desc.disabled = true;
-    }
-}
-
-function showTextareaSelect(obj_radio, obj_select, obj_desc){
-    var desc = document.forms[0].elements[obj_desc];
-
-    if(typeof obj_radio == "object")
-        var radio = obj_radio;
-    else
-        if(document.forms[0].elements[obj_radio+'_si'].checked)
-            radio = document.forms[0].elements[obj_radio+'_si'];
-        else
-            radio = document.forms[0].elements[obj_radio+'_no'];
-
-    if(radio.checked){
-        enableTextarea(desc);
-//        clearTextarea(desc);
-//        desc.disabled = false;
-    }
-
-    if(radio.id.match('si') & radio.checked & desc.type == 'select-one'){
-        disableTextarea(desc);
-//        clearTextarea(desc);
-//        desc.disabled = true;
-    }
 }
 
 function showTextfield(obj_radio, obj_desc){
@@ -130,7 +96,6 @@ function showTextfield(obj_radio, obj_desc){
 
 function showElements(obj_radio, obj_desc, obj_div){
     var desc = document.forms[0].elements[obj_desc];
-//    var num = document.forms[0].elements.length;
     
     if(typeof obj_radio == "object")
         var radio = obj_radio;
@@ -189,83 +154,6 @@ function validaSelect(obj_div){
    }
 }
 
-function showDescription1(obj_select, obj_desc)
-{
-    if(typeof obj_select == "object")
-        var select = obj_select;
-    else
-        select = document.forms[0].elements[obj_select];
-
-    var desc = document.forms[0].elements[obj_desc];
-    var tamano = select.length;
-
-    for(i = 0; i < tamano; i++){
-        if(select[i].value == 'OTR' && select[i].selected){
-            enableTextarea(desc);
-            if(typeof obj_select == "object") clearTextarea(desc);
-            break;
-        }
-        else{
-            disableTextarea(desc);
-            if(typeof obj_select == "object") clearTextarea(desc);
-        }
-    }
-}
-
-function showSelectDescription(obj_radio, obj_select, obj_desc){
-    
-    if(typeof obj_radio == "object")
-        var radio = obj_radio;
-    else
-        if(document.forms[0].elements[obj_radio+'_1'].checked)
-            radio = document.forms[0].elements[obj_radio+'_1'];
-        else
-            radio = document.forms[0].elements[obj_radio+'_2'];
-
-    if(typeof obj_select == "object")
-        var select = obj_select;
-    else
-        select = document.forms[0].elements[obj_select];
-
-    if(typeof obj_desc == "object")
-        var desc = obj_desc;
-    else
-        desc = document.forms[0].elements[obj_desc];
-
-    var tamano = select.length;
-
-    if(radio.checked)
-        if(radio.id.match('1')){
-            enableSelect(select);
-            if(typeof obj_radio == "object") clearSelect(select);
-            for(i = 0; i < tamano; i++){
-                if(select[i].value == 'OTR' && select[i].selected){
-                    enableTextarea(desc);
-                    if(typeof obj_select == "object") clearTextarea(desc);
-                    break;
-                }
-                else{
-                    disableTextarea(desc);
-                    if(typeof obj_select == "object") clearTextarea(desc);
-                }
-            }
-        }
-        else{
-            enableTextarea(desc);
-            if(typeof obj_radio == "object"){
-                clearSelect(select);
-                clearTextarea(desc);
-            }
-            disableSelect(select);
-        }
-    else{
-        clearSelect(select);
-        disableSelect(select);
-        clearTextarea(desc);
-        disableTextarea(desc);
-    }
-}
-
 function showSelectDescription(obj_radio, obj_select, obj_desc){
 
     if(typeof obj_radio == "object")
@@ -321,7 +209,6 @@ function showSelectDescription(obj_radio, obj_select, obj_desc){
 }
 
 function showSelect(obj_radio, obj_span, obj_desc){
-//    var select = document.forms[0].elements[obj_select];
     var div = document.getElementById(obj_span);
     var desc = document.forms[0].elements[obj_desc];
     var num = document.forms[0].elements.length;
@@ -421,4 +308,77 @@ function verifySelects(selects){
         }
     }
     return false;
+}
+
+/* Reporte */
+function showTextareaR(obj_radio, obj_desc, form){
+    var desc = document.forms[form].elements[obj_desc];
+
+    if(typeof obj_radio == "object")
+        var radio = obj_radio;
+    else
+        if(document.forms[form].elements[obj_radio+'_si'].checked)
+            radio = document.forms[form].elements[obj_radio+'_si'];
+        else
+            radio = document.forms[form].elements[obj_radio+'_no'];
+
+    if(radio.checked)
+        enableTextarea(desc);
+
+    if(radio.id.match('si') & radio.checked & desc.type == 'select-one')
+        disableTextarea(desc);
+}
+
+function showSelectDescriptionR(obj_radio, obj_select, obj_desc, form){
+
+    if(typeof obj_radio == "object")
+        var radio = obj_radio;
+    else
+        if(document.forms[form].elements[obj_radio+'_si'].checked)
+            radio = document.forms[form].elements[obj_radio+'_si'];
+        else
+            radio = document.forms[form].elements[obj_radio+'_no'];
+
+    if(typeof obj_select == "object")
+        var select = obj_select;
+    else
+        select = document.forms[form].elements[obj_select];
+
+    if(typeof obj_desc == "object")
+        var desc = obj_desc;
+    else
+        desc = document.forms[form].elements[obj_desc];
+
+    var tamano = select.length;
+
+    if(radio.checked)
+        if(radio.id.match('_si')){
+            enableSelect(select);
+            if(typeof obj_radio == "object") clearSelect(select);
+            for(i = 0; i < tamano; i++){
+                if(select[i].value == 'OTR' && select[i].selected){
+                    enableTextarea(desc);
+                    if(typeof obj_select == "object") clearTextarea(desc);
+                    break;
+                }
+                else{
+                    disableTextarea(desc);
+                    if(typeof obj_select == "object") clearTextarea(desc);
+                }
+            }
+        }
+        else{
+            enableTextarea(desc);
+            if(typeof obj_radio == "object"){
+                clearSelect(select);
+                clearTextarea(desc);
+            }
+            disableSelect(select);
+        }
+    else{
+        clearSelect(select);
+        disableSelect(select);
+        clearTextarea(desc);
+        disableTextarea(desc);
+    }
 }

@@ -22,10 +22,30 @@ class DiagnosticosController < ApplicationController
     
   def reporte
     @diagnostico = Diagnostico.find(params[:id]) if params[:id]
+
+    # -- Diagnostico ---
     @competencia = @diagnostico.competencia if @diagnostico.competencia
+    @s_csalud = multiple_selected(@competencia.csaluds) if @competencia.csaluds
+    @s_cmambiente = multiple_selected(@competencia.cmambientes) if @competencia.cmambientes
+    @s_pedagogica = multiple_selected(@competencia.pedagogicas) if @competencia.pedagogicas
+    @s_tambiental = multiple_selected(@competencia.tambientals) if @competencia.tambientals
+    @s_cactividad = multiple_selected(@competencia.cactividads) if @competencia.cactividads
+    @s_saludma = multiple_selected(@competencia.saludmas) if @competencia.saludmas
+
+    # -- Entorno ---
     @entorno = @diagnostico.entorno if @diagnostico.entorno
+    @s_area_verde = multiple_selected(@entorno.areas_verdes) if @entorno.areas_verdes
+    @s_actividad = multiple_selected(@entorno.actividads) if @entorno.actividads
+    @s_cuidado_salud = multiple_selected(@entorno.cuidado_saluds) if @entorno.cuidado_saluds
+    @s_sector_salud = multiple_selected(@entorno.sector_saluds) if @entorno.sector_saluds
+
+    # -- Huella --
     @huella = @diagnostico.huella if @diagnostico.huella
+
+    # -- Consumo --
     @consumo = @diagnostico.consumo if @diagnostico.consumo
+
+    # -- Participcion --
     @participacion = @diagnostico.participacion if @diagnostico.participacion
   end
   
