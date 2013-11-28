@@ -65,7 +65,7 @@
     <!-- categoria -->
     <div class="grid-6-12">
       <label>Categoría: <em class="formee-req">*</em></label>
-      <%=f.select :categoria_escuela_id, CategoriaEscuela.all.collect {|p| [ p.descripcion, p.clave ] }, {:selected => @select_ce}, :onchange => "showDescription(this,'escuela_categoria_desc');" %>
+      <%=f.select :categoria_escuela_id, CategoriaEscuela.all.collect {|p| [ p.descripcion, p.clave ] }, {:selected => @select_ce}, :onchange => "showDescription(this, 'escuela_categoria_desc');" %>
     </div>
     <div class="grid-6-12">
       <%=f.text_area :categoria_desc, :placeholder => "Especifique...", :disabled => 'disabled', :style => "display: none;" %>
@@ -164,8 +164,8 @@
 </div>
 
 <script type="text/javascript">
-  showDescription('escuela[categoria_escuela_id]','escuela_categoria_desc');
-  showDescription('escuela[programa_id]','escuela_programa_desc');
+  showDescription('escuela_categoria_escuela_id','escuela_categoria_desc');
+  showDescription('escuela_programa_id','escuela_programa_desc');
 
   var categoria_desc = new LiveValidation( 'escuela_categoria_desc', {onlyOnSubmit: true} );
   categoria_desc.add( Validate.Presence );
@@ -186,10 +186,10 @@
   var total_personal_docente = new LiveValidation( 'escuela_total_personal_docente');
   total_personal_docente.add( Validate.Presence );
   total_personal_docente.add( Validate.Numericality, { minimum: 1, onlyInteger: true } );
-  var total_personal_alumn_m = new LiveValidation( 'escuela_total_personal_alumn_m');
+  var total_personal_alumn_m = new LiveValidation( 'escuela_alu_muj');
   total_personal_alumn_m.add( Validate.Presence );
   total_personal_alumn_m.add( Validate.Numericality, { minimum: 1, onlyInteger: true } );
-  var total_personal_alumn_h = new LiveValidation( 'escuela_total_personal_alumn_h');
+  var total_personal_alumn_h = new LiveValidation( 'escuela_alu_hom');
   total_personal_alumn_h.add( Validate.Presence );
   total_personal_alumn_h.add( Validate.Numericality, { minimum: 1, onlyInteger: true } );
   var total_personal_admvo = new LiveValidation( 'escuela_total_personal_admvo');

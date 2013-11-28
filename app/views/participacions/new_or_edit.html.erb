@@ -33,17 +33,12 @@
           <td>&nbsp;</td>
           <td align="center">
             <span id="r_familia_involucran_actividades" class="InputGroup">
-            <label>SI <%= f.radio_button :familia_involucran_actividades, "SI", :onclick => "showSelectDescription2(this, 'acomunitaria_id', 'participacion_familia_involucran_actividades_desc');" %></label>&nbsp;&nbsp;
-            <label>NO <%= f.radio_button :familia_involucran_actividades, "NO", :onclick => "showSelectDescription2(this, 'acomunitaria_id', 'participacion_familia_involucran_actividades_desc');" %></label>
-            <%#*<label>SI <%= f.radio_button :familia_involucran_actividades, "SI", :onclick => "showSelect(this, 'acomunitarias', 'participacion_familia_involucran_actividades_desc');" ></label>&nbsp;&nbsp;%>
-            <%#*<label>NO <%= f.radio_button :familia_involucran_actividades, "NO", :onclick => "showSelect(this, 'acomunitarias', 'participacion_familia_involucran_actividades_desc');" ></label>%>
-            
+            <label>SI <%= f.radio_button :familia_involucran_actividades, "SI", :onclick => "showSelectDescription(this, 'participacion_acomunitaria_id', 'participacion_familia_involucran_actividades_desc');" %></label>&nbsp;&nbsp;
+            <label>NO <%= f.radio_button :familia_involucran_actividades, "NO", :onclick => "showSelectDescription(this, 'participacion_acomunitaria_id', 'participacion_familia_involucran_actividades_desc');" %></label>
             </span>
-            <span id="acomunitarias" style="display: none;">
-              <%= f.select :acomunitaria_id, Acomunitaria.all.collect {|p| [ p.descripcion, p.clave ] }, {:selected => @s_acomunitaria}, {:disabled => true, :style => "display: none;", :class => 'acomunitarias', :onchange => "showSelectDescription2('participacion_familia_involucran_actividades', this, 'participacion_familia_involucran_actividades_desc');"}  %>
-            </span>
+            <%= f.select :acomunitaria_id, Acomunitaria.all.collect {|p| [ p.descripcion, p.clave ] }, {:selected => @s_acomunitaria}, {:disabled => true, :style => "display: none;", :class => 'acomunitarias', :onchange => "showSelectDescription('participacion_familia_involucran_actividades', this, 'participacion_familia_involucran_actividades_desc');"}  %>
             <%= f.text_area :familia_involucran_actividades_desc, :placeholder => "Especifique...", :disabled => 'disabled', :style => "display: none;" %>
-
+            
             <!-- Aviso -->
             <% unless @participacion.familia_involucran_actividades.nil? %>
             <%#*<a title="Sugerencias" onclick="showSuggest('showSuggest_salud_ma');" style=" cursor: pointer;" ><img alt="Sugerencia" src="/images/formee/suggest2.png"/></a>%>
@@ -66,12 +61,10 @@
         <tr>
           <td align="center">
             <span id="r_esc_participa_proy" class="InputGroup" >
-            <label>SI <%= f.radio_button :esc_participa_proy, "SI", :onclick => "showSelectDescription2(this, 'participacions', 'participacion_esc_participa_proy_desc');" %></label>&nbsp;&nbsp;
-            <label>NO <%= f.radio_button :esc_participa_proy, "NO", :onclick => "showSelectDescription2(this, 'participacions', 'participacion_esc_participa_proy_desc');" %></label>
+            <label>SI <%= f.radio_button :esc_participa_proy, "SI", :onclick => "showSelectDescription(this, 'participacion_pcolectiva_id', 'participacion_esc_participa_proy_desc');" %></label>&nbsp;&nbsp;
+            <label>NO <%= f.radio_button :esc_participa_proy, "NO", :onclick => "showSelectDescription(this, 'participacion_pcolectiva_id', 'participacion_esc_participa_proy_desc');" %></label>
             </span>
-            <span id="participacions" style="display: none;">
-              <%= f.select :pcolectiva_id, Pcolectiva.all.collect {|p| [ p.descripcion, p.clave ] }, {:selected => @s_pcolectiva}, {:disabled => true, :style => "display: none;", :class => "participacions", :onchange => "showSelectDescription2('participacion_esc_participa_proy', this, 'participacion_esc_participa_proy_desc');"}  %>
-            </span>
+            <%= f.select :pcolectiva_id, Pcolectiva.all.collect {|p| [ p.descripcion, p.clave ] }, {:selected => @s_pcolectiva}, {:disabled => true, :style => "display: none;", :class => "participacions", :onchange => "showSelectDescription('participacion_esc_participa_proy', this, 'participacion_esc_participa_proy_desc');"}  %>
             <%= f.text_area :esc_participa_proy_desc, :placeholder => "Especifique...", :disabled => 'disabled', :style => "display: none;" %>
 
             <!-- Aviso -->
@@ -190,8 +183,8 @@
 
 <script type="text/javascript">
 showTextarea('participacion_proy_vincula_comunidad','participacion_proy_vincula_comunidad_desc');
-showSelect('participacion_familia_involucran_actividades', 'acomunitarias', 'participacion_familia_involucran_actividades_desc');
-showSelect('participacion_esc_participa_proy', 'participacions', 'participacion_esc_participa_proy_desc');
+showSelectDescription('participacion_familia_involucran_actividades', 'participacion_acomunitaria_id', 'participacion_familia_involucran_actividades_desc');
+showSelectDescription('participacion_esc_participa_proy', 'participacion_pcolectiva_id', 'participacion_esc_participa_proy_desc');
 showTextarea('participacion_esc_capacita_salud_ma','participacion_esc_capacita_salud_ma_desc');
 showTextarea('participacion_padres_participan_proy','participacion_padres_participan_proy_desc');
 showTextarea('participacion_familia_participa_acciones','participacion_familia_participa_acciones_desc');
