@@ -1,28 +1,26 @@
-<!-- <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
--->
-<!doctype html>
-<html lang="en">
+<!--<html lang="en"> -->
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>Educar con Responsabilidad Ambiental</title>
 
-  <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Educar con Responsabilidad Ambiental</title>
+  <style type="text/css">
+  body {
+          margin-top: 5px;
+          /*background-color: #F0F0F0;*/
+          background-color: white;
+  }
 
-<style type="text/css">
-body {
-	margin-top: 5px;
-	/*background-color: #F0F0F0;*/
-        background-color: white;
-}
+  </style>
 
-</style>
+<!-- TOOLTIPS -->
+<%= javascript_include_tag 'prototype'%>
+<%= javascript_include_tag 'BubbleTooltips' %>
+<%= stylesheet_link_tag "bt.css" %>
 
 
 <link rel="stylesheet" type="text/css" href="/stylesheets/era/estilo.css" />
-
-<!--
- <=javascript_include_tag "green/style.css"%>
--->
 <!-- formee -->
 <%=javascript_include_tag "formee/jquery-1.6.4.min.js" %>
 <%#=javascript_include_tag "formee/jquery-1.10.1.min.js" %>
@@ -41,7 +39,10 @@ body {
 <%= stylesheet_link_tag "fancybox/jquery.fancybox.css" %>
 <%= stylesheet_link_tag "validate/jquery.validate.css" %>
 
-<script type="text/javascript">jQuery.noConflict();</script>
+
+<script type="text/javascript">
+  jQuery.noConflict();
+</script>
 
 <style type="text/css">
 /* fix  ff bugs */
@@ -159,8 +160,8 @@ a:active {
 
 
 
-<!-- Inicio de fancy -->
-<script type="text/javascript">
+  <!-- Inicio de fancy -->
+  <script type="text/javascript">
 		jQuery(document).ready(function() {
 			/*
 			 *  Simple image gallery. Uses default settings
@@ -168,12 +169,14 @@ a:active {
 
 			jQuery('.fancybox').fancybox();
                });
-</script>
-
-
+  </script>
 </head>
 
+<!--
 <body onload="MM_preloadImages('/images/era/iconos/facebook_322.png','/images/era/iconos/twitter_322.png','/images/era/iconos/skype_322.png','/images/era/iconos/youtube_322.png','/images/era/iconos/blogger_322.png','/images/era/iconos/myspace_322.png','/images/era/iconos/picasa_322.png','/images/era/btns_cert/btn_man2.png','/images/era/btns_cert/btn_reg2.png','/images/era/btns_cert/btn_que2.png','/images/era/btns_cert/btn_dia2.png','/images/era/btns_cert/btn_pro2.png','/images/era/btns_cert/btn_ava2.png','/images/era/btns_cert/btn_res2.png')">
+-->
+<body onload="enableTooltips();">
+
 <!-- facebook -->
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
@@ -224,10 +227,10 @@ a:active {
                   </a>
                 </td>
                   <td width="34" align="center"><img src="/images/era/iconos/ico_arbol.png" alt="1" width="34" height="17" /></td>
-                  <td width="120" class="Txt_arbol"><a href="/home" class="Txt_arbol"><%=link_to "Cerrar Sesión", {:action => "destroy", :controller => "sessions"}, :style => "color:darkgreen; text-decoration: none;"%></a></td>
+                  <td width="120" class="Txt_arbol"><a href="/home" class="Txt_arbol"><%=link_to "Cerrar Sesión", {:action => "destroy", :controller => "sessions"}, :style => "color:darkgreen; text-decoration: none;", :title => "¿Está seguro(a) que desea salir de la plataforma?"%></a></td>
                 <%else%>
                   <td width="34" align="center"><img src="/images/era/iconos/ico_arbol.png" alt="1" width="34" height="17" /></td>
-                  <td width="120" class="Txt_arbol"><a href="/home" class="Txt_arbol"><%=link_to "Iniciar Sesión", {:action => "new", :controller => "sessions"}, :style => "color:darkgreen; text-decoration: none;"%></a></td>
+                  <td width="120" class="Txt_arbol"><a href="/home" class="Txt_arbol"><%=link_to "Iniciar Sesión", {:action => "new", :controller => "sessions"}, :style => "color:darkgreen; text-decoration: none;", :title => "Haga click para iniciar sesión"%></a></td>
                 <%end%>
 
                 <td>&nbsp;</td>
@@ -262,7 +265,7 @@ a:active {
                 <!-- Menu de administracion -->
                  <%if logged_in?%>
                   <%if current_user.has_role?("adminplat")%>
-                      <td><a href="/admin" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Image38','','/images/era/btns_cert/btn_admin2.png',1)"><img src="/images/era/btns_cert/btn_admin1.png" name="Image38" width="100" height="33" border="0" id="Image38" /></a></td>
+                      <td><%=link_to image_tag("era/btns_cert/btn_admin1.png", :size => "100x33", :mouseover => "era/btns_cert/btn_admin2.png",  :border => 0), {:controller => "admin", :action => "index" }, :title => "MENÚ DE ADMINISTRACIÓN"%></td>
                   <%end%>
                  <%end%>
 
@@ -381,11 +384,11 @@ a:active {
         </tr>
 
          <!-- Facebook -->
-              <tr align="center" >
-                <td colspan="3" style="background-color: white;">
-                    <div class="fb-like-box" data-href="https://www.facebook.com/pages/ERA-Chiapas/668302979850376" data-width="800" data-height="280" data-colorscheme="light" data-show-faces="true" data-header="true" data-stream="false" data-show-border="true"></div>
-                </td>
-              </tr>
+           <tr align="center" >
+              <td colspan="3" style="background-color: white;">
+                 <div class="fb-like-box" data-href="https://www.facebook.com/pages/ERA-Chiapas/668302979850376" data-width="800" data-height="280" data-colorscheme="light" data-show-faces="true" data-header="true" data-stream="false" data-show-border="true"></div>
+              </td>
+           </tr>
 
       </table>
     </td>
