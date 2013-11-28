@@ -1,0 +1,44 @@
+<p style="text-align: center;">
+   <%= link_to image_tag("admin/reload.png", :border =>0) , {:action => "indicadores"}, :title => "Recargar"%>
+</p>
+
+
+<!-- contenido -->
+<table width="65%" class="sample" border="0" cellspacing="0" cellpadding="0" style="color: navy; BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid">
+
+    <tr class="d0">
+       <td style="vertical-align: middle;">Descripción</td>
+       <td style="vertical-align: middle;">Total</td>
+    </tr>
+
+    <tr class="d1">
+     <td style="vertical-align: middle;">Escuelas registradas en plataforma</td>
+     <td style="vertical-align: middle;"><%=@escuelas_registradas_en_plataforma%></td>
+    </tr>
+
+    <tr class="d0">
+     <td style="vertical-align: middle;">Escuelas con registro de datos básicos</td>
+     <td style="vertical-align: middle;"><%=@escuelas_datos_basicos_capturados%></td>
+    </tr>
+
+    <tr class="d1">
+     <td style="vertical-align: middle;">Escuelas con diagnóstico iniciado</td>
+     <td style="vertical-align: middle;"><%=@escuelas_diagnostico_iniciado%></td>
+    </tr>
+    
+    <tr class="d0">
+     <td style="vertical-align: middle;">Total de directivos escolares registrados</td>
+     <td style="vertical-align: middle;"><%=@directivos_escolares_registrados%></td>
+    </tr>
+
+    <tr class="d1">
+     <td style="vertical-align: middle;">Total de escuelas que han ingresado</td>
+     <td style="vertical-align: middle;"><%=@total_escuelas_ingresadas%></td>
+    </tr>
+</table>
+
+
+<div class="titulos">
+<br />
+<%= link_to image_tag("botones/btn_regresar.png", :border =>0) , :controller => "admin", :action => "index"%><br />
+</div>
