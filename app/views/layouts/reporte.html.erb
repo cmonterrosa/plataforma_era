@@ -15,6 +15,10 @@ body {
 </style>
 <link rel="stylesheet" type="text/css" href="/stylesheets/era/estilo.css" />
 
+<!-- TOOLTIPS -->
+<%= javascript_include_tag 'prototype'%>
+<%= javascript_include_tag 'BubbleTooltips' %>
+
 <!-- formee -->
 <%=javascript_include_tag "formee/jquery-1.6.4.min.js"%>
 <%=javascript_include_tag "formee/formee.js"%>
@@ -24,7 +28,7 @@ body {
 
 </head>
 
-<body>
+<body onload="enableTooltips();">
 <table width="900" border="0" align="center" cellpadding="0" cellspacing="0">
   <tr>
     <td><img src="/images/era/ban.jpg" width="900" height="104" /></td>
