@@ -7,6 +7,6 @@ class CreateEntornosAreasVerdesJoinTable < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table :entornos_areas_verdes
+    #drop_table :entornos_areas_verdes
   end
 end

@@ -14,6 +14,6 @@ class CreateCuidadoSaluds < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table :cuidado_saluds
+  #  drop_table :cuidado_saluds
   end
 end

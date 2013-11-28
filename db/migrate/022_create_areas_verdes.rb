@@ -13,6 +13,6 @@ class CreateAreasVerdes < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table :areas_verdes
+    #drop_table :areas_verdes
   end
 end

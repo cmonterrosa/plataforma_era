@@ -14,6 +14,6 @@ class CreateActividads < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table :actividads
+  #  drop_table :actividads
   end
 end

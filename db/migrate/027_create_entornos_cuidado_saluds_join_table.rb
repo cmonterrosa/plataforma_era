@@ -7,6 +7,6 @@ class CreateEntornosCuidadoSaludsJoinTable < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table :entornos_cuidado_saluds
+    #drop_table :entornos_cuidado_saluds
   end
 end
