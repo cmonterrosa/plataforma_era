@@ -17,3 +17,4 @@ config.action_controller.perform_caching             = false
 config.action_mailer.raise_delivery_errors = false
 SITE_URL="esys.educacionchiapas.gob.mx"
 REPORTS_DIR = "#{RAILS_ROOT}/app/reports"
+SITE_EMAIL="esys@sef-chiapas.gob.mx"
