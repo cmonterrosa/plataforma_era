@@ -21,6 +21,8 @@ class DiagnosticosController < ApplicationController
   end
     
   def reporte
+    flash[:error] = "El reporte se encuentra en fase de construccion"
+    redirect_to :controller => "diagnosticos"
     @diagnostico = Diagnostico.find(params[:id]) if params[:id]
     @competencia = @diagnostico.competencia if @diagnostico.competencia
     @entorno = @diagnostico.entorno if @diagnostico.entorno

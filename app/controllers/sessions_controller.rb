@@ -41,7 +41,9 @@ class SessionsController < ApplicationController
 protected
   # Track failed login attempts
   def note_failed_signin
-    flash[:error] = "No se pudo ingresar"
+   # is_user_blocked=(User.find(params[:login]) ? User.find(params[:login]).blocked : nil
+    #msj=(User.find(params[:login]) ? User.find(params[:login]).blocked : nil)? "Usuario ha sido bloqueado, comuníquese con el administrador en la siguiente dirección: #{SITE_EMAIL}" : "Nombre de usuario o contraseña incorrectas, si tiene alguna duda, puede enviar un correo electrónico a: #{SITE_EMAIL}"
+    flash[:error] = "Nombre de usuario o contraseña incorrectas, si tiene alguna duda, puede enviar un correo electrónico a: #{SITE_EMAIL}"
     logger.warn "Failed login for '#{params[:login]}' from #{request.remote_ip} at #{Time.now.utc}"
   end
 end

@@ -1,5 +1,5 @@
 class AdminController < ApplicationController
-  protect_from_forgery
+  #protect_from_forgery
   require_role [:directivo], :only => [:show_escuelas]
   #require_role [:admin]
   
@@ -152,6 +152,14 @@ class AdminController < ApplicationController
     @comentario = Comentario.find(params[:id])
     (@comentario.destroy) ? flash[:notice] = "Comentario eliminado correctamente" : flash[:error] = "No se pudo eliminar comentario"
     redirect_to :action => "show_comentarios"
+  end
+
+  def indicadores
+    @escuelas_registradas_en_plataforma = Escuela.count(:id, :conditions => ["estatu_id = ?", Estatu.find_by_clave("esc-regis").id ])
+    @escuelas_datos_basicos_capturados = Escuela.count(:id, :conditions => ["estatu_id = ?", Estatu.find_by_clave("esc-datos").id ])
+    @escuelas_diagnostico_iniciado = Escuela.count(:id, :conditions => ["estatu_id = ?", Estatu.find_by_clave("diag-inic").id ])
+    @total_escuelas_ingresadas = User.count(:id, :joins => "users, escuelas e", :conditions => "users.login=e.clave")
+    @directivos_escolares_registrados =  Directivo.count(:id, :conditions => ["estatu_id = ?", Estatu.find_by_clave("dir-regis") ])
   end
 
 end
