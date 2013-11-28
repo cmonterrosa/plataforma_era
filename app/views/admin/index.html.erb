@@ -5,18 +5,21 @@
   </p>
 </div>
 
-<table width="60%" border="0" cellspacing="0" cellpadding="0" align="center">
+<table width="75%" border="0" cellspacing="0" cellpadding="0" align="center">
     <tr align="center">
 
        <!-- Búsqueda de Escuela -->
-       <td><%=link_to image_tag('admin/escuela.png', :size => "128x128", :mouseover => 'admin/escuela.png') , {:action => "show_users", :controller => "admin"}, :title => "Atención extraordinaria"%></td
+       <td><%=link_to image_tag('admin/escuela.png', :size => "128x128", :mouseover => 'admin/escuela2.png') , {:action => "show_users", :controller => "admin"}, :title => "Mostrar escuelas"%></td
      
        <!-- Perfiles -->
        <%if current_user.has_role?("admin")%>
-          <td><%=link_to image_tag('admin/usuarios.png', :size => "128x128", :size => "128x128", :mouseover => 'admin/usuarios.png') , {:action => "show_roles", :controller => "admin"}, :title => "Atención personal"%></td
+          <td><%=link_to image_tag('admin/usuarios.png', :size => "128x128", :size => "128x128", :mouseover => 'admin/usuarios2.png') , {:action => "show_roles", :controller => "admin"}, :title => "Mostrar roles y usuarios"%></td
        <%end%>
        <!-- Perfiles -->
-       <td><%=link_to image_tag('admin/comentarios.png', :size => "128x128", :size => "128x128", :mouseover => 'admin/comentarios.png') , {:action => "show_comentarios", :controller => "admin"}, :title => "Mostrar comentarios"%></td
+       <td><%=link_to image_tag('admin/comentarios.png', :size => "128x128", :size => "128x128", :mouseover => 'admin/comentarios2.png') , {:action => "show_comentarios", :controller => "admin"}, :title => "Mostrar comentarios"%></td
+
+       <!-- Indicadores -->
+       <td><%=link_to image_tag('admin/indicadores.png', :size => "128x128", :mouseover => 'admin/indicadores2.png') , {:action => "indicadores", :controller => "admin"}, :title => "Mostrar indicadores"%></td
 
 
     </tr>
@@ -28,6 +31,7 @@
       <td class="menu">Perfiles</td>
     <%end%>
     <td class="menu">Comentarios</td>
+    <td class="menu">Indicadores</td>
   </tr>
 </table>
 <br/>
