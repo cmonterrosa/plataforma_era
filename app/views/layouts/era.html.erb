@@ -240,7 +240,16 @@ a:active {
         </tr>
         <tr>
           <td width="606">&nbsp;</td>
-          <td colspan="2" rowspan="5" align="center"><a href="<%=h "http://#{SITE_URL}"%>"><img src="/images/era/logo.png" width="282" height="154" /></a></td>
+          <td colspan="2" rowspan="5" align="center">
+            
+            <!-- logotipo de esys -->
+            <%=link_to image_tag("era/logo_esys.png", :size => "172x150", :mouseover => "era/logo_esys2.png",  :border => 0), {:controller => "home", :action => "index" }, :title => "CERTIFICACIÓN DE ESCUELAS SALUDABLES Y SUSTENTABLES"%>
+            <!--
+            <a href="< "http://#{SITE_URL}"%>">
+            <img src="/images/era/logo.png" width="282" height="154" />
+            </a>
+            -->
+          </td>
         </tr>
         <tr>
           <td>&nbsp;</td>
