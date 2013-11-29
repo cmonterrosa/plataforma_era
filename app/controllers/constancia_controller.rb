@@ -26,7 +26,8 @@ class ConstanciaController < ApplicationController
       param=Hash.new {|k, v| k[v] = {:tipo=>"",:valor=>""}}
       #-- Parametros
       param["P_ESCUELA"]={:tipo=>"String", :valor=>clean_string(@escuela.nombre)}
-      param["P_FECHA"]={:tipo=>"String", :valor=>DateTime.now.strftime("%d de %B de %Y").upcase}
+      #param["P_FECHA"]={:tipo=>"String", :valor=>DateTime.now.strftime("%d de %B de %Y").upcase}
+      param["P_FECHA"]={:tipo=>"String", :valor=>fecha_string}
       param["P_PROCEDENCIA"]={:tipo=>"String", :valor=>@escuela.municipio}
       param["P_DIRECTOR"]= (@escuela.nombre_director) ? {:tipo=>"String", :valor=>@escuela.nombre_director} : {:tipo=>"String", :valor=>" "}
       param["P_CLAVE"]={:tipo=>"String", :valor=>@escuela.clave}
