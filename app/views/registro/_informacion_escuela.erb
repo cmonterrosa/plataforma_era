@@ -194,9 +194,9 @@
   total_personal_alumn_h.add( Validate.Numericality, { minimum: 1, onlyInteger: true } );
   var total_personal_admvo = new LiveValidation( 'escuela_total_personal_admvo');
   total_personal_admvo.add( Validate.Presence );
-  total_personal_admvo.add( Validate.Numericality, { minimum: 1, onlyInteger: true } );
+  total_personal_admvo.add( Validate.Numericality, { minimum: 0, onlyInteger: true } );
   var total_personal_apoyo = new LiveValidation( 'escuela_total_personal_apoyo');
   total_personal_apoyo.add( Validate.Presence );
-  total_personal_apoyo.add( Validate.Numericality, { minimum: 1, onlyInteger: true } );
+  total_personal_apoyo.add( Validate.Numericality, { minimum: 0, onlyInteger: true } );
 
 </script>
