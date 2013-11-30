@@ -76,10 +76,6 @@
 "Teléfono: (961) 61 70800 Ext. 41270" + "\n" +
 "Correo Electrónico: era.chiapas@gmail.com"]]></textFieldExpression>
 			</textField>
-			<image>
-				<reportElement x="15" y="11" width="132" height="57"/>
-				<imageExpression class="java.lang.String"><![CDATA["images/logo_educacion.jpg"]]></imageExpression>
-			</image>
 			<textField isBlankWhenNull="true">
 				<reportElement x="184" y="420" width="343" height="20"/>
 				<textElement verticalAlignment="Bottom">
@@ -179,12 +175,8 @@
 				<reportElement x="352" y="572" width="89" height="69"/>
 			</rectangle>
 			<image>
-				<reportElement x="195" y="8" width="157" height="57"/>
-				<imageExpression class="java.lang.String"><![CDATA["images/logo_gobierno.png"]]></imageExpression>
-			</image>
-			<image>
-				<reportElement x="391" y="9" width="159" height="57"/>
-				<imageExpression class="java.lang.String"><![CDATA["images/chiapas_nos_une.png"]]></imageExpression>
+				<reportElement x="15" y="4" width="522" height="80"/>
+				<imageExpression class="java.lang.String"><![CDATA["images/ban.jpg"]]></imageExpression>
 			</image>
 		</band>
 	</title>
