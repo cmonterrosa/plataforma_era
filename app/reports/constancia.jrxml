@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="constancia" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="229"/>
-	<property name="ireport.y" value="322"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="324"/>
 	<parameter name="P_ESCUELA" class="java.lang.String"/>
 	<parameter name="P_UBICACION" class="java.lang.String"/>
 	<parameter name="P_CT" class="java.lang.String"/>
@@ -23,7 +23,7 @@
 				<textElement textAlignment="Justified" verticalAlignment="Middle" lineSpacing="1_1_2">
 					<font size="11" pdfFontName="Helvetica-Bold"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["A la escuela: " + $P{P_ESCUELA} + " , de la localidad " + $P{P_LOCALIDAD} + ", del municipio " + $P{P_UBICACION} + ", con clave de centro de trabajo " +  $P{P_CT} + " ; comprometiéndose a  la realización de acciones para el cuidado, preservación y protección de la salud y el medio ambiente, promoviendo la participación comunitaria con responsabilidad ambiental,  en el proceso de certificación para el ciclo escolar " + $P{P_CICLO_ESCOLAR} + "."]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["A " + $P{P_ESCUELA} + " , de la localidad " + $P{P_LOCALIDAD} + ", del municipio " + $P{P_UBICACION} + ", con clave de centro de trabajo " +  $P{P_CT} + " ; comprometiéndose a  la realización de acciones para el cuidado, preservación y protección de la salud y el medio ambiente, promoviendo la participación comunitaria con responsabilidad ambiental,  en el proceso de certificación para el ciclo escolar " + $P{P_CICLO_ESCOLAR} + "."]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
