@@ -1,5 +1,5 @@
 <tr>
-  <td align="right"><img src="/images/era/space.png" alt="" width="10" height="10" /></td>
+  <td colspan="3"><img src="/images/era/space.png" alt="" width="10" height="10" /></td>
 </tr>
 
 <!-- titulo de certificacion -->
@@ -7,30 +7,22 @@
   <td align="left">
     <img alt="" src="/images/era/btns_cert/tit_1.png" width="299px" height="43" />
   </td>
-</tr>
-
-<!-- espacio -->
-<tr>
-  <td align="right"><img src="/images/era/space.png" alt="" width="10" height="10" /></td>
-</tr>
-
-<!-- botones -->
-<tr>
-  <td colspan="3" align="right">
   <%unless logged_in?%>
-    <div class="grid-4-12"><%=link_to image_tag("era/btn_iniciasesion.png", :size => "175x105", :mouseover => "era/btn_iniciasesion2.png", :border => 0), {:controller => "sessions", :action => "new" }, :title => "INGRESA A LA PLATAFORMA"%></div>
-    <div class="grid-4-12"><%=link_to image_tag("era/btn_registro.png", :size => "175x105", :mouseover => "era/btn_registro2.png", :border => 0), {:controller => "users", :action => "new" }, :title => "REGISTRA A TU ESCUELA, ES FÁCIL y RÁPIDO"%></div>
-  <%end%>
+  <td>
+    <%=link_to image_tag("era/btn_iniciasesion.png", :size => "175x105", :mouseover => "era/btn_iniciasesion2.png", :border => 0), {:controller => "sessions", :action => "new" }, :title => "INGRESA A LA PLATAFORMA"%>
   </td>
+  <td>
+    <%=link_to image_tag("era/btn_registro.png", :size => "175x105", :mouseover => "era/btn_registro2.png", :border => 0), {:controller => "users", :action => "new" }, :title => "REGISTRA A TU ESCUELA, ES FÁCIL y RÁPIDO"%>
+  </td>
+  <%else%>
+  <td colspan="2" >&nbsp;</td>
+  <%end%>
 </tr>
-
 
 <!-- espacio -->
 <tr>
-  <td align="right"><img src="/images/era/space.png" alt="" width="10" height="10" /></td>
+  <td colspan="3"><img src="/images/era/space.png" alt="" width="10" height="10" /></td>
 </tr>
-
-
 
 <tr>
   <td colspan="3" align="center">

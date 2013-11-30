@@ -22,7 +22,7 @@
     <div class="grid-12-12 clear"></div>
 
     <div class="grid-form">
-      <label>Correo electrónico: (Para recuperación de contraseña)</label>
+      <label>Correo electrónico: (para recuperar contraseña)</label>
       <%=f.text_field :email%>
     </div>
     <div class="grid-12-12 clear"></div>
@@ -50,16 +50,15 @@
 </div>
 
 <script type="text/javascript">
-
-  <%#*var f29 = new LiveValidation('escuela_categoria_escuela_id');%>
-  <%#*f29.add(Validate.Exclusion, { within: ['', null]});%>
-
   var login = new LiveValidation( 'user_login', {onlyOnSubmit: true} );
   login.add( Validate.Presence );
   var nombre = new LiveValidation( 'user_nombre', {onlyOnSubmit: true } );
   nombre.add( Validate.Presence );
   var email = new LiveValidation( 'user_email' );
   email.add( Validate.Email );
+  <%#*var email = new LiveValidation( 'user_email', {onlyOnSubmit: true } );%>
+  <%#*email.add( Validate.Presence );%>
+  <%#*email.add( Validate.Email );%>
   var password = new LiveValidation( 'user_password' );
   password.add( Validate.Presence, {onlyOnSubmit: true } );
   password.add( Validate.Length, { minimum: 6 } );
