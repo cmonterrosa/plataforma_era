@@ -8,7 +8,9 @@ class ConstanciaController < ApplicationController
       param=Hash.new {|k, v| k[v] = {:tipo=>"",:valor=>""}}
       #-- Parametros
       param["P_ESCUELA"]={:tipo=>"String", :valor=>clean_string(@escuela.nombre)}
+      param["P_LOCALIDAD"]={:tipo=>"String", :valor=>@escuela.localidad}
       param["P_UBICACION"]={:tipo=>"String", :valor=>@escuela.municipio}
+      param["P_CICLO_ESCOLAR"]={:tipo=>"String", :valor=>CICLO_ESCOLAR}
       param["P_CT"]={:tipo=>"String", :valor=>@escuela.clave}
       if File.exists?(REPORTS_DIR + "/constancia.jasper")
         send_doc_jdbc("constancia", "constancia", param, output_type = 'pdf')
