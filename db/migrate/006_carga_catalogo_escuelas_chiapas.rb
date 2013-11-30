@@ -37,6 +37,7 @@ class CargaCatalogoEscuelasChiapas < ActiveRecord::Migration
       add_index :nivels, :descripcion, :name => "descripcion_nivel"
 
       #---- Cargamos el catalogo de escuelas ------
+      turnos = {"1" => "MATUTINO", "2" => "VESPERTINO"}
       contador=1
       File.open("#{RAILS_ROOT}/db/migrate/catalogos/escuelas_actualizadas.csv").each_line { |line|
       ##"07DCC0206C","LOS NIÑOS HEROES",1    , "CHILON"             , "SAN GABRIEL"         ,"SAN GABRIEL",0,109,"07FZI0004J",1,"07FJI0001L",1,15,9,24,3,1,0,1,0,0,0,0,0,0,"PREESCOLAR","PREESCOLAR INDIGENA FEDERAL TRANSFERIDO",6,"VI SELVA",1,,
@@ -46,7 +47,7 @@ class CargaCatalogoEscuelasChiapas < ActiveRecord::Migration
       clave,nombre,turno,municipio,localidad,domicilio,telefono,zona_escolar,cct_zona,sector,cct_sector,escuelas, alu_hom, alu_muj, total_alumnos, grupos, doc_hom, doc_muj, total_docentes, dsg_hom, dsg_muj, total_dsg, apoyo_hom, apoyo_muj, total_personal_apoyo, nivel_descripcion, modalidad, region, region_descripcion, inc_cer = line.split("|")
       @e = Escuela.new(:clave => clave,
                   :nombre => nombre,
-                  :turno => turno,
+                  :turno => turnos["#{turno.strip}"],
                   :municipio => municipio,
                   :localidad => localidad,
                   :domicilio => domicilio,
@@ -87,7 +88,12 @@ class CargaCatalogoEscuelasChiapas < ActiveRecord::Migration
         puts e
       end
      }
-    
+
+    #-- Creamos usuario administrador por default
+    usuario = User.new(:login => "esys", :nombre => "Usuario de Certificacion", :email => "esys@sef-chiapas.gob.mx", :password => "adminesys", :password_confirmation => "adminesys")
+    usuario.activated_at = Time.now
+    usuario.roles << Role.find_by_name("adminplat")
+    usuario.save!
   end
 
   def self.down
