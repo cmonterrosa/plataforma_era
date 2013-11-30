@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="carta_compromiso" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="315"/>
 	<style name="Title" isDefault="false" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
 	<style name="SubTitle" isDefault="false" forecolor="#666666" fontName="Arial" fontSize="18"/>
 	<style name="Column header" isDefault="false" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
@@ -38,7 +38,7 @@
 				<text><![CDATA[CARTA COMPROMISO]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement mode="Transparent" x="16" y="132" width="521" height="32"/>
+				<reportElement mode="Transparent" x="16" y="125" width="521" height="50"/>
 				<textElement textAlignment="Right">
 					<font fontName="Serif" size="10" isBold="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 				</textElement>
@@ -52,11 +52,11 @@
 				<text><![CDATA[A QUIEN CORRESPONDA:]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement mode="Transparent" x="20" y="208" width="517" height="167"/>
+				<reportElement mode="Transparent" x="20" y="195" width="517" height="180"/>
 				<textElement textAlignment="Justified" verticalAlignment="Middle" lineSpacing="1_1_2">
-					<font fontName="Serif" size="12" isBold="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<font fontName="Serif" size="11" isBold="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["En el marco de la política pública del Gobierno del Estado “Chiapas Sustentable”, la Secretaría de Educación ha establecido en el Plan Estatal de Desarrollo, el Programa ‘Educar con Responsabilidad Ambiental', que tiene el propósito de ubicar a nuestras instituciones educativas  como el motor de la salud y la sustentabilidad, coordinando esfuerzos para una mayor consciencia ambiental, considerando el  liderazgo que caracteriza al director en el contexto educativo en los Consejos Técnicos Escolares para alcanzar una mejora continua." + "\n\n" +
+				<textFieldExpression class="java.lang.String"><![CDATA["En el marco de la política pública del Gobierno del Estado “Chiapas Sustentable”, la Secretaría de Educación ha establecido en el Plan Estatal de Desarrollo, el Programa “Educar con Responsabilidad Ambiental“, que tiene el propósito de ubicar a nuestras instituciones educativas  como el motor de la salud y la sustentabilidad, coordinando esfuerzos para una mayor consciencia ambiental, considerando el  liderazgo que caracteriza al director en el contexto educativo en los Consejos Técnicos Escolares para alcanzar una mejora continua." + "\n\n" +
 "Por lo anterior, la estructura educativa (directivos, docentes, alumnos y padres de familia), nos comprometemos a contribuir con las acciones de la Nueva Escuela Chiapaneca y participar en el proceso de  Certificación de Escuelas Saludables y Sustentables (ESyS)."]]></textFieldExpression>
 			</textField>
 			<staticText>
