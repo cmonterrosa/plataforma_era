@@ -22,4 +22,11 @@ class ApplicationController < ActionController::Base
       (string) ? (return string.to_s.gsub(/\$/, '\$').gsub(/\"/, '\"')) : (return "")
    end
 
+def fecha_string(date=Time.now)
+    meses = %w(Enero Febrero Marzo Abril Mayo Junio Julio Agosto Septiembre Octubre Noviembre Diciembre)
+    dia,mes,anio = date.strftime("%d"), date.strftime("%m"), date.strftime("%Y")
+    mes = meses[(mes.to_i - 1)]
+    return "#{dia} de #{mes} de #{anio}".upcase
+ end
+
 end

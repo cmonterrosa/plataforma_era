@@ -179,13 +179,15 @@ a:active {
 
 <!-- facebook -->
 <div id="fb-root"></div>
-<script>(function(d, s, id) {
+<script>
+  (function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
   if (d.getElementById(id)) return;
   js = d.createElement(s); js.id = id;
   js.src = "//connect.facebook.net/es_LA/all.js#xfbml=1";
   fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
+}(document, 'script', 'facebook-jssdk'));
+</script>
 
 
 
@@ -207,9 +209,23 @@ a:active {
             <table width="600" border="0" cellspacing="0" cellpadding="0">
               <tr>
                 <td width="50" align="right"><img src="/images/era/iconos/ico_arbol.png" alt="2" width="34" height="17" /></td>
-                <td width="40" class="Txt_arbol"><a href="http://era.educacionchiapas.gob.mx" class="Txt_arbol">Inicio</a></td>
+                <!-- <td width="40" class="Txt_arbol"><a href="http://era.educacionchiapas.gob.mx" class="Txt_arbol">Inicio</a></td>-->
+
+                <!-- inicio -->
+                <td width="40" class="Txt_arbol">
+                 <%=h link_to "Inicio", "http://era.educacionchiapas.gob.mx" , :style => "color:#DF0101; text-decoration: none;", :title => "SITIO PRINCIPAL DEL PROGRAMA 'ERA'", :confirm => "¿Desea ir al sitio principal?"%>
+                </td>
+
                 <td width="34" align="center"><img src="/images/era/iconos/ico_arbol.png" alt="1" width="34" height="17" /></td>
-                <td width="120" class="Txt_arbol"><a href="http://esys.educacionchiapas.gob.mx" class="Txt_arbol">Certificación ESyS</a></td>
+                
+                <!--<td width="120" class="Txt_arbol"><a href="http://esys.educacionchiapas.gob.mx" class="Txt_arbol">Certificación ESyS</a></td> -->
+
+                <!-- esys -->
+                <td width="120" class="Txt_arbol">
+                 <%=h link_to "Certificación ESyS", "http://esys.educacionchiapas.gob.mx" , :style => "color:#FFBF00; text-decoration: none;", :title => "SITIO DE CERTIFICACIÓN DE ESCUELAS SALUDABLES Y SUSTENTABLES"%>
+                </td>
+
+
 
                 <!-- nombre de escuela -->
                 <%if logged_in?%>
@@ -223,14 +239,14 @@ a:active {
                     <%end%>
                     <%nombre ||= (@esc = Escuela.find_by_clave(current_user.login)) ? @esc.nombre : nil %>
                     <%nombre ||= current_user.nombre %>
-                    <%=h nombre%>
+                    <%=h link_to "#{nombre}", {:controller => "escuelas", :action => "information_edit" }, :style => "color:#088A08; text-decoration: none;", :title => "MODIFICA LA INFORMACIÓN DE TU CUENTA"%>
                   </a>
                 </td>
                   <td width="34" align="center"><img src="/images/era/iconos/ico_arbol.png" alt="1" width="34" height="17" /></td>
-                  <td width="120" class="Txt_arbol"><a href="/home" class="Txt_arbol"><%=link_to "Cerrar Sesión", {:action => "destroy", :controller => "sessions"}, :style => "color:darkgreen; text-decoration: none;", :title => "¿Está seguro(a) que desea salir de la plataforma?"%></a></td>
+                  <td width="120" class="Txt_arbol"><a href="/home" class="Txt_arbol"><%=link_to "Cerrar Sesión", {:action => "destroy", :controller => "sessions"}, :style => "color:#0489B1; text-decoration: none;", :title => "¿ESTÁ SEGURO(A) QUE DESEA SALIR DE LA PLATAFORMA"%></a></td>
                 <%else%>
                   <td width="34" align="center"><img src="/images/era/iconos/ico_arbol.png" alt="1" width="34" height="17" /></td>
-                  <td width="120" class="Txt_arbol"><a href="/home" class="Txt_arbol"><%=link_to "Iniciar Sesión", {:action => "new", :controller => "sessions"}, :style => "color:darkgreen; text-decoration: none;", :title => "Haga click para iniciar sesión"%></a></td>
+                  <td width="120" class="Txt_arbol"><a href="/home" class="Txt_arbol"><%=link_to "Iniciar Sesión", {:action => "new", :controller => "sessions"}, :style => "color:#088A08; text-decoration: none;", :title => "HAGA CLICK PARA INICIAR SESIÓN"%></a></td>
                 <%end%>
 
                 <td>&nbsp;</td>
@@ -240,7 +256,16 @@ a:active {
         </tr>
         <tr>
           <td width="606">&nbsp;</td>
-          <td colspan="2" rowspan="5" align="center"><a href="<%=h "http://#{SITE_URL}"%>"><img src="/images/era/logo.png" width="282" height="154" /></a></td>
+          <td colspan="2" rowspan="5" align="center">
+            
+            <!-- logotipo de esys -->
+            <%=link_to image_tag("era/logo_esys.png", :size => "172x150", :mouseover => "era/logo_esys2.png",  :border => 0), {:controller => "home", :action => "index" }, :title => "CERTIFICACIÓN DE ESCUELAS SALUDABLES Y SUSTENTABLES"%>
+            <!--
+            <a href="< "http://#{SITE_URL}"%>">
+            <img src="/images/era/logo.png" width="282" height="154" />
+            </a>
+            -->
+          </td>
         </tr>
         <tr>
           <td>&nbsp;</td>
@@ -339,9 +364,9 @@ a:active {
         <tr>
           <td colspan="3" align="center" valign="middle" class="fnd_transp">
             <table width="850" border="0" cellspacing="0" cellpadding="0">
-              <tr>
+              <tr align="center">
                 <td width="200" rowspan="5"><img src="/images/era/logo_blanco.png" width="182" height="99" /></td>
-                <td align="right">
+                <td align="center">
                   <table border="0" cellspacing="0" cellpadding="0">
                     <tr>
                       <td width="520" valign="bottom" class="Txt_prof"><a href="contactanos.html" class="Txt_prof">Contáctanos</a></td>
@@ -380,8 +405,13 @@ a:active {
           <td colspan="3"><img src="/images/era/space.png" alt="" width="10" height="10" /></td>
         </tr>
         <tr>
-          <td colspan="3" align="right"><img src="/images/era/pie_pag.jpg" width="900" height="185" /></td>
+          <td colspan="3" align="center"><img src="/images/era/pie_pag.jpg" width="900" height="185" /></td>
         </tr>
+
+
+         <tr>
+          <td colspan="3"><img src="/images/era/space.png" width="10" height="30px" /></td>
+         </tr>
 
          <!-- Facebook -->
            <tr align="center" >
