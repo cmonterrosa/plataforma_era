@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="constancia" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="195"/>
-	<property name="ireport.y" value="386"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="324"/>
 	<parameter name="P_ESCUELA" class="java.lang.String"/>
 	<parameter name="P_UBICACION" class="java.lang.String"/>
 	<parameter name="P_CT" class="java.lang.String"/>
+	<parameter name="P_LOCALIDAD" class="java.lang.String"/>
+	<parameter name="P_CICLO_ESCOLAR" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select * from users]]>
 	</queryString>
@@ -14,28 +16,14 @@
 		<band height="572" splitType="Stretch">
 			<image vAlign="Bottom">
 				<reportElement x="0" y="0" width="752" height="572"/>
-				<imageExpression class="java.lang.String"><![CDATA["images/constancia.jpg"]]></imageExpression>
+				<imageExpression class="java.lang.String"><![CDATA["images/ConstanciaSinFirmas.jpg"]]></imageExpression>
 			</image>
 			<textField>
-				<reportElement x="76" y="312" width="615" height="13"/>
-				<textElement textAlignment="Center" verticalAlignment="Bottom">
-					<font size="10"/>
+				<reportElement x="48" y="279" width="646" height="129"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle" lineSpacing="1_1_2">
+					<font size="11" pdfFontName="Helvetica-Bold"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{P_ESCUELA}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="144" y="331" width="243" height="13"/>
-				<textElement textAlignment="Center" verticalAlignment="Bottom">
-					<font size="10"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{P_UBICACION}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="509" y="331" width="182" height="13"/>
-				<textElement textAlignment="Center">
-					<font size="10"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{P_CT}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["A " + $P{P_ESCUELA} + " , de la localidad " + $P{P_LOCALIDAD} + ", del municipio " + $P{P_UBICACION} + ", con clave de centro de trabajo " +  $P{P_CT} + " ; comprometiéndose a  la realización de acciones para el cuidado, preservación y protección de la salud y el medio ambiente, promoviendo la participación comunitaria con responsabilidad ambiental,  en el proceso de certificación para el ciclo escolar " + $P{P_CICLO_ESCOLAR} + "."]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
