@@ -7,7 +7,7 @@ class EscuelasController < ApplicationController
   end
   
   def show
-    @user ||= User.find(params[:id])
+    @user ||= User.find_by_login(params[:id])
     @user ||= current_user
     @escuela ||= Escuela.find_by_clave(@user.login) if @user
     unless @escuela

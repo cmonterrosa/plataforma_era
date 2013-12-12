@@ -81,6 +81,7 @@
   <%contador+=1%>
   </tr>
 <%end%>
+  <% if @escuelas.total_entries > @escuelas.per_page.to_i %>
   <tr class="d<%=invert_class(clase)%>" align="center" >
     <td colspan="5" style="padding: 0;">
       <div class="digg_pagination">
@@ -91,5 +92,6 @@
       </div>
     </td>
   </tr>
+  <% end %>
 </table>
 </div>

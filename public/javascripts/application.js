@@ -73,16 +73,19 @@ function showTextarea(obj_radio, obj_desc){
         disableTextarea(desc);
 }
 
-function showTextareaBusqueda(obj_radio, obj_radio2, obj_desc){
+function showTextareaBusqueda(obj_radio, obj_desc, obj_select){
+    var radio = document.forms[0].elements[obj_radio];
     var desc = document.forms[0].elements[obj_desc];
-    var radio2 = document.forms[0].elements[obj_radio2];
-    var radio = obj_radio;
-
-    if(radio.checked)
+    var select = document.forms[0].elements[obj_select];
+    
+    if(radio.checked == true){
+        enableTextarea(select);
+        disableTextarea(desc);
+    }
+    else{
         enableTextarea(desc);
-    else
-        if(radio2.checked == false)
-            disableTextarea(desc);
+        disableTextarea(select);
+    }
 }
 
 function showTextfield(obj_radio, obj_desc){

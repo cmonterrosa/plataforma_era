@@ -196,21 +196,18 @@ class AdminController < ApplicationController
 
   def showResults
     @users = User.find_by_sql("SELECT u.*, e.* FROM users as u
-                                  INNER JOIN escuelas as e on e.id = u.escuela_id
-                                  WHERE e.clave like '%#{params[:clave_nombre].to_s.downcase}%'") if (params[:clave] == "SI" or params[:nombre] == "SI")
+                               LEFT JOIN escuelas as e on e.id = u.escuela_id
+                               WHERE e.clave like '%#{params[:clave_nombre].to_s}%'
+                               OR u.login like '%#{params[:clave_nombre].to_s}%'") if (params[:buscar] == "nombre")
     @users = User.find_by_sql("SELECT u.*, e.* FROM users as u
-                                  INNER JOIN escuelas as e on e.id = u.escuela_id
-                                  WHERE e.nombre like '%#{params[:clave_nombre].to_s.downcase}%'") if (params[:nombre] == "SI")
+                               LEFT JOIN escuelas as e on e.id = u.escuela_id
+                               WHERE e.nombre like '%#{params[:clave_nombre].to_s}%'
+                               OR u.nombre like '%#{params[:clave_nombre].to_s}%'") if (params[:buscar] == "clave")
     @users = User.find_by_sql("SELECT u.*, e.* FROM users as u
-                                  INNER JOIN escuelas as e on e.id = u.escuela_id
-                                  WHERE e.clave like '%#{params[:clave_nombre].to_s.downcase}%'
-                                  OR e.nombre like '%#{params[:clave_nombre].to_s.downcase}%'") if (params[:clave] == "SI" and params[:nombre] == "SI")
-    @users = User.find_by_sql("SELECT u.*, e.* FROM users as u
-                                  INNER JOIN escuelas as e on e.id = u.escuela_id
-                                  WHERE e.clave like '%#{params[:clave_nombre].to_s.downcase}%'
-                                  OR e.nombre like '%#{params[:clave_nombre].to_s.downcase}%'
-                                  AND e.estatu_id like '%#{params[:clave_estatus].to_s.downcase}%'") if ((params[:clave] == "SI" or params[:clave] == "SI") and params[:estatus] == "SI")
-    if @users.nil?
+                               LEFT JOIN escuelas as e on u.escuela_id = e.id
+                               WHERE e.estatu_id = #{params[:estatus_escuela].to_i}") if (params[:buscar] == "estatus")
+    
+    if @users.nil? or @users.empty?
       flash[:error] = "No se encontraron registros con el criterio de busqueda especificado"
     else
       @usuarios = @users.paginate(:page => params[:page], :per_page => 15)
@@ -224,7 +221,7 @@ class AdminController < ApplicationController
         @load = 0
       end
     end
-
+    
     render :partial => "show_results", :layout => true
   end
 end
