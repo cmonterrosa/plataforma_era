@@ -1,5 +1,10 @@
 class EscuelasController < ApplicationController
+#  auto_complete_for :escuela, :clave
   before_filter :login_required
+
+  def index
+    @escuelas = Escuela.find(:all, :conditions => ['cct_zona = ? and clave LIKE ?', current_user.login.upcase, "%#{params[:search]}%"], :limit => 15)
+  end
   
   def show
     @user ||= User.find(params[:id])

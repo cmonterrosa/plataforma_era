@@ -457,10 +457,12 @@ table.sample td {
 	color: black;
 }
 table.sample tr.d0 td {
-	background-color: #FCF6CF;
+/*	background-color: #FCF6CF;*/
+	background-color: #CEF6D8;
 }
 table.sample tr.d1 td {
-	background-color: #FEFEF2;
+/*	background-color: #FEFEF2;*/
+	background-color: #EFFBF5;
 }
 table.sample td.d0 {
 	background-color: #FCF6CF;

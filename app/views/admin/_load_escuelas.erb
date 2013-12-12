@@ -1,0 +1,95 @@
+<% if @load == 1 %>
+<div class="formee">
+  <div class="grid-12-12 clear"></div>
+  <div class="grid-12-12"><div class="titulos">Mis escuelas</div></div>
+<%#*<p style="text-align: center;">%>
+   <%#= link_to image_tag("admin/reload.png", :border =>0) , {:action => "show_escuelas"}, :title => "Recargar"%>
+<%#*</p>%>
+  <div class="grid-12-12 clear"></div>
+
+  <div class="grid-2-12"></div>
+  <div class="grid-3-12"><label>Buscar escuela por clave:</label></div>
+  <div class="grid-3-12"><%= text_field_with_auto_complete :escuela, :clave, { :size => 15 }, { :url => {:controller => 'escuelas', :action => "index"}, :method => :get, :param_name => 'search'} %></div>
+  <div class="grid-1-12">
+    <%= link_to_remote (image_tag("admin/find.png", :mouseover => "admin/find1.png", :title => "Buscar")),
+                        :url => {:action => "findEscuela"},
+                        :update => "result",
+                        :with => "'clave='+$('escuela_clave').value",
+                        :loading => "Element.show('indicador');Element.hide('result')",
+                        :complete =>"Element.hide('indicador');Element.show('result')"%>
+  </div>
+  <div class="grid-1-12">
+    <%= link_to_remote (image_tag("admin/actualizar.png", :mouseover => "admin/actualizar1.png", :title => "Actualizar")),
+                        :url => {:action => "showEscuelas", :actualizar => 1},
+                        :update => "result",
+                        :loading => "Element.show('indicador');Element.hide('result')",
+                        :complete =>"Element.hide('indicador');Element.show('result')"%>
+  </div>
+  <div class="grid-2-12"></div>
+
+  <div class="grid-5-12"></div>
+  <div class="grid-2-12">
+    <span id="indicador" style="display:none;"><img src="/images/admin/spinner.gif" /></span>
+  </div>
+  <div class="grid-5-12"></div>
+</div>
+<% end %>
+
+<div id="result">
+<table width="90%" border="0" cellspacing="0" cellpadding="0" class="sample" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid" align="center">
+  <tr style="background-color:#2E6AB1; color:white;">
+    <th width="10%">NP</th>
+    <th width="20%">Clave</th>
+    <th style="vertical-align: middle;">Nombre de Escuela</th>
+    <th style="vertical-align: middle;">Estatus</th>
+    <th style="vertical-align: middle;" colspan="5">&nbsp;</th>
+  </tr>
+<%clase=0%>
+<%contador=1%>
+<%@escuelas.each do |escuela|%>
+  <tr class="d<%=invert_class(clase)%>">
+    <td style="vertical-align: middle; text-align: center;"><%=(@escuelas.current_page.to_i > 1 )? "#{contador + (@escuelas.per_page.to_i * (@escuelas.current_page.to_i - 1))}" : "#{contador}"%></td>
+    <td style="vertical-align: middle;"><%=h (escuela.clave)%></td>
+    <td style="vertical-align: middle;"><%=h (escuela)? escuela.nombre : "----"%></td>
+
+  <%if user= User.find_by_login(escuela.clave)%>
+    <td style="vertical-align: middle;"><%=h (escuela.estatu_id) ? Estatu.find(escuela.estatu_id).descripcion : "N/A"%></td>
+
+    <!-- Acciones -->
+    <td style="vertical-align: middle;">
+      <%=link_to "Resumen", {:action => 'show_fancy', :controller => 'escuelas', :id => user},  :title => "Resumen de la escuela", :class => "fancybox fancybox.iframe"%>
+    </td>
+    <td style="vertical-align: middle;"><%=button_to "Detalles", {:action => "show_fancy", :controller => "escuelas", :id => user}, :class => 'fancybox fancybox.iframe'%></td>
+    <td style="vertical-align: middle;"><%=button_to "Editar", {:action => "edit_user", :controller => "admin", :id => user}, :class => 'boton'%></td>
+
+    <%if user.is_blocked?%>
+    <td style="vertical-align: middle;"><%=button_to "Desbloquear", {:action => "block_user", :id => user}, :confirm => "¿Esta seguro que desea bloquearlo?", :method => :delete, :class => 'boton'%></td>
+    <%else%>
+    <td style="vertical-align: middle;"><%=button_to "Bloquear", {:action => "block_user", :id => user}, :confirm => "¿Esta seguro que desea bloquearlo?", :method => :delete, :class => 'boton'%></td>
+    <%end%>
+  <%else%>
+    <td style="vertical-align: middle;" colspan="5"><b>Sin registro</b></td>
+  <%end%>
+
+    <!-- Diagnostico -->
+  <%if escuela%>
+    <%if Diagnostico.find_by_escuela_id(escuela.id)%>
+    <td style="vertical-align: middle;"><%=link_to "Diagnostico", {:controller => "escuelas", :action => "show_diagnostico", :id => escuela}, :class => 'fancybox fancybox.iframe'%></td>
+    <%end%>
+  <%end%>
+  <%clase = invert_class(clase)%>
+  <%contador+=1%>
+  </tr>
+<%end%>
+  <tr class="d<%=invert_class(clase)%>" align="center" >
+    <td colspan="5" style="padding: 0;">
+      <div class="digg_pagination">
+        <div class="page_info">
+          <%= page_entries_info @escuelas %>
+        </div>
+        <%= will_paginate @escuelas %>
+      </div>
+    </td>
+  </tr>
+</table>
+</div>

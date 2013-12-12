@@ -1,0 +1,3 @@
+<% if params[:search].size.to_i > 2 %>
+  <%= auto_complete_result @escuelas, :clave %>
+<% end %>

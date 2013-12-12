@@ -73,6 +73,18 @@ function showTextarea(obj_radio, obj_desc){
         disableTextarea(desc);
 }
 
+function showTextareaBusqueda(obj_radio, obj_radio2, obj_desc){
+    var desc = document.forms[0].elements[obj_desc];
+    var radio2 = document.forms[0].elements[obj_radio2];
+    var radio = obj_radio;
+
+    if(radio.checked)
+        enableTextarea(desc);
+    else
+        if(radio2.checked == false)
+            disableTextarea(desc);
+}
+
 function showTextfield(obj_radio, obj_desc){
     var desc = document.forms[0].elements[obj_desc];
 

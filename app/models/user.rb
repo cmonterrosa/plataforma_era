@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
   # You may wish to modify it to suit your need
   has_many :reportes
   has_and_belongs_to_many :roles, :join_table => 'roles_users'
+  belongs_to :escuela
   
   # has_role? simply needs to return true or false whether a user has a role or not.  
   # It may be a good idea to have "admin" roles return true always
@@ -126,6 +127,7 @@ end
 
  def assign_role_by_default
    self.roles << Role.find_by_name("escuela") if Escuela.find_by_clave(self.login)
+   self.roles << Role.find_by_name("directivo") if Directivo.find_by_clave(self.login)
       #--- Si es el primer usuario creado lo hacemos administrador ---
 #      self.roles << Role.find_by_name("admin") if User.count(:id) <= 1
  end

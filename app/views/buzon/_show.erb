@@ -1,54 +1,35 @@
 <div class="container">
-
+  <div class="formee">
     <fieldset>
-
-    <legend>DETALLE&nbsp;DE&nbsp;COMENTARIO</legend>
-
-    <div class="grid-12-12 clear"></div>
-
-    <div class="grid-form">
-       <label>Usuario: </label>
-       <%=h (@comentario.user)? (@comentario.user.login.upcase) : "---"%>
-    </div>
-
-    <%if @escuela = Escuela.find_by_clave(@comentario.user.login)%>
+      <legend>DETALLE&nbsp;DE&nbsp;COMENTARIO</legend>
       <div class="grid-12-12 clear"></div>
-      <div class="grid-form">
-        <label>Escuela: </label>
-        <%=h (@escuela.nombre)? (@escuela.nombre) : "---"%>
+      <div class="grid-12-12" style="text-align: right;">
+        <label><b>Fecha / hora: </b></label>
+        <label>&nbsp;<%=h @comentario.created_at.strftime("%d de %B de %Y - %H:%M") %></label>
       </div>
-    <%end%>
-
-    <div class="grid-12-12 clear"></div>
-
-    <div class="grid-form">
-       <label>Asunto: </label>
-       <%=h @comentario.asunto%>
-    </div>
-
-
-    <div class="grid-12-12 clear"></div>
-
-    <div class="grid-form">
-       <label>Descripción: </label>
-      <%=h @comentario.descripcion %>
-    </div>
-
-    <div class="grid-12-12 clear"></div>
-
-     <div class="grid-12-12 clear"></div>
-
-    <div class="grid-form">
-       <label>Fecha/hora: </label>
-      <%=h @comentario.created_at.strftime("%d de %B de %Y - %H:%M") %>
-    </div>
-
-
-  </fieldset>
-
+      <div class="grid-12-12 clear"></div>
+      <div class="grid-4-12">
+        <label><b>Usuario: </b></label>
+        <label>&nbsp;<%=h (@comentario.user)? (@comentario.user.login.upcase) : "---"%></label>
+      </div>
+<% if @escuela = Escuela.find_by_clave(@comentario.user.login)%>
+      <div class="grid-8-12">
+        <label><b>Escuela: </b></label>
+        <label><%=h (@escuela.nombre)? (@escuela.nombre) : "---"%></label>
+      </div>
+<% end %>
+      <div class="grid-12-12 clear"></div>
+      <div class="grid-12-12">
+        <label><b>Asunto: </b></label>
+        <label>&nbsp;<%=h @comentario.asunto%></label>
+      </div>
+      <div class="grid-12-12 clear"></div>
+      <div class="grid-12-12 ">
+        <label><b>Descripción: </b></label>
+        <label>&nbsp;<%=h @comentario.descripcion %></label>
+      </div>
+      <div class="grid-12-12 clear"></div>
+      <div class="grid-12-12 clear"></div>
+    </fieldset>
+  </div>
 </div>
-
-
-<!-- buton de regresar deshabilitado -->
-<!--<= link_to image_tag("botones/regresar_menu_ant.png", :border =>0) ,  :action => "index", :id => @tramite%><br /> -->
-

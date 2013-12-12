@@ -6,3 +6,11 @@ function isChecked(id){
     });
     return ReturnVal;
 }
+function isCheckedC(id){
+    var ReturnVal = false;
+    jQuery("#" + id).find('input[type="checkbox"]').each(function(){
+        if (jQuery(this).is(":checked"))
+            ReturnVal = true;
+    });
+    return ReturnVal;
+}

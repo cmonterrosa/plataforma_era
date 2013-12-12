@@ -447,4 +447,10 @@ a {
     #pdf_link {
         display: none;
     }  
-}  
+}
+
+p a, p a:hover{
+  color: green;
+  font-weight: bold;
+  text-decoration: none;
+}

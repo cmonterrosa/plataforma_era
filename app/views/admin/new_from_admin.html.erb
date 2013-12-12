@@ -21,7 +21,7 @@
         <tr>
           <td align="center"><%= f.text_field :login, :required => true%> <div id="mensaje"></div></td>
           <td align="center"><%= f.text_field :nombre, :required => true%></td>
-           <td align="center"> <%= select :role, :id, Role.all.collect{|a| [a.descripcion, a.id]}, :prompt => 'Seleccione una opción'%></td>
+           <td align="center"> <%= select :role, :id, Role.all.collect{|a| [a.descripcion, a.id]}, :prompt => 'Seleccione una opción' %></td>
         </tr>
       </table></td>
     </tr>
@@ -38,8 +38,8 @@
           <td align="center">Confirmación de la contraseña</td>
         </tr>
         <tr>
-          <td align="center"><%= f.password_field :password %></td>
-          <td align="center"><%= f.password_field :password_confirmation %></td>
+          <td align="center"><%= f.password_field :password, :required => true %></td>
+          <td align="center"><%= f.password_field :password_confirmation, :required => true %></td>
         </tr>
       </table></td>
      </tr>

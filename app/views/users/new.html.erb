@@ -2,7 +2,7 @@
 <% form_for :user, @user, :url => { :action => "create", :controller => "users"}, :html => {:class => "formee"} do |f| -%>
   <fieldset>
 
-    <legend>Registro de nueva&nbsp;escuela</legend>
+    <legend>&nbsp;Registro&nbsp;de&nbsp;nueva&nbsp;escuela&nbsp;</legend>
     <div class="grid-form">
       <% @user.password = @user.password_confirmation = nil %>
       <%= error_messages_for :user %>

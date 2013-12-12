@@ -44,5 +44,6 @@ Rails::Initializer.run do |config|
   SITE_URL = "localhost:3000"
   
   config.middleware.use "PDFKit::Middleware", :print_media_type => true
-  
+
+  config.gem 'will_paginate', :version => '~> 2.3.16'
 end

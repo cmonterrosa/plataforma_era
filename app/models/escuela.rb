@@ -7,6 +7,10 @@ class Escuela < ActiveRecord::Base
   belongs_to :programa
   belongs_to :nivel
 
+#  def clave_escuela
+#    self.clave_escuela = "#{self.clave} #{self.nombre}" if self.clave
+#  end
+  
   def update_bitacora!(clave_estatus, usuario)
     @estatus = Estatu.find_by_clave(clave_estatus) if (!clave_estatus.nil? && !usuario.nil?)
     @bitacora = Bitacora.new(:user_id => usuario.id, :estatu_id => @estatus.id) if @estatus
