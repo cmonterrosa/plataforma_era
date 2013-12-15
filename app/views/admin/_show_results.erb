@@ -71,7 +71,7 @@
   end%>
     </td>
     <td style="vertical-align: middle;"><%=h(user.login.upcase)%></td>
-    <!-- Nombre de la escuela o usuario -->
+  <!-- Nombre de la escuela o usuario -->
   <%escuela = Escuela.find_by_clave(user.login)? Escuela.find_by_clave(user.login) : nil %>
   <%nombre= (escuela)? escuela.nombre : nil%>
   <%if user.has_role?("directivo")%>

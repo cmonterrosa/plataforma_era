@@ -4,12 +4,9 @@ class AdminController < ApplicationController
   #require_role [:admin]
   
   def index
-
   end
 
-  
   ### Control de usuarios #####
-
   def new_from_admin
     @user = User.new
   end
@@ -32,8 +29,6 @@ class AdminController < ApplicationController
 
   def edit_user
     @user = User.find_by_login(params[:id])
-    @nombre = Escuela.find_by_clave(@user.login)? Escuela.find_by_clave(@user.login).nombre : nil
-    @nombre ||= Directivo.find_by_clave(@user.login)? Directivo.find_by_clave(@user.login).descripcion : nil
   end
 
   def save
@@ -74,50 +69,48 @@ class AdminController < ApplicationController
       flash[:notice] = "No se pudo bloquear usuario, verifique"
     end
     redirect_to :action => "show_users"
- end
-
-   #------- Administracion de Roles ---------
+  end
+ #------- Administracion de Roles ---------
   def members_by_role
-     @role = Role.find(params[:id])
-     @users = []
-      User.find(:all).each{|user|
-        unless @role.users.include?(user)
-          @users << user
-        end
-      }
+    @role = Role.find(params[:id])
+    @users = []
+    User.find(:all).each{|user|
+      unless @role.users.include?(user)
+        @users << user
+      end
+    }
   end
 
   def add_user
-  @role = Role.find(params[:role])
-  @role.users << User.find(params[:user][:user_id])
-  if @role.save
-    flash[:notice] = "Usuario agregado correctamente"
-  else
-    flash[:notice] = "El usuario no fue agregado, verifique"
-  end
-  redirect_to :action => "members_by_role", :id => @role
-
+    @role = Role.find(params[:role])
+    @role.users << User.find(params[:user][:user_id])
+    if @role.save
+      flash[:notice] = "Usuario agregado correctamente"
+    else
+      flash[:notice] = "El usuario no fue agregado, verifique"
+    end
+    redirect_to :action => "members_by_role", :id => @role
   end
 
   def new_user
     @role = Role.find(params[:id])
     @users = []
     User.find(:all).each{|user|
-    unless @role.users.include?(user)
-      @users << user
-    end
+      unless @role.users.include?(user)
+        @users << user
+      end
     }
   end
 
   def delete_user
     @role = Role.find(params[:role])
     @user = User.find(params[:id])
-     @role.users.delete(@user)
-     if @role.save!
-       flash[:notice] = "Elemento eliminado del perfil correctamente"
-     else
-       flash[:notice] = "No se pudo eliminar, verifique"
-     end
+    @role.users.delete(@user)
+    if @role.save!
+      flash[:notice] = "Elemento eliminado del perfil correctamente"
+    else
+      flash[:notice] = "No se pudo eliminar, verifique"
+    end
       redirect_to :action => "members_by_role", :id => @role
   end
 
@@ -135,8 +128,7 @@ class AdminController < ApplicationController
     end
   end
 
-  ############## COMENTARIOS #####################
-
+  #--- Comentarios
   def show_comentarios
     @comentarios = Comentario.find(:all)
     render :partial => "show_comentarios" if params[:actualizar] == "SI"
@@ -195,17 +187,17 @@ class AdminController < ApplicationController
   end
 
   def showResults
-    @users = User.find_by_sql("SELECT u.*, e.* FROM users as u
-                               LEFT JOIN escuelas as e on e.id = u.escuela_id
-                               WHERE e.clave like '%#{params[:clave_nombre].to_s}%'
-                               OR u.login like '%#{params[:clave_nombre].to_s}%'") if (params[:buscar] == "nombre")
-    @users = User.find_by_sql("SELECT u.*, e.* FROM users as u
-                               LEFT JOIN escuelas as e on e.id = u.escuela_id
-                               WHERE e.nombre like '%#{params[:clave_nombre].to_s}%'
-                               OR u.nombre like '%#{params[:clave_nombre].to_s}%'") if (params[:buscar] == "clave")
-    @users = User.find_by_sql("SELECT u.*, e.* FROM users as u
-                               LEFT JOIN escuelas as e on u.escuela_id = e.id
-                               WHERE e.estatu_id = #{params[:estatus_escuela].to_i}") if (params[:buscar] == "estatus")
+    @users = User.find_by_sql("SELECT usr.* FROM users as usr
+                               LEFT JOIN escuelas as esc on esc.id = usr.escuela_id
+                               WHERE esc.clave like '%#{params[:clave_nombre].to_s}%'
+                               OR usr.login like '%#{params[:clave_nombre].to_s}%'") if (params[:buscar] == "nombre")
+    @users = User.find_by_sql("SELECT usr.* FROM users as usr
+                               LEFT JOIN escuelas as esc on esc.id = usr.escuela_id
+                               WHERE esc.nombre like '%#{params[:clave_nombre].to_s}%'
+                               OR usr.nombre like '%#{params[:clave_nombre].to_s}%'") if (params[:buscar] == "clave")
+    @users = User.find_by_sql("SELECT usr.* FROM users as usr
+                               LEFT JOIN escuelas as esc on usr.escuela_id = esc.id
+                               WHERE esc.estatu_id = #{params[:estatus_escuela].to_i}") if (params[:buscar] == "estatus")
     
     if @users.nil? or @users.empty?
       flash[:error] = "No se encontraron registros con el criterio de busqueda especificado"
@@ -224,4 +216,5 @@ class AdminController < ApplicationController
     
     render :partial => "show_results", :layout => true
   end
+  
 end

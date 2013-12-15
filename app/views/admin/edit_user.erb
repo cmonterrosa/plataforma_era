@@ -9,7 +9,15 @@
     <legend style="font-size:16px;font-weight:bold;"> &nbsp;D A T O S&nbsp; &nbsp;G E N E R A L E S &nbsp;</legend>
     <div class="grid-12-12 clear"></div>
     <div class="grid-4-12"><label>Usuario/Escuela: &nbsp;<b> <%= @user.login.upcase %> </b></label></div>
-    <div class="grid-8-12"><label style=" text-decoration: underline;" >" <%= @nombre %> "</label></div>
+  <!-- Nombre de la escuela o usuario -->
+  <%escuela = Escuela.find_by_clave(@user.login)? Escuela.find_by_clave(@user.login) : nil %>
+  <%nombre= (escuela)? escuela.nombre : nil%>
+  <%if @user.has_role?("directivo")%>
+    <%directivo= (Directivo.find_by_clave(@user.login)) ? (Directivo.find_by_clave(@user.login).descripcion) : nil%>
+    <%nombre ||= (directivo) ? "#{directivo} (Directivo)" : nil%>
+  <%end%>
+  <%nombre ||= "#{@user.nombre} (Usuario)"%>
+    <div class="grid-8-12"><label style=" text-decoration: underline;" >" <%= nombre %> "</label></div>
 
     <div class="grid-6-12 clear">
       <label>Nombre de quien registró: </label>
