@@ -5,7 +5,7 @@
   </p>
 </div>
 
-<table width="75%" border="0" cellspacing="0" cellpadding="0" align="center">
+<table width="90%" border="0" cellspacing="0" cellpadding="0" align="center">
     <tr align="center">
 
        <!-- Búsqueda de Escuela -->
@@ -21,6 +21,9 @@
        <!-- Indicadores -->
        <td><%=link_to image_tag('admin/indicadores.png', :size => "128x128", :mouseover => 'admin/indicadores2.png') , {:action => "indicadores", :controller => "admin"}, :title => "Mostrar indicadores"%></td
 
+        <!-- Listado -->
+       <td><%=link_to image_tag('admin/listado.png', :size => "128x128", :mouseover => 'admin/listado2.png') , {:action => "total_escuelas_registradas", :controller => "admin"}, :title => "Descargar listado de escuelas registradas"%></td
+
 
     </tr>
 
@@ -32,6 +35,7 @@
     <%end%>
     <td class="menu">Comentarios</td>
     <td class="menu">Indicadores</td>
+    <td class="menu">Listado General de Escuelas</td>
   </tr>
 </table>
 <br/>

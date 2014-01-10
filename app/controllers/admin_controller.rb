@@ -1,3 +1,4 @@
+require 'fastercsv'
 class AdminController < ApplicationController
   #protect_from_forgery
   require_role [:directivo], :only => [:show_escuelas]
@@ -215,6 +216,20 @@ class AdminController < ApplicationController
     end
     
     render :partial => "show_results", :layout => true
+  end
+
+  def total_escuelas_registradas
+    @escuelas = User.find(:all, :select => "users.created_at as user_created_at, users.login, users.id as user_id, e.*", :joins => "users, escuelas e", :conditions => "users.login=e.clave")
+    csv_string = FasterCSV.generate do |csv|
+      csv << ["NOMBRE", "CCT_SECTOR", "CCT_ZONA", "ZONA_ESCOLAR", "CLAVE_ESCUELA", "DOMICILIO", "LOCALIDAD", "MUNICIPIO", "MODALIDAD", "FECHA_HORA_CAPTURA"]
+
+      @escuelas.each do |i|
+         csv << [i["nombre"], i["cct_sector"], i["cct_zona"], i["zona_escolar"], i["clave"], i["domicilio"], i["localidad"], i['municipio'], i['modalidad'], i['user_created_at']]
+       end
+    end
+  send_data csv_string, type => "text/plain",
+    :filename => "escuelas_ESyS_#{Time.now.strftime("%d-%m-%Y_%I%M_%p")}.csv",
+    :disposition => "attachment"
   end
   
 end
