@@ -147,11 +147,11 @@ class AdminController < ApplicationController
   end
 
   def indicadores
-    @escuelas_registradas_en_plataforma = Escuela.count(:id, :conditions => ["estatu_id = ?", Estatu.find_by_clave("esc-regis").id ])
-    @escuelas_datos_basicos_capturados = Escuela.count(:id, :conditions => ["estatu_id = ?", Estatu.find_by_clave("esc-datos").id ])
-    @escuelas_diagnostico_iniciado = Escuela.count(:id, :conditions => ["estatu_id = ?", Estatu.find_by_clave("diag-inic").id ])
-    @total_escuelas_ingresadas = User.count(:id, :joins => "users, escuelas e", :conditions => "users.login=e.clave")
-    @directivos_escolares_registrados =  Directivo.count(:id, :conditions => ["estatu_id = ?", Estatu.find_by_clave("dir-regis") ])
+    @escuelas_registradas_en_plataforma = Escuela.count(:id, :joins => "escuelas, users users", :conditions => ["users.login=escuelas.clave AND escuelas.estatu_id = ? AND (users.blocked is NULL OR  users.blocked !=1)", Estatu.find_by_clave("esc-regis").id ])
+    @escuelas_datos_basicos_capturados =  Escuela.count(:id, :joins => "escuelas, users users", :conditions => ["users.login=escuelas.clave AND escuelas.estatu_id = ? AND (users.blocked is NULL OR  users.blocked !=1)", Estatu.find_by_clave("esc-datos").id ])
+    @escuelas_diagnostico_iniciado =      Escuela.count(:id, :joins => "escuelas, users users", :conditions => ["users.login=escuelas.clave AND escuelas.estatu_id = ? AND (users.blocked is NULL OR  users.blocked !=1)", Estatu.find_by_clave("diag-inic").id ])
+    @total_escuelas_ingresadas =          User.count(:id, :joins => "users, escuelas e", :conditions => "users.login=e.clave AND (users.blocked is NULL OR  users.blocked !=1)")
+    @directivos_escolares_registrados =   Directivo.count(:id, :conditions => ["estatu_id = ?", Estatu.find_by_clave("dir-regis") ])
     render :partial => "indicadores" if params[:actualizar] == "SI"
   end
 
