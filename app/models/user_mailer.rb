@@ -1,10 +1,8 @@
 class UserMailer < ActionMailer::Base
   def signup_notification(user)
     setup_email(user)
-    @subject    += 'Please activate your new account'
-  
+    @subject    += 'Su cuenta ha sido creada'
     @body[:url]  = "http://#{SITE_URL}/activate/#{user.activation_code}"
-  
   end
   
   def activation(user)
@@ -23,7 +21,7 @@ class UserMailer < ActionMailer::Base
   protected
     def setup_email(user)
       @recipients = "#{user.email}"
-      @from = "EDUCAR CON RESPONSABILIDAD AMBIENTAL <plataforma.era@gmail.com>"
+      @from = "Educar con Responsabilidad Ambiental <plataforma.era@gmail.com>"
       @sent_on  = Time.now
       @body[:user] = user
       @subject   = " "
