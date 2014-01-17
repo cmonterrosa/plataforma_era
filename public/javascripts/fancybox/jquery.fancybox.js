@@ -56,8 +56,8 @@
 			padding : 15,
 			margin  : 20,
 
-			width     : 800,
-			height    : 600,
+			width     : 1024,
+			height    : 800,
 			minWidth  : 100,
 			minHeight : 100,
 			maxWidth  : 9999,
@@ -75,7 +75,7 @@
 			topRatio    : 0.5,
 			leftRatio   : 0.5,
 
-			scrolling : 'auto', // 'auto', 'yes' or 'no'
+			scrolling : 'yes', // 'auto', 'yes' or 'no'
 			wrapCSS   : '',
 
 			arrows     : true,

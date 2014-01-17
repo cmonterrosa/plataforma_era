@@ -2,6 +2,7 @@ require 'ftools'
 class Adjunto < ActiveRecord::Base
    belongs_to :tramite
    belongs_to :tipodoc
+   belongs_to :diagnostico
    validates_presence_of :tipodoc_id, :message => ".- Seleccione un tipo de archivo"
    validates_numericality_of :file_size, :less_than => 16384, :message => ".- No puede excederse de 16 MB"
 
