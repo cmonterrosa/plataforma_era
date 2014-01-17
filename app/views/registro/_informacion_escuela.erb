@@ -11,6 +11,57 @@
   <fieldset>
     <legend>Registro&nbsp;de&nbsp;Escuelas</legend>
 
+    <% if @escuela.comunitaria %>
+      <div class="grid-4-12">
+        <label style=" font-weight: bold;">Clave:</label>
+        <label style=" font-style: italic;"><%= @escuela.clave %></label>
+        <%#= f.text_field :clave %>
+      </div>
+      <div class="grid-8-12">
+        <label>Nombre de la Escuela: <em class="formee-req">*</em></label>
+        <%= f.text_field :nombre %>
+      </div>
+
+      <div class="grid-4-12">
+        <label>Zona Escolar: <em class="formee-req">*</em></label>
+        <%= f.text_field :zona_escolar %>
+      </div>
+      <div class="grid-4-12">
+        <label>Sector: <em class="formee-req">*</em></label>
+        <%= f.text_field :sector %>
+      </div>
+      <div class="grid-4-12">
+        <label>Turno: <em class="formee-req">*</em></label>
+        <%= f.text_field :turno %>
+      </div>
+
+      <div class="grid-4-12">
+        <label style=" font-weight: bold;">Nivel: </label>
+        <label style=" font-style: italic;"><%= @escuela.nivel_descripcion %></label>
+      </div>
+      <div class="grid-8-12">
+        <label>Modalidad: <em class="formee-req">*</em></label>
+        <%= f.text_field :modalidad %>
+      </div>
+
+      <div class="grid-8-12">
+        <label>Domicilio: <em class="formee-req">*</em></label>
+        <%= f.text_field :domicilio %>
+      </div>
+      <div class="grid-4-12">
+        <label>Telefono: </label>
+        <%= f.text_field :telefono %>
+      </div>
+
+      <div class="grid-8-12">
+        <label>Localidad: <em class="formee-req">*</em></label>
+        <%= f.text_field :localidad %>
+      </div>
+      <div class="grid-4-12">
+        <label>Municipio: <em class="formee-req">*</em></label>
+        <%= f.text_field :municipio %>
+      </div>
+    <% else %>
     <div id="prellenado" style="background:#ebf7aa;">
       <div class="grid-4-12">
         <label style=" font-weight: bold;">Clave:</label>
@@ -61,6 +112,7 @@
         <label style=" font-style: italic;"><%= @escuela.municipio %></label>
       </div>
     </div>
+    <% end %>
     
     <!-- categoria -->
     <div class="grid-6-12">
@@ -167,6 +219,25 @@
   showDescription('escuela_categoria_escuela_id','escuela_categoria_desc');
   showDescription('escuela_programa_id','escuela_programa_desc');
 
+  var nombre = new LiveValidation( 'escuela_nombre', {onlyOnSubmit: true} );
+  nombre.add( Validate.Presence );
+  var zona_escolar = new LiveValidation( 'escuela_zona_escolar', {onlyOnSubmit: true} );
+  zona_escolar.add( Validate.Presence );
+  zona_escolar.add( Validate.Numericality );
+  var sector = new LiveValidation( 'escuela_sector', {onlyOnSubmit: true} );
+  sector.add( Validate.Presence );
+  sector.add( Validate.Numericality );
+  var turno = new LiveValidation( 'escuela_turno', {onlyOnSubmit: true} );
+  turno.add( Validate.Presence );
+  var modalidad = new LiveValidation( 'escuela_modalidad', {onlyOnSubmit: true} );
+  modalidad.add( Validate.Presence );
+  var domicilio = new LiveValidation( 'escuela_domicilio', {onlyOnSubmit: true} );
+  domicilio.add( Validate.Presence );
+  var localidad = new LiveValidation( 'escuela_localidad', {onlyOnSubmit: true} );
+  localidad.add( Validate.Presence );
+  var municipio = new LiveValidation( 'escuela_municipio', {onlyOnSubmit: true} );
+  municipio.add( Validate.Presence );
+
   var categoria_desc = new LiveValidation( 'escuela_categoria_desc', {onlyOnSubmit: true} );
   categoria_desc.add( Validate.Presence );
   var programa_desc = new LiveValidation( 'escuela_programa_desc', {onlyOnSubmit: true} );
@@ -188,10 +259,10 @@
   total_personal_docente.add( Validate.Numericality, { minimum: 1, onlyInteger: true } );
   var total_personal_alumn_m = new LiveValidation( 'escuela_alu_muj');
   total_personal_alumn_m.add( Validate.Presence );
-  total_personal_alumn_m.add( Validate.Numericality, { minimum: 1, onlyInteger: true } );
+  total_personal_alumn_m.add( Validate.Numericality, { minimum: 0, onlyInteger: true } );
   var total_personal_alumn_h = new LiveValidation( 'escuela_alu_hom');
   total_personal_alumn_h.add( Validate.Presence );
-  total_personal_alumn_h.add( Validate.Numericality, { minimum: 1, onlyInteger: true } );
+  total_personal_alumn_h.add( Validate.Numericality, { minimum: 0, onlyInteger: true } );
   var total_personal_admvo = new LiveValidation( 'escuela_total_personal_admvo');
   total_personal_admvo.add( Validate.Presence );
   total_personal_admvo.add( Validate.Numericality, { minimum: 0, onlyInteger: true } );
