@@ -412,5 +412,4 @@ function porcentaje(text_field, text_field2, div, docentes){
     
     valor_porcent.value = Math.round(val,2) +' %';
     valor_div.setAttribute('style', 'width:'+val+'%;');
-    alert("bien");
 }
