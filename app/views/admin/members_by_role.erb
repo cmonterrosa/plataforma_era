@@ -2,51 +2,45 @@
   <p><%=link_to 'Roles', {:action => "show_roles"}, :class => "titulos"%>  <span class="titulos"> >> </span>  <%=link_to "#{@role.descripcion}", {:action => "members_by_role", :id => @role}, :class => "titulos"%></p>
 </div>
 
-<div id="scroll">
-      <table class="sample" width="70%" border="0" cellspacing="0" cellpadding="0" style="color: black; BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid">
-                <tr align="center" class="d0">
-                  <td width="30%" bgcolor="#E8E8E8">USUARIO</td>
-                  <td width="50%" bgcolor="#E8E8E8">NOMBRE DE ESCUELA O USUARIO</td>
-                  <td width="20%" bgcolor="#E8E8E8" colspan="3">ACCIÓN</td>
-                </tr>
-            <!-- Registros -->
-            <% for usuario in @role.users %>
-               <tr align="center" class="d1">
-                  <td  bgcolor="#f3f3f3">
-                      <%=usuario.login%>
-                  </td>
-                  <td  bgcolor="#f3f3f3">
-                     <%=usuario.nombre_full%>
-                  </td>
-                  <td  bgcolor="#f3f3f3">
-                      <%= button_to 'Quitar', { :action => 'delete_user', :controller => "admin", :id => usuario, :role => @role}, :confirm => '¿Esta seguro?', :method => :post %>
-                  </td>
-                </tr>
-              <%end%>
-       </table>
-</div><br /><br /><br />
+  <table class="sample" width="85%" border="0" cellspacing="0" cellpadding="0" style="color: black; BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid">
+    <tr style="background-color:#2E6AB1;color:white;">
+      <th width="30%" >USUARIO</th>
+      <th width="50%" >NOMBRE DE ESCUELA O USUARIO</th>
+      <th width="20%" colspan="3">ACCIÓN</th>
+    </tr>
+    <!-- Registros -->
+    <%clase=0%>
+    
+    <% for usuario in @role.users %>
+    <tr align="center" class="d<%=invert_class(clase)%>">
+      <td  bgcolor="#f3f3f3"><%=usuario.login%></td>
+      <td  bgcolor="#f3f3f3"><%=usuario.nombre_full%></td>
+      <td  bgcolor="#f3f3f3">
+        <%#= button_to 'Quitar', { :action => 'delete_user', :controller => "admin", :id => usuario, :role => @role}, :confirm => '¿Esta seguro?', :method => :post %>
+        <%= link_to image_tag("/images/admin/groupDel.png", :mouseover => "/images/admin/groupDel1.png"), { :action => 'delete_user', :controller => "admin", :id => usuario, :role => @role }, :confirm => 'Estas seguro?', :title => "Quitar del rol", :method => :post%>
+      </td>
+      <%clase = invert_class(clase)%>
+    </tr>
+    <%end%>
+  </table>
+<br />
 
-
-<div id="scroll">
-<% form_tag :action => 'add_user', :role =>@role do -%>
-<table class="sample" width="50%" border="0" cellspacing="2" cellpadding="0" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid">
-      <tr style="background-color:gray; color:white">
-          <th colspan="2">
-              Agregar Usuario
-          </th>
-      </tr>
-
-      <tr class="d1">
-          <th><%= collection_select("user", "user_id", @users, :id, :nombre_full, :prompt => '>> Seleccione usuario')    %></th>
-          <th class="boton"><%= submit_tag "Agregar", :onclick => "return comprobar();" %></th>
-      </tr>
-</table>
+<% form_tag({:action => 'add_user', :role => @role}, {:class => "formee"}) do -%>
+<div class="grid-12-12" style="text-align:center;" >
+<fieldset style="text-align:center;margin:auto;padding:auto;width:50%" >
+  <legend style="font-size:16px;">&nbsp;Agregar&nbsp;usuario&nbsp;al&nbsp;rol&nbsp;de&nbsp;<%=@role.descripcion%></legend>
+  <div class="grid-10-12"><%= collection_select("user", "user_id", @users, :id, :nombre_full, :prompt => ">> Seleccione usuario")%></div>
+  <div class="grid-2-12"><%= image_submit_tag("/images/admin/groupAdd.png", { :style => "border:0;", :onmouseover => "this.src='/images/admin/groupAdd1.png;'", :onmouseout => "this.src='/images/admin/groupAdd.png;'", :title => "Agregar al rol"})%></div>
+</fieldset>
 <% end %>
 </div>
-
-
-
 <br />
 <div class="titulos">
-<%= link_to image_tag("botones/btn_regresar.png", :border =>0) , :controller => "admin", :action => "show_roles"%><br />
+  <%= link_to image_tag("botones/btn_regresar.png", :mouseover => "botones/btn_regresar1.png") , :controller => "admin", :action => "show_roles"%><br />
 </div>
+
+<script type="text/javascript">
+  var user_id = new LiveValidation( 'user_user_id');
+  user_id.add(Validate.Presence, {failureMessage: "Seleccione una opción válida"});
+  <%#*user_id.add( Validate.Exclusion, { within: [ '', "selecciones" ] } );%>
+</script>
