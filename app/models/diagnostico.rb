@@ -5,4 +5,5 @@ class Diagnostico < ActiveRecord::Base
    has_one :consumo
    has_one :participacion
    has_one :huella
+   has_many :adjuntos
 end
