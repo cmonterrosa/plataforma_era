@@ -397,3 +397,20 @@ function showSelectDescriptionR(obj_radio, obj_select, obj_desc, form){
         disableTextarea(desc);
     }
 }
+
+function porcentaje(text_field, text_field2, div, docentes){
+    var val = 0;
+    var doc_total = document.getElementById(docentes);
+    var valor_div = document.getElementById(div);
+    var valor = document.getElementById(text_field);
+//    var valor = text_field;
+    var valor_porcent = document.getElementById(text_field2);
+    
+    if((parseInt(valor.value) > 0) & (parseInt(doc_total.value) >= parseInt(valor.value)) ){
+        val = (parseInt(valor.value) / parseInt(doc_total.value)) * 100;
+    }
+    
+    valor_porcent.value = Math.round(val,2) +' %';
+    valor_div.setAttribute('style', 'width:'+val+'%;');
+    alert("bien");
+}

@@ -486,3 +486,14 @@ table.sample td.d0 {
 table.sample td.d99 {
 	background-color: #FF9900;
 }
+
+input[type="text"].ninguno{
+    background-color: #E6F8E0;
+    border-width: 0;
+    font-size: inherit;
+    font-family:inherit;
+    padding: 0;
+    color: black;
+    width: 40px;
+    text-align: center;
+}

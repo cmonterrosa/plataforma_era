@@ -637,7 +637,8 @@ var Validate = {
     	var wrongNumberMessage = paramsObj.wrongNumberMessage || "Must be " + is + "!";
 //    	var tooLowMessage = paramsObj.tooLowMessage || "Must not be less than " + minimum + "!";
     	var tooLowMessage = paramsObj.tooLowMessage || "No debe ser menor que " + minimum + "!";
-    	var tooHighMessage = paramsObj.tooHighMessage || "Must not be more than " + maximum + "!";
+//    	var tooHighMessage = paramsObj.tooHighMessage || "Must not be more than " + maximum + "!";
+    	var tooHighMessage = paramsObj.tooHighMessage || "No debe ser mayor que " + maximum + " !";
         if (!isFinite(value)) Validate.fail(notANumberMessage);
         if (paramsObj.onlyInteger && (/\.0+$|\.$/.test(String(suppliedValue))  || value != parseInt(value)) ) Validate.fail(notAnIntegerMessage);
     	switch(true){
