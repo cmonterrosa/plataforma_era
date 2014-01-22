@@ -49,13 +49,24 @@ class UploadController < ApplicationController
     @diagnostico = Diagnostico.find(params[:diagnostico]) if params[:diagnostico]
     @eje = params[:eje] if params[:eje]
     @numero_pregunta = params[:numero_pregunta] if params[:numero_pregunta]
+    return render(:partial => 'new_evidencia', :layout => "only_jquery")
+  end
+
+  def list_evidencias
+    @diagnostico = Diagnostico.find(params[:diagnostico]) if params[:diagnostico]
+    @eje = params[:eje] if params[:eje]
+    @numero_pregunta = params[:numero_pregunta] if params[:numero_pregunta]
+    @user = current_user
     @evidencias = Adjunto.find(:all, :conditions => ["user_id = ? AND eje_id = ? and numero_pregunta= ?", @user, @eje, @numero_pregunta])
     unless @evidencias.empty?
       return render(:partial => 'show_evidencia', :layout => "only_jquery")
     else
+       @uploaded_file = Adjunto.new
+       @user = current_user
        return render(:partial => 'new_evidencia', :layout => "only_jquery")
     end
   end
+
 
   def create_evidencia
     @uploaded_file =Adjunto.new(params[:adjunto])
@@ -68,7 +79,9 @@ class UploadController < ApplicationController
     @uploaded_file.numero_pregunta = @numero_pregunta
     @uploaded_file.user_id = current_user.id if current_user
     if @uploaded_file.save
-      return render(:partial => 'carga_evidencia_exitosa', :layout => "only_jquery")
+        flash[:notice] = "Evidencia cargada correctamente"
+        redirect_to :action => "list_evidencias", :diagnostico => @diagnostico, :eje => @eje, :numero_pregunta => @numero_pregunta
+       #return render(:partial => 'list_evidencias', :layout => "only_jquery")
     else
        return render(:partial => 'carga_evidencia_error', :layout => "only_jquery")
     end

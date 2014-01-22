@@ -1,8 +1,27 @@
+ <%if flash[:notice]%>
+            <div class="formee-msg-success">
+              <h3>Operación realizada exitosamente:</h3>
+              <ul>
+                <li><%=flash[:notice]%></li>
+              </ul>
+            </div>
+            <%elsif flash[:error]%>
+            <div class="formee-msg-error">
+              <h3>Error:</h3>
+              <ul>
+                <li><%=flash[:error]%></li>
+              </ul>
+            </div>
+            <%else%>
+            <%#*<p></p>%>
+  <%end%>
+
+
 <div class="container">
   <div class="formee">
     <table align="center" class="subprincipal" width="50%" cellspacing="5" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
       <tr class="tdiagnostico">
-        <td align="center" ><label>DETALLE DE EVIDENCIA DE EJE: <%=@eje%> PREGUNTA: <%=@numero_pregunta%></label></td>
+        <td align="center" ><label>DETALLE DE EVIDENCIAS DE EJE: <%=@eje%> PREGUNTA: <%=@numero_pregunta%></label></td>
       </tr>
     </table>
     <fieldset>
@@ -18,7 +37,7 @@
             <td style="vertical-align: middle;">&nbsp;</td>
           </tr>
           <%contador=1%>
-          <%@evidencias.eacho do |evidencia|%>
+          <%@evidencias.each do |evidencia|%>
             <tr>
               <td style="vertical-align: middle;"><%=contador%></td>
               <td style="vertical-align: middle;"><%=h (evidencia.tipodoc) ? evidencia.tipodoc.descripcion : "---"%></td>
@@ -38,7 +57,7 @@
 
 
     <!-- Cargar otra evidencia -->
-    <% form_for :escuela, @escuela, :url => { :action => "new_evidencia", :controller => "upload", :eje => @eje, :numero_pregunta => @numero_pregunta, :diagnostico => @diagnostico}, :html => { :target => "_blank"} do -%>
+    <% form_for :escuela, @escuela, :url => { :action => "new_evidencia", :controller => "upload", :eje => @eje, :numero_pregunta => @numero_pregunta, :diagnostico => @diagnostico} do -%>
       <%# form_for :escuela, @escuela, :url => { :action => "formato_registro", :controller => "registro", :id => @escuela.clave }, :html => { :target => "_blank"} do -%>
       <div class="grid-center">
         <p id="pdf_link"><input type="submit" title="CARGAR OTRA EVIDENCIA" value="AGREGAR MÁS EVIDENCIAS" /></p>
