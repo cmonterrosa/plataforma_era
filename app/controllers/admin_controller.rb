@@ -230,5 +230,19 @@ class AdminController < ApplicationController
     :filename => "escuelas_ESyS_#{Time.now.strftime("%d-%m-%Y_%I%M_%p")}.csv",
     :disposition => "attachment"
   end
+
+  def verifica_evidencias(diagnostico_id=nil,eje_id=nil)
+    ejes=YAML.load_file("#{RAILS_ROOT}/config/ejes.yml")
+    eje = ejes["eje#{eje_id}"]
+    eje.each do |pregunta|
+      num_pregunta = pregunta.first
+      num_evidencias = Adjunto.count(:id, :conditions => ["diagnostico_id = ? AND eje_id = ? AND numero_pregunta = ?", diagnostico_id, eje_id, num_pregunta])
+      #### Si la pregunta necesita evidencia ###
+      if pregunta.last == true
+        return false if num_evidencias < 1
+      end
+    end
+    return true
+  end
   
 end
