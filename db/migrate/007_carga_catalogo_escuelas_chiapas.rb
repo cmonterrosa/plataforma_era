@@ -30,7 +30,6 @@ class CargaCatalogoEscuelasChiapas < ActiveRecord::Migration
       ## Numero de escuelas para el caso de supervisiones
       add_column :escuelas, :escuelas, :integer
 
-
       ## Indices ###
       add_index :escuelas, :cct_zona, :name => "cct_zona"
       ## Descripcion de nivel
@@ -90,10 +89,10 @@ class CargaCatalogoEscuelasChiapas < ActiveRecord::Migration
      }
 
     #-- Creamos usuario administrador por default
-    usuario = User.new(:login => "esys", :nombre => "Usuario de Certificacion", :email => "esys@sef-chiapas.gob.mx", :password => "adminesys", :password_confirmation => "adminesys")
-    usuario.activated_at = Time.now
-    usuario.roles << Role.find_by_name("adminplat")
-    usuario.save!
+#    usuario = User.new(:login => "esys", :nombre => "Usuario de Certificacion", :email => "esys@sef-chiapas.gob.mx", :password => "adminesys", :password_confirmation => "adminesys")
+#    usuario.activated_at = Time.now
+#    usuario.roles << Role.find_by_name("adminplat")
+#    usuario.save!
   end
 
   def self.down

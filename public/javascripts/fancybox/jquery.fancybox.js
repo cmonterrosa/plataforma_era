@@ -56,7 +56,8 @@
 			padding : 15,
 			margin  : 20,
 
-			width     : 1024,
+//			width     : 1024,
+			width     : 900,
 			height    : 800,
 			minWidth  : 100,
 			minHeight : 100,

@@ -29,7 +29,7 @@ class RegistroController < ApplicationController
       redirect_to :controller => "home"
     end
     @select_ce = selected(@escuela.categoria_escuela) if @escuela.categoria_escuela
-    @select_p = selected(@escuela.programa) if @escuela.programa
+    @s_programas = multiple_selected(@escuela.programas) if @escuela.programas
   end
 
   def menu_reportes

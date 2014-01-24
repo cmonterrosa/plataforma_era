@@ -7,36 +7,55 @@
 
 <table width="90%" border="0" cellspacing="0" cellpadding="0" align="center">
     <tr align="center">
-
+      <td>
+        <div class="grid-3-12">
        <!-- Búsqueda de Escuela -->
-       <td><%=link_to image_tag('admin/escuela.png', :size => "128x128", :mouseover => 'admin/escuela2.png') , {:action => "show_users", :controller => "admin"}, :title => "Mostrar escuelas"%></td
-     
+       <%=link_to image_tag('admin/escuela.png', :size => "128x128", :mouseover => 'admin/escuela2.png') , {:action => "show_users", :controller => "admin"}, :title => "Mostrar escuelas"%>
+       <label style="font-family:verdana;font-size:14px;">Escuelas</label>
+        </div>
        <!-- Perfiles -->
        <%if current_user.has_role?("admin")%>
-          <td><%=link_to image_tag('admin/usuarios.png', :size => "128x128", :size => "128x128", :mouseover => 'admin/usuarios2.png') , {:action => "show_roles", :controller => "admin"}, :title => "Mostrar roles y usuarios"%></td
+       <div class="grid-3-12">
+          <%=link_to image_tag('admin/usuarios.png', :size => "128x128", :size => "128x128", :mouseover => 'admin/usuarios2.png') , {:action => "show_roles", :controller => "admin"}, :title => "Mostrar roles y usuarios"%>
+         <label style="font-family:verdana;font-size:14px;">Perfiles</label>
+       </div>
        <%end%>
+       
        <!-- Perfiles -->
-       <td><%=link_to image_tag('admin/comentarios.png', :size => "128x128", :size => "128x128", :mouseover => 'admin/comentarios2.png') , {:action => "show_comentarios", :controller => "admin"}, :title => "Mostrar comentarios"%></td
-
+       <div class="grid-3-12">
+       <%=link_to image_tag('admin/comentarios.png', :size => "128x128", :size => "128x128", :mouseover => 'admin/comentarios2.png') , {:action => "show_comentarios", :controller => "admin"}, :title => "Mostrar comentarios"%>
+         <label style="font-family:verdana;font-size:14px;">Comentarios</label>
+       </div>
        <!-- Indicadores -->
-       <td><%=link_to image_tag('admin/indicadores.png', :size => "128x128", :mouseover => 'admin/indicadores2.png') , {:action => "indicadores", :controller => "admin"}, :title => "Mostrar indicadores"%></td
-
+       <div class="grid-3-12">
+       <%=link_to image_tag('admin/indicadores.png', :size => "128x128", :mouseover => 'admin/indicadores2.png') , {:action => "indicadores", :controller => "admin"}, :title => "Mostrar indicadores"%>
+         <label style="font-family:verdana;font-size:14px;">Indicadores</label>
+       </div>
         <!-- Listado -->
-       <td><%=link_to image_tag('admin/listado.png', :size => "128x128", :mouseover => 'admin/listado2.png') , {:action => "total_escuelas_registradas", :controller => "admin"}, :title => "Descargar listado de escuelas registradas"%></td
-
+        <div class="grid-3-12">
+       <%=link_to image_tag('admin/listado.png', :size => "128x128", :mouseover => 'admin/listado2.png') , {:action => "total_escuelas_registradas", :controller => "admin"}, :title => "Descargar listado de escuelas registradas"%>
+          <label style="font-family:verdana;font-size:14px;">Listado General de Escuelas</label>
+        </div>
+        <!-- Catalogos -->
+        <div class="grid-3-12">
+       <%=link_to image_tag('admin/catalogos.png', :size => "128x128", :mouseover => 'admin/catalogos1.png') , {:action => "add_comunitaria", :controller => "admin"}, :title => "Catálogos para agregar escuela comunitaria"%>
+          <label style="font-family:verdana;font-size:14px;">Catálogos</label>
+        </div>
+       </td>
 
     </tr>
 
   <!-- TITULOS -->
-  <tr align="center">
-    <td class="menu">Escuelas</td>
-    <%if current_user.has_role?("admin")%>
-      <td class="menu">Perfiles</td>
-    <%end%>
-    <td class="menu">Comentarios</td>
-    <td class="menu">Indicadores</td>
-    <td class="menu">Listado General de Escuelas</td>
-  </tr>
+  <%#*<tr align="center" style="font-family: verdana; font-size: 14px;" >%>
+    <%#*<td>Escuelas</td>%>
+    <%#if current_user.has_role?("admin")%>
+      <%#*<td>Perfiles</td>%>
+    <%#end%>
+    <%#*<td>Comentarios</td>%>
+    <%#*<td>Indicadores</td>%>
+    <%#*<td>Listado General de Escuelas</td>%>
+    <%#*<td><label>Catálogos</label></td>%>
+  <%#*</tr>%>
 </table>
 <br/>
 

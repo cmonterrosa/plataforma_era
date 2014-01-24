@@ -244,5 +244,31 @@ class AdminController < ApplicationController
     end
     return true
   end
-  
+
+  def add_comunitaria
+#    @escuela = Escuela.new
+  end
+
+  def save_comunitaria
+    unless Escuela.find_by_clave(params[:escuela][:clave].strip)
+      @escuela = Escuela.new
+      nivel = Nivel.find_by_descripcion("COMUNITARIA")
+      @escuela.clave = params[:escuela][:clave].strip
+      @escuela.comunitaria = true
+      @escuela.nivel_id = nivel.id
+      @escuela.nivel_descripcion = nivel.descripcion
+
+      if @escuela.save
+        flash[:notice] = "Registro guardado correctamente"
+        redirect_to :controller => "admin"
+      else
+        flash[:error] = "No se pudo guardar, verifique los datos"
+        render :action => "add_comunitaria"
+      end
+    else
+      flash[:error] = "La Clave de escuela ya existe, verifique los datos"
+      render :action => "add_comunitaria"
+    end
+  end
+
 end

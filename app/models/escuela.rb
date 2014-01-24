@@ -4,7 +4,7 @@ class Escuela < ActiveRecord::Base
   has_one :diagnostico
   belongs_to :categoria_escuela
   belongs_to :estatu
-  belongs_to :programa
+  has_and_belongs_to_many :programas, :join_table => 'escuelas_programas'
   belongs_to :nivel
 
 #  def clave_escuela

@@ -407,9 +407,35 @@ function porcentaje(text_field, text_field2, div, docentes){
     var valor_porcent = document.getElementById(text_field2);
     
     if((parseInt(valor.value) > 0) & (parseInt(doc_total.value) >= parseInt(valor.value)) ){
-        val = (parseInt(valor.value) / parseInt(doc_total.value)) * 100;
+//        val = (parseInt(valor.value) / parseInt(doc_total.value)) * 100;
+        val = (parseFloat(valor.value) / parseFloat(doc_total.value)) * 100;
     }
-    
-    valor_porcent.value = Math.round(val,2) +' %';
+
+    if( parseInt(doc_total.value) % (parseInt(valor.value)) == 0 || val == 0)
+        valor_porcent.value = parseInt(val)+' %';
+    else
+        valor_porcent.value = parseFloat(val).toFixed(2) +' %';
+        
+    valor_div.setAttribute('style', 'width:'+val+'%;');
+}
+
+function porcentaje2(text_field, text_field2, div, docentes){
+    var val = 0;
+    var doc_total = document.getElementById(docentes);
+    var valor_div = document.getElementById(div);
+    var valor = document.getElementById(text_field);
+//    var valor = text_field;
+    var valor_porcent = document.getElementById(text_field2);
+
+    if((parseFloat(valor.value) > 0) & (parseFloat(doc_total.value) >= parseFloat(valor.value)) ){
+//        val = (parseInt(valor.value) / parseInt(doc_total.value)) * 100;
+        val = (parseFloat(valor.value) / parseFloat(doc_total.value)) * 100;
+    }
+
+    if(val == 0)
+        valor_porcent.value = parseInt(val)+' %';
+    else
+        valor_porcent.value = parseFloat(val).toFixed(2) +' %';
+
     valor_div.setAttribute('style', 'width:'+val+'%;');
 }

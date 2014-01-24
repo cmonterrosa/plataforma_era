@@ -1,5 +1,5 @@
 <!-- Carga de Evidencias -->
-<div class="container">
+<div class="container" style="width: 70%">
 
 
     <div class="formee-msg-info">
@@ -12,9 +12,9 @@
 
 
 <%form_for(@uploaded_file, :url => {:action => "create_evidencia", :diagnostico => @diagnostico, :eje => @eje, :numero_pregunta => @numero_pregunta}, :html => { :multipart => true, :class => "formee" }) do |f| -%>
-    <fieldset>
+  <fieldset>
 
-    <legend>CARGAR&nbsp;NUEVA&nbsp;EVIDENCIA</legend>
+    <legend>Cargar&nbsp;Nueva&nbsp;Evidencia</legend>
 
     <div class="grid-form">
       <label>Tipo de archivo: <em class="formee-req">*</em></label>
@@ -52,3 +52,14 @@
   </fieldset>
 <%end%>
 </div>
+
+<script type="text/javascript">
+  var tipodoc_id = new LiveValidation( 'adjunto_tipodoc_id', {onlyOnSubmit: true} );
+  tipodoc_id.add( Validate.Presence );
+
+  var inputfile = new LiveValidation( 'adjunto_inputfile', {onlyOnSubmit: true} );
+  inputfile.add( Validate.Presence );
+
+  var descripcion = new LiveValidation( 'adjunto_descripcion', {onlyOnSubmit: true} );
+  descripcion.add( Validate.Presence );
+</script>

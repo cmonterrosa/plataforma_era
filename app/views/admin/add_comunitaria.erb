@@ -1,0 +1,41 @@
+<div class="container">
+  <div class="formee-msg-info">
+    <h3>Información importante</h3>
+    <ul>
+      <li>Los campos marcados con <em class="formee-req">*</em> son obligatorios.</li>
+    </ul>
+  </div>
+
+  <% form_for :escuela, :url => { :action => "save_comunitaria" }, :html => {:class => "formee", :name => "escuela"} do |f| -%>
+  <fieldset style="margin:0px;padding:0px;">
+    <legend style="font-size:18px;">Agregar&nbsp;Escuela&nbsp;Comunitaria</legend>
+
+   
+    <div class="grid-12-12 clear"></div>
+
+    <div class="grid-4-12"></div>
+    <div class="grid-4-12">
+      <label>Clave de la Escuela: <em class="formee-req">*</em></label>
+      <%= f.text_field :clave %>
+    </div>
+    
+    <div class="grid-12-12 clear"></div>
+
+    <div class="grid-4-12"></div>
+    <div class="grid-2-12">
+      <input class="right" type="submit" onclick="to_uppercase();" title="GUARDAR" value="GUARDAR" />
+    </div>
+    <div class="grid-2-12">
+      <a href="/admin"><input class="right" type="button" title="CANCELAR" value="CANCELAR" /></a>
+    </div>
+
+    <div class="grid-12-12 clear"></div>
+  </fieldset>
+
+  <%end%>
+</div>
+
+<script type="text/javascript">
+  var clave = new LiveValidation( 'escuela_clave', {onlyOnSubmit: true} );
+  clave.add( Validate.Presence );
+</script>

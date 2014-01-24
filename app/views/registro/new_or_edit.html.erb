@@ -1,1 +1,5 @@
-<%= render :partial => "informacion_escuela"%>
+<% if @escuela.comunitaria %>
+  <%= render :partial => "informacion_escuela_comunitaria"%>
+<% else %>
+  <%= render :partial => "informacion_escuela"%>
+<% end %>

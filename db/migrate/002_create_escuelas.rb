@@ -19,7 +19,7 @@ class CreateEscuelas < ActiveRecord::Migration
         t.string :telefono_director, :limit => 100
         t.string :email, :limit => 90
         t.string :nombre_proyecto, :limit => 200
-        t.string :responsables_proyecto, :limit => 300
+        t.string :responsables_proyecto, :limit => 80
         t.string :tel_responsable_proyecto, :limit => 16
         t.string :email_responsable_proyecto, :limit => 90
         t.string :region, :limit => 90

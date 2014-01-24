@@ -2,193 +2,162 @@
 
 <% form_for :entorno, @entorno, :url => { :action => "save", :id => @entorno, :diagnostico => @diagnostico.id }, :html => {:class => "formee", :id => "entorno"} do |f| -%>
 <table class="principal" width="100%" border="0" align="center" cellpadding="2" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
-  <tr bgcolor="#003366" style="opacity: 0.7;">
+  <tr bgcolor="#003366" style="opacity: 0.7;" >
     <td align="center"><h4>EJE 2: ENTORNO SALUDABLE</h4></td>
   </tr>
   <tr align="center">
     <td align="center">
       <table class="subprincipal" width="100%" border="0" cellpadding="4" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
         <tr>
-          <td width="49%" align="justify"><label>¿Existen áreas verdes en la escuela?<em class="formee-req"> *</em></label></td>
-          <td>&nbsp;</td>
-          <td width="49%" align="justify"><label>¿Las áreas verdes se encuentran en buen estado?<em class="formee-req"> *</em></label></td>
-        </tr>
-        <tr>
-          <td align="center">
-            <span id="r_areas_verdes_esc" class="InputGroup">
-              <label>SI <%= f.radio_button :exist_areas_verde, "SI", :onclick => "showSelectDescription(this, 'areas_verdes', 'entorno_areas_verdes_esc_desc');" %></label>&nbsp;&nbsp;
-              <label>NO <%= f.radio_button :exist_areas_verde, "NO", :onclick => "showSelectDescription(this, 'areas_verdes', 'entorno_areas_verdes_esc_desc');" %> </label>
-            </span>
-            <select id="areas_verdes" size="3" name="areas_verdes[]" multiple="multiple" style=" display: none;" disabled="disabled" onchange="showSelectDescription('entorno_exist_areas_verde', this,'entorno_areas_verdes_esc_desc')">
-              <%= options_from_collection_for_select(AreasVerde.all, :clave, :descripcion, @s_area_verde)%>
-            </select>
-            <%=f.text_area :areas_verdes_esc_desc, :placeholder => "Especifique...", :disabled => 'disabled', :style => "display: none;" %>
+          <td width="49%" align="justify" style="vertical-align:top;" >
+            <!-- Línea Pregunta -->
+            <div class="grid-12-12">
+              <label>¿Cuál es la superficie total del terreno de la escuela en metros cuadrados?<em class="formee-req"> *</em></label>
+            </div>
+            <!-- Línea campo -->
+            <div class="grid-12-12">
+              <div class="grid-5-12"></div>
+              <div class="grid-2-12">
+                <%= f.text_field :superficie_terreno_escuela, :onkeyup => ""%>
+              </div>
+              <label style="padding: 10px 0;" >M<sup>2</sup></label>
+            </div>
           </td>
           <td>&nbsp;</td>
-          <td align="center">
-            <span id="r_edo_areas_verdes" class="InputGroup">
-            <label>SI <%= f.radio_button :edo_areas_verdes, "SI", :onclick => "showTextarea(this, 'entorno_edo_areas_verdes_desc');" %></label>&nbsp;&nbsp;
-            <label>NO <%= f.radio_button :edo_areas_verdes, "NO", :onclick => "showTextarea(this, 'entorno_edo_areas_verdes_desc');" %></label>
-            </span>
-            <%=f.text_area :edo_areas_verdes_desc, :placeholder => "Especifique...", :disabled => 'disabled', :style => "display: none;" %>
-          </td>
-        </tr>
-        <tr>
-        <td colspan="3">&nbsp;</td>
-        </tr>
-        <tr>
-          <td width="49%" align="justify"><label>¿Se llevan a cabo actividades para el cuidado, preservación y reforestación de las áreas verdes?<em class="formee-req"> *</em></label></td>
-          <td>&nbsp;</td>
-          <td width="49%" align="justify"><label>¿La escuela adopta áreas verdes?<em class="formee-req"> *</em></label></td>
-        </tr>
-        <tr>
-          <td align="center" >
-            <span id="r_cuidado_preserv_reforest" class="InputGroup">
-              <label>SI <%= f.radio_button :act_areas_verde, "SI", :onclick => "showSelectDescription(this, 'actividads', 'entorno_cuidado_preserv_reforest_desc');" %></label>&nbsp;&nbsp;
-              <label>NO <%= f.radio_button :act_areas_verde, "NO", :onclick => "showSelectDescription(this, 'actividads', 'entorno_cuidado_preserv_reforest_desc');" %> </label>
-            </span>
-            <select id="actividads" size="4" name="actividads[]" multiple="multiple" style=" display: none;" disabled="disabled" onchange="showSelectDescription('entorno_act_areas_verde', this,'entorno_cuidado_preserv_reforest_desc')">
-              <%= options_from_collection_for_select(Actividad.all, :clave, :descripcion, @s_actividad)%>
-            </select>
-            <%=f.text_area :cuidado_preserv_reforest_desc, :placeholder => "Especifique...", :disabled => 'disabled', :style => "display: none;" %>
-          </td>
-          <td>&nbsp;</td>
-          <td align="center">
-            <span id="r_adopta_areas_verdes" class="InputGroup">
-            <label>SI <%= f.radio_button :adopta_areas_verdes, "SI", :onclick => "showTextarea(this, 'entorno_adopta_areas_verdes_desc');"  %></label>&nbsp;&nbsp;
-            <label>NO <%= f.radio_button :adopta_areas_verdes, "NO", :onclick => "showTextarea(this, 'entorno_adopta_areas_verdes_desc');" %></label>
-            </span>
-            <%=f.text_area :adopta_areas_verdes_desc, :placeholder => "Especifique...", :disabled => 'disabled', :style => "display: none;" %>
-          </td>
-        </tr>
-        <tr>
-        <td colspan="3">&nbsp;</td>
-        </tr>
-        <tr>
-          <td width="49%" align="justify"><label>¿La institución educativa promueve el cuidado de la salud en la comunidad escolar?<em class="formee-req"> *</em></label></td>
-          <td>&nbsp;</td>
-          <td width="49%" align="justify"><label>¿La escuela promueve la activavión de la cartilla de salud?<em class="formee-req"> *</em></label></td>
-        </tr>
-        <tr>
-          <td align="center">
-            <span id="r_prom_cuidado_salud" class="InputGroup">
-              <label>SI <%= f.radio_button :prom_cuidado_salud, "SI", :onclick => "showSelectDescription(this, 'cuidado_saluds', 'entorno_prom_cuidado_salud_desc');" %></label>&nbsp;&nbsp;
-              <label>NO <%= f.radio_button :prom_cuidado_salud, "NO", :onclick => "showSelectDescription(this, 'cuidado_saluds', 'entorno_prom_cuidado_salud_desc');" %> </label>
-            </span>
-            <select id="cuidado_saluds" size="4" name="cuidado_saluds[]" multiple="multiple" style=" display: none;" disabled="disabled" onchange="showSelectDescription('entorno_prom_cuidado_salud', this,'entorno_prom_cuidado_salud_desc')">
-              <%= options_from_collection_for_select(CuidadoSalud.all, :clave, :descripcion, @s_cuidado_salud)%>
-            </select>
-            <%= f.text_area :prom_cuidado_salud_desc, :placeholder => "Especifique...", :disabled => 'disabled', :style => "display: none;" %>
-          </td>
-          <td>&nbsp;</td>
-          <td align="center">
-            <span id="r_prom_act_cartilla" class="InputGroup">
-            <label>SI <%= f.radio_button :prom_act_cartilla, "SI", :onclick => "showTextarea(this, 'entorno_prom_act_cartilla_desc');" %></label>&nbsp;&nbsp;
-            <label>NO <%= f.radio_button :prom_act_cartilla, "NO", :onclick => "showTextarea(this, 'entorno_prom_act_cartilla_desc');" %></label>
-            </span>
-            <%= f.text_area :prom_act_cartilla_desc, :placeholder => "Especifique...", :disabled => 'disabled', :style => "display: none;" %>
+          <td width="49%" align="justify">
+            <!-- Línea pregunta -->
+            <div class="grid-12-12">
+              <label>¿Qué superficie (mts. cuadrados) de la escuela se destina para áreas verdes? (Se considera áreas verdes al "espacio cubierto por vegetación. Un bosque, un parque y el jardín de una escuela son ejemplos de áreas verdes. Estos espacios brindan beneficios tanto al ambiente en el que se encuentran como a las personas localizadas cerca de ellos"). <em class="formee-req"> *</em></label>
+              <label>Rangos: 0 en adelante.</label><br />
+              <label>Posibles áreas verdes:</label><br />
+              <ul class="formee-lbl-vinetas" >
+                <li>Jardín de ornato</li>
+                <li>Jardín de césped</li>
+                <li>Jardín herbal</li>
+                <li>Jardín de macetas</li>
+                <li>Jardín vertical (paredes verdes)</li>
+                <li>Jardín hidropónico</li>
+                <li>Jardin de suelo elevado</li>
+                <li>Parcelas</li>
+                <li>Huerto escolar</li>
+              </ul>
+            </div>
+            <!-- Línea barra porcentaje -->
+            <div class="grid-12-12">
+              <div class="grid-2-12">Porcentaje:</div>
+              <div class="grid-8-12">
+                <div class="bar_mortice rounded_tiny mortice_tiny green_mortice">
+                  <div id="bar_docentes_aplican_conocimientos" class="progress rounded_tiny progress_tiny green"></div>
+                </div>
+              </div>
+              <div class="grid-2-12"><%= text_field :porcentaje, :docentes_aplican_conocimientos, :class => "ninguno", :disabled => "disabled", :value => :porcentaje_docentes_aplican_conocimientos? ? '0 %': :porcentaje_docentes_aplican_conocimientos %></div>
+            </div>
+            <!-- Línea campo -->
+            <div class="grid-12-12">
+              <div class="grid-2-12"></div>
+              <div class="grid-2-12">
+                <%= f.text_field :superficie_terreno_escuela_av, :onkeyup => "porcentaje2('entorno_superficie_terreno_escuela_av', 'porcentaje_docentes_aplican_conocimientos', 'bar_docentes_aplican_conocimientos', 'entorno_superficie_terreno_escuela');" %>
+              </div>
+              <div class="grid-2-12">
+                <label style="padding: 10px 0;">M<sup>2</sup></label>
+              </div>
+              <%=link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta2", :id => "pregunta2"),
+                                                              {:controller => "upload", :diagnostico => @diagnostico, :eje => 2, :numero_pregunta => 2, :action => "new_evidencia" },
+                                                              :title => "EVIDENCIA DE LA PREGUNTA 2", :class => "fancybox fancybox.iframe"%>
+              <%= text_field :verifica, :pregunta2, :class => "ninguno", :style => "width:15px;", :disabled => "disabled", :value => :verifica_pregunta2? ? '0': :verifica_pregunta2 %> Archivo(s) cargado(s)
+              <div class="grid-6-12"></div>
+            </div>
           </td>
         </tr>
         <tr>
-        <td colspan="3">&nbsp;</td>
+          <td colspan="3" >&nbsp;</td>
         </tr>
         <tr>
-          <td width="49%" align="justify"><label>¿La escuela propicia la participación del Sector Salud en temas relacionados al cuidado de la salud?<em class="formee-req"> *</em></label></td>
-          <td>&nbsp;</td>
-          <td width="49%" align="justify"><label>¿La escuela promueve la activación física en la comunidad educativa?<em class="formee-req"> *</em></label></td>
-        </tr>
-        <tr>
-          <td align="center">
-            <span id="r_prom_sector_salud" class="InputGroup">
-              <label>SI <%= f.radio_button :part_sector_salud, "SI", :onclick => "showSelectDescription(this, 'sector_saluds', 'entorno_part_sector_salud_desc');" %></label>&nbsp;&nbsp;
-              <label>NO <%= f.radio_button :part_sector_salud, "NO", :onclick => "showSelectDescription(this, 'sector_saluds', 'entorno_part_sector_salud_desc');" %> </label>
-            </span>
-            <select id="sector_saluds" size="5" name="sector_saluds[]" multiple="multiple" style=" display: none;" disabled="disabled" onchange="showSelectDescription('entorno_part_sector_salud', this,'entorno_part_sector_salud_desc')">
-              <%= options_from_collection_for_select(SectorSalud.all, :clave, :descripcion, @s_sector_salud)%>
-            </select>
-            <%= f.text_area :part_sector_salud_desc, :placeholder => "Especifique...", :disabled => 'disabled', :style => "display: none;" %>
+          <td width="49%" align="justify" style=" vertical-align:top;" >
+            <!-- Línea pregunta -->
+            <div class="grid-12-12">
+              <label>¿Cuántos árboles adultos se encuentran dentro del terreno de la escuela?<em class="formee-req"> *</em></label>
+            </div>
+            <div class="grid-12-12">
+              <label class="formee-msg-info">
+                Para que un árbol sea considerado adulto, debe contar con una altura no menor a 4 metros y erguirse de un solo tronco.
+              </label>
+            </div>
+            <!-- Línea campo -->
+            <div class="grid-12-12">
+              <div class="grid-5-12"></div>
+              <div class="grid-2-12">
+                <%= f.text_field :arboles_terreno_escuela, :onkeyup => "" %>
+              </div>
+            </div>
           </td>
           <td>&nbsp;</td>
-          <td align="center">
-            <span id="r_prom_act_fisica" class="InputGroup">
-            <label>SI <%= f.radio_button :prom_act_fisica, "SI", :onclick => "showTextarea(this, 'entorno_prom_act_fisica_desc');" %></label>&nbsp;&nbsp;
-            <label>NO <%= f.radio_button :prom_act_fisica, "NO", :onclick => "showTextarea(this, 'entorno_prom_act_fisica_desc');" %></label>
-            </span>
-            <%= f.text_area :prom_act_fisica_desc, :placeholder => "Especifique...", :disabled => 'disabled', :style => "display: none;" %>
+          <td width="49%" align="justify">
+            <!-- Liíne pregunta -->
+            <div class="grid-12-12">
+              <label>Del <a class="notchange" href="/Manual_de_Salud.pdf" target="_blank"><b>Manual de Salud</b></a> ¿Cuáles de las acciones con relación a los ejes de acción (Desarrollo de competencias para la modificación de los determinantes de la salud; promoción de entornos seguros y favorables para la salud de los escolares; participación social en la escuela; accesos a los servicios públicos de salud) realiza la institución educativa para promover el cuidado de la salud en la comunidad escolar?<em class="formee-req"> *</em></label>
+              <%#*<ul class="formee-lbl-vinetas">%>
+                <%#*<li>1. Enriquecimiento de los contenidos curriculares.</li>%>
+                <%#*<li>2. Aprovechamiento del currículo.</li>%>
+                <%#*<li>3. Formación docente.</li>%>
+                <%#*<li>4. Actividades extracurriculares.</li>%>
+                <%#*<li>5. Elaboración de materiales.</li>%>
+                <%#*<li>6. Diseño de estrategias diversificadas.</li>%>
+                <%#*<li>7. Capacitación de padres de familia.</li>%>
+                <%#*<li>8. Consejos escolares de participación social.</li>%>
+                <%#*<li>9. Formación de redes.</li>%>
+                <%#*<li>10. Trabajo con comunidad.</li>%>
+                <%#*<li>11. Coordinación, vinculación interinstitucional (asociaciones civiles, otros sectores, autoridades estatales.</li>%>
+                <%#*<li>12. Proyecto escolar.</li>%>
+                <%#*<li>13. Orientación y asesoría.</li>%>
+                <%#*<li>14. Uso y manejo de la cartilla nacional de vacunación.</li>%>
+                <%#*<li>15. Referencia y contrareferencia.</li>%>
+                <%#*<li>16. Detección gruesa del estado de salud de los alumnos.</li>%>
+                <%#*<li>17. Satisfactores materiales y emocionales.</li>%>
+                <%#*<li>18. Resolución de conflictos.</li>%>
+                <%#*<li>19. Responsabilidad compartida.</li>%>
+                <%#*<li>20. Relcaiones democráticas y solidarias.</li>%>
+                <%#*<li>21. Actividades artísticas y deportivas.</li>%>
+                <%#*<li>22. Prevención de riesgo.</li>%>
+                <%#*<li>23. Desarrollo armónico.</li>%>
+                <%#*<li>24. Mejoramientos de espacios, ambiente natural e infraestructura.</li>%>
+              <%#*</ul>%>
+            </div>
+            <div class="grid-12-12">
+              <label class="formee-msg-info">
+                Consultar manual de salud: Manual para el maestro del programa Escuela y Salud. Enfoque actual del programa: Determinantes de la salud, página 42 - 45.
+              </label>
+            </div>
+            <!-- Línea barra porcentaje -->
+            <div class="grid-12-12">
+              <div class="grid-2-12">Porcentaje:</div>
+              <div class="grid-8-12">
+                <div class="bar_mortice rounded_tiny mortice_tiny green_mortice">
+                  <div id="bar_alumnos_capacitados_docentes" class="progress rounded_tiny progress_tiny green"></div>
+                </div>
+              </div>
+              <input id="val_max_alu" name="val_max_alu" type="hidden" value="" />
+              <div class="grid-2-12"><%= text_field :porcentaje, :alumnos_capacitados_docentes, :class => "ninguno", :disabled => "disabled", :value => :porcentaje_porcentaje_alumnos_capacitados_docentes? ? '0 %': :porcentaje_porcentaje_alumnos_capacitados_docentes %></div>
+            </div>
+            <!-- Línea campo -->
+            <div class="grid-12-12">
+              <label>Acciones:</label>
+              <div style="overflow:auto; width:400px;">
+              <select id="acciones" name="acciones[]" multiple="multiple" size="10" style="width:auto;">
+                <%= options_from_collection_for_select(Accione.find(:all), :clave, :descripcion, @s_acciones)%>
+              </select>
+              </div>
+            </div>
+            <div class="grid-4-12"></div>
+              <%=link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta4", :id => "pregunta4"),
+                                                              {:controller => "upload", :diagnostico => @diagnostico, :eje => 2, :numero_pregunta => 4, :action => "new_evidencia" },
+                                                              :title => "EVIDENCIA DE LA PREGUNTA 4", :class => "fancybox fancybox.iframe"%>
+              <%= text_field :verifica, :pregunta4, :class => "ninguno", :style => "width:15px;", :disabled => "disabled", :value => :verifica_pregunta4? ? '0': :verifica_pregunta4 %> Archivo(s) cargado(s)
           </td>
-        </tr>
-        <tr>
-          <td colspan="3">&nbsp;</td>
-        </tr>
-        <tr>
-          <td width="49%" align="justify"><label>¿El tiempo destinado para la activación física escolar es el sugerido  en los programas educativos?<em class="formee-req"> *</em></label></td>
-          <td>&nbsp;</td>
-          <td width="49%" align="justify"><label>¿El tipo de suelo es el apropiado para siembra de árboles o cultivo de hortalizas?<em class="formee-req"> *</em></label></td>
-        </tr>
-        <tr>
-          <td align="center">
-            <span id="r_tiempo_act_fisica" class="InputGroup">
-            <label>SI <%= f.radio_button :tiempo_act_fisica, "SI", :onclick => "showTextarea(this, 'entorno_tiempo_act_fisica_desc');" %></label>&nbsp;&nbsp;
-            <label>NO <%= f.radio_button :tiempo_act_fisica, "NO", :onclick => "showTextarea(this, 'entorno_tiempo_act_fisica_desc');" %></label>
-            </span>
-            <%= f.text_area :tiempo_act_fisica_desc, :placeholder => "Especifique...", :disabled => 'disabled', :style => "display: none;" %>
-          </td>
-          <td>&nbsp;</td>
-          <td align="center">
-            <span id="r_tipo_suelo" class="InputGroup">
-            <label>SI <%= f.radio_button :tipo_suelo, "SI", :onclick => "showTextarea(this, 'entorno_tipo_suelo_desc');" %></label>&nbsp;&nbsp;
-            <label>NO <%= f.radio_button :tipo_suelo, "NO", :onclick => "showTextarea(this, 'entorno_tipo_suelo_desc');" %></label>
-            </span>
-            <%= f.text_area :tipo_suelo_desc, :placeholder => "Especifique...", :disabled => 'disabled', :style => "display: none;" %>
-          </td>
-        </tr>
-        <tr>
-          <td colspan="3">&nbsp;</td>
-        </tr>
-        <tr>
-          <td width="49%" align="justify"><label>¿La escuela cuenta con espacio físico para la reforestación, preparación de jardines o huertos escolares?<em class="formee-req"> *</em></label></td>
-          <td>&nbsp;</td>
-          <td width="49%" align="justify"><label>¿En los alrededores o espacios anexos a la escuela se cuenta con áreas verdes?<em class="formee-req"> *</em></label></td>
-        </tr>
-        <tr>
-          <td align="center">
-            <span id="r_esc_espacio_fisico" class="InputGroup">
-            <label>SI <%= f.radio_button :esc_espacio_fisico, "SI", :onclick => "showTextarea(this, 'entorno_esc_espacio_fisico_desc');" %></label>&nbsp;&nbsp;
-            <label>NO <%= f.radio_button :esc_espacio_fisico, "NO", :onclick => "showTextarea(this, 'entorno_esc_espacio_fisico_desc');" %></label>
-            </span>
-            <%= f.text_area :esc_espacio_fisico_desc, :placeholder => "Especifique...", :disabled => 'disabled', :style => "display: none;" %>
-          </td>
-          <td>&nbsp;</td>
-          <td align="center">
-            <span id="r_alrededores_cuenta_av" class="InputGroup">
-            <label>SI <%= f.radio_button :alrededores_cuenta_av, "SI", :onclick => "showTextarea(this, 'entorno_alrededores_cuenta_av_desc');" %></label>&nbsp;&nbsp;
-            <label>NO <%= f.radio_button :alrededores_cuenta_av, "NO", :onclick => "showTextarea(this, 'entorno_alrededores_cuenta_av_desc');" %></label>
-            </span>
-            <%= f.text_area :alrededores_cuenta_av_desc, :placeholder => "Especifique...", :disabled => 'disabled', :style => "display: none;" %>
-          </td>
-        </tr>
-        <tr>
-          <td colspan="3">&nbsp;</td>
-        </tr>
-        <tr>
-          <td width="49%" align="justify"><label>¿El aire que se respira se considera libre de contaminantes?<em class="formee-req"> *</em></label></td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-        </tr>
-        <tr>
-          <td align="center">
-            <span id="r_aire_libre_contam" class="InputGroup">
-            <label>SI <%= f.radio_button :aire_libre_contam, "SI", :onclick => "showTextarea(this, 'entorno_aire_libre_contam_desc');" %></label>&nbsp;&nbsp;
-            <label>NO <%= f.radio_button :aire_libre_contam, "NO", :onclick => "showTextarea(this, 'entorno_aire_libre_contam_desc');" %></label>
-            </span>
-            <%= f.text_area :aire_libre_contam_desc, :placeholder => "Especifique...", :disabled => 'disabled', :style => "display: none;" %>
-          </td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
         </tr>
       </table>
     </td>
-  </tr>
+  </tr>            
   <tr>
     <td colspan="3">&nbsp;</td>
   </tr>
@@ -213,68 +182,23 @@
 <% end %>
 
 <script type="text/javascript">
-showSelectDescription('entorno_exist_areas_verde', 'areas_verdes','entorno_areas_verdes_esc_desc');
-showTextarea('entorno_edo_areas_verdes', 'entorno_edo_areas_verdes_desc');
-showSelectDescription('entorno_act_areas_verde', 'actividads','entorno_cuidado_preserv_reforest_desc');
-showTextarea('entorno_adopta_areas_verdes', 'entorno_adopta_areas_verdes_desc');
-showSelectDescription('entorno_prom_cuidado_salud', 'cuidado_saluds','entorno_prom_cuidado_salud_desc');
-showTextarea('entorno_prom_act_cartilla','entorno_prom_act_cartilla_desc');
-showSelectDescription('entorno_part_sector_salud', 'sector_saluds','entorno_part_sector_salud_desc');
-showTextarea('entorno_prom_act_fisica','entorno_prom_act_fisica_desc');
-showTextarea('entorno_tiempo_act_fisica', 'entorno_tiempo_act_fisica_desc');
-showTextarea('entorno_tipo_suelo','entorno_tipo_suelo_desc');
-showTextarea('entorno_esc_espacio_fisico','entorno_esc_espacio_fisico_desc');
-showTextarea('entorno_alrededores_cuenta_av','entorno_alrededores_cuenta_av_desc');
-showTextarea('entorno_aire_libre_contam','entorno_aire_libre_contam_desc');
+  <%#*porcentaje('competencia_docentes_capacitados_sma', 'porcentaje_docentes_capacitados_sma', 'bar_docentes_capacitados_sma', 'val_max_doc');%>
+  <%#*porcentaje('competencia_docentes_aplican_conocimientos', 'porcentaje_docentes_aplican_conocimientos', 'bar_docentes_aplican_conocimientos', 'val_max_doc');%>
 
-var areas_verdes_esc_desc = new LiveValidation( 'entorno_areas_verdes_esc_desc', {onlyOnSubmit: true} );
-areas_verdes_esc_desc.add( Validate.Presence );
-var edo_areas_verde_desc = new LiveValidation( 'entorno_edo_areas_verdes_desc', {onlyOnSubmit: true} );
-edo_areas_verde_desc.add( Validate.Presence );
-var cuidado_preserv_reforest_desc = new LiveValidation( 'entorno_cuidado_preserv_reforest_desc', {onlyOnSubmit: true} );
-cuidado_preserv_reforest_desc.add( Validate.Presence );
-var adopta_areas_verdes_desc = new LiveValidation( 'entorno_adopta_areas_verdes_desc', {onlyOnSubmit: true} );
-adopta_areas_verdes_desc.add( Validate.Presence );
-var prom_cuidado_salud_desc = new LiveValidation( 'entorno_prom_cuidado_salud_desc', {onlyOnSubmit: true} );
-prom_cuidado_salud_desc.add( Validate.Presence );
-var prom_cuidado_salud_desc = new LiveValidation( 'entorno_prom_act_cartilla_desc', {onlyOnSubmit: true} );
-prom_cuidado_salud_desc.add( Validate.Presence );
-var part_sector_salud_desc = new LiveValidation( 'entorno_part_sector_salud_desc', {onlyOnSubmit: true} );
-part_sector_salud_desc.add( Validate.Presence );
-var prom_act_fisica_desc = new LiveValidation( 'entorno_prom_act_fisica_desc', {onlyOnSubmit: true} );
-prom_act_fisica_desc.add( Validate.Presence );
-var tiempo_act_fisica_desc = new LiveValidation( 'entorno_tiempo_act_fisica_desc', {onlyOnSubmit: true} );
-tiempo_act_fisica_desc.add( Validate.Presence );
-var tipo_suelo_desc = new LiveValidation( 'entorno_tipo_suelo_desc', {onlyOnSubmit: true} );
-tipo_suelo_desc.add( Validate.Presence );
-var esc_espacio_fisico_desc = new LiveValidation( 'entorno_esc_espacio_fisico_desc', {onlyOnSubmit: true} );
-esc_espacio_fisico_desc.add( Validate.Presence );
-var alrededores_cuenta_av_desc = new LiveValidation( 'entorno_alrededores_cuenta_av_desc', {onlyOnSubmit: true} );
-alrededores_cuenta_av_desc.add( Validate.Presence );
-var aire_libre_contam_desc = new LiveValidation( 'entorno_aire_libre_contam_desc', {onlyOnSubmit: true} );
-aire_libre_contam_desc.add( Validate.Presence );
+  var superficie_terreno_escuela = new LiveValidation( 'entorno_superficie_terreno_escuela' );
+  superficie_terreno_escuela.add( Validate.Presence );
+  superficie_terreno_escuela.add( Validate.Numericality );
 
-jQuery(function(){
-  jQuery("#r_areas_verdes_esc").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
-  jQuery("#r_edo_areas_verdes").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
-  jQuery("#r_cuidado_preserv_reforest").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
-  jQuery("#r_adopta_areas_verdes").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
-  jQuery("#r_prom_cuidado_salud").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
-  jQuery("#r_prom_act_cartilla").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
-  jQuery("#r_prom_sector_salud").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
-  jQuery("#r_prom_act_fisica").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
-  jQuery("#r_tiempo_act_fisica").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
-  jQuery("#r_tipo_suelo").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
-  jQuery("#r_esc_espacio_fisico").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
-  jQuery("#r_alrededores_cuenta_av").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
-  jQuery("#r_aire_libre_contam").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
-});
+  var superficie_terreno_escuela_av = new LiveValidation( 'entorno_superficie_terreno_escuela_av' );
+  superficie_terreno_escuela_av.add( Validate.Presence );
+  superficie_terreno_escuela_av.add( Validate.Numericality, { maximum: parseFloat(document.getElementById("entorno_superficie_terreno_escuela").value) }  );
 
-<%#*window.onload = function(){%>
-  <%#*document.getElementById('competencia').onsubmit = function(){%>
-    <%#*multipleSelects = ["csaluds", "cmambientes", "pedagogicas", "tambientals", "pedagogicas", "cactividads", "saludmas"];%>
-    <%#*if(verifySelects(multipleSelects))%>
-      <%#*return false;%>
-  <%#*}%>
-<%#*};%>
+  var arboles_terreno_escuela = new LiveValidation( 'entorno_arboles_terreno_escuela' );
+  arboles_terreno_escuela.add( Validate.Presence );
+  arboles_terreno_escuela.add( Validate.Numericality, {onlyInteger: true} );
+
+  var m_acciones = new LiveValidation( 'acciones', {onlyOnSubmit: true} );
+  m_acciones.add( Validate.Presence );
+  m_acciones.add( Validate.Exclusion, { within: [ '' , ' ' ] } );
+  
 </script>
