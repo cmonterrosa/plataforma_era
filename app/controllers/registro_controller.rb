@@ -43,7 +43,13 @@ class RegistroController < ApplicationController
     @escuela.programa_desc = '' unless params[:escuela][:programa_desc]
     @escuela.update_attributes(params[:escuela])
     @escuela.categoria_escuela = CategoriaEscuela.find_by_clave(params[:escuela][:categoria_escuela_id]) if params[:escuela][:categoria_escuela_id]
-    @escuela.programa = Programa.find_by_clave(params[:escuela][:programa_id]) if params[:escuela][:programa_id]
+
+    if params[:programas]
+      @programas = []
+      params[:programas].each { |op| @programas << Programa.find_by_clave(op)  }
+      @escuela.programas = Programa.find(@programas)
+    end
+
     if @escuela.save
       @escuela.update_bitacora!("esc-datos", current_user)
       flash[:notice] = "Registro guardado correctamente"
@@ -68,7 +74,7 @@ class RegistroController < ApplicationController
       redirect_to :controller => "home"
     end
     @select_ce = selected(@escuela.categoria_escuela) if @escuela.categoria_escuela
-    @select_p = selected(@escuela.programa) if @escuela.programa
+    @s_programas = multiple_selected(@escuela.programas) if @escuela.programas
   end
   
   private

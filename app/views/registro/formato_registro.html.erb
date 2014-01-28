@@ -65,10 +65,22 @@
           <div class="grid-12-12 clear"></div>
           <div class="grid-6-12">
             <label>La institución educativa participa en algún programa: ¿Cúal?<em class="formee-req">*</em></label>
-            <%= f.text_field :programa_id, :value => @escuela.programa.descripcion, :class => "rpt" %>
+            <% @descripcion = [] %>
+            <% @s_programas.each do |selected| %>
+            <% @selecion = Programa.find_by_clave(selected)%>
+            <% @descripcion.empty? ? @descripcion << "" : @descripcion << " , "%>
+            <% @descripcion << @selecion.descripcion %>
+            <%#*<div style="overflow:auto; width:370px;">%>
+              <%#*<select id="programas" name="programas[]" style="width:auto;" multiple="multiple" size="5" >%>
+                <%#= options_from_collection_for_select(Programa.find(:all), :clave, :descripcion, @s_programas)%>
+              <%#*</select>%>
+            <%#*</div>%>
+            <% end %>
+            <%= text_area  :select, :valor, :class => "rpt", :value => @descripcion %>
           </div>
           <% unless @escuela.programa_desc.empty? %>
           <div class="grid-6-12">
+            <img src="/images/era/space.png" alt="" width="10" height="40" />
             <%= f.text_area :programa_desc, :placeholder => "Especifique...", :class => "rpt" %>
           </div>
           <% end %>
@@ -84,13 +96,13 @@
             <label>Correo electrónico de la escuela: <em class="formee-req">*</em></label>
             <%= f.text_field :email, :class => "rpt" %>
           </div>
+          <%#*<div class="grid-12-12">%>
+            <%#*<label>Nombre del proyecto: <em class="formee-req">*</em></label>%>
+            <%#= f.text_field :nombre_proyecto, :class => "rpt" %>
+          <%#*</div>%>
           <div class="grid-12-12">
-            <label>Nombre del proyecto: <em class="formee-req">*</em></label>
-            <%= f.text_field :nombre_proyecto, :class => "rpt" %>
-          </div>
-          <div class="grid-12-12">
-            <label>Nombre(s) del (los) responsable (s) del proyecto: <em class="formee-req">*</em></label>
-            <%= f.text_area :responsables_proyecto, :class => "nta" %>
+            <label>Nombre del responsable del proyecto: <em class="formee-req">*</em></label>
+            <%= f.text_field :responsables_proyecto, :class => "rpt" %>
           </div>
           <div class="grid-6-12">
             <label>Teléfono (lada): </label>
