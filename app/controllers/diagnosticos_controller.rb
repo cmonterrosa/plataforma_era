@@ -4,6 +4,8 @@ class DiagnosticosController < ApplicationController
   
   def index
     @competencias = Competencia.find(:all)
+    flash[:error] = "Módulo de Diagnóstico está en construcción"
+    redirect_to :controller => "home"
   end
 
   def new_or_edit
