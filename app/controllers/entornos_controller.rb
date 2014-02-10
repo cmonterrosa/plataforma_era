@@ -7,6 +7,13 @@ class EntornosController < ApplicationController
     @diagnostico ||= Diagnostico.new
     @entorno = @diagnostico.entorno || Entorno.new
     @s_acciones = multiple_selected(@entorno.acciones) if @entorno.acciones
+    @escuela = Escuela.find_by_clave(current_user.login)
+    if @escuela.nivel_descripcion == "BACHILLERATO"
+      @acciones = Accione.find(:all, :conditions => ["clave not in ('CEP', 'UMC')"])
+    else
+      @acciones = Accione.find(:all)
+    end
+    
   end
 
   def save
@@ -14,6 +21,10 @@ class EntornosController < ApplicationController
     @entorno ||= Entorno.new
     @entorno.update_attributes(params[:entorno])
     @entorno.diagnostico = Diagnostico.find(params[:diagnostico])
+
+#    if verifica_evidencias(diagnostico_id=nil,eje_id=nil)
+
+#    end
 
     if params[:acciones]
       @acciones = []

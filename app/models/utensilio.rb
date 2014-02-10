@@ -1,3 +1,3 @@
 class Utensilio < ActiveRecord::Base
-#  has_many :consumos
+  has_and_belongs_to_many :consumos, :join_table => 'consumos_utensilios'
 end

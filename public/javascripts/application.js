@@ -439,3 +439,10 @@ function porcentaje2(text_field, text_field2, div, docentes){
 
     valor_div.setAttribute('style', 'width:'+val+'%;');
 }
+
+function changeDigit(valor){
+    if(parseFloat(valor) > parseInt(valor))
+        return parseFloat(valor);
+    else
+        return parseInt(valor);
+}

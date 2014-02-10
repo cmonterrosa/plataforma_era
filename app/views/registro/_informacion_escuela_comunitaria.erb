@@ -126,37 +126,45 @@
       <%= f.text_field :email_responsable_proyecto%>
     </div>
 
-    <!-- total de personal -->
-    <div class="grid-3-12">
-      <label>Total personal docente: <em class="formee-req">*</em></label>
-      <%@td = @escuela.doc_hom.to_i + @escuela.doc_muj.to_i%>
-      <%= f.text_field :total_personal_docente, :value => @td %>
-    </div>
-    
-    <div class="grid-3-12">
-      <label>Total de alumnos: <em class="formee-req">*</em></label><br />
-        <div class="grid-5-12">
-          <label>Mujeres: </label>
-          <%#= f.text_field :total_personal_alumn_m %>
-          <%= f.text_field :alu_muj %>
-        </div>
-        <div class="grid-2-12"></div>
-        <div class="grid-5-12">
-          <label>Hombres: </label>
-          <%#= f.text_field :total_personal_alumn_h %>
-          <%= f.text_field :alu_hom %>
-        </div>
-    </div>
+    <!-- total de personal docente apoyo-->
+      <div class="grid-8-12">
+        <fieldset>
+          <legend style=" font-size: 14px;" >Total personal:</legend>
+          <div class="grid-3-12">
+            <%@td = @escuela.doc_hom.to_i + @escuela.doc_muj.to_i%>
+            <label>Docente: <em class="formee-req">*</em></label>
+            <%= f.text_field :total_personal_docente, :value => @td %>
+          </div>
+          <div class="grid-3-12">
+            <label>Docentes de apoyo: <em class="formee-req">*</em></label>
+            <%= f.text_field :total_personal_docente_apoyo %>
+          </div>
+          <div class="grid-3-12">
+            <label>Administrativo: <em class="formee-req">*</em></label>
+            <%= f.text_field :total_personal_admvo %>
+          </div>
+          <div class="grid-3-12">
+            <label>De apoyo: <em class="formee-req">*</em></label>
+            <%= f.text_field :total_personal_apoyo %>
+          </div>
+        </fieldset>
+      </div>
 
-    <div class="grid-3-12">
-      <label>Total personal admvo: <em class="formee-req">*</em></label>
-      <%= f.text_field :total_personal_admvo %>
-    </div>
-
-    <div class="grid-3-12">
-      <label>Total personal de apoyo: <em class="formee-req">*</em></label>
-      <%= f.text_field :total_personal_apoyo %>
-    </div>
+      <div class="grid-4-12">
+        <fieldset>
+          <legend style=" font-size: 14px;" >Total de alumnos:</legend>
+          <div class="grid-6-12">
+            <label>Mujeres: <em class="formee-req">*</em></label>
+            <%#= f.text_field :total_personal_alumn_m %>
+            <%= f.text_field :alu_muj %>
+          </div>
+          <div class="grid-6-12">
+            <label>Hombres: <em class="formee-req">*</em></label>
+            <%#= f.text_field :total_personal_alumn_h %>
+            <%= f.text_field :alu_hom %>
+        </div>
+        </fieldset>
+      </div>
     
     <!-- submit -->
     <div class="grid-12-12">
@@ -212,6 +220,9 @@
   email_responsable_proyecto.add( Validate.Presence, {onlyOnSubmit: true } );
   var responsables_proyecto = new LiveValidation( 'escuela_responsables_proyecto', {onlyOnSubmit: true } );
   responsables_proyecto.add( Validate.Presence );
+  var total_personal_docente_apoyo = new LiveValidation( 'escuela_total_personal_docente_apoyo');
+  total_personal_docente_apoyo.add( Validate.Presence );
+  total_personal_docente_apoyo.add( Validate.Numericality, { minimum: 0, onlyInteger: true } );
   var total_personal_docente = new LiveValidation( 'escuela_total_personal_docente');
   total_personal_docente.add( Validate.Presence );
   total_personal_docente.add( Validate.Numericality, { minimum: 1, onlyInteger: true } );

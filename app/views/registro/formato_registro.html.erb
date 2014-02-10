@@ -112,7 +112,7 @@
             <label>Correo electrónico (proyecto): <em class="formee-req">*</em></label>
             <%= f.text_field :email_responsable_proyecto, :class => "rpt" %>
           </div>
-          <div class="grid-3-12">
+          <!--<div class="grid-3-12">
             <label>Total personal docente: <em class="formee-req">*</em></label>
             <%= f.text_field :total_personal_docente, :class => "rpt"  %>
           </div>
@@ -135,7 +135,45 @@
           <div class="grid-3-12">
             <label>Total personal de apoyo: <em class="formee-req">*</em></label>
             <%= f.text_field :total_personal_apoyo, :class => "rpt"  %>
+          </div>-->
+          <div class="grid-8-12">
+        <fieldset>
+          <legend style=" font-size: 14px;" >Total personal:</legend>
+          <div class="grid-3-12">
+            <%@td = @escuela.doc_hom.to_i + @escuela.doc_muj.to_i%>
+            <label>Docente: <em class="formee-req">*</em></label>
+            <%= f.text_field :total_personal_docente, :class => "rpt" %>
           </div>
+          <div class="grid-3-12">
+            <label>Docentes de apoyo: <em class="formee-req">*</em></label>
+            <%= f.text_field :total_personal_docente_apoyo, :class => "rpt" %>
+          </div>
+          <div class="grid-3-12">
+            <label>Administrativo: <em class="formee-req">*</em></label>
+            <%= f.text_field :total_personal_admvo, :class => "rpt" %>
+          </div>
+          <div class="grid-3-12">
+            <label>De apoyo: <em class="formee-req">*</em></label>
+            <%= f.text_field :total_personal_apoyo, :class => "rpt" %>
+          </div>
+        </fieldset>
+      </div>
+
+      <div class="grid-4-12">
+        <fieldset>
+          <legend style=" font-size: 14px;" >Total de alumnos:</legend>
+          <div class="grid-6-12">
+            <label>Mujeres: <em class="formee-req">*</em></label>
+            <%#= f.text_field :total_personal_alumn_m %>
+            <%= f.text_field :alu_muj, :class => "rpt" %>
+          </div>
+          <div class="grid-6-12">
+            <label>Hombres: <em class="formee-req">*</em></label>
+            <%#= f.text_field :total_personal_alumn_h %>
+            <%= f.text_field :alu_hom, :class => "rpt" %>
+        </div>
+        </fieldset>
+      </div>
         </fieldset>
         <%end%>
       </td>

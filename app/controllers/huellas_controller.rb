@@ -6,6 +6,9 @@ class HuellasController < ApplicationController
     @diagnostico = Diagnostico.find(params[:id]) if params[:id]
     @diagnostico ||= Diagnostico.new
     @huella = @diagnostico.huella || Huella.new
+    @s_inorganicos = multiple_selected(@huella.inorganicos) if @huella.inorganicos
+    @s_elimina_inorganicos = multiple_selected(@huella.elimina_inorganicos) if @huella.elimina_inorganicos
+    @s_elimina_organicos = multiple_selected(@huella.elimina_organicos) if @huella.elimina_organicos
   end
 
   def save
@@ -14,17 +17,23 @@ class HuellasController < ApplicationController
     @huella.update_attributes(params[:huella])
     @huella.diagnostico = Diagnostico.find(params[:diagnostico])
 
-    @huella.tienen_equipos_desc = '' unless params[:huella][:tienen_equipos_desc]
-    @huella.potab_agua_desc = '' unless params[:huella][:potab_agua_desc]
-    @huella.servicios_comun_desc = '' unless params[:huella][:servicios_comun_desc]
-    
-    @huella.sanitarios_fugas = '' if params[:huella][:sanitarios_num].to_i < 1
-    @huella.bebederos_fugas = '' if params[:huella][:bebederos_num].to_i < 1
-    @huella.tomas_agua_fugas = '' if params[:huella][:tomas_agua_num].to_i < 1
-    @huella.cisternas_fugas = '' if params[:huella][:cisternas_num].to_i < 1
 
-    @huella.recip_residuos_solid_num = '' unless params[:huella][:recip_residuos_solid_num]
-    @huella.cta_recip_org_inorg_num = '' unless params[:huella][:cta_recip_org_inorg_num]
+    if params[:inorganicos]
+      @inorganicos = []
+      params[:inorganicos].each { |op| @inorganicos << Inorganico.find_by_clave(op)  }
+      @huella.inorganicos = Inorganico.find(@inorganicos)
+    end
+    if params[:elimina_inorganicos]
+      @elimina_inorganicos = []
+      params[:elimina_inorganicos].each { |op| @elimina_inorganicos << EliminaInorganico.find_by_clave(op)  }
+      @huella.elimina_inorganicos = EliminaInorganico.find(@elimina_inorganicos)
+    end
+    if params[:elimina_organicos]
+      @elimina_organicos = []
+      params[:elimina_organicos].each { |op| @elimina_organicos << EliminaOrganico.find_by_clave(op)  }
+      @huella.elimina_organicos = EliminaOrganico.find(@elimina_organicos)
+    end
+
 
     if @huella.save
       flash[:notice] = "Registro guardado correctamente"

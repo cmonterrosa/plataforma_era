@@ -1,11 +1,11 @@
 class AddComunitariaToEscuela < ActiveRecord::Migration
   def self.up
     add_column :escuelas, :comunitaria, :boolean, :default => false
-    Nivel.create(:clave => 11, :descripcion => "COMUNITARIA")
+    Nivel.create(:clave => 11, :descripcion => "EXTRAESCOLAR")
   end
 
   def self.down
     remove_columns :escuelas, :comunitaria
-    Nivel.find_by_descripcion("COMUNITARIA").destroy
+    Nivel.find_by_descripcion("EXTRAESCOLAR").destroy
   end
 end

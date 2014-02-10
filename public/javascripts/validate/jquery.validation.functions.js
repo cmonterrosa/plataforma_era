@@ -14,3 +14,13 @@ function isCheckedC(id){
     });
     return ReturnVal;
 }
+function isSelected(id){
+    var select = document.forms[0].elements[id];
+    var ReturnVal = false;
+
+    for(i = 0; i < select.length; i++)
+        if(select[i].selected)
+            ReturnVal = true;
+
+    return ReturnVal;
+}

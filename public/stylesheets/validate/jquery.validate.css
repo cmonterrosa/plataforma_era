@@ -24,6 +24,7 @@ input:focus, select:focus {
     border: 1px solid #C6C6C6;
     border-radius: 7px;
     -moz-border-radius: 7px;
+    text-align: center;
 }
 
 /*.InputGroup label{

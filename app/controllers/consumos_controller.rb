@@ -6,11 +6,11 @@ class ConsumosController < ApplicationController
     @diagnostico = Diagnostico.find(params[:id]) if params[:id]
     @diagnostico ||= Diagnostico.new
     @consumo = @diagnostico.consumo || Consumo.new
-    @s_establecimiento = selected(@consumo.establecimiento) if @consumo.establecimiento
-    @s_cubierto = selected(@consumo.cubierto) if @consumo.cubierto
-    @s_plato = selected(@consumo.plato) if @consumo.plato
-    @s_vaso = selected(@consumo.vaso) if @consumo.vaso
-    @s_enfermedad = multiple_selected(@consumo.enfermedads) if @consumo.enfermedads
+    @s_establecimientos = multiple_selected(@consumo.establecimientos) if @consumo.establecimientos
+    @s_bebidas = multiple_selected(@consumo.bebidas) if @consumo.bebidas
+    @s_alimentos = multiple_selected(@consumo.alimentos) if @consumo.alimentos
+    @s_botanas = multiple_selected(@consumo.botanas) if @consumo.botanas
+    @s_reposterias = multiple_selected(@consumo.reposterias) if @consumo.reposterias
   end
 
   def save
@@ -19,24 +19,31 @@ class ConsumosController < ApplicationController
     @consumo.update_attributes(params[:consumo])
     @consumo.diagnostico = Diagnostico.find(params[:diagnostico])
 
-    @consumo.establecimiento_id = Establecimiento.find_by_clave(params[:consumo][:establecimiento_id]).id if params[:consumo][:establecimiento_id]
-    @consumo.cubierto_id = Utensilio.find_by_clave(params[:consumo][:cubierto_id]).id if params[:consumo][:cubierto_id]
-    @consumo.plato_id = Utensilio.find_by_clave(params[:consumo][:plato_id]).id if params[:consumo][:plato_id]
-    @consumo.vaso_id = Utensilio.find_by_clave(params[:consumo][:vaso_id]).id if params[:consumo][:vaso_id]
-    
-    @consumo.problemas_salud_desc = '' unless params[:consumo][:problemas_salud_desc]
-    @consumo.material_servir_alim_desc = '' unless params[:consumo][:material_servir_alim_desc]
-
-    if params[:enfermedads]
-      @enfermedads = []
-      params[:enfermedads].each { |op| @enfermedads << Enfermedad.find_by_clave(op)  }
-      @consumo.enfermedads = Enfermedad.find(@enfermedads)
+    if params[:establecimientos]
+      @establecimientos = []
+      params[:establecimientos].each { |op| @establecimientos << Establecimiento.find_by_clave(op)  }
+      @consumo.establecimientos = Establecimiento.find(@establecimientos)
     end
-    @consumo.enfermedads.destroy if params[:consumo][:problemas_salud] == 'NO'
-    @consumo.establecimiento_id = '' if params[:consumo][:tipo_establec] == 'NO'
-    @consumo.cubierto_id = '' if params[:consumo][:material_servir_alim] == 'NO'
-    @consumo.plato_id = '' if params[:consumo][:material_servir_alim] == 'NO'
-    @consumo.vaso_id = '' if params[:consumo][:material_servir_alim] == 'NO'
+    if params[:bebidas]
+      @bebidas = []
+      params[:bebidas].each { |op| @bebidas << Bebida.find_by_clave(op)  }
+      @consumo.bebidas = Bebida.find(@bebidas)
+    end
+    if params[:alimentos]
+      @alimentos = []
+      params[:alimentos].each { |op| @alimentos << Alimento.find_by_clave(op)  }
+      @consumo.alimentos = Alimento.find(@alimentos)
+    end
+    if params[:botanas]
+      @botanas = []
+      params[:botanas].each { |op| @botanas << Botana.find_by_clave(op)  }
+      @consumo.botanas = Botana.find(@botanas)
+    end
+    if params[:reposterias]
+      @reposterias = []
+      params[:reposterias].each { |op| @reposterias << Reposteria.find_by_clave(op)  }
+      @consumo.reposterias = Reposteria.find(@reposterias)
+    end
 
     if @consumo.save
       flash[:notice] = "Registro guardado correctamente"

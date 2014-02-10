@@ -18,7 +18,7 @@
             <div class="grid-12-12">
               <div class="grid-5-12"></div>
               <div class="grid-2-12">
-                <%= f.text_field :superficie_terreno_escuela, :onkeyup => ""%>
+                <%= f.text_field :superficie_terreno_escuela %>
               </div>
               <label style="padding: 10px 0;" >M<sup>2</sup></label>
             </div>
@@ -35,15 +35,13 @@
                 <li>Jardín de césped</li>
                 <li>Jardín herbal</li>
                 <li>Jardín de macetas</li>
-                <li>Jardín vertical (paredes verdes)</li>
-                <li>Jardín hidropónico</li>
                 <li>Jardin de suelo elevado</li>
                 <li>Parcelas</li>
                 <li>Huerto escolar</li>
               </ul>
             </div>
             <!-- Línea barra porcentaje -->
-            <div class="grid-12-12">
+            <!--<div class="grid-12-12">
               <div class="grid-2-12">Porcentaje:</div>
               <div class="grid-8-12">
                 <div class="bar_mortice rounded_tiny mortice_tiny green_mortice">
@@ -51,26 +49,66 @@
                 </div>
               </div>
               <div class="grid-2-12"><%= text_field :porcentaje, :docentes_aplican_conocimientos, :class => "ninguno", :disabled => "disabled", :value => :porcentaje_docentes_aplican_conocimientos? ? '0 %': :porcentaje_docentes_aplican_conocimientos %></div>
-            </div>
+            </div>-->
             <!-- Línea campo -->
             <div class="grid-12-12">
-              <div class="grid-2-12"></div>
+              <div class="grid-5-12"></div>
               <div class="grid-2-12">
-                <%= f.text_field :superficie_terreno_escuela_av, :onkeyup => "porcentaje2('entorno_superficie_terreno_escuela_av', 'porcentaje_docentes_aplican_conocimientos', 'bar_docentes_aplican_conocimientos', 'entorno_superficie_terreno_escuela');" %>
+                <%= f.text_field :superficie_terreno_escuela_av %>
               </div>
-              <div class="grid-2-12">
-                <label style="padding: 10px 0;">M<sup>2</sup></label>
-              </div>
-              <%=link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta2", :id => "pregunta2"),
-                                                              {:controller => "upload", :diagnostico => @diagnostico, :eje => 2, :numero_pregunta => 2, :action => "new_evidencia" },
-                                                              :title => "EVIDENCIA DE LA PREGUNTA 2", :class => "fancybox fancybox.iframe"%>
-              <%= text_field :verifica, :pregunta2, :class => "ninguno", :style => "width:15px;", :disabled => "disabled", :value => :verifica_pregunta2? ? '0': :verifica_pregunta2 %> Archivo(s) cargado(s)
-              <div class="grid-6-12"></div>
+              <label style="padding: 10px 0;" >M<sup>2</sup></label>
             </div>
           </td>
         </tr>
         <tr>
           <td colspan="3" >&nbsp;</td>
+        </tr>
+        <tr>
+          <td>
+            <!-- Línea Pregunta -->
+            <div class="grid-12-12">
+              <label>¿La escuela cuenta con espacios destinados para jardines verticales (paredes verdes)?<em class="formee-req"> *</em></label>
+            </div>
+            <!-- Línea campo -->
+            <div class="grid-12-12">
+              <div class="grid-2-12"></div>
+              <div class="grid-4-12">
+                <span id="r_jardines_verticales" class="InputGroup">
+                  <label>SI <%= f.radio_button :jardines_verticales, "SI" %></label>&nbsp;&nbsp;
+                  <label>NO <%= f.radio_button :jardines_verticales, "NO" %></label>
+                </span>
+              </div>
+              <div class="grid-1-12"></div>
+              <div class="grid-5-12">
+                <%= link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta3", :id => "pregunta3"),
+                                                              {:controller => "upload", :diagnostico => @diagnostico, :eje => 2, :numero_pregunta => 3, :action => "new_evidencia" },
+                                                              :title => "EVIDENCIA DE LA PREGUNTA 3", :class => "fancybox fancybox.iframe"%>
+              </div>
+            </div>
+          </td>
+          <td>&nbsp;</td>
+          <td>
+            <!-- Línea Pregunta -->
+            <div class="grid-12-12">
+              <label>¿La escuela cuenta con espacios destinados para jardines y/o cultivo hidropónicos?<em class="formee-req"> *</em></label>
+            </div>
+            <!-- Línea campo -->
+            <div class="grid-12-12">
+              <div class="grid-2-12"></div>
+              <div class="grid-4-12">
+                <span id="r_jardines_hidroponicos" class="InputGroup">
+                  <label>SI <%= f.radio_button :jardines_hidroponicos, "SI" %></label>&nbsp;&nbsp;
+                  <label>NO <%= f.radio_button :jardines_hidroponicos, "NO" %></label>
+                </span>
+              </div>
+              <div class="grid-1-12"></div>
+              <div class="grid-5-12">
+                <%= link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta4", :id => "pregunta4"),
+                                                              {:controller => "upload", :diagnostico => @diagnostico, :eje => 2, :numero_pregunta => 4, :action => "new_evidencia" },
+                                                              :title => "EVIDENCIA DE LA PREGUNTA 4", :class => "fancybox fancybox.iframe"%>
+              </div>
+            </div>
+          </td>
         </tr>
         <tr>
           <td width="49%" align="justify" style=" vertical-align:top;" >
@@ -80,14 +118,15 @@
             </div>
             <div class="grid-12-12">
               <label class="formee-msg-info">
-                Para que un árbol sea considerado adulto, debe contar con una altura no menor a 4 metros y erguirse de un solo tronco.
+                Para que un árbol sea considerado adulto, debe contar con una altura no menor a 4 metros y erguirse de un solo tronco. <br />
+                Si la escuela cuenta con áreas extensas arboladas agregue un número apróximado.
               </label>
             </div>
             <!-- Línea campo -->
             <div class="grid-12-12">
               <div class="grid-5-12"></div>
               <div class="grid-2-12">
-                <%= f.text_field :arboles_terreno_escuela, :onkeyup => "" %>
+                <%= f.text_field :arboles_terreno_escuela %>
               </div>
             </div>
           </td>
@@ -129,7 +168,7 @@
               </label>
             </div>
             <!-- Línea barra porcentaje -->
-            <div class="grid-12-12">
+            <!--<div class="grid-12-12">
               <div class="grid-2-12">Porcentaje:</div>
               <div class="grid-8-12">
                 <div class="bar_mortice rounded_tiny mortice_tiny green_mortice">
@@ -138,21 +177,20 @@
               </div>
               <input id="val_max_alu" name="val_max_alu" type="hidden" value="" />
               <div class="grid-2-12"><%= text_field :porcentaje, :alumnos_capacitados_docentes, :class => "ninguno", :disabled => "disabled", :value => :porcentaje_porcentaje_alumnos_capacitados_docentes? ? '0 %': :porcentaje_porcentaje_alumnos_capacitados_docentes %></div>
-            </div>
+            </div>-->
             <!-- Línea campo -->
             <div class="grid-12-12">
               <label>Acciones:</label>
               <div style="overflow:auto; width:400px;">
               <select id="acciones" name="acciones[]" multiple="multiple" size="10" style="width:auto;">
-                <%= options_from_collection_for_select(Accione.find(:all), :clave, :descripcion, @s_acciones)%>
+                <%= options_from_collection_for_select(@acciones, :clave, :descripcion, @s_acciones)%>
               </select>
               </div>
             </div>
             <div class="grid-4-12"></div>
-              <%=link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta4", :id => "pregunta4"),
-                                                              {:controller => "upload", :diagnostico => @diagnostico, :eje => 2, :numero_pregunta => 4, :action => "new_evidencia" },
-                                                              :title => "EVIDENCIA DE LA PREGUNTA 4", :class => "fancybox fancybox.iframe"%>
-              <%= text_field :verifica, :pregunta4, :class => "ninguno", :style => "width:15px;", :disabled => "disabled", :value => :verifica_pregunta4? ? '0': :verifica_pregunta4 %> Archivo(s) cargado(s)
+              <%= link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta6", :id => "pregunta6"),
+                                                              {:controller => "upload", :diagnostico => @diagnostico, :eje => 2, :numero_pregunta => 6, :action => "new_evidencia" },
+                                                              :title => "EVIDENCIA DE LA PREGUNTA 6", :class => "fancybox fancybox.iframe"%>
           </td>
         </tr>
       </table>
@@ -191,14 +229,16 @@
 
   var superficie_terreno_escuela_av = new LiveValidation( 'entorno_superficie_terreno_escuela_av' );
   superficie_terreno_escuela_av.add( Validate.Presence );
-  superficie_terreno_escuela_av.add( Validate.Numericality, { maximum: parseFloat(document.getElementById("entorno_superficie_terreno_escuela").value) }  );
-
+  superficie_terreno_escuela_av.add( Validate.Numericality, { maximum: changeDigit(document.getElementById("entorno_superficie_terreno_escuela").value) } );
+  
   var arboles_terreno_escuela = new LiveValidation( 'entorno_arboles_terreno_escuela' );
   arboles_terreno_escuela.add( Validate.Presence );
   arboles_terreno_escuela.add( Validate.Numericality, {onlyInteger: true} );
 
-  var m_acciones = new LiveValidation( 'acciones', {onlyOnSubmit: true} );
-  m_acciones.add( Validate.Presence );
-  m_acciones.add( Validate.Exclusion, { within: [ '' , ' ' ] } );
-  
+  jQuery(function(){
+    jQuery("#r_jardines_verticales").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
+    jQuery("#r_jardines_hidroponicos").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
+    jQuery("#acciones").validate({ expression: "if (isSelected(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
+  });
+
 </script>
