@@ -221,9 +221,9 @@ class AdminController < ApplicationController
   def total_escuelas_registradas
     @escuelas = User.find(:all, :select => "users.created_at as user_created_at, users.login, users.id as user_id, e.*", :joins => "users, escuelas e", :conditions => "users.login=e.clave AND (users.blocked is NULL OR  users.blocked !=1)")
     csv_string = FasterCSV.generate do |csv|
-      csv << ["CLAVE_ESCUELA", "NOMBRE", "ZONA_ESCOLAR", "SECTOR", "NIVEL", "DOMICILIO", "LOCALIDAD", "MUNICIPIO", "REGION", "MODALIDAD", "FECHA_HORA_CAPTURA"]
+      csv << ["CLAVE_ESCUELA", "NOMBRE", "ZONA_ESCOLAR", "SECTOR", "NIVEL", "DOMICILIO", "LOCALIDAD", "MUNICIPIO", "REGION", "MODALIDAD", "FECHA_HORA_CAPTURA", "ALU_HOMBRES", "ALU_MUJERES", "TOTAL_ALUMNOS", "GRUPOS"]
       @escuelas.each do |i|
-         csv << [ i["clave"], i["nombre"], i['zona_escolar'],  i['sector'], i['nivel_descripcion'],  i["domicilio"], i["localidad"], i['municipio'], i['region_descripcion'], i['modalidad'], i['user_created_at']]
+         csv << [ i["clave"], i["nombre"], i['zona_escolar'],  i['sector'], i['nivel_descripcion'],  i["domicilio"], i["localidad"], i['municipio'], i['region_descripcion'], i['modalidad'], i['user_created_at'], i['alu_hom'], i['alu_muj'], i['total_alumnos'], i['grupos']]
        end
     end
   send_data csv_string, type => "text/plain",
