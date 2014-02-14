@@ -9,9 +9,9 @@
     <td align="center">
       <table class="subprincipal" width="100%" border="0" cellpadding="4" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
         <tr>
-          <td width="49%" align="justify"><label>¿Cuántos docentes se han capacitado en materia de salud y/o medio ambiente en el último ciclo escolar?<em class="formee-req"> *</em></label></td>
+          <td width="49%" align="justify"><label>1.- ¿Cuántos docentes se han capacitado en materia de salud y/o medio ambiente en el último ciclo escolar?<em class="formee-req"> *</em></label></td>
           <td>&nbsp;</td>
-          <td width="49%" align="justify"><label>De los docentes capacitados, ¿cuántos aplican con sus alumnos los conocimientos adquiridos en materia de salud y medio ambiente en otras acciones pedagógicas o extracurriculares?<em class="formee-req"> *</em></label></td>
+          <td width="49%" align="justify"><label>2.- De los docentes capacitados, ¿cuántos aplican con sus alumnos los conocimientos adquiridos en materia de salud y medio ambiente en otras acciones pedagógicas o extracurriculares?<em class="formee-req"> *</em></label></td>
         </tr>
         <!--<tr>
           <td>
@@ -21,8 +21,14 @@
                 <div id="bar_docentes_capacitados_sma" class="progress rounded_tiny progress_tiny green" ></div>
               </div>
             </div>-->
-            <% totales = Escuela.find_by_clave(current_user.login.upcase) %>
-            <input id="val_max_doc" name="val_max_doc" type="hidden" value="<%= totales.total_personal_docente %>" />
+            <% totales = Escuela.find_by_clave(current_user.login.upcase)
+               if totales.nivel_descripcion == "BACHILLERATO"
+                    docentes = totales.perfil_ciencias_naturales
+               else
+                    docentes = totales.total_personal_docente
+               end
+            %>
+            <input id="val_max_doc" name="val_max_doc" type="hidden" value="<%= docentes %>" />
             <input id="val_max_alu" name="val_max_alu" type="hidden" value="<%= totales.alu_hom + totales.alu_muj%>" />
             <!--
             <div class="grid-2-12"><%= text_field :porcentaje, :docentes_capacitados_sma, :class => "ninguno", :disabled => "disabled", :value => :porcentaje_docentes_capacitados_sma? ? '0 %': :porcentaje_docentes_capacitados_sma %></div>
@@ -48,7 +54,7 @@
             <div class="grid-1-12"></div>
             <div class="grid-6-12">
               <%=link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta1", :id => "pregunta1"),
-                                                              {:controller => "upload", :diagnostico => @diagnostico, :eje => 1, :numero_pregunta => 1, :action => "new_evidencia" },
+                                                              {:controller => "upload", :diagnostico => @diagnostico, :eje => 1, :numero_pregunta => 1, :action => "list_evidencias" },
                                                               :title => "EVIDENCIA DE LA PREGUNTA 1", :class => "fancybox fancybox.iframe"%>
               <!--<div id="div_pregunta1">
                 <%= text_field :verifica, :pregunta1, :class => "ninguno", :style => "width:15px;", :disabled => "disabled", :value => :verifica_pregunta1? ? '0': :verifica_pregunta1 %> Archivo(s) cargado(s)
@@ -63,7 +69,7 @@
             </div>
             <div class="grid-1-12"></div>
               <%=link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta2", :id => "pregunta2"),
-                                                              {:controller => "upload", :diagnostico => @diagnostico, :eje => 1, :numero_pregunta => 2, :action => "new_evidencia" },
+                                                              {:controller => "upload", :diagnostico => @diagnostico, :eje => 1, :numero_pregunta => 2, :action => "list_evidencias" },
                                                               :title => "EVIDENCIA DE LA PREGUNTA 2", :class => "fancybox fancybox.iframe"%>
               <!--<%= text_field :verifica, :pregunta2, :class => "ninguno", :style => "width:15px;", :disabled => "disabled", :value => :verifica_pregunta2? ? '0': :verifica_pregunta2 %> Archivo(s) cargado(s)-->
             <div class="grid-6-12"></div>
@@ -71,9 +77,9 @@
         </tr>
 
         <tr>
-          <td width="49%" align="justify"><label>Del total de docentes, ¿cuántos se involucran en actividades extracurriculares en materia de salud y medio ambiente que promueve la escuela?<em class="formee-req"> *</em></label></td>
+          <td width="49%" align="justify"><label>3.- Del total de docentes, ¿cuántos se involucran en actividades extracurriculares en materia de salud y medio ambiente que promueve la escuela?<em class="formee-req"> *</em></label></td>
           <td>&nbsp;</td>
-          <td width="49%" align="justify"><label>Del total de alumnos, ¿cuántos recibieron capacitacion relacionada con temas salud y medio ambiente por parte de los docentes en el último ciclo escolar?<em class="formee-req"> *</em></label></td>
+          <td width="49%" align="justify"><label>4.- Del total de alumnos, ¿cuántos recibieron capacitacion relacionada con temas salud y medio ambiente por parte de los docentes en el último ciclo escolar?<em class="formee-req"> *</em></label></td>
         </tr>
         <!--<tr>
           <td>
@@ -106,7 +112,7 @@
             <div class="grid-1-12"></div>
             <div class="grid-6-12">
               <%=link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta3", :id => "pregunta3"),
-                                                              {:controller => "upload", :diagnostico => @diagnostico, :eje => 1, :numero_pregunta => 3, :action => "new_evidencia" },
+                                                              {:controller => "upload", :diagnostico => @diagnostico, :eje => 1, :numero_pregunta => 3, :action => "list_evidencias" },
                                                               :title => "EVIDENCIA DE LA PREGUNTA 3", :class => "fancybox fancybox.iframe"%>
               <!--<%= text_field :verifica, :pregunta3, :class => "ninguno", :style => "width:15px;", :disabled => "disabled", :value => :verifica_pregunta3? ? '0': :verifica_pregunta3 %> Archivo(s) cargado(s)-->
             </div>
@@ -120,7 +126,7 @@
             <div class="grid-1-12"></div>
             <div class="grid-6-12">
               <%=link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta4", :id => "pregunta4"),
-                                                              {:controller => "upload", :diagnostico => @diagnostico, :eje => 1, :numero_pregunta => 4, :action => "new_evidencia" },
+                                                              {:controller => "upload", :diagnostico => @diagnostico, :eje => 1, :numero_pregunta => 4, :action => "list_evidencias" },
                                                               :title => "EVIDENCIA DE LA PREGUNTA 4", :class => "fancybox fancybox.iframe"%>
               <!--<%= text_field :verifica, :pregunta4, :class => "ninguno", :style => "width:15px;", :disabled => "disabled", :value => :verifica_pregunta4? ? '0': :verifica_pregunta4 %> Archivo(s) cargado(s)-->
             </div>
@@ -128,7 +134,7 @@
         </tr>
 
         <tr>
-          <td width="49%" align="justify"><label>Del total de alumnos, ¿cuántos recibieron capacitación relacionada con temas de salud y medio ambiente por parte de otras <b>instituciones y/o dependencias</b> en el último ciclo escolar?<em class="formee-req"> *</em></label></td>
+          <td width="49%" align="justify"><label>5.- Del total de alumnos, ¿cuántos recibieron capacitación relacionada con temas de salud y medio ambiente por parte de otras <b>instituciones y/o dependencias</b> en el último ciclo escolar?<em class="formee-req"> *</em></label></td>
           <td>&nbsp;</td>
           <td width="49%" align="justify">&nbsp;</td>
         </tr>
@@ -154,7 +160,7 @@
             <div class="grid-1-12"></div>
             <div class="grid-6-12">
               <%=link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta5", :id => "pregunta5"),
-                                                              {:controller => "upload", :diagnostico => @diagnostico, :eje => 1, :numero_pregunta => 5, :action => "new_evidencia" },
+                                                              {:controller => "upload", :diagnostico => @diagnostico, :eje => 1, :numero_pregunta => 5, :action => "list_evidencias" },
                                                               :title => "EVIDENCIA DE LA PREGUNTA 5", :class => "fancybox fancybox.iframe"%>
               <!--<%= text_field :verifica, :pregunta5, :class => "ninguno", :style => "width:15px;", :disabled => "disabled", :value => :verifica_pregunta5? ? '0': :verifica_pregunta5 %> Archivo(s) cargado(s)-->
             </div>
@@ -169,6 +175,12 @@
   <tr>
     <td colspan="3">&nbsp;</td>
   </tr>
+
+
+  
+  <%= render :partial => "diagnosticos/errores_evidencias"%>
+
+
   <tr>
     <td align="right">
       <table>

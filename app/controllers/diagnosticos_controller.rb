@@ -4,9 +4,13 @@ class DiagnosticosController < ApplicationController
   
   def index
     @competencias = Competencia.find(:all)
-    flash[:error] = "Módulo de Diagnóstico está en construcción"
-    redirect_to :controller => "home"
-  end
+    flash[:notice] = "Únicamente podrá capturar Eje 1 y 2"
+    @eje1=true
+    @eje2=true
+    @eje3=false
+    @eje4=false
+    @eje5=false
+   end
 
   def new_or_edit
     unless Diagnostico.find_by_escuela_id(Escuela.find_by_clave(current_user.login.upcase))
