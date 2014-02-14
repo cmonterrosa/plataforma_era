@@ -81,11 +81,12 @@ class UploadController < ApplicationController
     if @uploaded_file.save
         flash[:notice] = "Evidencia cargada correctamente"
         redirect_to :action => "list_evidencias", :diagnostico => @diagnostico, :eje => @eje, :numero_pregunta => @numero_pregunta
-       #return render(:partial => 'list_evidencias', :layout => "only_jquery")
     else
-       return render(:partial => 'carga_evidencia_error', :layout => "only_jquery")
+      @errores = @uploaded_file.errors.full_messages
+      return render(:partial => 'carga_evidencia_error', :layout => "only_jquery")
     end
-  end
+   end
+ 
 
   def destroy_evidencia
     if @uploaded_file = Adjunto.find(params[:id])

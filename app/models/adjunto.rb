@@ -4,7 +4,7 @@ class Adjunto < ActiveRecord::Base
    belongs_to :tipodoc
    belongs_to :diagnostico
    validates_presence_of :tipodoc_id, :message => ".- Seleccione un tipo de archivo"
-   validates_numericality_of :file_size, :less_than => 16384, :message => ".- No puede excederse de 16 MB"
+   validates_numericality_of :file_size, :less_than => 10240, :message => ".- No puede excederse de 10 MB. "
 
    after_create :write_file
    before_destroy :prepare_file_for_delete
