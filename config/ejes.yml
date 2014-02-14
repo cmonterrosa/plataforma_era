@@ -8,5 +8,9 @@ eje1:
   5: true
   
 eje2:
-  1: true
+  1: false
   2: false
+  3: true
+  4: true
+  5: false
+  6: true
