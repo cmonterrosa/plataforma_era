@@ -12,13 +12,20 @@ class CompetenciasController < ApplicationController
     @competencia = Competencia.find(params[:id]) if params[:id]
     @competencia ||= Competencia.new
     @competencia.update_attributes(params[:competencia])
-    @competencia.diagnostico = Diagnostico.find(params[:diagnostico])
-    
-    if @competencia.save
-      flash[:notice] = "Registro guardado correctamente"
-      redirect_to :controller => "diagnosticos"
+    @diagnostico = @competencia.diagnostico = Diagnostico.find(params[:diagnostico])
+    validador = verifica_evidencias(@diagnostico,1)
+    #### {:valido => false, :sin_validar = [1,2,3,4,5]}
+    if validador["valido"]
+      if @competencia.save
+        flash[:notice] = "Registro guardado correctamente"
+        redirect_to :controller => "diagnosticos"
+      else
+        flash[:error] = "No se pudo guardar, verifique los datos"
+        render :action => "new_or_edit"
+      end
     else
-      flash[:error] = "No se pudo guardar, verifique los datos"
+      errores = validador["sin_validar"].join(" y ")
+      flash[:evidencias] = "Cargue archivos para la(s) pregunta(s): #{errores}"
       render :action => "new_or_edit"
     end
   end

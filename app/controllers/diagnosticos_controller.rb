@@ -4,8 +4,13 @@ class DiagnosticosController < ApplicationController
   
   def index
     @competencias = Competencia.find(:all)
-    flash[:error] = "Módulo de Diagnóstico está en construcción"
-    redirect_to :controller => "home"
+    flash[:notice] = "Únicamente podrá capturar Eje 1 y 2"
+    @eje1=true
+    @eje2=true
+    @eje3=false
+    @eje4=false
+    @eje5=false
+    #redirect_to :controller => "home"
   end
 
   def new_or_edit
