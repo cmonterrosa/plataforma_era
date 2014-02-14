@@ -1,0 +1,19 @@
+<!-- Mensaje de validaciones de evidencias -->
+  <tr>
+    <td align="center">
+      <table>
+        <tr>
+          <td colspan="4">
+            <%if flash[:evidencias]%>
+            <div class="formee-msg-error">
+              <h2>No se encontraron evidencias:</h2>
+              <ul>
+                <li style="font-size: 14px;"><%=flash[:evidencias]%>.</li>
+              </ul>
+            </div>
+            <%end%>
+          </td>
+        </tr>
+      </table>
+    </td>
+ </tr>

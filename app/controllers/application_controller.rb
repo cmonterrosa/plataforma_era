@@ -32,15 +32,24 @@ def fecha_string(date=Time.now)
   def verifica_evidencias(diagnostico_id=nil,eje_id=nil)
     ejes=YAML.load_file("#{RAILS_ROOT}/config/ejes.yml")
     eje = ejes["eje#{eje_id}"]
+    h= Hash.new
+    h["valido"] = true
+    h["sin_validar"] = Array.new
     eje.each do |pregunta|
       num_pregunta = pregunta.first
       num_evidencias = Adjunto.count(:id, :conditions => ["diagnostico_id = ? AND eje_id = ? AND numero_pregunta = ?", diagnostico_id, eje_id, num_pregunta])
       #### Si la pregunta necesita evidencia ###
       if pregunta.last == true
-        return false if num_evidencias < 1
+        if num_evidencias < 1
+          h["valido"] = false
+          h["sin_validar"] << num_pregunta
+        end
       end
-    end
-    return true
+      h["sin_validar"].sort! unless h["sin_validar"].empty?
+      #### {:valido => true, :sin_validar = []}
+      #### {:valido => false, :sin_validar = [1,2,3,4,5]}
+     end
+    return h
   end
 
 end
