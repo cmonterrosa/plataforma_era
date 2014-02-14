@@ -10,8 +10,7 @@ class DiagnosticosController < ApplicationController
     @eje3=false
     @eje4=false
     @eje5=false
-    #redirect_to :controller => "home"
-  end
+   end
 
   def new_or_edit
     unless Diagnostico.find_by_escuela_id(Escuela.find_by_clave(current_user.login.upcase))
