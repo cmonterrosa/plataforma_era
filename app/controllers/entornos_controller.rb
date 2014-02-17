@@ -6,7 +6,7 @@ class EntornosController < ApplicationController
     @diagnostico = Diagnostico.find(params[:id]) if params[:id]
     @diagnostico ||= Diagnostico.new
     @entorno = @diagnostico.entorno || Entorno.new
-    @s_acciones = multiple_selected(@entorno.acciones) if @entorno.acciones
+    @s_acciones = multiple_selected_id(@entorno.acciones) if @entorno.acciones
     @escuela = Escuela.find_by_clave(current_user.login)
     if @escuela.nivel_descripcion == "BACHILLERATO"
       @acciones = Accione.find(:all, :conditions => ["clave not in ('CEP', 'UMC')"])
@@ -29,6 +29,8 @@ class EntornosController < ApplicationController
         @acciones = []
         params[:acciones].each { |op| @acciones << Accione.find_by_clave(op)  }
         @entorno.acciones = Accione.find(@acciones)
+      else
+        @entorno.acciones.delete_all
       end
 
       if @entorno.save
@@ -40,7 +42,7 @@ class EntornosController < ApplicationController
       end
     else
       @escuela = Escuela.find_by_clave(current_user.login)
-      @s_acciones = multiple_selected(@entorno.acciones) if @entorno.acciones
+      @s_acciones = multiple_selected_id(@entorno.acciones) if @entorno.acciones
       if @escuela.nivel_descripcion == "BACHILLERATO"
         @acciones = Accione.find(:all, :conditions => ["clave not in ('CEP', 'UMC')"])
       else

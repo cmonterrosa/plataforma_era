@@ -7,7 +7,7 @@ class DiagnosticosController < ApplicationController
     flash[:notice] = "Únicamente podrá capturar Eje 1 y 2"
     @eje1=true
     @eje2=true
-    @eje3=false
+    @eje3=true
     @eje4=false
     @eje5=false
    end

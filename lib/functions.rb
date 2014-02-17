@@ -18,4 +18,13 @@ module Functions
     return @selected
   end
 
+  def multiple_selected_id(relacion)
+    if relacion.empty?
+      @selected=[]
+    else
+      @selected=relacion.collect{|cat|cat.id}
+    end
+    return @selected
+  end
+
 end

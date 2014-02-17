@@ -441,8 +441,8 @@ function porcentaje2(text_field, text_field2, div, docentes){
 }
 
 function changeDigit(valor){
-    if(parseFloat(valor) > parseInt(valor))
-        return parseFloat(valor);
-    else
-        return parseInt(valor);
+    var num = document.getElementById(valor).value;
+    document.getElementById('superficie_terreno').value = num;
+
+    alert(document.getElementById('superficie_terreno').value);
 }
