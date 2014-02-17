@@ -12,12 +12,33 @@
         <label><b>Usuario: </b></label>
         <label>&nbsp;<%=h (@comentario.user)? (@comentario.user.login.upcase) : "---"%></label>
       </div>
-<% if @escuela = Escuela.find_by_clave(@comentario.user.login)%>
+
+      <div class="grid-12-12 clear"></div>
+      <div class="grid-4-12">
+        <label><b>Correo electrónico: </b></label>
+        <label>&nbsp;<%=h (@comentario.user)? (@comentario.user.email) : "---"%></label>
+      </div>
+       <div class="grid-12-12 clear"></div>
+
+
+      <% if @escuela = Escuela.find_by_clave(@comentario.user.login)%>
       <div class="grid-8-12">
         <label><b>Escuela: </b></label>
         <label><%=h (@escuela.nombre)? (@escuela.nombre) : "---"%></label>
       </div>
-<% end %>
+
+      <div class="grid-12-12 clear"></div>
+      <div class="grid-6-12">
+        <label><b>Localidad: </b></label>
+        <label>&nbsp;<%=h (@escuela.localidad)? (@escuela.localidad) : "---"%></label>
+      </div>
+
+      <div class="grid-6-12">
+        <label><b>Municipio: </b></label>
+        <label>&nbsp;<%=h (@escuela.municipio)? (@escuela.municipio) : "---"%></label>
+      </div>
+
+      <% end %>
       <div class="grid-12-12 clear"></div>
       <div class="grid-12-12">
         <label><b>Asunto: </b></label>
