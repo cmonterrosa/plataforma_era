@@ -1,9 +1,9 @@
 <div class="container">
 <% form_for :user, @user, :url => { :action => "forgot", :controller => "users"}, :html => {:class => "formee"} do |f| -%>
       <fieldset>
-        <legend>Recuperar contraseña</legend>
+        <legend>Recuperar&nbsp;contraseña</legend>
             <div class="grid-8-12">
-               <label>Correo electrónico:</label>
+               <label>Escriba la dirección de correo electrónico con la cual se registró:</label>
                <!-- <input type="text" value="Escriba la clave completa" /> -->
                <%=f.text_field :email%>
             </div>
