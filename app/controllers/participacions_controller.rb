@@ -13,6 +13,11 @@ class ParticipacionsController < ApplicationController
     @participacion ||= Participacion.new
     @participacion.update_attributes(params[:participacion])
     @participacion.diagnostico = Diagnostico.find(params[:diagnostico])
+
+    @participacion.proy_escolares_ma_desc = '' unless params[:participacion][:proy_escolares_ma_desc]
+    @participacion.proy_escolares_salud_desc = '' unless params[:participacion][:proy_escolares_salud_desc]
+    @participacion.act_salud_ma_desc = '' unless params[:participacion][:act_salud_ma_desc]
+    @participacion.act_dep_gobierno_desc = '' unless params[:participacion][:act_dep_gobierno_desc]
     
     if @participacion.save
       flash[:notice] = "Registro guardado correctamente"

@@ -314,6 +314,16 @@ function disableTextarea(select){
     element.disabled = true;
 }
 
+function disableUpoad(id){
+    var element = id;
+    element.style.display = 'none';
+}
+
+function enableUpoad(id){
+    var element = id;
+    element.style.display = '';
+}
+
 function verifySelects(selects){
     var tamano = selects.length;
     for(i = 0; i < tamano; i++){
@@ -440,9 +450,87 @@ function porcentaje2(text_field, text_field2, div, docentes){
     valor_div.setAttribute('style', 'width:'+val+'%;');
 }
 
-function changeDigit(valor){
-    var num = document.getElementById(valor).value;
-    document.getElementById('superficie_terreno').value = num;
+//function setValor(valOrg, valDest){
+//    var text1 = document.getElementById(valOrg);
+//    var text2 = document.getElementById(valDest);
+//    text2.value = parseInt(text1.value);
+//}
+//
+//function setValor(valOrg, valDest){
+//    var text1 = document.getElementById(valOrg);
+//    var text2 = document.getElementById(valDest);
+//    text2.value = text1.value;
+//}
 
-    alert(document.getElementById('superficie_terreno').value);
+function enable2Textbox(comboSelect, textField1, textField2, imageUpload){
+    var select, text1, text2, upload;
+    
+    if(typeof comboSelect == "object")
+        select = comboSelect;
+    else
+        select = document.getElementById(comboSelect);
+
+    text1 = document.getElementById(textField1);
+    text2 = document.getElementById(textField2);
+    upload = document.getElementById(imageUpload);
+
+    
+    if(select.value != ""){
+        disableTextarea(text1);
+        clearTextarea(text1);
+        disableTextarea(text2);
+        clearTextarea(text2);
+        disableTextarea(upload);
+    }
+    else{
+        enableTextarea(text1);
+        enableTextarea(text2);
+        enableTextarea(upload);
+    }
+
+    
+}
+
+function enaSelect(radioButton, comboSelect){
+    var select = document.forms[0].elements[comboSelect];
+
+    if(typeof radioButton == "object")
+        var radio = radioButton;
+    else
+        if(document.forms[0].elements[radioButton+'_si'].checked)
+            radio = document.forms[0].elements[radioButton+'_si'];
+        else
+            radio = document.forms[0].elements[radioButton+'_no'];
+
+    if(radio.checked && radio.id.match('_no')){
+        enableSelect(select);
+    }
+    else{
+        clearSelect(select);
+        disableSelect(select);
+    }
+
+}
+
+function showDesc(obj_select, obj_desc)
+{
+    if(typeof obj_select == "object")
+        var select = obj_select;
+    else
+        select = document.forms[0].elements[obj_select];
+
+    var desc = document.forms[0].elements[obj_desc];
+    var tamano = select.length;
+
+    for(i = 0; i < tamano; i++){
+        if(select[i].value != '0' && select[i].selected){
+            enableTextarea(desc);
+            if(typeof obj_select == "object") clearTextarea(desc);
+            break;
+        }
+        else{
+            if(typeof obj_select == "object") clearTextarea(desc);
+            disableTextarea(desc);
+        }
+    }
 }

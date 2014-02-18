@@ -17,12 +17,12 @@
             <!-- Línea campo -->
             <div class="grid-3-12"></div>
             <div class="grid-2-12">
-              <%= f.select :capacitacion_ahorro_energia, (0..2), {:prompt => "SELECCIONE UNA OPCIÓN"}%>
+              <%= f.select :capacitacion_ahorro_energia, (0..2)%>
             </div>
             <div class="grid-1-12"></div>
             <div class="grid-6-12">
               <%= link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta1", :id => "pregunta1"),
-                                                              {:controller => "upload", :diagnostico => @diagnostico, :eje => 3, :numero_pregunta => 1, :action => "new_evidencia" },
+                                                              {:controller => "upload", :diagnostico => @diagnostico, :eje => 3, :numero_pregunta => 1, :action => "list_evidencias" },
                                                               :title => "EVIDENCIA DE LA PREGUNTA 1", :class => "fancybox fancybox.iframe"%>
               </div>
           </td>
@@ -32,7 +32,6 @@
             <div class="grid-12-12">
               <label>2.- Tomando en cuenta el último bimestre de consumo con relación al mismo bimestre del año anterior ¿Cuál es la variación en el consumo eléctrico de la institución escolar?.<em class="formee-req"> *</em></label>
             </div>
-            <div class="grid-1-12"></div>
             <div class="grid-4-12">
               <label>Consumo anterior:</label>
               <%= f.text_field :consumo_anterior %>
@@ -41,16 +40,15 @@
               <label>Consumo actual:</label>
               <%= f.text_field :consumo_actual %>
             </div>
-            <div class="grid-1-12"></div>
-            <div class="grid-2-12">
+            <div class="grid-4-12">
               <img src="/images/era/space.png" width="20px" />
               <%= link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta2", :id => "pregunta2"),
-                                                              {:controller => "upload", :diagnostico => @diagnostico, :eje => 3, :numero_pregunta => 1, :action => "new_evidencia" },
-                                                              :title => "EVIDENCIA DE LA PREGUNTA 2", :class => "fancybox fancybox.iframe"%>
+                                                              {:controller => "upload", :diagnostico => @diagnostico, :eje => 3, :numero_pregunta => 2, :action => "list_evidencias" },
+                                                              :title => "EVIDENCIA DE LA PREGUNTA 2", :class => "fancybox fancybox.iframe", :style => "display: '';" %>
             </div>
             <div class="grid-12-12">
               <label>Otro:</label>
-                <%= f.select :energia_electrica_id, EnergiaElectrica.all.collect {|p| [ p.descripcion, p.clave ]}, {:prompt => "SELECCIONE UNA OPCIÓN"} %>
+                <%= f.select :energia_electrica_id, EnergiaElectrica.all.collect {|p| [ p.descripcion, p.clave ]}, {:prompt => "SELECCIONE UNA OPCIÓN"}, :onchange => "enable2Textbox(this, 'huella_consumo_anterior', 'huella_consumo_actual', 'pregunta2');" %>
             </div>
           </td>
         </tr>
@@ -68,10 +66,11 @@
             <div class="grid-4-12">
               <label>Total de Focos:</label>
               <%= f.text_field :total_focos %>
+              <input type="hidden" name="tfoco" id="tfoco" />
             </div>
             <div class="grid-4-12">
               <label>Focos ahorradores:</label>
-              <%= f.text_field :focos_ahorradores %>
+              <%= f.text_field :focos_ahorradores, :onkeypress => "setValor('huella_total_focos', 'tfoco');" %>
             </div>
             <div class="grid-2-12"></div>
           </td>
@@ -85,12 +84,12 @@
             <div class="grid-3-12"></div>
             <div class="grid-5-12">
               <span id="r_jardines_hidroponicos" class="InputGroup">
-                <label>SI <%= f.radio_button :red_publica_agua, "SI" %></label>&nbsp;&nbsp;
-                <label>NO <%= f.radio_button :red_publica_agua, "NO" %></label>
+                <label>SI <%= f.radio_button :red_publica_agua, "SI", :onclick => "enaSelect(this, 'huella_servicio_agua_id');"%></label>&nbsp;&nbsp;
+                <label>NO <%= f.radio_button :red_publica_agua, "NO", :onclick => "enaSelect(this, 'huella_servicio_agua_id');" %></label>
               </span>
             </div>
             <div class="grid-12-12">
-                <%= f.select :servicio_agua_id, ServicioAgua.all.collect {|p| [ p.descripcion, p.clave ]}, {:prompt => "SELECCIONE UNA OPCIÓN"} %>
+                <%= f.select :servicio_agua_id, ServicioAgua.all.collect {|p| [ p.descripcion, p.clave ]}, {:prompt => "SELECCIONE UNA OPCIÓN"}, {:disabled => true, :style => "display: none;"} %>
             </div>
           </td>
         </tr>
@@ -103,7 +102,7 @@
             <!-- Línea campo -->
             <div class="grid-5-12"></div>
             <div class="grid-2-12">
-              <%= f.select :mantto_inst, (0..2), {:prompt => "SELECCIONE UNA OPCIÓN"} %>
+              <%= f.select :mantto_inst, (0..2) %>
             </div>
           </td>
           <td>&nbsp;</td>
@@ -149,7 +148,7 @@
             <!-- Línea campo -->
             <div class="grid-3-12"></div>
             <div class="grid-5-12">
-              <span id="r_recip_residuos_solid" class="InputGroup">
+              <span id="r_elabora_compostas" class="InputGroup">
                 <label>SI <%= f.radio_button :elabora_compostas, "SI" %></label>&nbsp;&nbsp;
                 <label>NO <%= f.radio_button :elabora_compostas, "NO" %></label>
               </span>
@@ -217,6 +216,7 @@
   <tr>
     <td colspan="3">&nbsp;</td>
   </tr>
+  <%= render :partial => "diagnosticos/errores_evidencias"%>
   <tr>
     <td align="right">
       <table>
@@ -238,86 +238,41 @@
 <% end %>
 
 <script type="text/javascript">
-<%#*showTextarea('huella_mantto_inst', 'huella_mantto_inst_desc'); // P1%>
-<%#*showElements('huella_tienen_equipos', 'huella_tienen_equipos_desc', 'electronicos'); // P2%>
-<%#*showTextarea('huella_desc_epos_elec', 'huella_desc_epos_elec_desc'); // P3%>
-<%#*showTextarea('huella_util_lamp_ahorr', 'huella_util_lamp_ahorr_desc'); // P4%>
-<%#*showTextarea('huella_aprov_luz_natural', 'huella_aprov_luz_natural_desc'); // P5%>
-<%#*showTextarea('huella_sist_almac_agua', 'huella_sist_almac_agua_desc'); // P6%>
-<%#*showTextfield('huella_potab_agua', 'huella_potab_agua_desc'); // P7%>
-<%#*showElements('huella_servicios_comun', 'huella_servicios_comun_desc', 'servicios'); // P8%>
-<%#*showTextarea('huella_reutiliza_agua', 'huella_reutiliza_agua_desc'); // P10%>
-<%#*showTextfield('huella_recip_residuos_solid', 'huella_recip_residuos_solid_num'); // P11%>
-<%#*showTextarea('huella_sep_residuos_org_inorg', 'huella_sep_residuos_org_inorg_desc'); // P12%>
-<%#*showTextarea('huella_elab_comp_residuos', 'huella_elab_comp_residuos_desc'); // P13%>
-<%#*showTextfield('huella_cta_recip_org_inorg', 'huella_cta_recip_org_inorg_num'); // P14%>
-<%#*showTextarea('huella_act_reutiliza_residuos', 'huella_act_reutiliza_residuos_desc'); // P15%>
-<%#*showTextarea('huella_meca_elim_residuos_solid', 'huella_meca_elim_residuos_solid_desc'); // P16%>
+enable2Textbox('huella_energia_electrica_id', 'huella_consumo_anterior', 'huella_consumo_actual', 'pregunta2');
+enaSelect('huella_red_publica_agua', 'huella_servicio_agua_id');
 
-var consumo_anterior = new LiveValidation( 'huella_consumo_anterior' ); // P2
+var consumo_anterior = new LiveValidation( 'huella_consumo_anterior', {onlyOnSubmit: true} ); // P2
 consumo_anterior.add( Validate.Presence );
 consumo_anterior.add( Validate.Numericality );
-var consumo_actual = new LiveValidation( 'huella_consumo_actual' ); // P2
+
+var consumo_actual = new LiveValidation( 'huella_consumo_actual', {onlyOnSubmit: true} ); // P2
 consumo_actual.add( Validate.Presence );
 consumo_actual.add( Validate.Numericality );
+
 var total_focos = new LiveValidation( 'huella_total_focos' ); // P3
 total_focos.add( Validate.Presence );
 total_focos.add( Validate.Numericality, {onlyInteger: true} );
+
 var focos_ahorradores = new LiveValidation( 'huella_focos_ahorradores' ); // P3
 focos_ahorradores.add( Validate.Presence );
-focos_ahorradores.add( Validate.Numericality, { maximum: parseInt(document.getElementById("huella_total_focos").value), onlyInteger: true } );
+focos_ahorradores.add( Validate.Numericality, { maximum: 100, onlyInteger: true } );
 
-<%#*var desc_epos_elec_desc = new LiveValidation( 'huella_desc_epos_elec_desc', {onlyOnSubmit: true} ); // P3%>
-<%#*desc_epos_elec_desc.add( Validate.Presence );%>
-<%#*var util_lamp_ahorr_desc = new LiveValidation( 'huella_util_lamp_ahorr_desc', {onlyOnSubmit: true} ); // P4%>
-<%#*util_lamp_ahorr_desc.add( Validate.Presence );%>
-<%#*var aprov_luz_natural_desc = new LiveValidation( 'huella_aprov_luz_natural_desc', {onlyOnSubmit: true} ); // P5%>
-<%#*aprov_luz_natural_desc.add( Validate.Presence );%>
-<%#*var sist_almac_agua_desc = new LiveValidation( 'huella_sist_almac_agua_desc', {onlyOnSubmit: true} ); // P6%>
-<%#*sist_almac_agua_desc.add( Validate.Presence );%>
-<%#*var potab_agua_desc = new LiveValidation( 'huella_potab_agua_desc', {onlyOnSubmit: true} ); // P7%>
-<%#*potab_agua_desc.add( Validate.Presence );%>
-<%#*var servicios_comun_desc = new LiveValidation( 'huella_servicios_comun_desc', {onlyOnSubmit: true} ); // P8%>
-<%#*servicios_comun_desc.add( Validate.Presence );%>
-<%#*var reutiliza_agua_desc = new LiveValidation( 'huella_reutiliza_agua_desc', {onlyOnSubmit: true} ); // P10%>
-<%#*reutiliza_agua_desc.add( Validate.Presence );%>
-<%#*var recip_residuos_solid_num = new LiveValidation( 'huella_recip_residuos_solid_num'); // P11%>
-<%#*recip_residuos_solid_num.add( Validate.Numericality, { onlyInteger: true } );%>
-<%#*recip_residuos_solid_num.add( Validate.Presence );%>
-<%#*var sep_residuos_org_inorg_desc = new LiveValidation( 'huella_sep_residuos_org_inorg_desc', {onlyOnSubmit: true} ); // P12%>
-<%#*sep_residuos_org_inorg_desc.add( Validate.Presence );%>
-<%#*var elab_comp_residuos_desc = new LiveValidation( 'huella_elab_comp_residuos_desc', {onlyOnSubmit: true} ); // P13%>
-<%#*elab_comp_residuos_desc.add( Validate.Presence );%>
-<%#*var cta_recip_org_inorg_num = new LiveValidation( 'huella_cta_recip_org_inorg_num'); // P14%>
-<%#*cta_recip_org_inorg_num.add( Validate.Numericality, { onlyInteger: true } );%>
-<%#*cta_recip_org_inorg_num.add( Validate.Presence );%>
-<%#*var act_reutiliza_residuos_desc = new LiveValidation( 'huella_act_reutiliza_residuos_desc', {onlyOnSubmit: true} ); // P15%>
-<%#*act_reutiliza_residuos_desc.add( Validate.Presence );%>
-<%#*var meca_elim_residuos_solid_desc = new LiveValidation( 'huella_meca_elim_residuos_solid_desc', {onlyOnSubmit: true} ); // P16%>
-<%#*meca_elim_residuos_solid_desc.add( Validate.Presence );%>
+var servicio_agua_id = new LiveValidation( 'huella_servicio_agua_id' ); // P3
+servicio_agua_id.add( Validate.Presence );
+servicio_agua_id.add( Validate.Exclusion, { within: [ '' , ' ' ] } );
 
 jQuery(function(){
-  jQuery("#huella_capacitacion_ahorro_energia").validate({ expression: "if (isSelectedC(SelfID)) return true; else return false;", message: "Seleccione una opción!" }); // P1
-  jQuery("#huella_mantto_inst").validate({ expression: "if (isSelectedC(SelfID)) return true; else return false;", message: "Seleccione una opción!" }); // P5
+  <%#*jQuery("#huella_capacitacion_ahorro_energia").validate({ expression: "if (isSelectedC(SelfID)) return true; else return false;", message: "Seleccione una opción!" }); // P1%>
+  <%#*jQuery("#huella_mantto_inst").validate({ expression: "if (isSelectedC(SelfID)) return true; else return false;", message: "Seleccione una opción!" }); // P5%>
+  <%#*jQuery("#huella_servicio_agua_id").validate({ expression: "if (isSelectedC(SelfID)) return true; else return false;", message: "Seleccione una opción!" }); // P5%>
   
-  <%#*jQuery("#r_mant_instalaciones").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" }); // P1%>
-  <%#*jQuery("#r_equipos").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" }); // P2%>
-  <%#*jQuery("#r_desc_epos_elec").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" }); // P3%>
-  <%#*jQuery("#r_util_lamp_ahorr").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" }); // P4%>
-  <%#*jQuery("#r_aprov_luz_natural").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" }); // P5%>
-  <%#*jQuery("#r_sist_almac_agua").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" }); // P6%>
-  <%#*jQuery("#r_potab_agua").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" }); // P7%>
-  <%#*jQuery("#r_servicios_comun").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" }); // P8%>
-  <%#*jQuery("#r_captacion_agua_pluv").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" }); // P9%>
-  <%#*jQuery("#r_reutiliza_agua").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" }); // P10%>
-  <%#*jQuery("#r_recip_residuos_solid").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" }); // P11%>
-  <%#*jQuery("#r_sep_residuos_org_inorg").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" }); // P12%>
-  <%#*jQuery("#r_elab_comp_residuos").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" }); // P13%>
-  <%#*jQuery("#r_cta_recip_org_inorg").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" }); // P14%>
-  <%#*jQuery("#r_act_reutiliza_residuos").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" }); // P15%>
-  <%#*jQuery("#r_meca_elim_residuos_solid").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" }); // P16%>
-    jQuery("#inorganicos").validate({ expression: "if (isCheckedC(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
-    jQuery("#elimina_organicos").validate({ expression: "if (isCheckedC(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
-    jQuery("#elimina_inorganicos").validate({ expression: "if (isCheckedC(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
+  jQuery("#r_jardines_hidroponicos").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" }); // P1
+  jQuery("#r_recip_residuos_solid").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" }); // P2
+  jQuery("#r_sep_residuos_org_inorg").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" }); // P3
+  jQuery("#r_elabora_compostas").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" }); // P4
+ 
+  jQuery("#inorganicos").validate({ expression: "if (isCheckedC(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
+  jQuery("#elimina_organicos").validate({ expression: "if (isCheckedC(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
+  jQuery("#elimina_inorganicos").validate({ expression: "if (isCheckedC(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
 });
 </script>

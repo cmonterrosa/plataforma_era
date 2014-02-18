@@ -8,7 +8,7 @@ class DiagnosticosController < ApplicationController
     @eje1=true
     @eje2=true
     @eje3=true
-    @eje4=false
+    @eje4=true
     @eje5=false
    end
 

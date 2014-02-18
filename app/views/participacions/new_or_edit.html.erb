@@ -12,7 +12,7 @@
           <td width="49%" align="justify" style=" vertical-align:top;" >
             <!-- Línea pregunta -->
             <div class="grid-12-12">
-              <label>¿Cuál es el número de  padres de familia o tutores que tiene la escuela en su registro?.<em class="formee-req"> *</em></label>
+              <label>1.- ¿Cuál es el número de  padres de familia o tutores que tiene la escuela en su registro?.<em class="formee-req"> *</em></label>
             </div>
             <!-- Línea campo -->
             <div class="grid-12-12">
@@ -23,7 +23,7 @@
               <div class="grid-1-12"></div>
               <div class="grid-6-12">
                 <%= link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta1", :id => "pregunta1"),
-                                                              {:controller => "upload", :diagnostico => @diagnostico, :eje => 5, :numero_pregunta => 1, :action => "new_evidencia" },
+                                                              {:controller => "upload", :diagnostico => @diagnostico, :eje => 5, :numero_pregunta => 1, :action => "list_evidencias" },
                                                               :title => "EVIDENCIA DE LA PREGUNTA 1", :class => "fancybox fancybox.iframe"%>
               </div>
             </div>
@@ -32,7 +32,7 @@
           <td width="49%" align="justify" style=" vertical-align:top;">
             <!-- Línea Pregunta -->
             <div class="grid-12-12">
-              <label>De su registro escolar ¿Cuántos  padres de familia o tutores participaron en la última capacitación, taller, curso o actividad relacionados en temas de salud y/o medio ambiente?.<em class="formee-req"> *</em></label>
+              <label>2.- De su registro escolar ¿Cuántos  padres de familia o tutores participaron en la última capacitación, taller, curso o actividad relacionados en temas de salud y/o medio ambiente?.<em class="formee-req"> *</em></label>
             </div>
             <!-- Línea campo -->
             <div class="grid-12-12">
@@ -43,7 +43,7 @@
               <div class="grid-1-12"></div>
               <div class="grid-6-12">
                 <%= link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta2", :id => "pregunta2"),
-                                                              {:controller => "upload", :diagnostico => @diagnostico, :eje => 5, :numero_pregunta => 2, :action => "new_evidencia" },
+                                                              {:controller => "upload", :diagnostico => @diagnostico, :eje => 5, :numero_pregunta => 2, :action => "list_evidencias" },
                                                               :title => "EVIDENCIA DE LA PREGUNTA 2", :class => "fancybox fancybox.iframe"%>
               </div>
             </div>
@@ -56,42 +56,88 @@
           <td width="49%" align="justify" style=" vertical-align:top;" >
             <!-- Línea pregunta -->
             <div class="grid-12-12">
-              <label>¿Cuántos proyectos escolares en materia del cuidado del medio ambiente y/o salud realizó la escuela en vinculación con la comunidad?.<em class="formee-req"> *</em></label>
+              <label>3.- ¿Cuántos proyectos escolares en materia del cuidado del medio ambiente realizó la escuela en vinculación con la comunidad?.<em class="formee-req"> *</em></label>
             </div>
             <!-- Línea campo -->
             <div class="grid-3-12"></div>
             <div class="grid-2-12">
-              <%= f.select :proy_escolares, (0..2)%>
+              <%= f.select :proy_escolares_ma, (0..2), {}, :onchange => "showDesc(this, 'participacion_proy_escolares_ma_desc');"%>
             </div>
             <div class="grid-1-12"></div>
             <div class="grid-6-12">
               <%= link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta3", :id => "pregunta3"),
-                                                              {:controller => "upload", :diagnostico => @diagnostico, :eje => 5, :numero_pregunta => 3, :action => "new_evidencia" },
+                                                              {:controller => "upload", :diagnostico => @diagnostico, :eje => 5, :numero_pregunta => 3, :action => "list_evidencias" },
                                                               :title => "EVIDENCIA DE LA PREGUNTA 3", :class => "fancybox fancybox.iframe"%>
             </div>
             <div class="grid-12-12">
-              <%= f.text_area :act_salud_ma_desc %>
+              <%= f.text_area :proy_escolares_ma_desc, :placeholder => "Especifique...", :disabled => 'disabled', :style => "display: none;" %>
             </div>
           </td>
           <td>&nbsp;</td>
           <td width="49%" align="justify" style=" vertical-align:top;">
             <!-- Línea Pregunta -->
             <div class="grid-12-12">
-              <label>¿Cuántas capacitaciones, talleres, cursos o actividades relacionados en temas de salud y/o medio ambiente con padres de familia se han realizado?.<em class="formee-req"> *</em></label>
+              <label>4.- ¿Cuántos proyectos escolares en materia del cuidado de la salud realizó la escuela en vinculación con la comunidad?.<em class="formee-req"> *</em></label>
             </div>
             <!-- Línea campo -->
             <div class="grid-3-12"></div>
             <div class="grid-2-12">
-              <%= f.select :act_salud_ma, (0..2)%>
+              <%= f.select :proy_escolares_salud, (0..2), {}, :onchange => "showDesc(this, 'participacion_proy_escolares_salud_desc');"%>
             </div>
             <div class="grid-1-12"></div>
             <div class="grid-6-12">
             <%= link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta4", :id => "pregunta4"),
-                                                              {:controller => "upload", :diagnostico => @diagnostico, :eje => 5, :numero_pregunta => 4, :action => "new_evidencia" },
+                                                              {:controller => "upload", :diagnostico => @diagnostico, :eje => 5, :numero_pregunta => 4, :action => "list_evidencias" },
                                                               :title => "EVIDENCIA DE LA PREGUNTA 4", :class => "fancybox fancybox.iframe"%>
             </div>
             <div class="grid-12-12">
-              <%= f.text_area :act_salud_ma_desc %>
+              <%= f.text_area :proy_escolares_salud_desc, :placeholder => "Especifique...", :disabled => 'disabled', :style => "display: none;" %>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3">&nbsp;</td>
+        </tr>
+        <tr>
+          <td width="49%" align="justify" style=" vertical-align:top;" >
+            <!-- Línea pregunta -->
+            <div class="grid-12-12">
+              <label>5.- ¿Cuántos talleres, platicas o actividades relacionadas en temas de salud y/o medio ambiente ha realizado la escuela con padres de familia?.<em class="formee-req"> *</em></label>
+            </div>
+            <!-- Línea campo -->
+            <div class="grid-3-12"></div>
+            <div class="grid-2-12">
+              <%= f.select :act_salud_ma, (0..2), {}, :onchange => "showDesc(this, 'participacion_act_salud_ma_desc');"%>
+            </div>
+            <div class="grid-1-12"></div>
+            <div class="grid-6-12">
+              <%= link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta5", :id => "pregunta5"),
+                                                              {:controller => "upload", :diagnostico => @diagnostico, :eje => 5, :numero_pregunta => 5, :action => "list_evidencias" },
+                                                              :title => "EVIDENCIA DE LA PREGUNTA 5", :class => "fancybox fancybox.iframe"%>
+            </div>
+            <div class="grid-12-12">
+              <%= f.text_area :act_salud_ma_desc, :placeholder => "Especifique...", :disabled => 'disabled', :style => "display: none;" %>
+            </div>
+          </td>
+          <td>&nbsp;</td>
+          <td width="49%" align="justify" style=" vertical-align:top;">
+            <!-- Línea Pregunta -->
+            <div class="grid-12-12">
+              <label>6.- De los proyectos o actividades que realiza la intitución escolar, ¿cuáles se desarrollan, con apoyos de organismos no gubernamentales o dependencias gubernamentales?.<em class="formee-req"> *</em></label>
+            </div>
+            <!-- Línea campo -->
+            <div class="grid-3-12"></div>
+            <div class="grid-2-12">
+              <%= f.select :act_dep_gobierno, (0..2), {}, :onchange => "showDesc(this, 'participacion_act_dep_gobierno_desc');"%>
+            </div>
+            <div class="grid-1-12"></div>
+            <div class="grid-6-12">
+            <%= link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta6", :id => "pregunta6"),
+                                                              {:controller => "upload", :diagnostico => @diagnostico, :eje => 6, :numero_pregunta => 6, :action => "list_evidencias" },
+                                                              :title => "EVIDENCIA DE LA PREGUNTA 6", :class => "fancybox fancybox.iframe"%>
+            </div>
+            <div class="grid-12-12">
+              <%= f.text_area :act_dep_gobierno_desc, :placeholder => "Especifique...", :disabled => 'disabled', :style => "display: none;" %>
             </div>
           </td>
         </tr>
@@ -122,44 +168,28 @@
 <% end %>
 
 <script type="text/javascript">
-<%#*showTextarea('participacion_proy_vincula_comunidad','participacion_proy_vincula_comunidad_desc');%>
-<%#*showSelectDescription('participacion_familia_involucran_actividades', 'participacion_acomunitaria_id', 'participacion_familia_involucran_actividades_desc');%>
-<%#*showSelectDescription('participacion_esc_participa_proy', 'participacion_pcolectiva_id', 'participacion_esc_participa_proy_desc');%>
-<%#*showTextarea('participacion_esc_capacita_salud_ma','participacion_esc_capacita_salud_ma_desc');%>
-<%#*showTextarea('participacion_padres_participan_proy','participacion_padres_participan_proy_desc');%>
-<%#*showTextarea('participacion_familia_participa_acciones','participacion_familia_participa_acciones_desc');%>
-<%#*showTextarea('participacion_acciones_padres_ma', 'participacion_acciones_padres_ma_desc');%>
-<%#*showTextarea('participacion_padres_aprov_esc_hijos', 'participacion_padres_aprov_esc_hijos_desc');%>
-<%#*showTextarea('participacion_promueven_aprendizajes', 'participacion_promueven_aprendizajes_desc');%>
+  showDesc('participacion_proy_escolares_ma', 'participacion_proy_escolares_ma_desc');
+  showDesc('participacion_proy_escolares_salud', 'participacion_proy_escolares_salud_desc');
+  showDesc('participacion_act_salud_ma', 'participacion_act_salud_ma_desc');
+  showDesc('participacion_act_dep_gobierno', 'participacion_act_dep_gobierno_desc');
 
-<%#*var proy_vincula_comunidad_desc = new LiveValidation( 'participacion_proy_vincula_comunidad_desc', {onlyOnSubmit: true} );%>
-<%#*proy_vincula_comunidad_desc.add( Validate.Presence );%>
-<%#*var familia_involucran_actividades_desc = new LiveValidation( 'participacion_familia_involucran_actividades_desc', {onlyOnSubmit: true} );%>
-<%#*familia_involucran_actividades_desc.add( Validate.Presence );%>
-<%#*var esc_participa_proy_desc = new LiveValidation( 'participacion_esc_participa_proy_desc', {onlyOnSubmit: true} );%>
-<%#*esc_participa_proy_desc.add( Validate.Presence );%>
-<%#*var esc_capacita_salud_ma_desc = new LiveValidation( 'participacion_esc_capacita_salud_ma_desc', {onlyOnSubmit: true} );%>
-<%#*esc_capacita_salud_ma_desc.add( Validate.Presence );%>
-<%#*var padres_participan_proy_desc = new LiveValidation( 'participacion_padres_participan_proy_desc', {onlyOnSubmit: true} );%>
-<%#*padres_participan_proy_desc.add( Validate.Presence );%>
-<%#*var familia_participa_acciones_desc = new LiveValidation( 'participacion_familia_participa_acciones_desc', {onlyOnSubmit: true} );%>
-<%#*familia_participa_acciones_desc.add( Validate.Presence );%>
-<%#*var acciones_padres_ma_desc = new LiveValidation( 'participacion_acciones_padres_ma_desc', {onlyOnSubmit: true} );%>
-<%#*acciones_padres_ma_desc.add( Validate.Presence );%>
-<%#*var padres_aprov_esc_hijos_desc = new LiveValidation( 'participacion_padres_aprov_esc_hijos_desc', {onlyOnSubmit: true} );%>
-<%#*padres_aprov_esc_hijos_desc.add( Validate.Presence );%>
-<%#*var promueven_aprendizajes_desc = new LiveValidation( 'participacion_promueven_aprendizajes_desc', {onlyOnSubmit: true} );%>
-<%#*promueven_aprendizajes_desc.add( Validate.Presence );%>
+  var num_padres_familia = new LiveValidation( 'participacion_num_padres_familia' );
+  num_padres_familia.add( Validate.Presence );
+  num_padres_familia.add( Validate.Numericality, { onlyInteger: true } );
 
-<%#*jQuery(function(){%>
-  <%#*jQuery("#r_proy_vincula_comunidad").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });%>
-  <%#*jQuery("#r_familia_involucran_actividades").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });%>
-  <%#*jQuery("#r_esc_participa_proy").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });%>
-  <%#*jQuery("#r_esc_capacita_salud_ma").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });%>
-  <%#*jQuery("#r_padres_participan_proy").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });%>
-  <%#*jQuery("#r_familia_participa_acciones").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });%>
-  <%#*jQuery("#r_acciones_padres_ma").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });%>
-  <%#*jQuery("#r_padres_aprov_esc_hijos").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });%>
-  <%#*jQuery("#r_promueven_aprendizajes").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });%>
-<%#*});%>
+  var capacitacion_salud_ma = new LiveValidation( 'participacion_capacitacion_salud_ma' );
+  capacitacion_salud_ma.add( Validate.Presence );
+  capacitacion_salud_ma.add( Validate.Numericality, { onlyInteger: true } );
+
+  var proy_escolares_ma_desc = new LiveValidation( 'participacion_proy_escolares_ma_desc' );
+  proy_escolares_ma_desc.add( Validate.Presence );
+
+  var proy_escolares_salud_desc = new LiveValidation( 'participacion_proy_escolares_salud_desc' );
+  proy_escolares_salud_desc.add( Validate.Presence );
+
+  var act_salud_ma_desc = new LiveValidation( 'participacion_act_salud_ma_desc' );
+  act_salud_ma_desc.add( Validate.Presence );
+
+  var act_dep_gobierno_desc = new LiveValidation( 'participacion_act_dep_gobierno_desc' );
+  act_dep_gobierno_desc.add( Validate.Presence );
 </script>
