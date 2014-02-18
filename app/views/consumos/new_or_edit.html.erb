@@ -9,30 +9,51 @@
     <td align="center">
       <table class="subprincipal" width="100%" border="0" cellpadding="4" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
         <tr>
+          <!--
           <td width="49%" align="justify" style=" vertical-align:top;" >
-            <!-- Línea pregunta -->
             <div class="grid-12-12">
-              <label>¿Su centro escolar cuenta con establecimientos para el  expendio de alimentos y bebidas?.<em class="formee-req"> *</em></label>
+              <label>¿Su centro escolar cuenta con establecimientos para el expendio de alimentos y bebidas?.<em class="formee-req"> *</em></label>
             </div>
-            <!-- Línea campo -->
+            
             <div class="grid-12-12">
               <div style="overflow:auto; width:400px;">
               <select id="establecimientos" name="establecimientos[]" multiple="multiple" size="4" style="width:auto;">
-                <%= options_from_collection_for_select(Establecimiento.find(:all), :clave, :descripcion, @s_establecimientos)%>
+                <= options_from_collection_for_select(Establecimiento.find(:all), :clave, :descripcion, @s_establecimientos)%>
               </select>
               </div>
             </div>
           </td>
+          -->
+          
+           <!-- Bebidas -->
+          <td width="49%" align="justify" style=" vertical-align:top;" >
+            <!-- Línea pregunta -->
+            <div class="grid-12-12">
+              <label>1.- ¿Su centro escolar cuenta con establecimientos para el expendio de alimentos y bebidas?.<em class="formee-req"> *</em></label>
+            </div>
+            <!-- Línea campo -->
+            <fieldset style="padding: 5px 5px 5px 5px;">
+                <div id="establecimientos" class="grid-12-12">
+                  <% Establecimiento.find(:all).each do |c| %>
+                    <%= check_box_tag "establecimientos[#{c.id}]", c.clave, @s_establecimientos.include?(c.clave) ? true : false %>&nbsp;<%= c.descripcion %><br />
+                  <% end %>
+                </div>
+            </fieldset>
+          </td>
+
+
+
+
           <td>&nbsp;</td>
           <td width="49%" align="justify" style=" vertical-align:top;">
             <!-- Línea Pregunta -->
             <div class="grid-12-12">
-              <label>Los responsables de la elaboración y venta de  alimentos en cooperativas, cafeterías o expendios escolares, ¿conocen los  Lineamientos Generales para la venta y consumo de alimentos y bebidas  de la Secretaria de Salud?.<em class="formee-req"> *</em></label>
+              <label>2.- Los responsables de la elaboración y venta de  alimentos en cooperativas, cafeterías o expendios escolares, ¿conocen los  Lineamientos Generales para la venta y consumo de alimentos y bebidas  de la Secretaria de Salud?.<em class="formee-req"> *</em></label>
             </div>
             <!-- Línea campo -->
             <div class="grid-3-12"></div>
             <div class="grid-5-12">
-              <span id="r_recip_residuos_solid" class="InputGroup">
+              <span id="responsables_conocen_lineamientos" class="InputGroup">
                 <label>SI <%= f.radio_button :conocen_lineamientos_grales, "SI" %></label>&nbsp;&nbsp;
                 <label>NO <%= f.radio_button :conocen_lineamientos_grales, "NO" %></label>
               </span>
@@ -46,7 +67,7 @@
           <td width="49%" align="justify" style=" vertical-align:top;" >
             <!-- Línea pregunta -->
             <div class="grid-12-12">
-              <label>Las personas encargadas del manejo y preparación de alimentos  dentro de la escuela, ¿han recibido capacitación(es)  para la preparación  e higiene de alimentos y bebidas en  los establecimientos de consumo escolar?<em class="formee-req"> *</em></label>
+              <label>3.- Las personas encargadas del manejo y preparación de alimentos  dentro de la escuela, ¿han recibido capacitación(es)  para la preparación  e higiene de alimentos y bebidas en  los establecimientos de consumo escolar?<em class="formee-req"> *</em></label>
             </div>
             <!-- Línea campo -->
             <div class="grid-12-12">
@@ -69,13 +90,13 @@
           <td width="49%" align="justify" style=" vertical-align:top;">
             <!-- Línea Pregunta -->
             <div class="grid-12-12">
-              <label>Los alimentos preparados que se venden en los establecimientos escolares, ¿cumplen los  requerimientos nutricionales  que señala la Norma Oficial Mexicana  NOM-0043-SSA2-2005, del Plato del Bien Comer?.<em class="formee-req"> *</em></label>
+              <label>4.- Los alimentos preparados que se venden en los establecimientos escolares, ¿cumplen los  requerimientos nutricionales  que señala la Norma Oficial Mexicana  NOM-0043-SSA2-2005, del Plato del Bien Comer?.<em class="formee-req"> *</em></label>
             </div>
             <!-- Línea campo -->
             <div class="grid-12-12">
               <div class="grid-2-12"></div>
               <div class="grid-5-12">
-                <span id="r_:cumplen_req_nutricionales" class="InputGroup">
+                <span id="r_cumplen_req_nutricionales" class="InputGroup">
                   <label>SI <%= f.radio_button :cumplen_req_nutricionales, "SI" %></label>&nbsp;&nbsp;
                   <label>NO <%= f.radio_button :cumplen_req_nutricionales, "NO" %></label>
                 </span>
@@ -83,7 +104,7 @@
               <div class="grid-1-12"></div>
               <div class="grid-4-12">
                   <%= link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta4", :id => "pregunta4"),
-                                                              {:controller => "upload", :diagnostico => @diagnostico, :eje => 4, :numero_pregunta => 3, :action => "new_evidencia" },
+                                                              {:controller => "upload", :diagnostico => @diagnostico, :eje => 4, :numero_pregunta => 4, :action => "new_evidencia" },
                                                               :title => "EVIDENCIA DE LA PREGUNTA 4", :class => "fancybox fancybox.iframe"%>
               </div>
             </div>
@@ -96,67 +117,142 @@
           <td colspan="3" align="justify" style=" vertical-align:top;" >
             <!-- Línea pregunta -->
             <div class="grid-12-12">
-              <label>Productos que se comercializan en la(s) cooperativa(s) escolar(es) y/o tienda(s) escolar(es). Del siguiente listado marque los que se comercializan en su escuela:<em class="formee-req"> *</em></label>
+              <label>5.- Productos que se comercializan en la(s) cooperativa(s) escolar(es) y/o tienda(s) escolar(es). Del siguiente listado marque los que se comercializan en su escuela:<em class="formee-req"> *</em></label>
             </div>
           </td>
         </tr>
         <tr>
+
+
+          <!-- ANTERIOR BEBIDAS
           <td width="49%" align="justify" style=" vertical-align:top;" >
             <div class="grid-12-12">
               <label>Bebidas (industrializadas y caseras):</label>
             </div>
-            <!-- Línea campo -->
+           
             <div class="grid-12-12">
               <div style="overflow:auto; width:400px;">
               <select id="bebidas" name="bebidas[]" multiple="multiple" size="6" style="width:auto;">
-                <%= options_from_collection_for_select(Bebida.find(:all), :clave, :descripcion, @s_bebidas)%>
+                <= options_from_collection_for_select(Bebida.find(:all), :clave, :descripcion, @s_bebidas)%>
               </select>
               </div>
             </div>
           </td>
+          -->
+
+          <!-- Bebidas -->
+          <td width="49%" align="justify" style=" vertical-align:top;" >
+            <!-- Línea pregunta -->
+            <div class="grid-12-12">
+              <label>Bebidas (industrializadas y caseras):</label>
+            </div>
+            <!-- Línea campo -->
+            <fieldset style="padding: 5px 5px 5px 5px;">
+                <div id="bebidas" class="grid-12-12">
+                  <% Bebida.find(:all).each do |c| %>
+                    <%= check_box_tag "bebidas[#{c.id}]", c.clave, @s_bebidas.include?(c.clave) ? true : false %>&nbsp;<%= c.descripcion %><br />
+                  <% end %>
+                </div>
+            </fieldset>
+          </td>
+
           <td>&nbsp;</td>
+          <!-- ANTERIOR ALIMENTOS
           <td width="49%" align="justify" style=" vertical-align:top;">
             <div class="grid-12-12">
               <label>Alimentos:</label>
             </div>
-            <!-- Línea campo -->
             <div class="grid-12-12">
               <div style="overflow:auto; width:400px;">
               <select id="alimentos" name="alimentos[]" multiple="multiple" size="10" style="width:auto;">
-                <%= options_from_collection_for_select(Alimento.find(:all), :clave, :descripcion, @s_alimentos)%>
+                <= options_from_collection_for_select(Alimento.find(:all), :clave, :descripcion, @s_alimentos)%>
               </select>
               </div>
             </div>
+           </td>
+          -->
+
+          <td width="49%" align="justify" style=" vertical-align:top;" >
+            <!-- Línea pregunta -->
+            <div class="grid-12-12">
+              <label>Alimentos:</label>
+            </div>
+            <!-- Línea campo -->
+            <fieldset style="padding: 5px 5px 5px 5px;">
+                <div id="alimentos" class="grid-12-12">
+                  <% Alimento.find(:all).each do |c| %>
+                    <%= check_box_tag "alimentos[#{c.id}]", c.clave, @s_alimentos.include?(c.clave) ? true : false %>&nbsp;<%= c.descripcion %><br />
+                  <% end %>
+                </div>
+            </fieldset>
           </td>
         </tr>
+
         <tr>
+
+          <!-- ANTERIOR BOTANAS
           <td width="49%" align="justify" style=" vertical-align:top;" >
             <div class="grid-12-12">
               <label>Botanas (Industriales y caseras):</label>
             </div>
-            <!-- Línea campo -->
-            <div class="grid-12-12">
+             <div class="grid-12-12">
               <div style="overflow:auto; width:400px;">
               <select id="botanas" name="botanas[]" multiple="multiple" size="6" style="width:auto;">
-                <%= options_from_collection_for_select(Botana.find(:all), :clave, :descripcion, @s_botanas)%>
+                <= options_from_collection_for_select(Botana.find(:all), :clave, :descripcion, @s_botanas)%>
               </select>
               </div>
             </div>
           </td>
+          -->
+          
+           <td width="49%" align="justify" style=" vertical-align:top;" >
+            <!-- Línea pregunta -->
+            <div class="grid-12-12">
+              <label>Botanas (Industriales y caseras):</label>
+            </div>
+            <!-- Línea campo -->
+            <fieldset style="padding: 5px 5px 5px 5px;">
+                <div id="botanas" class="grid-12-12">
+                  <% Botana.find(:all).each do |c| %>
+                    <%= check_box_tag "botanas[#{c.id}]", c.clave, @s_botanas.include?(c.clave) ? true : false %>&nbsp;<%= c.descripcion %><br />
+                  <% end %>
+                </div>
+            </fieldset>
+          </td>
+
+
           <td>&nbsp;</td>
+          <!-- ANTERIOR REPOSTERIA
           <td width="49%" align="justify" style=" vertical-align:top;">
             <div class="grid-12-12">
               <label>Galletas, pastelillos y postres (Industriales y caseros):</label>
             </div>
-            <!-- Línea campo -->
             <div class="grid-12-12">
               <div style="overflow:auto; width:400px;">
               <select id="reposterias" name="reposterias[]" multiple="multiple" size="10" style="width:auto;">
-                <%= options_from_collection_for_select(Reposteria.find(:all), :clave, :descripcion, @s_reposterias)%>
+                <= options_from_collection_for_select(Reposteria.find(:all), :clave, :descripcion, @s_reposterias)%>
               </select>
               </div>
             </div>
           </td>
+          -->
+
+          <td width="49%" align="justify" style=" vertical-align:top;" >
+            <!-- Línea pregunta -->
+            <div class="grid-12-12">
+              <label>Galletas, pastelillos y postres (Industriales y caseros):</label>
+            </div>
+            <!-- Línea campo -->
+            <fieldset style="padding: 5px 5px 5px 5px;">
+                <div id="reposterias" class="grid-12-12">
+                  <% Reposteria.find(:all).each do |c| %>
+                    <%= check_box_tag "reposterias[#{c.id}]", c.clave, @s_reposterias.include?(c.clave) ? true : false %>&nbsp;<%= c.descripcion %><br />
+                  <% end %>
+                </div>
+            </fieldset>
+          </td>
+
+
         </tr>
         <tr>
           <td colspan="3"></td>
@@ -164,7 +260,7 @@
         <tr>
           <td width="49%" align="justify" style=" vertical-align:top;" >
             <div class="grid-12-12">
-              <label>¿Con qué frecuencia se realiza activación física en su escuela?. <em class="formee-req"> *</em></label>
+              <label>6.- ¿Con qué frecuencia se realiza activación física en su escuela?. <em class="formee-req"> *</em></label>
             </div>
             <div class="grid-12-12">
               <label class="formee-msg-info">Nota: esta se realizará con independencia y de manera adicional a la clase de Educación Física.</label>
@@ -177,7 +273,7 @@
           <td>&nbsp;</td>
           <td width="49%" align="justify" style=" vertical-align:top;">
             <div class="grid-12-12">
-              <label>Por día ¿Qué tiempo dedica y en cuántos momentos realiza la activación física?. <em class="formee-req"> *</em></label>
+              <label>7.- Por día ¿Qué tiempo dedica y en cuántos momentos realiza la activación física?. <em class="formee-req"> *</em></label>
             </div>
             <!-- Línea campo -->
             <div class="grid-2-12"></div>
@@ -199,6 +295,10 @@
   <tr>
     <td>&nbsp;</td>
   </tr>
+
+  <%= render :partial => "diagnosticos/errores_evidencias"%>
+
+
   <tr>
     <td align="right">
       <table>
@@ -220,6 +320,16 @@
 <% end %>
 
 <script type="text/javascript">
+  jQuery("#establecimientos").validate({ expression: "if (isCheckedC(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
+  jQuery("#bebidas").validate({ expression: "if (isCheckedC(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
+  jQuery("#alimentos").validate({ expression: "if (isCheckedC(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
+  jQuery("#botanas").validate({ expression: "if (isCheckedC(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
+  jQuery("#reposterias").validate({ expression: "if (isCheckedC(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
+
+  jQuery("#responsables_conocen_lineamientos").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" }); // P2
+  jQuery("#r_capacitacion_alim_bebidas").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
+  jQuery("#r_cumplen_req_nutricionales").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" }); // P2
+
   <%#*showTextarea('consumo_desayunos_esc', 'consumo_desayunos_esc_desc');%>
   <%#*showTextfield('consumo_tipo_establec', 'consumo_establecimiento_id');%>
   <%#*showTextarea('consumo_apli_lineamientos', 'consumo_apli_lineamientos_desc');%>
