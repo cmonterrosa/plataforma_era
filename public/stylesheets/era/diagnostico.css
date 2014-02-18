@@ -433,6 +433,15 @@ a.fancybox, a.fancybox:hover{
     text-align: center;
 }
 
+.titulos_ejes {
+    /*font-family: "Trebuchet MS", sans-serif;*/
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 15px; color: black;
+    text-decoration:none;
+    text-shadow:1px 1px 0px #ffffff;
+    text-align: center;
+}
+
 .vinculo_negro {
     text-align: center;
     color: black;
