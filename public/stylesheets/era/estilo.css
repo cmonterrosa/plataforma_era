@@ -27,9 +27,10 @@
 	font-weight: bold;
 }
 .Txt_cont_acercade {
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 14px;
-	color: #333333;
+	/*font-family: Arial, Helvetica, sans-serif;*/
+        font-family: "Arial Narrow", Arial, "Helvetica Condensed";
+	font-size: 16px;
+	color: black;
 	text-align: justify;
 	margin-right: 10px;
 	margin-left: 10px;
@@ -90,6 +91,15 @@
 	text-align: justify;
 }
 
+.Banner_era {
+        background-image: url(/images/era/ban_esys.jpg);
+	background-repeat: no-repeat;
+	background-position: center top;
+        width:900px;
+        height: 175px;
+
+}
+
 /* .fnd_cert {
 	background-image: url(/images/era/fnds/fondo22.jpg);
 	background-repeat: no-repeat;
@@ -101,7 +111,12 @@
 
 
 table.TextoPrincipal{
-background-image:url('/images/era/fnds/fondo5.jpg');
+/*background-image:url('/images/era/fnds/fondo5.jpg');
 background-repeat: no-repeat;
-
+*/
+background-color:#ffffff;
+  border:0px solid black;
+  opacity:0.7;
+  filter:alpha(opacity=60); /* For IE8 and earlier */
+  
 }
