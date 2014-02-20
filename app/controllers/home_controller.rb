@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
-  layout 'era'
+  
   
   def index
   end

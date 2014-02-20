@@ -1,0 +1,434 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!--<html lang="en"> -->
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>Educar con Responsabilidad Ambiental</title>
+
+  <style type="text/css">
+  body {
+          margin-top: 5px;
+          /*background-color: #F0F0F0;*/
+          background-color: white;
+          font-family: Arial Narrow,Helvetica,sans-serif;
+  }
+
+  </style>
+
+<!-- TOOLTIPS -->
+<%= javascript_include_tag 'prototype'%>
+<%= javascript_include_tag 'BubbleTooltips' %>
+<%= stylesheet_link_tag "bt.css" %>
+
+
+<link rel="stylesheet" type="text/css" href="/stylesheets/era/estilo.css" />
+<!-- formee -->
+<%=javascript_include_tag "formee/jquery-1.6.4.min.js" %>
+<%#=javascript_include_tag "formee/jquery-1.10.1.min.js" %>
+<%=javascript_include_tag "formee/formee.js" %>
+<%=javascript_include_tag "livevalidation/livevalidation_standalone.js" %>
+<%=javascript_include_tag "fancybox/jquery.fancybox.js" %>
+<%=javascript_include_tag "validate/jquery.validate.js" %>
+<%=javascript_include_tag "validate/jquery.validation.functions.js" %>
+<%#=javascript_include_tag "validate/jquery-1.3.2.js" %>
+<%=javascript_include_tag :defaults %>
+
+<%= stylesheet_link_tag "formee/formee-structure.css" %>
+<%= stylesheet_link_tag "formee/formee-style.css" %>
+<%= stylesheet_link_tag "era/diagnostico.css" %>
+<%= stylesheet_link_tag "livevalidation/validation.css" %>
+<%= stylesheet_link_tag "fancybox/jquery.fancybox.css" %>
+<%= stylesheet_link_tag "validate/jquery.validate.css" %>
+
+<!-- Paginate -->
+<%= stylesheet_link_tag "paginate/style.css" %>
+
+<!-- Progress bar -->
+<%= stylesheet_link_tag "progressbar/css3-progress-bar-ie.css" %>
+<%= stylesheet_link_tag "progressbar/css3-progress-bar.css" %>
+
+
+<script type="text/javascript">
+  jQuery.noConflict();
+</script>
+
+<style type="text/css">
+/* fix  ff bugs */
+form:after, div:after, ol:after, ul:after, li:after, dl:after {
+	content:".";
+	display:block;
+	clear:both;
+	visibility:hidden;
+	height:0;
+	overflow:hidden;
+}
+form {clear:both;}
+/*.container {margin:0 auto; height:100%; padding:0 40px;}*/
+.container {margin:5px auto 0 auto; width: 90%;  height:100%; padding:15px 0 15px 0; }
+.footer, .footer a {color:#fff;}
+.left {float:left;}
+.right {float:right;}
+.topbar {
+	background: #fafafa;
+	padding: 10px 30px;
+  border-bottom:1px solid #e9e9e9;
+}
+.topbar a{
+	color:#777;
+	font-size:1.4em;
+	text-decoration: none;
+}
+.topbar a:hover{
+	color:#69a4d0;
+	text-decoration: underline;
+}
+.formeebar {
+	background: #f5f5f5;
+	padding:30px;
+  border-bottom:1px solid #e9e9e9;
+  margin-bottom:40px;
+}
+.formeebar a {color:#fff;font-size:1.4em;text-decoration: none;}
+.formeebar h1 {
+  clear:both;
+  float:left;
+}
+.formeebar h1 a{
+  /*background: transparent url(img/formee-logo.png) no-repeat left top;*/
+  text-indent:-9999px;
+  overflow: hidden;
+  width:147px;
+  height: 50px;
+  display: block;
+}
+.formeebar h2 {
+	color:#520026;
+	font-size:2.0em;
+	font-weight:normal;
+	float:right;
+	display:inline;
+	margin-top:20px;
+}
+
+.link-to {
+	font-size:2.4em;
+	letter-spacing:-.02em;
+	line-height:1em;
+	color:#EA0076;
+	float:right;
+	margin-bottom:2em;
+}
+/* footer */
+.footer {background: #520026;padding:30px 0;margin-top:40px;color:#fff;}
+.footer p {line-height:1.1em; font-size:1.2em; margin-bottom:.3%;}
+.footer a {color:#F0CF73;font-size:1.4em;text-decoration: none;}
+</style>
+
+<script type="text/javascript">
+<!--
+function MM_swapImgRestore() { //v3.0
+  var i,x,a=document.MM_sr; for(i=0;a&&i<a.length&&(x=a[i])&&x.oSrc;i++) x.src=x.oSrc;
+}
+function MM_preloadImages() { //v3.0
+  var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
+    var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
+    if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
+}
+
+function MM_findObj(n, d) { //v4.01
+  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
+    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
+  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
+  if(!x && d.getElementById) x=d.getElementById(n); return x;
+}
+
+function MM_swapImage() { //v3.0
+  var i,j=0,x,a=MM_swapImage.arguments; document.MM_sr=new Array; for(i=0;i<(a.length-2);i+=3)
+   if ((x=MM_findObj(a[i]))!=null){document.MM_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
+}
+//-->
+</script>
+<style type="text/css">
+<!--
+a:link {
+	text-decoration: none;
+}
+a:visited {
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: underline;
+}
+a:active {
+	text-decoration: none;
+}
+-->
+</style>
+
+
+
+  <!-- Inicio de fancy -->
+  <script type="text/javascript">
+		jQuery(document).ready(function() {
+			/*
+			 *  Simple image gallery. Uses default settings
+			 */
+
+			jQuery('.fancybox').fancybox();
+               });
+  </script>
+</head>
+
+<!--
+<body onload="MM_preloadImages('/images/era/iconos/facebook_322.png','/images/era/iconos/twitter_322.png','/images/era/iconos/skype_322.png','/images/era/iconos/youtube_322.png','/images/era/iconos/blogger_322.png','/images/era/iconos/myspace_322.png','/images/era/iconos/picasa_322.png','/images/era/btns_cert/btn_man2.png','/images/era/btns_cert/btn_reg2.png','/images/era/btns_cert/btn_que2.png','/images/era/btns_cert/btn_dia2.png','/images/era/btns_cert/btn_pro2.png','/images/era/btns_cert/btn_ava2.png','/images/era/btns_cert/btn_res2.png')">
+-->
+<body onload="enableTooltips();">
+
+
+<table width="900" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td colspan="3"><a href="/"><img src="/images/era/ban.jpg" width="900" height="104" /></a></td>
+  </tr>
+  <tr>
+    <td colspan="3"><img src="/images/era/space.png" width="10" height="5" /></td>
+  </tr>
+  <tr>
+    <td colspan="3" valign="top" class="fnd_cert">
+      <table width="900" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td colspan="3"><img src="/images/era/space.png" alt="" width="10" height="10" /></td>
+        </tr>
+        <tr>
+          <td colspan="3">
+            <table width="600" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td width="60px" align="right"><img src="/images/era/iconos/ico_arbol.png" alt="2" width="34" height="17" /></td>
+                <!-- <td width="40" class="Txt_arbol"><a href="http://era.educacionchiapas.gob.mx" class="Txt_arbol">Inicio</a></td>-->
+
+                <!-- inicio -->
+                <td width="40px" class="Txt_arbol">
+                 <%=h link_to "Inicio", "http://era.educacionchiapas.gob.mx" , :style => "color:#DF0101; text-decoration: none;", :title => "SITIO PRINCIPAL DEL PROGRAMA 'ERA'", :confirm => "¿Desea ir al sitio principal?"%>
+                </td>
+
+                <td width="34px" align="center"><img src="/images/era/iconos/ico_arbol.png" alt="1" width="34" height="17" /></td>
+                
+                <!--<td width="120" class="Txt_arbol"><a href="http://esys.educacionchiapas.gob.mx" class="Txt_arbol">Certificación ESyS</a></td> -->
+
+                <!-- esys -->
+                <td width="120px" class="Txt_arbol">
+                 <%=h link_to "Certificación ESyS", "http://esys.educacionchiapas.gob.mx" , :style => "color:#FFBF00; text-decoration: none;", :title => "SITIO DE CERTIFICACIÓN DE ESCUELAS SALUDABLES Y SUSTENTABLES"%>
+                </td>
+
+
+
+                <!-- nombre de escuela -->
+                <%if logged_in?%>
+                <td width="34" align="center"><img src="/images/era/iconos/ico_arbol.png" alt="1" width="34" height="17" /></td>
+
+                <!-- Nombre de quien esta loggeado -->
+                <td width="180" class="Txt_arbol">
+                  <a href="/home" class="Txt_arbol">
+                    <%if current_user.has_role?("directivo")%>
+                      <%nombre= (@esc = Directivo.find_by_clave(current_user.login)) ? @esc.descripcion : nil%>
+                    <%end%>
+                    <%nombre ||= (@esc = Escuela.find_by_clave(current_user.login)) ? @esc.nombre : nil %>
+                    <%nombre ||= current_user.nombre %>
+                    <%=h link_to "#{nombre}", {:controller => "escuelas", :action => "information_edit" }, :style => "color:#088A08; text-decoration: none;", :title => "MODIFICA LA INFORMACIÓN DE TU CUENTA"%>
+                  </a>
+                </td>
+                  <td width="34" align="center"><img src="/images/era/iconos/ico_arbol.png" alt="1" width="34" height="17" /></td>
+                  <td width="120" class="Txt_arbol"><a href="/home" class="Txt_arbol"><%=link_to "Cerrar Sesión", {:action => "destroy", :controller => "sessions"}, :style => "color:#0489B1; text-decoration: none;", :title => "¿ESTÁ SEGURO(A) QUE DESEA SALIR DE LA PLATAFORMA"%></a></td>
+                <%else%>
+                  <td width="34" align="center"><img src="/images/era/iconos/ico_arbol.png" alt="1" width="34" height="17" /></td>
+                  <td width="120" class="Txt_arbol"><a href="/home" class="Txt_arbol"><%=link_to "Iniciar Sesión", {:action => "new", :controller => "sessions"}, :style => "color:#088A08; text-decoration: none;", :title => "HAGA CLICK PARA INICIAR SESIÓN"%></a></td>
+                <%end%>
+
+                <td>&nbsp;</td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          
+          <!--
+          <td colspan="2" rowspan="5" align="center">
+            -->
+            <!-- logotipo de esys 
+            <=link_to image_tag("era/logo_esys.png", :size => "172x150", :mouseover => "era/logo_esys2.png",  :border => 0), {:controller => "home", :action => "index" }, :title => "CERTIFICACIÓN DE ESCUELAS SALUDABLES Y SUSTENTABLES"%>
+            -->
+            <!--
+            <a href="< "http://#{SITE_URL}"%>">
+            <img src="/images/era/logo.png" width="282" height="154" />
+            </a>
+            -->
+          <!--</td> -->
+          
+          <td colspan="3" width="900px" class="Banner_era">
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+            <img src="/images/era/btn_ESyS.png" width="512px" height="43" valign="bottom"/>
+          </td>
+
+        </tr>
+        <tr>
+          <td colspan="3"><img src="/images/era/space.png" width="10" height="10" /></td>
+        </tr>
+        <tr>
+          <td colspan="3" align="center" valign="middle" class="fnd_bar_sub">
+            <table width="875" border="0" cellpadding="0" cellspacing="0">
+              <tr>
+
+                <!-- Menu de administracion -->
+                 <%if logged_in?%>
+                  <%if current_user.has_role?("adminplat")%>
+                      <td><%=link_to image_tag("era/btns_cert/btn_admin1.png", :size => "100x33", :mouseover => "era/btns_cert/btn_admin2.png",  :border => 0), {:controller => "admin", :action => "index" }, :title => "MENÚ DE ADMINISTRACIÓN"%></td>
+                  <%end%>
+                 <%end%>
+
+                <!-- static information -->
+                <td><%=link_to image_tag("era/btns_cert/btn_que1.png", :size => "100x33", :mouseover => "era/btns_cert/btn_que2.png", :border => 0), {:controller => "home", :action => "certificacion_esys" }, :title => "DESCRIPCIÓN DEL PROGRAMA DE CERTIFICACIÓN"%></td>
+                <td><%=link_to image_tag("era/btns_cert/btn_man1.png", :size => "100x33", :mouseover => "era/btns_cert/btn_man2.png", :border => 0), {:controller => "home", :action => "certificacion_manual" }, :title => "DESCARGUE EL MANUAL DE CERTIFICACION"%></td>
+
+                <!-- si es perfil directivo -->
+                <%if logged_in?%>
+                  <%if current_user.has_role?("directivo")%>
+                     <td><%=link_to image_tag("era/btns_cert/btn_esc1.png", :size => "100x33", :mouseover => "era/btns_cert/btn_esc2.png", :border => 0), {:controller => "admin", :action => "show_escuelas" }, :title => "ADMINISTRACION DE ESCUELAS"%></td>
+                  <%else%>
+
+                     <%if current_user.has_role?("escuela")%>
+                        <!-- imagenes del menu -->
+                        <td><%=link_to image_tag("era/btns_cert/btn_reg1.png", :size => "100x33", :mouseover => "era/btns_cert/btn_reg2.png", :border => 0), {:controller => "registro", :action => "index" }, :title => "CONSULTA EL REGISTRO DE DATOS"%></td>
+                        <td><%=link_to image_tag("era/btns_cert/btn_dia1.png", :size => "100x33", :mouseover => "era/btns_cert/btn_dia2.png", :border => 0), {:controller => "diagnosticos", :action => "index" }, :title => "CONSULTA EL DIAGNOSTICO"%></td>
+
+                        <!-- buzon -->
+                        <td><%=link_to image_tag("era/btns_cert/buzon1.png", :size => "40x33", :mouseover => "era/btns_cert/buzon2.png", :border => 0), {:controller => "buzon", :action => "new" }, :title => "¿TIENES ALGUN COMENTARIO O SUGERENCIA?", :class => "fancybox fancybox.iframe"%></td>
+                      <%end%>
+
+                 <%end%>
+                <%end%>
+
+
+                <!--
+                <td><a href="/home/certificacion_esys" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Image38','','/images/era/btns_cert/btn_que2.png',1)"><img src="/images/era/btns_cert/btn_que1.png" name="Image38" width="100" height="33" border="0" id="Image38" /></a></td>
+                <td><a href="/home/certificacion_manual" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Image39','','/images/era/btns_cert/btn_man2.png',1)"><img src="/images/era/btns_cert/btn_man1.png" name="Image39" width="100" height="33" border="0" id="Image39" /></a></td>
+                <td><a href="/registro" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Image32','','/images/era/btns_cert/btn_reg2.png',1)"><img src="/images/era/btns_cert/btn_reg1.png" name="Image32" width="100" height="33" border="0" id="Image32" /></a></td>
+                <td><a href="/diagnosticos" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Image32','','/images/era/btns_cert/btn_dia2.png',1)"><img src="/images/era/btns_cert/btn_dia1.png" name="Image32" width="100" height="33" border="0" id="Image32" /></a></td>
+                -->
+                <td><img src="/images/era/space.png" name="Image34" width="100" height="33" border="0" id="Image34" /></td>
+                <td><img src="/images/era/space.png" name="Image34" width="100" height="33" border="0" id="Image34" /></td>
+
+              </tr>
+            </table>
+          </td>
+        </tr>
+
+        <!-- Contenido principal -->
+        <tr>
+          <td colspan="3">
+            <%if flash[:notice]%>
+            <div class="formee-msg-success">
+              <h3>Operación realizada exitosamente:</h3>
+              <ul>
+                <li><%=flash[:notice]%></li>
+              </ul>
+            </div>
+            <%elsif flash[:error]%>
+            <div class="formee-msg-error">
+              <h3>Error:</h3>
+              <ul>
+                <li><%=flash[:error]%></li>
+              </ul>
+            </div>
+            <%else%>
+            <%#*<p></p>%>
+            <%end%>
+          
+            <%=yield%>
+
+          </td>
+        </tr>
+        <!-- termina contenido principal -->
+
+        <tr>
+          <td colspan="3"><img src="/images/era/space.png" width="10" height="30px" /></td>
+        </tr>
+        <tr>
+          <td colspan="3" align="center" valign="middle" class="fnd_transp">
+            <table width="850" border="0" cellspacing="0" cellpadding="0">
+              <tr align="center">
+                <td width="200" rowspan="5"><img src="/images/era/logo_blanco.png" width="182" height="99" /></td>
+                <td align="center">
+                  <table border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                      <td width="520" valign="bottom" class="Txt_prof"><a href="contactanos.html" class="Txt_prof">Contáctanos</a></td>
+                      <td width="40"><a href="#" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Image24','','/images/era/iconos/facebook_322.png',1)"><img src="/images/era/iconos/facebook_32.png" alt="2" name="Image24" width="32" height="32" border="0" id="Image24" /></a></td>
+                      <td width="40"><a href="#" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Image25','','/images/era/iconos/twitter_322.png',1)"><img src="/images/era/iconos/twitter_32.png" alt="6" name="Image25" width="32" height="32" border="0" id="Image25" /></a></td>
+                      <td width="40"><a href="#" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Image27','','/images/era/iconos/youtube_322.png',1)"><img src="/images/era/iconos/youtube_32.png" alt="7" name="Image27" width="32" height="32" border="0" id="Image27" /></a></td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+              <tr>
+                <td align="right"><img src="/images/era/space.png" alt="" width="10" height="10" /></td>
+              </tr>
+              <tr>
+                <td><div align="center"><img src="/images/era/linea.png" width="650" height="2" /></div></td>
+              </tr>
+              <tr>
+                <td align="center"><img src="/images/era/space.png" alt="" width="10" height="10" /></td>
+              </tr>
+              <tr>
+                <td align="center">
+                  <span class="Txt_piepagina">
+                    Edificio Anexo de la Subsecretaria de Educación Federalizada (SEF),
+                    3er. Piso<br />
+                    Calzada Mayor Julio Sabines S/N,
+                    Col. 24 de Junio, Tuxtla Gutiérrez, Chiapas.<br />
+                    Teléfono: (961) 61 70800 Ext. 41270<br />
+                    Correo Electrónico: <a href="mailto:era.chiapas@gmail.com" class="Txt_piepagina">era.chiapas@gmail.com</a>
+                  </span>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3"><img src="/images/era/space.png" alt="" width="10" height="10" /></td>
+        </tr>
+
+        <!-- Pie de pagina -->
+        <div align="center"></div>
+        <td colspan="3" align="center" valign="middle"><img  src="/images/era/pie_pag.jpg" alt="" width="900" height="185" border="0" usemap="#Map" /></td>
+          <map name="Map" id="Map">
+            <area shape="rect" coords="230,72,363,106" href="http://www.pueblosyculturas.chiapas.gob.mx" target="_blank" />
+            <area shape="rect" coords="550,80,708,116" href="http://www.planeacion.chiapas.gob.mx/" target="_blank" />
+            <area shape="rect" coords="59,131,134,165" href="http://www.salud.chiapas.gob.mx" target="_blank" />
+            <area shape="rect" coords="397,138,531,173" href="http://www.sedepas.chiapas.gob.mx/" target="_blank" />
+            <area shape="rect" coords="405,14,493,52" href="http://www.secretariadelcampo.gob.mx" target="_blank" />
+            <area shape="rect" coords="49,13,163,49" href="http://www.semahn.chiapas.gob.mx/portal/" target="_blank" />
+            <area shape="rect" coords="190,10,367,57" href="http://www.cna.gob.mx/" target="_blank" />
+            <area shape="circle" coords="619,41,33" href="http://www.conanp.gob.mx/" target="_blank" />
+            <area shape="rect" coords="722,17,881,69" href="http://www.conafor.gob.mx/portal/" target="_blank" />
+            <area shape="rect" coords="22,66,190,111" href="http://www.semarnat.gob.mx/Pages/Inicio.aspx" target="_blank" />
+            <area shape="rect" coords="415,59,478,124" href="http://www.unach.mx/" target="_blank" />
+            <area shape="rect" coords="268,113,311,176" href="http://www.unicach.edu.mx" target="_blank" />
+            <area shape="rect" coords="570,128,667,166" href="http://www.difchiapas.gob.mx/" target="_blank" />
+            <area shape="rect" coords="758,106,840,167" href="http://www.conabio.gob.mx/" target="_blank" />
+         </map>
+
+
+
+         <tr>
+          <td colspan="3"><img src="/images/era/space.png" width="10" height="30px" /></td>
+         </tr>
+
+         
+
+      </table>
+    </td>
+  </tr>
+</table>
+</body>
+</html>
