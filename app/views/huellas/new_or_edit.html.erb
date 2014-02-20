@@ -44,11 +44,13 @@
               <img src="/images/era/space.png" width="20px" />
               <%= link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta2", :id => "pregunta2"),
                                                               {:controller => "upload", :diagnostico => @diagnostico, :eje => 3, :numero_pregunta => 2, :action => "list_evidencias" },
-                                                              :title => "EVIDENCIA DE LA PREGUNTA 2", :class => "fancybox fancybox.iframe", :style => "display: '';" %>
+                                                              :title => "EVIDENCIA DE LA PREGUNTA 2", :class => "fancybox fancybox.iframe" %>
+                                                              <!-- :title => "EVIDENCIA DE LA PREGUNTA 2", :class => "fancybox fancybox.iframe", :style => "display: '';" %>-->
             </div>
             <div class="grid-12-12">
               <label>Otro:</label>
-                <%= f.select :energia_electrica_id, EnergiaElectrica.all.collect {|p| [ p.descripcion, p.clave ]}, {:prompt => "SELECCIONE UNA OPCIÓN"}, :onchange => "enable2Textbox(this, 'huella_consumo_anterior', 'huella_consumo_actual', 'pregunta2');" %>
+                <%= f.select :energia_electrica_id, EnergiaElectrica.all.collect {|p| [ p.descripcion, p.clave ]}, {:prompt => "SELECCIONE UNA OPCIÓN"}%>
+                <!--{:prompt => "SELECCIONE UNA OPCIÓN"}, :onchange => "enable2Textbox(this, 'huella_consumo_anterior', 'huella_consumo_actual', 'pregunta2');" %>-->
             </div>
           </td>
         </tr>
@@ -70,7 +72,7 @@
             </div>
             <div class="grid-4-12">
               <label>Focos ahorradores:</label>
-              <%= f.text_field :focos_ahorradores, :onkeypress => "setValor('huella_total_focos', 'tfoco');" %>
+              <%= f.text_field :focos_ahorradores %>
             </div>
             <div class="grid-2-12"></div>
           </td>
@@ -115,9 +117,18 @@
             <div class="grid-3-12"></div>
             <div class="grid-5-12">
               <span id="r_recip_residuos_solid" class="InputGroup">
-                <label>SI <%= f.radio_button :recip_residuos_solid, "SI" %></label>&nbsp;&nbsp;
-                <label>NO <%= f.radio_button :recip_residuos_solid, "NO" %></label>
+                <label>SI <%= f.radio_button :recip_residuos_solid, "SI", :onclick => "enaSelectMultiple(this, 'elimina_residuos');" %></label>&nbsp;&nbsp;
+                <label>NO <%= f.radio_button :recip_residuos_solid, "NO", :onclick => "enaSelectMultiple(this, 'elimina_residuos');" %></label>
               </span>
+            </div>
+            <!-- Línea campo -->
+            <div id="elimina_residuos" class="grid-12-12" style="text-align: justify; display: none;">
+              <label>¿Que tipo de acciones realiza para la disposición de los residuos sólidos.?</label>
+              <fieldset style="padding: 5px 5px 5px 5px;">
+                  <% EliminaResiduo.find(:all).each do |c| %>
+                    <%= check_box_tag "elimina_residuos[#{c.id}]", c.clave, @s_elimina_residuos.include?(c.id) ? true : false %>&nbsp;<%= c.descripcion %><br />
+                  <% end %>
+              </fieldset>
             </div>
           </td>
         </tr>
@@ -174,41 +185,10 @@
             </fieldset>
           </td>
           <td>&nbsp;</td>
-          <td>
-            <!-- Línea Pregunta -->
-            <div class="grid-12-12">
-              <label>10.- ¿Qué tipo de acciones realiza  para la eliminación de residuos sólidos orgánicos?.<em class="formee-req"> *</em></label>
-            </div>
-            <!-- Línea campo -->
-            <fieldset style="padding: 5px 5px 5px 5px;" >
-                <div id="elimina_organicos" class="grid-12-12">
-                  <% EliminaOrganico.find(:all).each do |c| %>
-                    <%= check_box_tag "elimina_organicos[#{c.id}]", c.clave, @s_elimina_organicos.include?(c.id) ? true : false %>&nbsp;<%= c.descripcion %><br />
-                  <% end %>
-                </div>
-            </fieldset>
-          </td>
+          <td>&nbsp;</td>
         </tr>
         <tr>
           <td colspan="3" >&nbsp;</td>
-        </tr>
-        <tr>
-          <td width="49%" align="justify" style=" vertical-align:top;" >
-            <!-- Línea pregunta -->
-            <div class="grid-12-12">
-              <label>11.- ¿Qué tipo de acciones realiza para la eliminación de residuos sólidos inorgánicos?.<em class="formee-req"> *</em></label>
-            </div>
-            <!-- Línea campo -->
-            <fieldset style="padding: 5px 5px 5px 5px;">
-                <div id="elimina_inorganicos" class="grid-12-12">
-                  <% EliminaInorganico.find(:all).each do |c| %>
-                    <%= check_box_tag "elimina_inorganicos[#{c.id}]", c.clave, @s_elimina_inorganicos.include?(c.id) ? true : false %>&nbsp;<%= c.descripcion %><br />
-                  <% end %>
-                </div>
-            </fieldset>
-          </td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
         </tr>
       </table>
     </td>
@@ -238,7 +218,7 @@
 <% end %>
 
 <script type="text/javascript">
-enable2Textbox('huella_energia_electrica_id', 'huella_consumo_anterior', 'huella_consumo_actual', 'pregunta2');
+<%#*enable2Textbox('huella_energia_electrica_id', 'huella_consumo_anterior', 'huella_consumo_actual', 'pregunta2');%>
 enaSelect('huella_red_publica_agua', 'huella_servicio_agua_id');
 
 var consumo_anterior = new LiveValidation( 'huella_consumo_anterior', {onlyOnSubmit: true} ); // P2
@@ -261,6 +241,10 @@ var servicio_agua_id = new LiveValidation( 'huella_servicio_agua_id' ); // P3
 servicio_agua_id.add( Validate.Presence );
 servicio_agua_id.add( Validate.Exclusion, { within: [ '' , ' ' ] } );
 
+<%#*var energia_electrica_id = new LiveValidation( 'huella_energia_electrica_id' ); // P3%>
+<%#*energia_electrica_id.add( Validate.Presence );%>
+<%#*energia_electrica_id.add( Validate.Exclusion, { within: [ '' , ' ' ] } );%>
+
 jQuery(function(){
   <%#*jQuery("#huella_capacitacion_ahorro_energia").validate({ expression: "if (isSelectedC(SelfID)) return true; else return false;", message: "Seleccione una opción!" }); // P1%>
   <%#*jQuery("#huella_mantto_inst").validate({ expression: "if (isSelectedC(SelfID)) return true; else return false;", message: "Seleccione una opción!" }); // P5%>
@@ -272,7 +256,6 @@ jQuery(function(){
   jQuery("#r_elabora_compostas").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" }); // P4
  
   jQuery("#inorganicos").validate({ expression: "if (isCheckedC(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
-  jQuery("#elimina_organicos").validate({ expression: "if (isCheckedC(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
-  jQuery("#elimina_inorganicos").validate({ expression: "if (isCheckedC(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
+  jQuery("#elimina_residuos").validate({ expression: "if (isCheckedC(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
 });
 </script>

@@ -474,7 +474,7 @@ function enable2Textbox(comboSelect, textField1, textField2, imageUpload){
     text2 = document.getElementById(textField2);
     upload = document.getElementById(imageUpload);
 
-    
+//    alert(select.value);
     if(select.value != ""){
         disableTextarea(text1);
         clearTextarea(text1);
@@ -508,6 +508,37 @@ function enaSelect(radioButton, comboSelect){
     else{
         clearSelect(select);
         disableSelect(select);
+    }
+
+}
+
+function enaSelectMultiple(radioButton, selectMultiple){
+    var select = document.getElementById(selectMultiple);
+    var elem = document.getElementsByTagName(selectMultiple);
+
+    if(typeof radioButton == "object")
+        var radio = radioButton;
+    else
+        if(document.forms[0].elements[radioButton+'_si'].checked)
+            radio = document.forms[0].elements[radioButton+'_si'];
+        else
+            radio = document.forms[0].elements[radioButton+'_no'];
+
+    if(radio.checked && radio.id.match('_no')){
+        select.style.display = '';
+        alert(elem.length +' '+ select.length);
+        for (i = 0; i < elem.length; i++){
+            elem[i].style.display = '';
+            elem[i].disabled = false;
+            alert(elem[i].value);
+        }
+    }
+    else{
+        for (i = 0; i < elem.length; i++){
+            elem[i].style.display = 'none';
+            elem[i].disabled = true;
+        }
+        select.style.display = 'none';
     }
 
 }

@@ -12,18 +12,26 @@ class ParticipacionsController < ApplicationController
     @participacion = Participacion.find(params[:id]) if params[:id]
     @participacion ||= Participacion.new
     @participacion.update_attributes(params[:participacion])
-    @participacion.diagnostico = Diagnostico.find(params[:diagnostico])
+    @diagnostico = @participacion.diagnostico = Diagnostico.find(params[:diagnostico])
 
-    @participacion.proy_escolares_ma_desc = '' unless params[:participacion][:proy_escolares_ma_desc]
-    @participacion.proy_escolares_salud_desc = '' unless params[:participacion][:proy_escolares_salud_desc]
-    @participacion.act_salud_ma_desc = '' unless params[:participacion][:act_salud_ma_desc]
-    @participacion.act_dep_gobierno_desc = '' unless params[:participacion][:act_dep_gobierno_desc]
+    validador = verifica_evidencias(@diagnostico,5)
+
+    if validador["valido"]
+      @participacion.proy_escolares_ma_desc = '' unless params[:participacion][:proy_escolares_ma_desc]
+      @participacion.proy_escolares_salud_desc = '' unless params[:participacion][:proy_escolares_salud_desc]
+      @participacion.act_salud_ma_desc = '' unless params[:participacion][:act_salud_ma_desc]
+      @participacion.act_dep_gobierno_desc = '' unless params[:participacion][:act_dep_gobierno_desc]
     
-    if @participacion.save
-      flash[:notice] = "Registro guardado correctamente"
-      redirect_to :controller => "diagnosticos"
+      if @participacion.save
+        flash[:notice] = "Registro guardado correctamente"
+        redirect_to :controller => "diagnosticos"
+      else
+        flash[:error] = "No se pudo guardar, verifique los datos"
+        render :action => "new_or_edit"
+      end
     else
-      flash[:error] = "No se pudo guardar, verifique los datos"
+      errores = validador["sin_validar"].join(" y ")
+      flash[:evidencias] = "Cargue archivos para la(s) pregunta(s): #{errores}"
       render :action => "new_or_edit"
     end
   end

@@ -9,7 +9,7 @@ class DiagnosticosController < ApplicationController
     @eje2=true
     @eje3=true
     @eje4=true
-    @eje5=false
+    @eje5=true
    end
 
   def new_or_edit

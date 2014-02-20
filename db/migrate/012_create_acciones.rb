@@ -5,6 +5,7 @@ class CreateAcciones < ActiveRecord::Migration
       t.string :clave, :limit => 5
     end
 
+    Accione.create(:descripcion => "ORIENTACIÓN Y ASESORÍA.", :clave => "AC00")
     Accione.create(:descripcion => "USO Y MANEJO DE LA CARTILLA NACIONAL DE VACUNACIÓN.", :clave => "AC01")
     Accione.create(:descripcion => "ACTIVIDADES ARTÍSTICAS Y DEPORTIVAS.", :clave => "AC02")
     Accione.create(:descripcion => "PREVENCIÓN DE RIESGO.", :clave => "AC03")

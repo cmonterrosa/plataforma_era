@@ -7,8 +7,7 @@ class HuellasController < ApplicationController
     @diagnostico ||= Diagnostico.new
     @huella = @diagnostico.huella || Huella.new
     @s_inorganicos = multiple_selected_id(@huella.inorganicos) if @huella.inorganicos
-    @s_elimina_inorganicos = multiple_selected_id(@huella.elimina_inorganicos) if @huella.elimina_inorganicos
-    @s_elimina_organicos = multiple_selected_id(@huella.elimina_organicos) if @huella.elimina_organicos
+    @s_elimina_residuos = multiple_selected_id(@huella.elimina_residuos) if @huella.elimina_residuos
   end
 
   def save
@@ -29,21 +28,20 @@ class HuellasController < ApplicationController
       else
         @huella.inorganicos.delete_all
       end
-
-      if params[:elimina_inorganicos]
-        @elimina_inorganicos = []
-        params[:elimina_inorganicos].each { |op| @elimina_inorganicos << EliminaInorganico.find_by_clave(op)  }
-        @huella.elimina_inorganicos = EliminaInorganico.find(@elimina_inorganicos)
-      else
-        @huella.elimina_inorganicos.delete_all
-      end
     
-      if params[:elimina_organicos]
-        @elimina_organicos = []
-        params[:elimina_organicos].each { |op| @elimina_organicos << EliminaOrganico.find_by_clave(op)  }
-        @huella.elimina_organicos = EliminaOrganico.find(@elimina_organicos)
+      if params[:elimina_residuos] and params[:huella][:recip_residuos_solid] == 'NO'
+        @elimina_residuos = []
+        params[:elimina_residuos].each { |op| @elimina_residuos << EliminaResiduo.find_by_clave(op)  }
+        @huella.elimina_residuos = EliminaResiduo.find(@elimina_residuos)
       else
-        @huella.elimina_organicos.delete_all
+        @huella.elimina_organicos.delete_all if @huella.elimina_organicos
+      end
+
+      if (params[:huella][:energia_electrica_id].size > 0)
+        params[:huella][:consumo_anterior] = ""
+        params[:huella][:consumo_actual] = ""
+      else
+
       end
     
       if @huella.save

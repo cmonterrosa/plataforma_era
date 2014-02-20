@@ -7,6 +7,7 @@ class CreateEnergiaElectricas < ActiveRecord::Migration
 
     EnergiaElectrica.create(:descripcion => "NO CUENTA CON MEDIDOR", :clave => "NCCM")
     EnergiaElectrica.create(:descripcion => "NO CUENTA CON ENERGÍA ELÉCTRICA", :clave => "NCEN")
+    EnergiaElectrica.create(:descripcion => ">> SELECCIONE UNA OPCIÓN", :clave => "SUOP")
     
   end
 

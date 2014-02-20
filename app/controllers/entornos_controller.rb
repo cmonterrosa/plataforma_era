@@ -9,9 +9,9 @@ class EntornosController < ApplicationController
     @s_acciones = multiple_selected_id(@entorno.acciones) if @entorno.acciones
     @escuela = Escuela.find_by_clave(current_user.login)
     if @escuela.nivel_descripcion == "BACHILLERATO"
-      @acciones = Accione.find(:all, :conditions => ["clave not in ('CEP', 'UMC')"])
+      @acciones = Accione.find(:all, :conditions => ["clave not in ('AC01')"])
     else
-      @acciones = Accione.find(:all)
+      @acciones = Accione.find(:all, :conditions => ["clave not in ('AC00')"])
     end
     
   end
@@ -44,9 +44,9 @@ class EntornosController < ApplicationController
       @escuela = Escuela.find_by_clave(current_user.login)
       @s_acciones = multiple_selected_id(@entorno.acciones) if @entorno.acciones
       if @escuela.nivel_descripcion == "BACHILLERATO"
-        @acciones = Accione.find(:all, :conditions => ["clave not in ('CEP', 'UMC')"])
+        @acciones = Accione.find(:all, :conditions => ["clave not in ('AC01')"])
       else
-        @acciones = Accione.find(:all)
+        @acciones = Accione.find(:all, :conditions => ["clave not in ('AC00')"])
       end
       errores = validador["sin_validar"].join(" y ")
       flash[:evidencias] = "Cargue archivos para la(s) pregunta(s): #{errores}"
