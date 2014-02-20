@@ -4,7 +4,7 @@ class DiagnosticosController < ApplicationController
   
   def index
     @competencias = Competencia.find(:all)
-    flash[:notice] = "Únicamente podrá capturar Eje 1 y 2"
+    #flash[:notice] = "Únicamente podrá capturar Eje 1 y 2"
     @eje1=true
     @eje2=true
     @eje3=true
@@ -60,7 +60,7 @@ class DiagnosticosController < ApplicationController
   private
 
   def set_layout
-    (action_name == 'reporte')? 'reporte' : 'era2014'
+    (action_name == 'reporte')? 'reporte' : 'diagnostico'
   end
 
 end

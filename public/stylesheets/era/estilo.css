@@ -77,6 +77,14 @@
 	/*height: 1012px;*/
 	width: 900px;
 }
+
+.fnd_diagnostico {
+	background-image: url(/images/era/fnds/fondo4.jpg);
+	background-repeat: no-repeat;
+	background-position: center top;
+	/*height: 1012px;*/
+	width: 900px;
+}
 .Txt_Adv {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 36px;
