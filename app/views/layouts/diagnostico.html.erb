@@ -199,7 +199,7 @@ a:active {
         <tr>
           <td colspan="3"><img src="/images/era/space.png" alt="" width="10" height="10" /></td>
         </tr>
-        <tr>
+        <tr style="text-shadow: black 0.1em 0.1em 0.2em">
           <td colspan="3">
             <table width="600" border="0" cellspacing="0" cellpadding="0">
               <tr>
@@ -238,7 +238,7 @@ a:active {
                   </a>
                 </td>
                   <td width="34" align="center"><img src="/images/era/iconos/ico_arbol.png" alt="1" width="34" height="17" /></td>
-                  <td width="120" class="Txt_arbol"><a href="/home" class="Txt_arbol"><%=link_to "Cerrar Sesión", {:action => "destroy", :controller => "sessions"}, :style => "color:#DF0101; text-decoration: none;", :title => "¿ESTÁ SEGURO(A) QUE DESEA SALIR DE LA PLATAFORMA"%></a></td>
+                  <td width="120" class="Txt_arbol"><a href="/home" class="Txt_arbol"><%=link_to "Cerrar Sesión", {:action => "destroy", :controller => "sessions"}, :style => "color:#FFBF00; text-decoration: none;", :title => "¿ESTÁ SEGURO(A) QUE DESEA SALIR DE LA PLATAFORMA"%></a></td>
                 <%else%>
                   <td width="34" align="center"><img src="/images/era/iconos/ico_arbol.png" alt="1" width="34" height="17" /></td>
                   <td width="120" class="Txt_arbol"><a href="/home" class="Txt_arbol"><%=link_to "Iniciar Sesión", {:action => "new", :controller => "sessions"}, :style => "color:#088A08; text-decoration: none;", :title => "HAGA CLICK PARA INICIAR SESIÓN"%></a></td>
