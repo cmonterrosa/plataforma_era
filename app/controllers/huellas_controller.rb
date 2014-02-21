@@ -52,13 +52,25 @@ class HuellasController < ApplicationController
         flash[:notice] = "Registro guardado correctamente"
         redirect_to :controller => "diagnosticos"
       else
+        @s_inorganicos = multiple_selected_id(@huella.inorganicos) if @huella.inorganicos
+        @s_elimina_residuos = multiple_selected_id(@huella.elimina_residuos) if @huella.elimina_residuos
+#        @s_elimina_inorganicos = multiple_selected_id(@huella.elimina_inorganicos) if @huella.elimina_inorganicos
+#        @s_elimina_organicos = multiple_selected_id(@huella.elimina_organicos) if @huella.elimina_organicos
+        @ahorradores = Array.new
+        @ahorradores << (@huella.focos_ahorradores.to_i) if @huella.focos_ahorradores
+        @focos = 0..99
         flash[:error] = "No se pudo guardar, verifique los datos"
+        flash[:evidencias] = @huella.errors.full_messages.join(", ")
         render :action => "new_or_edit"
       end
     else
+      @ahorradores = Array.new
+      @ahorradores << (@huella.focos_ahorradores.to_i) if @huella.focos_ahorradores
+      @focos = 0..99
       @s_inorganicos = multiple_selected_id(@huella.inorganicos) if @huella.inorganicos
-      @s_elimina_inorganicos = multiple_selected_id(@huella.elimina_inorganicos) if @huella.elimina_inorganicos
-      @s_elimina_organicos = multiple_selected_id(@huella.elimina_organicos) if @huella.elimina_organicos
+      @s_elimina_residuos = multiple_selected_id(@huella.elimina_residuos) if @huella.elimina_residuos
+#      @s_elimina_inorganicos = multiple_selected_id(@huella.elimina_inorganicos) if @huella.elimina_inorganicos
+#      @s_elimina_organicos = multiple_selected_id(@huella.elimina_organicos) if @huella.elimina_organicos
       errores = validador["sin_validar"].join(" y ")
       flash[:evidencias] = "Cargue archivos para la(s) pregunta(s): #{errores}"
       render :action => "new_or_edit"
