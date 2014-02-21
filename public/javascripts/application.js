@@ -541,8 +541,8 @@ function enaSelectMultiple(radioButton, selectMultiple){
 
 }
 
-function showDesc(obj_select, obj_desc)
-{
+function showDesc(obj_select, obj_desc, divField){
+    var div = document.getElementById(divField);
     if(typeof obj_select == "object")
         var select = obj_select;
     else
@@ -554,16 +554,19 @@ function showDesc(obj_select, obj_desc)
     for(i = 0; i < tamano; i++){
         if(select[i].value != '0' && select[i].selected){
             enableTextarea(desc);
+            div.style.display = "block";
             if(typeof obj_select == "object") clearTextarea(desc);
             break;
         }
         else{
             if(typeof obj_select == "object") clearTextarea(desc);
+            div.style.display = "none";
             disableTextarea(desc);
         }
     }
 }
 
+// Habilita/Deshabilita imagen evidencia si checkbox = "NO"
 function showImage(checkBox, divImage){
     var radio = document.getElementById(checkBox);
     var div = document.getElementById(divImage);
@@ -572,4 +575,62 @@ function showImage(checkBox, divImage){
         div.style.display = 'none';
     else
         div.style.display = 'block';
+}
+
+// Habilita/Deshabilita imagen evidencia si comboSelect > 0
+function showImageNum(comboSelect, divField){
+    var select = document.getElementById(comboSelect);
+    var div = document.getElementById(divField);
+    
+    if(parseInt(select.value) > 0)
+        div.style.display = 'block';
+    else
+        div.style.display = 'none';
+}
+
+// Habilita/Deshabilita 2 text_field e imagen si comboSelect != SUOP
+function showImageText(comboSelect, textBox1, textBox2, divField){
+    var text1 = document.getElementById(textBox1);
+    var text2 = document.getElementById(textBox2);
+    var div = document.getElementById(divField);
+    var select;
+
+    if(typeof comboSelect == "object")
+        select = comboSelect;
+    else
+        select = document.getElementById(comboSelect);
+
+    if(select.value != "SUOP"){
+     clearTextarea(text1);
+     disableTextarea(text1);
+     clearTextarea(text2);
+     disableTextarea(text2);
+     div.style.display = "none";
+    }
+    else{
+     if(typeof comboSelect == "object") {
+         clearTextarea(text1);
+         clearTextarea(text2);
+     }
+     enableTextarea(text1);
+     enableTextarea(text2);
+     div.style.display = "block";
+    }
+}
+
+function checkRadio(arreglo, numRadio){
+    var radio;
+    var radio2;
+
+    for(i=1; i <= numRadio; i++){
+        radio = document.getElementById(arreglo + "_" + i);
+        if(radio.checked && radio.value == "NING"){
+            for(x=1; x < numRadio; x++){
+                radio2 = document.getElementById(arreglo + "_" + x);
+                if(radio2.value != "NING") radio2.checked = false;
+            }
+            break;
+        }
+    }
+
 }

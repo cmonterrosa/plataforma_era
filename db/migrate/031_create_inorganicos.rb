@@ -7,7 +7,7 @@ class CreateInorganicos < ActiveRecord::Migration
 
     Inorganico.create(:descripcion => "METAL.", :clave => "META")
     Inorganico.create(:descripcion => "CARTÓN.", :clave => "CART")
-    Inorganico.create(:descripcion => "VIDIRIO.", :clave => "VIDR")
+    Inorganico.create(:descripcion => "VIDRIO.", :clave => "VIDR")
     Inorganico.create(:descripcion => "PLÁSTICO.", :clave => "PLAS")
     Inorganico.create(:descripcion => "UNICEL.", :clave => "UNIC")
     Inorganico.create(:descripcion => "NINGUNA.", :clave => "NING")

@@ -6,6 +6,7 @@ class HuellasController < ApplicationController
     @diagnostico = Diagnostico.find(params[:id]) if params[:id]
     @diagnostico ||= Diagnostico.new
     @huella = @diagnostico.huella || Huella.new
+    @s_electricas = selected(@huella.energia_electrica) if @huella.energia_electrica
     @s_inorganicos = multiple_selected_id(@huella.inorganicos) if @huella.inorganicos
     @s_elimina_residuos = multiple_selected_id(@huella.elimina_residuos) if @huella.elimina_residuos
     @ahorradores = Array.new
@@ -23,7 +24,7 @@ class HuellasController < ApplicationController
 
     if validador["valido"]
       @huella.servicio_agua_id = '' if params[:huella][:red_publica_agua] == 'SI'
-      @huella.energia_electrica_id = '' if params[:huella][:red_publica_agua] == 'SUOP'
+      @huella.energia_electrica_id = '' if params[:huella][:energia_electrica_id] == 'SUOP'
     
       if params[:inorganicos]
         @inorganicos = []
@@ -40,14 +41,14 @@ class HuellasController < ApplicationController
       else
         @huella.elimina_residuos.delete_all if @huella.elimina_residuos
       end
-
-      if (params[:huella][:energia_electrica_id].size > 0)
-        params[:huella][:consumo_anterior] = ""
-        params[:huella][:consumo_actual] = ""
-      else
-
+      a=0
+      if (params[:huella][:energia_electrica_id] != "SUOP")
+        @huella.consumo_anterior = ""
+        @huella.consumo_actual = ""
       end
     
+      @huella.energia_electrica_id = EnergiaElectrica.find_by_clave(params[:huella][:energia_electrica_id]).id if params[:huella][:energia_electrica_id]
+
       if @huella.save
         flash[:notice] = "Registro guardado correctamente"
         redirect_to :controller => "diagnosticos"

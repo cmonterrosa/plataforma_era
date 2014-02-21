@@ -18,10 +18,10 @@
             <div class="grid-12-12">
               <div class="grid-3-12"></div>
               <div class="grid-2-12">
-                <%= f.text_field :num_padres_familia %>
+                <%= f.text_field :num_padres_familia, :onkeyup => "showImageNum('participacion_num_padres_familia', 'eje5_p1');" %>
               </div>
               <div class="grid-1-12"></div>
-              <div class="grid-6-12">
+              <div id="eje5_p1" class="grid-6-12" style="display: none;">
                 <%= link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta1", :id => "pregunta1"),
                                                               {:controller => "upload", :diagnostico => @diagnostico, :eje => 5, :numero_pregunta => 1, :action => "list_evidencias" },
                                                               :title => "EVIDENCIA DE LA PREGUNTA 1", :class => "fancybox fancybox.iframe"%>
@@ -38,10 +38,10 @@
             <div class="grid-12-12">
               <div class="grid-3-12"></div>
               <div class="grid-2-12">
-                <%= f.text_field :capacitacion_salud_ma %>
+                <%= f.text_field :capacitacion_salud_ma, :onkeyup => "showImageNum('participacion_capacitacion_salud_ma', 'eje5_p2');"  %>
               </div>
               <div class="grid-1-12"></div>
-              <div class="grid-6-12">
+              <div id="eje5_p2" class="grid-6-12" style="display: none;">
                 <%= link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta2", :id => "pregunta2"),
                                                               {:controller => "upload", :diagnostico => @diagnostico, :eje => 5, :numero_pregunta => 2, :action => "list_evidencias" },
                                                               :title => "EVIDENCIA DE LA PREGUNTA 2", :class => "fancybox fancybox.iframe"%>
@@ -61,10 +61,10 @@
             <!-- Línea campo -->
             <div class="grid-3-12"></div>
             <div class="grid-2-12">
-              <%= f.select :proy_escolares_ma, (0..2), {}, :onchange => "showDesc(this, 'participacion_proy_escolares_ma_desc');"%>
+              <%= f.select :proy_escolares_ma, (0..2), {}, :onchange => "showDesc(this, 'participacion_proy_escolares_ma_desc', 'eje5_p3');"%>
             </div>
             <div class="grid-1-12"></div>
-            <div class="grid-6-12">
+            <div id="eje5_p3" class="grid-6-12" style="display: none;">
               <%= link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta3", :id => "pregunta3"),
                                                               {:controller => "upload", :diagnostico => @diagnostico, :eje => 5, :numero_pregunta => 3, :action => "list_evidencias" },
                                                               :title => "EVIDENCIA DE LA PREGUNTA 3", :class => "fancybox fancybox.iframe"%>
@@ -82,10 +82,10 @@
             <!-- Línea campo -->
             <div class="grid-3-12"></div>
             <div class="grid-2-12">
-              <%= f.select :proy_escolares_salud, (0..2), {}, :onchange => "showDesc(this, 'participacion_proy_escolares_salud_desc');"%>
+              <%= f.select :proy_escolares_salud, (0..2), {}, :onchange => "showDesc(this, 'participacion_proy_escolares_salud_desc', 'eje5_p4');"%>
             </div>
             <div class="grid-1-12"></div>
-            <div class="grid-6-12">
+            <div id="eje5_p4" class="grid-6-12" style="display: none;">
             <%= link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta4", :id => "pregunta4"),
                                                               {:controller => "upload", :diagnostico => @diagnostico, :eje => 5, :numero_pregunta => 4, :action => "list_evidencias" },
                                                               :title => "EVIDENCIA DE LA PREGUNTA 4", :class => "fancybox fancybox.iframe"%>
@@ -107,10 +107,10 @@
             <!-- Línea campo -->
             <div class="grid-3-12"></div>
             <div class="grid-2-12">
-              <%= f.select :act_salud_ma, (0..2), {}, :onchange => "showDesc(this, 'participacion_act_salud_ma_desc');"%>
+              <%= f.select :act_salud_ma, (0..2), {}, :onchange => "showDesc(this, 'participacion_act_salud_ma_desc', 'eje5_p5');"%>
             </div>
             <div class="grid-1-12"></div>
-            <div class="grid-6-12">
+            <div id="eje5_p5" class="grid-6-12" style="display: none;">
               <%= link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta5", :id => "pregunta5"),
                                                               {:controller => "upload", :diagnostico => @diagnostico, :eje => 5, :numero_pregunta => 5, :action => "list_evidencias" },
                                                               :title => "EVIDENCIA DE LA PREGUNTA 5", :class => "fancybox fancybox.iframe"%>
@@ -128,10 +128,10 @@
             <!-- Línea campo -->
             <div class="grid-3-12"></div>
             <div class="grid-2-12">
-              <%= f.select :act_dep_gobierno, (0..2), {}, :onchange => "showDesc(this, 'participacion_act_dep_gobierno_desc');"%>
+              <%= f.select :act_dep_gobierno, (0..2), {}, :onchange => "showDesc(this, 'participacion_act_dep_gobierno_desc', 'eje5_p6');"%>
             </div>
             <div class="grid-1-12"></div>
-            <div class="grid-6-12">
+            <div id="eje5_p6" class="grid-6-12" style="display: none;">
             <%= link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta6", :id => "pregunta6"),
                                                               {:controller => "upload", :diagnostico => @diagnostico, :eje => 5, :numero_pregunta => 6, :action => "list_evidencias" },
                                                               :title => "EVIDENCIA DE LA PREGUNTA 6", :class => "fancybox fancybox.iframe"%>
@@ -169,10 +169,12 @@
 <% end %>
 
 <script type="text/javascript">
-  showDesc('participacion_proy_escolares_ma', 'participacion_proy_escolares_ma_desc');
-  showDesc('participacion_proy_escolares_salud', 'participacion_proy_escolares_salud_desc');
-  showDesc('participacion_act_salud_ma', 'participacion_act_salud_ma_desc');
-  showDesc('participacion_act_dep_gobierno', 'participacion_act_dep_gobierno_desc');
+  showImageNum('participacion_num_padres_familia', 'eje5_p1');
+  showImageNum('participacion_capacitacion_salud_ma', 'eje5_p2');
+  showDesc('participacion_proy_escolares_ma', 'participacion_proy_escolares_ma_desc', 'eje5_p3');
+  showDesc('participacion_proy_escolares_salud', 'participacion_proy_escolares_salud_desc', 'eje5_p4');
+  showDesc('participacion_act_salud_ma', 'participacion_act_salud_ma_desc', 'eje5_p5');
+  showDesc('participacion_act_dep_gobierno', 'participacion_act_dep_gobierno_desc', 'eje5_p6');
 
   var num_padres_familia = new LiveValidation( 'participacion_num_padres_familia' );
   num_padres_familia.add( Validate.Presence );

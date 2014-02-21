@@ -15,7 +15,7 @@
 <% form_remote_tag :url => { :action => 'showResults' }, :loading => "Element.show('indicador');Element.hide('divlista')", :complete =>"Element.hide('indicador');Element.show('divlista')", :update => { :success => "divlista" }  do -%>
 <div class="grid-12-12">
   <fieldset style="text-align:center;margin:0px;padding:0px;" >
-    <legend style="font-size:14px;font-weight:bold;">FILTRO POR: </legend>
+    <legend style="font-size:14px;font-weight:bold;">&nbsp;&nbsp;FILTRO&nbsp;POR:&nbsp;&nbsp;</legend>
       <div class="grid-12-12">
         <span id="r_clave_nombre_estatus" class="InputGroup" style="text-align:justify;">
           <%= radio_button_tag 'buscar', 'nombre', false, {:onclick => "showTextareaBusqueda('buscar_estatus', 'clave_nombre', 'estatus_escuela');"} %><label>&nbsp;Clave de la Escuela</label><img src="/images/era/space.png" height="10" width="50" />

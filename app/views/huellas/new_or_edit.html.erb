@@ -68,7 +68,7 @@
               <label>Otro:</label>
                 <%energias = EnergiaElectrica.all.sort{|p1,p2|p1.descripcion  <=> p2.descripcion } %>
              
-                <%= f.select :energia_electrica_id, energias.collect {|p| [ p.descripcion, p.clave ]}, {}, :onchange => "showImageText(this, 'huella_consumo_actual', 'huella_consumo_anterior', 'eje3_p2');"%>
+                <%= f.select :energia_electrica_id, energias.collect {|p| [ p.descripcion, p.clave ]}, {:selected => @s_electricas}, :onchange => "showImageText(this, 'huella_consumo_actual', 'huella_consumo_anterior', 'eje3_p2');"%>
                 <!--{:prompt => "SELECCIONE UNA OPCIÓN"}, :onchange => "enable2Textbox(this, 'huella_consumo_anterior', 'huella_consumo_actual', 'pregunta2');" %>-->
             </div>
           </td>
@@ -199,7 +199,7 @@
             <fieldset style="padding: 5px 5px 5px 5px;">
                 <div id="inorganicos" class="grid-12-12">
                   <% Inorganico.find(:all).each do |c| %>
-                    <%= check_box_tag "inorganicos[#{c.id}]", c.clave, @s_inorganicos.include?(c.id) ? true : false %>&nbsp;<%= c.descripcion %><br />
+                    <%= check_box_tag "inorganicos[#{c.id}]", c.clave, @s_inorganicos.include?(c.id) ? true : false, :onclick => "checkRadio('inorganicos', #{Inorganico.count(:id)})" %>&nbsp;<%= c.descripcion %><br />
                   <% end %>
                 </div>
             </fieldset>

@@ -11,7 +11,7 @@ class ConsumosController < ApplicationController
     if @escuela.nivel_descripcion == "BACHILLERATO"
       @establecimientos = Establecimiento.find(:all, :conditions => ["nivel not in ('BASICA')"])
     else
-      @establecimientos = Establecimiento.find(:all, :conditions => ["nivel not in ('BACHILLERATO')"])
+      @establecimientos = Establecimiento.find(:all)
     end
     @establecimientos
     @s_establecimientos = multiple_selected(@consumo.establecimientos) if @consumo.establecimientos
@@ -37,47 +37,72 @@ class ConsumosController < ApplicationController
             @establecimientos = []
             params[:establecimientos].each { |op| @establecimientos << Establecimiento.find_by_clave(op)  }
             @consumo.establecimientos = Establecimiento.find(@establecimientos)
+        else
+          @consumo.establecimientos.delete_all
         end
+
         if params[:preparacions]
             @preparacions = []
             params[:preparacions].each { |op| @preparacions << Preparacion.find_by_clave(op)  }
             @consumo.preparacions = Preparacion.find(@preparacions)
+        else
+          @consumo.preparacions.delete_all
         end
+
         if params[:utensilios]
             @utensilios = []
             params[:utensilios].each { |op| @utensilios << Utensilio.find_by_clave(op)  }
             @consumo.utensilios = Utensilio.find(@utensilios)
+        else
+          @consumo.utensilios.delete_all
         end
+
         if params[:higienes]
             @higienes = []
             params[:higienes].each { |op| @higienes << Higiene.find_by_clave(op)  }
             @consumo.higienes = Higiene.find(@higienes)
+        else
+          @consumo.higienes.delete_all
         end
+
         if params[:bebidas]
             @bebidas = []
             params[:bebidas].each { |op| @bebidas << Bebida.find_by_clave(op)  }
             @consumo.bebidas = Bebida.find(@bebidas)
+        else
+          @consumo.bebidas.delete_all
         end
+
         if params[:alimentos]
           @alimentos = []
           params[:alimentos].each { |op| @alimentos << Alimento.find_by_clave(op)  }
           @consumo.alimentos = Alimento.find(@alimentos)
+        else
+          @consumo.alimentos.delete_all
         end
+
         if params[:botanas]
           @botanas = []
           params[:botanas].each { |op| @botanas << Botana.find_by_clave(op)  }
           @consumo.botanas = Botana.find(@botanas)
+        else
+          @consumo.botanas.delete_all
         end
+
         if params[:reposterias]
           @reposterias = []
           params[:reposterias].each { |op| @reposterias << Reposteria.find_by_clave(op)  }
           @consumo.reposterias = Reposteria.find(@reposterias)
+        else
+          @consumo.reposterias.delete_all
         end
+
         if params[:materials]
           @materials = []
           params[:materials].each { |op| @materials << Material.find_by_clave(op)  }
           @consumo.materials = Material.find(@materials)
         end
+
         if @consumo.save
           flash[:notice] = "Registro guardado correctamente"
           redirect_to :controller => "diagnosticos"

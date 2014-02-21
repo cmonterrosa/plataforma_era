@@ -17,15 +17,11 @@ function isCheckedC(id){
 
 function isSelected(id){
     var select = document.forms[0].elements[id];
-    var ReturnVal = false;
-
-    alert(select.length);
-    
+    var ReturnVal = false;    
 
     for(i = 0; i < select.length; i++){
         if(select[i].selected)
             ReturnVal = true;
-        alert(select[i].value);
     }
     return ReturnVal;
 }

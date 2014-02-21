@@ -31,6 +31,8 @@ class DiagnosticosController < ApplicationController
     @diagnostico = Diagnostico.find(params[:id])
     @diagnostico.oficializado = true
     @diagnostico.fecha_oficializado = Time.now
+    @escuela = Escuela.find(@diagnostico.escuela_id)
+    @escuela.update_bitacora!("diag-conc", current_user)
     if @diagnostico.save
       flash[:notice] = "El diagnóstico fue oficializado correctamente"
     else
