@@ -17,10 +17,10 @@
             <!-- Línea campo -->
             <div class="grid-3-12"></div>
             <div class="grid-2-12">
-              <%= f.select :capacitacion_ahorro_energia, (0..2)%>
+              <%= f.select :capacitacion_ahorro_energia, (0..2), {}, :onchange => "showImageNum('huella_capacitacion_ahorro_energia', 'eje3_p1');"%>
             </div>
             <div class="grid-1-12"></div>
-            <div class="grid-6-12">
+            <div id="eje3_p1" class="grid-6-12" style="display: none;">
               <%= link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta1", :id => "pregunta1"),
                                                               {:controller => "upload", :diagnostico => @diagnostico, :eje => 3, :numero_pregunta => 1, :action => "list_evidencias" },
                                                               :title => "EVIDENCIA DE LA PREGUNTA 1", :class => "fancybox fancybox.iframe"%>
@@ -37,6 +37,7 @@
                 Para obtener el valor de consumo, debe de considerar el historial en kWh consumidos en su recibo de energía eléctrica.
               </label>
             </div>
+            <div id="eje3_p2" class="grid-12-12">
             <div class="grid-4-12">
               <label>Consumo anterior:</label>
               <div class="grid-8-12">
@@ -62,9 +63,12 @@
                                                               :title => "EVIDENCIA DE LA PREGUNTA 2", :class => "fancybox fancybox.iframe" %>
                                                               <!-- :title => "EVIDENCIA DE LA PREGUNTA 2", :class => "fancybox fancybox.iframe", :style => "display: '';" %>-->
             </div>
+            </div>
             <div class="grid-12-12">
               <label>Otro:</label>
-                <%= f.select :energia_electrica_id, EnergiaElectrica.all.collect {|p| [ p.descripcion, p.clave ]}, {:prompt => "SELECCIONE UNA OPCIÓN"}%>
+                <%energias = EnergiaElectrica.all.sort{|p1,p2|p1.descripcion  <=> p2.descripcion } %>
+             
+                <%= f.select :energia_electrica_id, energias.collect {|p| [ p.descripcion, p.clave ]}, {}, :onchange => "showImageText(this, 'huella_consumo_actual', 'huella_consumo_anterior', 'eje3_p2');"%>
                 <!--{:prompt => "SELECCIONE UNA OPCIÓN"}, :onchange => "enable2Textbox(this, 'huella_consumo_anterior', 'huella_consumo_actual', 'pregunta2');" %>-->
             </div>
           </td>
@@ -82,12 +86,13 @@
             <div class="grid-2-12"></div>
             <div class="grid-4-12">
               <label>Total de Focos:</label>
-              <%= f.text_field :total_focos %>
+              <!-- <= f.text_field :total_focos %> -->
+              <%=f.select(:total_focos, @focos.map { |value| [ value, value ] })%>
               <input type="hidden" name="tfoco" id="tfoco" />
             </div>
             <div class="grid-4-12">
               <label>Focos ahorradores:</label>
-              <%= f.text_field :focos_ahorradores %>
+              <%=f.select(:focos_ahorradores, @ahorradores.map { |value| [ value, value ] })%>
             </div>
             <div class="grid-2-12"></div>
           </td>
@@ -232,8 +237,17 @@
 </table>
 <% end %>
 
+<%= observe_field :huella_total_focos,
+                  :frecuency => 0.2,
+                  :update => :huella_focos_ahorradores,
+                  :url => { :controller => 'combos', :action => 'get_ahorradores' },
+                  :with => :huella_total_focos %>
+
 <script type="text/javascript">
 <%#*enable2Textbox('huella_energia_electrica_id', 'huella_consumo_anterior', 'huella_consumo_actual', 'pregunta2');%>
+  showImageNum('huella_capacitacion_ahorro_energia', 'eje3_p1');
+  showImageText('huella_energia_electrica_id', 'huella_consumo_actual', 'huella_consumo_anterior', 'eje3_p2');
+
 enaSelect('huella_red_publica_agua', 'huella_servicio_agua_id');
 enaSelectMultiple('huella_recip_residuos_solid', 'elimina_residuos');
 
@@ -244,6 +258,8 @@ consumo_anterior.add( Validate.Numericality );
 var consumo_actual = new LiveValidation( 'huella_consumo_actual', {onlyOnSubmit: true} ); // P2
 consumo_actual.add( Validate.Presence );
 consumo_actual.add( Validate.Numericality );
+
+
 
 var total_focos = new LiveValidation( 'huella_total_focos' ); // P3
 total_focos.add( Validate.Presence );
@@ -261,14 +277,14 @@ servicio_agua_id.add( Validate.Exclusion, { within: [ '' , ' ' ] } );
 <%#*energia_electrica_id.add( Validate.Presence );%>
 <%#*energia_electrica_id.add( Validate.Exclusion, { within: [ '' , ' ' ] } );%>
 
-function verificas(veryField , limitField){
-  var maxVal;
-  var focos_ahorradores2 = new LiveValidation(limitField);
-  maxVal = parseInt(document.getElementById(veryField).value);
-  focos_ahorradores2.add( Validate.Presence );
-  focos_ahorradores2.add( Validate.Numericality, { maximum: maxVal, onlyInteger: true } );
+<%#*function verificas(veryField , limitField){%>
+  <%#*var maxVal;%>
+  <%#*var focos_ahorradores2 = new LiveValidation(limitField);%>
+  <%#*maxVal = parseInt(document.getElementById(veryField).value);%>
+  <%#*focos_ahorradores2.add( Validate.Presence );%>
+  <%#*focos_ahorradores2.add( Validate.Numericality, { maximum: maxVal, onlyInteger: true } );%>
 <%#*alert(document.getElementById(veryField).value);%>
-}
+<%#*}%>
 
 
 jQuery(function(){

@@ -8,6 +8,9 @@ class HuellasController < ApplicationController
     @huella = @diagnostico.huella || Huella.new
     @s_inorganicos = multiple_selected_id(@huella.inorganicos) if @huella.inorganicos
     @s_elimina_residuos = multiple_selected_id(@huella.elimina_residuos) if @huella.elimina_residuos
+    @ahorradores = Array.new
+    @ahorradores << (@huella.focos_ahorradores.to_i) if @huella.focos_ahorradores
+    @focos = 0..99
   end
 
   def save
@@ -20,6 +23,7 @@ class HuellasController < ApplicationController
 
     if validador["valido"]
       @huella.servicio_agua_id = '' if params[:huella][:red_publica_agua] == 'SI'
+      @huella.energia_electrica_id = '' if params[:huella][:red_publica_agua] == 'SUOP'
     
       if params[:inorganicos]
         @inorganicos = []
