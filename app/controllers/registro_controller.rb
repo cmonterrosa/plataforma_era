@@ -80,7 +80,7 @@ class RegistroController < ApplicationController
   private
 
   def set_layout
-    (action_name == 'formato_registro')? 'reporte' : 'era'
+    (action_name == 'formato_registro')? 'reporte' : 'era2014'
   end
 
 end
