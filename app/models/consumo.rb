@@ -10,4 +10,13 @@ class Consumo < ActiveRecord::Base
   has_and_belongs_to_many :alimentos, :join_table => 'consumos_alimentos'
   has_and_belongs_to_many :botanas, :join_table => 'consumos_botanas'
   has_and_belongs_to_many :reposterias, :join_table => 'consumos_reposterias'
+
+  validates_presence_of :evidencia_pregunta_3, :if => "self.capacitacion_alim_bebidas == 'SI'"
+  
+
+  def evidencia_pregunta_3
+    current_eje = 4
+    contador = Adjunto.count(:id, :conditions => ["eje_id = ? AND diagnostico_id = ? AND numero_pregunta = ?", current_eje, self.diagnostico_id, 3])
+    (contador > 0)?  true : false
+  end
 end
