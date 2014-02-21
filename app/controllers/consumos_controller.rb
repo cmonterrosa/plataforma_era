@@ -30,6 +30,7 @@ class ConsumosController < ApplicationController
     @consumo ||= Consumo.new
     @consumo.update_attributes(params[:consumo])
     @diagnostico = @consumo.diagnostico = Diagnostico.find(params[:diagnostico])
+
     validador = verifica_evidencias(@diagnostico,4)
     if validador["valido"]
         if params[:establecimientos]
@@ -81,10 +82,21 @@ class ConsumosController < ApplicationController
           flash[:notice] = "Registro guardado correctamente"
           redirect_to :controller => "diagnosticos"
         else
-          flash[:error] = "No se pudo guardar, verifique los datos"
+          @establecimientos = Establecimiento.find :all
+          @s_establecimientos = multiple_selected(@consumo.establecimientos) if @consumo.establecimientos
+          @s_preparacions = multiple_selected(@consumo.preparacions) if @consumo.preparacions
+          @s_utensilios = multiple_selected(@consumo.utensilios) if @consumo.utensilios
+          @s_higienes = multiple_selected(@consumo.higienes) if @consumo.higienes
+          @s_bebidas = multiple_selected(@consumo.bebidas) if @consumo.bebidas
+          @s_alimentos = multiple_selected(@consumo.alimentos) if @consumo.alimentos
+          @s_botanas = multiple_selected(@consumo.botanas) if @consumo.botanas
+          @s_reposterias = multiple_selected(@consumo.reposterias) if @consumo.reposterias
+          @s_materials = multiple_selected(@consumo.materials) if @consumo.materials
+          flash[:evidencias] = @consumo.errors.full_messages.join(", ")
           render :action => "new_or_edit"
         end
     else
+      @establecimientos = Establecimiento.find :all
       @s_establecimientos = multiple_selected(@consumo.establecimientos) if @consumo.establecimientos
       @s_preparacions = multiple_selected(@consumo.preparacions) if @consumo.preparacions
       @s_utensilios = multiple_selected(@consumo.utensilios) if @consumo.utensilios

@@ -79,12 +79,12 @@
               <div class="grid-2-12"></div>
               <div class="grid-5-12">
                 <span id="r_capacitacion_alim_bebidas" class="InputGroup">
-                  <label>SI <%= f.radio_button :capacitacion_alim_bebidas, "SI" %></label>&nbsp;&nbsp;
-                  <label>NO <%= f.radio_button :capacitacion_alim_bebidas, "NO" %></label>
+                  <label>SI <%= f.radio_button :capacitacion_alim_bebidas, "SI", :onclick => "showImage('consumo_capacitacion_alim_bebidas_si', 'eje4_p3');"%></label>&nbsp;&nbsp;
+                  <label>NO <%= f.radio_button :capacitacion_alim_bebidas, "NO", :onclick => "showImage('consumo_capacitacion_alim_bebidas_no', 'eje4_p3');"%></label>
                 </span>
               </div>
               <div class="grid-1-12"></div>
-              <div class="grid-4-12">
+              <div id="eje4_p3" class="grid-4-12" style="display: none;">
                   <%= link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta3", :id => "pregunta3"),
                                                               {:controller => "upload", :diagnostico => @diagnostico, :eje => 4, :numero_pregunta => 3, :action => "new_evidencia" },
                                                               :title => "EVIDENCIA DE LA PREGUNTA 3", :class => "fancybox fancybox.iframe"%>
