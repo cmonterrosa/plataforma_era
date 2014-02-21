@@ -79,7 +79,7 @@
   <!-- Diagnostico -->
   <%if escuela%>
     <%if Diagnostico.find_by_escuela_id(escuela.id)%>
-      <td style="vertical-align: middle;"><%=button_to "Diagnostico", {:action => "show_diagnostico", :id => escuela}, :class => 'boton'%></td>
+      <td style="vertical-align: middle;"><%=button_to "Diagnostico", {:action => "menu_diagnostico", :id => escuela}, :class => 'boton'%></td>
     <%end%>
   <%end%>
 

@@ -259,4 +259,21 @@ class AdminController < ApplicationController
     end
   end
 
+  def menu_diagnostico
+    @escuela = Escuela.find(params[:id])
+    @diagnostico = Diagnostico.find_by_escuela_id(@escuela.id)
+  end
+
+  def habilitar_diagnostico
+    @diagnostico = Diagnostico.find(params[:id])
+    @escuela = Escuela.find(params[:escuela])
+    @diagnostico.oficializado = false
+    if @diagnostico.save
+      flash[:notice] = "Diagnóstico habilitado"
+    else
+      flash[:notice] = "DIagnóstico no se pudo habilitar"
+    end
+    redirect_to :action => "menu_diagnostico", :id => @escuela
+  end
+
 end

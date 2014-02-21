@@ -1,0 +1,58 @@
+<div class="container">
+  <% form_for :diagnostico, @diagnostico, :url => { :action => "habilitar_diagnostico", :id => @diagnostico, :escuela => @escuela}, :html => {:class => "formee", :name => "escuela_diagnostico"} do |f| -%>
+
+  <fieldset>
+    <legend>Diagnóstico&nbsp;de&nbsp;Escuela</legend>
+
+    <div id="prellenado" style="background:#ebf7aa;">
+
+       <div class="grid-4-12">
+        <label style=" font-weight: bold;">Folio de Diagnóstico:</label>
+        <label style=" font-style: italic;"><%= @diagnostico.folio %></label>
+      </div>
+
+      <div class="grid-4-12">
+        <label style=" font-weight: bold;">Clave:</label>
+        <label style=" font-style: italic;"><%= @escuela.clave %></label>
+      </div>
+      <div class="grid-8-12">
+        <label style=" font-weight: bold;">Nombre de la Escuela:</label>
+        <label style=" font-style: italic;"><%= @escuela.nombre %></label>
+      </div>
+
+      <div class="grid-4-12">
+        <label style=" font-weight: bold;">Zona Escolar:</label>
+        <label style=" font-style: italic;"><%= @escuela.zona_escolar %></label>
+      </div>
+      <div class="grid-4-12">
+        <label style=" font-weight: bold;">Sector:</label>
+        <label style=" font-style: italic;"><%= @escuela.sector %></label>
+      </div>
+      <div class="grid-4-12">
+        <label style=" font-weight: bold;">Turno:</label>
+        <label style=" font-style: italic;"><%= @escuela.turno %></label>
+      </div>
+
+      <div class="grid-8-12">
+        <label style=" font-weight: bold;">Localidad:</label>
+        <label style=" font-style: italic;"><%= @escuela.localidad %></label>
+      </div>
+      <div class="grid-4-12">
+        <label style=" font-weight: bold;">Municipio:</label>
+        <label style=" font-style: italic;"><%= @escuela.municipio %></label>
+      </div>
+    </div>
+
+    <div class="grid-12-12 clear"></div>
+
+     <!-- submit -->
+    <%if @diagnostico.oficializado%>
+      <div class="grid-12-12">
+        <input class="right" type="submit" onclick="to_uppercase();" title="HABILITAR DIAGNOSTICO" value="HABILITAR DIAGNOSTICO" />
+      </div>
+    <%end%>
+
+  </fieldset>
+
+  <%end%>
+</div>
