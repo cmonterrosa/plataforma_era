@@ -6,8 +6,8 @@ class CreateEstablecimientos < ActiveRecord::Migration
       t.string :nivel, :limit => 15
     end
 
-    Establecimiento.create(:descripcion => "CONSUME EN LOCALES ALEDAÑOS A LA ESCUELA.", :clave => "CLAE", :nivel => "MEDIA SUPERIOR")
-    Establecimiento.create(:descripcion => "CONSUME ALIMENTOS ELEBAORADOS EN CASA.", :clave => "CAEC", :nivel => "MEDIA SUPERIOR")
+    Establecimiento.create(:descripcion => "CONSUME EN LOCALES ALEDAÑOS A LA ESCUELA.", :clave => "CLAE", :nivel => "BACHILLERATO")
+    Establecimiento.create(:descripcion => "CONSUME ALIMENTOS ELABORADOS EN CASA.", :clave => "CAEC", :nivel => "BACHILLERATO")
     Establecimiento.create(:descripcion => "CUENTA CON APOYO DEL PROGRAMA DESAYUNOS ESCOLARES IMPLEMENTADOS POR EL SISTEMA DIF (DESARROLLO INTEGRAL DE LA FAMILIA).", :clave => "CAPD", :nivel => "BASICA")
     Establecimiento.create(:descripcion => "CUENTA CON EL APOYO DEL PROGRAMA ESCUELAS DE TIEMPO COMPLETO.", :clave => "CAPE", :nivel => "BASICA")
 

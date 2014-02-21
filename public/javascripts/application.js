@@ -529,7 +529,6 @@ function enaSelectMultiple(radioButton, selectMultiple){
         for (i = 0; i < elem.length; i++){
             elem[i].style.display = '';
             elem[i].disabled = false;
-            alert(elem[i].value);
         }
     }
     else{
@@ -563,4 +562,14 @@ function showDesc(obj_select, obj_desc)
             disableTextarea(desc);
         }
     }
+}
+
+function showImage(checkBox, divImage){
+    var radio = document.getElementById(checkBox);
+    var div = document.getElementById(divImage);
+
+    if(radio.checked && radio.id.match('_no'))
+        div.style.display = 'none';
+    else
+        div.style.display = 'block';
 }

@@ -6,6 +6,14 @@ class ConsumosController < ApplicationController
     @diagnostico = Diagnostico.find(params[:id]) if params[:id]
     @diagnostico ||= Diagnostico.new
     @consumo = @diagnostico.consumo || Consumo.new
+    
+    @escuela = Escuela.find_by_clave(current_user.login.upcase)
+    if @escuela.nivel_descripcion == "BACHILLERATO"
+      @establecimientos = Establecimiento.find(:all, :conditions => ["nivel not in ('BASICA')"])
+    else
+      @establecimientos = Establecimiento.find(:all, :conditions => ["nivel not in ('BACHILLERATO')"])
+    end
+    @establecimientos
     @s_establecimientos = multiple_selected(@consumo.establecimientos) if @consumo.establecimientos
     @s_preparacions = multiple_selected(@consumo.preparacions) if @consumo.preparacions
     @s_utensilios = multiple_selected(@consumo.utensilios) if @consumo.utensilios

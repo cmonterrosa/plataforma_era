@@ -10,6 +10,7 @@ class DiagnosticosController < ApplicationController
     @eje3=true
     @eje4=true
     @eje5=true
+    @diagnostico = Diagnostico.find_by_escuela_id(Escuela.find_by_clave(current_user.login.upcase)) if Escuela.find_by_clave(current_user.login.upcase)
    end
 
   def new_or_edit
@@ -22,6 +23,18 @@ class DiagnosticosController < ApplicationController
       else
         flash[:error] = "No se pudo crear objeto, verifique"
       end
+    end
+    redirect_to :action => "index"
+  end
+
+  def oficializar
+    @diagnostico = Diagnostico.find(params[:id])
+    @diagnostico.oficializado = true
+    @diagnostico.fecha_oficializado = Time.now
+    if @diagnostico.save
+      flash[:notice] = "El diagnóstico fue oficializado correctamente"
+    else
+      flash[:notice] = "El diagnóstico no pudo oficializarse, vuelva a intentarlo"
     end
     redirect_to :action => "index"
   end

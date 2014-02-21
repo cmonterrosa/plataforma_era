@@ -43,7 +43,7 @@
             </div>
             <div id="establecimientos" class="grid-12-12">
               <fieldset style="padding: 5px 5px 5px 5px;">
-                <% Establecimiento.find(:all).each do |c| %>
+                <% @establecimientos.each do |c| %>
                   <%= check_box_tag "establecimientos[#{c.id}]", c.clave, @s_establecimientos.include?(c.clave) ? true : false %>&nbsp;<%= c.descripcion %><br />
                 <% end %>
               </fieldset>
@@ -388,13 +388,13 @@
   enaSelectMultiple('consumo_escuela_establecimiento', 'establecimientos');
 
   <%#*jQuery("#establecimientos").validate({ expression: "if (isCheckedC(SelfID)) return true; else return false;", message: "Seleccione una opción!" });%>
-  jQuery("#preparacions").validate({ expression: "if (isCheckedC(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
-  jQuery("#utensilios").validate({ expression: "if (isCheckedC(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
-  jQuery("#higienes").validate({ expression: "if (isCheckedC(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
-  jQuery("#bebidas").validate({ expression: "if (isCheckedC(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
-  jQuery("#alimentos").validate({ expression: "if (isCheckedC(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
-  jQuery("#botanas").validate({ expression: "if (isCheckedC(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
-  jQuery("#reposterias").validate({ expression: "if (isCheckedC(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
+  <%#*jQuery("#preparacions").validate({ expression: "if (isCheckedC(SelfID)) return true; else return false;", message: "Seleccione una opción!" });%>
+  <%#*jQuery("#utensilios").validate({ expression: "if (isCheckedC(SelfID)) return true; else return false;", message: "Seleccione una opción!" });%>
+  <%#*jQuery("#higienes").validate({ expression: "if (isCheckedC(SelfID)) return true; else return false;", message: "Seleccione una opción!" });%>
+  <%#*jQuery("#bebidas").validate({ expression: "if (isCheckedC(SelfID)) return true; else return false;", message: "Seleccione una opción!" });%>
+  <%#*jQuery("#alimentos").validate({ expression: "if (isCheckedC(SelfID)) return true; else return false;", message: "Seleccione una opción!" });%>
+  <%#*jQuery("#botanas").validate({ expression: "if (isCheckedC(SelfID)) return true; else return false;", message: "Seleccione una opción!" });%>
+  <%#*jQuery("#reposterias").validate({ expression: "if (isCheckedC(SelfID)) return true; else return false;", message: "Seleccione una opción!" });%>
   jQuery("#materials").validate({ expression: "if (isCheckedC(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
 
   jQuery("#responsables_conocen_lineamientos").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" }); // P2

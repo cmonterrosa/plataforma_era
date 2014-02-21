@@ -37,7 +37,16 @@ class EntornosController < ApplicationController
         flash[:notice] = "Registro guardado correctamente"
         redirect_to :controller => "diagnosticos"
       else
-        flash[:error] = "No se pudo guardar, verifique los datos"
+
+        @escuela = Escuela.find_by_clave(current_user.login)
+        if @escuela.nivel_descripcion == "BACHILLERATO"
+          @acciones = Accione.find(:all, :conditions => ["clave not in ('AC01')"])
+        else
+          @acciones = Accione.find(:all, :conditions => ["clave not in ('AC00')"])
+        end
+
+        @s_acciones = multiple_selected_id(@entorno.acciones) if @entorno.acciones
+        flash[:evidencias] = @entorno.errors.full_messages.join(", ")
         render :action => "new_or_edit"
       end
     else

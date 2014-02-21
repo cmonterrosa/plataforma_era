@@ -2,6 +2,7 @@
 
 <input id="superficie_terreno" name="superficie_terreno" type="hidden"/>
 
+
 <% form_for :entorno, @entorno, :url => { :action => "save", :id => @entorno, :diagnostico => @diagnostico.id }, :html => {:class => "formee", :id => "entorno"} do |f| -%>
 <table class="principal" width="100%" border="0" align="center" cellpadding="2" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
   <tr bgcolor="#003366" style="opacity: 0.7;" >
@@ -81,12 +82,12 @@
               <div class="grid-2-12"></div>
               <div class="grid-4-12">
                 <span id="r_jardines_verticales" class="InputGroup">
-                  <label>SI <%= f.radio_button :jardines_verticales, "SI" %></label>&nbsp;&nbsp;
-                  <label>NO <%= f.radio_button :jardines_verticales, "NO" %></label>
+                  <label>SI <%= f.radio_button :jardines_verticales, "SI", :onclick => "showImage('entorno_jardines_verticales_si', 'eje3_p3');" %></label>&nbsp;&nbsp;
+                  <label>NO <%= f.radio_button :jardines_verticales, "NO", :onclick => "showImage('entorno_jardines_verticales_no', 'eje3_p3');" %></label>
                 </span>
               </div>
               <div class="grid-1-12"></div>
-              <div class="grid-5-12">
+              <div id="eje3_p3" class="grid-5-12" style="display: none;">
                 <%= link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta3", :id => "pregunta3"),
                                                               {:controller => "upload", :diagnostico => @diagnostico, :eje => 2, :numero_pregunta => 3, :action => "list_evidencias" },
                                                               :title => "EVIDENCIA DE LA PREGUNTA 3", :class => "fancybox fancybox.iframe"%>
@@ -104,12 +105,12 @@
               <div class="grid-2-12"></div>
               <div class="grid-4-12">
                 <span id="r_jardines_hidroponicos" class="InputGroup">
-                  <label>SI <%= f.radio_button :jardines_hidroponicos, "SI" %></label>&nbsp;&nbsp;
-                  <label>NO <%= f.radio_button :jardines_hidroponicos, "NO" %></label>
+                  <label>SI <%= f.radio_button :jardines_hidroponicos, "SI", :onclick => "showImage('entorno_jardines_hidroponicos_si', 'eje3_p4');" %></label>&nbsp;&nbsp;
+                  <label>NO <%= f.radio_button :jardines_hidroponicos, "NO", :onclick => "showImage('entorno_jardines_hidroponicos_no', 'eje3_p4');" %></label>
                 </span>
               </div>
               <div class="grid-1-12"></div>
-              <div class="grid-5-12">
+              <div id="eje3_p4" class="grid-5-12" style="display: none;">
                 <%= link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta4", :id => "pregunta4"),
                                                               {:controller => "upload", :diagnostico => @diagnostico, :eje => 2, :numero_pregunta => 4, :action => "list_evidencias" },
                                                               :title => "EVIDENCIA DE LA PREGUNTA 4", :class => "fancybox fancybox.iframe"%>
@@ -141,7 +142,7 @@
           <td width="49%" align="justify">
             <!-- Liíne pregunta -->
             <div class="grid-12-12">
-              <label>6.- Del Manual de Salud. ¿Cuáles de las acciones con relación a los ejes de acción (Desarrollo de competencias para la modificación de los determinantes de la salud; promoción de entornos seguros y favorables para la salud de los escolares; participación social en la escuela; accesos a los servicios públicos de salud) realiza la institución educativa para promover el cuidado de la salud en la comunidad escolar?<em class="formee-req"> *</em></label>
+              <label>6.- ¿Cuáles de las siguientes acciones del Manual de Salud realiza la institución educativa?<em class="formee-req"> *</em></label>
               <%#*<ul class="formee-lbl-vinetas">%>
                 <%#*<li>1. Enriquecimiento de los contenidos curriculares.</li>%>
                 <%#*<li>2. Aprovechamiento del currículo.</li>%>

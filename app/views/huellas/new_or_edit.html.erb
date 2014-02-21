@@ -39,11 +39,21 @@
             </div>
             <div class="grid-4-12">
               <label>Consumo anterior:</label>
-              <%= f.text_field :consumo_anterior %>
+              <div class="grid-8-12">
+                <%= f.text_field :consumo_anterior %>
+              </div>
+              <div class="grid-2-12">
+                <label style="padding: 10px 0;" >kWh</label>
+              </div>
             </div>
             <div class="grid-4-12">
               <label>Consumo actual:</label>
-              <%= f.text_field :consumo_actual %>
+                <div class="grid-8-12">
+                  <%= f.text_field :consumo_actual %>
+                </div>
+                <div class="grid-2-12">
+                  <label style="padding: 10px 0;" >kWh</label>
+                </div>
             </div>
             <div class="grid-4-12">
               <img src="/images/era/space.png" width="20px" />
