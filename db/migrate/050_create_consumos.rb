@@ -1,6 +1,7 @@
 class CreateConsumos < ActiveRecord::Migration
   def self.up
     create_table :consumos do |t|
+      t.string :escuela_establecimiento, :limit => 2
       t.string :conocen_lineamientos_grales, :limit => 2
       t.string :capacitacion_alim_bebidas, :limit => 2
       t.string :cumplen_req_nutricionales, :limit => 2

@@ -34,7 +34,7 @@ class HuellasController < ApplicationController
         params[:elimina_residuos].each { |op| @elimina_residuos << EliminaResiduo.find_by_clave(op)  }
         @huella.elimina_residuos = EliminaResiduo.find(@elimina_residuos)
       else
-        @huella.elimina_organicos.delete_all if @huella.elimina_organicos
+        @huella.elimina_residuos.delete_all if @huella.elimina_residuos
       end
 
       if (params[:huella][:energia_electrica_id].size > 0)

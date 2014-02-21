@@ -526,7 +526,6 @@ function enaSelectMultiple(radioButton, selectMultiple){
 
     if(radio.checked && radio.id.match('_no')){
         select.style.display = '';
-        alert(elem.length +' '+ select.length);
         for (i = 0; i < elem.length; i++){
             elem[i].style.display = '';
             elem[i].disabled = false;
