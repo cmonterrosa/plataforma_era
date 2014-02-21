@@ -32,6 +32,11 @@
             <div class="grid-12-12">
               <label>2.- Tomando en cuenta el último bimestre de consumo con relación al mismo bimestre del año anterior ¿Cuál es la variación en el consumo eléctrico de la institución escolar?.<em class="formee-req"> *</em></label>
             </div>
+            <div class="grid-12-12">
+              <label class="formee-msg-info">
+                Para obtener el valor de consumo, debe de considerar el historial en kWh consumidos en su recibo de energía eléctrica.
+              </label>
+            </div>
             <div class="grid-4-12">
               <label>Consumo anterior:</label>
               <%= f.text_field :consumo_anterior %>
@@ -234,9 +239,9 @@ var total_focos = new LiveValidation( 'huella_total_focos' ); // P3
 total_focos.add( Validate.Presence );
 total_focos.add( Validate.Numericality, {onlyInteger: true} );
 
-var focos_ahorradores = new LiveValidation( 'huella_focos_ahorradores' ); // P3
-focos_ahorradores.add( Validate.Presence );
-focos_ahorradores.add( Validate.Numericality, { maximum: 100, onlyInteger: true } );
+<%#*var focos_ahorradores = new LiveValidation( 'huella_focos_ahorradores' ); // P3%>
+<%#*focos_ahorradores.add( Validate.Presence );%>
+<%#*focos_ahorradores.add( Validate.Numericality, {onlyInteger: true } );%>
 
 var servicio_agua_id = new LiveValidation( 'huella_servicio_agua_id' ); // P3
 servicio_agua_id.add( Validate.Presence );
@@ -245,6 +250,16 @@ servicio_agua_id.add( Validate.Exclusion, { within: [ '' , ' ' ] } );
 <%#*var energia_electrica_id = new LiveValidation( 'huella_energia_electrica_id' ); // P3%>
 <%#*energia_electrica_id.add( Validate.Presence );%>
 <%#*energia_electrica_id.add( Validate.Exclusion, { within: [ '' , ' ' ] } );%>
+
+function verificas(veryField , limitField){
+  var maxVal;
+  var focos_ahorradores2 = new LiveValidation(limitField);
+  maxVal = parseInt(document.getElementById(veryField).value);
+  focos_ahorradores2.add( Validate.Presence );
+  focos_ahorradores2.add( Validate.Numericality, { maximum: maxVal, onlyInteger: true } );
+<%#*alert(document.getElementById(veryField).value);%>
+}
+
 
 jQuery(function(){
   <%#*jQuery("#huella_capacitacion_ahorro_energia").validate({ expression: "if (isSelectedC(SelfID)) return true; else return false;", message: "Seleccione una opción!" }); // P1%>
