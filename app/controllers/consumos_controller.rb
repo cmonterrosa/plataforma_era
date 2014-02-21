@@ -14,7 +14,7 @@ class ConsumosController < ApplicationController
     @s_alimentos = multiple_selected(@consumo.alimentos) if @consumo.alimentos
     @s_botanas = multiple_selected(@consumo.botanas) if @consumo.botanas
     @s_reposterias = multiple_selected(@consumo.reposterias) if @consumo.reposterias
-    a=10
+    @s_materials = multiple_selected(@consumo.materials) if @consumo.materials
   end
 
   def save
@@ -64,6 +64,11 @@ class ConsumosController < ApplicationController
           params[:reposterias].each { |op| @reposterias << Reposteria.find_by_clave(op)  }
           @consumo.reposterias = Reposteria.find(@reposterias)
         end
+        if params[:materials]
+          @materials = []
+          params[:materials].each { |op| @materials << Material.find_by_clave(op)  }
+          @consumo.materials = Material.find(@materials)
+        end
         if @consumo.save
           flash[:notice] = "Registro guardado correctamente"
           redirect_to :controller => "diagnosticos"
@@ -80,6 +85,7 @@ class ConsumosController < ApplicationController
       @s_alimentos = multiple_selected(@consumo.alimentos) if @consumo.alimentos
       @s_botanas = multiple_selected(@consumo.botanas) if @consumo.botanas
       @s_reposterias = multiple_selected(@consumo.reposterias) if @consumo.reposterias
+      @s_materials = multiple_selected(@consumo.materials) if @consumo.materials
       errores = validador["sin_validar"].join(" y ")
       flash[:evidencias] = "Cargue archivos para la(s) pregunta(s): #{errores}"
       render :action => "new_or_edit"
