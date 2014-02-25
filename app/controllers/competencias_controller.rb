@@ -21,6 +21,7 @@ class CompetenciasController < ApplicationController
         redirect_to :controller => "diagnosticos"
       else
         flash[:error] = "No se pudo guardar, verifique los datos"
+        flash[:evidencias] = @competencia.errors.full_messages.join(", ")
         render :action => "new_or_edit"
       end
     else
