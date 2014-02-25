@@ -67,6 +67,20 @@ class UploadController < ApplicationController
     end
   end
 
+  def show_evidencias_por_usuario
+    @diagnostico = Diagnostico.find(params[:diagnostico]) if params[:diagnostico]
+    @user = (params[:id]) ? User.find(params[:id]): current_user
+    @evidencias = Adjunto.find(:all, :conditions => ["user_id = ?", @user], :order => "eje_id, numero_pregunta")
+    unless @evidencias.empty?
+      return render(:partial => 'show_todas_evidencias', :layout => "only_jquery")
+    else
+       @uploaded_file = Adjunto.new
+       @user = current_user
+       render :text => "<h3>No existen evidencias cargadas</h3>"
+       #return render(:partial => 'new_evidencia', :layout => "only_jquery")
+    end
+  end
+
 
   def create_evidencia
     @uploaded_file =Adjunto.new(params[:adjunto])
