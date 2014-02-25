@@ -3,6 +3,11 @@ class DiagnosticosController < ApplicationController
   before_filter :login_required
   
   def index
+    if current_user.has_role?("adminplat") || current_user.has_role?("admin")
+      flash[:notice] = "Bienvenido al menú administrativo"
+      redirect_to :controller => "admin"
+    end
+
     @competencias = Competencia.find(:all)
     #flash[:notice] = "Únicamente podrá capturar Eje 1 y 2"
     @eje1=true
