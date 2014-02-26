@@ -389,7 +389,9 @@
   showImage('consumo_capacitacion_alim_bebidas_si', 'eje4_p3');
   showImage('consumo_capacitacion_alim_bebidas_no', 'eje4_p3');
 
-  <%#*jQuery("#establecimientos").validate({ expression: "if (isCheckedC(SelfID)) return true; else return false;", message: "Seleccione una opción!" });%>
+  
+
+  jQuery("#establecimientos").validate({ expression: "if (skipSelect(SelfID, 'consumo_escuela_establecimiento')) return true; else return false;", message: "Seleccione una opción!" });
   <%#*jQuery("#preparacions").validate({ expression: "if (isCheckedC(SelfID)) return true; else return false;", message: "Seleccione una opción!" });%>
   <%#*jQuery("#utensilios").validate({ expression: "if (isCheckedC(SelfID)) return true; else return false;", message: "Seleccione una opción!" });%>
   <%#*jQuery("#higienes").validate({ expression: "if (isCheckedC(SelfID)) return true; else return false;", message: "Seleccione una opción!" });%>

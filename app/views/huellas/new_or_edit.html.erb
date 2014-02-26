@@ -111,7 +111,7 @@
               </span>
             </div>
             <div class="grid-12-12">
-                <%= f.select :servicio_agua_id, ServicioAgua.all.collect {|p| [ p.descripcion, p.clave ]}, {:prompt => "SELECCIONE UNA OPCIÓN"}, {:disabled => true, :style => "display: none;"} %>
+                <%= f.select :servicio_agua_id, ServicioAgua.all.collect {|p| [ p.descripcion, p.clave ]}, { :selected => @s_aguas,  :prompt => "SELECCIONE UNA OPCIÓN" }, {:disabled => true, :style => "display: none;"} %>
             </div>
           </td>
         </tr>
@@ -244,60 +244,35 @@
                   :with => :huella_total_focos %>
 
 <script type="text/javascript">
-<%#*enable2Textbox('huella_energia_electrica_id', 'huella_consumo_anterior', 'huella_consumo_actual', 'pregunta2');%>
   showImageNum('huella_capacitacion_ahorro_energia', 'eje3_p1');
   showImageText('huella_energia_electrica_id', 'huella_consumo_actual', 'huella_consumo_anterior', 'eje3_p2');
 
-enaSelect('huella_red_publica_agua', 'huella_servicio_agua_id');
-enaSelectMultiple('huella_recip_residuos_solid', 'elimina_residuos');
+  enaSelect('huella_red_publica_agua', 'huella_servicio_agua_id');
+  enaSelectMultiple('huella_recip_residuos_solid', 'elimina_residuos');
 
-var consumo_anterior = new LiveValidation( 'huella_consumo_anterior', {onlyOnSubmit: true} ); // P2
-consumo_anterior.add( Validate.Presence );
-consumo_anterior.add( Validate.Numericality );
+  var consumo_anterior = new LiveValidation( 'huella_consumo_anterior', {onlyOnSubmit: true} );
+  consumo_anterior.add( Validate.Presence );
+  consumo_anterior.add( Validate.Numericality );
 
-var consumo_actual = new LiveValidation( 'huella_consumo_actual', {onlyOnSubmit: true} ); // P2
-consumo_actual.add( Validate.Presence );
-consumo_actual.add( Validate.Numericality );
+  var consumo_actual = new LiveValidation( 'huella_consumo_actual', {onlyOnSubmit: true} );
+  consumo_actual.add( Validate.Presence );
+  consumo_actual.add( Validate.Numericality );
 
+  var total_focos = new LiveValidation( 'huella_total_focos' );
+  total_focos.add( Validate.Presence );
+  total_focos.add( Validate.Numericality, {onlyInteger: true} );
 
+  var servicio_agua_id = new LiveValidation( 'huella_servicio_agua_id' );
+  servicio_agua_id.add( Validate.Presence );
+  servicio_agua_id.add( Validate.Exclusion, { within: [ '' , ' ' ] } );
 
-var total_focos = new LiveValidation( 'huella_total_focos' ); // P3
-total_focos.add( Validate.Presence );
-total_focos.add( Validate.Numericality, {onlyInteger: true} );
-
-<%#*var focos_ahorradores = new LiveValidation( 'huella_focos_ahorradores' ); // P3%>
-<%#*focos_ahorradores.add( Validate.Presence );%>
-<%#*focos_ahorradores.add( Validate.Numericality, {onlyInteger: true } );%>
-
-var servicio_agua_id = new LiveValidation( 'huella_servicio_agua_id' ); // P3
-servicio_agua_id.add( Validate.Presence );
-servicio_agua_id.add( Validate.Exclusion, { within: [ '' , ' ' ] } );
-
-<%#*var energia_electrica_id = new LiveValidation( 'huella_energia_electrica_id' ); // P3%>
-<%#*energia_electrica_id.add( Validate.Presence );%>
-<%#*energia_electrica_id.add( Validate.Exclusion, { within: [ '' , ' ' ] } );%>
-
-<%#*function verificas(veryField , limitField){%>
-  <%#*var maxVal;%>
-  <%#*var focos_ahorradores2 = new LiveValidation(limitField);%>
-  <%#*maxVal = parseInt(document.getElementById(veryField).value);%>
-  <%#*focos_ahorradores2.add( Validate.Presence );%>
-  <%#*focos_ahorradores2.add( Validate.Numericality, { maximum: maxVal, onlyInteger: true } );%>
-<%#*alert(document.getElementById(veryField).value);%>
-<%#*}%>
-
-
-jQuery(function(){
-  <%#*jQuery("#huella_capacitacion_ahorro_energia").validate({ expression: "if (isSelectedC(SelfID)) return true; else return false;", message: "Seleccione una opción!" }); // P1%>
-  <%#*jQuery("#huella_mantto_inst").validate({ expression: "if (isSelectedC(SelfID)) return true; else return false;", message: "Seleccione una opción!" }); // P5%>
-  <%#*jQuery("#huella_servicio_agua_id").validate({ expression: "if (isSelectedC(SelfID)) return true; else return false;", message: "Seleccione una opción!" }); // P5%>
-  
-  jQuery("#r_jardines_hidroponicos").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" }); // P1
-  jQuery("#r_recip_residuos_solid").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" }); // P2
-  jQuery("#r_sep_residuos_org_inorg").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" }); // P3
-  jQuery("#r_elabora_compostas").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" }); // P4
+  jQuery(function(){
+    jQuery("#r_jardines_hidroponicos").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" }); 
+    jQuery("#r_recip_residuos_solid").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" }); 
+    jQuery("#r_sep_residuos_org_inorg").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
+    jQuery("#r_elabora_compostas").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" }); 
  
-  jQuery("#inorganicos").validate({ expression: "if (isCheckedC(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
-  <%#*jQuery("#elimina_residuos").validate({ expression: "if (isCheckedC(SelfID)) return true; else return false;", message: "Seleccione una opción!" });%>
-});
+    jQuery("#inorganicos").validate({ expression: "if (isCheckedC(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
+    jQuery("#elimina_residuos").validate({ expression: "if (skipSelect(SelfID, 'huella_recip_residuos_solid')) return true; else return false;", message: "Seleccione una opción!" });
+  });
 </script>

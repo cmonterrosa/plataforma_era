@@ -35,3 +35,16 @@ function isSelectedC(id){
             ReturnVal = true;
     return ReturnVal;
 }
+
+function skipSelect(id, opcion){
+    var ReturnVal = false;
+    
+    if(document.getElementById(opcion + "_si").checked)
+        ReturnVal = true;
+    else
+        jQuery("#" + id).find('input[type="checkbox"]').each(function(){
+            if (jQuery(this).is(":checked"))
+                ReturnVal = true;
+        });
+    return ReturnVal;
+}
