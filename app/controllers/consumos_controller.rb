@@ -13,7 +13,7 @@ class ConsumosController < ApplicationController
     else
       @establecimientos = Establecimiento.find(:all)
     end
-    @establecimientos
+#    @establecimientos
     @s_establecimientos = multiple_selected(@consumo.establecimientos) if @consumo.establecimientos
     @s_preparacions = multiple_selected(@consumo.preparacions) if @consumo.preparacions
     @s_utensilios = multiple_selected(@consumo.utensilios) if @consumo.utensilios
@@ -33,12 +33,12 @@ class ConsumosController < ApplicationController
 
     validador = verifica_evidencias(@diagnostico,4)
     if validador["valido"]
-        if params[:establecimientos]
-            @establecimientos = []
-            params[:establecimientos].each { |op| @establecimientos << Establecimiento.find_by_clave(op)  }
-            @consumo.establecimientos = Establecimiento.find(@establecimientos)
+        if(params[:establecimientos] and params[:consumo][:escuela_establecimiento] == 'NO')
+          @establecimientos = []
+          params[:establecimientos].each { |op| @establecimientos << Establecimiento.find_by_clave(op)  }
+          @consumo.establecimientos = Establecimiento.find(@establecimientos)
         else
-          @consumo.establecimientos.delete_all
+          @consumo.establecimientos.delete_all if @consumo.establecimientos
         end
 
         if params[:preparacions]

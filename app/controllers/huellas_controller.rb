@@ -7,6 +7,7 @@ class HuellasController < ApplicationController
     @diagnostico ||= Diagnostico.new
     @huella = @diagnostico.huella || Huella.new
     @s_electricas = selected(@huella.energia_electrica) if @huella.energia_electrica
+    @s_aguas = selected(@huella.servicio_agua) if @huella.servicio_agua
     @s_inorganicos = multiple_selected_id(@huella.inorganicos) if @huella.inorganicos
     @s_elimina_residuos = multiple_selected_id(@huella.elimina_residuos) if @huella.elimina_residuos
     @ahorradores = Array.new
@@ -23,9 +24,19 @@ class HuellasController < ApplicationController
     validador = verifica_evidencias(@diagnostico,3)
 
     if validador["valido"]
-      @huella.servicio_agua_id = '' if params[:huella][:red_publica_agua] == 'SI'
-      @huella.energia_electrica_id = '' if params[:huella][:energia_electrica_id] == 'SUOP'
-    
+      
+      if (params[:huella][:red_publica_agua] == 'SI')
+        @huella.servicio_agua_id = ''    
+      else
+        @huella.servicio_agua_id = ServicioAgua.find_by_clave(params[:huella][:servicio_agua_id]).id if params[:huella][:servicio_agua_id]
+      end
+      
+      if (params[:huella][:energia_electrica_id] == 'SUOP')
+        @huella.energia_electrica_id = '' 
+      else
+        @huella.energia_electrica_id = EnergiaElectrica.find_by_clave(params[:huella][:energia_electrica_id]).id if params[:huella][:energia_electrica_id]
+      end
+
       if params[:inorganicos]
         @inorganicos = []
         params[:inorganicos].each { |op| @inorganicos << Inorganico.find_by_clave(op)  }
@@ -41,13 +52,11 @@ class HuellasController < ApplicationController
       else
         @huella.elimina_residuos.delete_all if @huella.elimina_residuos
       end
-      a=0
+      
       if (params[:huella][:energia_electrica_id] != "SUOP")
         @huella.consumo_anterior = ""
         @huella.consumo_actual = ""
       end
-    
-      @huella.energia_electrica_id = EnergiaElectrica.find_by_clave(params[:huella][:energia_electrica_id]).id if params[:huella][:energia_electrica_id]
 
       if @huella.save
         flash[:notice] = "Registro guardado correctamente"
