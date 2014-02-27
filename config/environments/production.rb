@@ -29,5 +29,5 @@ config.action_view.cache_template_loading            = true
 
 SITE_URL="esys.educacionchiapas.gob.mx"
 REPORTS_DIR = "#{RAILS_ROOT}/app/reports"
-SITE_EMAIL="esys@sef-chiapas.gob.mx"
+SITE_EMAIL="plataforma.era@gmail.com"
 CICLO_ESCOLAR="2013-2014"
