@@ -1,3 +1,4 @@
+require 'resolv'
 require 'digest/sha1'
 
 class User < ActiveRecord::Base
@@ -39,6 +40,7 @@ class User < ActiveRecord::Base
   #validates_length_of       :email,    :within => 6..100 #r@a.wk
   validates_uniqueness_of   :email
   validates_format_of       :email,    :with => Authentication.email_regex, :message => Authentication.bad_email_message
+  
 
   before_create :make_activation_code
   before_create :assign_role_by_default
@@ -132,6 +134,13 @@ end
 #      self.roles << Role.find_by_name("admin") if User.count(:id) <= 1
  end
 
+  def email_valid?(email=self.email)
+      domain = email.match(/\@(.+)/)[1]
+      Resolv::DNS.open do |dns|
+          @mx = dns.getresources(domain, Resolv::DNS::Resource::IN::MX)
+      end
+      @mx.size > 0 ? true : false
+  end
 
 
     protected
