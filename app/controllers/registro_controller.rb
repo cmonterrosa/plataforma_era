@@ -49,7 +49,7 @@ class RegistroController < ApplicationController
       params[:programas].each { |op| @programas << Programa.find_by_clave(op)  }
       @escuela.programas = Programa.find(@programas)
     end
-
+    @escuela.registro_completo = true
     if @escuela.save
       @escuela.update_bitacora!("esc-datos", current_user)
       flash[:notice] = "Registro guardado correctamente"
