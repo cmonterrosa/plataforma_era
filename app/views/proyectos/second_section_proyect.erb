@@ -1,0 +1,110 @@
+<%= render :partial => "informacion_proyectos"%>
+
+<% form_for :eje, @eje, :url => { :action => "save_second_section", :proyecto_id => @proyecto, :id => @eje,  }, :html => {:class => "formee", :id => "eje"} do |f| -%>
+<table class="principal" width="100%" border="0" align="center" cellpadding="2" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
+  <tr bgcolor="#003366" style="opacity: 0.7;" >
+    <td align="center"><h4>P R O Y E C T O</h4></td>
+  </tr>
+  <tr align="center">
+    <td align="center">
+      <table class="subprincipal" width="100%" border="0" cellpadding="4" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
+        <tr>
+          <td align="justify" style="vertical-align:top;" >
+            <div class="grid-6-12">
+              <label>Líneas de Acción:</label>
+              <%= f.select :lineas_accion_id, @lineas.collect {|p| [ p.descripcion, p.clave ] }, { :prompt => "SELECCIONE UNA ACCIÓN" } %>
+            </div>
+            <div class="grid-6-12">
+              <label>Indicadores:</label>
+              <%= f.select :indicadore_id, @indicadores.collect {|p| [ p.descripcion, p.clave ] }, { :prompt => "SELECCIONE UNA ACCIÓN" } %>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td align="justify" style="vertical-align:top;" >
+            <div class="grid-6-12">
+              <label>Objetivo especifico:</label>
+              <%= f.text_area :objetivo_especifico %>
+            </div>
+            <div class="grid-6-12">
+              <label>Meta:</label>
+              <%= f.text_area :meta %>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td align="center" style="vertical-align:top;"><label style=" font-size: 15px; font-weight: bold;" >Actividades:</label></td>
+        </tr>
+        <tr>
+          <td align="justify" style="vertical-align:top;" >
+            <div class="grid-1-12"></div>
+            <div class="grid-2-12">
+              <label>Actividad 1:</label>
+            </div>
+            <div class="grid-7-12">
+              <%= f.text_area :actividad1 %>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td align="justify" style="vertical-align:top;" >
+            <div class="grid-1-12"></div>
+            <div class="grid-2-12">
+              <label>Actividad 2:</label>
+            </div>
+            <div class="grid-7-12">
+              <%= f.text_area :actividad2 %>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td align="justify" style="vertical-align:top;" >
+            <div class="grid-1-12"></div>
+            <div class="grid-2-12">
+              <label>Actividad 3:</label>
+            </div>
+            <div class="grid-7-12">
+              <%= f.text_area :actividad3 %>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td align="justify" style="vertical-align:top;" >
+            <div class="grid-1-12"></div>
+            <div class="grid-2-12">
+              <label>Actividad 4:</label>
+            </div>
+            <div class="grid-7-12">
+              <%= f.text_area :actividad4 %>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <%#= render :partial => "diagnosticos/errores_evidencias"%>
+  <tr>
+    <td align="right">
+      <table>
+        <tr>
+          <td>
+            <input id="siguiente" onclick="to_uppercase();" class="buttonText" type="submit" title="Guardar y Seguir" value="Guardar y Seguir" />
+          </td>
+          <td>
+            <a href="/proyectos/new_or_edit" id="cancelar_sig" class="buttonText">Regresar</a>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2" >&nbsp;</td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<% end %>
