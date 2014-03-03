@@ -41,6 +41,15 @@
        <%=link_to image_tag('admin/catalogos.png', :size => "128x128", :mouseover => 'admin/catalogos1.png') , {:action => "add_comunitaria", :controller => "admin"}, :title => "Catálogos para agregar escuela comunitaria"%>
           <label style="font-family:verdana;font-size:14px;">Catálogos</label>
         </div>
+
+        <!-- Perfiles -->
+       <%if current_user.has_role?("admin")%>
+       <div class="grid-3-12">
+          <%=link_to image_tag('admin/respaldos.png', :size => "128x128", :size => "128x128", :mouseover => 'admin/respaldos2.png') , {:action => "show_respaldos", :controller => "admin"}, :title => "Respaldos de bases de datos"%>
+         <label style="font-family:verdana;font-size:14px;">Respaldos</label>
+       </div>
+       <%end%>
+
        </td>
 
     </tr>

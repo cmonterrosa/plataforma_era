@@ -2,6 +2,7 @@ require 'fastercsv'
 class AdminController < ApplicationController
   #protect_from_forgery
   require_role [:directivo], :only => [:show_escuelas]
+  require_role [:admin], :for => ["show_respaldos"]
   #require_role [:admin]
   
   def index
@@ -275,6 +276,15 @@ class AdminController < ApplicationController
       flash[:notice] = "DIagnóstico no se pudo habilitar"
     end
     redirect_to :action => "menu_diagnostico", :id => @escuela
+  end
+
+  def show_respaldos
+    @respaldos = Dir.glob("#{BACKUPS_DIR}/*.tar.gz")
+  end
+
+   def download_respaldo
+    path="#{BACKUPS_DIR}/" + params[:archivo]
+    send_file path , :disposition => 'inline'
   end
 
 end

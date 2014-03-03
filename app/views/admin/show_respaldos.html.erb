@@ -1,0 +1,24 @@
+<div class="titulos">
+  <p>
+    Respaldos de Base de datos
+  </p>
+</div>
+<br />
+
+    <table width="65%" border="0" cellspacing="0" cellpadding="0" class="sample" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid" align="center">
+      <tr style="background-color:#2E6AB1; color:white;">
+        <th width="15%">NP</th>
+        <th width="85%">Archivo</th>
+      </tr>
+      <%clase=0%>
+      <%contador=1%>
+      <%@respaldos.sort.reverse.each do |r|%>
+          <tr class="d<%=invert_class(clase)%>">
+            <td style="vertical-align: middle; text-align: center;"><%=contador%></td>
+             <%archivo = r.match(/\w+-\d{8}-\d{4}.tar.gz$/)%>
+            <td style="vertical-align: middle;"><%= link_to archivo, {:action => "download_respaldo", :archivo => archivo}, :style => "color:black; font-size: 14px;"%></td>
+            <%clase = invert_class(clase)%>
+            <%contador+=1%>
+        </tr>
+      <%end%>
+      </table>
