@@ -1,3 +1,4 @@
 class Proyecto < ActiveRecord::Base
-  belongs_to :eje
+  has_many :ejes
+  belongs_to :diagnostico
 end

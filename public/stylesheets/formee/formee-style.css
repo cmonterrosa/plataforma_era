@@ -319,6 +319,33 @@ a.notchange{
   background-image: linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2));
 }
 
+#siguiente{
+  background: #62b548;
+  color: white;
+  text-shadow: 0px 2px 0px rgba(0, 0, 0, 0.3);
+  font-size: 16px;
+  height: 38px;
+  width: 180px;
+  margin: 0px 0 0 10px;
+  overflow: hidden;
+  display: block;
+  text-align: center;
+  text-transform: inherit;
+  font-weight: normal;
+  border-color: #62b548;
+
+  -webkit-box-shadow: 0px 6px 0px rgba(0, 90, 0, 0.8);
+  -moz-box-shadow:    0px 6px 0px rgba(0, 90, 0, 0.8);
+  box-shadow:         0px 6px 0px rgba(0, 90, 0, 0.8);
+
+  /*Gradient*/
+/*  background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2));*/
+/*  background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2));*/
+  background-image: -o-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2));
+  background-image: -ms-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2));
+  background-image: linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2));
+}
+
 #buttonc {
   background: orangered; /* #5c5c5c;*/
   color: white;
@@ -350,29 +377,81 @@ a.notchange{
   background-image: linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2));
 }
 
+#cancelar_sig {
+  background: orangered; /* #5c5c5c;*/
+  color: white;
+  text-shadow: 0px 2px 0px rgba(0, 0, 0, 0.3);
+  font-size: 16px;
+  height: 38px;
+  width: 180px;
+  margin: 0px 0 0 20px;
+  overflow: hidden;
+  display: block;
+  text-align: center;
+  line-height: 45px;
+
+/*  Rounded Corners*/
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+
+  /*Shadow*/
+  -webkit-box-shadow: 0px 6px 0px rgba(80, 0, 0, 0.8);
+  -moz-box-shadow:    0px 6px 0px rgba(80, 0, 0, 0.8);
+  box-shadow:         0px 6px 0px rgba(80, 0, 0, 0.8);
+
+  /*Gradient*/
+/*  background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2));*/
+  background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2));
+  background-image: -o-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2));
+  background-image: -ms-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2));
+  background-image: linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2));
+}
+
 
 #button4:hover{
   margin-top: 3px;
   text-decoration: none;
 
-  /*Shadow*/
-/*  -webkit-box-shadow: 0px 4px 0px rgba(0, 0, 0, 0.6);
-  -moz-box-shadow: 0px 4px 0px rgba(0, 0, 0, 0.6);
-  box-shadow: 0px 4px 0px rgba(0, 0, 0, 0.6);*/
+  -webkit-box-shadow: 0px 3px 0px rgba(0, 110, 0, 0.8);
+  -moz-box-shadow:    0px 3px 0px rgba(0, 110, 0, 0.8);
+  box-shadow:         0px 3px 0px rgba(0, 110, 0, 0.8);
+
+  background-image: -o-linear-gradient(bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4));
+  background-image: -ms-linear-gradient(bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4));
+  background-image: linear-gradient(bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4));
+}
+
+#siguiente:hover{
+  margin-top: 3px;
+  text-decoration: none;
 
   -webkit-box-shadow: 0px 3px 0px rgba(0, 110, 0, 0.8);
   -moz-box-shadow:    0px 3px 0px rgba(0, 110, 0, 0.8);
   box-shadow:         0px 3px 0px rgba(0, 110, 0, 0.8);
 
-  /*Gradient*/
-/*  background-image: -webkit-linear-gradient(bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4));*/
-/*  background-image: -moz-linear-gradient(bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4));*/
   background-image: -o-linear-gradient(bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4));
   background-image: -ms-linear-gradient(bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4));
   background-image: linear-gradient(bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4));
 }
 
 #buttonc:hover{
+  margin-top: 3px;
+  text-decoration: none;
+
+  -webkit-box-shadow: 0px 3px 0px rgba(150, 0, 0, 0.8);
+  -moz-box-shadow:    0px 3px 0px rgba(150, 0, 0, 0.8);
+  box-shadow:         0px 3px 0px rgba(150, 0, 0, 0.8);
+
+  /*Gradient*/
+/*  background-image: -webkit-linear-gradient(bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4));*/
+  background-image: -moz-linear-gradient(bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4));
+  background-image: -o-linear-gradient(bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4));
+  background-image: -ms-linear-gradient(bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4));
+  background-image: linear-gradient(bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4));
+}
+
+#cancelar_sig:hover{
   margin-top: 3px;
   text-decoration: none;
 

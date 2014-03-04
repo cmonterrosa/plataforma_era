@@ -1,6 +1,6 @@
 <%= render :partial => "informacion_proyectos"%>
 
-<% form_for :proyecto, @proyecto,  :update => "seccion", :url => { :action => "save_proyecto", :id => @proyecto }, :html => {:class => "formee", :id => "proyecto"} do |f| -%>
+<% form_for :proyecto, @proyecto, :url => { :action => "save", :id => @proyecto }, :html => {:class => "formee", :id => "proyecto"} do |f| -%>
 <table class="principal" width="100%" border="0" align="center" cellpadding="2" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
   <tr bgcolor="#003366" style="opacity: 0.7;" >
     <td align="center"><h4>P R O Y E C T O</h4></td>
@@ -50,7 +50,7 @@
       <table>
         <tr>
           <td>
-            <input id="siguiente" onclick="to_uppercase();" class="buttonText" type="submit" title="Guardar y Continuar" value="Guardar y Continuar" />
+            <input id="siguiente" onclick="to_uppercase();" class="buttonText" type="submit" title="Guardar y Regresar" value="Guardar y Regresar" />
           </td>
           <td>
             <a href="/proyectos" id="cancelar_sig" class="buttonText">Cancelar</a>
@@ -62,5 +62,5 @@
       </table>
     </td>
   </tr>
-</table>
+</table>z
 <% end %>

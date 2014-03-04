@@ -303,9 +303,10 @@ a:active {
                         <!-- imagenes del menu -->
                         <td><%=link_to image_tag("era/btns_cert/btn_reg1.png", :size => "100x33", :mouseover => "era/btns_cert/btn_reg2.png", :border => 0), {:controller => "registro", :action => "index" }, :title => "CONSULTA EL REGISTRO DE DATOS"%></td>
                         <td><%=link_to image_tag("era/btns_cert/btn_dia1.png", :size => "100x33", :mouseover => "era/btns_cert/btn_dia2.png", :border => 0), {:controller => "diagnosticos", :action => "index" }, :title => "CONSULTA EL DIAGNOSTICO"%></td>
+                        <td><%=link_to image_tag("/images/era/btns_cert/btn_pro1.png", :size => "100x33", :mouseover => "/images/era/btns_cert/btn_pro2.png", :border => 0), {:controller => "proyectos", :action => "index" }, :title => "CONSULTA EL PROYECTO"%></td>
 
                         <!-- buzon -->
-                        <td><%=link_to image_tag("era/btns_cert/buzon1.png", :size => "40x33", :mouseover => "era/btns_cert/buzon2.png", :border => 0), {:controller => "buzon", :action => "new" }, :title => "¿TIENES ALGUN COMENTARIO O SUGERENCIA?", :class => "fancybox fancybox.iframe"%></td>
+                        <td><%=link_to image_tag("/images/era/btns_cert/buzon1.png", :size => "40x33", :mouseover => "/images/era/btns_cert/buzon2.png", :border => 0), {:controller => "buzon", :action => "new" }, :title => "¿TIENES ALGUN COMENTARIO O SUGERENCIA?", :class => "fancybox fancybox.iframe"%></td>
                       <%end%>
 
                  <%end%>
@@ -318,7 +319,7 @@ a:active {
                 <td><a href="/registro" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Image32','','/images/era/btns_cert/btn_reg2.png',1)"><img src="/images/era/btns_cert/btn_reg1.png" name="Image32" width="100" height="33" border="0" id="Image32" /></a></td>
                 <td><a href="/diagnosticos" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Image32','','/images/era/btns_cert/btn_dia2.png',1)"><img src="/images/era/btns_cert/btn_dia1.png" name="Image32" width="100" height="33" border="0" id="Image32" /></a></td>
                 -->
-                <td><img src="/images/era/space.png" name="Image34" width="100" height="33" border="0" id="Image34" /></td>
+                <%#*<td><img src="/images/era/space.png" name="Image34" width="100" height="33" border="0" id="Image34" /></td>%>
                 <td><img src="/images/era/space.png" name="Image34" width="100" height="33" border="0" id="Image34" /></td>
 
               </tr>

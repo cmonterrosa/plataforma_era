@@ -1,0 +1,68 @@
+<%= render :partial => "informacion_proyectos"%>
+
+<% if @proyecto.nil? %>
+<table width="100%" >
+  <tr>
+    <td><img src="/images/era/space.png" width="10" height="20px" /></td>
+  </tr>
+  <tr align="center" >
+    <td>
+      <div class="formee" style="text-align: center;" >
+        <%=button_to "INICIAR PROYECTO", { :action => "new_proyecto", :escuela_id => @escuela_id } %>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="3"><img src="/images/era/space.png" width="10" height="50px" /></td>
+  </tr>
+</table>
+<% else %>
+ <table class="principal" width="100%" border="0" align="center" cellpadding="2" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
+  <tr bgcolor="#003366" style="opacity: 0.7;" >
+    <td align="center"><h4>DATOS DEL PROYECTO</h4></td>
+  </tr>
+  <tr align="center">
+    <td align="center">
+      <table class="subprincipal" width="100%" border="0" cellpadding="4" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
+        <tr>
+          <td>
+            <div class="grid-11-12">
+              <label style=" font-weight: bold;" >Nombre del Proyecto: &nbsp;</label>
+              <label style="font-size: 13px;"><%= @proyecto.descripcion %></label>
+            </div>
+            <div class="grid-1-12">
+              <%= link_to image_tag("/images/era/iconos/ico_arbol.png"), {:action => "edit", :escuela_id => @escuela_id} %>
+            </div>
+          </td>
+        </tr>
+        <tr align="justify" >
+          <td>
+            <div class="grid-11-12">
+              <label style=" font-weight: bold;" >Ejes a Desarrollar: </label>
+            </div>
+            <div class="grid-1-12">A
+              <%= link_to image_tag("/images/era/iconos/ico_arbol.png"), { :action => "seccion_eje", :escuela_id => @escuela_id} %>
+            </div>
+            <% @ejes.each do |eje|%>
+            <div class="grid-12-12" >
+              <label style="font-size: 12px;">::&nbsp;<%= eje.catalogo_eje.completo %></label>
+              </div>
+              <div class="grid-6-12">
+                <label style="font-size: 13px; font-weight: bold;" >Linea de Acción: </label><br />
+                <label style="font-size: 12px;"><%= eje.indicadore.descripcion %></label>
+              </div>
+              <div class="grid-5-12">
+                <label style="font-size: 13px; font-weight: bold;" >Indicador: </label><br />
+                <label style="font-size: 12px;"><%= eje.lineas_accion.descripcion %></label>
+              </div>
+              <div class="grid-1-12">E
+                <%= link_to image_tag("/images/era/iconos/ico_arbol.png"), { :action => "seccion_eje", :id => eje.id } %>
+              </div>
+            <% end %>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<% end  %>

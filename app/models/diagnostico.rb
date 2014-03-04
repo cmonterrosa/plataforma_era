@@ -6,6 +6,7 @@ class Diagnostico < ActiveRecord::Base
    has_one :participacion
    has_one :huella
    has_many :adjuntos
+   has_one :proyecto
 
    def folio
      "#{self.id.to_s.rjust(5, '0')}"

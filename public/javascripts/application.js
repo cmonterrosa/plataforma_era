@@ -1,5 +1,14 @@
 // Funciones para validar datos en las vistas
 
+// Convierte a mayuscula los campos del formulario y lo envia
+function to_uppercase(){
+    var numero = document.forms[0].elements.length;
+    for(a=0;a<numero;a++) {
+        if(document.forms[0].elements[a].type == 'text' || document.forms[0].elements[a].type == 'textarea')
+            document.forms[0].elements[a].value = document.forms[0].elements[a].value.toUpperCase();
+    }
+}
+
 function showDescription(obj_select, obj_desc)
 {
     if(typeof obj_select == "object")

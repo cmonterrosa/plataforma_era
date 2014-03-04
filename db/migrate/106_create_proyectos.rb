@@ -3,9 +3,10 @@ class CreateProyectos < ActiveRecord::Migration
     create_table :proyectos do |t|
       t.string :descripcion
       t.string :ciclo_escolar
-      t.string :antecedentes
-      t.string :objetivo_general
-      t.integer :eje_id
+      t.string :antecedentes, :limit => 700
+      t.string :objetivo_general, :limit => 300
+      t.integer :diagnostico_id
+      
       t.timestamps
     end
   end
