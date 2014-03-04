@@ -17,6 +17,7 @@ class AdminController < ApplicationController
   def save_new_user
     @user = User.new(params[:user])
     @user.activated_at = Time.now
+    @user.email_not_required!
     ## Main Role ###
     @user.roles << Role.find(params[:role][:id])
     success = @user && @user.save

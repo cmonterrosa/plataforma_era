@@ -34,10 +34,12 @@
           <td align="center" colspan="4" ></td>
         </tr>
         <tr align=" justify" class="pregunta">
+          <td align="center">Correo electrónico</td>
           <td align="center">Contraseña</td>
           <td align="center">Confirmación de la contraseña</td>
         </tr>
         <tr>
+          <td align="center"><%= f.text_field :email, :required => true%></td>
           <td align="center"><%= f.password_field :password, :required => true %></td>
           <td align="center"><%= f.password_field :password_confirmation, :required => true %></td>
         </tr>
