@@ -84,3 +84,31 @@
       </table>
     </td>
   </tr>
+
+<script type="text/javascript">
+  var lineas_accion_id = new LiveValidation( 'eje_lineas_accion_id' );
+  lineas_accion_id.add( Validate.Presence );
+  lineas_accion_id.add( Validate.Exclusion, { within: [ '' , ' ' ] } );
+
+  var indicadore_id = new LiveValidation( 'eje_indicadore_id' );
+  indicadore_id.add( Validate.Presence );
+  indicadore_id.add( Validate.Exclusion, { within: [ '' , ' ' ] } );
+
+  var objetivo_especifico = new LiveValidation( 'eje_objetivo_especifico' );
+  objetivo_especifico.add( Validate.Presence );
+
+  var meta = new LiveValidation( 'eje_meta' );
+  meta.add( Validate.Presence );
+
+  var actividad1 = new LiveValidation( 'eje_actividad1' );
+  actividad1.add( Validate.Presence );
+
+  var actividad2 = new LiveValidation( 'eje_actividad2' );
+  actividad2.add( Validate.Presence );
+
+  var actividad3 = new LiveValidation( 'eje_actividad3' );
+  actividad3.add( Validate.Presence );
+
+  var actividad4 = new LiveValidation( 'eje_actividad4' );
+  actividad4.add( Validate.Presence );
+</script>

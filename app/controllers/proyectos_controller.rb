@@ -1,4 +1,6 @@
 class ProyectosController < ApplicationController
+  layout :set_layout
+
   before_filter :login_required
 #  skip_before_filter :verify_authenticity_token, :only => [:save_first_section, :second_section_proyect]
 
@@ -35,12 +37,10 @@ class ProyectosController < ApplicationController
 
   def new_or_edit
     @proyecto = Proyecto.find_by_diagnostico_id(Diagnostico.find_by_escuela_id(params[:escuela_id]).id)
-    a=0
   end
 
   def edit
     @proyecto = Proyecto.find_by_diagnostico_id(Diagnostico.find_by_escuela_id(params[:escuela_id]).id)
-    a=0
   end
 
   def save
@@ -60,27 +60,21 @@ class ProyectosController < ApplicationController
       flash[:error] = "No se pudo crear el proyecto"
     end
   end
-#  def save_proyecto
-#    @proyecto = Proyecto.find(params[:id])
-#    if @proyecto.update_attributes(params[:proyecto])
-#      @escuela_id = Escuela.find_by_clave(current_user.login.upcase).id
-#      @proyecto = Proyecto.find_by_diagnostico_id(Diagnostico.find_by_escuela_id(@escuela_id).id)
-#      @lineas = LineasAccion.find(:all)
-#      @indicadores = Indicadore.find(:all)
-#      @catalogo_ejes = CatalogoEje.find(:all)
-#      render :partial => "seccion_eje"
-#    else
-#      flash[:error] = "No se pudo crear el proyecto"
-#    end
-#  end
 
   def seccion_eje
     @eje = Eje.find(params[:id]) if params[:id]
     @escuela_id = Escuela.find_by_clave(current_user.login.upcase).id
     @proyecto = Proyecto.find_by_diagnostico_id(Diagnostico.find_by_escuela_id(@escuela_id).id)
-    @lineas = LineasAccion.find(:all)
-    @indicadores = Indicadore.find(:all)
-    @catalogo_ejes = CatalogoEje.find(:all)
+    @id_usados = Eje.find(:all, :select => "catalogo_eje_id, lineas_accion_id, indicadore_id", :conditions => ["proyecto_id = ?", @proyecto.id])
+    unless @id_usados.empty?
+#    @lineas = LineasAccion.find(:all, :conditions => ["id not in (#{convertir_array(@id_usados,'linea').join(',')})"])
+#    @indicadores = Indicadore.find(:all, :conditions => ["id not in (#{convertir_array(@id_usados,'indicador').join(',')})"])
+    @catalogo_ejes = CatalogoEje.find(:all, :conditions => ["id not in (#{convertir_array(@id_usados,'eje').join(',')})"] )
+    else
+#      @lineas = LineasAccion.find(:all)
+#      @indicadores = Indicadore.find(:all)
+      @catalogo_ejes = CatalogoEje.find(:all)
+    end
   end
 
   def edit_eje
@@ -92,28 +86,26 @@ class ProyectosController < ApplicationController
     @catalogo_ejes = CatalogoEje.find(:all)
   end
 
-  def second_section_proyect
+  def proyect_to_pdf
     @escuela_id = Escuela.find_by_clave(current_user.login.upcase).id
-    @proyecto = Proyecto.find_by_diagnostico_id(Diagnostico.find_by_escuela_id(@escuela_id).id)
-    @lineas = LineasAccion.find(:all, :conditions => [" num_eje = ?", @proyecto.eje.clave])
-    @indicadores = Indicadore.find(:all, :conditions => [" num_eje = ?", @proyecto.eje.clave])
+    @diagnostico = Diagnostico.find_by_escuela_id(@escuela_id)
+    @proyecto = Proyecto.find_by_diagnostico_id(@diagnostico)
   end
 
-  def save_second_section
-    @proyecto = Proyecto.find(params[:proyecto_id])
-#    @eje = Eje.find(@proyecto.eje).id if @proyecto
+  private
 
-    @lineas_accion_id = LineasAccion.find_by_clave(params[:eje][:lineas_accion_id]).id if params[:eje][:lineas_accion_id]
-    params[:eje][:lineas_accion_id] = @lineas_accion_id if  @lineas_accion_id
-
-    @indicador_id = Indicadore.find_by_clave(params[:eje][:indicadore_id]).id if params[:eje][:indicadore_id]
-    params[:eje][:indicadore_id] = @indicador_id if  @indicador_id
-
-    if @proyecto.eje.update_attributes(params[:eje])
-      redirect_to :action => "new_or_edit"
-    else
-      redirect_to :action => "second_section_proyect"
+  def convertir_array(array,field)
+    arreglo =[]
+    array.each do |a|
+      arreglo << a.catalogo_eje_id if field =='eje'
+      arreglo << a.lineas_accion_id if field =='linea'
+      arreglo << a.indicadore_id if field =='indicador'
     end
+    return arreglo
   end
+
+  def set_layout
+    (action_name == 'proyect_to_pdf')? 'reporte' : 'era2014'
+  end
+
 end
-#  @diagnostico = Diagnostico.find(params[:id]) if params[:id]

@@ -31,14 +31,10 @@
         </tr>
         <tr>
           <td align="justify" style="vertical-align:top;" >
-            <div class="grid-6-12">
+            <div class="grid-12-12">
               <label>Objetivo General:</label>
               <%= f.text_area :objetivo_general %>
             </div>
-            <%#*<div class="grid-6-12">%>
-              <%#*<label>Eje a desarrollar:</label>%>
-              <%#= f.select :eje_id, @ejes.collect {|p| [ p.descripcion, p.clave ] }, { :prompt => "SELECCIONE UN EJE" } %>
-            <%#*</div>%>
           </td>
         </tr>
       </table>
@@ -64,3 +60,20 @@
   </tr>
 </table>
 <% end %>
+
+<script type="text/javascript">
+
+  var ciclo_escolar = new LiveValidation( 'proyecto_ciclo_escolar' );
+  ciclo_escolar.add( Validate.Presence );
+  ciclo_escolar.add( Validate.Exclusion, { within: [ '' , ' ' ] } );
+  
+  var descripcion = new LiveValidation( 'proyecto_descripcion' );
+  descripcion.add( Validate.Presence );
+
+  var antecedentes = new LiveValidation( 'proyecto_antecedentes' );
+  antecedentes.add( Validate.Presence );
+
+  var objetivo_general = new LiveValidation( 'proyecto_objetivo_general' );
+  objetivo_general.add( Validate.Presence );
+
+</script>

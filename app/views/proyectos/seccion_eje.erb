@@ -39,7 +39,7 @@
             <input id="siguiente" onclick="to_uppercase();" class="buttonText" type="submit" title="Guardar" value="Guardar" />
           </td>
           <td>
-            <a href="/proyectos/index" id="cancelar_sig" class="buttonText">Regresar</a>
+            <a href="/proyectos" id="cancelar_sig" class="buttonText">Regresar</a>
           </td>
         </tr>
         <tr>
@@ -51,16 +51,15 @@
 </table>
 <% end %>
 
-
-
-
-
-
-
-
-
 <%= observe_field :eje_catalogo_eje_id,
                   :frecuency => 0.2,
                   :update => :contenido_eje,
                   :url => { :controller => 'proyectos', :action => 'get_contenido_ejes' },
                   :with => :eje_catalogo_eje_id %>
+
+<script type="text/javascript">
+  var catalogo_eje_id = new LiveValidation( 'eje_catalogo_eje_id' );
+  catalogo_eje_id.add( Validate.Presence );
+  catalogo_eje_id.add( Validate.Exclusion, { within: [ '' , ' ' ] } );
+
+</script>

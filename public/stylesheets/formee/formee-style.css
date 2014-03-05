@@ -41,6 +41,7 @@ Style
 	color:#2b2b2b;
 	font-weight: normal;
 }
+
 .formee h5 {
 	font-size:1.4em;
 	line-height:1.2em;
@@ -539,3 +540,85 @@ p a, p a:hover{
   font-weight: bold;
   text-decoration: none;
 }
+
+
+.reporte  {font: normal 10px/1.1em Arial,Sans-Serif;}
+.reporte label {
+    color:#2b2b2b;
+    font-size:1.4em;
+    line-height: 1.3em;
+    vertical-align:middle;
+}
+.reporte h1 {
+	font-size:1.8em;
+	line-height:1.2em;
+	letter-spacing: 0.8em;
+	color: #FFFFFF;
+	font-weight: bold;
+      margin:0.6em 0.5% .6%;
+	padding: 0.5% 0.5% 0.8%;
+}
+.reporte label.titulo {
+    color:#2b2b2b;
+    font-size:1.4em;
+    line-height: 1.3em;
+    vertical-align:middle;
+    font-weight: bold;
+    display: block;
+}
+.reporte label.subtitulo {
+    color:#2b2b2b;
+    font-size:1.3em;
+    line-height: 1.3em;
+    vertical-align:middle;
+    font-weight: bold;
+    display: block;
+}
+.reporte label.descripcion {
+    color:#2b2b2b;
+    font-size:1.3em;
+    line-height: 1.3em;
+    vertical-align:middle;
+    font-weight: normal;
+    display: block;
+}
+.reporte fieldset {
+      border: 1px solid #d4d4d4;
+	position: relative;
+	height:100%;
+	padding: 1.2em 0;
+	margin: 0 0 1.5em;
+
+	background: honeydew;
+	/*corner*/
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+}
+/*.reporte fieldset.subfieldset {
+      border: 1px solid #d4d4d4;
+	position: relative;
+	height:100%;
+	padding: 1.2em 0;
+	margin: 0 0.5em 1.5em;
+
+	background: honeydew;
+	corner
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+}*/
+.reporte legend{
+	font-size:1.3em;
+	line-height:1.2em;
+	letter-spacing: -.035em;
+	color:#2b2b2b;
+	font-weight: bold;
+}
+/*.reporte legend.sublegend{
+	font-size:1.3em;
+	line-height:1.2em;
+	letter-spacing: 0.1em;
+	color:#2b2b2b;
+	font-weight: bold;
+}*/

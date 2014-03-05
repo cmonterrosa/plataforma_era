@@ -1,0 +1,142 @@
+<% form_for :proyecto, @proyecto, :html => {:class => "reporte", :id => "proyecto"} do |f| -%>
+<table class="principal" width="100%" border="0" align="center" cellpadding="2" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
+  <tr bgcolor="#003366" style="opacity: 0.7;" >
+    <td align="center"><h1>TABLA  DE  PROYECTO  ESyS</h1></td>
+  </tr>
+  <tr align="center">
+    <td align="center">
+      <table class="subprincipal" width="100%" border="0" cellpadding="4" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
+        <tr>
+          <td align="justify" style="vertical-align:top;" >
+            <div class="grid-8-12">
+              <label class="titulo">NOMBRE DEL PROYECTO: </label>
+              <label class="descripcion"> <%= @proyecto.descripcion %></label>
+            </div>
+            <div class="grid-4-12">
+              <label class="titulo">CICLO ESCOLAR: </label>
+              <label class="descripcion"> <%= @proyecto.ciclo_escolar %> </label>
+            </div>
+
+            <div class="grid-6-12">
+              <label class="titulo">ANTECEDENTES: </label>
+              <label class="descripcion"> <%= @proyecto.antecedentes %></label>
+            </div>        
+            <div class="grid-6-12">
+              <label class="titulo">OBJETIVO GENERAL:</label>
+              <label class="descripcion"> <%= @proyecto.objetivo_general %></label>
+            </div>
+            <div class="grid-12-12 clear">&nbsp;</div>
+            
+              <div class="grid-12-12">
+                <label class="titulo">EJE(S) A DESARROLLAR:</label>
+              </div>
+            <% @proyecto.ejes.sort_by { |hsh| hsh[:catalogo_eje_id] }.each do |eje| %>
+            <fieldset>
+              <legend> &nbsp; :: &nbsp;<%= eje.catalogo_eje.completo %> &nbsp; </legend>
+            <div class="grid-3-12">
+              <label class="subtitulo">LINEAS DE ACCIÓN: </label>
+              <label class="descripcion"> <%= eje.lineas_accion.descripcion %></label>
+            </div>
+            <div class="grid-5-12">
+              <label class="subtitulo">INDICADORES: </label>
+              <label class="descripcion"> <%= eje.indicadore.descripcion %></label>
+            </div>
+            <div class="grid-4-12">
+              <label class="subtitulo">OBJETIVO ESPECIFICO: </label>
+              <label class="descripcion"> <%= eje.objetivo_especifico %></label>
+            </div>
+
+            <div class="grid-12-12 clear"></div>
+
+            <div class="grid-4-12">
+              <label class="subtitulo">ACTIVIDAD 1: </label>
+              <label class="descripcion"> <%= eje.actividad1 %></label>
+            </div>
+            <div class="grid-4-12">
+              <label class="subtitulo">ACTIVIDAD 2: </label>
+              <label class="descripcion"> <%= eje.actividad2 %></label>
+            </div>
+            <div class="grid-4-12">
+              <label class="subtitulo">ACTIVIDAD 3: </label>
+              <label class="descripcion"> <%= eje.actividad3 %></label>
+            </div>
+
+            <div class="grid-12-12 clear"></div>
+            
+            <div class="grid-4-12">
+              <label class="subtitulo">ACTIVIDAD 4: </label>
+              <label class="descripcion"> <%= eje.actividad4 %></label>
+            </div>
+            <div class="grid-4-12">
+              <label class="subtitulo">META: </label>
+              <label class="descripcion"> <%= eje.meta %></label>
+            </div>
+            
+            </fieldset>
+            <% end %>
+            
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<% end %>
+
+
+
+
+              <%#*<label>Eje a desarrollar:</label>%>
+              <%#= f.select :catalogo_eje_id, @catalogo_ejes.collect {|p| [ p.completo, p.clave ] }, { :prompt => "SELECCIONE UNA ACCIÓN" } %>
+
+  
+            <%#*<div class="grid-6-12">%>
+              <%#*<label>Líneas de Acción:</label>%>
+              <%#= f.select :lineas_accion_id, @lineas.collect {|p| [ p.descripcion, p.clave ] }, { :prompt => "SELECCIONE UNA ACCIÓN" } %>
+            <%#*</div>%>
+            <%#*<div class="grid-6-12">%>
+              <%#*<label>Indicadores:</label>%>
+              <%#= f.select :indicadore_id, @indicadores.collect {|p| [ p.descripcion, p.clave ] }, { :prompt => "SELECCIONE UNA ACCIÓN" } %>
+            <%#*</div>%>
+
+            <%#*<div class="grid-6-12">%>
+              <%#*<label>Objetivo especifico:</label>%>
+              <%#= f.text_area :objetivo_especifico %>
+            <%#*</div>%>
+            <%#*<div class="grid-6-12">%>
+              <%#*<label>Meta:</label>%>
+              <%#= f.text_area :meta %>
+            <%#*</div>%>
+      
+            <%#*<div class="grid-1-12"></div>%>
+            <%#*<div class="grid-2-12">%>
+              <%#*<label>Actividad 1:</label>%>
+            <%#*</div>%>
+            <%#*<div class="grid-7-12">%>
+              <%#= f.text_area :actividad1 %>
+            <%#*</div>%>
+   
+            <%#*<div class="grid-1-12"></div>%>
+            <%#*<div class="grid-2-12">%>
+              <%#*<label>Actividad 2:</label>%>
+            <%#*</div>%>
+            <%#*<div class="grid-7-12">%>
+              <%#= f.text_area :actividad2 %>
+            <%#*</div>%>
+
+            <%#*<div class="grid-1-12"></div>%>
+            <%#*<div class="grid-2-12">%>
+              <%#*<label>Actividad 3:</label>%>
+            <%#*</div>%>
+            <%#*<div class="grid-7-12">%>
+              <%#= f.text_area :actividad3 %>
+            <%#*</div>%>
+    
+            <%#*<div class="grid-1-12"></div>%>
+            <%#*<div class="grid-2-12">%>
+              <%#*<label>Actividad 4:</label>%>
+            <%#*</div>%>
+            <%#*<div class="grid-7-12">%>
+              <%#= f.text_area :actividad4 %>
+            <%#*</div>%>
+ 

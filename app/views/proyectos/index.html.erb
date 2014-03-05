@@ -43,25 +43,34 @@
             <div class="grid-2-12">
               <label style="font-size: 12px;"><%= link_to image_tag("/images/botones/add_eje.png", :mouseover => "/images/botones/add_eje2.png"), { :action => "seccion_eje", :escuela_id => @escuela_id} %>&nbsp; Agregar Eje</label>
             </div>
-            <% @ejes.each do |eje|%>
-            <div class="grid-12-12" >
-              <label style="font-size: 13px;">::&nbsp;<%= eje.catalogo_eje.completo %></label>
+            <% @ejes.sort_by { |hsh| hsh[:catalogo_eje_id] }.each do |eje|%>
+            <div class="reporte">
+            <fieldset>
+              <legend>&nbsp;::&nbsp;<%= eje.catalogo_eje.completo %> &nbsp;</legend>
+              <div class="grid-4-12">
+                <label style="font-size: 12px; font-style: italic;" >LÍNEA DE ACCIÓN: </label><br />
+                <label style="font-size: 12px;"><%= eje.lineas_accion.descripcion %></label>
               </div>
               <div class="grid-6-12">
-                <label style="font-size: 12px; font-weight: bold; font-style: italic;" >LÍNEA DE ACCIÓN: </label><br />
+                <label style="font-size: 12px; font-style: italic;" >INDICADOR: </label><br />
                 <label style="font-size: 12px;"><%= eje.indicadore.descripcion %></label>
-              </div>
-              <div class="grid-4-12">
-                <label style="font-size: 12px; font-weight: bold; font-style: italic;" >INDICADOR: </label><br />
-                <label style="font-size: 12px;"><%= eje.lineas_accion.descripcion %></label>
               </div>
               <div class="grid-2-12">
                 <label style="font-size: 12px;"><%= link_to image_tag("/images/botones/edit_proyect.png", :mouseover => "/images/botones/edit_proyect2.png"), { :action => "edit_eje", :id => eje.id } %>&nbsp; Editar Eje</label>
               </div>
+            </fieldset>
+            </div>
             <% end %>
           </td>
         </tr>
       </table>
+    </td>
+  </tr>
+  <tr align="center">
+    <td>
+      <div class="grid-12-12">
+        <p id="pdf_link"><%= link_to image_tag("/images/botones/print_proyect.png", :mouseover => "/images/botones/print_proyect2.png" ), { :action => "proyect_to_pdf.pdf" }, :target => "_blank" %></p>
+      </div>
     </td>
   </tr>
 </table>
