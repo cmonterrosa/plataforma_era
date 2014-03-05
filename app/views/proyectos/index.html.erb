@@ -56,7 +56,7 @@
                 <label style="font-size: 12px;"><%= eje.lineas_accion.descripcion %></label>
               </div>
               <div class="grid-2-12">
-                <label style="font-size: 12px;"><%= link_to image_tag("/images/botones/edit_proyect.png", :mouseover => "/images/botones/edit_proyect2.png"), { :action => "seccion_eje", :id => eje.id } %>&nbsp; Editar Eje</label>
+                <label style="font-size: 12px;"><%= link_to image_tag("/images/botones/edit_proyect.png", :mouseover => "/images/botones/edit_proyect2.png"), { :action => "edit_eje", :id => eje.id } %>&nbsp; Editar Eje</label>
               </div>
             <% end %>
           </td>

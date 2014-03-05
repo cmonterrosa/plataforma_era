@@ -83,6 +83,15 @@ class ProyectosController < ApplicationController
     @catalogo_ejes = CatalogoEje.find(:all)
   end
 
+  def edit_eje
+    @eje = Eje.find(params[:id]) if params[:id]
+    @escuela_id = Escuela.find_by_clave(current_user.login.upcase).id
+    @proyecto = Proyecto.find_by_diagnostico_id(Diagnostico.find_by_escuela_id(@escuela_id).id)
+    @lineas = LineasAccion.find(:all)
+    @indicadores = Indicadore.find(:all)
+    @catalogo_ejes = CatalogoEje.find(:all)
+  end
+
   def second_section_proyect
     @escuela_id = Escuela.find_by_clave(current_user.login.upcase).id
     @proyecto = Proyecto.find_by_diagnostico_id(Diagnostico.find_by_escuela_id(@escuela_id).id)
