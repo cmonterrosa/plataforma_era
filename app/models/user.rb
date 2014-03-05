@@ -49,6 +49,9 @@ class User < ActiveRecord::Base
   # prevents a user from submitting a crafted form that bypasses activation
   # anything else you want your user to change should be added here.
   attr_accessible :login, :email, :nombre, :password, :password_confirmation, :blocked, :reset_code
+  attr_accessor :email_not_required
+
+
 
 
   def before_save
@@ -143,6 +146,11 @@ end
           @mx = dns.getresources(domain, Resolv::DNS::Resource::IN::MX)
       end
       @mx.size > 0 ? true : false
+  end
+
+
+  def email_not_required!
+    (self.email_not_required) ? true : false
   end
 
 
