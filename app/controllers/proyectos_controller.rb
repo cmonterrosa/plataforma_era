@@ -4,8 +4,24 @@ class ProyectosController < ApplicationController
 
   def index
     @escuela_id = Escuela.find_by_clave(current_user.login.upcase).id
-    @proyecto = Proyecto.find_by_diagnostico_id(Diagnostico.find_by_escuela_id(@escuela_id).id)
+    @diagnostico = Diagnostico.find_by_escuela_id(@escuela_id)
+    unless @diagnostico
+      flash[:notice] = "Para iniciar la captura del proyecto, es necesario concluir la etapa de diagnóstico"
+      redirect_to :action => "index", :controller => "diagnosticos"
+    end
+    @proyecto = Proyecto.find_by_diagnostico_id(@diagnostico)
     @ejes = Eje.find(:all, :conditions => ["proyecto_id = ?", @proyecto.id ]) if @proyecto
+  end
+
+  def get_contenido_ejes
+    @eje = Eje.new
+    @catalogo_ejes = CatalogoEje.find_by_clave( params[:eje_catalogo_eje_id]) if params[:eje_catalogo_eje_id]
+    @escuela_id = Escuela.find_by_clave(current_user.login.upcase).id
+    @proyecto = Proyecto.find_by_diagnostico_id(Diagnostico.find_by_escuela_id(@escuela_id).id)
+    #@lineas = LineasAccion.find_by_catalogo_eje_id(@catalogo_ejes)
+    @lineas = LineasAccion.find(:all, :conditions => ["catalogo_eje_id = ?", @catalogo_ejes.id ])
+    @indicadores = Indicadore.find(:all, :conditions => ["catalogo_eje_id = ?", @catalogo_ejes.id ] )
+    render :partial => "contenido_eje", :layout => "only_jquery"
   end
 
   def new_proyecto

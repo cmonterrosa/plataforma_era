@@ -10,90 +10,26 @@
       <table class="subprincipal" width="100%" border="0" cellpadding="4" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
         <tr>
           <td align="justify" style="vertical-align:top;" >
-            <div class="grid-6-12">
-              <label>Líneas de Acción:</label>
+            <div class="grid-12-12">
+              <label>Seleccione el eje:</label>
               <%= f.select :catalogo_eje_id, @catalogo_ejes.collect {|p| [ p.completo, p.clave ] }, { :prompt => "SELECCIONE UNA ACCIÓN" } %>
-            </div>
-            <div class="grid-6-12">
-              <label>Líneas de Acción:</label>
-              <%= f.select :lineas_accion_id, @lineas.collect {|p| [ p.descripcion, p.clave ] }, { :prompt => "SELECCIONE UNA ACCIÓN" } %>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td align="justify" style="vertical-align:top;" >
-            <div class="grid-6-12">
-              <label>Indicadores:</label>
-              <%= f.select :indicadore_id, @indicadores.collect {|p| [ p.descripcion, p.clave ] }, { :prompt => "SELECCIONE UNA ACCIÓN" } %>
-            </div>
-            <div class="grid-6-12">
-              <label>Objetivo especifico:</label>
-              <%= f.text_area :objetivo_especifico %>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td align="justify" style="vertical-align:top;" >
-            <div class="grid-6-12">
-              <label>Meta:</label>
-              <%= f.text_area :meta %>
-            </div>
-            <div class="grid-6-12">&nbsp;</div>
-          </td>
-        </tr>
-        <tr>
-          <td>&nbsp;</td>
-        </tr>
-        <tr>
-          <td align="center" style="vertical-align:top;"><label style=" font-size: 15px; font-weight: bold;" >Actividades:</label></td>
-        </tr>
-        <tr>
-          <td align="justify" style="vertical-align:top;" >
-            <div class="grid-1-12"></div>
-            <div class="grid-2-12">
-              <label>Actividad 1:</label>
-            </div>
-            <div class="grid-7-12">
-              <%= f.text_area :actividad1 %>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td align="justify" style="vertical-align:top;" >
-            <div class="grid-1-12"></div>
-            <div class="grid-2-12">
-              <label>Actividad 2:</label>
-            </div>
-            <div class="grid-7-12">
-              <%= f.text_area :actividad2 %>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td align="justify" style="vertical-align:top;" >
-            <div class="grid-1-12"></div>
-            <div class="grid-2-12">
-              <label>Actividad 3:</label>
-            </div>
-            <div class="grid-7-12">
-              <%= f.text_area :actividad3 %>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td align="justify" style="vertical-align:top;" >
-            <div class="grid-1-12"></div>
-            <div class="grid-2-12">
-              <label>Actividad 4:</label>
-            </div>
-            <div class="grid-7-12">
-              <%= f.text_area :actividad4 %>
             </div>
           </td>
         </tr>
       </table>
     </td>
   </tr>
+
+  <!-- contenido -->
+  <tr align="center">
+    <td align="center">
+      <div id="contenido_eje">
+
+      </div>
+    </td>
+  </tr>
+
+
   <%#= render :partial => "diagnosticos/errores_evidencias"%>
   <tr>
     <td align="right">
@@ -114,3 +50,17 @@
   </tr>
 </table>
 <% end %>
+
+
+
+
+
+
+
+
+
+<%= observe_field :eje_catalogo_eje_id,
+                  :frecuency => 0.2,
+                  :update => :contenido_eje,
+                  :url => { :controller => 'proyectos', :action => 'get_contenido_ejes' },
+                  :with => :eje_catalogo_eje_id %>

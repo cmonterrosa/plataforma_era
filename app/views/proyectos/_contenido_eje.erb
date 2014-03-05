@@ -1,0 +1,86 @@
+
+  <tr align="center">
+    <td align="center">
+      <table class="subprincipal" width="100%" border="0" cellpadding="4" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
+        <tr>
+          <td align="justify" style="vertical-align:top;" >
+            <div class="grid-12-12">
+              <label>Líneas de Acción:</label>
+              <%= select :eje, :lineas_accion_id, @lineas.collect {|p| [ p.descripcion, p.clave ] }, { :prompt => "SELECCIONE UNA ACCIÓN" } %>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td align="justify" style="vertical-align:top;" >
+            <div class="grid-12-12">
+              <label>Indicadores:</label>
+              <%= select :eje, :indicadore_id, @indicadores.collect {|p| [ p.descripcion, p.clave ] }, { :prompt => "SELECCIONE UNA ACCIÓN" } %>
+            </div>
+            <div class="grid-12-12">
+              <label>Objetivo especifico:</label>
+              <%= text_area :eje, :objetivo_especifico %>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td align="justify" style="vertical-align:top;" >
+            <div class="grid-12-12">
+              <label>Meta:</label>
+              <%= text_area :eje, :meta %>
+            </div>
+            <div class="grid-12-12">&nbsp;</div>
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td align="center" style="vertical-align:top;"><label style=" font-size: 15px; font-weight: bold;" >Actividades:</label></td>
+        </tr>
+        <tr>
+          <td align="justify" style="vertical-align:top;" >
+            <div class="grid-1-12"></div>
+            <div class="grid-2-12">
+              <label>Actividad 1:</label>
+            </div>
+            <div class="grid-7-12">
+              <%= text_area :eje, :actividad1 %>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td align="justify" style="vertical-align:top;" >
+            <div class="grid-1-12"></div>
+            <div class="grid-2-12">
+              <label>Actividad 2:</label>
+            </div>
+            <div class="grid-7-12">
+              <%= text_area :eje, :actividad2 %>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td align="justify" style="vertical-align:top;" >
+            <div class="grid-1-12"></div>
+            <div class="grid-2-12">
+              <label>Actividad 3:</label>
+            </div>
+            <div class="grid-7-12">
+              <%= text_area :eje, :actividad3 %>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td align="justify" style="vertical-align:top;" >
+            <div class="grid-1-12"></div>
+            <div class="grid-2-12">
+              <label>Actividad 4:</label>
+            </div>
+            <div class="grid-7-12">
+              <%= text_area :eje, :actividad4 %>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
