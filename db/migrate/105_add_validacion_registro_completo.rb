@@ -1,6 +1,6 @@
 class AddValidacionRegistroCompleto < ActiveRecord::Migration
   def self.up
-    add_column :escuelas, :registro_completo, :boolean
+    #add_column :escuelas, :registro_completo, :boolean
 
 
     #### Actualizamos las que ya tienen registro completo ####
