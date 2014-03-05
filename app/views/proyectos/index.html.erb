@@ -26,37 +26,37 @@
       <table class="subprincipal" width="100%" border="0" cellpadding="4" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
         <tr>
           <td>
-            <div class="grid-11-12">
-              <label style=" font-weight: bold;" >Nombre del Proyecto: &nbsp;</label>
+            <div class="grid-10-12">
+              <label style="font-size: 15px; font-weight: bold;" >NOMBRE DEL PROYECTO: &nbsp;</label>
               <label style="font-size: 13px;"><%= @proyecto.descripcion %></label>
             </div>
-            <div class="grid-1-12">
-              <%= link_to image_tag("/images/era/iconos/ico_arbol.png"), {:action => "edit", :escuela_id => @escuela_id} %>
+            <div class="grid-2-12">
+              <label style="font-size: 12px;"><%= link_to image_tag("/images/botones/edit_proyect.png", :mouseover => "/images/botones/edit_proyect2.png"), {:action => "edit", :escuela_id => @escuela_id} %>&nbsp; Editar Proyecto</label>
             </div>
           </td>
         </tr>
         <tr align="justify" >
           <td>
-            <div class="grid-11-12">
-              <label style=" font-weight: bold;" >Ejes a Desarrollar: </label>
+            <div class="grid-10-12">
+              <label style="font-size: 15px; font-weight: bold;" >EJES A DESARROLLAR: </label>
             </div>
-            <div class="grid-1-12">A
-              <%= link_to image_tag("/images/era/iconos/ico_arbol.png"), { :action => "seccion_eje", :escuela_id => @escuela_id} %>
+            <div class="grid-2-12">
+              <label style="font-size: 12px;"><%= link_to image_tag("/images/botones/add_eje.png", :mouseover => "/images/botones/add_eje2.png"), { :action => "seccion_eje", :escuela_id => @escuela_id} %>&nbsp; Agregar Eje</label>
             </div>
             <% @ejes.each do |eje|%>
             <div class="grid-12-12" >
-              <label style="font-size: 12px;">::&nbsp;<%= eje.catalogo_eje.completo %></label>
+              <label style="font-size: 13px;">::&nbsp;<%= eje.catalogo_eje.completo %></label>
               </div>
               <div class="grid-6-12">
-                <label style="font-size: 13px; font-weight: bold;" >Linea de Acción: </label><br />
+                <label style="font-size: 12px; font-weight: bold; font-style: italic;" >LÍNEA DE ACCIÓN: </label><br />
                 <label style="font-size: 12px;"><%= eje.indicadore.descripcion %></label>
               </div>
-              <div class="grid-5-12">
-                <label style="font-size: 13px; font-weight: bold;" >Indicador: </label><br />
+              <div class="grid-4-12">
+                <label style="font-size: 12px; font-weight: bold; font-style: italic;" >INDICADOR: </label><br />
                 <label style="font-size: 12px;"><%= eje.lineas_accion.descripcion %></label>
               </div>
-              <div class="grid-1-12">E
-                <%= link_to image_tag("/images/era/iconos/ico_arbol.png"), { :action => "seccion_eje", :id => eje.id } %>
+              <div class="grid-2-12">
+                <label style="font-size: 12px;"><%= link_to image_tag("/images/botones/edit_proyect.png", :mouseover => "/images/botones/edit_proyect2.png"), { :action => "seccion_eje", :id => eje.id } %>&nbsp; Editar Eje</label>
               </div>
             <% end %>
           </td>
