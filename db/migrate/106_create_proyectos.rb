@@ -5,6 +5,7 @@ class CreateProyectos < ActiveRecord::Migration
       t.string :ciclo_escolar
       t.string :antecedentes, :limit => 700
       t.string :objetivo_general, :limit => 300
+      t.boolean :concluido
       t.integer :diagnostico_id
       
       t.timestamps

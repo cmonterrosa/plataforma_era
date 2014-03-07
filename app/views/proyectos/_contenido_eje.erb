@@ -4,18 +4,22 @@
       <table class="subprincipal" width="100%" border="0" cellpadding="4" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
         <tr>
           <td align="justify" style="vertical-align:top;" >
-            <div class="grid-12-12">
+            <div class="grid-6-12">
               <label>Líneas de Acción:</label>
-              <%= select :eje, :lineas_accion_id, @lineas.collect {|p| [ p.descripcion, p.clave ] }, { :prompt => "SELECCIONE UNA ACCIÓN" } %>
+              <% @lineas.each do |linea| %>
+              <li style=" margin-left:13px;padding:1px;"><%= linea.descripcion %> </li>
+              <% end %>
+            </div>
+            <div class="grid-6-12">
+              <label>Indicadores:</label>
+              <% @indicadores.each do |indicador| %>
+              <li style=" margin-left:13px;padding:1px;" >&nbsp;<%= indicador.descripcion %></li>
+              <% end %>
             </div>
           </td>
         </tr>
         <tr>
           <td align="justify" style="vertical-align:top;" >
-            <div class="grid-12-12">
-              <label>Indicadores:</label>
-              <%= select :eje, :indicadore_id, @indicadores.collect {|p| [ p.descripcion, p.clave ] }, { :prompt => "SELECCIONE UNA ACCIÓN" } %>
-            </div>
             <div class="grid-12-12">
               <label>Objetivo especifico:</label>
               <%= text_area :eje, :objetivo_especifico %>

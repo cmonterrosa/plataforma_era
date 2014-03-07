@@ -86,6 +86,17 @@ class ProyectosController < ApplicationController
     @catalogo_ejes = CatalogoEje.find(:all)
   end
 
+  def delete_eje
+    @eje = Eje.find(params[:id])
+    @eje_nombre = @eje.catalogo_eje.descripcion
+    if @eje.destroy
+      flash[:notice] = "Eje: #{@eje_nombre} has sido eliminado."
+    else
+      flash[:error] = "Error al eliminar el eje: #{@eje_nombre}."
+    end
+    redirect_to :action => "index"
+  end
+
   def proyect_to_pdf
     @escuela_id = Escuela.find_by_clave(current_user.login.upcase).id
     @diagnostico = Diagnostico.find_by_escuela_id(@escuela_id)

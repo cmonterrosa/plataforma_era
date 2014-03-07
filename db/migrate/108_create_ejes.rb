@@ -9,8 +9,8 @@ class CreateEjes < ActiveRecord::Migration
       t.string :actividad4, :limit => 300
       t.integer :proyecto_id
       t.integer :catalogo_eje_id
-      t.integer :lineas_accion_id
-      t.integer :indicadore_id
+#      t.integer :lineas_accion_id
+#      t.integer :indicadore_id
 
       t.timestamps
     end
