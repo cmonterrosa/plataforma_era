@@ -12,20 +12,24 @@
           <td align="justify" style="vertical-align:top;" >
             <div class="grid-3-12">&nbsp;</div>
             <div class="grid-6-12">
-              <label>Eje a desarrollar:</label>
-              <%= f.select :catalogo_eje_id, @catalogo_ejes.collect {|p| [ p.completo, p.clave ] }, { :prompt => "SELECCIONE UNA ACCIÓN" } %>
+              <label>Eje a desarrollar: <%=@eje.catalogo_eje.descripcion%></label>
+              <!-- <= f.select :catalogo_eje_id, @catalogo_ejes.collect {|p| [ p.completo, p.clave ] }, { :prompt => "SELECCIONE UNA ACCIÓN" }, :d %> -->
             </div>
           </td>
         </tr>
-        <tr>
+         <tr>
           <td align="justify" style="vertical-align:top;" >
             <div class="grid-6-12">
               <label>Líneas de Acción:</label>
-              <%= f.select :lineas_accion_id, @lineas.collect {|p| [ p.descripcion, p.clave ] }, { :prompt => "SELECCIONE UNA ACCIÓN" } %>
+              <% @lineas.each do |linea| %>
+              <li style=" margin-left:13px;padding:1px;"><%= linea.descripcion %> </li>
+              <% end %>
             </div>
             <div class="grid-6-12">
               <label>Indicadores:</label>
-              <%= f.select :indicadore_id, @indicadores.collect {|p| [ p.descripcion, p.clave ] }, { :prompt => "SELECCIONE UNA ACCIÓN" } %>
+              <% @indicadores.each do |indicador| %>
+              <li style=" margin-left:13px;padding:1px;" >&nbsp;<%= indicador.descripcion %></li>
+              <% end %>
             </div>
           </td>
         </tr>
@@ -47,50 +51,56 @@
         <tr>
           <td align="center" style="vertical-align:top;"><label style=" font-size: 15px; font-weight: bold;" >Actividades:</label></td>
         </tr>
-        <tr>
-          <td align="justify" style="vertical-align:top;" >
-            <div class="grid-1-12"></div>
-            <div class="grid-2-12">
-              <label>Actividad 1:</label>
-            </div>
-            <div class="grid-7-12">
-              <%= f.text_area :actividad1 %>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td align="justify" style="vertical-align:top;" >
-            <div class="grid-1-12"></div>
-            <div class="grid-2-12">
-              <label>Actividad 2:</label>
-            </div>
-            <div class="grid-7-12">
-              <%= f.text_area :actividad2 %>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td align="justify" style="vertical-align:top;" >
-            <div class="grid-1-12"></div>
-            <div class="grid-2-12">
-              <label>Actividad 3:</label>
-            </div>
-            <div class="grid-7-12">
-              <%= f.text_area :actividad3 %>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td align="justify" style="vertical-align:top;" >
-            <div class="grid-1-12"></div>
-            <div class="grid-2-12">
-              <label>Actividad 4:</label>
-            </div>
-            <div class="grid-7-12">
-              <%= f.text_area :actividad4 %>
-            </div>
-          </td>
-        </tr>
+        
+            <tr>
+            <td align="justify" style="vertical-align:top;" >
+              <div class="grid-1-12"></div>
+              <div class="grid-2-12">
+                <label>Actividad 1:</label>
+              </div>
+              <div class="grid-7-12">
+                <%= text_area "actividads", "actividad1", :value => @actividades["actividad1"]%>
+              </div>
+            </td>
+          </tr>
+
+           <tr>
+            <td align="justify" style="vertical-align:top;" >
+              <div class="grid-1-12"></div>
+              <div class="grid-2-12">
+                <label>Actividad 2:</label>
+              </div>
+              <div class="grid-7-12">
+                <%= text_area "actividads", "actividad2", :value => @actividades["actividad2"]%>
+              </div>
+            </td>
+          </tr>
+
+           <tr>
+            <td align="justify" style="vertical-align:top;" >
+              <div class="grid-1-12"></div>
+              <div class="grid-2-12">
+                <label>Actividad 3:</label>
+              </div>
+              <div class="grid-7-12">
+                <%= text_area "actividads", "actividad3", :value => @actividades["actividad3"]%>
+              </div>
+            </td>
+          </tr>
+
+           <tr>
+            <td align="justify" style="vertical-align:top;" >
+              <div class="grid-1-12"></div>
+              <div class="grid-2-12">
+                <label>Actividad 4:</label>
+              </div>
+              <div class="grid-7-12">
+                <%= text_area "actividads", "actividad4", :value => @actividades["actividad4"]%>
+              </div>
+            </td>
+          </tr>
+
+
       </table>
     </td>
   </tr>
@@ -134,16 +144,16 @@
   var meta = new LiveValidation( 'eje_meta' );
   meta.add( Validate.Presence );
 
-  var actividad1 = new LiveValidation( 'eje_actividad1' );
+  var actividad1 = new LiveValidation( 'actividads_actividad1' );
   actividad1.add( Validate.Presence );
 
-  var actividad2 = new LiveValidation( 'eje_actividad2' );
+  var actividad2 = new LiveValidation( 'actividads_actividad2' );
   actividad2.add( Validate.Presence );
 
-  var actividad3 = new LiveValidation( 'eje_actividad3' );
+  var actividad3 = new LiveValidation( 'actividads_actividad3' );
   actividad3.add( Validate.Presence );
 
-  var actividad4 = new LiveValidation( 'eje_actividad4' );
+  var actividad4 = new LiveValidation( 'actividads_actividad4' );
   actividad4.add( Validate.Presence );
   
 </script>

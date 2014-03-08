@@ -13,7 +13,7 @@
             <div class="grid-12-12" clear ></div>
             <div class="grid-3-12">
               <label>Ciclo Escolar:</label>
-              <%= f.select :ciclo_escolar, ["2013 - 2014"], { :prompt => ">> SELECCIONE"} %>
+              <%= f.select :ciclo_escolar, ["2013 - 2014"], {:selected => "2013-2014"} %>
             </div>
             <div class="grid-9-12">
               <label>Nombre del Proyecto:</label>
@@ -63,9 +63,9 @@
 
 <script type="text/javascript">
 
-  var ciclo_escolar = new LiveValidation( 'proyecto_ciclo_escolar' );
-  ciclo_escolar.add( Validate.Presence );
-  ciclo_escolar.add( Validate.Exclusion, { within: [ '' , ' ' ] } );
+  <%#*var ciclo_escolar = new LiveValidation( 'proyecto_ciclo_escolar' );%>
+  <%#*ciclo_escolar.add( Validate.Presence );%>
+  <%#*ciclo_escolar.add( Validate.Exclusion, { within: [ '' , ' ' ] } );%>
   
   var descripcion = new LiveValidation( 'proyecto_descripcion' );
   descripcion.add( Validate.Presence );

@@ -1,63 +1,64 @@
-<%= render :partial => "informacion_proyectos"%>
 
-<% if @proyecto.nil? %>
-<table width="100%" >
-  <tr>
-    <td><img src="/images/era/space.png" width="10" height="20px" /></td>
-  </tr>
-  <tr align="center" >
-    <td>
-      <div class="formee" style="text-align: center;" >
-        <%=button_to "INICIAR PROYECTO", { :action => "new_proyecto", :escuela_id => @escuela_id } %>
-      </div>
-    </td>
-  </tr>
-  <tr>
-    <td colspan="3"><img src="/images/era/space.png" width="10" height="50px" /></td>
-  </tr>
-</table>
-<% else %>
- <table class="principal" width="100%" border="0" align="center" cellpadding="2" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
-  <tr bgcolor="#003366" style="opacity: 0.7;" >
-    <td align="center"><h4>DATOS DEL PROYECTO</h4></td>
-  </tr>
-  <tr align="center">
-    <td align="center">
-      <table class="subprincipal" width="100%" border="0" cellpadding="4" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
-        <tr>
-          <td>
-            <div class="grid-10-12">
-              <label style="font-size: 15px; font-weight: bold;" >NOMBRE DEL PROYECTO: &nbsp;</label>
-              <label style="font-size: 13px;"><%= @proyecto.descripcion %></label>
-            </div>
-            <div class="grid-2-12">
-              <label style="font-size: 12px;"><%= link_to image_tag("/images/botones/edit_proyect.png", :mouseover => "/images/botones/edit_proyect2.png"), {:action => "edit", :escuela_id => @escuela_id} %>&nbsp; Editar Proyecto</label>
-            </div>
-          </td>
-        </tr>
-        <tr align="justify" >
-          <td>
-            <div class="grid-10-12">
-              <label style="font-size: 15px; font-weight: bold;" >EJES A DESARROLLAR: </label>
-            </div>
-            <div class="grid-2-12">
-              <label style="font-size: 12px;"><%= link_to image_tag("/images/botones/add_eje.png", :mouseover => "/images/botones/add_eje2.png"), { :action => "seccion_eje", :escuela_id => @escuela_id} %>&nbsp; Agregar Eje</label>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <% @ejes.sort_by { |hsh| hsh[:catalogo_eje_id] }.each do |eje|%>
-            <div class="reporte">
-              <fieldset>
-                <legend>&nbsp;::&nbsp;<%= eje.catalogo_eje.completo %> &nbsp;</legend>
-                <div class="grid-4-12">
-                  <label style="font-size: 12px; font-style: italic;" >LÍNEA DE ACCIÓN: </label><br />
-                  <label style="font-size: 12px;"><%= eje.lineas_accion.descripcion %></label>
-                </div>
+<%if @proyecto%>
+    <%if @proyecto.oficializado%>
+      <div class="titulos">
+        <p>Gracias por haber concluido su proyecto</p>
+        <p>
+           <div class="grid-3-12">&nbsp;</div>
+           <div class="grid-3-12">
+             <p id="pdf_link"><%= link_to image_tag("/images/botones/print_proyect.png", :mouseover => "/images/botones/print_proyect2.png" ), { :action => "proyect_to_pdf.pdf" }, :target => "_blank" %></p>
+           </div>
+        </p>
+      </div>   
+    <%else%>
+
+    <%= render :partial => "informacion_proyectos"%>
+    <!-- capturamos toda la info -->
+    <table class="principal" width="100%" border="0" align="center" cellpadding="2" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
+    <tr bgcolor="#003366" style="opacity: 0.7;" >
+      <td align="center"><h4>DATOS DEL PROYECTO</h4></td>
+    </tr>
+    <tr align="center">
+      <td align="center">
+        <table class="subprincipal" width="100%" border="0" cellpadding="4" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
+          <tr>
+            <td>
+              <div class="grid-10-12">
+                <label style="font-size: 15px; font-weight: bold;" >NOMBRE DEL PROYECTO: &nbsp;</label>
+                <label style="font-size: 13px;"><%= @proyecto.descripcion %></label>
+              </div>
+              <div class="grid-2-12">
+                <label style="font-size: 12px;"><%= link_to image_tag("/images/botones/edit_proyect.png", :mouseover => "/images/botones/edit_proyect2.png"), {:action => "edit", :escuela_id => @escuela_id} %>&nbsp; Editar Proyecto</label>
+              </div>
+            </td>
+          </tr>
+          <tr align="justify" >
+            <td>
+             <div class="grid-10-12">
+                <label style="font-size: 15px; font-weight: bold;" >EJES A DESARROLLAR: </label>
+              </div>
+              <div class="grid-2-12">
+                <label style="font-size: 12px;"><%= link_to image_tag("/images/botones/add_eje.png", :mouseover => "/images/botones/add_eje2.png"), { :action => "seccion_eje", :escuela_id => @escuela_id} %>&nbsp; Agregar Eje</label>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <% @ejes.sort_by { |hsh| hsh[:catalogo_eje_id] }.each do |eje|%>
+              <div class="reporte">
+                <fieldset>
+                  <legend>&nbsp;::&nbsp;<%= eje.catalogo_eje.completo %> &nbsp;</legend>
+                  <div class="grid-4-12">
+                    <label style="font-size: 13px; font-style: italic;" >LÍNEAS DE ACCIÓN: </label><br /><br />
+                    <%eje.catalogo_eje.lineas_accions.each do |linea|%>
+                      <label style="font-size: 12px;">- <%= linea.descripcion %></label><br /><br />
+                    <%end%>
+                  </div>
                 <div class="grid-6-12">
-                  <label style="font-size: 12px; font-style: italic;" >INDICADOR: </label><br />
-                  <label style="font-size: 12px;"><%= eje.indicadore.descripcion %></label>
+                  <label style="font-size: 13px; font-style: italic;" >INDICADORES: </label><br /><br />
+                  <%eje.catalogo_eje.indicadores.each do |indicador|%>
+                    <label style="font-size: 12px;">- <%= indicador.descripcion %></label><br /><br />
+                  <%end%>
                 </div>
                 <div class="grid-2-12">
                   <label style="font-size: 12px;display:block;"><%= link_to image_tag("/images/botones/edit_proyect.png", :mouseover => "/images/botones/edit_proyect2.png"), { :action => "edit_eje", :id => eje.id } %>&nbsp; Editar Eje</label>
@@ -73,14 +74,51 @@
   </tr>
   <tr align="center">
     <td>
-      <div class="grid-3-12">&nbsp;</div>
-      <div class="grid-3-12">
-        <p id="pdf_link"><%= link_to image_tag("/images/botones/print_proyect.png", :mouseover => "/images/botones/print_proyect2.png" ), { :action => "proyect_to_pdf.pdf" }, :target => "_blank" %></p>
-      </div>
-      <div class="grid-3-12">
-        <p id="pdf_link"><%= link_to image_tag("/images/botones/finish_proyect.png", :mouseover => "/images/botones/finish_proyect2.png" ), { :action => "proyect_to_pdf.pdf" }, :target => "_blank" %></p>
-      </div>
+      
+
+
+      <%if Eje.count(:id, :conditions => ["proyecto_id = ?", @proyecto.id]) > 0%>
+        <div class="grid-3-12">&nbsp;</div>
+        <div class="grid-3-12">
+          <p id="pdf_link"><%= link_to image_tag("/images/botones/print_proyect.png", :mouseover => "/images/botones/print_proyect2.png" ), { :action => "proyect_to_pdf.pdf" }, :target => "_blank" %></p>
+        </div>
+
+        <div class="grid-3-12">
+          <p id="pdf_link"><%= link_to image_tag("/images/botones/finish_proyect.png", :mouseover => "/images/botones/finish_proyect2.png" ), { :action => "oficializar", :id => @proyecto }, :confirm => '¿ESTA SEGURO(A) QUE DESEA CONCLUIR EL PROYECTO, YA NO PODRÁ MODIFICARLO DESPUÉS DE HACER CLICK?', :method => :post, :class => 'buttonText' %></p>
+        </div>
+      <%end%>
     </td>
   </tr>
 </table>
+
+    
+    <%end%>
+<%else%>
+
+<%= render :partial => "informacion_proyectos"%>
+<table width="100%" >
+  <tr>
+    <td><img src="/images/era/space.png" width="10" height="20px" /></td>
+  </tr>
+  <tr align="center" >
+    <td>
+      <div class="formee" style="text-align: center;" >
+        <%=button_to "INICIAR PROYECTO", { :action => "new_proyecto", :escuela_id => @escuela_id } %>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="3"><img src="/images/era/space.png" width="10" height="50px" /></td>
+  </tr>
+</table>
+
+<%end%>
+
+
+
+
+<% if @proyecto.nil? %>
+
+<% else %>
+
 <% end  %>

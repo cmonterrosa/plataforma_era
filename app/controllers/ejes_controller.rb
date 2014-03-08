@@ -16,8 +16,21 @@ class EjesController < ApplicationController
     params[:eje][:catalogo_eje_id] = @catalogo_eje_id if  @catalogo_eje_id
 
     params[:eje][:proyecto_id] = params[:proyecto] if params[:proyecto]
+
+    @actividads = params[:actividads] if params[:actividads]
+    
+    if @actividads
+      @actividads.each do |a| 
+        if act = Actividad.find(:first, :conditions => ["eje_id = ? AND clave = ?", @eje.id, a[0]] )
+            act.update_attributes!(:descripcion => a[1])
+        else
+           @eje.actividads << Actividad.create(:descripcion => a[1], :clave => a[0])
+        end
+      end
+    end
     
     if @eje.update_attributes(params[:eje])
+       flash[:notice] = "Registro guardado correctamente"
        redirect_to :controller => "proyectos", :action => "index"
     else
        flash[:error] = "No se pudo crear el eje a desarrollar"

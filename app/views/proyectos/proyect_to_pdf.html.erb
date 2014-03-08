@@ -33,14 +33,23 @@
             <% @proyecto.ejes.sort_by { |hsh| hsh[:catalogo_eje_id] }.each do |eje| %>
             <fieldset>
               <legend> &nbsp; :: &nbsp;<%= eje.catalogo_eje.completo %> &nbsp; </legend>
-            <div class="grid-3-12">
-              <label class="subtitulo">LINEAS DE ACCIÓN: </label>
-              <label class="descripcion"> <%= eje.lineas_accion.descripcion %></label>
-            </div>
-            <div class="grid-5-12">
-              <label class="subtitulo">INDICADORES: </label>
-              <label class="descripcion"> <%= eje.indicadore.descripcion %></label>
-            </div>
+         
+
+                <div class="grid-3-12">
+                  <label class="subtitulo">LINEAS DE ACCIÓN: </label><br /><br />
+                  <%eje.catalogo_eje.lineas_accions.each do |linea|%>
+                    <label style="font-size: 12px;"><%= linea.descripcion %></label><br /><br />
+                  <%end%>
+
+                </div>
+                <div class="grid-5-12">
+                 <label class="subtitulo">INDICADORES: </label><br /><br />
+                  <%eje.catalogo_eje.indicadores.each do |indicador|%>
+                    <label style="font-size: 12px;"><%= indicador.descripcion %></label><br /><br />
+                  <%end%>
+                </div>
+
+
             <div class="grid-4-12">
               <label class="subtitulo">OBJETIVO ESPECIFICO: </label>
               <label class="descripcion"> <%= eje.objetivo_especifico %></label>
@@ -48,26 +57,23 @@
 
             <div class="grid-12-12 clear"></div>
 
-            <div class="grid-4-12">
-              <label class="subtitulo">ACTIVIDAD 1: </label>
-              <label class="descripcion"> <%= eje.actividad1 %></label>
-            </div>
-            <div class="grid-4-12">
-              <label class="subtitulo">ACTIVIDAD 2: </label>
-              <label class="descripcion"> <%= eje.actividad2 %></label>
-            </div>
-            <div class="grid-4-12">
-              <label class="subtitulo">ACTIVIDAD 3: </label>
-              <label class="descripcion"> <%= eje.actividad3 %></label>
-            </div>
+            <!-- actividads -->
+            <%@actividades = Actividad.find(:all, :conditions => ["eje_id = ?", eje.id], :order => "clave")%>
+            <%contador=1%>
+            <%@actividades.each do |actividad|%>
+              <div class="grid-6-12">
+                <label class="subtitulo">ACTIVIDAD <%=h contador%>: </label>
+                <label class="descripcion"> <%= actividad.descripcion %></label>
+              </div>
+              <%if contador == 2 || contador == 4%>
+                  <div class="grid-12-12 clear"></div>
+              <%end%>
+              <%contador+=1%>
+            <%end%>
 
-            <div class="grid-12-12 clear"></div>
-            
-            <div class="grid-4-12">
-              <label class="subtitulo">ACTIVIDAD 4: </label>
-              <label class="descripcion"> <%= eje.actividad4 %></label>
-            </div>
-            <div class="grid-4-12">
+
+          
+            <div class="grid-12-12">
               <label class="subtitulo">META: </label>
               <label class="descripcion"> <%= eje.meta %></label>
             </div>
