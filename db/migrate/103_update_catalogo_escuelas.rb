@@ -66,15 +66,15 @@ class UpdateCatalogoEscuelas < ActiveRecord::Migration
 
 
   def self.down
-    puts("Deshacemos escuelas actualizadas")
-    File.open("#{RAILS_ROOT}/db/migrate/catalogos/agregadas2014.csv").each_line { |line|
-      clave,nombre,turno,municipio,localidad,domicilio,telefono,zona_escolar,cct_zona,sector,cct_sector,escuelas, alu_hom, alu_muj, total_alumnos, grupos, doc_hom, doc_muj, total_docentes, dsg_hom, dsg_muj, total_dsg, apoyo_hom, apoyo_muj, total_personal_apoyo, nivel_descripcion, modalidad, region,  = line.split("|")
-      esc = Escuela.find_by_clave(clave)
-      if esc && esc.destroy
-         puts "=> Eliminada"
-      end
-    }
-    File.delete("#{RAILS_ROOT}/db/migrate/catalogos/agregadas2014.csv")
+#    puts("Deshacemos escuelas actualizadas")
+#    File.open("#{RAILS_ROOT}/db/migrate/catalogos/agregadas2014.csv").each_line { |line|
+#      clave,nombre,turno,municipio,localidad,domicilio,telefono,zona_escolar,cct_zona,sector,cct_sector,escuelas, alu_hom, alu_muj, total_alumnos, grupos, doc_hom, doc_muj, total_docentes, dsg_hom, dsg_muj, total_dsg, apoyo_hom, apoyo_muj, total_personal_apoyo, nivel_descripcion, modalidad, region,  = line.split("|")
+#      esc = Escuela.find_by_clave(clave)
+#      if esc && esc.destroy
+#         puts "=> Eliminada"
+#      end
+#    }
+#    File.delete("#{RAILS_ROOT}/db/migrate/catalogos/agregadas2014.csv")
   end
 end
 

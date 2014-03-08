@@ -3,10 +3,10 @@ class CreateEjes < ActiveRecord::Migration
     create_table :ejes do |t|
       t.string :objetivo_especifico, :limit => 300
       t.string :meta, :limit => 300
-      t.string :actividad1, :limit => 300
-      t.string :actividad2, :limit => 300
-      t.string :actividad3, :limit => 300
-      t.string :actividad4, :limit => 300
+#      t.string :actividad1, :limit => 300
+#      t.string :actividad2, :limit => 300
+#      t.string :actividad3, :limit => 300
+#      t.string :actividad4, :limit => 300
       t.integer :proyecto_id
       t.integer :catalogo_eje_id
 #      t.integer :lineas_accion_id
@@ -14,6 +14,8 @@ class CreateEjes < ActiveRecord::Migration
 
       t.timestamps
     end
+
+     add_index :ejes, :proyecto_id, :name => "eje_proyecto_id"
   end
 
   def self.down

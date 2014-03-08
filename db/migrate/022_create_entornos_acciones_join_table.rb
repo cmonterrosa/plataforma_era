@@ -7,6 +7,6 @@ class CreateEntornosAccionesJoinTable < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table :entornos_acciones
+  #  drop_table :entornos_acciones
   end
 end
