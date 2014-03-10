@@ -36,16 +36,20 @@
          
 
                 <div class="grid-3-12">
-                  <label class="subtitulo">LINEAS DE ACCIÓN: </label><br /><br />
+                  <label class="subtitulo">LINEAS DE ACCIÓN: </label>
                   <%eje.catalogo_eje.lineas_accions.each do |linea|%>
-                    <label style="font-size: 12px;"><%= linea.descripcion %></label><br /><br />
+                    <label style="font-size: 12px;">
+                      <li style="padding:1px;"><%= linea.descripcion %></li>
+                    </label>
                   <%end%>
 
                 </div>
                 <div class="grid-5-12">
-                 <label class="subtitulo">INDICADORES: </label><br /><br />
+                 <label class="subtitulo">INDICADORES: </label>
                   <%eje.catalogo_eje.indicadores.each do |indicador|%>
-                    <label style="font-size: 12px;"><%= indicador.descripcion %></label><br /><br />
+                 <label style="font-size: 12px;">
+                    <li style="padding:1px;"><%= indicador.descripcion %></li>
+                 </label>
                   <%end%>
                 </div>
 
