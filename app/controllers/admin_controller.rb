@@ -149,11 +149,21 @@ class AdminController < ApplicationController
   end
 
   def indicadores
+      @gran_total=0
     @escuelas_registradas_en_plataforma = Escuela.count(:id, :joins => "escuelas, users users", :conditions => ["users.login=escuelas.clave AND escuelas.estatu_id = ? AND (users.blocked is NULL OR  users.blocked !=1)", Estatu.find_by_clave("esc-regis").id ])
+      @gran_total+=@escuelas_registradas_en_plataforma
     @escuelas_datos_basicos_capturados =  Escuela.count(:id, :joins => "escuelas, users users", :conditions => ["users.login=escuelas.clave AND escuelas.estatu_id = ? AND (users.blocked is NULL OR  users.blocked !=1)", Estatu.find_by_clave("esc-datos").id ])
+      @gran_total+=@escuelas_datos_basicos_capturados
     @escuelas_diagnostico_iniciado =      Escuela.count(:id, :joins => "escuelas, users users", :conditions => ["users.login=escuelas.clave AND escuelas.estatu_id = ? AND (users.blocked is NULL OR  users.blocked !=1)", Estatu.find_by_clave("diag-inic").id ])
+      @gran_total+=@escuelas_diagnostico_iniciado
     @escuelas_diagnostico_terminado =      Escuela.count(:id, :joins => "escuelas, users users", :conditions => ["users.login=escuelas.clave AND escuelas.estatu_id = ? AND (users.blocked is NULL OR  users.blocked !=1)", Estatu.find_by_clave("diag-conc").id ])
-    @total_escuelas_ingresadas =          User.count(:id, :joins => "users, escuelas e", :conditions => "users.login=e.clave AND (users.blocked is NULL OR  users.blocked !=1)")
+      @gran_total+=@escuelas_diagnostico_terminado
+    @escuelas_proyecto_iniciado =      Escuela.count(:id, :joins => "escuelas, users users", :conditions => ["users.login=escuelas.clave AND escuelas.estatu_id = ? AND (users.blocked is NULL OR  users.blocked !=1)", Estatu.find_by_clave("proy-inic").id ])
+      @gran_total+=@escuelas_proyecto_iniciado
+    @escuelas_proyecto_terminado =      Escuela.count(:id, :joins => "escuelas, users users", :conditions => ["users.login=escuelas.clave AND escuelas.estatu_id = ? AND (users.blocked is NULL OR  users.blocked !=1)", Estatu.find_by_clave("proy-fin").id ])
+      @gran_total+=@escuelas_proyecto_terminado
+    @total_escuelas_ingresadas = @gran_total
+    #@total_escuelas_ingresadas =          User.count(:id, :joins => "users, escuelas e", :conditions => "users.login=e.clave AND (users.blocked is NULL OR  users.blocked !=1)")
     @directivos_escolares_registrados =   Directivo.count(:id, :conditions => ["estatu_id = ?", Estatu.find_by_clave("dir-regis") ])
     render :partial => "indicadores" if params[:actualizar] == "SI"
   end
@@ -287,5 +297,11 @@ class AdminController < ApplicationController
     path="#{BACKUPS_DIR}/" + params[:archivo]
     send_file path , :disposition => 'inline'
   end
+
+   def report_by_niveles
+     #@niveles = Nivel.find(:all, :order => "descripcion")
+     @niveles = Escuela.find(:all, :group => "nivel_descripcion")
+
+   end
 
 end
