@@ -300,7 +300,7 @@ class AdminController < ApplicationController
 
    def report_by_niveles
      #@niveles = Nivel.find(:all, :order => "descripcion")
-     @niveles = Escuela.find(:all, :group => "nivel_descripcion")
+     @niveles = Escuela.find(:all, :group => "nivel_descripcion", :conditions => ["estatu_id IS NOT NULL"])
 
    end
 
