@@ -1,8 +1,19 @@
 class ProyectosController < ApplicationController
   layout :set_layout
 
-  before_filter :login_required
+  before_filter :check_is_available
+
+  require_role [:escuela]
 #  skip_before_filter :verify_authenticity_token, :only => [:save_first_section, :second_section_proyect]
+
+
+  def check_is_available
+    unless Time.now < (Time.parse FECHA_FINAL_PROYECTO)
+      flash[:error] = "La etapa del proyecto no está disponible"
+      redirect_to :controller => "diagnosticos"
+    end
+  end
+
 
   def index
     @escuela_id = Escuela.find_by_clave(current_user.login.upcase).id if current_user
