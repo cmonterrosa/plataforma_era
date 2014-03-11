@@ -23,6 +23,10 @@ class CreateIndicadores < ActiveRecord::Migration
         puts e
       end
      }
+
+    add_index :indicadores, :catalogo_eje_id, :name => "indicadores_catalogo_eje"
+
+
   end
 
   def self.down

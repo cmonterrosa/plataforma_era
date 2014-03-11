@@ -3,8 +3,7 @@ class CreateCatalogoEjes < ActiveRecord::Migration
     create_table :catalogo_ejes do |t|
       t.string :clave, :limit => 5
       t.string :descripcion
-
-      t.timestamps
+      #t.timestamps
     end
 
     CatalogoEje.create(:clave => "EJE1", :descripcion => "DESARROLLO DE COMPETENCIAS")
