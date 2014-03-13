@@ -32,6 +32,48 @@ function showDescription(obj_select, obj_desc)
     }
 }
 
+
+function checkRadioD(arreglo, numRadio, obj_desc){
+    var radio;
+    var radio2;
+    var desc = document.forms[0].elements[obj_desc];
+
+    for(i=1; i <= numRadio; i++){
+        radio = document.getElementById(arreglo + "_" + i);
+        if(radio.checked && radio.value == "OTR"){
+            for(x=1; x < numRadio; x++){
+                radio2 = document.getElementById(arreglo + "_" + x);
+                if(radio2.value != "OTR")  enableTextarea(desc);
+                else disableTextarea(desc);
+            }
+            break;
+        }
+    }
+}
+
+function showDescriptionC(obj_select, obj_desc)
+{
+    if(typeof obj_select == "object")
+        var select = obj_select;
+    else
+        select = document.forms[0].elements[obj_select];
+
+    var desc = document.forms[0].elements[obj_desc];
+    var tamano = select.length;
+
+    for(i = 0; i < tamano; i++){
+        if(select[i].value == 'OTR' && select[i].selected){
+            enableTextarea(desc);
+            if(typeof obj_select == "object") clearTextarea(desc);
+            break;
+        }
+        else{
+            disableTextarea(desc);
+            if(typeof obj_select == "object") clearTextarea(desc);
+        }
+    }
+}
+
 function showTextarea(obj_radio, obj_desc){
     var desc = document.forms[0].elements[obj_desc];
     

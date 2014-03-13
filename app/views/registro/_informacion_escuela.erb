@@ -76,11 +76,16 @@
     <!-- programa -->
     <div class="grid-6-12">
       <label>La institución educativa participa en algún programa: ¿Cúal? <em class="formee-req">*</em></label>
-      <div style="overflow:auto; width:370px;">
-        <select id="programas" name="programas[]" style="width:auto;" multiple="multiple" size="5" onchange="showDescription(this, 'escuela_programa_desc');">
-          <%= options_from_collection_for_select(Programa.find(:all), :clave, :descripcion, @s_programas)%>
-        </select>
-      </div>
+      <fieldset style="padding: 5px 5px 5px 5px;">
+                  <% Programa.find(:all).each do |c| %>
+                    <%= check_box_tag "programas[#{c.id}]", c.clave, @s_programas.include?(c.id) ? true : false, :onclick => "checkRadioD('programas', #{Programa.count(:id)}, 'escuela_programa_desc')" %>&nbsp;<%= c.descripcion %><br />
+                  <% end %>
+      </fieldset>
+      <%#*<div style="overflow:auto; width:370px;">%>
+        <%#*<select id="programas" name="programas[]" style="width:auto;" multiple="multiple" size="5" onchange="showDescription(this, 'escuela_programa_desc');">%>
+          <%#= options_from_collection_for_select(Programa.find(:all), :clave, :descripcion, @s_programas)%>
+        <%#*</select>%>
+      <%#*</div>%>
     </div>
        <%#= f.select :programa_id, Programa.find(:all).collect {|p| [ p.descripcion, p.clave ] }, {:selected => @select_p}, :onchange => "showDescription(this,'escuela_programa_desc');" %>
     <div class="grid-6-12" >
@@ -187,7 +192,7 @@
 
 <script type="text/javascript">
   showDescription('escuela_categoria_escuela_id','escuela_categoria_desc');
-  showDescription('programas','escuela_programa_desc');
+  <%#*showDescription('programas','escuela_programa_desc');%>
 
   var categoria_desc = new LiveValidation( 'escuela_categoria_desc', {onlyOnSubmit: true} );
   categoria_desc.add( Validate.Presence );
