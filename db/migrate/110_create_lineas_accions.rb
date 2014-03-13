@@ -23,6 +23,10 @@ class CreateLineasAccions < ActiveRecord::Migration
         puts e
       end
      }
+
+    ## Agrego indice ###
+    add_index :lineas_accions, :catalogo_eje_id, :name => "lineas_accions_catalogo_eje"
+
   end
 
   def self.down

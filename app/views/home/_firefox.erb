@@ -1,0 +1,33 @@
+<script type="text/javascript">
+jQuery(document).ready(function() {
+    jQuery("#firefox").fancybox().trigger('click');
+});
+</script>
+
+<div style="display: none;" id="firefox">
+
+<div class="formee-msg-warning" style="font-size: 16px;">
+  <h3>Información importante</h3>
+    <ul>
+      <li>
+        <p>&nbsp;</p>
+        <strong>A LOS USUARIOS DE LA PLATAFORMA DE CERTIFICACIÓN ESyS:</strong><br/>
+        <p>Con la finalidad de mejorar la experiencia de uso, rapidez y funcionalidad, recomendamos utilizar alguno de los siguientes navegadores: </p>
+        <p>&nbsp;</p>
+      </li>
+      <li>
+        <strong><%=link_to (image_tag "era/iconos/firefox.png"), "http://www.mozilla.org/es-MX/firefox/new", :onclick => "window.location.replace('http://www.mozilla.org/es-MX/firefox/new');"%> Mozilla Firefox, que puede descargarlo <a href="http://www.mozilla.org/es-MX/firefox/new" target="_blank" onclick="window.location.replace('http://www.mozilla.org/es-MX/firefox/new');">Aquí</a>.</strong>
+        <p>&nbsp;</p>
+      </li>
+      <li>
+        <strong><%=link_to (image_tag "era/iconos/chrome.png"), "https://www.google.com/intl/es-419/chrome/browser/?brand=CHMO#eula", :onclick => "window.location.replace('https://www.google.com/intl/es-419/chrome/browser/?brand=CHMO#eula');"%> Google Chrome, que puede descargarlo <a href="https://www.google.com/intl/es-419/chrome/browser/?brand=CHMO#eula" target="_blank" onclick="window.location.replace('https://www.google.com/intl/es-419/chrome/browser/?brand=CHMO#eula');">Aquí</a>.</strong>
+        <p>&nbsp;</p>
+      </li>
+
+        
+      <li>
+        <p>Dudas o comentarios puede hacerlos llegar a: <a href="mailto:plataforma.era@gmail.com">plataforma.era@gmail.com</a>, donde con gusto le daremos seguimiento.</p>
+      </li>
+    </ul>
+</div>
+</div>
