@@ -1,0 +1,54 @@
+<!-- Demo CSS -->
+<link rel="stylesheet" href="/stylesheets/galeria/flexslider.css" type="text/css" media="screen" />
+<!-- Modernizr -->
+<script src="/javascripts/galeria/modernizr.js"></script>
+<!-- jQuery -->
+<script src="/javascripts/formee/jquery-1.6.4.min.js"></script>
+<script>window.jQuery || document.write('<script src="/javascripts/libs/jquery-1.7.min.js">\x3C/script>')</script>
+<!-- FlexSlider -->
+<script defer src="/javascripts/galeria/jquery.flexslider.js"></script>
+<!-- Syntax Highlighter -->
+<script type="text/javascript" src="/javascripts/galeria/shCore.js"></script>
+<script type="text/javascript" src="/javascripts/galeria/shBrushXml.js"></script>
+<script type="text/javascript" src="/javascripts/galeria/shBrushJScript.js"></script>
+<!-- Optional FlexSlider Additions -->
+<script src="/javascripts/galeria/jquery.easing.js"></script>
+<script src="/javascripts/galeria/jquery.mousewheel.js"></script>
+<script defer src="/javascripts/galeria/demo.js"></script>
+
+<script type="text/javascript">
+// Can also be used with $(document).ready()
+$(window).load(function() {
+  $('.flexslider').flexslider({
+    animation: "slide",
+    animationLoop: false,
+    itemWidth: 480,
+    itemMargin: 5,
+    minItems: 2,
+    maxItems: 4
+  });
+});
+</script>
+
+
+<div class="titulos">
+  <p>Galería Fotográfica</p>
+  <p><%=@nombre%></p>
+</div>
+
+
+
+
+<!-- Place somewhere in the <body> of your page -->
+<div class="flexslider">
+  <ul class="slides">
+
+    <%for adjunto in @adjuntos%>
+      <%if File.exists?(adjunto.full_path)%>
+        <li>
+          <%=image_tag "/upload/download/#{adjunto.id}", :size => "480x280"%>
+        </li>
+      <%end%>
+    <%end%>
+  </ul>
+</div>

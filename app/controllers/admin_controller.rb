@@ -4,6 +4,8 @@ class AdminController < ApplicationController
   require_role [:directivo], :only => [:show_escuelas]
   require_role [:admin], :for => ["show_respaldos"]
   #require_role [:admin]
+
+
   
   def index
   end
@@ -301,7 +303,8 @@ class AdminController < ApplicationController
    def report_by_niveles
      #@niveles = Nivel.find(:all, :order => "descripcion")
      @niveles = Escuela.find(:all, :group => "nivel_descripcion", :conditions => ["estatu_id IS NOT NULL"])
-
    end
+
+  
 
 end

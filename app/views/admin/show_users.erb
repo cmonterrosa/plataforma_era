@@ -43,7 +43,7 @@
       <th style="vertical-align: middle;">&nbsp;</th>
       <th style="vertical-align: middle;">Login</th>
       <th style="vertical-align: middle;">Nombre de Escuela/Usuario</th>
-      <th style="vertical-align: middle;" colspan="5">Acciones</th>
+      <th style="vertical-align: middle;" colspan="6">Acciones</th>
     </tr>
 <%clase=0%>
 <%@usuarios.each do |user|%>
@@ -80,6 +80,7 @@
   <%if escuela%>
      <%if d = Diagnostico.find_by_escuela_id(escuela.id)%>
       <td style="vertical-align: middle;"><%=link_to "Evidencias", {:controller => "upload", :action => "show_evidencias_por_usuario", :id => user, :diagnostico => d}, :class => 'fancybox fancybox.iframe'%></td>
+      <td style="vertical-align: middle;"><%=button_to "Galería", {:controller => "galeria", :action => "por_escuela", :id => escuela}, :class => 'boton'%></td>
       <td style="vertical-align: middle;"><%=button_to "Diagnostico", {:action => "menu_diagnostico", :id => escuela}, :class => 'boton'%></td>
     <%end%>
   <%end%>
