@@ -84,7 +84,7 @@ Style
 	border-radius: 4px;
       text-transform: uppercase;
 }
-.formee input[type="text"].rpt, .formee textarea.rpt {
+.formee input[type="text"].rpt, .formee textarea.rpt, .formee fieldset.rpt {
 /*	border-color:#c6c6c6 #dadada #eaeaea;*/
 	border-color:#acacac;
 	background: #f2f2f2;

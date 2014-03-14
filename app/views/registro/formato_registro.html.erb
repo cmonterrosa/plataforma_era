@@ -1,7 +1,7 @@
 <div class="formee">
   <table class="subreport" width="100%" border="0" align="center" cellpadding="1" cellspacing="1" style="BORDER-RIGHT: #3a3a3a 1px solid; BORDER-TOP: #3a3a3a 1px solid; BORDER-LEFT: #3a3a3a 1px solid; BORDER-BOTTOM: #3a3a3a 1px solid;">
     <tr>
-      <td align="center"><h4>FORMATO DE REGISTRO</h4></td>
+      <td align="center"><h4 class="reporte" >FORMATO DE REGISTRO</h4></td>
     </tr>
     <tr>
       <td>
@@ -30,7 +30,7 @@
             </div>
             <div class="grid-4-12">
               <label style=" font-weight: bold;">Nivel:</label>
-              <label style=" font-style: italic;"><%= @escuela.nivel.descripcion %></label>
+              <label style=" font-style: italic;"><%= @escuela.nivel.descripcion if @escuela.nivel.descripcion %></label>
             </div>
             <div class="grid-8-12">
               <label style=" font-weight: bold;">Modalidad:</label>
@@ -65,18 +65,25 @@
           <div class="grid-12-12 clear"></div>
           <div class="grid-6-12">
             <label>La institución educativa participa en algún programa: ¿Cúal?<em class="formee-req">*</em></label>
-            <% @descripcion = [] %>
-            <% @s_programas.each do |selected| %>
-            <% @selecion = Programa.find_by_clave(selected)%>
-            <% @descripcion.empty? ? @descripcion << "" : @descripcion << " , "%>
-            <% @descripcion << @selecion.descripcion %>
+            <fieldset style="padding: 5px 5px 5px 5px;" class="rpt">
+              <div id="programas">
+                <% Programa.find(:all).each do |c| %>
+                  <%= check_box_tag "programas[#{c.id}]", c.clave, @s_programas.include?(c.id) ? true : false, :onclick => "checkRadioD(this, 'escuela_programa_desc')" %>&nbsp;<%= c.descripcion %><br />
+                <% end %>
+              </div>
+            </fieldset>
+            <%# @descripcion = [] %>
+            <%# @s_programas.each do |selected| %>
+            <%# @selecion = Programa.find_by_clave(selected)%>
+            <%# @descripcion.empty? ? @descripcion << "" : @descripcion << " , "%>
+            <%# @descripcion << @selecion.descripcion %>
             <%#*<div style="overflow:auto; width:370px;">%>
               <%#*<select id="programas" name="programas[]" style="width:auto;" multiple="multiple" size="5" >%>
                 <%#= options_from_collection_for_select(Programa.find(:all), :clave, :descripcion, @s_programas)%>
               <%#*</select>%>
             <%#*</div>%>
-            <% end %>
-            <%= text_area  :select, :valor, :class => "rpt", :value => @descripcion %>
+            <%# end %>
+            <%#= text_area  :select, :valor, :class => "rpt", :value => @descripcion %>
           </div>
           <% unless @escuela.programa_desc.empty? %>
           <div class="grid-6-12">
@@ -139,27 +146,35 @@
           <div class="grid-8-12">
         <fieldset>
           <legend style=" font-size: 14px;" >Total personal:</legend>
-          <div class="grid-4-12">
+          <div class="grid-2-12">
             <%@td = @escuela.doc_hom.to_i + @escuela.doc_muj.to_i%>
             <label>Docente: <em class="formee-req">*</em></label>
-            <%= f.text_field :total_personal_docente, :class => "rpt" %>
+            <div class="grid-10-12">
+              <%= f.text_field :total_personal_docente, :class => "rpt" %>
+            </div>
           </div>
           <div class="grid-4-12">
             <label>Docentes de apoyo: <em class="formee-req">*</em></label>
-            <%= f.text_field :total_personal_docente_apoyo, :class => "rpt" %>
+            <div class="grid-5-12">
+              <%= f.text_field :total_personal_docente_apoyo, :class => "rpt", :size => "50" %>
+            </div>
           </div>
-          <div class="grid-4-12">
+          <div class="grid-3-12">
             <label>Administrativo: <em class="formee-req">*</em></label>
-            <%= f.text_field :total_personal_admvo, :class => "rpt" %>
+            <div class="grid-6-12">
+              <%= f.text_field :total_personal_admvo, :class => "rpt" %>
+            </div>
           </div>
-          <div class="grid-4-12">
+          <div class="grid-3-12">
             <label>De apoyo: <em class="formee-req">*</em></label>
-            <%= f.text_field :total_personal_apoyo, :class => "rpt" %>
+            <div class="grid-6-12">
+              <%= f.text_field :total_personal_apoyo, :class => "rpt" %>
+            </div>
           </div>
           <% if @escuela.nivel_descripcion == "BACHILLERATO" %>
           <div class="grid-8-12">
             <label>Perfil Académico enfocado a Ciencias Naturales:<em class="formee-req">&nbsp;*</em></label>
-            <div class="grid-6-12">
+            <div class="grid-3-12">
               <%= f.text_field :perfil_ciencias_naturales, :class => "rpt" %>
             </div>
           </div>
@@ -173,12 +188,16 @@
           <div class="grid-6-12">
             <label>Mujeres: <em class="formee-req">*</em></label>
             <%#= f.text_field :total_personal_alumn_m %>
-            <%= f.text_field :alu_muj, :class => "rpt" %>
+            <div class="grid-6-12">
+              <%= f.text_field :alu_muj, :class => "rpt" %>
+            </div>
           </div>
           <div class="grid-6-12">
             <label>Hombres: <em class="formee-req">*</em></label>
             <%#= f.text_field :total_personal_alumn_h %>
-            <%= f.text_field :alu_hom, :class => "rpt" %>
+            <div class="grid-6-12">
+              <%= f.text_field :alu_hom, :class => "rpt" %>
+            </div>
         </div>
         </fieldset>
       </div>
@@ -188,3 +207,7 @@
     </tr>
   </table>
 </div>
+
+<script type="text/javascript">
+  checkRadioD("programas", 'escuela_programa_desc');
+</script>

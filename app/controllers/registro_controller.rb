@@ -29,7 +29,7 @@ class RegistroController < ApplicationController
       redirect_to :controller => "home"
     end
     @select_ce = selected(@escuela.categoria_escuela) if @escuela.categoria_escuela
-    @s_programas = multiple_selected(@escuela.programas) if @escuela.programas
+    @s_programas = multiple_selected_id(@escuela.programas) if @escuela.programas
   end
 
   def menu_reportes
@@ -48,7 +48,10 @@ class RegistroController < ApplicationController
       @programas = []
       params[:programas].each { |op| @programas << Programa.find_by_clave(op)  }
       @escuela.programas = Programa.find(@programas)
+    else
+      @escuela.programas.delete_all
     end
+
     @escuela.registro_completo = true
     if @escuela.save
       @escuela.update_bitacora!("esc-datos", current_user)
@@ -74,7 +77,7 @@ class RegistroController < ApplicationController
       redirect_to :controller => "home"
     end
     @select_ce = selected(@escuela.categoria_escuela) if @escuela.categoria_escuela
-    @s_programas = multiple_selected(@escuela.programas) if @escuela.programas
+    @s_programas = multiple_selected_id(@escuela.programas) if @escuela.programas
   end
   
   private

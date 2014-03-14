@@ -33,22 +33,40 @@ function showDescription(obj_select, obj_desc)
 }
 
 
-function checkRadioD(arreglo, numRadio, obj_desc){
+function checkRadioD(radio_buttom, obj_desc){
     var radio;
     var radio2;
-    var desc = document.forms[0].elements[obj_desc];
+    var desc = document.getElementById(obj_desc);
 
-    for(i=1; i <= numRadio; i++){
-        radio = document.getElementById(arreglo + "_" + i);
-        if(radio.checked && radio.value == "OTR"){
-            for(x=1; x < numRadio; x++){
-                radio2 = document.getElementById(arreglo + "_" + x);
-                if(radio2.value != "OTR")  enableTextarea(desc);
-                else disableTextarea(desc);
+    if(typeof radio_buttom == "object"){
+        radio = radio_buttom;
+        if(radio.value == "OTR"){
+            if(radio.checked){
+                enableTextarea(desc);
             }
-            break;
+            else{
+                clearTextarea(desc);
+                disableTextarea(desc);
+            }
         }
     }
+    else{
+        for(var i=1; i <= getNumCheckbox(radio_buttom); i++){
+            radio2 = document.getElementById(radio_buttom + "_" + i);
+            if(radio2.checked && radio2.value == "OTR"){
+                enableTextarea(desc);
+                break;
+            }
+        }
+    }
+}
+
+function getNumCheckbox(div){
+    var div2 = document.getElementById(div);
+    for(var i = j = 0; i < div2.childNodes.length; i++)
+        if(div2.childNodes[i].nodeName == 'INPUT')
+            j++;
+    return j;
 }
 
 function showDescriptionC(obj_select, obj_desc)
