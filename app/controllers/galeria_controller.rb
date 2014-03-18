@@ -1,6 +1,6 @@
 class GaleriaController < ApplicationController
   def global
-    @adjuntos = Adjunto.find(:all, :conditions => ["file_type = ?", "image/jpeg"], :limit => 16)
+    @adjuntos = Adjunto.find(:all, :conditions => ["file_type = ?", "image/jpeg"], :limit => 32)
     @nombre = "Galería global"
      unless @adjuntos
        flash[:notice] = "No existen imagenes"

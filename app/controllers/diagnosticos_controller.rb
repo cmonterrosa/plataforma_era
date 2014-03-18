@@ -8,7 +8,8 @@ class DiagnosticosController < ApplicationController
       redirect_to :controller => "admin"
     end
 
-    @escuela = Escuela.find_by_clave(current_user.login.upcase)
+    @escuela= Escuela.find(params[:id]) if params[:id]
+    @escuela ||= Escuela.find_by_clave(current_user.login.upcase)
     unless @escuela.registro_completo
       flash[:notice] = "Para iniciar al diagnostico, es necesario primero concluir el registro de dátos básicos"
       redirect_to :controller => "registro"

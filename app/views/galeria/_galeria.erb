@@ -31,6 +31,7 @@ $(window).load(function() {
 </script>
 
 
+
 <div class="titulos">
   <p>Galería Fotográfica</p>
   <p><%=@nombre%></p>
@@ -40,7 +41,8 @@ $(window).load(function() {
 
 
 <!-- Place somewhere in the <body> of your page -->
-<div class="flexslider">
+<div class="flexslider" style="height: 460px">
+  
   <ul class="slides">
 
     <%for adjunto in @adjuntos%>
@@ -51,4 +53,5 @@ $(window).load(function() {
       <%end%>
     <%end%>
   </ul>
+  
 </div>

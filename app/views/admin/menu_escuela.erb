@@ -1,0 +1,120 @@
+<div class="container">
+ <fieldset>
+    <legend>
+      <!-- Menu -->
+      <div class="titulos">
+        <p> Datos Generales de la Escuela</p>
+      </div>
+    </legend>
+
+    <div id="prellenado" style="background:#ebf7aa;">
+
+       
+
+      <div class="grid-4-12">
+        <label style=" font-weight: bold;">Clave de la Escuela:</label>
+        <label style=" font-style: italic;"><%= @escuela.clave %></label>
+      </div>
+      <div class="grid-8-12">
+        <label style=" font-weight: bold;">Nombre de la Escuela:</label>
+        <label style=" font-style: italic;"><%= @escuela.nombre %></label>
+      </div>
+
+      <div class="grid-4-12">
+        <label style=" font-weight: bold;">Zona Escolar:</label>
+        <label style=" font-style: italic;"><%= @escuela.zona_escolar %></label>
+      </div>
+      <div class="grid-4-12">
+        <label style=" font-weight: bold;">Sector:</label>
+        <label style=" font-style: italic;"><%= @escuela.sector %></label>
+      </div>
+      <div class="grid-4-12">
+        <label style=" font-weight: bold;">Turno:</label>
+        <label style=" font-style: italic;"><%= @escuela.turno %></label>
+      </div>
+
+      <div class="grid-8-12">
+        <label style=" font-weight: bold;">Localidad:</label>
+        <label style=" font-style: italic;"><%= @escuela.localidad %></label>
+      </div>
+      <div class="grid-4-12">
+        <label style=" font-weight: bold;">Municipio:</label>
+        <label style=" font-style: italic;"><%= @escuela.municipio %></label>
+      </div>
+    </div>
+
+    <div class="grid-12-12 clear"></div>
+</fieldset>
+
+
+ <table width="90%" border="0" cellspacing="0" cellpadding="0" align="center">
+    <tr align="center">
+      <td>
+        <legend>
+        <!-- Menu -->
+          <div class="titulos">
+             <p> Menú de opciones</p>
+          </div>
+        </legend>
+
+        <div class="grid-3-12">
+       <!-- Búsqueda de Escuela -->
+       <%=link_to image_tag('admin/menu_escuela/bitacora.png', :size => "128x128", :mouseover => 'admin/menu_escuela/bitacora2.png') , {:action => "show_bitacora", :controller => "admin", :id => @user}, :class => 'fancybox fancybox.iframe', :title => "Bitácora"%>
+       <label style="font-family:verdana;font-size:14px;">Bitácora</label>
+        </div>
+
+
+       <div class="grid-3-12">
+        <!-- Registro -->
+        <%=link_to image_tag('admin/menu_escuela/registro.png', :size => "128x128", :mouseover => 'admin/menu_escuela/registro2.png') , {:action => "menu_documentos_registro", :controller => "admin", :id => @escuela},  :class => 'fancybox fancybox.iframe', :title => "Formatos de registro"%>
+        <label style="font-family:verdana;font-size:14px;">Documentos de registro</label>
+       </div>
+
+
+       <!-- Diagnostico -->
+        <div class="grid-3-12">
+       <%=link_to image_tag('admin/menu_escuela/diagnostico.png', :size => "128x128", :mouseover => 'admin/menu_escuela/diagnostico2.png') , {:action => "show_diagnostico", :controller => "admin", :id => @escuela}, :class => 'fancybox fancybox.iframe', :title => "Detalle de diagnóstico"%>
+          <label style="font-family:verdana;font-size:14px;">Diagnóstico</label>
+        </div>
+
+       
+       <!-- Evidencias del diagnóstico -->
+       <div class="grid-3-12">
+       <%=link_to image_tag('admin/menu_escuela/evidencias.png', :size => "128x128", :size => "128x128", :mouseover => 'admin/menu_escuela/evidencias2.png') , {:action => "show_evidencias_por_usuario", :controller => "upload", :id => @user, :diagnostico => @diagnostico}, :html => { :target => "_blank"}, :title => "Mostrar evidencias del diagnóstico" %>
+         <label style="font-family:verdana;font-size:14px;">Evidencias del diagnóstico</label>
+       </div>
+
+        <div class="grid-12-12 clear"></div>
+
+       <!-- Galería del diagnóstico -->
+       <div class="grid-3-12">
+       <%=link_to image_tag('admin/menu_escuela/galeria.png', :size => "128x128", :size => "128x128", :mouseover => 'admin/menu_escuela/galeria2.png') , {:action => "show_galeria", :controller => "admin", :id => @user},  :class => 'fancybox fancybox.iframe', :title => "Mostrar evidencias del diagnóstico" %>
+         <label style="font-family:verdana;font-size:14px;">Galería del diagnóstico</label>
+       </div>
+
+       <!-- proyecto -->
+       <div class="grid-3-12">
+       <%=link_to image_tag('admin/menu_escuela/proyecto.png', :size => "128x128", :size => "128x128", :mouseover => 'admin/menu_escuela/proyecto2.png') , {:action => "proyect_to_pdf", :controller => "proyectos", :id => @escuela}, :class => 'fancybox fancybox.iframe', :title => "Detalle de proyecto"%>
+         <label style="font-family:verdana;font-size:14px;">Proyecto</label>
+       </div>
+
+      
+      <div class="grid-12-12 clear"></div>
+      </td>
+
+    </tr>
+
+</table>
+
+
+
+
+
+
+
+</div>
+
+<br />
+<div class="titulos">
+  <%= link_to image_tag("botones/btn_regresar.png", :mouseover => "botones/btn_regresar1.png") , :controller => "admin", :action => "index"%><br />
+</div>

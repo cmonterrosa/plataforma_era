@@ -1,0 +1,52 @@
+<div class="container">
+  <div class="formee">
+
+    <table align="center" class="subprincipal" width="50%" cellspacing="5" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
+      <tr class="tdiagnostico">
+        <td align="center" >
+          <legend>
+        <!-- Menu -->
+          <div class="titulos">
+             <p> Documentos para impresión</p>
+          </div>
+        </legend>
+
+        </td>
+      </tr>
+    </table>
+    <%#*<h4 style="text-align: center;">IMPRESIÓN DE DOCUMENTOS</h4>%>
+    <%#*<div class="grid-center"><hr /></div>%>
+    <div class="grid-12-12 clear"></div>
+    <fieldset>
+      <!-- constancia -->
+      <% form_for :escuela, @escuela, :url => { :action => "formato_registro", :controller => "registro", :id => "#{@escuela.clave}.pdf" }, :html => { :target => "_blank"} do -%>
+      <%# form_for :escuela, @escuela, :url => { :action => "formato_registro", :controller => "registro", :id => @escuela.clave }, :html => { :target => "_blank"} do -%>
+      <div class="grid-center">
+        <p id="pdf_link"><input type="submit" title="IMPRIMIR FORMATO DE REGISTRO" value="IMPRIMIR FORMATO DE REGISTRO" /></p>
+      </div>
+      <%end%>
+
+      <div class="grid-12-12 clear"></div>
+
+      <!-- constancia -->
+      <% form_for :escuela, @escuela, :url => { :action => "generar", :controller => "constancia", :id => @escuela }, :html => { :target => "_blank"} do |f| -%>
+      <div class="grid-center">
+        <input type="submit" title="IMPRIMIR CONSTANCIA DE INSCRIPCION" value="IMPRIMIR CONSTANCIA DE INSCRIPCION" />
+      </div>
+      <%end%>
+
+      <div class="grid-12-12 clear"></div>
+
+      <!-- carta compromiso -->
+      <% form_for :escuela, @escuela, :url => { :action => "carta_compromiso_basica", :controller => "constancia", :id => @escuela }, :html => { :target => "_blank"} do |f| -%>
+      <div class="grid-center">
+        <input type="submit" title="IMPRIMIR CARTA COMPROMISO" value="IMPRIMIR CARTA COMPROMISO" />
+      </div>
+      <%end%>
+
+    </fieldset>
+
+    <br />
+
+  </div>
+</div>
