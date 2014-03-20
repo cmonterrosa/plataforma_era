@@ -1,7 +1,7 @@
 class ProyectosController < ApplicationController
   layout :set_layout
 
-  before_filter :check_is_available
+#  before_filter :check_is_available
 
   require_role [:escuela]
 #  skip_before_filter :verify_authenticity_token, :only => [:save_first_section, :second_section_proyect]
@@ -26,6 +26,7 @@ class ProyectosController < ApplicationController
       flash[:notice] = "Para iniciar la captura del proyecto, es necesario concluir la etapa de diagnóstico"
       redirect_to :action => "index", :controller => "diagnosticos"
     end
+    a=0
   end
 
   def get_contenido_ejes

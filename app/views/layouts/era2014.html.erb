@@ -53,6 +53,10 @@
 <%= stylesheet_link_tag "progressbar/css3-progress-bar-ie.css" %>
 <%= stylesheet_link_tag "progressbar/css3-progress-bar.css" %>
 
+<!-- Acordeon -->
+<%#= javascript_include_tag "acordeon/acordeon.js" %>
+<%= stylesheet_link_tag "acordeon/style.css" %>
+<%#= stylesheet_link_tag "acordeon/demo.css" %>
 
 <script type="text/javascript">
   jQuery.noConflict();
@@ -86,6 +90,7 @@
             }
 
         //]]>
+
 </script>
 
 
@@ -209,16 +214,13 @@ a:active {
 
 
 
-  <!-- Inicio de fancy -->
-  <script type="text/javascript">
-		jQuery(document).ready(function() {
-			/*
-			 *  Simple image gallery. Uses default settings
-			 */
+<!-- Inicio de fancy -->
+<script type="text/javascript">
+  jQuery(document).ready(function() {
+    jQuery('.fancybox').fancybox();
+  });
+</script>
 
-			jQuery('.fancybox').fancybox();
-               });
-  </script>
 </head>
 
 <!--

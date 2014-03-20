@@ -1,0 +1,79 @@
+<table class="principal" width="100%" border="0" align="center" cellpadding="2" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
+  <tr bgcolor="#003366" style="opacity: 0.7;" >
+    <td align="center"><h4>PRIMER AVANCE DEL PROYECTO</h4></td>
+  </tr>
+  <tr align="center">
+    <td align="center">
+      <table class="subprincipal" width="100%" border="0" cellpadding="4" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
+        <tr>
+          <td>
+            <div class="grid-12-12">
+              <label style="font-size: 15px; font-weight: bold;" >NOMBRE DEL PROYECTO: &nbsp;</label>
+              <label style="font-size: 13px;"><%= @proyecto.descripcion %></label>
+            </div>
+          </td>
+        </tr>
+        <tr align="justify" >
+          <td>
+            <div class="grid-12-12">
+              <label style="font-size: 15px; font-weight: bold;" >EJES A DESARROLLAR: </label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <section class="ac-container">
+              <% a = 1 %>
+              <% @ejes.sort_by { |hsh| hsh[:catalogo_eje_id] }.each do |eje|%>
+              <div>
+                <input id="ac-<%= a %>" name="accordion-1" type="radio" checked />
+                <label class="acc-label" for="ac-<%= a %>"><%= eje.catalogo_eje.completo %></label>
+                <article class="ac-auto" >
+                  <div class="grid-6-12">
+                    <label class="art-label">LÍNEAS DE ACCIÓN: </label>
+                    <% eje.catalogo_eje.lineas_accions.each do |linea| %>
+                      <li><%= linea.descripcion %></li>
+                    <% end %>
+                  </div>
+                  <div class="grid-6-12">
+                    <label class="art-label">INDICADORES: </label>
+                    <% eje.catalogo_eje.indicadores.each do |indicador| %>
+                      <li><%= indicador.descripcion %></li>
+                    <% end %>
+                  </div>
+                  <div class="grid-6-12">
+                    <label class="art-label">OBJETIVO ESPECÍFICO: </label>
+                    <p><%= eje.objetivo_especifico %></p>
+                  </div>
+                  <div class="grid-6-12">
+                    <label class="art-label">META: </label>
+                    <p><%= eje.meta %></p>
+                  </div>
+                  <div class="grid-12-12">
+                    <label class="art-label">ACTIVIDADES: </label>
+                    <% num=1 %>
+                    <% form_for :avance, @avance,  :update => "avances", :url => { :action => "new_or_edit", :id => @avance }, :html => {:class => "formee", :id => "avance"} do |f| -%>
+                    <ol style="list-style-type: decimal-leading-zero; padding-left: 2em;">
+                    <% eje.actividads.each do |actividad| %>
+                      <li><%= actividad.descripcion %> <em class="formee-req">*</em></li>
+                      <%= f.text_area "actividad#{num}", :class => "forme", :placeholder => "Descripcion del avance" %>
+                      <% num+=1 %>
+                    <% end %>
+                    </ol>
+                    <div class="grid-9-12"></div>
+                    <div class="grid-3-12">
+                      <label style="font-size: 12px;"><%= link_to image_tag("/images/botones/add_eje.png", :mouseover => "/images/botones/add_eje2.png"), { :action => "edit_eje", :id => eje.id } %>&nbsp; Guardar actividades</label>
+                    </div>
+                    <% end %>
+                  </div>
+                  </article>
+                </div>
+              <% a+=1 %>
+              <% end %>
+            </section>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>

@@ -1,0 +1,72 @@
+<%= render :partial => "info"%>
+<% a=0 %>
+<div id="avances">
+  <%#= render :partial => "datos_proyecto"%>
+  <table class="principal" width="100%" border="0" align="center" cellpadding="2" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
+  <tr bgcolor="#003366" style="opacity: 0.7;" >
+    <td align="center"><h4>PRIMER AVANCE DEL PROYECTO</h4></td>
+  </tr>
+  <tr align="center">
+    <td align="center">
+      <table class="subprincipal" width="100%" border="0" cellpadding="4" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
+        <tr>
+          <td>
+            <div class="grid-12-12">
+              <label style="font-size: 15px; font-weight: bold;" >NOMBRE DEL PROYECTO: &nbsp;</label>
+              <label style="font-size: 13px;"><%= @proyecto.descripcion %></label>
+            </div>
+          </td>
+        </tr>
+        <tr align="justify" >
+          <td>
+            <div class="grid-12-12">
+              <label style="font-size: 15px; font-weight: bold;" >EJES A DESARROLLAR: </label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <table border="0" cellpadding="0" cellspacing="0" >
+              <tr align="center" >
+                <td>
+                  <% @ejes.sort_by { |hsh| hsh[:catalogo_eje_id] }.each do |eje|%>
+                    <% case eje.catalogo_eje.clave %>
+                    <% when "EJE1" %>
+                      <div class="grid-3-12">
+                        <span class="titulos_ejes">EJE 1</span> <a href="/competencias/new_or_edit/<%=@diagnostico.id%>" type="image" id="button5" class="buttonText" style="font-weight: bold;"><img src="/images/era/iconos/4.png" alt="Desarrollo de Competencias" onmouseover="this.src='/images/era/iconos/4a.png'" onmouseout="this.src='/images/era/iconos/4.png'"/>Desarrollo&nbsp;de&nbsp;Competencias</a>
+                      </div>
+                    <% when "EJE2" %>
+                      <div class="grid-3-12">
+                        <span class="titulos_ejes">EJE 2</span><a href="/entornos/new_or_edit/<%=@diagnostico.id%>" type="image" id="button5" class="buttonText" style="font-weight: bold;" ><img src="/images/era/iconos/1.png" alt="Entorno Saludable" onmouseover="this.src='/images/era/iconos/1a.png'" onmouseout="this.src='/images/era/iconos/1.png'"/>&nbsp;Entorno&nbsp;Saludable&nbsp;</a>
+                      </div>
+                    <% when "EJE3" %>
+                      <div class="grid-3-12">
+                        <span class="titulos_ejes">EJE 3</span><a href="/huellas/new_or_edit/<%=@diagnostico.id%>" type="image" id="button5" class="buttonText" style="font-weight: bold;"><img src="/images/era/iconos/2.png" alt="Huella Ecologica" onmouseover="this.src='/images/era/iconos/2a.png'" onmouseout="this.src='/images/era/iconos/2.png'"/>&nbsp;&nbsp;Huella&nbsp;Ecológica&nbsp;&nbsp;</a>
+                      </div>
+                    <% when "EJE4" %>
+                      <div class="grid-3-12">
+                        <span class="titulos_ejes">EJE 4</span> <a href="/consumos/new_or_edit/<%=@diagnostico.id%>" type="image" id="button5" class="buttonText" style="font-weight: bold;"><img src="/images/era/iconos/3.png" alt="Consumo Saludable" onmouseover="this.src='/images/era/iconos/3a.png'" onmouseout="this.src='/images/era/iconos/3.png'"/>Consumo&nbsp;Responsable&nbsp;y&nbsp;Saludable</a>
+                      </div>
+                    <% when "EJE5" %>
+                      <div class="grid-3-12">
+                        <span class="titulos_ejes">EJE 5</span> <a href="/participacions/new_or_edit/<%=@diagnostico.id%>" type="image" id="button5" class="buttonText" style="font-weight: bold;"><img src="/images/era/iconos/5.png" alt="Participación Ciudadana" onmouseover="this.src='/images/era/iconos/5a.png'" onmouseout="this.src='/images/era/iconos/5.png'"/>Participación&nbsp;Comunitaria</a>
+                      </div>
+                    <% else %>
+                      <p>No existen ejes, verifique.</p>
+                    <% end %>
+                  <% end %>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  </table>
+
+
+</div>
+<p style="text-align: center;">
+  <%= link_to image_tag("/images/botones/concluir_1er.png", :mouseover => "/images/botones/concluir_1er2.png" ), { :controller => "avances" } %>
+</p>

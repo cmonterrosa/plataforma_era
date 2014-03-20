@@ -1,0 +1,124 @@
+.ac-container{
+    width: auto;
+    margin: 10px auto 30px auto;
+}
+.ac-container label.acc-label{
+    font-family: 'BebasNeueRegular', 'Arial Narrow', Arial, sans-serif;
+    font-size: 13px;
+    font-weight: bold;
+    padding: 5px 20px;
+    position: relative;
+    z-index: 20;
+    display: block;
+    height: 30px;
+    cursor: pointer;
+/*    color: #777;*/
+    color: black;
+    text-shadow: 1px 1px 1px rgba(255,255,255,0.8);
+    line-height: 33px;
+/*    background: linear-gradient(top, #fffff 1%,#eaeaea 100%);*/
+    background: #eaeaea;
+    box-shadow:
+        0px 0px 0px 1px rgba(155,155,155,0.3),
+        1px 0px 0px 0px rgba(255,255,255,0.9) inset,
+        0px 2px 2px rgba(0,0,0,0.1);
+}
+.ac-container article label.art-label{
+    font-family: 'BebasNeueRegular', 'Arial Narrow', Arial, sans-serif;
+    font-size: 12px;
+    padding: 5px 10px;
+    position: relative;
+    z-index: 20;
+    display: block;
+    height: 25px;
+    color: #777;
+    text-shadow: 1px 1px 1px rgba(255,255,255,0.8);
+    line-height: 33px;
+    background: linear-gradient(top, #ffffff 1%,#eaeaea 100%);
+    box-shadow:
+        0px 0px 0px 1px rgba(155,155,155,0.3),
+        1px 0px 0px 0px rgba(255,255,255,0.9) inset,
+        0px 2px 2px rgba(0,0,0,0.1);
+}
+.ac-container label.acc-label:hover{
+/*    background: #fff;*/
+    background: #CEF6D8;
+}
+.ac-container article label.art-label:hover{
+    background: #fff;
+}
+.ac-container input:checked + label.acc-label,
+.ac-container input:checked + label.acc-label:hover{
+    background: #6ce26c;
+/*    color: #3d7489;*/
+    color: #555555;
+    text-shadow: 0px 1px 1px rgba(255,255,255, 0.6);
+    box-shadow:
+        0px 0px 0px 1px rgba(155,155,155,0.3),
+        0px 2px 2px rgba(0,0,0,0.1);
+}
+.ac-container label.acc-label:hover:after,
+.ac-container input:checked + label.acc-label:hover:after{
+    content: '';
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    right: 13px;
+    top: 7px;
+    background: transparent url(/images/acordeon/arrow_down.png) no-repeat center center;
+}
+.ac-container input:checked + label.acc-label:hover:after{
+    background-image: url(/images/acordeon/arrow_up.png);
+}
+.ac-container input{
+    display: none;
+}
+.ac-container article{
+    background: rgba(255, 255, 255, 0.5);
+    text-align: justify;
+    margin-top: -1px;
+    overflow: hidden;
+    height: 0px;
+    position: relative;
+    z-index: 10;
+    transition:
+        height 0.3s ease-in-out,
+        box-shadow 0.6s linear;
+}
+.ac-container input:checked ~ article{
+    transition:
+        height 0.5s ease-in-out,
+        box-shadow 0.1s linear;
+    box-shadow: 0px 0px 0px 1px rgba(155,155,155,0.3);
+}
+.ac-container article p{
+/*    padding: 5px 20px;*/
+/*    font-style: italic;*/
+    color: #777;
+/*    line-height: 23px;*/
+    font-size: 12px;
+    margin:5px 0px 0px 13px;
+    padding: 1px;
+    text-shadow: 1px 1px 1px rgba(255,255,255,0.8);
+}
+.ac-container article li{
+    color: #777;
+/*    line-height: 23px;*/
+    font-size: 12px;
+/*    padding: 5px 20px;*/
+    margin:5px 0px 0px 13px;
+    padding: 1px;
+    text-shadow: 1px 1px 1px rgba(255,255,255,0.8);
+}
+.ac-container input:checked ~ article.ac-small{
+    height: 140px;
+}
+.ac-container input:checked ~ article.ac-medium{
+    height: 180px;
+}
+.ac-container input:checked ~ article.ac-large{
+    height: 230px;
+}
+.ac-container input:checked ~ article.ac-auto{
+    height: auto;
+}
