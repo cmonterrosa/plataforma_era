@@ -277,6 +277,7 @@ class AdminController < ApplicationController
   def menu_diagnostico
     @escuela = Escuela.find(params[:id])
     @diagnostico = Diagnostico.find_by_escuela_id(@escuela.id)
+    render :partial => "show_diagnostico", :layout => "era2014"
   end
 
   def habilitar_diagnostico
@@ -303,6 +304,50 @@ class AdminController < ApplicationController
    def report_by_niveles
      #@niveles = Nivel.find(:all, :order => "descripcion")
      @niveles = Escuela.find(:all, :group => "nivel_descripcion", :conditions => ["estatu_id IS NOT NULL"])
+   end
+
+
+   ################################################################################################
+   #    ACCIONES DEL MENU DE ESCUELAS
+   #
+   ################################################################################################
+
+   def menu_escuela
+     @user = User.find(params[:id])
+     @escuela = @user.escuela if @user
+     @diagnostico = Diagnostico.find_by_user_id(@user.id) if @user
+     @proyecto = Proyecto.find_by_diagnostico_id(@diagnostico.id) if @diagnostico
+     
+   end
+
+   def show_bitacora
+      @user = User.find(params[:id]) 
+      render :partial => "escuelas/bitacora", :layout => "only_jquery"
+   end
+
+   def show_diagnostico
+      @escuela = Escuela.find(params[:id])
+      @diagnostico = Diagnostico.find_by_escuela_id(@escuela.id) if @escuela
+      if @diagnostico
+        render :partial => "show_diagnostico", :layout => "only_jquery"
+      else
+        render :text => "<h1 style='color: red;' align='center'>No existe diagnóstico registrado</h1>"
+      end
+   end
+
+   def menu_documentos_registro
+     @escuela = Escuela.find(params[:id])
+     render :partial => "menu_documentos_registro", :layout => "only_jquery"
+   end
+
+   def show_galeria
+     @user = User.find(params[:id])
+     @adjuntos = Adjunto.find(:all, :conditions => ["user_id = ? AND file_type = ?", @user.id, "image/jpeg"], :limit => 20) if @user
+     unless @adjuntos.empty?
+       render :partial => "galeria/galeria", :layout => "only_jquery"
+     else
+       render :text => "<h1 style='color: red;' align='center'>No existen archivos de imágenes</h1>"
+     end
    end
 
   

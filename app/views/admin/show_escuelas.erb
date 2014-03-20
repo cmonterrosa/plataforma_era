@@ -77,11 +77,11 @@
               <td style="vertical-align: middle;" colspan="5"><b>Sin registro</b></td>
           <%end%>
 
-          <!-- Diagnostico -->
+          <!-- Menu -->
           <%if escuela%>
-              <%if Diagnostico.find_by_escuela_id(escuela.id)%>
-                <td style="vertical-align: middle;"><%=link_to "Diagnostico", {:controller => "escuelas", :action => "show_diagnostico", :id => escuela}, :class => 'fancybox fancybox.iframe'%></td>
-              <%end%>
+            <td style="vertical-align: middle;"><%=button_to "Menú", {:controller => "admin", :action => "menu_escuela", :id => user}%></td>
+          <%else%>
+            <td style="vertical-align: middle;">&nbsp;</td>
           <%end%>
       <%clase = invert_class(clase)%>
       <%contador+=1%>

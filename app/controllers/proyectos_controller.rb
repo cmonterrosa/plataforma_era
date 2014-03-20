@@ -1,7 +1,7 @@
 class ProyectosController < ApplicationController
   layout :set_layout
 
-#  before_filter :check_is_available
+  before_filter :check_is_available, :except => "proyect_to_pdf"
 
   require_role [:escuela]
 #  skip_before_filter :verify_authenticity_token, :only => [:save_first_section, :second_section_proyect]
@@ -117,9 +117,13 @@ class ProyectosController < ApplicationController
   end
 
   def proyect_to_pdf
-    @escuela_id = Escuela.find_by_clave(current_user.login.upcase).id
+    @escuela_id = Escuela.find(params[:id]) if params[:id]
+    @escuela_id ||= Escuela.find_by_clave(current_user.login.upcase).id
     @diagnostico = Diagnostico.find_by_escuela_id(@escuela_id)
     @proyecto = Proyecto.find_by_diagnostico_id(@diagnostico)
+    unless @proyecto
+      render :text => "<h1 style='color: red;' align='center'>No existe proyecto registrado</h2>"
+    end
   end
 
  def oficializar
