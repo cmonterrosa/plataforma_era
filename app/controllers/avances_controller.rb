@@ -1,5 +1,7 @@
 class AvancesController < ApplicationController
   layout 'era2014'
+  @@eje = Array.new
+  @@proyectos = Proyecto.new
 
   def index
     @escuela_id = Escuela.find_by_clave(current_user.login.upcase).id if current_user
@@ -8,10 +10,19 @@ class AvancesController < ApplicationController
     if @diagnostico_concluido
        @proyecto = Proyecto.find_by_diagnostico_id(@diagnostico)
        @ejes = Eje.find(:all, :conditions => ["proyecto_id = ?", @proyecto.id ]) if @proyecto
+       @@eje = @ejes
+       @@proyectos = @proyecto
+       a=0
     else
       flash[:notice] = "Para iniciar la captura del proyecto, es necesario concluir la etapa de diagnóstico"
       redirect_to :action => "index", :controller => "diagnosticos"
     end
+  end
+
+  def add_avances
+    @proyecto = @@proyectos
+    @eje = @@eje
+    a=0
   end
 
 
