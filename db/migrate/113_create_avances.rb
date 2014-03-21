@@ -3,7 +3,7 @@ class CreateAvances < ActiveRecord::Migration
     create_table :avances do |t|
       t.integer :numero
       t.string  :descripcion, :limit => 200
-      t.actividad_id  :actividad_id
+      t.integer  :actividad_id
       t.timestamps
     end
   end
