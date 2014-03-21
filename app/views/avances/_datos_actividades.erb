@@ -33,7 +33,11 @@
               <ol style="list-style-type: decimal-leading-zero; padding-left: 2em;">
               <% @eje.actividads.each do |actividad| %>
                 <li><%= actividad.descripcion %> <em class="formee-req">*</em></li>
-                <%= text_area "actividades", "avance#{num}", :class => "forme", :placeholder => "Descripcion del avance...", :value => @act["avance#{num}"] unless @act["avance#{num}"].empty? %>
+                <% if @act %>
+                <%= text_area "actividades", "actividad#{num}", :class => "forme", :placeholder => "Descripcion del avance...", :value => @act["actividad#{num}"] %>
+                <% else %>
+                <%= text_area "actividades", "actividad#{num}", :class => "forme", :placeholder => "Descripcion del avance..." %>
+                <% end %>
                 <% num+=1 %>
               <% end %>
               </ol>
