@@ -38,7 +38,6 @@ class AvancesController < ApplicationController
          @act["actividad#{n}"] = @avance[n-1][:descripcion] if @avance && @avance[n-1]
      end
     end
-    a=0
   end
 
   def save_avances
@@ -53,18 +52,26 @@ class AvancesController < ApplicationController
             act.update_attributes!(:descripcion => a[1])
         else
            Avance.create(:numero => params[:num_avance], :descripcion => a[1], :actividad_id => @actividad_eje.id)
+           eje = Eje.find(params[:eje].to_i)
+            eje.update_attributes!(:avance1 => true) if @num_avance == '1'
         end
     end if @actividades
 
-#    if @eje.update_attributes(params[:eje])
-#       flash[:notice] = "Registro guardado correctamente"
-#       redirect_to :controller => "proyectos", :action => "index"
-#    else
-#       flash[:error] = "No se pudo crear el eje a desarrollar"
-#    end
-
-    
     redirect_to :action => "index", :num_avance => @num_avance
   end
+
+  def concluir
+    @proyecto = Proyecto.find(params[:id])
+    @proyecto.avance = params[:avance].to_i
+    @escuela = Escuela.find(@proyecto.diagnostico.escuela_id)
+    @escuela.update_bitacora!("avance1", current_user)
+    if @proyecto.save
+      flash[:notice] = "El avance núm. #{params[:avance]} del proyecto fue finalizado correctamente"
+    else
+      flash[:notice] = "El avance del proyecto no pudo finalizarse, vuelva a intentarlo"
+    end
+    redirect_to :controller => "proyectos"
+  end
+
 
 end
