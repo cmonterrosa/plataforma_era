@@ -3,6 +3,7 @@ class Adjunto < ActiveRecord::Base
    belongs_to :tramite
    belongs_to :tipodoc
    belongs_to :diagnostico
+   belongs_to :proyecto
    validates_presence_of :tipodoc_id, :message => ".- Seleccione un tipo de archivo"
    validates_numericality_of :file_size, :less_than => 10240, :message => ".- No puede excederse de 10 MB. "
 

@@ -42,8 +42,8 @@
               <% end %>
               </ol>
               <div class="grid-12-12" style="text-align:center;">
-                <%=link_to image_tag("botones/upload_content1.png", :mouseover => "botones/upload_content2.png", :border => 0, :name => "", :id => ""),
-                                                              {:controller => "upload", :avance => @avance, :eje => 1, :numero_pregunta => 2, :action => "list_evidencias" },
+                <%=link_to image_tag("botones/upload_content1.png", :mouseover => "botones/upload_content2.png", :border => 0, :name => "avance1", :id => "avance1"),
+                                                              {:controller => "upload", :num_avance => @num_avance, :eje => @eje.id, :proyecto => @proyecto.id, :action => "list_evidencias_avance" },
                                                                :class => "fancybox fancybox.iframe"%>
               </div>
               <div class="grid-12-12 clear">&nbsp;</div>
@@ -52,7 +52,7 @@
                 <input id="button4" onclick="to_uppercase();" class="buttonText" type="submit" title="Guardar y Regresar" value="Guardar y Regresar" />
               </div>
               <div class="grid-4-12">
-                <a href="/avances" id="buttonc" class="buttonText"><img src="/images/formee/form-ic-error.png"/>&nbsp;&nbsp;Regresar sin Guardar</a>
+                <a href="/avances?num_avance=<%= Base64.encode64(@num_avance) %>" id="buttonc" class="buttonText"><img src="/images/formee/form-ic-error.png"/>&nbsp;&nbsp;Regresar sin Guardar</a>
               </div>
               <% end %>
             </div>

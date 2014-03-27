@@ -1,10 +1,11 @@
+require 'base64'
 class AvancesController < ApplicationController
   layout 'era2014'
 #  @@eje = ""
 #  @@proyectos = ""
 
   def index
-    @num_avance = params[:num_avance] if params[:num_avance]
+    @num_avance = Base64.decode64(params[:num_avance]) if params[:num_avance]
     @escuela_id = Escuela.find_by_clave(current_user.login.upcase).id if current_user
     @diagnostico = Diagnostico.find_by_escuela_id(@escuela_id) if @escuela_id
     @diagnostico_concluido = (@diagnostico.oficializado) ? @diagnostico.oficializado : false  if @diagnostico
@@ -23,7 +24,7 @@ class AvancesController < ApplicationController
     @escuela_id = Escuela.find_by_clave(current_user.login.upcase).id if current_user
     @diagnostico = Diagnostico.find_by_escuela_id(@escuela_id) if @escuela_id
     @proyecto = Proyecto.find_by_diagnostico_id(@diagnostico)
-    @id, @num_avance = params[:id].split("-") if params[:id]
+    @id, @num_avance = (Base64.decode64(params[:id])).split("-") if params[:id]
     @eje = Eje.find(@id) if @id
     @avance = Array.new
     @eje.actividads.each do | actividad |
@@ -57,7 +58,7 @@ class AvancesController < ApplicationController
         end
     end if @actividades
 
-    redirect_to :action => "index", :num_avance => @num_avance
+    redirect_to :action => "index", :num_avance => Base64.encode64(@num_avance)
   end
 
   def concluir

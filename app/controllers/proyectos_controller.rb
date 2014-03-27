@@ -1,3 +1,4 @@
+require 'base64'
 class ProyectosController < ApplicationController
   layout :set_layout
 

@@ -8,7 +8,7 @@
       <% case @proyecto.avance
         when 0 %>
           <div class ="grid-3-12">
-            <p><%= link_to image_tag("/images/botones/primer_avance.png", :mouseover => "/images/botones/primer_avance2.png" ), { :controller => "avances", :num_avance => 1 } %></p>
+            <p><%= link_to image_tag("/images/botones/primer_avance.png", :mouseover => "/images/botones/primer_avance2.png" ), { :controller => "avances", :num_avance => Base64.encode64("1") } %></p>
           </div
         <% when 1 %>
           <div class ="grid-3-12">
