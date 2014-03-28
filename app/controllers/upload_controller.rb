@@ -134,7 +134,7 @@ class UploadController < ApplicationController
     @num_avance = params[:num_avance] if params[:num_avance]
     @evidencias = Adjunto.find(:all, :conditions => ["user_id = ? AND eje_id = ? and avance = ? and proyecto_id = ?", @user, @eje, @num_avance, @proyecto])
     unless @evidencias.empty?
-      return render(:partial => 'show_evidencia', :layout => "only_jquery", :num_avance => @num_avance, :eje => @eje, :proyecto => @proyecto)
+      return render(:partial => 'show_evidencia_avance', :layout => "only_jquery", :num_avance => @num_avance, :eje => @eje, :proyecto => @proyecto)
     else
        @uploaded_file = Adjunto.new
        @user = current_user

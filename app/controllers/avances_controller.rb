@@ -46,8 +46,8 @@ class AvancesController < ApplicationController
     @avance = Avance.find(params[:id]) if params[:id]
     @avance ||= Avance.new
     @actividades = params[:actividades]
-
-    @actividades.each do | a |
+    if evidencia_preguntas(params[:eje].to_i, params[:num_avance].to_i, params[:proyecto])
+      @actividades.each do | a |
         @actividad_eje = Actividad.find(:first, :conditions => ["eje_id = ? AND clave = ?", params[:eje], a[0]])
         if act = Avance.find(:first, :conditions => ["actividad_id = ?", @actividad_eje.id])
             act.update_attributes!(:descripcion => a[1])
@@ -56,9 +56,12 @@ class AvancesController < ApplicationController
            eje = Eje.find(params[:eje].to_i)
             eje.update_attributes!(:avance1 => true) if @num_avance == '1'
         end
-    end if @actividades
-
-    redirect_to :action => "index", :num_avance => Base64.encode64(@num_avance)
+      end
+      redirect_to :action => "index", :num_avance => Base64.encode64(@num_avance)
+    else
+      flash[:evidencias] = "Cargue archivos para la(s) evidencia(s)"
+      render :action => "add_avances"
+    end
   end
 
   def concluir

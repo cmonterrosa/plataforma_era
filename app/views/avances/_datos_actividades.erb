@@ -29,7 +29,7 @@
             <div class="grid-12-12">
               <label class="art-label">ACTIVIDADES: </label>
               <% num=1 %>
-              <% form_for :avance, @avance, :url => { :action => "save_avances", :id => @avance, :num_avance => @num_avance, :eje => @eje.id }, :html => {:class => "formee", :id => "avance"} do |f| -%>
+              <% form_for :avance, @avance, :url => { :action => "save_avances", :id => @avance, :num_avance => @num_avance, :eje => @eje.id, :poryecto => @proyecto }, :html => {:class => "formee", :id => "avance"} do |f| -%>
               <ol style="list-style-type: decimal-leading-zero; padding-left: 2em;">
               <% @eje.actividads.each do |actividad| %>
                 <li><%= actividad.descripcion %> <em class="formee-req">*</em></li>
@@ -62,3 +62,4 @@
     </td>
   </tr>
 </table>
+  <%= render :partial => "diagnosticos/errores_evidencias"%>
