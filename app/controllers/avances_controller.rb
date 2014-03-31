@@ -12,6 +12,7 @@ class AvancesController < ApplicationController
     if @diagnostico_concluido
        @proyecto = Proyecto.find_by_diagnostico_id(@diagnostico)
        @ejes = Eje.find(:all, :conditions => ["proyecto_id = ?", @proyecto.id ]) if @proyecto
+       @finish = concluido(@ejes, @num_avance)
 #       @@eje = @ejes
 #       @@proyectos = @proyecto
     else
@@ -46,7 +47,7 @@ class AvancesController < ApplicationController
     @avance = Avance.find(params[:id]) if params[:id]
     @avance ||= Avance.new
     @actividades = params[:actividades]
-    if evidencia_preguntas(params[:eje].to_i, params[:num_avance].to_i, params[:proyecto])
+    if evidencia_preguntas(params[:eje].to_i, params[:num_avance].to_i, params[:proyecto]) > 0
       @actividades.each do | a |
         @actividad_eje = Actividad.find(:first, :conditions => ["eje_id = ? AND clave = ?", params[:eje], a[0]])
         if act = Avance.find(:first, :conditions => ["actividad_id = ?", @actividad_eje.id])
@@ -60,7 +61,7 @@ class AvancesController < ApplicationController
       redirect_to :action => "index", :num_avance => Base64.encode64(@num_avance)
     else
       flash[:evidencias] = "Cargue archivos para la(s) evidencia(s)"
-      render :action => "add_avances"
+      redirect_to :action => "add_avances", :id => Base64.encode64( params[:eje] + "-" + @num_avance )
     end
   end
 
@@ -75,6 +76,30 @@ class AvancesController < ApplicationController
       flash[:notice] = "El avance del proyecto no pudo finalizarse, vuelva a intentarlo"
     end
     redirect_to :controller => "proyectos"
+  end
+
+  def concluido(ejes, avance)
+    @fin = true
+    ejes.each do |e|
+      case avance.to_i
+      when 1
+        if e.avance1 == false
+          @fin = false 
+          break;
+        end
+      when 2
+        if e.avance2 == false
+          @fin = false
+          break;
+        end
+      when 3
+        if e.avance3 == false
+          @fin = false
+          break;
+        end
+      end
+    end
+    return @fin
   end
 
 

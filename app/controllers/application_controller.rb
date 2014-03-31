@@ -75,9 +75,9 @@ def fecha_string(date=Time.now)
   end
 
   def evidencia_preguntas(eje, avance, proyecto)
-    contador = Adjunto.count(:id, :conditions => ["eje_id = ? AND avance = ? AND proyecto_id = ?", eje, avance, proyecto])
+    contador = Adjunto.count(:id, :conditions => ["eje_id = ? AND avance = ? AND proyecto_id = ?", eje.to_i, avance.to_i, proyecto.to_i])
     #self.errors.add(:pregunta_3, "=> Requiere evidencia") if contador < 1
-    (contador > 0)?  true : false
+    (contador.to_i > 0)?  true : false
    return contador
   end
 

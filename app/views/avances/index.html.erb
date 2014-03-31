@@ -1,5 +1,5 @@
 <%= render :partial => "info"%>
-<% a=0 %>
+
 <div id="avances">
   <%#= render :partial => "datos_proyecto"%>
   <table class="principal" width="100%" border="0" align="center" cellpadding="2" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
@@ -26,7 +26,6 @@
         </tr>
         <tr>
           <td>
-            <% @finish = true %>
             <% @ejes.sort_by { |hsh| hsh[:catalogo_eje_id] }.each do |eje|%>
               <% case eje.catalogo_eje.clave
                 when 'EJE1' %>
@@ -55,7 +54,6 @@
                      <a href="/avances/add_avances/<%= Base64.encode64(eje.id.to_s + '-'+ @num_avance.to_s) %>" type="image" id="button5" class="buttonText" style="font-weight: bold;"><img src="/images/era/iconos/5.png" alt="Participación Ciudadana" onmouseover="this.src='/images/era/iconos/5a.png'" onmouseout="this.src='/images/era/iconos/5.png'"/>Participación&nbsp;Comunitaria</a>
                   </div>
               <% end %>
-              <% @finish = false if eje.avance1 == false %>
             <% end %>
           </td>
         </tr>
@@ -63,9 +61,8 @@
     </td>
   </tr>
   </table>
-
-
 </div>
+
 <% if @finish == true %>
 <p style="text-align: center;">
   <%= link_to image_tag("/images/botones/concluir_1er.png", :mouseover => "/images/botones/concluir_1er2.png" ), { :controller => "avances", :action => "concluir", :id =>  @proyecto.id, :avance => @num_avance } %>
