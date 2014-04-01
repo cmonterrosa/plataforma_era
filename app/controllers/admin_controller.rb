@@ -236,9 +236,9 @@ class AdminController < ApplicationController
   def total_escuelas_registradas
     @escuelas = User.find(:all, :select => "users.created_at as user_created_at, users.login, users.id as user_id, e.*", :joins => "users, escuelas e", :conditions => "users.login=e.clave AND (users.blocked is NULL OR  users.blocked !=1)")
     csv_string = FasterCSV.generate do |csv|
-      csv << ["CLAVE_ESCUELA", "NOMBRE", "ZONA_ESCOLAR", "SECTOR", "NIVEL", "DOMICILIO", "LOCALIDAD", "MUNICIPIO", "REGION", "MODALIDAD", "FECHA_HORA_CAPTURA", "ALU_HOMBRES", "ALU_MUJERES", "TOTAL_ALUMNOS", "GRUPOS"]
+      csv << ["CLAVE_ESCUELA", "NOMBRE", "ZONA_ESCOLAR", "SECTOR", "NIVEL", "DOMICILIO", "LOCALIDAD", "MUNICIPIO", "REGION", "MODALIDAD", "FECHA_HORA_CAPTURA", "ALU_HOMBRES", "ALU_MUJERES", "TOTAL_ALUMNOS", "GRUPOS", "TOTAL_ALUMNOS", "GRUPOS", "TOTAL_PERSONAL_DOCENTE", "TOTAL_DOCENTE_APOYO", "TOTAL_PERSONAL_ADMVO", "TOTAL_PERSONAL_APOYO"]
       @escuelas.each do |i|
-         csv << [ i["clave"], i["nombre"], i['zona_escolar'],  i['sector'], i['nivel_descripcion'],  i["domicilio"], i["localidad"], i['municipio'], i['region_descripcion'], i['modalidad'], i['user_created_at'], i['alu_hom'], i['alu_muj'], i['total_alumnos'], i['grupos']]
+         csv << [ i["clave"], i["nombre"], i['zona_escolar'],  i['sector'], i['nivel_descripcion'],  i["domicilio"], i["localidad"], i['municipio'], i['region_descripcion'], i['modalidad'], i['user_created_at'], i['alu_hom'], i['alu_muj'], i['total_alumnos'], i['grupos'], i['total_personal_docente'],  i['total_personal_docente_apoyo'], i['total_personal_admvo'],  i["total_personal_apoyo"]]
        end
     end
   send_data csv_string, type => "text/plain",
@@ -305,7 +305,6 @@ class AdminController < ApplicationController
      #@niveles = Nivel.find(:all, :order => "descripcion")
      @niveles = Escuela.find(:all, :group => "nivel_descripcion", :conditions => ["estatu_id IS NOT NULL"])
    end
-
 
    ################################################################################################
    #    ACCIONES DEL MENU DE ESCUELAS
