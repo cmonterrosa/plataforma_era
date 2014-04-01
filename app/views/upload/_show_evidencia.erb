@@ -50,7 +50,7 @@
               <td style="vertical-align: middle;"><=h evidencia.file_type %></td>
               -->
               <td style="vertical-align: middle;"><%=h evidencia.created_at.strftime("%d/%m/%Y - %H:%M")%></td>
-              <td style="vertical-align: middle;"><%= button_to 'Visualizar', {:action => "download", :id => evidencia}, :method => :post, :class => 'boton' %></td>
+              <td style="vertical-align: middle;"><%= button_to 'Visualizar', {:action => "download", :id => evidencia}, :method => :post, :class => 'boton', :html => { :target => "_blank"} %></td>
               <td style="vertical-align: middle;"><%= button_to 'Eliminar', {:action => "destroy_evidencia", :id => evidencia}, :confirm => '¿Esta seguro que desea elimina la evidencia?', :method => :post, :class => 'boton' %></td>
             </tr>
             <%contador+=1%>

@@ -38,7 +38,11 @@ class UploadController < ApplicationController
 
   def download
     @uploaded_file  = Adjunto.find(params[:id])
-    send_file @uploaded_file.full_path, :type => @uploaded_file.file_type, :disposition => 'inline'
+    if File.exists?(@uploaded_file.full_path)
+      send_file @uploaded_file.full_path, :type => @uploaded_file.file_type, :disposition => 'inline'
+    else
+      render :text => "Archivo no existe"
+    end
   end
 
 
@@ -70,6 +74,7 @@ class UploadController < ApplicationController
   def show_evidencias_por_usuario
     @diagnostico = Diagnostico.find(params[:diagnostico]) if params[:diagnostico]
     @user = (params[:id]) ? User.find(params[:id]): current_user
+    @observaciones_evidencias = (@diagnostico.observaciones_evidencias) ? @diagnostico.observaciones_evidencias : nil
     @evidencias = Adjunto.find(:all, :conditions => ["user_id = ?", @user], :order => "eje_id, numero_pregunta")
     unless @evidencias.empty?
       return render(:partial => 'show_todas_evidencias', :layout => "only_jquery")
@@ -142,19 +147,7 @@ class UploadController < ApplicationController
     end
   end
 
-#  def show_evidencias_por_usuario
-#    @diagnostico = Diagnostico.find(params[:diagnostico]) if params[:diagnostico]
-#    @user = (params[:id]) ? User.find(params[:id]): current_user
-#    @evidencias = Adjunto.find(:all, :conditions => ["user_id = ?", @user], :order => "eje_id, numero_pregunta")
-#    unless @evidencias.empty?
-#      return render(:partial => 'show_todas_evidencias', :layout => "only_jquery")
-#    else
-#       @uploaded_file = Adjunto.new
-#       @user = current_user
-#       render :text => "<h3>No existen evidencias cargadas</h3>"
-#       # return render(:partial => 'new_evidencia', :layout => "only_jquery")
-#    end
-#  end
+
 
   def create_evidencia_avance
     @uploaded_file =Adjunto.new(params[:adjunto])
@@ -188,6 +181,30 @@ class UploadController < ApplicationController
     else
       return render(:partial => 'eliminar_evidencia_error', :layout => "only_jquery")
     end
+  end
+
+  def validar
+     @adjunto = Adjunto.find(params[:id])
+     @diagnostico = Diagnostico.find(params[:diagnostico])
+     @user = User.find(params[:user])
+    (@adjunto.update_attributes!(:validado => true, :user_validado => current_user.id))? flash[:notice] = "Evidencia se validó correctamente" : flash[:error] = "No se pudo validar, intente más tarde"
+    redirect_to :action => "show_evidencias_por_usuario", :id => @user, :diagnostico => @diagnostico
+  end
+
+  def invalidar
+     @adjunto = Adjunto.find(params[:id])
+     @diagnostico = Diagnostico.find(params[:diagnostico])
+     @user = User.find(params[:user])
+    (@adjunto.update_attributes!(:validado => false, :user_validado => current_user.id))? flash[:notice] = "Evidencia se invalidó correctamente" : flash[:error] = "No se pudo validar, intente más tarde"
+    redirect_to :action => "show_evidencias_por_usuario", :id => @user, :diagnostico => @diagnostico
+  end
+
+  def reporte_evidencias_diagnostico
+    @diagnostico = Diagnostico.find(params[:diagnostico])
+    @user = User.find(params[:user])
+    @observaciones_evidencias = params[:diagnosticos][:observaciones_evidencias] if params[:diagnosticos][:observaciones_evidencias]
+    @diagnostico.update_attributes!(:observaciones_evidencias => @observaciones_evidencias, :validacion_evidencias => true) if @observaciones_evidencias
+    @evidencias = Adjunto.find(:all, :conditions => ["validado = ? AND user_id = ? AND diagnostico_id = ?", false, @user, @diagnostico])
   end
 
 
