@@ -288,7 +288,7 @@ a:active {
 
                 <!-- inicio -->
                 <td width="40px" class="Txt_arbol">
-                 <%=h link_to "Inicio", "http://era.educacionchiapas.gob.mx" , :style => "color:#DF0101; text-decoration: none;", :title => "SITIO PRINCIPAL DEL PROGRAMA 'ERA'", :confirm => "¿Desea ir al sitio principal?"%>
+                 <%=h link_to "ERA", "http://era.educacionchiapas.gob.mx" , :style => "http://esys.educacionchiapas.gob.mx" , :style => "text-decoration: none; color: #404040;", :title => "SITIO PRINCIPAL DEL PROGRAMA 'ERA'", :confirm => "¿Desea ir al sitio principal?"%>
                 </td>
 
                 <td width="34px" align="center"><img src="/images/era/iconos/ico_arbol.png" alt="1" width="34" height="17" /></td>
@@ -297,7 +297,7 @@ a:active {
 
                 <!-- esys -->
                 <td width="120px" class="Txt_arbol">
-                 <%=h link_to "Certificación ESyS", "http://esys.educacionchiapas.gob.mx" , :style => "color:#c6a313; text-decoration: none;", :title => "SITIO DE CERTIFICACIÓN DE ESCUELAS SALUDABLES Y SUSTENTABLES"%>
+                 <%=h link_to "CERTIFICACIÓN ESyS", "http://esys.educacionchiapas.gob.mx" , :style => "text-decoration: none; color: #404040;", :title => "SITIO DE CERTIFICACIÓN DE ESCUELAS SALUDABLES Y SUSTENTABLES"%>
                 </td>
 
 
@@ -318,10 +318,10 @@ a:active {
                   </a>
                 </td>
                   <td width="34" align="center"><img src="/images/era/iconos/ico_arbol.png" alt="1" width="34" height="17" /></td>
-                  <td width="120" class="Txt_arbol"><a href="/home" class="Txt_arbol"><%=link_to "Cerrar Sesión", {:action => "destroy", :controller => "sessions"}, :style => "color:#0489B1; text-decoration: none;", :title => "¿ESTÁ SEGURO(A) QUE DESEA SALIR DE LA PLATAFORMA"%></a></td>
+                  <td width="120" class="Txt_arbol"><a href="/home" class="Txt_arbol"><%=link_to "CERRAR SESIÓN", {:action => "destroy", :controller => "sessions"}, :style => "http://esys.educacionchiapas.gob.mx" , :style => "text-decoration: none; color: #404040;", :title => "¿ESTÁ SEGURO(A) QUE DESEA SALIR DE LA PLATAFORMA"%></a></td>
                 <%else%>
                   <td width="34" align="center"><img src="/images/era/iconos/ico_arbol.png" alt="1" width="34" height="17" /></td>
-                  <td width="120" class="Txt_arbol"><a href="/home" class="Txt_arbol"><%=link_to "Iniciar Sesión", {:action => "new", :controller => "sessions"}, :style => "color:#088A08; text-decoration: none;", :title => "HAGA CLICK PARA INICIAR SESIÓN"%></a></td>
+                  <td width="120" class="Txt_arbol"><a href="/home" class="Txt_arbol"><%=link_to "INICIAR SESIÓN", {:action => "new", :controller => "sessions"}, :style => "http://esys.educacionchiapas.gob.mx" , :style => "text-decoration: none; color: #404040;", :title => "HAGA CLICK PARA INICIAR SESIÓN"%></a></td>
                 <%end%>
 
                 <td>&nbsp;</td>
