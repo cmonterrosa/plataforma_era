@@ -15,7 +15,7 @@
           <td width="49%" align="justify" style="vertical-align:top;" >
             <!-- Línea Pregunta -->
             <div class="grid-12-12">
-              <label>1.- ¿Cuál es la superficie total del terreno de la escuela en metros cuadrados?<em class="formee-req"> *</em></label>
+              <label class="uper">1.- ¿Cuál es la superficie total del terreno de la escuela en metros cuadrados?<em class="formee-req"> *</em></label>
             </div>
             <!-- Línea campo -->
             <div class="grid-12-12">
@@ -23,17 +23,17 @@
               <div class="grid-3-12">
                 <%= f.text_field :superficie_terreno_escuela, :onchange => "remove_validation();", :style => "text-align: right;" %>
               </div>
-              <label style="padding: 10px 0;" >M<sup>2</sup></label>
+              <label class="uper" style="padding: 10px 0;" >M<sup>2</sup></label>
             </div>
           </td>
           <td>&nbsp;</td>
           <td width="49%" align="justify">
             <!-- Línea pregunta -->
             <div class="grid-12-12">
-              <label>2.- ¿Qué superficie (mts. cuadrados) de la escuela se destina para áreas verdes? (Se considera áreas verdes al "espacio cubierto por vegetación. Un bosque, un parque y el jardín de una escuela son ejemplos de áreas verdes. Estos espacios brindan beneficios tanto al ambiente en el que se encuentran como a las personas localizadas cerca de ellos"). <em class="formee-req"> *</em></label>
-              <label>Rangos: 0 en adelante.</label><br />
-              <label>Posibles áreas verdes:</label><br />
-              <ul class="formee-lbl-vinetas" >
+              <label class="uper">2.- ¿Qué superficie (mts. cuadrados) de la escuela se destina para áreas verdes? (Se considera áreas verdes al "espacio cubierto por vegetación. Un bosque, un parque y el jardín de una escuela son ejemplos de áreas verdes. Estos espacios brindan beneficios tanto al ambiente en el que se encuentran como a las personas localizadas cerca de ellos"). <em class="formee-req"> *</em></label>
+              <label class="uper">Rangos: 0 en adelante.</label><br />
+              <label class="uper">Posibles áreas verdes:</label><br />
+              <ul class="formee-lbl-vinetas" style="text-transform:uppercase;">
                 <li>Jardín de ornato</li>
                 <li>Jardín de césped</li>
                 <li>Jardín herbal</li>
@@ -44,7 +44,7 @@
               </ul>
             </div>
             <div class="grid-12-12">
-              <label class="formee-msg-info">
+              <label class="formee-msg-info" style="text-transform:uppercase;font-size:1.1em;" >
                 Este valor debe de ser menor o igual a la superficie total del terreno.
               </label>
             </div>
@@ -64,7 +64,7 @@
               <div class="grid-3-12">
                 <%= f.text_field :superficie_terreno_escuela_av, :onchange => "add_validation();", :style => "text-align: right;" %>
               </div>
-              <label style="padding: 10px 0;" >M<sup>2</sup></label>
+              <label class="uper" style="padding: 10px 0;" >M<sup>2</sup></label>
             </div>
           </td>
         </tr>
@@ -75,15 +75,15 @@
           <td>
             <!-- Línea Pregunta -->
             <div class="grid-12-12">
-              <label>3.- ¿La escuela cuenta con espacios destinados para jardines verticales (paredes verdes)?<em class="formee-req"> *</em></label>
+              <label class="uper">3.- ¿La escuela cuenta con espacios destinados para jardines verticales (paredes verdes)?<em class="formee-req"> *</em></label>
             </div>
             <!-- Línea campo -->
             <div class="grid-12-12">
               <div class="grid-2-12"></div>
               <div class="grid-4-12">
                 <span id="r_jardines_verticales" class="InputGroup">
-                  <label>SI <%= f.radio_button :jardines_verticales, "SI", :onclick => "showImage('entorno_jardines_verticales_si', 'eje3_p3');" %></label>&nbsp;&nbsp;
-                  <label>NO <%= f.radio_button :jardines_verticales, "NO", :onclick => "showImage('entorno_jardines_verticales_no', 'eje3_p3');" %></label>
+                  <label class="uper">SI <%= f.radio_button :jardines_verticales, "SI", :onclick => "showImage('entorno_jardines_verticales_si', 'eje3_p3');" %></label>&nbsp;&nbsp;
+                  <label class="uper">NO <%= f.radio_button :jardines_verticales, "NO", :onclick => "showImage('entorno_jardines_verticales_no', 'eje3_p3');" %></label>
                 </span>
               </div>
               <div class="grid-1-12"></div>
@@ -98,15 +98,15 @@
           <td>
             <!-- Línea Pregunta -->
             <div class="grid-12-12">
-              <label>4.- ¿La escuela cuenta con espacios destinados para jardines y/o cultivo hidropónicos?<em class="formee-req"> *</em></label>
+              <label class="uper">4.- ¿La escuela cuenta con espacios destinados para jardines y/o cultivo hidropónicos?<em class="formee-req"> *</em></label>
             </div>
             <!-- Línea campo -->
             <div class="grid-12-12">
               <div class="grid-2-12"></div>
               <div class="grid-4-12">
                 <span id="r_jardines_hidroponicos" class="InputGroup">
-                  <label>SI <%= f.radio_button :jardines_hidroponicos, "SI", :onclick => "showImage('entorno_jardines_hidroponicos_si', 'eje3_p4');" %></label>&nbsp;&nbsp;
-                  <label>NO <%= f.radio_button :jardines_hidroponicos, "NO", :onclick => "showImage('entorno_jardines_hidroponicos_no', 'eje3_p4');" %></label>
+                  <label class="uper">SI <%= f.radio_button :jardines_hidroponicos, "SI", :onclick => "showImage('entorno_jardines_hidroponicos_si', 'eje3_p4');" %></label>&nbsp;&nbsp;
+                  <label class="uper">NO <%= f.radio_button :jardines_hidroponicos, "NO", :onclick => "showImage('entorno_jardines_hidroponicos_no', 'eje3_p4');" %></label>
                 </span>
               </div>
               <div class="grid-1-12"></div>
@@ -122,10 +122,10 @@
           <td width="49%" align="justify" style=" vertical-align:top;" >
             <!-- Línea pregunta -->
             <div class="grid-12-12">
-              <label>5.- ¿Cuántos árboles adultos se encuentran dentro del terreno de la escuela?<em class="formee-req"> *</em></label>
+              <label class="uper">5.- ¿Cuántos árboles adultos se encuentran dentro del terreno de la escuela?<em class="formee-req"> *</em></label>
             </div>
             <div class="grid-12-12">
-              <label class="formee-msg-info">
+              <label class="formee-msg-info" style="text-transform:uppercase;font-size:1.1em;" >
                 Para que un árbol sea considerado adulto, debe contar con una altura no menor a 4 metros y erguirse de un solo tronco. <br />
                 Si la escuela cuenta con áreas extensas arboladas agregue un número apróximado.
               </label>
@@ -142,10 +142,10 @@
           <td width="49%" align="justify">
             <!-- Liíne pregunta -->
             <div class="grid-12-12">
-              <label>6.- ¿Cuáles de las siguientes acciones del Manual de Salud realiza la institución educativa?<em class="formee-req"> *</em></label>
+              <label class="uper">6.- ¿Cuáles de las siguientes acciones del Manual de Salud realiza la institución educativa?<em class="formee-req"> *</em></label>
             </div>
             <div class="grid-12-12">
-              <label class="formee-msg-info">
+              <label class="formee-msg-info" style="text-transform:uppercase;font-size:1.1em;" >
                 Consultar manual de salud: Manual para el maestro del programa Escuela y Salud. Enfoque actual del programa: Determinantes de la salud, página 42 - 45. Puede consultarlo dando clic <a class="notchange" href="/Manual_de_Salud.pdf" target="_blank"><b>aquí</b></a>
               </label>
             </div>
@@ -162,7 +162,7 @@
             </div>-->
             <!-- Línea campo -->
             <fieldset style="padding: 5px 5px 5px 5px;">
-              <legend style=" font-size: 14px;">&nbsp;Acciones:&nbsp;</legend>
+              <legend style="text-transform:uppercase;font-size:1.1em;">&nbsp;Acciones:&nbsp;</legend>
                 <div id="acciones" class="grid-12-12">
                   <% @acciones.each do |c| %>
                     <%= check_box_tag "acciones[#{c.id}]", c.clave, @s_acciones.include?(c.id) ? true : false %>&nbsp;<%= c.descripcion %><br />

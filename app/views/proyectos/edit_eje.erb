@@ -12,7 +12,7 @@
           <td align="justify" style="vertical-align:top;" >
             <div class="grid-3-12">&nbsp;</div>
             <div class="grid-6-12">
-              <label>Eje a desarrollar: &nbsp; <b><%=@eje.catalogo_eje.descripcion%></b></label>
+              <label class="uper">Eje a desarrollar: &nbsp; <b><%=@eje.catalogo_eje.descripcion%></b></label>
               <!-- <= f.select :catalogo_eje_id, @catalogo_ejes.collect {|p| [ p.completo, p.clave ] }, { :prompt => "SELECCIONE UNA ACCIÓN" }, :d %> -->
             </div>
           </td>
@@ -20,13 +20,13 @@
          <tr>
           <td align="justify" style="vertical-align:top;" >
             <div class="grid-6-12">
-              <label>Líneas de Acción:</label>
+              <label class="uper">Líneas de Acción:</label>
               <% @lineas.each do |linea| %>
               <li style=" margin-left:13px;padding:1px;"><%= linea.descripcion %> </li>
               <% end %>
             </div>
             <div class="grid-6-12">
-              <label>Indicadores:</label>
+              <label class="uper">Indicadores:</label>
               <% @indicadores.each do |indicador| %>
               <li style=" margin-left:13px;padding:1px;" >&nbsp;<%= indicador.descripcion %></li>
               <% end %>
@@ -36,11 +36,11 @@
         <tr>
           <td align="justify" style="vertical-align:top;" >
             <div class="grid-6-12">
-              <label>Objetivo especifico:</label>
+              <label class="uper">Objetivo especifico:</label>
               <%= f.text_area :objetivo_especifico %>
             </div>
             <div class="grid-6-12">
-              <label>Meta:</label>
+              <label class="uper">Meta:</label>
               <%= f.text_area :meta %>
             </div>
           </td>
@@ -49,14 +49,14 @@
           <td>&nbsp;</td>
         </tr>
         <tr>
-          <td align="center" style="vertical-align:top;"><label style=" font-size: 15px; font-weight: bold;" >Actividades:</label></td>
+          <td align="center" style="vertical-align:top;"><label class="uper" style=" font-size: 15px; font-weight: bold;" >Actividades:</label></td>
         </tr>
         
             <tr>
             <td align="justify" style="vertical-align:top;" >
               <div class="grid-1-12"></div>
               <div class="grid-2-12">
-                <label>Actividad 1:</label>
+                <label class="uper">Actividad 1:</label>
               </div>
               <div class="grid-7-12">
                 <%= text_area "actividads", "actividad1", :value => @actividades["actividad1"]%>
@@ -68,7 +68,7 @@
             <td align="justify" style="vertical-align:top;" >
               <div class="grid-1-12"></div>
               <div class="grid-2-12">
-                <label>Actividad 2:</label>
+                <label class="uper">Actividad 2:</label>
               </div>
               <div class="grid-7-12">
                 <%= text_area "actividads", "actividad2", :value => @actividades["actividad2"]%>
@@ -80,7 +80,7 @@
             <td align="justify" style="vertical-align:top;" >
               <div class="grid-1-12"></div>
               <div class="grid-2-12">
-                <label>Actividad 3:</label>
+                <label class="uper">Actividad 3:</label>
               </div>
               <div class="grid-7-12">
                 <%= text_area "actividads", "actividad3", :value => @actividades["actividad3"]%>
@@ -92,7 +92,7 @@
             <td align="justify" style="vertical-align:top;" >
               <div class="grid-1-12"></div>
               <div class="grid-2-12">
-                <label>Actividad 4:</label>
+                <label class="uper">Actividad 4:</label>
               </div>
               <div class="grid-7-12">
                 <%= text_area "actividads", "actividad4", :value => @actividades["actividad4"]%>

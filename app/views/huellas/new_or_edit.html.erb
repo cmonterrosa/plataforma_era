@@ -12,7 +12,7 @@
           <td width="49%" align="justify" style="vertical-align:top;" >
             <!-- Línea Pregunta -->
             <div class="grid-12-12">
-              <label>1.- En el último ciclo escolar, ¿cuántas capacitaciones enfocadas al uso adecuado y al ahorro de energía eléctrica ha recibido la comunidad estudiantil?.<em class="formee-req"> *</em></label>
+              <label class="uper">1.- En el último ciclo escolar, ¿cuántas capacitaciones enfocadas al uso adecuado y al ahorro de energía eléctrica ha recibido la comunidad estudiantil?.<em class="formee-req"> *</em></label>
             </div>
             <!-- Línea campo -->
             <div class="grid-3-12"></div>
@@ -30,30 +30,30 @@
           <td width="49%" align="justify">
             <!-- Línea pregunta -->
             <div class="grid-12-12">
-              <label>2.- Tomando en cuenta el último bimestre de consumo con relación al mismo bimestre del año anterior ¿Cuál es la variación en el consumo eléctrico de la institución escolar?.<em class="formee-req"> *</em></label>
+              <label class="uper">2.- Tomando en cuenta el último bimestre de consumo con relación al mismo bimestre del año anterior ¿Cuál es la variación en el consumo eléctrico de la institución escolar?.<em class="formee-req"> *</em></label>
             </div>
             <div class="grid-12-12">
-              <label class="formee-msg-info">
+              <label class="formee-msg-info" style="text-transform:uppercase;font-size:1.1em;">
                 Para obtener el valor de consumo, debe de considerar el historial en kWh consumidos en su recibo de energía eléctrica.
               </label>
             </div>
             <div id="eje3_p2" class="grid-12-12">
             <div class="grid-4-12">
-              <label>Consumo anterior:</label>
+              <label class="uper">Consumo&nbsp;ant.:</label>
               <div class="grid-8-12">
                 <%= f.text_field :consumo_anterior, :style => "text-align: right;" %>
               </div>
               <div class="grid-2-12">
-                <label style="padding: 10px 0;" >kWh</label>
+                <label class="uper" style="padding: 10px 0;" >kWh</label>
               </div>
             </div>
             <div class="grid-4-12">
-              <label>Consumo actual:</label>
+              <label class="uper">Consumo&nbsp;actual:</label>
                 <div class="grid-8-12">
                   <%= f.text_field :consumo_actual, :style => "text-align: right;" %>
                 </div>
                 <div class="grid-2-12">
-                  <label style="padding: 10px 0;" >kWh</label>
+                  <label class="uper" style="padding: 10px 0;" >kWh</label>
                 </div>
             </div>
             <div class="grid-4-12">
@@ -65,7 +65,7 @@
             </div>
             </div>
             <div class="grid-12-12">
-              <label>Otro:</label>
+              <label class="uper">Otro:</label>
                 <%energias = EnergiaElectrica.all.sort{|p1,p2|p1.descripcion  <=> p2.descripcion } %>
              
                 <%= f.select :energia_electrica_id, energias.collect {|p| [ p.descripcion, p.clave ]}, {:selected => @s_electricas}, :onchange => "showImageText(this, 'huella_consumo_actual', 'huella_consumo_anterior', 'eje3_p2');"%>
@@ -80,34 +80,34 @@
           <td>
             <!-- Línea Pregunta -->
             <div class="grid-12-12">
-              <label>3.- De los focos existentes en la institución escolar ¿Cuántos son ahorradores?.<em class="formee-req"> *</em></label>
+              <label class="uper">3.- De los focos existentes en la institución escolar ¿Cuántos son ahorradores?.<em class="formee-req"> *</em></label>
             </div>
             <!-- Línea campo -->
-            <div class="grid-2-12"></div>
-            <div class="grid-4-12">
-              <label>Total de Focos:</label>
+            <div class="grid-1-12"></div>
+            <div class="grid-5-12">
+              <label class="uper">Total de Focos:</label>
               <!-- <= f.text_field :total_focos %> -->
               <%=f.select(:total_focos, @focos.map { |value| [ value, value ] })%>
               <input type="hidden" name="tfoco" id="tfoco" />
             </div>
-            <div class="grid-4-12">
-              <label>Focos ahorradores:</label>
+            <div class="grid-5-12">
+              <label class="uper">Focos ahorradores:</label>
               <%=f.select(:focos_ahorradores, @ahorradores.map { |value| [ value, value ] })%>
             </div>
-            <div class="grid-2-12"></div>
+            <div class="grid-1-12"></div>
           </td>
           <td>&nbsp;</td>
           <td>
             <!-- Línea Pregunta -->
             <div class="grid-12-12">
-              <label>4.- ¿La escuela se encuentra conectada a la red pública de agua?.<em class="formee-req"> *</em></label>
+              <label class="uper">4.- ¿La escuela se encuentra conectada a la red pública de agua?.<em class="formee-req"> *</em></label>
             </div>
             <!-- Línea campo -->
             <div class="grid-3-12"></div>
             <div class="grid-5-12">
               <span id="r_jardines_hidroponicos" class="InputGroup">
-                <label>SI <%= f.radio_button :red_publica_agua, "SI", :onclick => "enaSelect(this, 'huella_servicio_agua_id');"%></label>&nbsp;&nbsp;
-                <label>NO <%= f.radio_button :red_publica_agua, "NO", :onclick => "enaSelect(this, 'huella_servicio_agua_id');" %></label>
+                <label class="uper">SI <%= f.radio_button :red_publica_agua, "SI", :onclick => "enaSelect(this, 'huella_servicio_agua_id');"%></label>&nbsp;&nbsp;
+                <label class="uper">NO <%= f.radio_button :red_publica_agua, "NO", :onclick => "enaSelect(this, 'huella_servicio_agua_id');" %></label>
               </span>
             </div>
             <div class="grid-12-12">
@@ -119,7 +119,7 @@
           <td width="49%" align="justify" style=" vertical-align:top;" >
             <!-- Línea pregunta -->
             <div class="grid-12-12">
-              <label>5.- ¿Cuántas veces la escuela da mantenimiento preventivo y/o correctivo a las instalaciones hidráulicas en el ciclo escolar?.<em class="formee-req"> *</em></label>
+              <label class="uper">5.- ¿Cuántas veces la escuela da mantenimiento preventivo y/o correctivo a las instalaciones hidráulicas en el ciclo escolar?.<em class="formee-req"> *</em></label>
             </div>
             <!-- Línea campo -->
             <div class="grid-5-12"></div>
@@ -131,19 +131,19 @@
           <td>
             <!-- Línea Pregunta -->
             <div class="grid-12-12">
-              <label>6.- ¿La escuela cuenta con recipientes para residuos sólidos en las diferentes áreas de la institución?.<em class="formee-req"> *</em></label>
+              <label class="uper">6.- ¿La escuela cuenta con recipientes para residuos sólidos en las diferentes áreas de la institución?.<em class="formee-req"> *</em></label>
             </div>
             <!-- Línea campo -->
             <div class="grid-3-12"></div>
             <div class="grid-5-12">
               <span id="r_recip_residuos_solid" class="InputGroup">
-                <label>SI <%= f.radio_button :recip_residuos_solid, "SI", :onclick => "enaSelectMultiple(this, 'elimina_residuos');" %></label>&nbsp;&nbsp;
-                <label>NO <%= f.radio_button :recip_residuos_solid, "NO", :onclick => "enaSelectMultiple(this, 'elimina_residuos');" %></label>
+                <label class="uper">SI <%= f.radio_button :recip_residuos_solid, "SI", :onclick => "enaSelectMultiple(this, 'elimina_residuos');" %></label>&nbsp;&nbsp;
+                <label class="uper">NO <%= f.radio_button :recip_residuos_solid, "NO", :onclick => "enaSelectMultiple(this, 'elimina_residuos');" %></label>
               </span>
             </div>
             <!-- Línea campo -->
             <div id="elimina_residuos" class="grid-12-12" style="text-align: justify; display: none;">
-              <label>¿Que tipo de acciones realiza para la disposición de los residuos sólidos.?</label>
+              <label class="uper">¿Que tipo de acciones realiza para la disposición de los residuos sólidos.?</label>
               <fieldset style="padding: 5px 5px 5px 5px;">
                   <% EliminaResiduo.find(:all).each do |c| %>
                     <%= check_box_tag "elimina_residuos[#{c.id}]", c.clave, @s_elimina_residuos.include?(c.id) ? true : false %>&nbsp;<%= c.descripcion %><br />
@@ -159,14 +159,14 @@
           <td width="49%" align="justify" style=" vertical-align:top;" >
             <!-- Línea pregunta -->
             <div class="grid-12-12">
-              <label>7.- De los residuos sólidos, generados en la institución. ¿Se realiza la adecuada separación según las características de  su composición? (ORGANICO E INORGANICO).<em class="formee-req"> *</em></label>
+              <label class="uper">7.- De los residuos sólidos, generados en la institución. ¿Se realiza la adecuada separación según las características de  su composición? (ORGANICO E INORGANICO).<em class="formee-req"> *</em></label>
             </div>
             <!-- Línea campo -->
             <div class="grid-3-12"></div>
             <div class="grid-5-12">
               <span id="r_sep_residuos_org_inorg" class="InputGroup">
-                <label>SI <%= f.radio_button :sep_residuos_org_inorg, "SI" %></label>&nbsp;&nbsp;
-                <label>NO <%= f.radio_button :sep_residuos_org_inorg, "NO" %></label>
+                <label class="uper">SI <%= f.radio_button :sep_residuos_org_inorg, "SI" %></label>&nbsp;&nbsp;
+                <label class="uper">NO <%= f.radio_button :sep_residuos_org_inorg, "NO" %></label>
               </span>
             </div>
           </td>
@@ -174,14 +174,14 @@
           <td>
             <!-- Línea Pregunta -->
             <div class="grid-12-12">
-              <label>8.- ¿Los residuos orgánicos (hojas, cascaras de frutas o verduras, etc.) son reutilizados en elaboración de compostas para abono en áreas verdes?.<em class="formee-req"> *</em></label>
+              <label class="uper">8.- ¿Los residuos orgánicos (hojas, cascaras de frutas o verduras, etc.) son reutilizados en elaboración de compostas para abono en áreas verdes?.<em class="formee-req"> *</em></label>
             </div>
             <!-- Línea campo -->
             <div class="grid-3-12"></div>
             <div class="grid-5-12">
               <span id="r_elabora_compostas" class="InputGroup">
-                <label>SI <%= f.radio_button :elabora_compostas, "SI" %></label>&nbsp;&nbsp;
-                <label>NO <%= f.radio_button :elabora_compostas, "NO" %></label>
+                <label class="uper">SI <%= f.radio_button :elabora_compostas, "SI" %></label>&nbsp;&nbsp;
+                <label class="uper">NO <%= f.radio_button :elabora_compostas, "NO" %></label>
               </span>
             </div>
           </td>
@@ -193,7 +193,7 @@
           <td width="49%" align="justify" style=" vertical-align:top;" >
             <!-- Línea pregunta -->
             <div class="grid-12-12">
-              <label>9.- Selecciona de la siguiente lista los residuos inorgánicos  que son reutilizados y/o reciclados en el centro escolar. <em class="formee-req"> *</em></label>
+              <label class="uper">9.- Selecciona de la siguiente lista los residuos inorgánicos  que son reutilizados y/o reciclados en el centro escolar. <em class="formee-req"> *</em></label>
             </div>
             <!-- Línea campo -->
             <fieldset style="padding: 5px 5px 5px 5px;">

@@ -12,13 +12,15 @@
       <th style="vertical-align: middle;">Clave</th>
       <th style="vertical-align: middle;">Nombre</th>
       <th style="vertical-align: middle;">Director</th>
+      <th style="vertical-align: middle;">Modalidad</th>
     </tr>
-<%clase=0%>
+<% clase=0 %>
 <% @escuelas.each do |escuela|%>
       <tr class="d<%=invert_class(clase)%>">
       <td align="center"><%=h(escuela.clave)%></td>
       <td align="justify"><%=h(escuela.nombre)%></td>
       <td align="justify"><%=h escuela.nombre_director? ? escuela.nombre_director : "NO EXISTE INFORMACIÓN" %> </td>
+      <td align="justify"><%=h escuela.modalidad? ? escuela.modalidad : "NO EXISTE INFORMACIÓN" %> </td>
       <% clase = invert_class(clase) %>
     </tr>
 <%end%>
