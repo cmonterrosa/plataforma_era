@@ -255,7 +255,7 @@ class AdminController < ApplicationController
   def save_comunitaria
     unless Escuela.find_by_clave(params[:escuela][:clave].strip)
       @escuela = Escuela.new
-      nivel = Nivel.find_by_descripcion("COMUNITARIA")
+      nivel = Nivel.find_by_descripcion("EXTRAESCOLAR")
       @escuela.clave = params[:escuela][:clave].strip
       @escuela.comunitaria = true
       @escuela.nivel_id = nivel.id
