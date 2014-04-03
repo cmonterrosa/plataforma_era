@@ -1,0 +1,74 @@
+ <%if flash[:notice]%>
+            <div class="formee-msg-success">
+              <h3>Operación realizada exitosamente:</h3>
+              <ul>
+                <li><%=flash[:notice]%></li>
+              </ul>
+            </div>
+            <%elsif flash[:error]%>
+            <div class="formee-msg-error">
+              <h3>Error:</h3>
+              <ul>
+                <li><%=flash[:error]%></li>
+              </ul>
+            </div>
+ <%end%>
+
+
+<%if @proyecto%>
+
+
+<div class="container">
+  <div class="formee">
+
+    <table align="center" class="subprincipal" width="50%" cellspacing="5" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
+      <tr class="tdiagnostico">
+        <td align="center" >
+          <legend>
+          <!-- Menu -->
+          <div class="titulos">
+             <p> PROYECTO: <%=h @proyecto.descripcion%></p>
+          </div>
+        </legend>
+
+        </td>
+      </tr>
+    </table>
+
+    <div class="grid-12-12 clear"></div>
+    <fieldset>
+      <!-- habilitar -->
+
+      <%if @proyecto.oficializado%>
+          <% form_for :proyecto, @proyecto, :url => {:action => "habilitar_proyecto", :controller => "admin", :id => @proyecto, :escuela => @escuela } do -%>
+            <div class="grid-center">
+              <input type="submit" title="HABILITAR PROYECTO" value="HABILITAR PROYECTO" />
+            </div>
+          <%end%>
+      <%end%>
+
+      <div class="grid-12-12 clear"></div>
+
+      <!-- visualizar -->
+      <% form_for :escuela, @escuela, :url => { :action => "proyect_to_pdf", :controller => "proyectos", :id => @escuela}, :html => { :target => "_blank"} do |f| -%>
+      <div class="grid-center">
+        <input type="submit" title="VISUALIZAR PROYECTO" value="VISUALIZAR PROYECTO" />
+      </div>
+      <%end%>
+
+      <div class="grid-12-12 clear"></div>
+    </fieldset>
+
+    <br />
+
+  </div>
+</div>
+
+
+<%else%> <!-- Si no existe proyecto registrado -->
+<div class="formee-msg-error">
+  <p>Proyecto no se encuentra registrado.</p>
+</div>
+<%end%>
+
+

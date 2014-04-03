@@ -280,6 +280,13 @@ class AdminController < ApplicationController
     render :partial => "show_diagnostico", :layout => "era2014"
   end
 
+
+  ###############################################################################
+  #  Funciones para habilitar y deshabilitar diagnostico y proyecto (solo admin)
+  #
+  ###############################################################################
+
+
   def habilitar_diagnostico
     @diagnostico = Diagnostico.find(params[:id])
     @escuela = Escuela.find(params[:escuela])
@@ -291,6 +298,20 @@ class AdminController < ApplicationController
     end
     redirect_to :action => "menu_diagnostico", :id => @escuela
   end
+
+  def habilitar_proyecto
+    @proyecto = Proyecto.find(params[:id])
+    @escuela = Escuela.find(params[:escuela])
+    @proyecto.oficializado = false
+    if @proyecto.save
+      flash[:notice] = "Proyecto habilitado"
+    else
+      flash[:notice] = "Proyecto no se pudo habilitar"
+    end
+    redirect_to :action => "menu_proyecto", :id => @escuela, :diagnostico => @proyecto.diagnostico
+  end
+
+  ###### RESPALDOS #################
 
   def show_respaldos
     @respaldos = Dir.glob("#{BACKUPS_DIR}/*.tar.gz")
@@ -347,6 +368,13 @@ class AdminController < ApplicationController
      else
        render :text => "<h1 style='color: red;' align='center'>No existen archivos de imágenes</h1>"
      end
+   end
+
+   def menu_proyecto
+     @escuela = Escuela.find(params[:id])
+     @diagnostico = Diagnostico.find(params[:diagnostico])
+     @proyecto = @diagnostico.proyecto
+     render :partial => "menu_proyecto", :layout => "only_jquery"
    end
 
   

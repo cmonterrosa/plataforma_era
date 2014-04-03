@@ -94,7 +94,7 @@
 
        <!-- proyecto -->
        <div class="grid-3-12">
-       <%=link_to image_tag('admin/menu_escuela/proyecto.png', :size => "128x128", :size => "128x128", :mouseover => 'admin/menu_escuela/proyecto2.png') , {:action => "proyect_to_pdf", :controller => "proyectos", :id => @escuela}, :class => 'fancybox fancybox.iframe', :title => "Detalle de proyecto"%>
+       <%=link_to image_tag('admin/menu_escuela/proyecto.png', :size => "128x128", :size => "128x128", :mouseover => 'admin/menu_escuela/proyecto2.png') , {:action => "menu_proyecto", :controller => "admin", :id => @escuela, :diagnostico => @diagnostico}, :class => 'fancybox fancybox.iframe', :title => "Menú de opciones de proyecto"%>
          <label style="font-family:verdana;font-size:14px;">Proyecto</label>
        </div>
 
