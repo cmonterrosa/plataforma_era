@@ -12,11 +12,11 @@
           <td align="justify" style="vertical-align:top;" >
             <div class="grid-12-12" clear ></div>
             <div class="grid-3-12">
-              <label>Ciclo Escolar:</label>
+              <label class="uper">Ciclo Escolar:</label>
               <%= f.select :ciclo_escolar, ["2013 - 2014"], {:selected => "2013-2014"} %>
             </div>
             <div class="grid-9-12">
-              <label>Nombre del Proyecto:</label>
+              <label class="uper">Nombre del Proyecto:</label>
               <%= f.text_field :descripcion %>
             </div>
           </td>
@@ -24,7 +24,7 @@
         <tr>
           <td align="justify" style="vertical-align:top;" >
             <div class="grid-12-12">
-              <label>Antecedentes:</label>
+              <label class="uper">Antecedentes:</label>
               <%= f.text_area :antecedentes %>
             </div>            
           </td>
@@ -32,7 +32,7 @@
         <tr>
           <td align="justify" style="vertical-align:top;" >
             <div class="grid-12-12">
-              <label>Objetivo General:</label>
+              <label class="uper">Objetivo General:</label>
               <%= f.text_area :objetivo_general %>
             </div>
           </td>

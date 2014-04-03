@@ -130,6 +130,7 @@ class ProyectosController < ApplicationController
  def oficializar
     @proyecto = Proyecto.find(params[:id])
     @proyecto.oficializado = true
+    @proyecto.avance = params[:avance].to_i
     @proyecto.fecha_oficializado = Time.now
     @escuela = Escuela.find(@proyecto.diagnostico.escuela_id)
     @escuela.update_bitacora!("proy-fin", current_user)
