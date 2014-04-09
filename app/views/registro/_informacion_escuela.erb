@@ -207,8 +207,8 @@
   var email = new LiveValidation( 'escuela_email' );
   email.add( Validate.Presence, {onlyOnSubmit: true } );
   email.add( Validate.Email );
-  var tel_responsable_proyecto = new LiveValidation( 'escuela_tel_responsable_proyecto' );
-  tel_responsable_proyecto.add( Validate.Numericality, {onlyInteger: true} );
+  <%#*var tel_responsable_proyecto = new LiveValidation( 'escuela_tel_responsable_proyecto' );%>
+  <%#*tel_responsable_proyecto.add( Validate.Numericality, {onlyInteger: true} );%>
   var email_responsable_proyecto = new LiveValidation( 'escuela_email_responsable_proyecto' );
   email_responsable_proyecto.add( Validate.Email );
   email_responsable_proyecto.add( Validate.Presence, {onlyOnSubmit: true } );

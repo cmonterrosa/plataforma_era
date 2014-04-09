@@ -32,7 +32,6 @@ function showDescription(obj_select, obj_desc)
     }
 }
 
-
 function checkRadioD(radio_buttom, obj_desc){
     var radio;
     var radio2;
@@ -40,13 +39,30 @@ function checkRadioD(radio_buttom, obj_desc){
 
     if(typeof radio_buttom == "object"){
         radio = radio_buttom;
+
         if(radio.value == "OTR"){
             if(radio.checked){
                 enableTextarea(desc);
             }
             else{
+
                 clearTextarea(desc);
                 disableTextarea(desc);
+            }
+        }
+        
+        if(radio.value == "NIN" && radio.checked){
+            var div = document.getElementById("programas");
+            for (i=0; i<div.childNodes.length; i++){
+                if(div.childNodes[i].type == "checkbox" && div.childNodes[i].value != "NIN") div.childNodes[i].checked = false;
+            }
+            clearTextarea(desc);
+            disableTextarea(desc);
+        }
+        else{
+            div = document.getElementById("programas");
+            for (i=0; i<div.childNodes.length; i++){                
+                if(div.childNodes[i].type == "checkbox" && div.childNodes[i].value == "NIN") div.childNodes[i].checked = false;
             }
         }
     }

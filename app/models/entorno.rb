@@ -4,6 +4,7 @@ class Entorno < ActiveRecord::Base
 
   validates_presence_of :evidencia_pregunta_3, :if => "self.jardines_verticales == 'SI'"
   validates_presence_of :evidencia_pregunta_4, :if => "self.jardines_hidroponicos == 'SI'"
+  validates_presence_of :evidencia_pregunta_6
 
   def evidencia_pregunta_3
     current_eje = 2
@@ -15,6 +16,13 @@ class Entorno < ActiveRecord::Base
   def evidencia_pregunta_4
     current_eje = 2
     contador = Adjunto.count(:id, :conditions => ["eje_id = ? AND diagnostico_id = ? AND numero_pregunta = ?", current_eje, self.diagnostico_id, 4])
+    #self.errors.add(:pregunta_4, "=> Requiere evidencia") if contador < 1
+    (contador > 0)?  true : false
+  end
+
+  def evidencia_pregunta_6
+    current_eje = 2
+    contador = Adjunto.count(:id, :conditions => ["eje_id = ? AND diagnostico_id = ? AND numero_pregunta = ?", current_eje, self.diagnostico_id, 6])
     #self.errors.add(:pregunta_4, "=> Requiere evidencia") if contador < 1
     (contador > 0)?  true : false
   end
