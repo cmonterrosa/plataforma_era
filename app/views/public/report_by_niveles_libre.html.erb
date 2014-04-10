@@ -50,17 +50,17 @@
 <%@niveles.each do |nivel|%>
 
     <%
-    escuelas_registradas_en_plataforma = Escuela.count(:id, :joins => "escuelas, users users", :conditions => ["users.login=escuelas.clave AND escuelas.nivel_descripcion = ? AND escuelas.estatu_id = ? AND (users.blocked is NULL OR  users.blocked !=1)", nivel.nivel_descripcion, Estatu.find_by_clave("esc-regis").id ])
-    escuelas_datos_basicos_capturados =  Escuela.count(:id, :joins => "escuelas, users users", :conditions => ["users.login=escuelas.clave AND escuelas.nivel_descripcion = ? AND escuelas.estatu_id = ? AND (users.blocked is NULL OR  users.blocked !=1)", nivel.nivel_descripcion, Estatu.find_by_clave("esc-datos").id ])
-    escuelas_diagnostico_iniciado =      Escuela.count(:id, :joins => "escuelas, users users", :conditions => ["users.login=escuelas.clave AND escuelas.nivel_descripcion = ? AND escuelas.estatu_id = ? AND (users.blocked is NULL OR  users.blocked !=1)", nivel.nivel_descripcion,  Estatu.find_by_clave("diag-inic").id ])
-    escuelas_diagnostico_terminado =      Escuela.count(:id, :joins => "escuelas, users users", :conditions => ["users.login=escuelas.clave AND escuelas.nivel_descripcion = ? AND escuelas.estatu_id = ? AND (users.blocked is NULL OR  users.blocked !=1)", nivel.nivel_descripcion, Estatu.find_by_clave("diag-conc").id ])
-    escuelas_proyecto_iniciado =      Escuela.count(:id, :joins => "escuelas, users users", :conditions => ["users.login=escuelas.clave AND escuelas.nivel_descripcion = ? AND escuelas.estatu_id = ? AND (users.blocked is NULL OR  users.blocked !=1)", nivel.nivel_descripcion, Estatu.find_by_clave("proy-inic").id ])
-    escuelas_proyecto_terminado =      Escuela.count(:id, :joins => "escuelas, users users", :conditions => ["users.login=escuelas.clave AND escuelas.nivel_descripcion = ? AND escuelas.estatu_id = ? AND (users.blocked is NULL OR  users.blocked !=1)", nivel.nivel_descripcion, Estatu.find_by_clave("proy-fin").id ])
+    escuelas_registradas_en_plataforma = Escuela.count(:id, :joins => "escuelas, users users", :conditions => ["users.login=escuelas.clave AND escuelas.nivel_id = ? AND escuelas.estatu_id = ? AND (users.blocked is NULL OR  users.blocked !=1)", nivel.id, Estatu.find_by_clave("esc-regis").id ])
+    escuelas_datos_basicos_capturados =  Escuela.count(:id, :joins => "escuelas, users users", :conditions => ["users.login=escuelas.clave AND escuelas.nivel_id = ? AND escuelas.estatu_id = ? AND (users.blocked is NULL OR  users.blocked !=1)", nivel.id, Estatu.find_by_clave("esc-datos").id ])
+    escuelas_diagnostico_iniciado =      Escuela.count(:id, :joins => "escuelas, users users", :conditions => ["users.login=escuelas.clave AND escuelas.nivel_id = ? AND escuelas.estatu_id = ? AND (users.blocked is NULL OR  users.blocked !=1)", nivel.id,  Estatu.find_by_clave("diag-inic").id ])
+    escuelas_diagnostico_terminado =      Escuela.count(:id, :joins => "escuelas, users users", :conditions => ["users.login=escuelas.clave AND escuelas.nivel_id = ? AND escuelas.estatu_id = ? AND (users.blocked is NULL OR  users.blocked !=1)", nivel.id, Estatu.find_by_clave("diag-conc").id ])
+    escuelas_proyecto_iniciado =      Escuela.count(:id, :joins => "escuelas, users users", :conditions => ["users.login=escuelas.clave AND escuelas.nivel_id = ? AND escuelas.estatu_id = ? AND (users.blocked is NULL OR  users.blocked !=1)", nivel.id, Estatu.find_by_clave("proy-inic").id ])
+    escuelas_proyecto_terminado =      Escuela.count(:id, :joins => "escuelas, users users", :conditions => ["users.login=escuelas.clave AND escuelas.nivel_id = ? AND escuelas.estatu_id = ? AND (users.blocked is NULL OR  users.blocked !=1)", nivel.id, Estatu.find_by_clave("proy-fin").id ])
     total=0
     %>
 
       <tr class="d<%=invert_class(clase)%>">
-      <td align="center"><%=h link_to nivel.nivel_descripcion, {:action => "list_esc_nivel", :nivel_descripcion => nivel.nivel_descripcion}, :style => "color:black; font-size: 12px; font-weight: normal; "%></td>
+      <td align="center"><%=h link_to nivel.descripcion, {:action => "list_esc_nivel", :nivel_descripcion => nivel.descripcion}, :style => "color:black; font-size: 12px; font-weight: normal; "%></td>
       <td align="center"><%=h(escuelas_registradas_en_plataforma)%><% total+=  escuelas_registradas_en_plataforma%></td>
       <td align="center"><%=h(escuelas_datos_basicos_capturados)%><% total+=  escuelas_datos_basicos_capturados%></td>
       <td align="center"><%=h(escuelas_diagnostico_iniciado)%><% total+= escuelas_diagnostico_iniciado%></td>
@@ -87,9 +87,3 @@
 
   </table>
 </div>
-
-
-<%#*<br/>%>
-<%#*<div class="titulos">%>
-  <%#= link_to image_tag("botones/btn_regresar.png", :mouseover => "botones/btn_regresar1.png") , :controller => "home" %><br />
-<%#*</div>%>
