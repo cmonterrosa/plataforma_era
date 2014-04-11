@@ -466,3 +466,23 @@ function checkRadio(arreglo, numRadio){
         }
     }
 }
+
+
+function checkRadioImage(arreglo, numRadio, image_id){
+    var radio;
+    var radio2;
+    var image = document.getElementById(image_id);
+
+    for(var i=1; i <= numRadio; i++){
+        radio = document.getElementById(arreglo + "_" + i);
+        if(radio.checked && radio.value == "NING"){
+            for(var x=1; x < numRadio; x++){
+                radio2 = document.getElementById(arreglo + "_" + x);
+                if(radio2.value != "NING") radio2.checked = false;
+            }
+            image.style.display = "none";
+            break;
+        }
+        image.style.display = "block";
+    }
+}

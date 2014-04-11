@@ -140,7 +140,7 @@
           <div class="grid-3-12">
             <%@td = @escuela.doc_hom.to_i + @escuela.doc_muj.to_i%>
             <label>Docente: <em class="formee-req">*</em></label>
-            <%= f.text_field :total_personal_docente, :value => @td %>
+            <%= f.text_field :total_personal_docente, :value => :total_personal_docente? ? @escuela.total_personal_docente : @td %>
           </div>
           <div class="grid-3-12">
             <label>Docentes de apoyo: <em class="formee-req">*</em></label>

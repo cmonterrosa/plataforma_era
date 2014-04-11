@@ -164,8 +164,10 @@
             <fieldset style="padding: 5px 5px 5px 5px;">
               <legend style="text-transform:uppercase;font-size:1.1em;">&nbsp;Acciones:&nbsp;</legend>
                 <div id="acciones" class="grid-12-12">
+                  <% i= 1 %>
                   <% @acciones.each do |c| %>
-                    <%= check_box_tag "acciones[#{c.id}]", c.clave, @s_acciones.include?(c.id) ? true : false %>&nbsp;<%= c.descripcion %><br />
+                    <%= check_box_tag "acciones[#{i}]", c.clave, @s_acciones.include?(c.id) ? true : false, :onclick => "checkRadioImage('acciones', #{@acciones.size}, 'pregunta6')" %>&nbsp;<%= c.descripcion %><br />
+                    <% i+=1 %>
                   <% end %>
                 </div>
             </fieldset>

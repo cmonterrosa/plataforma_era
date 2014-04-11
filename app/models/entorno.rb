@@ -4,7 +4,7 @@ class Entorno < ActiveRecord::Base
 
   validates_presence_of :evidencia_pregunta_3, :if => "self.jardines_verticales == 'SI'"
   validates_presence_of :evidencia_pregunta_4, :if => "self.jardines_hidroponicos == 'SI'"
-  validates_presence_of :evidencia_pregunta_6
+  validates_presence_of :evidencia_pregunta_6, :if => :valida_evidencia
 
   def evidencia_pregunta_3
     current_eje = 2
@@ -27,6 +27,13 @@ class Entorno < ActiveRecord::Base
     (contador > 0)?  true : false
   end
 
-
+  def valida_evidencia
+    self.acciones.each do |a|
+      if a.clave == 'NING'
+        return false
+      end
+    end
+    return true
+  end
 
 end
