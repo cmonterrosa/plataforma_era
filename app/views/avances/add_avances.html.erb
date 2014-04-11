@@ -1,6 +1,10 @@
 <%= render :partial => "datos_actividades"%>
 <%= render :partial => "diagnosticos/errores_evidencias"%>
 <script type="text/javascript">
+
+  var meta_lograda = new LiveValidation( "ejes_meta_lograda<%=@num_avance%>" );
+  meta_lograda.add( Validate.Presence );
+
   var actividad1 = new LiveValidation( 'actividades_actividad1' );
   actividad1.add( Validate.Presence );
 

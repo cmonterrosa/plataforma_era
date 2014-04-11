@@ -4,34 +4,38 @@
       <section class="ac-container">
         <div>
           <input id="ac-1" name="accordion-1" type="radio" checked />
-          <label class="acc-label" for="ac-1"><%= @eje.catalogo_eje.completo %></label>
+          <label class="acc-label" for="ac-1"><%= @ejes.catalogo_eje.completo %></label>
           <article class="ac-auto" >
             <div class="grid-6-12">
               <label class="art-label">LÍNEAS DE ACCIÓN: </label>
-              <% @eje.catalogo_eje.lineas_accions.each do |linea| %>
+              <% @ejes.catalogo_eje.lineas_accions.each do |linea| %>
                 <li><%= linea.descripcion %></li>
               <% end %>
             </div>
             <div class="grid-6-12">
               <label class="art-label">INDICADORES: </label>
-              <% @eje.catalogo_eje.indicadores.each do |indicador| %>
+              <% @ejes.catalogo_eje.indicadores.each do |indicador| %>
                 <li><%= indicador.descripcion %></li>
               <% end %>
             </div>
             <div class="grid-6-12">
               <label class="art-label">OBJETIVO ESPECÍFICO: </label>
-              <p><%= @eje.objetivo_especifico %></p>
+              <p><%= @ejes.objetivo_especifico %></p>
             </div>
             <div class="grid-6-12">
               <label class="art-label">META: </label>
-              <p><%= @eje.meta %></p>
+              <p><%= @ejes.meta %></p>
+            </div>
+            <% num=1 %>
+            <% form_for :avance, @avance, :url => { :action => "save_avances", :id => @avance, :num_avance => @num_avance, :eje => @ejes.id, :proyecto => @proyecto }, :html => {:class => "formee", :id => "avance"} do |f| -%>
+            <div class="grid-12-12">
+              <label class="art-label">META LOGRADA: </label>
+              <%= text_area "ejes", "meta_lograda#{@num_avance}", :class => "forme", :placeholder => "Descripcion de la meta lograda..."%>
             </div>
             <div class="grid-12-12">
               <label class="art-label">ACTIVIDADES: </label>
-              <% num=1 %>
-              <% form_for :avance, @avance, :url => { :action => "save_avances", :id => @avance, :num_avance => @num_avance, :eje => @eje.id, :proyecto => @proyecto }, :html => {:class => "formee", :id => "avance"} do |f| -%>
               <ol style="list-style-type: decimal-leading-zero; padding-left: 2em;">
-              <% @eje.actividads.each do |actividad| %>
+              <% @ejes.actividads.each do |actividad| %>
                 <li><%= actividad.descripcion %> <em class="formee-req">*</em></li>
                 <% if @act %>
                 <%= text_area "actividades", "actividad#{num}", :class => "forme", :placeholder => "Descripcion del avance...", :value => @act["actividad#{num}"] %>
@@ -43,7 +47,7 @@
               </ol>
               <div class="grid-12-12" style="text-align:center;">
                 <%=link_to image_tag("botones/upload_content1.png", :mouseover => "botones/upload_content2.png", :border => 0, :name => "avance1", :id => "avance1"),
-                                                              {:controller => "upload", :num_avance => @num_avance, :eje => @eje.id, :proyecto => @proyecto.id, :action => "list_evidencias_avance" },
+                                                              {:controller => "upload", :num_avance => @num_avance, :eje => @ejes.id, :proyecto => @proyecto.id, :action => "list_evidencias_avance" },
                                                                :class => "fancybox fancybox.iframe"%>
               </div>
               <div class="grid-12-12 clear">&nbsp;</div>
