@@ -34,6 +34,13 @@
     <div class="grid-12-12 clear"></div>
 
     <div class="grid-form">
+      <label>Número de actividad: <em class="formee-req">*</em></label>
+      <%@actividades= 1..4%>
+      <%=f.select(:numero_actividad, @actividades.map { |value| [ value, value ] }, :prompt => "Seleccione alguna actividad")%>
+    </div>
+    <div class="grid-12-12 clear"></div>
+
+    <div class="grid-form">
        <label>Descripción: <em class="formee-req">*</em></label>
       <%= f.text_area :descripcion, :placeholder => "Escriba la descripción del archivo" %>
     </div>
@@ -56,4 +63,7 @@
 
   var descripcion = new LiveValidation( 'adjunto_descripcion', {onlyOnSubmit: true} );
   descripcion.add( Validate.Presence );
+
+  var numero_actividad = new LiveValidation( 'adjunto_numero_actividad', {onlyOnSubmit: true} );
+  numero_actividad.add( Validate.Presence );
 </script>

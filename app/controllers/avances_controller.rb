@@ -47,7 +47,8 @@ class AvancesController < ApplicationController
     @avance = Avance.find(params[:id]) if params[:id]
     @avance ||= Avance.new
     @actividades = params[:actividades]
-    if evidencia_preguntas(params[:eje].to_i, params[:num_avance].to_i, params[:proyecto]) > 0
+    v = valida_cuatro_evidencias_avance(params[:eje].to_i, params[:num_avance].to_i, params[:proyecto])
+    if v.empty?
       @actividades.each do | a |
         @actividad_eje = Actividad.find(:first, :conditions => ["eje_id = ? AND clave = ?", params[:eje], a[0]])
         if act = Avance.find(:first, :conditions => ["actividad_id = ?", @actividad_eje.id])
@@ -60,9 +61,29 @@ class AvancesController < ApplicationController
       end
       redirect_to :action => "index", :num_avance => Base64.encode64(@num_avance)
     else
-      flash[:evidencias] = "Cargue archivos para la(s) evidencia(s)"
+      flash[:evidencias] = "Cargue archivos para la(s) evidencia(s) #{v.join(',')}"
       redirect_to :action => "add_avances", :id => Base64.encode64( params[:eje] + "-" + @num_avance )
     end
+
+
+
+
+#    if evidencia_preguntas(params[:eje].to_i, params[:num_avance].to_i, params[:proyecto]) > 0
+#      @actividades.each do | a |
+#        @actividad_eje = Actividad.find(:first, :conditions => ["eje_id = ? AND clave = ?", params[:eje], a[0]])
+#        if act = Avance.find(:first, :conditions => ["actividad_id = ?", @actividad_eje.id])
+#            act.update_attributes!(:descripcion => a[1])
+#        else
+#           Avance.create(:numero => params[:num_avance], :descripcion => a[1], :actividad_id => @actividad_eje.id)
+#           eje = Eje.find(params[:eje].to_i)
+#            eje.update_attributes!(:avance1 => true) if @num_avance == '1'
+#        end
+#      end
+#      redirect_to :action => "index", :num_avance => Base64.encode64(@num_avance)
+#    else
+#      flash[:evidencias] = "Cargue archivos para la(s) evidencia(s)"
+#      redirect_to :action => "add_avances", :id => Base64.encode64( params[:eje] + "-" + @num_avance )
+#    end
   end
 
   def concluir

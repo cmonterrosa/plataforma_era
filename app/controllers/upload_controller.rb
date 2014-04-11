@@ -122,6 +122,22 @@ class UploadController < ApplicationController
     end
   end
 
+  def destroy_evidencia_avance
+    if @uploaded_file = Adjunto.find(params[:id])
+      @eje = @uploaded_file.eje_id
+    end
+    if @uploaded_file.destroy
+      flash[:notice] = "Evidencia eliminada correctamente"
+      @user = current_user
+      @proyecto = params[:proyecto] if params[:proyecto]
+      @eje = params[:eje] if params[:eje]
+      @num_avance = params[:num_avance] if params[:num_avance]
+      redirect_to :action => "list_evidencias_avance", :proyecto => @proyecto, :eje => @eje, :num_avance => @num_avance
+    else
+      return render(:partial => 'eliminar_evidencia_error', :layout => "only_jquery")
+    end
+  end
+
    ################# CARGA DE EVIDENCIAS AVANCES#############################
   def new_evidencia_avance
     @uploaded_file = Adjunto.new
@@ -171,7 +187,7 @@ class UploadController < ApplicationController
   def destroy_evidencia_avance
     if @uploaded_file = Adjunto.find(params[:id])
       @eje = @uploaded_file.eje_id
-      @num_avance = @uploaded_file.num_avance
+      @num_avance = params[:num_avance] if params[:num_avance]
       @proyecto = @uploaded_file.proyecto_id
     end
     if @uploaded_file.destroy

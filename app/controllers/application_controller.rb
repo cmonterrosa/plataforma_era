@@ -82,5 +82,21 @@ def fecha_string(date=Time.now)
   end
 
 
+   def valida_cuatro_evidencias_avance(eje, avance, proyecto)
+     errores = []
+     primera_evidencia = Adjunto.count(:id, :conditions => ["eje_id = ? AND avance = ? AND proyecto_id = ? and numero_actividad = 1", eje.to_i, avance.to_i, proyecto.to_i])
+     segunda_evidencia = Adjunto.count(:id, :conditions => ["eje_id = ? AND avance = ? AND proyecto_id = ? and numero_actividad = 2", eje.to_i, avance.to_i, proyecto.to_i])
+     tercera_evidencia = Adjunto.count(:id, :conditions => ["eje_id = ? AND avance = ? AND proyecto_id = ? and numero_actividad = 3", eje.to_i, avance.to_i, proyecto.to_i])
+     cuarta_evidencia = Adjunto.count(:id, :conditions => ["eje_id = ? AND avance = ? AND proyecto_id = ? and numero_actividad = 4", eje.to_i, avance.to_i, proyecto.to_i])
+     errores << 1 if primera_evidencia < 1
+     errores << 2 if segunda_evidencia < 1
+     errores << 3 if tercera_evidencia < 1
+     errores << 4 if cuarta_evidencia < 1
+   end
+
+
+
+
+
 
 end
