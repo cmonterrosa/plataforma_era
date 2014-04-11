@@ -5,7 +5,7 @@ class AddComunitariaToEscuela < ActiveRecord::Migration
   end
 
   def self.down
-    remove_columns :escuelas, :comunitaria
+    remove_column :escuelas, :comunitaria
     Nivel.find_by_descripcion("EXTRAESCOLAR").destroy
   end
 end

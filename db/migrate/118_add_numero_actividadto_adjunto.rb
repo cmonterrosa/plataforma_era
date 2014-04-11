@@ -4,6 +4,6 @@ class AddNumeroActividadtoAdjunto < ActiveRecord::Migration
   end
 
   def self.down
-    remove_columns :adjuntos, :numero_actividad
+    remove_column :adjuntos, :numero_actividad
   end
 end

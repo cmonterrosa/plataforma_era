@@ -5,7 +5,7 @@ class AddColumnMetaLogradaToEjes < ActiveRecord::Migration
   end
 
   def self.down
-    remove_columns :ejes, :meta_lograda1
-    remove_columns :ejes, :meta_lograda2
+    remove_column :ejes, :meta_lograda1
+    remove_column :ejes, :meta_lograda2
   end
 end

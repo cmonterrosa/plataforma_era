@@ -92,6 +92,7 @@ def fecha_string(date=Time.now)
      errores << 2 if segunda_evidencia < 1
      errores << 3 if tercera_evidencia < 1
      errores << 4 if cuarta_evidencia < 1
+     return errores
    end
 
 

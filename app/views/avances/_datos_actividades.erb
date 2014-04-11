@@ -27,7 +27,7 @@
               <p><%= @ejes.meta %></p>
             </div>
             <% num=1 %>
-            <% form_for :avance, @avance, :url => { :action => "save_avances", :id => @avance, :num_avance => @num_avance, :eje => @ejes.id, :proyecto => @proyecto }, :html => {:class => "formee", :id => "avance"} do |f| -%>
+            <% form_for :actividade, @actividade, :url => { :action => "save_avances", :id => @actividade, :num_avance => @num_avance, :eje => @ejes.id, :proyecto => @proyecto }, :html => {:class => "formee", :id => "avance"} do |f| -%>
             <div class="grid-12-12">
               <label class="art-label">META LOGRADA: </label>
               <%= text_area "ejes", "meta_lograda#{@num_avance}", :class => "forme", :placeholder => "Descripcion de la meta lograda..."%>

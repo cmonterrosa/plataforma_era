@@ -1,6 +1,6 @@
 class AddFieldNinguno < ActiveRecord::Migration
   def self.up
-#    Programa.create(:descripcion => "NINGUNO", :clave => "NIN")
+    Programa.create(:descripcion => "NINGUNO", :clave => "NIN")
     Accione.create(:descripcion =>"NINGUNA", :clave => "NING")
   end
 

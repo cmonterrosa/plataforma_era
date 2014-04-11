@@ -47,7 +47,7 @@ class AvancesController < ApplicationController
     @avance = Avance.find(params[:id]) if params[:id]
     @avance ||= Avance.new
     @actividades = params[:actividades]
-    v = valida_cuatro_evidencias_avance(params[:eje].to_i, params[:num_avance].to_i, params[:proyecto])
+    v = valida_cuatro_evidencias_avance(params[:eje].to_i, params[:num_avance].to_i, params[:proyecto].to_i)
     if v.empty?
       @actividades.each do | a |
         @actividad_eje = Actividad.find(:first, :conditions => ["eje_id = ? AND clave = ?", params[:eje], a[0]])

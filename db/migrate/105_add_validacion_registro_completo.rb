@@ -21,6 +21,6 @@ class AddValidacionRegistroCompleto < ActiveRecord::Migration
   end
 
   def self.down
-    remove_columns :escuelas, :registro_completo
+    remove_column :escuelas, :registro_completo
   end
 end

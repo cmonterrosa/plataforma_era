@@ -5,7 +5,7 @@ class AddColumnOficializadoDiagnostico < ActiveRecord::Migration
   end
 
   def self.down
-    remove_columns :diagnosticos, :oficializado
-    remove_columns :diagnosticos, :fecha_oficializado
+    remove_column :diagnosticos, :oficializado
+    remove_column :diagnosticos, :fecha_oficializado
   end
 end
