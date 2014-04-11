@@ -65,6 +65,6 @@
 
 <% if @finish == true %>
 <p style="text-align: center;">
-  <%= link_to image_tag("/images/botones/concluir_1er.png", :mouseover => "/images/botones/concluir_1er2.png" ), { :controller => "avances", :action => "concluir", :id =>  @proyecto.id, :avance => @num_avance } %>
+  <%= link_to image_tag("/images/botones/concluir_1er.png", :mouseover => "/images/botones/concluir_1er2.png" ), { :controller => "avances", :action => "concluir", :id =>  @proyecto, :avance => @num_avance } %>
 </p>
 <% end %>

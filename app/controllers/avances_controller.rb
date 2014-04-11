@@ -47,6 +47,7 @@ class AvancesController < ApplicationController
     @avance = Avance.find(params[:id]) if params[:id]
     @avance ||= Avance.new
     @actividades = params[:actividades]
+    @proyecto = Proyecto.find(params[:proyecto])
     v = valida_cuatro_evidencias_avance(params[:eje].to_i, params[:num_avance].to_i, params[:proyecto].to_i)
     if v.empty?
       @actividades.each do | a |
@@ -64,8 +65,15 @@ class AvancesController < ApplicationController
       end
       redirect_to :action => "index", :num_avance => Base64.encode64(@num_avance)
     else
+      @ejes = Eje.find(params[:eje]) if params[:eje]
+      #@act = Hash.new
+      @actividades = params[:actividades] if params[:actividades]
+       (1..@ejes.actividads.size).each do |n|
+         @actividades["actividad#{n}"] = @ejes.actividads[n-1].descripcion if @ejes
+      end
+      @act=@actividades
       flash[:evidencias] = "Cargue archivos para la(s) evidencia(s) #{v.join(',')}"
-      redirect_to :action => "add_avances", :id => Base64.encode64( params[:eje] + "-" + @num_avance )
+      render :action => "add_avances", :id => Base64.encode64( params[:eje] + "-" + @num_avance )
     end
 
 
@@ -90,8 +98,8 @@ class AvancesController < ApplicationController
   end
 
   def concluir
-    @proyecto = Proyecto.find(params[:id])
-    @proyecto.avance = params[:avance].to_i
+    @proyecto = Proyecto.find(params[:id]) if params[:id]
+    @proyecto.avance = (params[:avance].to_i + 1) if params[:avance]
     @escuela = Escuela.find(@proyecto.diagnostico.escuela_id)
     @escuela.update_bitacora!("avance1", current_user)
     if @proyecto.save
