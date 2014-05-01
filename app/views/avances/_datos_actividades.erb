@@ -4,7 +4,7 @@
       <section class="ac-container">
         <div>
           <input id="ac-1" name="accordion-1" type="radio" checked />
-          <label class="acc-label" for="ac-1"><%= @ejes.catalogo_eje.completo %></label>
+          <label class="acc-label" for="ac-1">AVANCE <%=@num_avance%>  >> <%= @ejes.catalogo_eje.completo %></label>
           <article class="ac-auto" >
             <div class="grid-6-12">
               <label class="art-label">LÍNEAS DE ACCIÓN: </label>
@@ -20,17 +20,17 @@
             </div>
             <div class="grid-6-12">
               <label class="art-label">OBJETIVO ESPECÍFICO: </label>
-              <p><%= @ejes.objetivo_especifico %></p>
+              <li><%= @ejes.objetivo_especifico %></li>
             </div>
             <div class="grid-6-12">
               <label class="art-label">META: </label>
-              <p><%= @ejes.meta %></p>
+              <li><%= @ejes.meta %></li>
             </div>
             <% num=1 %>
             <% form_for :actividade, @actividade, :url => { :action => "save_avances", :id => @actividade, :num_avance => @num_avance, :eje => @ejes.id, :proyecto => @proyecto }, :html => {:class => "formee", :id => "avance"} do |f| -%>
             <div class="grid-12-12">
               <label class="art-label">META LOGRADA: </label>
-              <%= text_area "ejes", "meta_lograda#{@num_avance}", :class => "forme", :placeholder => "Descripcion de la meta lograda..."%>
+              <%= text_area "ejes", "meta_lograda#{@num_avance}", :class => "forme", :placeholder => "Escriba la descripción de la meta lograda...", :value => @meta_lograda%>
             </div>
             <div class="grid-12-12">
               <label class="art-label">ACTIVIDADES: </label>
@@ -38,9 +38,9 @@
               <% @ejes.actividads.each do |actividad| %>
                 <li><%= actividad.descripcion %> <em class="formee-req">*</em></li>
                 <% if @act %>
-                <%= text_area "actividades", "actividad#{num}", :class => "forme", :placeholder => "Descripcion del avance...", :value => @act["actividad#{num}"] %>
+                <%= text_area "actividades", "actividad#{num}", :class => "forme", :placeholder => "Escriba la descripción del avance...", :value => @act["actividad#{num}"] %>
                 <% else %>
-                <%= text_area "actividades", "actividad#{num}", :class => "forme", :placeholder => "Descripcion del avance..." %>
+                <%= text_area "actividades", "actividad#{num}", :class => "forme", :placeholder => "Escriba la descripción del avance..." %>
                 <% end %>
                 <% num+=1 %>
               <% end %>

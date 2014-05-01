@@ -4,6 +4,12 @@ class AvancesController < ApplicationController
 #  @@eje = ""
 #  @@proyectos = ""
 
+  def list
+    @escuela_id = Escuela.find_by_clave(current_user.login.upcase).id if current_user
+    @diagnostico = Diagnostico.find_by_escuela_id(@escuela_id) if @escuela_id
+    @proyecto = Proyecto.find_by_diagnostico_id(@diagnostico)
+  end
+
   def index
     @num_avance = Base64.decode64(params[:num_avance]) if params[:num_avance]
     @escuela_id = Escuela.find_by_clave(current_user.login.upcase).id if current_user
@@ -66,14 +72,15 @@ class AvancesController < ApplicationController
       redirect_to :action => "index", :num_avance => Base64.encode64(@num_avance)
     else
       @ejes = Eje.find(params[:eje]) if params[:eje]
-      #@act = Hash.new
+      @act = Hash.new
       @actividades = params[:actividades] if params[:actividades]
-       (1..@ejes.actividads.size).each do |n|
-         @actividades["actividad#{n}"] = @ejes.actividads[n-1].descripcion if @ejes
+      (1..@ejes.actividads.size).each do |n|
+         @act["actividad#{n}"] = @actividades["actividad#{n}"] if  @actividades["actividad#{n}"]
       end
-      @act=@actividades
+      @meta_lograda = params[:ejes][:meta_lograda1] if params[:ejes][:meta_lograda1]
       flash[:evidencias] = "Cargue archivos para la(s) evidencia(s) #{v.join(',')}"
-      render :action => "add_avances", :id => Base64.encode64( params[:eje] + "-" + @num_avance )
+     # render :action => "add_avances", :id => Base64.encode64( params[:eje] + "-" + @num_avance )
+      render :action => "add_avances", :id => Base64.encode64( params[:eje] + "-")
     end
 
 

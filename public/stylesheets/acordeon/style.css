@@ -4,8 +4,8 @@
 }
 .ac-container label.acc-label{
     font-family: 'BebasNeueRegular', 'Arial Narrow', Arial, sans-serif;
-    font-size: 13px;
-    font-weight: bold;
+    font-size: 15px;
+    /*font-weight: bold;*/
     padding: 5px 20px;
     position: relative;
     z-index: 20;
@@ -34,7 +34,9 @@
     color: #777;
     text-shadow: 1px 1px 1px rgba(255,255,255,0.8);
     line-height: 33px;
-    background: linear-gradient(top, #ffffff 1%,#eaeaea 100%);
+    /*background: linear-gradient(top, #ffffff 1%,#eaeaea 100%);*/
+    background: #CEF6D8;
+    color: #2b2b2b;
     box-shadow:
         0px 0px 0px 1px rgba(155,155,155,0.3),
         1px 0px 0px 0px rgba(255,255,255,0.9) inset,
@@ -43,9 +45,11 @@
 .ac-container label.acc-label:hover{
 /*    background: #fff;*/
     background: #CEF6D8;
+    
 }
 .ac-container article label.art-label:hover{
-    background: #fff;
+    background: #CEF6D8;
+    color: navy;
 }
 .ac-container input:checked + label.acc-label,
 .ac-container input:checked + label.acc-label:hover{
@@ -102,7 +106,7 @@
     text-shadow: 1px 1px 1px rgba(255,255,255,0.8);
 }
 .ac-container article li{
-    color: #777;
+    color: black;
 /*    line-height: 23px;*/
     font-size: 12px;
 /*    padding: 5px 20px;*/
