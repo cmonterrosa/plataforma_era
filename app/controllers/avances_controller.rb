@@ -7,7 +7,11 @@ class AvancesController < ApplicationController
   def list
     @escuela_id = Escuela.find_by_clave(current_user.login.upcase).id if current_user
     @diagnostico = Diagnostico.find_by_escuela_id(@escuela_id) if @escuela_id
-    @proyecto = Proyecto.find_by_diagnostico_id(@diagnostico)
+    @proyecto = Proyecto.find_by_diagnostico_id(@diagnostico) if @diagnostico
+    unless @proyecto
+      flash[:notice] = "Para ingresar a la sección de avances es necesario concluir la etapa del proyecto"
+      redirect_to :controller => "proyectos"
+    end
   end
 
   def index
