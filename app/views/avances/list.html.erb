@@ -6,13 +6,14 @@
         when 1 %>
 
           <div>
-            <p align="center"><%= link_to image_tag("/images/botones/primer_avance.png", :mouseover => "/images/botones/primer_avance2.png" ), { :controller => "avances", :num_avance => Base64.encode64("1") } %></p>
+            <p align="center"><%= link_to image_tag("/images/botones/primer_avance1.png", :mouseover => "/images/botones/primer_avance.png" ), { :controller => "avances", :num_avance => Base64.encode64("1") } %></p>
           </div
 
         <% when 2 %>
-          <div>
-            <p style=" vertical-align: middle;" >Proximamente... segundo avance</p>
-          </div
+            <div class ="grid-3-12">&nbsp;</div>
+            <div class ="grid-3-12"><%= link_to image_tag("/images/botones/imprimir_1avance.png", :mouseover => "/images/botones/imprimir_1avance1.png" ), { :controller => "avances", :action => "list" } %></div>
+            <div class ="grid-3-12"><%= link_to image_tag("/images/botones/segundo_avance.png", :mouseover => "/images/botones/segundo_avance1.png" ), { :controller => "avances", :action => "list" } %></div>
+          
       <% end %>
     <%end%>
  <%end%>
