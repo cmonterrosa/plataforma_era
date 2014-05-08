@@ -310,6 +310,19 @@ class AdminController < ApplicationController
     end
     redirect_to :action => "menu_proyecto", :id => @escuela, :diagnostico => @proyecto.diagnostico
   end
+  
+  def habilitar_avance
+    @num_avance = params[:num_avance]
+    @proyecto = Proyecto.find(params[:id])
+    @escuela = Escuela.find(params[:escuela])
+    @proyecto.avance = @num_avance.to_i
+    if @proyecto.save
+      flash[:notice] = "Avance #{@num_avance} habilitado"
+    else
+      flash[:notice] = "Avance #{@num_avance} no se pudo habilitar"
+    end
+    redirect_to :action => "menu_proyecto", :id => @escuela, :diagnostico => @proyecto.diagnostico
+  end
 
   ###### RESPALDOS #################
 

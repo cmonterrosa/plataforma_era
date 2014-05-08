@@ -16,7 +16,7 @@ class AvancesController < ApplicationController
 
   def index
     @num_avance = Base64.decode64(params[:num_avance]) if params[:num_avance]
-    if @num_avance == 1
+    if @num_avance.to_i == 1
       @escuela_id = Escuela.find_by_clave(current_user.login.upcase).id if current_user
       @diagnostico = Diagnostico.find_by_escuela_id(@escuela_id) if @escuela_id
       @proyecto = Proyecto.find_by_diagnostico_id(@diagnostico) if @diagnostico
@@ -33,7 +33,7 @@ class AvancesController < ApplicationController
         redirect_to :action => "index", :controller => "diagnosticos"
       end
     else
-      flash[:notice] = "Este módulo no ha sido habilitado" if @num_avance == 2  # no imprime mensaje
+      flash[:error] = "Este módulo aún no ha sido habilitado" if @num_avance.to_i == 2  # no imprime mensaje
       redirect_to :action => "list"
     end
   end

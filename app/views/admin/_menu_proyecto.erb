@@ -49,6 +49,16 @@
 
       <div class="grid-12-12 clear"></div>
 
+      <%if @proyecto.avance == 2 %>
+          <% form_for :proyecto, @proyecto, :url => {:action => "habilitar_avance", :controller => "admin", :id => @proyecto, :escuela => @escuela, :num_avance => 1 } do -%>
+            <div class="grid-center">
+              <input type="submit" title="HABILITAR 1ER. AVANCE" value="HABILITAR 1ER. AVANCE" />
+            </div>
+          <%end%>
+      <%end%>
+
+      <div class="grid-12-12 clear"></div>
+
       <!-- visualizar -->
       <% form_for :escuela, @escuela, :url => { :action => "proyect_to_pdf", :controller => "proyectos", :id => @escuela}, :html => { :target => "_blank"} do |f| -%>
       <div class="grid-center">
