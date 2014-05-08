@@ -102,8 +102,8 @@ class User < ActiveRecord::Base
   def self.authenticate(login, password)
     return nil if login.blank? || password.blank?
     u = find :first, :conditions => ['login = ? and activated_at IS NOT NULL and (blocked IS NULL or blocked=false)', login] # need to get the salt
-    mayusculas= u.authenticated?(password.upcase)
-    minusculas = u.authenticated?(password.downcase)
+    mayusculas= u.authenticated?(password.upcase) if u
+    minusculas = u.authenticated?(password.downcase) if u
     u && (mayusculas || minusculas) ? u : nil
     #u && u.authenticated?(password) ? u : nil
   end

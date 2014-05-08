@@ -1,6 +1,6 @@
 require 'base64'
 class AvancesController < ApplicationController
-  layout 'era2014'
+  layout :set_layout
 #  @@eje = ""
 #  @@proyectos = ""
 
@@ -8,7 +8,7 @@ class AvancesController < ApplicationController
     @escuela_id = Escuela.find_by_clave(current_user.login.upcase).id if current_user
     @diagnostico = Diagnostico.find_by_escuela_id(@escuela_id) if @escuela_id
     @proyecto = Proyecto.find_by_diagnostico_id(@diagnostico) if @diagnostico
-    unless @proyecto
+    unless @proyecto.oficializado
       flash[:notice] = "Para ingresar a la sección de avances es necesario concluir la etapa del proyecto"
       redirect_to :controller => "proyectos"
     end
@@ -16,18 +16,25 @@ class AvancesController < ApplicationController
 
   def index
     @num_avance = Base64.decode64(params[:num_avance]) if params[:num_avance]
-    @escuela_id = Escuela.find_by_clave(current_user.login.upcase).id if current_user
-    @diagnostico = Diagnostico.find_by_escuela_id(@escuela_id) if @escuela_id
-    @diagnostico_concluido = (@diagnostico.oficializado) ? @diagnostico.oficializado : false  if @diagnostico
-    if @diagnostico_concluido
-       @proyecto = Proyecto.find_by_diagnostico_id(@diagnostico)
-       @ejes = Eje.find(:all, :conditions => ["proyecto_id = ?", @proyecto.id ]) if @proyecto
-       @finish = concluido(@ejes, @num_avance)
+    if @num_avance == 1
+      @escuela_id = Escuela.find_by_clave(current_user.login.upcase).id if current_user
+      @diagnostico = Diagnostico.find_by_escuela_id(@escuela_id) if @escuela_id
+      @proyecto = Proyecto.find_by_diagnostico_id(@diagnostico) if @diagnostico
+
+      @diagnostico_concluido = (@diagnostico.oficializado) ? @diagnostico.oficializado : false  if @diagnostico
+      if @diagnostico_concluido
+        @proyecto = Proyecto.find_by_diagnostico_id(@diagnostico)
+        @ejes = Eje.find(:all, :conditions => ["proyecto_id = ?", @proyecto.id ]) if @proyecto
+        @finish = concluido(@ejes, @num_avance)
 #       @@eje = @ejes
 #       @@proyectos = @proyecto
+      else
+        flash[:notice] = "Para iniciar la captura del proyecto, es necesario concluir la etapa de diagnóstico"
+        redirect_to :action => "index", :controller => "diagnosticos"
+      end
     else
-      flash[:notice] = "Para iniciar la captura del proyecto, es necesario concluir la etapa de diagnóstico"
-      redirect_to :action => "index", :controller => "diagnosticos"
+      flash[:notice] = "Este módulo no ha sido habilitado" if @num_avance == 2  # no imprime mensaje
+      redirect_to :action => "list"
     end
   end
 
@@ -65,8 +72,8 @@ class AvancesController < ApplicationController
         eje = Eje.find(params[:eje].to_i)
         if act = Avance.find(:first, :conditions => ["actividad_id = ?", @actividad_eje.id])
             act.update_attributes!(:descripcion => a[1])
-            eje.update_attributes!(:meta_lograda1 => params[:ejes][:meta_lograda1]) if @num_avance == '1'
-            eje.update_attributes!(:meta_lograda2 => params[:ejes][:meta_lograda2]) if @num_avance == '2'
+            eje.update_attributes!(:avance1 => true, :meta_lograda1 => params[:ejes][:meta_lograda1]) if @num_avance == '1'
+            eje.update_attributes!(:avance2 => true, :meta_lograda2 => params[:ejes][:meta_lograda2]) if @num_avance == '2'
         else
            Avance.create(:numero => params[:num_avance], :descripcion => a[1], :actividad_id => @actividad_eje.id)
            eje.update_attributes!(:avance1 => true, :meta_lograda1 => params[:ejes][:meta_lograda1]) if @num_avance == '1'
@@ -118,32 +125,51 @@ class AvancesController < ApplicationController
     else
       flash[:notice] = "El avance del proyecto no pudo finalizarse, vuelva a intentarlo"
     end
-    redirect_to :controller => "proyectos"
+    redirect_to :controller => "avances", :action => "list"
   end
 
   def concluido(ejes, avance)
     @fin = true
     ejes.each do |e|
       case avance.to_i
-      when 1
-        if e.avance1 == false
-          @fin = false 
+        when 1
+          if e.avance1 == false
+            @fin = false
+          end
           break;
-        end
-      when 2
-        if e.avance2 == false
-          @fin = false
+        when 2
+          if e.avance2 == false
+            @fin = false
+          end
           break;
-        end
-      when 3
-        if e.avance3 == false
-          @fin = false
+        when 3
+          if e.avance3 == false
+            @fin = false
+          end
           break;
-        end
       end
     end
     return @fin
   end
 
+  def avance_to_pdf
+    @num_avance = Base64.decode64(params[:num_avance]) if params[:num_avance]
+    @escuela_id = Escuela.find_by_clave(current_user.login.upcase).id if current_user
+    @diagnostico = Diagnostico.find_by_escuela_id(@escuela_id) if @escuela_id
+    @proyecto = Proyecto.find_by_diagnostico_id(@diagnostico)
 
+    if @proyecto.oficializado
+       @proyecto = Proyecto.find_by_diagnostico_id(@diagnostico)
+       @ejes = Eje.find(:all, :conditions => ["proyecto_id = ?", @proyecto.id ]) if @proyecto
+    else
+      flash[:notice] = "Es necesario concluir la etapa de Proyecto"
+      redirect_to :action => "index", :controller => "Proyecto"
+    end
+  end
+
+  private
+
+  def set_layout
+    (action_name == 'avance_to_pdf')? 'reporte_avance' : 'era2014'
+  end
 end

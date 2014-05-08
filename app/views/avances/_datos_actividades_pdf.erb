@@ -1,0 +1,76 @@
+<p style="font-family: verdana; font-size: 16px; font-weight: normal;" >REPPORTE DEL 1ER AVANCE DE ACTIVIDADES</p>
+<% @ejes.sort_by { |hsh| hsh[:catalogo_eje_id] }.each do |eje| %>
+    <% @avance = Array.new %>
+      <% eje.actividads.each do | actividad | %>
+        <% if @av = Avance.find(:first, :conditions => ["actividad_id = ?", actividad.id]) %>
+        <% @avance << @av %>
+      <% end %>
+    <% end %>
+
+    <% @act = Hash.new %>
+    <% unless @avance.empty? %>
+      <% (1..@avance.size).each do |n| %>
+        <% @act["actividad#{n}"] = @avance[n-1][:descripcion] if @avance && @avance[n-1] %>
+      <% end %>
+    <% end %>
+    <% @num_avance = 1 %>
+<% form_for :ejes, @ejes, :url => { }, :html => {:class => "formee"} do |f| -%>
+
+<table class="principal" width="100%" border="0" cellpadding="4" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
+  <tr>
+    <td>
+      <section class="ac-container">
+        <div>
+          <input id="ac-1" name="accordion-1" type="checkbox" checked />
+          <label class="acc-label" for="ac-1">AVANCE <%=@num_avance%>  >> <%= eje.catalogo_eje.completo %></label>
+          <article class="ac-auto" >
+            <div class="grid-6-12">
+              <label class="art-label">LÍNEAS DE ACCIÓN: </label>
+              <% eje.catalogo_eje.lineas_accions.each do |linea| %>
+                <li><%= linea.descripcion %></li>
+              <% end %>
+            </div>
+            <div class="grid-6-12">
+              <label class="art-label">INDICADORES: </label>
+              <% eje.catalogo_eje.indicadores.each do |indicador| %>
+                <li><%= indicador.descripcion %></li>
+              <% end %>
+            </div>
+            <div class="grid-6-12">
+              <label class="art-label">OBJETIVO ESPECÍFICO: </label>
+              <li><%= eje.objetivo_especifico %></li>
+            </div>
+            <div class="grid-6-12">
+              <label class="art-label">META: </label>
+              <li><%= eje.meta %></li>
+            </div>
+            <% num=1 %>
+            
+            <div class="grid-12-12">
+              <label class="art-label">META LOGRADA: </label>
+                <%= text_area "", "meta", :value => eje.meta_lograda1, :class => "rpt" %>
+            </div>
+            <div class="grid-12-12">
+              <label class="art-label">ACTIVIDADES: </label>
+              <ol style="list-style-type: decimal-leading-zero; padding-left: 2em;">
+              <% eje.actividads.each do |actividad| %>
+                <li><%= actividad.descripcion %> <em class="formee-req">*</em></li>
+                <% if @act %>
+                <%= text_area "actividades", "actividad#{num}", :value => @act["actividad#{num}"], :class => "rpt" %>
+                <% else %>
+                <%= text_area "actividades", "actividad#{num}", :class => "rpt" %>
+                <% end %>
+                <% num+=1 %>
+              <% end %>
+              </ol>
+            </div>
+            
+          </article>
+        </div>
+      </section>
+    </td>
+  </tr>
+</table>
+<% end %>
+<br />
+<% end %>

@@ -1,5 +1,5 @@
 <%if @proyecto%>
-    <%if @proyecto.oficializado%>
+    <%if @proyecto.oficializado %>
       <div class="titulos" style="text-align: center;" ><p>Gracias por haber concluido su proyecto</p></div>
       <div class ="grid-4-12">&nbsp;</div>
         <div class ="grid-3-12">
@@ -93,10 +93,12 @@
 
 
       <%if Eje.count(:id, :conditions => ["proyecto_id = ?", @proyecto.id]) > 0%>
-        <div class="grid-3-12">&nbsp;</div>
-        <div class="grid-3-12">
-          <p id="pdf_link"><%= link_to image_tag("/images/botones/print_proyect.png", :mouseover => "/images/botones/print_proyect2.png" ), { :action => "proyect_to_pdf.pdf" }, :target => "_blank" %></p>
-        </div>
+        <div class="grid-4-12">&nbsp;</div>
+        <%if @proyecto.oficializado %>
+          <div class="grid-3-12">
+            <p id="pdf_link"><%= link_to image_tag("/images/botones/print_proyect.png", :mouseover => "/images/botones/print_proyect2.png" ), { :action => "proyect_to_pdf.pdf" }, :target => "_blank" %></p>
+          </div>
+        <% end %>
 
         <div class="grid-3-12">
           <p id="pdf_link"><%= link_to image_tag("/images/botones/finish_proyect.png", :mouseover => "/images/botones/finish_proyect2.png" ), { :action => "oficializar", :id => @proyecto, :avance => 1 }, :confirm => '¿ESTA SEGURO(A) QUE DESEA CONCLUIR EL PROYECTO, YA NO PODRÁ MODIFICARLO DESPUÉS DE HACER CLICK?', :method => :post, :class => 'buttonText' %></p>
