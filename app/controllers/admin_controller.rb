@@ -236,9 +236,9 @@ class AdminController < ApplicationController
   def total_escuelas_registradas
     @escuelas = User.find(:all, :select => "users.created_at as user_created_at, users.login, users.id as user_id, e.*", :joins => "users, escuelas e", :conditions => "users.login=e.clave AND (users.blocked is NULL OR  users.blocked !=1)")
     csv_string = FasterCSV.generate do |csv|
-      csv << ["CLAVE_ESCUELA", "NOMBRE", "ZONA_ESCOLAR",       "SECTOR",          "NIVEL",           "DOMICILIO",     "LOCALIDAD",   "MUNICIPIO",      "REGION",              "MODALIDAD",  "TELEFONO_ESCUELA", "TELEFONO_DIRECTOR", "FECHA_HORA_CAPTURA", "ALU_HOMBRES", "ALU_MUJERES", "TOTAL_ALUMNOS", "GRUPOS", "TOTAL_ALUMNOS",       "DOCENTES_H", "DOCENTES_M",  "TOTAL_DOCENTE_APOYO",              "TOTAL_PERSONAL_ADMVO",   "TOTAL_PERSONAL_APOYO", ]
+      csv << ["CLAVE_ESCUELA", "NOMBRE", "ZONA_ESCOLAR",       "SECTOR",          "NIVEL",           "DOMICILIO",     "LOCALIDAD",   "MUNICIPIO",      "REGION",              "MODALIDAD",  "CORREO_ESCUELA",   "CORREO_RESPONSABLE",    "TELEFONO_ESCUELA", "TELEFONO_DIRECTOR", "FECHA_HORA_CAPTURA", "ALU_HOMBRES", "ALU_MUJERES", "TOTAL_ALUMNOS", "GRUPOS", "TOTAL_ALUMNOS",       "DOCENTES_H", "DOCENTES_M",  "TOTAL_DOCENTE_APOYO",              "TOTAL_PERSONAL_ADMVO",   "TOTAL_PERSONAL_APOYO", ]
       @escuelas.each do |i|
-         csv << [ i["clave"], i["nombre"], i['zona_escolar'],  i['sector'], i['nivel_descripcion'],  i["domicilio"], i["localidad"], i['municipio'], i['region_descripcion'], i['modalidad'], i["telefono"], i["telefono_director"], i['user_created_at'], i['alu_hom'], i['alu_muj'], i['total_alumnos'], i['grupos'], i['total_alumnos'],  i['doc_hom'], i['doc_muj'], i["total_personal_docente_apoyo"], i['total_personal_admvo'], i["total_personal_apoyo"]]
+         csv << [ i["clave"], i["nombre"], i['zona_escolar'],  i['sector'], i['nivel_descripcion'],  i["domicilio"], i["localidad"], i['municipio'], i['region_descripcion'], i['modalidad'], i["email"], i["email_responsable_proyecto"], i["telefono"], i["telefono_director"], i['user_created_at'], i['alu_hom'], i['alu_muj'], i['total_alumnos'], i['grupos'], i['total_alumnos'],  i['doc_hom'], i['doc_muj'], i["total_personal_docente_apoyo"], i['total_personal_admvo'], i["total_personal_apoyo"]]
        end
     end
   send_data csv_string, type => "text/plain",
