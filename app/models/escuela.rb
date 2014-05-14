@@ -27,7 +27,12 @@ class Escuela < ActiveRecord::Base
   end
 
   def descripcion_completa
-    "#{self.clave} - #{self.nombre}"
+    "#{self.clave} | #{self.nombre}"
+  end
+
+  def get_clave
+    clave, nombre =  self.descripcion_completa.split("|")
+    return clave
   end
 
 

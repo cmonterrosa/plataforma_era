@@ -24,6 +24,7 @@ class MensajesController < ApplicationController
 
   def save
     @mensaje = Mensaje.new(params[:mensaje])
+    @mensaje.recibe_id = params[:escuela][:clave_completa]
     @mensaje.envia_id = current_user.id unless @mensaje.envia_id
     @mensaje.activo = true unless @mensaje.activo
     if @mensaje.save
