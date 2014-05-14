@@ -5,9 +5,9 @@ class CombosController < ApplicationController
     #render :text => "Total de focos:"
   end
 
-  def clave_escuela
-    @escuela = Escuela.find(:all, :conditions => ["clave = ?", params[:clave_escuela]])
-    return render(:partial => 'ahorradores', :layout => false) if request.xhr?
+  def get_clave_escuela
+    @escuela = Escuela.find(:first, :conditions => ["clave = ?", params[:escuela_clave]]) if params[:escuela_clave].size > 6
+    return render(:partial => 'escuela', :layout => false) if request.xhr?
   end
 
 end
