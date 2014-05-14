@@ -325,15 +325,15 @@ function porcentaje(text_field, text_field2, div, docentes){
 }
 
 function enaSelect(radioButton, comboSelect){
-    var select = document.forms[0].elements[comboSelect];
+    var select = document.getElementById(comboSelect);
 
     if(typeof radioButton == "object")
         var radio = radioButton;
     else
-        if(document.forms[0].elements[radioButton+'_si'].checked)
-            radio = document.forms[0].elements[radioButton+'_si'];
+        if(document.getElementById(radioButton+'_si').checked)
+            radio = document.getElementById(radioButton+'_si');
         else
-            radio = document.forms[0].elements[radioButton+'_no'];
+            radio = document.getElementById(radioButton+'_no');
 
     if(radio.checked && radio.id.match('_no')){
         enableSelect(select);
@@ -352,10 +352,10 @@ function enaSelectMultiple(radioButton, selectMultiple){
     if(typeof radioButton == "object")
         var radio = radioButton;
     else
-        if(document.forms[0].elements[radioButton+'_si'].checked)
-            radio = document.forms[0].elements[radioButton+'_si'];
+        if(document.getElementById(radioButton+'_si').checked)
+            radio = document.getElementById(radioButton+'_si');
         else
-            radio = document.forms[0].elements[radioButton+'_no'];
+            radio = document.getElementById(radioButton+'_no');
 
     if(radio.checked && radio.id.match('_no')){
         select.style.display = '';

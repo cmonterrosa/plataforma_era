@@ -56,19 +56,20 @@ class DiagnosticosController < ApplicationController
   def reporte
     #flash[:error] = "El reporte se encuentra en fase de construccion"
     #redirect_to :controller => "diagnosticos"
+
     @diagnostico = Diagnostico.find(params[:id]) if params[:id]
 
     # -- Diagnostico ---
-    #@competencia = @diagnostico.competencia if @diagnostico.competencia
-    #@s_csalud = multiple_selected(@competencia.csaluds) if @competencia.csaluds
-    #@s_cmambiente = multiple_selected(@competencia.cmambientes) if @competencia.cmambientes
-    #@s_pedagogica = multiple_selected(@competencia.pedagogicas) if @competencia.pedagogicas
-    #@s_tambiental = multiple_selected(@competencia.tambientals) if @competencia.tambientals
-    #@s_cactividad = multiple_selected(@competencia.cactividads) if @competencia.cactividads
-    #@s_saludma = multiple_selected(@competencia.saludmas) if @competencia.saludmas
+#    @competencia = @diagnostico.competencia if @diagnostico.competencia
+#    @s_csalud = multiple_selected(@competencia.csaluds) if @competencia.csaluds
+#    @s_cmambiente = multiple_selected(@competencia.cmambientes) if @competencia.cmambientes
+#    @s_pedagogica = multiple_selected(@competencia.pedagogicas) if @competencia.pedagogicas
+#    @s_tambiental = multiple_selected(@competencia.tambientals) if @competencia.tambientals
+#    @s_cactividad = multiple_selected(@competencia.cactividads) if @competencia.cactividads
+#    @s_saludma = multiple_selected(@competencia.saludmas) if @competencia.saludmas
 
     # -- Entorno ---
-    #@entorno = @diagnostico.entorno if @diagnostico.entorno
+#    @entorno = @diagnostico.entorno if @diagnostico.entorno
     #@s_area_verde = multiple_selected(@entorno.areas_verdes) if @entorno.areas_verdes
     #@s_actividad = multiple_selected(@entorno.actividads) if @entorno.actividads
     #@s_cuidado_salud = multiple_selected(@entorno.cuidado_saluds) if @entorno.cuidado_saluds
@@ -83,11 +84,36 @@ class DiagnosticosController < ApplicationController
     # -- Participcion --
     #@participacion = @diagnostico.participacion if @diagnostico.participacion
   end
+
+  def reporte_completo
+    @diagnostico = Diagnostico.find(params[:id]) if params[:id]
+    # -- Diagnostico ---
+    @competencia = @diagnostico.competencia if @diagnostico.competencia
+
+    # -- Entorno ---
+    @entorno = @diagnostico.entorno if @diagnostico.entorno
+    @s_acciones = multiple_selected_id(@entorno.acciones) if @entorno.acciones
+    if @diagnostico.escuela.nivel_descripcion == "BACHILLERATO"
+      @acciones = Accione.find(:all, :conditions => ["clave not in ('AC01')"])
+    else
+      @acciones = Accione.find(:all, :conditions => ["clave not in ('AC00')"])
+    end
+
+    # -- Huella ---
+    @huella = @diagnostico.huella if @diagnostico.huella
+    @s_electricas = selected(@huella.energia_electrica) if @huella.energia_electrica
+    @s_aguas = selected(@huella.servicio_agua) if @huella.servicio_agua
+    @s_inorganicos = multiple_selected_id(@huella.inorganicos) if @huella.inorganicos
+    @s_elimina_residuos = multiple_selected_id(@huella.elimina_residuos) if @huella.elimina_residuos
+    @ahorradores = Array.new
+    @ahorradores << (@huella.focos_ahorradores.to_i) if @huella.focos_ahorradores
+    @focos = 0..99
+  end
   
   private
 
   def set_layout
-    (action_name == 'reporte')? 'reporte' : 'diagnostico'
+    (action_name == 'reporte_completo')? 'reporte' : 'diagnostico'
   end
 
 end
