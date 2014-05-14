@@ -41,72 +41,66 @@
 
     <div class="grid-12-12 clear"></div>
 </fieldset>
-  </div>
 
- <table width="90%" border="0" cellspacing="0" cellpadding="0" align="center">
-    <tr align="center">
-      <td>
-        <legend>
-        <!-- Menu -->
-          <div class="titulos">
-             <p> Menú de opciones</p>
-          </div>
-        </legend>
-
-        <div class="grid-3-12">
+    <!-- Menu -->
+    <div class="titulos"><p> Menú de opciones</p></div>
+        
+    <fieldset>
+      <legend>
+        <p class="titulos" >&nbsp;Diagnóstico&nbsp;</p>
+      </legend>
+      <div class="grid-1-12"></div>
+        <div class="grid-2-12">
        <!-- Búsqueda de Escuela -->
-       <%=link_to image_tag('admin/menu_escuela/bitacora.png', :size => "128x128", :mouseover => 'admin/menu_escuela/bitacora2.png') , {:action => "show_bitacora", :controller => "admin", :id => @user}, :class => 'fancybox fancybox.iframe', :title => "Bitácora"%>
+       <%=link_to image_tag('admin/menu_escuela/bitacora.png', :size => "100x100", :mouseover => 'admin/menu_escuela/bitacora2.png') , {:action => "show_bitacora", :controller => "admin", :id => @user}, :class => 'fancybox fancybox.iframe', :title => "Bitácora"%>
        <label style="font-family:verdana;font-size:14px;">Bitácora</label>
         </div>
 
 
-       <div class="grid-3-12">
+       <div class="grid-2-12">
         <!-- Registro -->
-        <%=link_to image_tag('admin/menu_escuela/registro.png', :size => "128x128", :mouseover => 'admin/menu_escuela/registro2.png') , {:action => "menu_documentos_registro", :controller => "admin", :id => @escuela},  :class => 'fancybox fancybox.iframe', :title => "Formatos de registro"%>
+        <%=link_to image_tag('admin/menu_escuela/registro.png', :size => "100x100", :mouseover => 'admin/menu_escuela/registro2.png') , {:action => "menu_documentos_registro", :controller => "admin", :id => @escuela},  :class => 'fancybox fancybox.iframe', :title => "Formatos de registro"%>
         <label style="font-family:verdana;font-size:14px;">Documentos de registro</label>
        </div>
 
 
        <!-- Diagnostico -->
-        <div class="grid-3-12">
-       <%=link_to image_tag('admin/menu_escuela/diagnostico.png', :size => "128x128", :mouseover => 'admin/menu_escuela/diagnostico2.png') , {:action => "show_diagnostico", :controller => "admin", :id => @escuela}, :class => 'fancybox fancybox.iframe', :title => "Detalle de diagnóstico"%>
+        <div class="grid-2-12">
+       <%=link_to image_tag('admin/menu_escuela/diagnostico.png', :size => "100x100", :mouseover => 'admin/menu_escuela/diagnostico2.png') , {:action => "show_diagnostico", :controller => "admin", :id => @escuela}, :class => 'fancybox fancybox.iframe', :title => "Detalle de diagnóstico"%>
           <label style="font-family:verdana;font-size:14px;">Diagnóstico</label>
         </div>
 
        
        <!-- Evidencias del diagnóstico -->
-       <div class="grid-3-12">
-       <%=link_to image_tag('admin/menu_escuela/evidencias.png', :size => "128x128", :size => "128x128", :mouseover => 'admin/menu_escuela/evidencias2.png') , {:action => "show_evidencias_por_usuario", :controller => "upload", :id => @user, :diagnostico => @diagnostico}, :html => { :target => "_blank"}, :title => "Mostrar evidencias del diagnóstico" %>
+       <div class="grid-2-12">
+       <%=link_to image_tag('admin/menu_escuela/evidencias.png', :size => "100x100", :size => "100x100", :mouseover => 'admin/menu_escuela/evidencias2.png') , {:action => "show_evidencias_por_usuario", :controller => "upload", :id => @user, :diagnostico => @diagnostico}, :html => { :target => "_blank"}, :title => "Mostrar evidencias del diagnóstico" %>
          <label style="font-family:verdana;font-size:14px;">Evidencias del diagnóstico</label>
        </div>
 
-        <div class="grid-12-12 clear"></div>
-
        <!-- Galería del diagnóstico -->
-       <div class="grid-3-12">
-       <%=link_to image_tag('admin/menu_escuela/galeria.png', :size => "128x128", :size => "128x128", :mouseover => 'admin/menu_escuela/galeria2.png') , {:action => "show_galeria", :controller => "admin", :id => @user},  :class => 'fancybox fancybox.iframe', :title => "Mostrar evidencias del diagnóstico" %>
+       <div class="grid-2-12">
+       <%=link_to image_tag('admin/menu_escuela/galeria.png', :size => "100x100", :size => "100x100", :mouseover => 'admin/menu_escuela/galeria2.png') , {:action => "show_galeria", :controller => "admin", :id => @user},  :class => 'fancybox fancybox.iframe', :title => "Mostrar evidencias del diagnóstico" %>
          <label style="font-family:verdana;font-size:14px;">Galería del diagnóstico</label>
        </div>
+    </fieldset>
 
+    <fieldset>
+      <legend>
+        <p class="titulos" >&nbsp;Proyecto&nbsp;</p>
+      </legend>
+      <div class="grid-1-12"></div>
        <!-- proyecto -->
-       <div class="grid-3-12">
-       <%=link_to image_tag('admin/menu_escuela/proyecto.png', :size => "128x128", :size => "128x128", :mouseover => 'admin/menu_escuela/proyecto2.png') , {:action => "menu_proyecto", :controller => "admin", :id => @escuela, :diagnostico => @diagnostico}, :class => 'fancybox fancybox.iframe', :title => "Menú de opciones de proyecto"%>
+       <div class="grid-2-12">
+       <%=link_to image_tag('admin/menu_escuela/proyecto.png', :size => "100x100", :size => "100x100", :mouseover => 'admin/menu_escuela/proyecto2.png') , {:action => "menu_proyecto", :controller => "admin", :id => @escuela, :diagnostico => @diagnostico}, :class => 'fancybox fancybox.iframe', :title => "Menú de opciones de proyecto"%>
          <label style="font-family:verdana;font-size:14px;">Proyecto</label>
        </div>
 
-      
-      <div class="grid-12-12 clear"></div>
-      </td>
-
-    </tr>
-
-</table>
-
-
-
-
-
-
+      <div class="grid-2-12">
+       <%=link_to image_tag('admin/menu_escuela/evidencias.png', :size => "100x100", :size => "100x100", :mouseover => 'admin/menu_escuela/evidencias2.png') , {:action => "show_evidencias_avance", :controller => "upload", :id => @user, :diagnostico => @diagnostico, :avance => 1}, :html => { :target => "_blank"}, :title => "Mostrar evidencias del 1er Avance" %>
+         <label style="font-family:verdana;font-size:14px;">Evidencias del 1er Aance</label>
+       </div>
+    </fieldset>
+</div>
 
 </div>
 
