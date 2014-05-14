@@ -1,0 +1,64 @@
+<%=render :partial => "menu"%>
+<br />
+
+
+
+
+<div class="container">
+  <div class="formee-msg-info">
+    <h3>Captura de nuevo mensaje</h3>
+    <ul>
+      <li>Los campos marcados con <em class="formee-req">*</em> son obligatorios.</li>
+    </ul>
+  </div>
+
+<%form_for(@mensaje, :url => {:action => "save"}, :html => {:class => "formee" }) do |f| -%>
+  <fieldset>
+    <legend>NUEVO&nbsp;MENSAJE</legend>
+    
+    <div class="grid-12-12">
+      <label>Escriba la clave de la escuela para realizar la búsqueda: <em class="formee-req">*</em></label>
+        <!-- <= f.text_field :recibe_id, :placeholder => "Seleccione un destinatario" %> -->
+       <%= text_field :escuela, :clave %>
+    </div>
+
+    <div class="grid-12-12">
+      <label>Destinatario: <em class="formee-req">*</em></label>
+        <%= text_field "escuela", "clave_completa", :disabled => true%>
+    </div>
+
+    <%= observe_field :escuela_clave,
+                  :frecuency => 0.2,
+                  :update => :escuela_clave_completa,
+                  :url => { :controller => 'combos', :action => 'get_clave_escuela' },
+                  :with => :escuela_clave %>
+
+    <div class="grid-12-12 clear"></div>
+    <%#*<div class="grid-form">%>
+    <div class="grid-12-12">
+      <label>Asunto: <em class="formee-req">*</em></label>
+        <%= f.text_field :asunto, :placeholder => "Escriba brevemente el asunto" %>
+    </div>
+    <%#*</div>%>
+    <div class="grid-12-12 clear"></div>
+    <%#*<div class="grid-form">%>
+
+    <div class="grid-12-12">
+      <label>Descripción: <em class="formee-req">*</em></label>
+        <%= f.text_area :descripcion, :placeholder => "Escriba la descripción detallada" %>
+    </div>
+    <%#*</div>%>
+    <div class="grid-12-12 clear"></div>
+    <div class="grid-7-12">
+      <input class="right" type="submit" title="ENVIAR" value="ENVIAR" />
+    </div>
+  </fieldset>
+<%end%>
+</div>
+
+<script type="text/javascript">
+  var comentario_asunto = new LiveValidation( 'mensaje_asunto', {onlyOnSubmit: true} );
+  comentario_asunto.add( Validate.Presence );
+  var comentario_descripcion = new LiveValidation( 'mensaje_descripcion', {onlyOnSubmit: true} );
+  comentario_descripcion.add( Validate.Presence );
+</script>

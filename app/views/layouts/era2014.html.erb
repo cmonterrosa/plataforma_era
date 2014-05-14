@@ -372,8 +372,17 @@ a:active {
                         <td><%=link_to image_tag("era/btns_cert/btns_inf_evid_1.png", :size => "100x33", :mouseover => "era/btns_cert/btns_inf_evid_1.png", :border => 0), {:controller => "avances", :action => "list" }, :title => "AVANCE DE EVIDENCIAS"%></td>
 
 
-                        <!-- buzon -->
-                        <td><%=link_to image_tag("era/btns_cert/buzon1.png", :size => "40x33", :mouseover => "era/btns_cert/buzon2.png", :border => 0), {:controller => "buzon", :action => "new" }, :title => "¿TIENES ALGUN COMENTARIO O SUGERENCIA?", :class => "fancybox fancybox.iframe"%></td>
+                        
+                        <!-- Verificamos si tiene mensajes en su bandeja -->
+                        <%if current_user.has_new_messages?%>
+                            <td><%=link_to image_tag("mensajes/nuevo.gif", :size => "50x50", :mouseover => "mensajes/nuevo.gif", :border => 0), {:controller => "mensajes", :action => "recibidos" }, :title => "TIENES NUEVOS MENSAJES"%></td>
+                        <%else%>
+                            <!-- buzon -->
+                            <td><%=link_to image_tag("era/btns_cert/buzon1.png", :size => "40x33", :mouseover => "era/btns_cert/buzon2.png", :border => 0), {:controller => "buzon", :action => "new" }, :title => "¿TIENES ALGUN COMENTARIO O SUGERENCIA?", :class => "fancybox fancybox.iframe"%></td>
+                        <%end%>
+
+
+                        
                       <%end%>
 
                  <%end%>

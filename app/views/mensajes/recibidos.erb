@@ -1,0 +1,36 @@
+<%=render :partial => "menu"%>
+<br />
+
+
+<!-- Menú de administrador -->
+<div class="titulos">
+  <p>
+    Mensajes Recibidos
+  </p>
+</div>
+
+  <!-- contenido -->
+<div id="result">
+    <table width="85%" border="0" cellspacing="0" cellpadding="0" class="sample" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid" align="center">
+      <tr style="background-color:#2E6AB1; color:white;">
+        <th width="10%">NP</th>
+        <th width="10%">Fecha/Hora</th>
+        <th width="35%">Remitente</th>
+        <th width="35%">Asunto</th>
+        <th width="10%">&nbsp;</th>
+      </tr>
+    <%clase=0%>
+    <%contador=1%>
+    <%@recibidos.each do |r|%>
+        <tr class="d<%=invert_class(clase)%>">
+        <td style="vertical-align: middle; text-align: center;"><%=contador%></td>
+        <td style="vertical-align: middle; text-align: center;"><%=r.created_at.strftime("%d de %b de %Y - %H:%M")%></td>
+        <td style="vertical-align: middle;"><%=h (r.remitente)%></td>
+        <td style="vertical-align: middle;"><%=link_to r.asunto, {:action => "show", :id => r}, :style => "text-decoration: none; color: #404040;"%></td>
+        <td style="vertical-align: middle;"><%= button_to 'Eliminar', {:action => "destroy", :id => r}, :confirm => '¿Esta seguro que desea eliminar el mensaje?', :method => :post, :class => 'boton' %></td>
+        <%clase = invert_class(clase)%>
+        <%contador+=1%>
+    </tr>
+    <%end%>
+</table>
+</div>

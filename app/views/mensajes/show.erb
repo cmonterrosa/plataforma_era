@@ -1,0 +1,40 @@
+<br />
+<table width="85%" border="0" cellspacing="0" cellpadding="0" class="sample" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid" align="center">
+      <tr style="background-color:transparent; color:navy; font-size: 18px;">
+        <th><%=image_tag "mensajes/regresar.png"%>&nbsp;<%=link_to "Regresar a plataforma de mensajes", {:action => "list"}, :style => "text-decoration: none; color: navy; vertical-align: center;"%></th>
+      </tr>
+</table>
+
+<div class="container">
+ <%form_for(@mensaje, :url => {:action => "save"}, :html => {:class => "formee" }) do |f| -%>
+  <fieldset>
+    <legend style=" color: navy;">MENSAJE</legend>
+
+    <div class="grid-12-12">
+      <label><b>Remitente: </b><%=@mensaje.remitente%></label>
+    </div>
+
+    <div class="grid-12-12">
+      <label><b>Destinatario: </b><%=@mensaje.destinatario%></label>
+    </div>
+
+    <div class="grid-12-12 clear"></div>
+    <%#*<div class="grid-form">%>
+    <div class="grid-12-12">
+      <label><b>Asunto: </b><%=@mensaje.asunto%></label>
+        
+    </div>
+    <%#*</div>%>
+    <div class="grid-12-12 clear"></div>
+    <%#*<div class="grid-form">%>
+
+    <div class="grid-12-12">
+      <label><b>Descripción: </b></label>
+        <%= f.text_area :descripcion, :placeholder => "Escriba la descripción detallada", :disabled => true %>
+    </div>
+   
+    <div class="grid-12-12 clear"></div>
+   
+  </fieldset>
+<%end%>
+</div>
