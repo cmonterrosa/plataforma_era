@@ -307,7 +307,7 @@ a:active {
                 <td width="34" align="center"><img src="/images/era/iconos/ico_arbol.png" alt="1" width="34" height="17" /></td>
 
                 <!-- Nombre de quien esta loggeado -->
-                <td width="180" class="Txt_arbol">
+                <td width="280" class="Txt_arbol">
                   <a href="/home" class="Txt_arbol">
                     <%if current_user.has_role?("directivo")%>
                       <%nombre= (@esc = Directivo.find_by_clave(current_user.login)) ? @esc.descripcion : nil%>
@@ -317,6 +317,20 @@ a:active {
                     <%=h link_to "#{nombre}", {:controller => "escuelas", :action => "information_edit" }, :style => "color:#088A08; text-decoration: none;", :title => "MODIFICA LA INFORMACIÓN DE TU CUENTA"%>
                   </a>
                 </td>
+                
+
+
+                       <!-- Verificamos si tiene mensajes en su bandeja -->
+                        <%if current_user.numero_mensaje_bandeja > 0%>
+                            <td width="34" align="center"><img src="/images/era/iconos/ico_arbol.png" alt="1" width="34" height="17" /></td>
+                            <td width="350" class="Txt_arbol"><%=image_tag ("mensajes/mensajes_recibidos_small.png")%>&nbsp;<a href="/home" class="Txt_arbol"><%=link_to "(#{current_user.numero_mensaje_bandeja}) MENSAJES NUEVOS", {:action => "recibidos", :controller => "mensajes"}, :style => "text-decoration: none; color: #4c8bff;", :title => "BANDEJA DE ENTRADA"%></a></td>
+                        <%else%>
+                            <td width="34" align="center"><img src="/images/era/iconos/ico_arbol.png" alt="1" width="34" height="17" /></td>
+                            <td width="350" class="Txt_arbol"><%=image_tag ("mensajes/mensajes.png")%>&nbsp;<a href="/home" class="Txt_arbol"><%=link_to "PLATAFORMA DE MENSAJES", {:action => "list", :controller => "mensajes"}, :style => "text-decoration: none; color: #4c8bff;", :title => "NO HAY MENSAJES NUEVOS"%></a></td>
+                        <%end%>
+
+
+
                   <td width="34" align="center"><img src="/images/era/iconos/ico_arbol.png" alt="1" width="34" height="17" /></td>
                   <td width="120" class="Txt_arbol"><a href="/home" class="Txt_arbol"><%=link_to "CERRAR SESIÓN", {:action => "destroy", :controller => "sessions"}, :style => "http://esys.educacionchiapas.gob.mx" , :style => "text-decoration: none; color: #404040;", :title => "¿ESTÁ SEGURO(A) QUE DESEA SALIR DE LA PLATAFORMA"%></a></td>
                 <%else%>
@@ -370,9 +384,6 @@ a:active {
                         <td><%=link_to image_tag("era/btns_cert/btn_dia1.png", :size => "100x33", :mouseover => "era/btns_cert/btn_dia2.png", :border => 0), {:controller => "diagnosticos", :action => "index" }, :title => "CONSULTA EL DIAGNOSTICO"%></td>
                         <td><%=link_to image_tag("era/btns_cert/btn_pro1.png", :size => "100x33", :mouseover => "era/btns_cert/btn_pro2.png", :border => 0), {:controller => "proyectos", :action => "index" }, :title => "CONSULTA EL PROYECTO"%></td>
                         <td><%=link_to image_tag("era/btns_cert/btns_inf_evid_1.png", :size => "100x33", :mouseover => "era/btns_cert/btns_inf_evid_1.png", :border => 0), {:controller => "avances", :action => "list" }, :title => "AVANCE DE EVIDENCIAS"%></td>
-
-
-                        <!-- buzon -->
                         <td><%=link_to image_tag("era/btns_cert/buzon1.png", :size => "40x33", :mouseover => "era/btns_cert/buzon2.png", :border => 0), {:controller => "buzon", :action => "new" }, :title => "¿TIENES ALGUN COMENTARIO O SUGERENCIA?", :class => "fancybox fancybox.iframe"%></td>
                       <%end%>
 

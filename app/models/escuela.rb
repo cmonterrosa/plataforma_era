@@ -26,5 +26,10 @@ class Escuela < ActiveRecord::Base
     end
   end
 
+  def descripcion_completa
+    "#{self.clave} | #{self.nombre}"
+  end
+
+ 
 
 end

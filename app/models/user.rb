@@ -52,6 +52,13 @@ class User < ActiveRecord::Base
   attr_accessor :email_not_required
 
 
+  def has_new_messages?
+    ( numero_mensaje_bandeja > 0) ? true : false
+  end
+
+  def numero_mensaje_bandeja
+    Mensaje.count(:id, :conditions => ["recibe_id = ? AND leido_at IS NULL", self.id])
+  end
 
 
   def before_save
