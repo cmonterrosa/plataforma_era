@@ -20,6 +20,8 @@ class MensajesController < ApplicationController
 
   def new
     @mensaje = Mensaje.new
+    @destinatario = User.find(params[:recibe_id]) if params[:recibe_id]
+    @escuela = Escuela.find_by_clave(@destinatario.login) if @destinatario
   end
 
   def save
@@ -40,11 +42,17 @@ class MensajesController < ApplicationController
 
   def show
     @mensaje = Mensaje.find(params[:id])
-    @mensaje_respuesta = Mensaje.new
+    if @mensaje && (@mensaje.envia_id == current_user.id || @mensaje.recibe_id == current_user.id || (current_user.has_role?("adminplat") || current_user.has_role?("admin")))
+       @mensaje = Mensaje.find(params[:id])
+       @mensaje_respuesta = Mensaje.new
     if @mensaje.recibe_id == current_user.id
       @mensaje.update_attributes!(:leido_at => Time.now) unless @mensaje.leido_at
     end
-  end
+    else
+      flash[:error] = "No tiene privilegios de visualizar este mensaje"
+      redirect_to :action => "list"
+    end
+    end
 
   def responder
     @mensaje_respuesta = Mensaje.new
@@ -75,6 +83,23 @@ class MensajesController < ApplicationController
       flash[:error] = "Mensaje no se pudo eliminar, verifique"
     end
     redirect_to :action => "list"
+  end
+
+
+  ###### NOTIFICACIONES ESPECIFICAS DEL SISTEMA #########
+  def send_reporte_evidencias_diagnostico
+    @mensaje = Mensaje.new(params[:mensaje])
+    @diagnostico = Diagnostico.find(params[:diagnostico]) if params[:diagnostico]
+    @mensaje.recibe_id =  (params[:recibe_id]) ? User.find(params[:recibe_id]).id : nil
+    @mensaje.envia_id = current_user.id unless @mensaje.envia_id
+    @mensaje.activo = true unless @mensaje.activo
+    @mensaje.asunto = "Comentarios y correcciones de evidencias del diagnóstico"
+    @mensaje.descripcion = @diagnostico.observaciones_evidencias if @diagnostico
+    @mensaje.url_notificacion_sistema = "#{url_for :host => SITE_URL, :action => "reporte_evidencias_diagnostico", :controller => 'upload', :diagnostico => params[:diagnostico], :id => params[:user]}"
+    if @mensaje.save
+        flash[:notice] = "Se envío reporte de evidencias a la escuela correspondiente"
+        redirect_to :controller => "admin", :action => "menu_escuela", :id => params[:user]
+    end
   end
 
 end
