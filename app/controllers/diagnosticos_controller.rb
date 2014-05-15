@@ -87,27 +87,28 @@ class DiagnosticosController < ApplicationController
 
   def reporte_completo
     @diagnostico = Diagnostico.find(params[:id]) if params[:id]
+    @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
     # -- Diagnostico ---
     @competencia = @diagnostico.competencia if @diagnostico.competencia
 
-    # -- Entorno ---
-    @entorno = @diagnostico.entorno if @diagnostico.entorno
-    @s_acciones = multiple_selected_id(@entorno.acciones) if @entorno.acciones
-    if @diagnostico.escuela.nivel_descripcion == "BACHILLERATO"
-      @acciones = Accione.find(:all, :conditions => ["clave not in ('AC01')"])
-    else
-      @acciones = Accione.find(:all, :conditions => ["clave not in ('AC00')"])
-    end
-
-    # -- Huella ---
-    @huella = @diagnostico.huella if @diagnostico.huella
-    @s_electricas = selected(@huella.energia_electrica) if @huella.energia_electrica
-    @s_aguas = selected(@huella.servicio_agua) if @huella.servicio_agua
-    @s_inorganicos = multiple_selected_id(@huella.inorganicos) if @huella.inorganicos
-    @s_elimina_residuos = multiple_selected_id(@huella.elimina_residuos) if @huella.elimina_residuos
-    @ahorradores = Array.new
-    @ahorradores << (@huella.focos_ahorradores.to_i) if @huella.focos_ahorradores
-    @focos = 0..99
+#    # -- Entorno ---
+#    @entorno = @diagnostico.entorno if @diagnostico.entorno
+#    @s_acciones = multiple_selected_id(@entorno.acciones) if @entorno.acciones
+#    if @diagnostico.escuela.nivel_descripcion == "BACHILLERATO"
+#      @acciones = Accione.find(:all, :conditions => ["clave not in ('AC01')"])
+#    else
+#      @acciones = Accione.find(:all, :conditions => ["clave not in ('AC00')"])
+#    end
+#
+#    # -- Huella ---
+#    @huella = @diagnostico.huella if @diagnostico.huella
+#    @s_electricas = selected(@huella.energia_electrica) if @huella.energia_electrica
+#    @s_aguas = selected(@huella.servicio_agua) if @huella.servicio_agua
+#    @s_inorganicos = multiple_selected_id(@huella.inorganicos) if @huella.inorganicos
+#    @s_elimina_residuos = multiple_selected_id(@huella.elimina_residuos) if @huella.elimina_residuos
+#    @ahorradores = Array.new
+#    @ahorradores << (@huella.focos_ahorradores.to_i) if @huella.focos_ahorradores
+#    @focos = 0..99
   end
   
   private
