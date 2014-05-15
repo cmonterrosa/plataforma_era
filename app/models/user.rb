@@ -53,7 +53,11 @@ class User < ActiveRecord::Base
 
 
   def has_new_messages?
-    (Mensaje.count(:id, :conditions => ["recibe_id = ? AND leido_at IS NULL", self.id]) > 0) ? true : false
+    ( numero_mensaje_bandeja > 0) ? true : false
+  end
+
+  def numero_mensaje_bandeja
+    Mensaje.count(:id, :conditions => ["recibe_id = ? AND leido_at IS NULL", self.id])
   end
 
 

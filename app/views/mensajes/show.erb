@@ -32,9 +32,25 @@
       <label><b>Descripción: </b></label>
         <%= f.text_area :descripcion, :placeholder => "Escriba la descripción detallada", :disabled => true %>
     </div>
-   
-    <div class="grid-12-12 clear"></div>
-   
   </fieldset>
 <%end%>
 </div>
+
+
+
+<div class="container">
+  <div class="formee">
+    <fieldset>
+      <!-- constancia -->
+      <% form_for :mensaje, @mensaje, :url => { :action => "responder", :controller => "mensajes", :recibe_id => @mensaje.envia_id } do |f| -%>
+      <div class="grid-center">
+        <input type="submit" title="RESPONDER MENSAJE" value="RESPONDER MENSAJE" />
+      </div>
+      <%end%>
+    </fieldset>
+  </div>
+</div>
+
+<!--
+ :html => { :target => "_blank"}
+-->

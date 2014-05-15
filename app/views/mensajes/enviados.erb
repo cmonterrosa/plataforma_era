@@ -26,7 +26,7 @@
         <tr class="d<%=invert_class(clase)%>">
         <td style="vertical-align: middle; text-align: center;"><%=contador%></td>
         <td style="vertical-align: middle; text-align: center;"><%=e.created_at.strftime("%d de %b de %Y - %H:%M")%></td>
-        <td style="vertical-align: middle;"><%=h (e.destinatario)%></td>
+        <td style="vertical-align: middle;"><%=link_to e.destinatario, {:action => "show", :id => e}, :style => "text-decoration: none; color: #404040;"%></td>
         <td style="vertical-align: middle;"><%=link_to e.asunto, {:action => "show", :id => e}, :style => "text-decoration: none; color: #404040;"%></td>
         <td style="vertical-align: middle;"><%=h (e.leido_at) ? "LEIDO" : "NO LEIDO"%></td>
         <td style="vertical-align: middle;"><%= button_to 'Eliminar', {:action => "destroy", :id => e}, :confirm => '¿Esta seguro que desea eliminar el mensaje?', :method => :post, :class => 'boton' %></td>
