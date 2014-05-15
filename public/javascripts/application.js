@@ -486,3 +486,88 @@ function checkRadioImage(arreglo, numRadio, image_id){
         image.style.display = "block";
     }
 }
+
+
+function porcentaje_ptos(porcentaje){
+    var valor;
+    switch(porcentaje){
+    case 0:
+        valor = 0;
+        break;
+    case 1:
+        valor = 0.1288;
+        break;
+    case 2:
+        valor = 0.2576;
+        break;
+    case 3:
+        valor = 0.3864;
+        break;
+    case 4:
+        valor = 0.5152;
+        break;
+    case 5:
+        valor = 0.644;
+        break;
+    case 6:
+        valor = 0.7728;
+        break;
+    case 7:
+        valor = 0.9016;
+        break;
+    case 8:
+        valor = 1.0304;
+        break;
+    case 9:
+        valor = 1.1592;
+        break;
+    case 10:
+        valor = 1.288;
+        break;
+    case 11:
+        valor = 1.4168;
+        break;
+    case 12:
+        valor = 1.5456;
+        break;
+    case 13:
+        valor = 1.6744;
+        break;
+    case 14:
+        valor = 1.8032;
+        break;
+    case 15:
+        valor = 1.932;
+        break;
+    case 16:
+        valor = 2.0608;
+        break;
+    case 17:
+        valor = 2.1896;
+        break;
+    case 18:
+        valor = 2.3184;
+        break;
+    case 19:
+        valor = 2.4472;
+        break;
+    case 20:
+        valor = 2.576;
+        break;
+    case 21:
+        valor = 2.7048;
+        break;
+    case 22:
+        valor = 2.8336;
+        break;
+    case 23:
+        valor = 2.9624;
+        break;
+    case 24:
+        valor = 3.0912;
+        break;
+    default:
+        valor = 3.225;
+    }
+    return valor;
+}

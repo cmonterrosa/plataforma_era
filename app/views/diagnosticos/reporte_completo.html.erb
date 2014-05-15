@@ -13,23 +13,87 @@
           <tr align="center">
             <td align="center">
               <table class="subprincipal" width="100%" border="0" cellpadding="4" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
+                <tr align="center" >
+                  <td><label class="uper" style="font-weight:bold;" >Pregunta</label></td>
+                  <td>&nbsp;</td>
+                  <td><label class="uper" style="font-weight:bold;" >Máximo Puntaje</label></td>
+                  <td>&nbsp;</td>
+                  <td><label class="uper" style="font-weight:bold;" >Puntaje Obtenido</label></td>
+                </tr>
+                <!-- Pregunta1 -->
                 <tr>
-                  <td><label class="uper">Pregunta</label></td>
+                  <td width="80%" align="justify">
+                    <label class="uper">1.- ¿Cuántos docentes se han capacitado en materia de salud y/o medio ambiente en el último ciclo escolar?<em class="formee-req"> *</em></label>
+                    <div class="grid-2-12"><%= f.text_field :docentes_capacitados_sma, :style => "text-align: center;", :class => "rpt" %></div>
+                  </td>
                   <td>&nbsp;</td>
-                  <td><label class="uper">Max. Puntaje</label></td>
+                  <td style="text-align:right;vertical-align:top;" ><label><%= $competencia_p1.to_f * 100 %></label></td>
                   <td>&nbsp;</td>
-                  <td><label class="uper">Puntaje Obtenido</label></td>
+                  <td style="text-align:right;vertical-align:top;" ><label><%= @cp1 %></label></td>
+                </tr>
+                <!-- Pregunta2 -->
+                <tr>
+                  <td width="80%" align="justify">
+                    <label class="uper">2.- De los docentes capacitados, ¿cuántos aplican con sus alumnos los conocimientos adquiridos en materia de salud y medio ambiente en otras acciones pedagógicas o extracurriculares?<em class="formee-req"> *</em></label>
+                    <div class="grid-2-12"><%= f.text_field :docentes_aplican_conocimientos, :style => "text-align: center;", :class => "rpt" %></div>
+                  </td>
+                  <td>&nbsp;</td>
+                  <td style="text-align:right;vertical-align:top;" ><label><%= $competencia_p2.to_f * 100 %></label></td>
+                  <td>&nbsp;</td>
+                  <td style="text-align:right;vertical-align:top;" ><label><%= @cp2 %></label></td>
+                </tr>
+                <!-- Pregunta3 -->
+                <tr>
+                  <td width="80%" align="justify">
+                    <label class="uper">3.- Del total de docentes, ¿cuántos se involucran en actividades extracurriculares en materia de salud y medio ambiente que promueve la escuela?<em class="formee-req"> *</em></label>
+                    <div class="grid-2-12"><%= f.text_field :docentes_involucran_actividades, :style => "text-align: center;", :class => "rpt" %></div>
+                  </td>
+                  <td>&nbsp;</td>
+                  <td style="text-align:right;vertical-align:top;" ><label><%= $competencia_p3.to_f * 100 %></label></td>
+                  <td>&nbsp;</td>
+                  <td style="text-align:right;vertical-align:top;" ><label><%= @cp3 %></label></td>
+                </tr>
+                <!-- Pregunta4 -->
+                <tr>
+                  <td width="80%" align="justify">
+                    <label class="uper">4.- Del total de alumnos, ¿cuántos recibieron capacitación relacionada con temas salud y medio ambiente por parte de los docentes en el último ciclo escolar?<em class="formee-req"> *</em></label>
+                    <div class="grid-2-12"><%= f.text_field :alumnos_capacitados_docentes, :style => "text-align: center;", :class => "rpt" %></div>
+                  </td>
+                  <td>&nbsp;</td>
+                  <td style="text-align:right;vertical-align:top;" ><label><%= $competencia_p4.to_f * 100 %></label></td>
+                  <td>&nbsp;</td>
+                  <td style="text-align:right;vertical-align:top;" ><label><%= @cp4 %></label></td>
+                </tr>
+                <!-- Pregunta5 -->
+                <tr>
+                  <td width="80%" align="justify">
+                    <label class="uper">5.- Del total de alumnos, ¿cuántos recibieron capacitación relacionada con temas de salud y medio ambiente por parte de otras <b>instituciones y/o dependencias</b> en el último ciclo escolar?<em class="formee-req"> *</em></label>
+                    <div class="grid-2-12"><%= f.text_field :alumnos_capacitados_instituciones, :style => "text-align: center;", :class => "rpt" %></div>
+                  </td>
+                  <td>&nbsp;</td>
+                  <td style="text-align:right;vertical-align:top;" ><label><%= $competencia_p5.to_f * 100 %></label></td>
+                  <td>&nbsp;</td>
+                  <td style="text-align:right;vertical-align:top;" ><label><%= @cp5 %></label></td>
+                </tr>
+                <!-- Barra de Porcentaje -->
+                <tr align="center" >
+                  <td><label class="uper" style="font-weight:bold;" >Porcentaje</label></td>
+                  <td>&nbsp;</td>
+                  <td><label class="uper" style="font-weight:bold;" >Total Máximo</label></td>
+                  <td>&nbsp;</td>
+                  <td><label class="uper" style="font-weight:bold;" >Total Obtenido</label></td>
                 </tr>
                 <tr>
-                  <td width="80%" align="justify"><label class="uper">1.- ¿Cuántos docentes se han capacitado en materia de salud y/o medio ambiente en el último ciclo escolar?<em class="formee-req"> *</em></label></td>
+                  <td style="text-align:center;" >
+                    <div class="bar_mortice rounded_tiny mortice_tiny green_mortice">
+                      <div id="bar_competencias" class="progress rounded_tiny progress_tiny green" style="width: <%= @c_porcentaje.to_i %>%;" ></div>
+                    </div>
+                    <label style="font-weight:bold;" ><%= @c_porcentaje %> %</label>
+                  </td>
                   <td>&nbsp;</td>
-                  <td><label>3.225</label></td>
+                  <td style="text-align:right;" ><label style="font-weight:bold;" ><%= @c_maxptos %></label></td>
                   <td>&nbsp;</td>
-                  <td><label><%= (((@competencia.docentes_capacitados_sma.to_i)/(@escuela.total_personal_docente.to_f)) * 100) * 0.03225 %></label></td>
-                </tr>
-                <tr>
-                  <td><div class="grid-2-12"><%= f.text_field :docentes_capacitados_sma, :style => "text-align: center;", :class => "rpt" %></div></td>
-                  <td colspan="4">&nbsp;</td>
+                  <td style="text-align:right;" ><label style="font-weight:bold;" ><%= @c_totalptos %></label></td>
                 </tr>
             </table>
           </td>
@@ -41,6 +105,179 @@
       <% end %>
     </td>
   </tr>
+  <tr>
+    <td><img src="/images/era/space.png" alt="" width="10" height="350" /></td>
+  </tr>
+  <!-- EJE 2: DESARROLLO DE ENTORNO -->
+  <tr>
+    <td>
+      <% form_for :entorno, @entorno, :html => {:class => "formee", :name => "entorno"} do |f| -%>
+      <table class="principal" width="100%" border="0" align="center" cellpadding="2" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
+        <tr bgcolor="#003366" style="opacity: 0.7;" >
+          <td align="center"><h4>EJE 2: ENTORNO SALUDABLE</h4></td>
+        </tr>
+        <tr align="center">
+          <td align="center">
+            <table class="subprincipal" width="100%" border="0" cellpadding="4" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
+              <tr align="center" >
+                <td><label class="uper" style="font-weight:bold;" >Pregunta</label></td>
+                <td>&nbsp;</td>
+                <td><label class="uper" style="font-weight:bold;" >Máximo Puntaje</label></td>
+                <td>&nbsp;</td>
+                <td><label class="uper" style="font-weight:bold;" >Puntaje Obtenido</label></td>
+              </tr>
+              <!-- Pregunta1 -->
+              <tr>
+                <td width="80%" align="justify">
+                  <label class="uper">1.- ¿Cuál es la superficie total del terreno de la escuela en metros cuadrados?<em class="formee-req"> *</em></label>
+                  <div class="grid-2-12"><%= f.text_field :superficie_terreno_escuela, :style => "text-align: center;", :class => "rpt" %></div>
+                  <div class="grid-1-12"><label class="uper" style="padding: 10px 0;">M<sup>2</sup></label></div>
+                </td>
+                <td>&nbsp;</td>
+                <td style="text-align:right;vertical-align:top;" ><label>0</label></td>
+                <td>&nbsp;</td>
+                <td style="text-align:right;vertical-align:top;" ><label>0</label></td>
+              </tr>
+              <!-- Pregunta2 -->
+              <tr>
+                <td width="80%" align="justify">
+                  <label class="uper">2.- ¿Qué superficie (mts. cuadrados) de la escuela se destina para áreas verdes? (Se considera áreas verdes al "espacio cubierto por vegetación. Un bosque, un parque y el jardín de una escuela son ejemplos de áreas verdes. Estos espacios brindan beneficios tanto al ambiente en el que se encuentran como a las personas localizadas cerca de ellos"). <em class="formee-req"> *</em></label>
+                  <label class="uper">Rangos: 0 en adelante.</label><br />
+                  <label class="uper">Posibles áreas verdes:</label><br />
+                  <label class="formee-msg-info" style="text-transform:uppercase;font-size:1.1em;" >
+                    Este valor debe de ser menor o igual a la superficie total del terreno.
+                  </label><br />
+                    <ul class="formee-lbl-vinetas" style="text-transform:uppercase;">
+                      <li>Jardín de ornato</li>
+                      <li>Jardín de césped</li>
+                      <li>Jardín herbal</li>
+                      <li>Jardín de macetas</li>
+                      <li>Jardin de suelo elevado</li>
+                      <li>Parcelas</li>
+                      <li>Huerto escolar</li>
+                    </ul>
+                  <div class="grid-2-12"><%= f.text_field :superficie_terreno_escuela_av, :style => "text-align: center;", :class => "rpt" %></div>
+                  <div class="grid-1-12"><label class="uper" style="padding: 10px 0;">M<sup>2</sup></label></div>
+                </td>
+                <td>&nbsp;</td>
+                <td style="text-align:right;vertical-align:top;" ><label><%= $entorno_p2.to_f * 100 %></label></td>
+                <td>&nbsp;</td>
+                <td style="text-align:right;vertical-align:top;" ><label><%= @ep2 %></label></td>
+              </tr>
+              <!-- Pregunta3 -->
+              <tr>
+                <td width="80%" align="justify">
+                  <label class="uper">3.- ¿La escuela cuenta con espacios destinados para jardines verticales (paredes verdes)?<em class="formee-req"> *</em></label>
+                  <div class="grid-4-12">
+                    <span id="r_jardines_verticales" class="InputGroup">
+                      <label class="uper">SI <%= f.radio_button :jardines_verticales, "SI" %></label>&nbsp;&nbsp;
+                      <label class="uper">NO <%= f.radio_button :jardines_verticales, "NO" %></label>
+                    </span>
+                  </div>
+                </td>
+                <td>&nbsp;</td>
+                <td style="text-align:right;vertical-align:top;" ><label>0</label></td>
+                <td>&nbsp;</td>
+                <td style="text-align:right;vertical-align:top;" ><label>0</label></td>
+              </tr>
+              <!-- Pregunta4 -->
+              <tr>
+                <td width="80%" align="justify">
+                  <label class="uper">4.- ¿La escuela cuenta con espacios destinados para jardines y/o cultivo hidropónicos?<em class="formee-req"> *</em></label>
+                  <div class="grid-4-12">
+                    <span id="r_jardines_hidroponicos" class="InputGroup">
+                      <label class="uper">SI <%= f.radio_button :jardines_hidroponicos, "SI" %></label>&nbsp;&nbsp;
+                      <label class="uper">NO <%= f.radio_button :jardines_hidroponicos, "NO" %></label>
+                    </span>
+                  </div>
+                </td>
+                <td>&nbsp;</td>
+                <td style="text-align:right;vertical-align:top;" ><label>0</label></td>
+                <td>&nbsp;</td>
+                <td style="text-align:right;vertical-align:top;" ><label>0</label></td>
+              </tr>
+              <!-- Pregunta5 -->
+              <tr>
+                <td width="80%" align="justify">
+                  <label class="uper">5.- ¿Cuántos árboles adultos se encuentran dentro del terreno de la escuela?<em class="formee-req"> *</em></label>
+                  <label class="formee-msg-info" style="text-transform:uppercase;font-size:1.1em;" >
+                    Para que un árbol sea considerado adulto, debe contar con una altura no menor a 4 metros y erguirse de un solo tronco. <br />
+                    Si la escuela cuenta con áreas extensas arboladas agregue un número apróximado.
+                  </label>
+                  <div class="grid-2-12"><%= f.text_field :arboles_terreno_escuela, :style => "text-align: center;", :class => "rpt" %></div>
+                </td>
+                <td>&nbsp;</td>
+                <td style="text-align:right;vertical-align:top;" ><label>0</label></td>
+                <td>&nbsp;</td>
+                <td style="text-align:right;vertical-align:top;" ><label>0</label></td>
+              </tr>
+              <!-- Pregunta6 -->
+              <tr>
+                <td width="80%" align="justify">
+                  <label class="uper">6.- ¿Cuáles de las siguientes acciones del Manual de Salud realiza la institución educativa?<em class="formee-req"> *</em></label>
+                  <label class="formee-msg-info" style="text-transform:uppercase;font-size:1.1em;" >
+                    Consultar manual de salud: Manual para el maestro del programa Escuela y Salud. Enfoque actual del programa: Determinantes de la salud, página 42 - 45. Puede consultarlo dando clic <a class="notchange" href="/Manual_de_Salud.pdf" target="_blank"><b>aquí</b></a>
+                  </label>
+                    <fieldset style="padding: 5px 5px 5px 5px;">
+                      <legend style="text-transform:uppercase;font-size:1.1em;">&nbsp;Acciones:&nbsp;</legend>
+                      <div id="acciones" class="grid-12-12">
+                        <% i= 1 %>
+                        <% @acciones.each do |c| %>
+                        <%= check_box_tag "acciones[#{i}]", c.clave, @s_acciones.include?(c.id) ? true : false %>&nbsp;<%= c.descripcion %><br />
+                        <% i+=1 %>
+                      <% end %>
+                      </div>
+                    </fieldset>
+                </td>
+                <td>&nbsp;</td>
+                <td style="text-align:right;vertical-align:top;" ><label><%= $entorno_p6.to_f * 100 %></label></td>
+                <td>&nbsp;</td>
+                <td style="text-align:right;vertical-align:top;" ><label><%= @ep6 %></label></td>
+              </tr>
+              <!-- Barra de Porcentaje -->
+                <tr align="center" >
+                  <td><label class="uper" style="font-weight:bold;" >Porcentaje</label></td>
+                  <td>&nbsp;</td>
+                  <td><label class="uper" style="font-weight:bold;" >Total Máximo</label></td>
+                  <td>&nbsp;</td>
+                  <td><label class="uper" style="font-weight:bold;" >Total Obtenido</label></td>
+                </tr>
+                <tr>
+                  <td style="text-align:center;" >
+                    <div class="bar_mortice rounded_tiny mortice_tiny green_mortice">
+                      <div id="bar_entornos" class="progress rounded_tiny progress_tiny green" style="width: <%= @e_porcentaje.to_i %>%;" ></div>
+                    </div>
+                    <label style="font-weight:bold;" ><%= @e_porcentaje %> %</label>
+                  </td>
+                  <td>&nbsp;</td>
+                  <td style="text-align:right;" ><label style="font-weight:bold;" ><%= @e_maxptos %></label></td>
+                  <td>&nbsp;</td>
+                  <td style="text-align:right;" ><label style="font-weight:bold;" ><%= @e_totalptos %></label></td>
+                </tr>
+            </td>
+          </tr>
+        </table>
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <td><img src="/images/era/space.png" alt="" width="10" height="135" /></td>
+    </tr>
+    <!-- EJE 3: HUELLA ECOLÓGICA -->
+    <tr>
+      <td>
+        <% form_for :entorno, @entorno, :html => {:class => "formee", :name => "entorno"} do |f| -%>
+        <table class="principal" width="100%" border="0" align="center" cellpadding="2" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
+          <tr bgcolor="#003366" style="opacity: 0.7;" >
+            <td align="center"><h4>EJE 2: ENTORNO SALUDABLE</h4></td>
+          </tr>
+          <tr align="center">
+            <td align="center"></td>
+          </tr>
+        </table>
+        <% end %>
+      </td>
+    </tr>
 </table>
 
 <script type="text/javascript">

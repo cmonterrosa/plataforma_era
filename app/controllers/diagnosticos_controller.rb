@@ -90,15 +90,34 @@ class DiagnosticosController < ApplicationController
     @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
     # -- Diagnostico ---
     @competencia = @diagnostico.competencia if @diagnostico.competencia
+      # -- Operaciones --
+      @cp1 = (((@competencia.docentes_capacitados_sma.to_i / @escuela.total_personal_docente.to_f ) * 100) * $competencia_p1.to_f).round(3)
+      @cp2 = (((@competencia.docentes_aplican_conocimientos.to_i / @escuela.total_personal_docente.to_f ) * 100) * $competencia_p2.to_f).round(3)
+      @cp3 = (((@competencia.docentes_involucran_actividades.to_i / @escuela.total_personal_docente.to_f ) * 100) * $competencia_p3.to_f).round(3)
+      @cp4 = (((@competencia.alumnos_capacitados_docentes.to_i / @escuela.total_personal_docente.to_f ) * 100) * $competencia_p4.to_f).round(3)
+      @cp5 = (((@competencia.alumnos_capacitados_instituciones.to_i / @escuela.total_personal_docente.to_f ) * 100) * $competencia_p5.to_f).round(3)
 
-#    # -- Entorno ---
-#    @entorno = @diagnostico.entorno if @diagnostico.entorno
-#    @s_acciones = multiple_selected_id(@entorno.acciones) if @entorno.acciones
-#    if @diagnostico.escuela.nivel_descripcion == "BACHILLERATO"
-#      @acciones = Accione.find(:all, :conditions => ["clave not in ('AC01')"])
-#    else
-#      @acciones = Accione.find(:all, :conditions => ["clave not in ('AC00')"])
-#    end
+      @c_maxptos = (($competencia_p1.to_f + $competencia_p2.to_f + $competencia_p3.to_f + $competencia_p5.to_f + $competencia_p5.to_f)*100).round(3)
+      @c_totalptos = (@cp1.to_f + @cp2.to_f + @cp3.to_f + @cp4.to_f + @cp5.to_f).round(3)
+      @c_porcentaje = ((@c_totalptos.to_f * 100) / @c_maxptos.to_f).round(3)
+
+    # -- Entorno ---
+    @entorno = @diagnostico.entorno if @diagnostico.entorno
+      # -- Operaciones --
+      @ep2 = porcentaje_ptos(((@entorno.superficie_terreno_escuela_av.to_f / @entorno.superficie_terreno_escuela.to_f) * 100).round)
+      @s_acciones = multiple_selected_id(@entorno.acciones) if @entorno.acciones
+      if @diagnostico.escuela.nivel_descripcion == "BACHILLERATO"
+        @acciones = Accione.find(:all, :conditions => ["clave not in ('AC01')"])
+        @ep6 = (((@s_acciones.size.to_f / 4)* 100) * $entorno_p6.to_f).round(3)
+      else
+        @acciones = Accione.find(:all, :conditions => ["clave not in ('AC00')"])
+        @ep6 = (((@s_acciones.size.to_f / 4)* 100) * $entorno_p6.to_f).round(3)
+      end
+      
+      @e_maxptos = (($entorno_p2.to_f + $entorno_p6.to_f)*100).round(3)
+      @e_totalptos = (@ep2.to_f + @ep5.to_f).round(3)
+      @e_porcentaje = ((@e_totalptos.to_f * 100) / @e_maxptos.to_f).round(3)
+
 #
 #    # -- Huella ---
 #    @huella = @diagnostico.huella if @diagnostico.huella
