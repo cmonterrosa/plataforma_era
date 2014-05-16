@@ -232,8 +232,10 @@ class UploadController < ApplicationController
 
   def reporte_evidencias_diagnostico
     @diagnostico = Diagnostico.find(params[:diagnostico])
-    @user = User.find(params[:user])
-    @observaciones_evidencias = params[:diagnosticos][:observaciones_evidencias] if params[:diagnosticos][:observaciones_evidencias]
+    @user = User.find(params[:id]) if params[:id]
+    @user ||= User.find(params[:user]) if params[:user]
+    @observaciones_evidencias = params[:diagnosticos][:observaciones_evidencias] if params[:diagnosticos]
+    @observaciones_evidencias ||= @diagnostico.observaciones_evidencias
     @diagnostico.update_attributes!(:observaciones_evidencias => @observaciones_evidencias, :validacion_evidencias => true) if @observaciones_evidencias
     @evidencias = Adjunto.find(:all, :conditions => ["validado = ? AND user_id = ? AND diagnostico_id = ?", false, @user, @diagnostico])
   end

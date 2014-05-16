@@ -17,27 +17,39 @@
 <%form_for(@mensaje, :url => {:action => "save"}, :html => {:class => "formee" }) do |f| -%>
   <fieldset>
     <legend>NUEVO&nbsp;MENSAJE</legend>
-    
-    <div class="grid-12-12">
-      <label>Escriba la clave completa de la escuela para realizar la búsqueda: <em class="formee-req">*</em></label>
-        <!-- <= f.text_field :recibe_id, :placeholder => "Seleccione un destinatario" %> -->
-       <%= text_field :escuela, :clave %>
-    </div>
+
+    <!-------- DESTINATARIO ------>
+    <%unless @escuela%>
+
+      <div class="grid-12-12">
+        <label>Escriba la clave completa de la escuela para realizar la búsqueda: <em class="formee-req">*</em></label>
+            <%= text_field :escuela, :clave %>
+      </div>
+
+      <div class="grid-12-12">
+        <label>Destinatario: <em class="formee-req">*</em> </label>
+        <div id="destinatario"></div>
+      </div>
+
+
+      <img alt="spinner" id="spinner" src="/images/loading_spinner.gif" style="display:none;" />
+          <%= observe_field :escuela_clave,
+                    :on => "change",
+                    :before => "Element.show('spinner')",
+                    :success => "Element.hide('spinner')",
+                    :update => :destinatario,
+                    :url => { :controller => 'combos', :action => 'get_clave_escuela' },
+                    :with => :escuela_clave %>
+
+    <%else%>
 
     <div class="grid-12-12">
-      <label>Destinatario: <em class="formee-req">*</em></label>
-      <div id="destinatario"></div>
+      <label>Asunto: <em class="formee-req">*</em></label>
+        <%=text_field "escuela", "clave_completa_disabled", :value => @escuela.descripcion_completa, :disabled => true%>
+        <%=hidden_field "escuela", "clave_completa", :value => @escuela.descripcion_completa%>
     </div>
 
-
-    <img alt="spinner" id="spinner" src="/images/loading_spinner.gif" style="display:none;" />
-    <%= observe_field :escuela_clave,
-                  :on => "change",
-                  :before => "Element.show('spinner')",
-                  :success => "Element.hide('spinner')",
-                  :update => :destinatario,
-                  :url => { :controller => 'combos', :action => 'get_clave_escuela' },
-                  :with => :escuela_clave %>
+    <%end%>
 
     <div class="grid-12-12 clear"></div>
    

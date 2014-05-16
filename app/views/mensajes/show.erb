@@ -28,10 +28,22 @@
     <div class="grid-12-12 clear"></div>
     <%#*<div class="grid-form">%>
 
+    
+
+
     <div class="grid-12-12">
       <label><b>Descripción: </b></label>
-        <%= f.text_area :descripcion, :placeholder => "Escriba la descripción detallada", :disabled => true %>
+        <%= f.text_area :descripcion,  :placeholder => "Escriba la descripción detallada", :disabled => true %>
     </div>
+
+    <!-- Mostramos el mensaje si es una notificacion del sistema -->
+    <%if @mensaje.url_notificacion_sistema%>
+      <div class="grid-12-12">
+        <%=link_to ":. HAGA CLICK AQUÍ PARA ACCEDER .:", "#{@mensaje.url_notificacion_sistema}", :style => "text-decoration: none; color: red; vertical-align: center; font-size: 18px;", :target => "_blank"%>
+      </div>
+    <%end%>
+
+
   </fieldset>
 <%end%>
 </div>
