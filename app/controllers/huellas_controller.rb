@@ -54,8 +54,8 @@ class HuellasController < ApplicationController
       end
       
       if (params[:huella][:energia_electrica_id] != "SUOP")
-        @huella.consumo_anterior = ""
-        @huella.consumo_actual = ""
+        @huella.consumo_anterior = 0
+        @huella.consumo_actual = 0
       end
 
       if @huella.save

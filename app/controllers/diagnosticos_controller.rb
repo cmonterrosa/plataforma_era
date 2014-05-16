@@ -86,7 +86,7 @@ class DiagnosticosController < ApplicationController
   end
 
   def reporte_completo
-    @diagnostico = Diagnostico.find(params[:id]) if params[:id]
+    @diagnostico = Diagnostico.find(Base64.decode64(params[:id])) if params[:id]
     @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
     # -- Diagnostico ---
     @competencia = @diagnostico.competencia if @diagnostico.competencia
@@ -104,7 +104,8 @@ class DiagnosticosController < ApplicationController
     # -- Entorno ---
     @entorno = @diagnostico.entorno if @diagnostico.entorno
       # -- Operaciones --
-      @ep2 = porcentaje_ptos(((@entorno.superficie_terreno_escuela_av.to_f / @entorno.superficie_terreno_escuela.to_f) * 100).round)
+      ((@entorno.superficie_terreno_escuela_av.to_f / @entorno.superficie_terreno_escuela.to_f) * 100).round > 25 ? @ep2 = ptos_superficie(25) : @ep2 = ptos_superficie(((@entorno.superficie_terreno_escuela_av.to_f / @entorno.superficie_terreno_escuela.to_f) * 100).round)
+      
       @s_acciones = multiple_selected_id(@entorno.acciones) if @entorno.acciones
       if @diagnostico.escuela.nivel_descripcion == "BACHILLERATO"
         @acciones = Accione.find(:all, :conditions => ["clave not in ('AC01')"])
@@ -118,16 +119,33 @@ class DiagnosticosController < ApplicationController
       @e_totalptos = (@ep2.to_f + @ep5.to_f).round(3)
       @e_porcentaje = ((@e_totalptos.to_f * 100) / @e_maxptos.to_f).round(3)
 
-#
-#    # -- Huella ---
-#    @huella = @diagnostico.huella if @diagnostico.huella
-#    @s_electricas = selected(@huella.energia_electrica) if @huella.energia_electrica
-#    @s_aguas = selected(@huella.servicio_agua) if @huella.servicio_agua
-#    @s_inorganicos = multiple_selected_id(@huella.inorganicos) if @huella.inorganicos
-#    @s_elimina_residuos = multiple_selected_id(@huella.elimina_residuos) if @huella.elimina_residuos
-#    @ahorradores = Array.new
-#    @ahorradores << (@huella.focos_ahorradores.to_i) if @huella.focos_ahorradores
-#    @focos = 0..99
+    # -- Huella ---
+    @huella = @diagnostico.huella if @diagnostico.huella
+      # -- Operaciones --
+      @hp1 = (((@huella.capacitacion_ahorro_energia.to_f / 2 ) * 100) * $huella_p1.to_f).round(3)
+
+      @huella.consumo_anterior > @huella.consumo_actual ? @hp2 = $huella_p2 * 100 : @hp2 = 0
+        
+      @s_electricas = selected(@huella.energia_electrica) if @huella.energia_electrica
+      @hp3 = (((@huella.focos_ahorradores.to_f / @huella.total_focos.to_f ) * 100) * $huella_p3.to_f).round(3)
+
+      @s_aguas = selected(@huella.servicio_agua) if @huella.servicio_agua
+      @huella.red_publica_agua == "SI" ? @hp4 = $huella_p4 * 100 : @hp4 = 0
+      @hp5 = (((@huella.mantto_inst.to_f / 2 ) * 100) * $huella_p5.to_f).round(3)
+
+      @s_elimina_residuos = multiple_selected_id(@huella.elimina_residuos) if @huella.elimina_residuos
+      @huella.recip_residuos_solid == "SI" ? @hp6 = $huella_p6 * 100 : @hp6 = 0
+
+      @huella.sep_residuos_org_inorg == "SI" ? @hp7 = $huella_p7 * 100 : @hp7 = 0
+
+      @huella.elabora_compostas == "SI" ? @hp8 = $huella_p8 * 100 : @hp8 = 0
+      
+      @s_inorganicos = multiple_selected_id(@huella.inorganicos) if @huella.inorganicos
+      (@s_inorganicos.size == 1 and @huella.inorganicos[0]['clave'] == "NING") ? @hp9 = 0 : @hp9 = ptos_inorganicos(@s_inorganicos.size)
+
+      @h_maxptos = (($huella_p1.to_f + $huella_p2.to_f + $huella_p3.to_f + $huella_p4.to_f + $huella_p5.to_f + $huella_p6.to_f + $huella_p7.to_f + $huella_p8.to_f + $huella_p9.to_f)*100).round(3)
+      @h_totalptos = (@hp1.to_f + @hp2.to_f + @hp3.to_f + @hp4.to_f + @hp5.to_f + @hp6.to_f + @hp7.to_f + @hp8.to_f + @hp9.to_f).round(3)
+      @h_porcentaje = ((@h_totalptos.to_f * 100) / @h_maxptos.to_f).round(3)
   end
   
   private

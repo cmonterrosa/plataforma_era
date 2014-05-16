@@ -55,4 +55,10 @@
   </fieldset>
 
   <%end%>
+
+  <% if @diagnostico %>
+    <% form_for :diagnostico, @diagnostico, :url => {:action => "reporte_completo", :controller => "diagnosticos", :id => "#{Base64.encode64(@diagnostico.id.to_s)}.pdf" }, :html => {:class => "formee", :target => "_blank"} do -%>
+     <input type="submit" title="Imprimir" value="Imprimir Diagnostico" />
+   <% end %>
+ <% end %>
 </div>
