@@ -18,7 +18,7 @@
             <div class="grid-12-12">
               <div class="grid-3-12"></div>
               <div class="grid-2-12">
-                <%= f.text_field :num_padres_familia, :style => "text-align: center;", :onkeyup => "showImageNum('participacion_num_padres_familia', 'eje5_p1');" %>
+                <%= f.text_field :num_padres_familia, :style => "text-align: center;", :onkeyup => "showImageNum('participacion_num_padres_familia', 'eje5_p1');", :onfocusout => "updateField();" %>
               </div>
               <div class="grid-1-12"></div>
               <div id="eje5_p1" class="grid-6-12" style="display: none;">
@@ -182,7 +182,7 @@
 
   var capacitacion_salud_ma = new LiveValidation( 'participacion_capacitacion_salud_ma' );
   capacitacion_salud_ma.add( Validate.Presence );
-  capacitacion_salud_ma.add( Validate.Numericality, { onlyInteger: true } );
+  //capacitacion_salud_ma.add( Validate.Numericality, { onlyInteger: true } );
 
   var proy_escolares_ma_desc = new LiveValidation( 'participacion_proy_escolares_ma_desc' );
   proy_escolares_ma_desc.add( Validate.Presence );
@@ -195,4 +195,8 @@
 
   var act_dep_gobierno_desc = new LiveValidation( 'participacion_act_dep_gobierno_desc' );
   act_dep_gobierno_desc.add( Validate.Presence );
+
+  function updateField(){
+    capacitacion_salud_ma.add( Validate.Numericality, { maximum: parseInt(document.getElementById("participacion_num_padres_familia").value)}, { onlyInteger: true } );
+  }
 </script>

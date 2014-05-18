@@ -23,6 +23,7 @@ class ConsumosController < ApplicationController
     @s_botanas = multiple_selected(@consumo.botanas) if @consumo.botanas
     @s_reposterias = multiple_selected(@consumo.reposterias) if @consumo.reposterias
     @s_materials = multiple_selected(@consumo.materials) if @consumo.materials
+    @s_afisicas = selected(@consumo.frecuencia_afisica) if @consumo.frecuencia_afisica
   end
 
   def save
@@ -102,6 +103,8 @@ class ConsumosController < ApplicationController
           params[:materials].each { |op| @materials << Material.find_by_clave(op)  }
           @consumo.materials = Material.find(@materials)
         end
+
+        @consumo.frecuencia_afisica_id = FrecuenciaAfisica.find_by_clave(params[:consumo][:frecuencia_afisica_id]).id if params[:consumo][:frecuencia_afisica_id]
 
         if @consumo.save
           flash[:notice] = "Registro guardado correctamente"

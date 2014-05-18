@@ -326,7 +326,7 @@
             </div>
             <!-- Línea campo -->
             <div class="grid-12-12">
-              <%= f.select :frecuencia_afisica_id, FrecuenciaAfisica.all.collect {|p| [ p.descripcion, p.clave ]} %>
+              <%= f.select :frecuencia_afisica_id, FrecuenciaAfisica.all.collect {|p| [ p.descripcion, p.clave ]}, {:selected => @s_afisicas} %>
             </div>
           </td>
         </tr>

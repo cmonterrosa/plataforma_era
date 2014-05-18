@@ -1,0 +1,190 @@
+<h4 style="text-align: center;" >REPORTE GENERAL DEL DIAGNOSTICO INSTITUCIONAL</h4>
+<!-- EJE 1: DESARROLLO DE COMPETENCIAS -->
+<% form_for :competencia, :html => {:class => "formee", :name => "competencia"} do |f| -%>
+<table class="principal" width="100%" border="0" align="center" cellpadding="2" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
+  <tr bgcolor="#003366" style="opacity: 0.7;">
+    <td align="center"><h4>EJE 1: DESARROLLO DE COMPETENCIAS</h4></td>
+  </tr>
+  <tr align="center">
+    <td align="center">
+      <table class="subprincipal" width="100%" border="0" cellpadding="4" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
+        <!-- Barra de Porcentaje -->
+        <tr align="center" >
+          <td width="80%" ><label class="uper" style="font-weight:bold;" >Porcentaje</label></td>
+          <td>&nbsp;</td>
+          <td><label class="uper" style="font-weight:bold;" >Total Máximo</label></td>
+          <td>&nbsp;</td>
+          <td><label class="uper" style="font-weight:bold;" >Total Obtenido</label></td>
+        </tr>
+        <tr>
+          <td style="text-align:center;" >
+            <div class="bar_mortice rounded_tiny mortice_tiny green_mortice">
+              <div id="bar_competencias" class="progress rounded_tiny progress_tiny green" style="width: <%= @c_porcentaje.to_i %>%;" ></div>
+            </div>
+            <label style="font-weight:bold;" ><%= @c_porcentaje %> %</label>
+          </td>
+          <td>&nbsp;</td>
+          <td style="text-align:right;" ><label style="font-weight:bold;" ><%= @c_maxptos %></label></td>
+          <td>&nbsp;</td>
+          <td style="text-align:right;" ><label style="font-weight:bold;" ><%= @c_totalptos %></label></td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="5">&nbsp;</td>
+  </tr>
+</table>
+<% end %>
+<img src="/images/era/space.png" alt="" width="10" height="20" />
+<!-- EJE 2: ENTORNO SALUDABLE -->
+<% form_for :entorno, @entorno, :html => {:class => "formee", :name => "entorno"} do |f| -%>
+<table class="principal" width="100%" border="0" align="center" cellpadding="2" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
+  <tr bgcolor="#003366" style="opacity: 0.7;" >
+    <td align="center"><h4>EJE 2: ENTORNO SALUDABLE</h4></td>
+  </tr>
+  <tr align="center">
+    <td align="center">
+      <table class="subprincipal" width="100%" border="0" cellpadding="4" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
+        <!-- Barra de Porcentaje -->
+        <tr align="center" >
+          <td width="80%" ><label class="uper" style="font-weight:bold;" >Porcentaje</label></td>
+          <td>&nbsp;</td>
+          <td><label class="uper" style="font-weight:bold;" >Total Máximo</label></td>
+          <td>&nbsp;</td>
+          <td><label class="uper" style="font-weight:bold;" >Total Obtenido</label></td>
+        </tr>
+        <tr>
+          <td style="text-align:center;" >
+            <div class="bar_mortice rounded_tiny mortice_tiny green_mortice">
+              <div id="bar_entornos" class="progress rounded_tiny progress_tiny green" style="width: <%= @e_porcentaje.to_i %>%;" ></div>
+            </div>
+            <label style="font-weight:bold;" ><%= @e_porcentaje %> %</label>
+          </td>
+          <td>&nbsp;</td>
+          <td style="text-align:right;" ><label style="font-weight:bold;" ><%= @e_maxptos %></label></td>
+          <td>&nbsp;</td>
+          <td style="text-align:right;" ><label style="font-weight:bold;" ><%= @e_totalptos %></label></td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="5">&nbsp;</td>
+  </tr>
+</table>
+<% end %>
+<img src="/images/era/space.png" alt="" width="10" height="20" />
+<!-- EJE 3: HUELLA ECOLÓGICA -->
+<% form_for :huella, @huella, :html => {:class => "formee", :name => "huella"} do |f| -%>
+<table class="principal" width="100%" border="0" align="center" cellpadding="2" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
+  <tr bgcolor="#003366" style="opacity: 0.7;" >
+    <td align="center"><h4>EJE 3: HUELLA ECOLÓGICA</h4></td>
+  </tr>
+  <tr align="center">
+    <td align="center">
+      <table class="subprincipal" width="100%" border="0" cellpadding="4" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
+        <!-- Barra de Porcentaje -->
+        <tr align="center" >
+          <td width="80%" ><label class="uper" style="font-weight:bold;" >Porcentaje</label></td>
+          <td>&nbsp;</td>
+          <td><label class="uper" style="font-weight:bold;" >Total Máximo</label></td>
+          <td>&nbsp;</td>
+          <td><label class="uper" style="font-weight:bold;" >Total Obtenido</label></td>
+        </tr>
+        <tr>
+          <td style="text-align:center;" >
+            <div class="bar_mortice rounded_tiny mortice_tiny green_mortice">
+              <div id="bar_huellas" class="progress rounded_tiny progress_tiny green" style="width: <%= @h_porcentaje.to_i %>%;" ></div>
+            </div>
+            <label style="font-weight:bold;" ><%= @h_porcentaje %> %</label>
+          </td>
+          <td>&nbsp;</td>
+          <td style="text-align:right;" ><label style="font-weight:bold;" ><%= @h_maxptos %></label></td>
+          <td>&nbsp;</td>
+          <td style="text-align:right;" ><label style="font-weight:bold;" ><%= @h_totalptos %></label></td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="5">&nbsp;</td>
+  </tr>
+</table>
+<% end %>
+<img src="/images/era/space.png" alt="" width="10" height="20" />
+<!-- EJE 4: CONSUMO RESPONSABLE / SALUDABLE -->
+<% form_for :consumo, :html => {:class => "formee", :name => "consumo"} do |f| -%>
+<table class="principal" width="100%" border="0" align="center" cellpadding="2" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
+  <tr bgcolor="#003366" style="opacity: 0.7;">
+    <td align="center"><h4>EJE 4: CONSUMO RESPONSABLE / SALUDABLE</h4></td>
+  </tr>
+  <tr align="center">
+    <td align="center">
+      <table class="subprincipal" width="100%" border="0" cellpadding="4" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
+        <!-- Barra de Porcentaje -->
+        <tr align="center" >
+          <td width="80%" ><label class="uper" style="font-weight:bold;" >Porcentaje</label></td>
+          <td>&nbsp;</td>
+          <td><label class="uper" style="font-weight:bold;" >Total Máximo</label></td>
+          <td>&nbsp;</td>
+          <td><label class="uper" style="font-weight:bold;" >Total Obtenido</label></td>
+        </tr>
+        <tr>
+          <td style="text-align:center;" >
+            <div class="bar_mortice rounded_tiny mortice_tiny green_mortice">
+              <div id="bar_consumo" class="progress rounded_tiny progress_tiny green" style="width: <%= @co_porcentaje.to_i %>%;" ></div>
+            </div>
+            <label style="font-weight:bold;" ><%= @co_porcentaje %> %</label>
+          </td>
+          <td>&nbsp;</td>
+          <td style="text-align:right;" ><label style="font-weight:bold;" ><%= @co_maxptos %></label></td>
+          <td>&nbsp;</td>
+          <td style="text-align:right;" ><label style="font-weight:bold;" ><%= @co_totalptos %></label></td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="5">&nbsp;</td>
+  </tr>
+</table>
+<% end %>
+<img src="/images/era/space.png" alt="" width="10" height="20" />
+<!-- EJE 5: PARTICIPACIÓN CIUDADANA -->
+<% form_for :participacion, :html => {:class => "formee", :name => "participacion"} do |f| -%>
+<table class="principal" width="100%" border="0" align="center" cellpadding="2" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
+  <tr bgcolor="#003366" style="opacity: 0.7;">
+    <td align="center"><h4>EJE 5: PARTICIPACION CIUDADANA</h4></td>
+  </tr>
+  <tr align="center">
+    <td align="center">
+      <table class="subprincipal" width="100%" border="0" cellpadding="4" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
+        <!-- Barra de Porcentaje -->
+        <tr align="center" >
+          <td width="80%" ><label class="uper" style="font-weight:bold;" >Porcentaje</label></td>
+          <td>&nbsp;</td>
+          <td><label class="uper" style="font-weight:bold;" >Total Máximo</label></td>
+          <td>&nbsp;</td>
+          <td><label class="uper" style="font-weight:bold;" >Total Obtenido</label></td>
+        </tr>
+        <tr>
+          <td style="text-align:center;" >
+            <div class="bar_mortice rounded_tiny mortice_tiny green_mortice">
+              <div id="bar_participacion" class="progress rounded_tiny progress_tiny green" style="width: <%= @p_porcentaje.to_i %>%;" ></div>
+            </div>
+            <label style="font-weight:bold;" ><%= @p_porcentaje %> %</label>
+          </td>
+          <td>&nbsp;</td>
+          <td style="text-align:right;" ><label style="font-weight:bold;" ><%= @p_maxptos %></label></td>
+          <td>&nbsp;</td>
+          <td style="text-align:right;" ><label style="font-weight:bold;" ><%= @p_totalptos %></label></td>
+        </tr>
+        <tr>
+          <td colspan="5">&nbsp;</td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<% end %>

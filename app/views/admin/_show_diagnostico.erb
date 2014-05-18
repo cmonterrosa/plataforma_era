@@ -46,19 +46,20 @@
     <div class="grid-12-12 clear"></div>
 
      <!-- submit -->
-    <%if @diagnostico.oficializado%>
+    <% if @diagnostico.oficializado %>
       <div class="grid-12-12">
         <input class="right" type="submit" onclick="to_uppercase();" title="HABILITAR DIAGNOSTICO" value="HABILITAR DIAGNOSTICO" />
       </div>
     <%end%>
-
+     
   </fieldset>
 
   <%end%>
 
-  <% if @diagnostico %>
+  <% if @diagnostico.oficializado %>
     <% form_for :diagnostico, @diagnostico, :url => {:action => "reporte_completo", :controller => "diagnosticos", :id => "#{Base64.encode64(@diagnostico.id.to_s)}.pdf" }, :html => {:class => "formee", :target => "_blank"} do -%>
-     <input type="submit" title="Imprimir" value="Imprimir Diagnostico" />
-   <% end %>
- <% end %>
+      <div class="grid-12-12" style="text-align: center;" ><input type="submit" title="Imprimir" value="Imprimir Diagnostico" /></div>
+    <% end %>
+  <% end %>
+      
 </div>

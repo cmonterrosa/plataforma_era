@@ -146,12 +146,104 @@ class DiagnosticosController < ApplicationController
       @h_maxptos = (($huella_p1.to_f + $huella_p2.to_f + $huella_p3.to_f + $huella_p4.to_f + $huella_p5.to_f + $huella_p6.to_f + $huella_p7.to_f + $huella_p8.to_f + $huella_p9.to_f)*100).round(3)
       @h_totalptos = (@hp1.to_f + @hp2.to_f + @hp3.to_f + @hp4.to_f + @hp5.to_f + @hp6.to_f + @hp7.to_f + @hp8.to_f + @hp9.to_f).round(3)
       @h_porcentaje = ((@h_totalptos.to_f * 100) / @h_maxptos.to_f).round(3)
+
+    # -- Consumos --
+    @consumo = @diagnostico.consumo if @diagnostico.consumo
+      # -- Operaciones --
+      if @escuela.nivel_descripcion == "BACHILLERATO"
+        @establecimientos = Establecimiento.find(:all, :conditions => ["nivel not in ('BASICA')"])
+      else
+        @establecimientos = Establecimiento.find(:all)
+      end
+      @s_establecimientos = multiple_selected(@consumo.establecimientos) if @consumo.establecimientos
+      
+      @consumo.conocen_lineamientos_grales == "SI" ? @cop2 = $consumo_p2 * 100 : @cop2 = 0
+      
+      @consumo.capacitacion_alim_bebidas == "SI" ? @cop3 = $consumo_p3 * 100 : @cop3 = 0
+
+      @s_preparacions = multiple_selected(@consumo.preparacions) if @consumo.preparacions
+      @s_utensilios = multiple_selected(@consumo.utensilios) if @consumo.utensilios
+      @s_higienes = multiple_selected(@consumo.higienes) if @consumo.higienes
+      @t_preparacions = Preparacion.all
+      @t_utensilios = Utensilio.all
+      @t_higiene = Higiene.all
+      @cop4 = ((((@s_preparacions.size + @s_utensilios.size + @s_higienes.size).to_f / (@t_preparacions.size + @t_utensilios.size + @t_higiene.size).to_f) * 100 ) * $consumo_p4.to_f).round(3)
+
+      @s_bebidas = multiple_selected(@consumo.bebidas) if @consumo.bebidas
+      @s_alimentos = multiple_selected(@consumo.alimentos) if @consumo.alimentos
+      @s_botanas = multiple_selected(@consumo.botanas) if @consumo.botanas
+      @s_reposterias = multiple_selected(@consumo.reposterias) if @consumo.reposterias
+
+      @b_saludables = Bebida.find_all_by_tipo("SALUDABLE")
+      @select_bebidas = 0
+      @s_bebidas.each do |bebida|
+        @select_bebidas+=1 if @b_saludables.any? { |b| b[:clave] == bebida }
+      end
+      @bebidas = (((@select_bebidas.to_f / @s_bebidas.size.to_f)* 100)* $consumo_p5).round(3)
+
+      @a_saludables = Alimento.find_all_by_tipo("SALUDABLE")
+      @select_alimentos = 0
+      @s_alimentos.each do |alimento|
+        @select_alimentos+=1 if @a_saludables.any? { |b| b[:clave] == alimento }
+      end
+      @alimentos = (((@select_alimentos.to_f / @s_alimentos.size.to_f)* 100)* $consumo_p5).round(3)
+
+      @bo_saludables = Botana.find_all_by_tipo("SALUDABLE")
+      @select_botanas = 0
+      @s_botanas.each do |botana|
+        @select_botanas+=1 if @bo_saludables.any? { |b| b[:clave] == botana }
+      end
+      @botanas = (((@select_botanas.to_f / @s_botanas.size.to_f)* 100)* $consumo_p5).round(3)
+
+      @r_saludables = Reposteria.find_all_by_tipo("SALUDABLE")
+      @select_reposterias = 0
+      @s_reposterias.each do |reposteria|
+        @select_reposterias+=1 if @r_saludables.any? { |b| b[:clave] == reposteria }
+      end
+      @reposterias = (((@select_reposterias.to_f / @s_reposterias.size.to_f)* 100)* $consumo_p5).round(3)
+
+      (@bebidas + @alimentos + @botanas + @reposterias) < 1 ? @cop5 = 0 : @cop5 = (@bebidas + @alimentos + @botanas + @reposterias)
+
+      @s_materials = multiple_selected(@consumo.materials) if @consumo.materials
+      @m_recomendables = Material.find_all_by_tipo("RECOMENDABLES")
+      @select_materials = 0
+      @s_materials.each do |material|
+        @select_materials+=1 if @m_recomendables.any? { |b| b[:clave] == material }
+      end
+      @cop6 = (((@select_materials.to_f / @s_materials.size.to_f)* 100)* $consumo_p6).round(3)
+
+      @s_afisicas = selected(@consumo.frecuencia_afisica) if @consumo.frecuencia_afisica
+      @cop7 = ptos_afisica(@s_afisicas)
+
+      @cop8 = ptos_minutos(@consumo.minutos_activacion_fisica > 30 ? 30 : @consumo.minutos_activacion_fisica)
+
+      @co_maxptos = (($consumo_p2.to_f + $consumo_p3.to_f + $consumo_p4.to_f + $consumo_p5.to_f + $consumo_p6.to_f + $consumo_p7.to_f + $consumo_p8.to_f)*100).round(3)
+      @co_totalptos = (@cop2.to_f + @cop3.to_f + @cop4.to_f + @cop5.to_f + @cop6.to_f + @cop7.to_f + @cop8.to_f).round(3)
+      @co_porcentaje = ((@co_totalptos.to_f * 100) / @co_maxptos.to_f).round(3)
+
+    # -- Participación --
+    @participacion = @diagnostico.participacion if @diagnostico.participacion
+      # -- Operaciones --
+      @pp2 = (((@participacion.capacitacion_salud_ma.to_f / @participacion.num_padres_familia.to_f ) * 100) * $participacion_p2.to_f).round(3)
+      @pp3 = ptos_participacion(@participacion.proy_escolares_ma)
+      @pp4 = ptos_participacion(@participacion.proy_escolares_salud)
+      @pp5 = ptos_participacion(@participacion.act_salud_ma)
+
+      @p_maxptos = (($participacion_p2.to_f + $participacion_p3.to_f + $participacion_p4.to_f + $participacion_p5.to_f)*100).round(3)
+      @p_totalptos = (@pp2.to_f + @pp3.to_f + @pp4.to_f + @pp5.to_f).round(3)
+      @p_porcentaje = ((@p_totalptos.to_f * 100) / @p_maxptos.to_f).round(3)
+
+    if current_user.roles.any? { |b| b[:name] == 'escuela' }
+      render :partial => 'resumen', :layout => 'reporte'
+    else
+      render :partial => 'completo', :layout => 'reporte'
+    end
   end
   
   private
 
   def set_layout
-    (action_name == 'reporte_completo')? 'reporte' : 'diagnostico'
+    (action_name == 'reporte_completo' || action_name == 'reporte_resumen')? 'reporte' : 'diagnostico'
   end
 
 end

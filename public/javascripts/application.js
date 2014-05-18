@@ -398,6 +398,15 @@ function showDesc(obj_select, obj_desc, divField){
     }
 }
 
+function showDescReport(obj_select, obj_desc){
+    var select = document.getElementById(obj_select);
+    var desc = document.getElementById(obj_desc);
+    
+    if(select.value != '0'){ enableTextarea(desc);}
+    else{ disableTextarea(desc); }
+}
+
+
 // Habilita/Deshabilita imagen evidencia si checkbox = "NO"
 function showImage(checkBox, divImage){
     var radio = document.getElementById(checkBox);
