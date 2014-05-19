@@ -323,10 +323,10 @@ a:active {
                        <!-- Verificamos si tiene mensajes en su bandeja -->
                         <%if current_user.numero_mensaje_bandeja > 0%>
                             <td width="34" align="center"><img src="/images/era/iconos/ico_arbol.png" alt="1" width="34" height="17" /></td>
-                            <td width="350" class="Txt_arbol"><%=image_tag ("mensajes/mensajes_recibidos_small.png")%>&nbsp;<a href="/home" class="Txt_arbol"><%=link_to "(#{current_user.numero_mensaje_bandeja}) MENSAJES NUEVOS", {:action => "recibidos", :controller => "mensajes"}, :style => "text-decoration: none; color: #4c8bff;", :title => "BANDEJA DE ENTRADA"%></a></td>
+                            <td width="350" class="Txt_arbol"><%=image_tag ("mensajes/mensajes_recibidos_small.png")%>&nbsp;<a href="/home" class="Txt_arbol"><%=link_to "(#{current_user.numero_mensaje_bandeja}) MENSAJES NUEVOS", {:action => "recibidos", :controller => "mensajes"}, :style => "text-decoration: none; color: #e51414;", :title => "BANDEJA DE ENTRADA"%></a></td>
                         <%else%>
                             <td width="34" align="center"><img src="/images/era/iconos/ico_arbol.png" alt="1" width="34" height="17" /></td>
-                            <td width="350" class="Txt_arbol"><%=image_tag ("mensajes/mensajes.png")%>&nbsp;<a href="/home" class="Txt_arbol"><%=link_to "PLATAFORMA DE MENSAJES", {:action => "list", :controller => "mensajes"}, :style => "text-decoration: none; color: #4c8bff;", :title => "NO HAY MENSAJES NUEVOS"%></a></td>
+                            <td width="350" class="Txt_arbol"><%=image_tag ("mensajes/mensajes.png")%>&nbsp;<a href="/home" class="Txt_arbol"><%=link_to "PLATAFORMA DE MENSAJES", {:action => "list", :controller => "mensajes"}, :style => "text-decoration: none; color: #027bed;", :title => "NO HAY MENSAJES NUEVOS"%></a></td>
                         <%end%>
 
 
