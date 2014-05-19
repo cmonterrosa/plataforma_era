@@ -236,6 +236,18 @@ a:active {
                     <%nombre ||= current_user.nombre %>
                     <%=h link_to "#{nombre}", {:controller => "escuelas", :action => "information_edit" }, :style => "color:#ffffff; text-decoration: none;", :title => "MODIFICA LA INFORMACIÓN DE TU CUENTA"%>
                   </a>
+
+                    <!-- Verificamos si tiene mensajes en su bandeja -->
+                        <%if current_user.numero_mensaje_bandeja > 0%>
+                            <td width="34" align="center"><img src="/images/era/iconos/ico_arbol.png" alt="1" width="34" height="17" /></td>
+                            <td width="350" class="Txt_arbol"><%=image_tag ("mensajes/mensajes_recibidos_small.png")%>&nbsp;<a href="/home" class="Txt_arbol"><%=link_to "(#{current_user.numero_mensaje_bandeja}) MENSAJES NUEVOS", {:action => "recibidos", :controller => "mensajes"}, :style => "text-decoration: none; color: #99ffbb;", :title => "BANDEJA DE ENTRADA"%></a></td>
+                        <%else%>
+                            <td width="34" align="center"><img src="/images/era/iconos/ico_arbol.png" alt="1" width="34" height="17" /></td>
+                            <td width="350" class="Txt_arbol"><%=image_tag ("mensajes/mensajes.png")%>&nbsp;<a href="/home" class="Txt_arbol"><%=link_to "PLATAFORMA DE MENSAJES", {:action => "list", :controller => "mensajes"}, :style => "text-decoration: none; color: #99ffbb;", :title => "NO HAY MENSAJES NUEVOS"%></a></td>
+                        <%end%>
+
+
+
                 </td>
                   <td width="34" align="center"><img src="/images/era/iconos/ico_arbol.png" alt="1" width="34" height="17" /></td>
                   <td width="120" class="Txt_arbol"><a href="/home" class="Txt_arbol"><%=link_to "Cerrar Sesión", {:action => "destroy", :controller => "sessions"}, :style => "color:#FFBF00; text-decoration: none;", :title => "¿ESTÁ SEGURO(A) QUE DESEA SALIR DE LA PLATAFORMA"%></a></td>
