@@ -233,6 +233,10 @@ class DiagnosticosController < ApplicationController
       @p_totalptos = (@pp2.to_f + @pp3.to_f + @pp4.to_f + @pp5.to_f).round(3)
       @p_porcentaje = ((@p_totalptos.to_f * 100) / @p_maxptos.to_f).round(3)
 
+      @max_ptos = @c_maxptos + @e_maxptos + @h_maxptos + @co_maxptos + @p_maxptos
+      @total_ptos = @c_totalptos + @e_totalptos + @h_totalptos + @co_totalptos + @p_totalptos
+      @porcentaje = ((@total_ptos.to_f * 100) / @max_ptos.to_f).round(3)
+
     if current_user.roles.any? { |b| b[:name] == 'escuela' }
       render :partial => 'resumen', :layout => 'reporte'
     else
