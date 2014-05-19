@@ -124,7 +124,7 @@ class DiagnosticosController < ApplicationController
       # -- Operaciones --
       @hp1 = (((@huella.capacitacion_ahorro_energia.to_f / 2 ) * 100) * $huella_p1.to_f).round(3)
 
-      @huella.consumo_anterior > @huella.consumo_actual ? @hp2 = $huella_p2 * 100 : @hp2 = 0
+      @huella.consumo_anterior.to_f > @huella.consumo_actual.to_f ? @hp2 = $huella_p2 * 100 : @hp2 = 0
         
       @s_electricas = selected(@huella.energia_electrica) if @huella.energia_electrica
       @hp3 = (((@huella.focos_ahorradores.to_f / @huella.total_focos.to_f ) * 100) * $huella_p3.to_f).round(3)
