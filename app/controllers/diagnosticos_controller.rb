@@ -121,7 +121,7 @@ class DiagnosticosController < ApplicationController
       
       @e_maxptos = (($entorno_p2.to_f + $entorno_p6.to_f)*100).round(3)
       @e_totalptos = (@ep2.to_f + @ep6.to_f).round(3)
-      @e_porcentaje = @e_totalptos.to_i > 0 ? ((@e_totalptos.to_f * 100) / @e_maxptos.to_f).round(3) : 0
+      @e_porcentaje = @e_totalptos.to_f > 0 ? ((@e_totalptos.to_f * 100) / @e_maxptos.to_f).round(3) : 0
 
     # -- Huella ---
     @huella = @diagnostico.huella if @diagnostico.huella
@@ -153,7 +153,7 @@ class DiagnosticosController < ApplicationController
 
       @h_maxptos = (($huella_p1.to_f + $huella_p2.to_f + $huella_p3.to_f + $huella_p4.to_f + $huella_p5.to_f + $huella_p6.to_f + $huella_p7.to_f + $huella_p8.to_f + $huella_p9.to_f)*100).round(3)
       @h_totalptos = (@hp1.to_f + @hp2.to_f + @hp3.to_f + @hp4.to_f + @hp5.to_f + @hp6.to_f + @hp7.to_f + @hp8.to_f + @hp9.to_f).round(3)
-      @h_porcentaje = @h_totalptos.to_i > 0 ? ((@h_totalptos.to_f * 100) / @h_maxptos.to_f).round(3) : 0
+      @h_porcentaje = @h_totalptos.to_f > 0 ? ((@h_totalptos.to_f * 100) / @h_maxptos.to_f).round(3) : 0
 
     # -- Consumos --
     @consumo = @diagnostico.consumo if @diagnostico.consumo
@@ -227,7 +227,7 @@ class DiagnosticosController < ApplicationController
 
       @co_maxptos = (($consumo_p2.to_f + $consumo_p3.to_f + $consumo_p4.to_f + $consumo_p5.to_f + $consumo_p6.to_f + $consumo_p7.to_f + $consumo_p8.to_f)*100).round(3)
       @co_totalptos = (@cop2.to_f + @cop3.to_f + @cop4.to_f + @cop5.to_f + @cop6.to_f + @cop7.to_f + @cop8.to_f).round(3)
-      @co_porcentaje = @co_totalptos.to_i > 0 ? ((@co_totalptos.to_f * 100) / @co_maxptos.to_f).round(3) : 0
+      @co_porcentaje = @co_totalptos.to_f > 0 ? ((@co_totalptos.to_f * 100) / @co_maxptos.to_f).round(3) : 0
 
     # -- Participación --
     @participacion = @diagnostico.participacion if @diagnostico.participacion
