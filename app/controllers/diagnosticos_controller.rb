@@ -175,7 +175,7 @@ class DiagnosticosController < ApplicationController
       @t_preparacions = Preparacion.all
       @t_utensilios = Utensilio.all
       @t_higiene = Higiene.all
-      @cop4 = ((((@s_preparacions.size + @s_utensilios.size + @s_higienes.size).to_f / (@t_preparacions.size + @t_utensilios.size + @t_higiene.size).to_f) * 100 ) * $consumo_p4.to_f).round(3)
+      @cop4 = (@s_preparacions.size + @s_utensilios.size + @s_higienes.size).to_f > 0 ? ((((@s_preparacions.size + @s_utensilios.size + @s_higienes.size).to_f / (@t_preparacions.size + @t_utensilios.size + @t_higiene.size).to_f) * 100 ) * $consumo_p4.to_f).round(3) : 0
 
       @s_bebidas = multiple_selected(@consumo.bebidas) if @consumo.bebidas
       @s_alimentos = multiple_selected(@consumo.alimentos) if @consumo.alimentos
@@ -187,30 +187,30 @@ class DiagnosticosController < ApplicationController
       @s_bebidas.each do |bebida|
         @select_bebidas+=1 if @b_saludables.any? { |b| b[:clave] == bebida }
       end
-      @bebidas = (((@select_bebidas.to_f / @s_bebidas.size.to_f)* 100)* $consumo_p5).round(3)
+      @bebidas = @select_bebidas.to_f > 0 ? (((@select_bebidas.to_f / @s_bebidas.size.to_f)* 100)* $consumo_p5).round(3) : 0
 
       @a_saludables = Alimento.find_all_by_tipo("SALUDABLE")
       @select_alimentos = 0
       @s_alimentos.each do |alimento|
         @select_alimentos+=1 if @a_saludables.any? { |b| b[:clave] == alimento }
       end
-      @alimentos = (((@select_alimentos.to_f / @s_alimentos.size.to_f)* 100)* $consumo_p5).round(3)
+      @alimentos = @select_alimentos.to_f > 0 ? (((@select_alimentos.to_f / @s_alimentos.size.to_f)* 100)* $consumo_p5).round(3) : 0
 
       @bo_saludables = Botana.find_all_by_tipo("SALUDABLE")
       @select_botanas = 0
       @s_botanas.each do |botana|
         @select_botanas+=1 if @bo_saludables.any? { |b| b[:clave] == botana }
       end
-      @botanas = (((@select_botanas.to_f / @s_botanas.size.to_f)* 100)* $consumo_p5).round(3)
+      @botanas = @select_botanas.to_f > 0 ? (((@select_botanas.to_f / @s_botanas.size.to_f)* 100)* $consumo_p5).round(3) : 0
 
       @r_saludables = Reposteria.find_all_by_tipo("SALUDABLE")
       @select_reposterias = 0
       @s_reposterias.each do |reposteria|
         @select_reposterias+=1 if @r_saludables.any? { |b| b[:clave] == reposteria }
       end
-      @reposterias = (((@select_reposterias.to_f / @s_reposterias.size.to_f)* 100)* $consumo_p5).round(3)
+      @reposterias =  @select_reposterias.to_f > 0 ? (((@select_reposterias.to_f / @s_reposterias.size.to_f)* 100)* $consumo_p5).round(3) : 0
 
-      (@bebidas + @alimentos + @botanas + @reposterias) < 1 ? @cop5 = 0 : @cop5 = (@bebidas + @alimentos + @botanas + @reposterias)
+      @cop5 = (@bebidas + @alimentos + @botanas + @reposterias).to_f > 0 ?  (@bebidas + @alimentos + @botanas + @reposterias) : 0
 
       @s_materials = multiple_selected(@consumo.materials) if @consumo.materials
       @m_recomendables = Material.find_all_by_tipo("RECOMENDABLES")
