@@ -1,6 +1,6 @@
 class DiagnosticosController < ApplicationController
   layout :set_layout
-  before_filter :login_required
+  before_filter :login_required, :except => [:reporte_completo]
   
   def index
     if current_user.has_role?("adminplat") || current_user.has_role?("admin")
