@@ -193,7 +193,7 @@ class DiagnosticosController < ApplicationController
       @s_botanas.each do |botana|
         @select_botanas+=1 if @bo_saludables.any? { |b| b[:clave] == botana }
       end
-      @botanas = (((@select_botanas.to_f / @s_botanas.size.to_f)* 100)* $consumo_p5).round(3)
+      @botanas = (((@select_botanas.to_f / @s_botanas.size.to_f)* 100)* $consumo_p5).round(3) if $consumo_p5
 
       @r_saludables = Reposteria.find_all_by_tipo("SALUDABLE")
       @select_reposterias = 0
