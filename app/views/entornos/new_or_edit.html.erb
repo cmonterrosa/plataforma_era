@@ -21,7 +21,7 @@
             <div class="grid-12-12">
               <div class="grid-4-12"></div>
               <div class="grid-3-12">
-                <%= f.text_field :superficie_terreno_escuela, :onchange => "remove_validation();", :style => "text-align: right;" %>
+                <%= f.text_field :superficie_terreno_escuela, :onFocus => "add_validation();", :style => "text-align: right;" %>
               </div>
               <label class="uper" style="padding: 10px 0;" >M<sup>2</sup></label>
             </div>
@@ -62,7 +62,7 @@
             <div class="grid-12-12">
               <div class="grid-4-12"></div>
               <div class="grid-3-12">
-                <%= f.text_field :superficie_terreno_escuela_av, :onchange => "add_validation();", :style => "text-align: right;" %>
+                <%= f.text_field :superficie_terreno_escuela_av, :onKeyPress => "add_validation();", :style => "text-align: right;" %>
               </div>
               <label class="uper" style="padding: 10px 0;" >M<sup>2</sup></label>
             </div>
@@ -217,7 +217,7 @@
   
   var superficie_terreno_escuela = new LiveValidation( 'entorno_superficie_terreno_escuela' );
   superficie_terreno_escuela.add( Validate.Presence );
-  superficie_terreno_escuela.add( Validate.Numericality );
+  superficie_terreno_escuela.add( Validate.Numericality, {minimum: document.getElementById('entorno_superficie_terreno_escuela_av').value} );
 
   var superficie_terreno_escuela_av = new LiveValidation('entorno_superficie_terreno_escuela_av');
   superficie_terreno_escuela_av.add( Validate.Presence );
@@ -225,12 +225,16 @@
   
   function add_validation(){
     superficie_terreno_escuela_av.remove( Validate.Numericality, {maximum: document.getElementById('entorno_superficie_terreno_escuela').value} );
-    superficie_terreno_escuela_av.removeMessageAndFieldClass();
+    superficie_terreno_escuela_av.add( Validate.Numericality, {maximum: document.getElementById('entorno_superficie_terreno_escuela').value} );
+  }
+  function add_validation2(){
+    superficie_terreno_escuela.remove( Validate.Numericality, {minimum: document.getElementById('entorno_superficie_terreno_escuela_av').value} );
+    superficie_terreno_escuela.add( Validate.Numericality, {minimum: document.getElementById('entorno_superficie_terreno_escuela_av').value} );
   }
 
-  function remove_validation(){
+  /*function remove_validation(){
     superficie_terreno_escuela_av.add( Validate.Numericality, {maximum: document.getElementById('entorno_superficie_terreno_escuela').value});
-  }
+  }*/
 
   var arboles_terreno_escuela = new LiveValidation( 'entorno_arboles_terreno_escuela' );
   arboles_terreno_escuela.add( Validate.Presence );

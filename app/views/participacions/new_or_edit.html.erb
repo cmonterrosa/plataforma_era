@@ -18,7 +18,7 @@
             <div class="grid-12-12">
               <div class="grid-3-12"></div>
               <div class="grid-2-12">
-                <%= f.text_field :num_padres_familia, :style => "text-align: center;", :onkeyup => "showImageNum('participacion_num_padres_familia', 'eje5_p1');", :onfocusout => "updateField();" %>
+                <%= f.text_field :num_padres_familia, :style => "text-align: center;", :onkeyup => "showImageNum('participacion_num_padres_familia', 'eje5_p1');", :onKeyPress => "add_validation();"%>
               </div>
               <div class="grid-1-12"></div>
               <div id="eje5_p1" class="grid-6-12" style="display: none;">
@@ -38,7 +38,7 @@
             <div class="grid-12-12">
               <div class="grid-3-12"></div>
               <div class="grid-2-12">
-                <%= f.text_field :capacitacion_salud_ma, :style => "text-align: center;", :onkeyup => "showImageNum('participacion_capacitacion_salud_ma', 'eje5_p2');"  %>
+                <%= f.text_field :capacitacion_salud_ma, :style => "text-align: center;", :onkeyup => "showImageNum('participacion_capacitacion_salud_ma', 'eje5_p2');", :onKeyPress => "add_validation2();"  %>
               </div>
               <div class="grid-1-12"></div>
               <div id="eje5_p2" class="grid-6-12" style="display: none;">
@@ -178,11 +178,11 @@
 
   var num_padres_familia = new LiveValidation( 'participacion_num_padres_familia' );
   num_padres_familia.add( Validate.Presence );
-  num_padres_familia.add( Validate.Numericality, { onlyInteger: true } );
+  num_padres_familia.add( Validate.Numericality, { minimum: parseInt(document.getElementById("participacion_capacitacion_salud_ma").value)}, { onlyInteger: true } );
 
   var capacitacion_salud_ma = new LiveValidation( 'participacion_capacitacion_salud_ma' );
   capacitacion_salud_ma.add( Validate.Presence );
-  //capacitacion_salud_ma.add( Validate.Numericality, { onlyInteger: true } );
+  capacitacion_salud_ma.add( Validate.Numericality, { maximum: parseInt(document.getElementById("participacion_num_padres_familia").value)}, { onlyInteger: true } );
 
   var proy_escolares_ma_desc = new LiveValidation( 'participacion_proy_escolares_ma_desc' );
   proy_escolares_ma_desc.add( Validate.Presence );
@@ -196,7 +196,12 @@
   var act_dep_gobierno_desc = new LiveValidation( 'participacion_act_dep_gobierno_desc' );
   act_dep_gobierno_desc.add( Validate.Presence );
 
-  function updateField(){
+  function add_validation(){
+    num_padres_familia.remove( Validate.Numericality, { minimum: parseInt(document.getElementById("participacion_capacitacion_salud_ma").value)}, { onlyInteger: true } );
+    num_padres_familia.add( Validate.Numericality, { minimum: parseInt(document.getElementById("participacion_capacitacion_salud_ma").value)}, { onlyInteger: true } );
+  }
+  function add_validation2(){
+    capacitacion_salud_ma.remove( Validate.Numericality, { maximum: parseInt(document.getElementById("participacion_num_padres_familia").value)}, { onlyInteger: true } );
     capacitacion_salud_ma.add( Validate.Numericality, { maximum: parseInt(document.getElementById("participacion_num_padres_familia").value)}, { onlyInteger: true } );
   }
 </script>

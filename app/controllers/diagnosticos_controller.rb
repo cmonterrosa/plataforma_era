@@ -91,20 +91,24 @@ class DiagnosticosController < ApplicationController
     # -- Diagnostico ---
     @competencia = @diagnostico.competencia if @diagnostico.competencia
       # -- Operaciones --
-      @cp1 = (((@competencia.docentes_capacitados_sma.to_i / @escuela.total_personal_docente.to_f ) * 100) * $competencia_p1.to_f).round(3)
-      @cp2 = (((@competencia.docentes_aplican_conocimientos.to_i / @escuela.total_personal_docente.to_f ) * 100) * $competencia_p2.to_f).round(3)
-      @cp3 = (((@competencia.docentes_involucran_actividades.to_i / @escuela.total_personal_docente.to_f ) * 100) * $competencia_p3.to_f).round(3)
-      @cp4 = (((@competencia.alumnos_capacitados_docentes.to_i / @escuela.total_personal_docente.to_f ) * 100) * $competencia_p4.to_f).round(3)
-      @cp5 = (((@competencia.alumnos_capacitados_instituciones.to_i / @escuela.total_personal_docente.to_f ) * 100) * $competencia_p5.to_f).round(3)
+      @cp1 = @competencia.docentes_capacitados_sma.to_i > 0 ? (((@competencia.docentes_capacitados_sma.to_i / @escuela.total_personal_docente.to_f ) * 100) * $competencia_p1.to_f).round(3) : 0
+      @cp2 = @competencia.docentes_aplican_conocimientos.to_i > 0 ? (((@competencia.docentes_aplican_conocimientos.to_i / @escuela.total_personal_docente.to_f ) * 100) * $competencia_p2.to_f).round(3) : 0
+      @cp3 = @competencia.docentes_involucran_actividades.to_i > 0 ? (((@competencia.docentes_involucran_actividades.to_i / @escuela.total_personal_docente.to_f ) * 100) * $competencia_p3.to_f).round(3) : 0
+      @cp4 = @competencia.alumnos_capacitados_docentes.to_i > 0 ? (((@competencia.alumnos_capacitados_docentes.to_i / @escuela.total_personal_docente.to_f ) * 100) * $competencia_p4.to_f).round(3) : 0
+      @cp5 = @competencia.alumnos_capacitados_instituciones.to_i > 0 ? (((@competencia.alumnos_capacitados_instituciones.to_i / @escuela.total_personal_docente.to_f ) * 100) * $competencia_p5.to_f).round(3) : 0
 
       @c_maxptos = (($competencia_p1.to_f + $competencia_p2.to_f + $competencia_p3.to_f + $competencia_p5.to_f + $competencia_p5.to_f)*100).round(3)
       @c_totalptos = (@cp1.to_f + @cp2.to_f + @cp3.to_f + @cp4.to_f + @cp5.to_f).round(3)
-      @c_porcentaje = ((@c_totalptos.to_f * 100) / @c_maxptos.to_f).round(3)
+      @c_porcentaje = @c_totalptos.to_f > 0 ? ((@c_totalptos.to_f * 100) / @c_maxptos.to_f).round(3) : 0
 
     # -- Entorno ---
     @entorno = @diagnostico.entorno if @diagnostico.entorno
       # -- Operaciones --
-      ((@entorno.superficie_terreno_escuela_av.to_f / @entorno.superficie_terreno_escuela.to_f) * 100).round > 25 ? @ep2 = ptos_superficie(25) : @ep2 = ptos_superficie(((@entorno.superficie_terreno_escuela_av.to_f / @entorno.superficie_terreno_escuela.to_f) * 100).round)
+      if @entorno.superficie_terreno_escuela_av.to_f > 0  and @entorno.superficie_terreno_escuela.to_f > 0
+        ((@entorno.superficie_terreno_escuela_av.to_f / @entorno.superficie_terreno_escuela.to_f) * 100).round > 25 ? @ep2 = ptos_superficie(25) : @ep2 = ptos_superficie(((@entorno.superficie_terreno_escuela_av.to_f / @entorno.superficie_terreno_escuela.to_f) * 100).round)
+      else
+        @ep2 = 0
+      end
       
       @s_acciones = multiple_selected_id(@entorno.acciones) if @entorno.acciones
       if @diagnostico.escuela.nivel_descripcion == "BACHILLERATO"
@@ -116,18 +120,22 @@ class DiagnosticosController < ApplicationController
       end
       
       @e_maxptos = (($entorno_p2.to_f + $entorno_p6.to_f)*100).round(3)
-      @e_totalptos = (@ep2.to_f + @ep5.to_f).round(3)
-      @e_porcentaje = ((@e_totalptos.to_f * 100) / @e_maxptos.to_f).round(3)
+      @e_totalptos = (@ep2.to_f + @ep6.to_f).round(3)
+      @e_porcentaje = @e_totalptos.to_i > 0 ? ((@e_totalptos.to_f * 100) / @e_maxptos.to_f).round(3) : 0
 
     # -- Huella ---
     @huella = @diagnostico.huella if @diagnostico.huella
       # -- Operaciones --
-      @hp1 = (((@huella.capacitacion_ahorro_energia.to_f / 2 ) * 100) * $huella_p1.to_f).round(3)
+      @hp1 = @huella.capacitacion_ahorro_energia.to_f > 0 ? (((@huella.capacitacion_ahorro_energia.to_f / 2 ) * 100) * $huella_p1.to_f).round(3) : 0
 
-      @huella.consumo_anterior.to_f > @huella.consumo_actual.to_f ? @hp2 = $huella_p2 * 100 : @hp2 = 0
+      if @huella.consumo_anterior.to_f > 0 and @huella.consumo_actual.to_f > 0
+        @huella.consumo_anterior.to_f > @huella.consumo_actual.to_f ? @hp2 = $huella_p2 * 100 : @hp2 = 0 if @huella.consumo_anterior or @huella.consumo_actual
+      else
+        @hp2 = 0
+      end
         
       @s_electricas = selected(@huella.energia_electrica) if @huella.energia_electrica
-      @hp3 = (((@huella.focos_ahorradores.to_f / @huella.total_focos.to_f ) * 100) * $huella_p3.to_f).round(3)
+      @hp3 = @huella.focos_ahorradores.to_f > 0 ? (((@huella.focos_ahorradores.to_f / @huella.total_focos.to_f ) * 100) * $huella_p3.to_f).round(3) : 0
 
       @s_aguas = selected(@huella.servicio_agua) if @huella.servicio_agua
       @huella.red_publica_agua == "SI" ? @hp4 = $huella_p4 * 100 : @hp4 = 0
@@ -145,7 +153,7 @@ class DiagnosticosController < ApplicationController
 
       @h_maxptos = (($huella_p1.to_f + $huella_p2.to_f + $huella_p3.to_f + $huella_p4.to_f + $huella_p5.to_f + $huella_p6.to_f + $huella_p7.to_f + $huella_p8.to_f + $huella_p9.to_f)*100).round(3)
       @h_totalptos = (@hp1.to_f + @hp2.to_f + @hp3.to_f + @hp4.to_f + @hp5.to_f + @hp6.to_f + @hp7.to_f + @hp8.to_f + @hp9.to_f).round(3)
-      @h_porcentaje = ((@h_totalptos.to_f * 100) / @h_maxptos.to_f).round(3)
+      @h_porcentaje = @h_totalptos.to_i > 0 ? ((@h_totalptos.to_f * 100) / @h_maxptos.to_f).round(3) : 0
 
     # -- Consumos --
     @consumo = @diagnostico.consumo if @diagnostico.consumo
@@ -173,27 +181,6 @@ class DiagnosticosController < ApplicationController
       @s_alimentos = multiple_selected(@consumo.alimentos) if @consumo.alimentos
       @s_botanas = multiple_selected(@consumo.botanas) if @consumo.botanas
       @s_reposterias = multiple_selected(@consumo.reposterias) if @consumo.reposterias
-
-
-
-      #### Agrego valores nulos ####
-      @s_preparacions ||= Array.new
-      @s_utensilios ||= Array.new
-      @s_higienes ||= Array.new
-      @s_higienes ||= Array.new
-      @t_preparacions ||= Array.new
-      @t_utensilios ||= Array.new
-      @t_utensilios ||= Array.new
-      @t_higiene ||= Array.new
-      @s_bebidas ||= Array.new
-      @s_alimentos ||= Array.new
-      @s_reposterias ||= Array.new
-      @botanas ||= Array.new
-
-
-
-
-
 
       @b_saludables = Bebida.find_all_by_tipo("SALUDABLE")
       @select_bebidas = 0
@@ -240,19 +227,19 @@ class DiagnosticosController < ApplicationController
 
       @co_maxptos = (($consumo_p2.to_f + $consumo_p3.to_f + $consumo_p4.to_f + $consumo_p5.to_f + $consumo_p6.to_f + $consumo_p7.to_f + $consumo_p8.to_f)*100).round(3)
       @co_totalptos = (@cop2.to_f + @cop3.to_f + @cop4.to_f + @cop5.to_f + @cop6.to_f + @cop7.to_f + @cop8.to_f).round(3)
-      @co_porcentaje = ((@co_totalptos.to_f * 100) / @co_maxptos.to_f).round(3)
+      @co_porcentaje = @co_totalptos.to_i > 0 ? ((@co_totalptos.to_f * 100) / @co_maxptos.to_f).round(3) : 0
 
     # -- Participación --
     @participacion = @diagnostico.participacion if @diagnostico.participacion
       # -- Operaciones --
-      @pp2 = (((@participacion.capacitacion_salud_ma.to_f / @participacion.num_padres_familia.to_f ) * 100) * $participacion_p2.to_f).round(3)
-      @pp3 = ptos_participacion(@participacion.proy_escolares_ma)
-      @pp4 = ptos_participacion(@participacion.proy_escolares_salud)
-      @pp5 = ptos_participacion(@participacion.act_salud_ma)
+      @pp2 = @participacion.num_padres_familia.to_i > 0 ? (((@participacion.capacitacion_salud_ma.to_f / @participacion.num_padres_familia.to_f ) * 100) * $participacion_p2.to_f).round(3) : 0
+      @pp3 = @participacion.proy_escolares_ma.to_i > 0 ? ptos_participacion(@participacion.proy_escolares_ma) : 0
+      @pp4 = @participacion.proy_escolares_salud.to_i > 0 ? ptos_participacion(@participacion.proy_escolares_salud) : 0
+      @pp5 = @participacion.act_salud_ma.to_i > 0 ? ptos_participacion(@participacion.act_salud_ma) : 0
 
       @p_maxptos = (($participacion_p2.to_f + $participacion_p3.to_f + $participacion_p4.to_f + $participacion_p5.to_f)*100).round(3)
       @p_totalptos = (@pp2.to_f + @pp3.to_f + @pp4.to_f + @pp5.to_f).round(3)
-      @p_porcentaje = ((@p_totalptos.to_f * 100) / @p_maxptos.to_f).round(3)
+      @p_porcentaje = @p_totalptos.to_f > 0 ? ((@p_totalptos.to_f * 100) / @p_maxptos.to_f).round(3) : 0
 
       @max_ptos = @c_maxptos + @e_maxptos + @h_maxptos + @co_maxptos + @p_maxptos
       @total_ptos = @c_totalptos + @e_totalptos + @h_totalptos + @co_totalptos + @p_totalptos
