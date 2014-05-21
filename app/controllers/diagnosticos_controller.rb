@@ -174,6 +174,26 @@ class DiagnosticosController < ApplicationController
       @s_botanas = multiple_selected(@consumo.botanas) if @consumo.botanas
       @s_reposterias = multiple_selected(@consumo.reposterias) if @consumo.reposterias
 
+
+
+      #### Agrego valores nulos ####
+      @s_preparacions ||= Array.new
+      @s_utensilios ||= Array.new
+      @s_higienes ||= Array.new
+      @s_higienes ||= Array.new
+      @t_preparacions ||= Array.new
+      @t_utensilios ||= Array.new
+      @t_utensilios ||= Array.new
+      @t_higiene ||= Array.new
+      @s_bebidas ||= Array.new
+      @s_alimentos ||= Array.new
+      @s_reposterias ||= Array.new
+
+
+
+
+
+
       @b_saludables = Bebida.find_all_by_tipo("SALUDABLE")
       @select_bebidas = 0
       @s_bebidas.each do |bebida|
