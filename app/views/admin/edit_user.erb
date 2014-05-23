@@ -17,7 +17,19 @@
     <%nombre ||= (directivo) ? "#{directivo} (Directivo)" : nil%>
   <%end%>
   <%nombre ||= "#{@user.nombre} (Usuario)"%>
-    <div class="grid-8-12"><label style=" text-decoration: underline;" >" <%= nombre %> "</label></div>
+
+    <!-- Nombre de escuela -->
+     <%if current_user.has_role?("admin-plat")%>
+      <%if escuela%>
+        <div class="grid-8-12 clear">
+          <label>Nombre del centro escolar: </label>
+          <%= text_field "escuela", "nombre", :value => nombre %>
+        </div>
+        <%else%>
+          <div class="grid-8-12"><label style=" text-decoration: underline;" >" <%= nombre %> "</label></div>
+      <%end%>
+    <%end%>
+
 
     <div class="grid-6-12 clear">
       <label>Nombre de quien registró: </label>
@@ -44,15 +56,35 @@
 </div>
 <% end %>
 
+
+
+<%if current_user.has_role?("admin-plat")%>
+
 <script type="text/javascript">
+  var nombre_escuela = new LiveValidation( 'escuela_nombre', {onlyOnSubmit: true } );
+  nombre_escuela.add( Validate.Presence );
   var nombre = new LiveValidation( 'user_nombre', {onlyOnSubmit: true } );
   nombre.add( Validate.Presence );
   var email = new LiveValidation( 'user_email' );
   email.add( Validate.Email );
-
-  var password = new LiveValidation( 'user_password' );
-  password.add( Validate.Presence, {onlyOnSubmit: true } );
-  password.add( Validate.Length, { minimum: 6 } );
   var password_confirmation = new LiveValidation( 'user_password_confirmation' );
   password_confirmation.add( Validate.Confirmation, { match: 'user_password'} );
 </script>
+
+
+<%else%>
+  <script type="text/javascript">
+    var nombre = new LiveValidation( 'user_nombre', {onlyOnSubmit: true } );
+    nombre.add( Validate.Presence );
+    var email = new LiveValidation( 'user_email' );
+    email.add( Validate.Email );
+    var password = new LiveValidation( 'user_password' );
+    password.add( Validate.Presence, {onlyOnSubmit: true } );
+    password.add( Validate.Length, { minimum: 6 } );
+    var password_confirmation = new LiveValidation( 'user_password_confirmation' );
+    password_confirmation.add( Validate.Confirmation, { match: 'user_password'} );
+</script>
+<%end%>
+
+
+

@@ -40,8 +40,11 @@ class AdminController < ApplicationController
     @user = User.find(params[:id])
     @user.update_attributes(params[:user])
     @user.activated_at ||= Time.now
+    escuela = Escuela.find_by_clave(@user.login)? Escuela.find_by_clave(@user.login) : nil
     success = @user && @user.save
     if success && @user.errors.empty?
+      ##### Actualizamos escuela si es el caso ####
+      escuela.update_attributes!(:nombre => params["escuela"]["nombre"]) if current_user.has_role?("admin-plat") && params["escuela"]["nombre"]
       flash[:notice] = "Los datos se actualizaron correctamente"
       redirect_to :controller => "admin", :action => "show_users"
     else
