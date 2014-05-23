@@ -68,7 +68,7 @@ class HuellasController < ApplicationController
 #        @s_elimina_organicos = multiple_selected_id(@huella.elimina_organicos) if @huella.elimina_organicos
         @ahorradores = Array.new
         @ahorradores << (@huella.focos_ahorradores.to_i) if @huella.focos_ahorradores
-        @focos = 0..99
+        @focos = 0..499
         flash[:error] = "No se pudo guardar, verifique los datos"
         flash[:evidencias] = @huella.errors.full_messages.join(", ")
         render :action => "new_or_edit"
