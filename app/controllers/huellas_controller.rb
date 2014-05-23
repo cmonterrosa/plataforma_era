@@ -12,7 +12,7 @@ class HuellasController < ApplicationController
     @s_elimina_residuos = multiple_selected_id(@huella.elimina_residuos) if @huella.elimina_residuos
     @ahorradores = Array.new
     @ahorradores << (@huella.focos_ahorradores.to_i) if @huella.focos_ahorradores
-    @focos = 0..99
+    @focos = 0..499
   end
 
   def save
