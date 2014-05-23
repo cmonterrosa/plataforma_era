@@ -255,7 +255,7 @@ class DiagnosticosController < ApplicationController
   private
 
   def set_layout
-    (action_name == 'reporte_completo' || action_name == 'reporte_resumen')? 'reporte' : 'diagnostico'
+    (action_name == 'reporte_completo' || action_name == 'reporte_resumen' || action_name == 'reporte')? 'reporte' : 'diagnostico'
   end
 
 end
