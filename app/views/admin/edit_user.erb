@@ -19,7 +19,7 @@
   <%nombre ||= "#{@user.nombre} (Usuario)"%>
 
     <!-- Nombre de escuela -->
-     <%if current_user.has_role?("admin-plat")%>
+     <%if current_user.has_role?("adminplat")%>
       <%if escuela%>
         <div class="grid-8-12 clear">
           <label>Nombre del centro escolar: </label>

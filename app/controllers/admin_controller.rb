@@ -3,7 +3,7 @@ class AdminController < ApplicationController
   #protect_from_forgery
   require_role [:directivo], :only => [:show_escuelas]
   require_role [:admin], :for => ["show_respaldos"]
-  #require_role [:admin]
+  require_role [:admin, :adminplat]
 
 
   
@@ -44,7 +44,7 @@ class AdminController < ApplicationController
     success = @user && @user.save
     if success && @user.errors.empty?
       ##### Actualizamos escuela si es el caso ####
-      escuela.update_attributes!(:nombre => params["escuela"]["nombre"]) if current_user.has_role?("admin-plat") && params["escuela"]["nombre"]
+      escuela.update_attributes!(:nombre => params["escuela"]["nombre"]) if current_user.has_role?("adminplat") && params["escuela"]["nombre"]
       flash[:notice] = "Los datos se actualizaron correctamente"
       redirect_to :controller => "admin", :action => "show_users"
     else
@@ -262,8 +262,8 @@ class AdminController < ApplicationController
       nivel = Nivel.find_by_descripcion("EXTRAESCOLAR")
       @escuela.clave = params[:escuela][:clave].strip
       @escuela.comunitaria = true
-      @escuela.nivel_id = nivel.id
-      @escuela.nivel_descripcion = nivel.descripcion
+      @escuela.nivel_id = nivel.id if nivel
+      @escuela.nivel_descripcion = nivel.descripcion if nivel
 
       if @escuela.save
         flash[:notice] = "Registro guardado correctamente"
