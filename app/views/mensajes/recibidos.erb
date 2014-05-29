@@ -2,6 +2,16 @@
 <br />
 
 
+
+<div class="formee-msg-info">
+    <h3>Mensajes en bandeja</h3>
+    <ul>
+      <li>Los registros en color <span style="background-color: yellow;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>,  aún no han sido leídos</li>
+    </ul>
+  </div>
+
+
+
 <!-- Menú de administrador -->
 <div class="titulos">
   <p>
@@ -22,13 +32,15 @@
     <%clase=0%>
     <%contador=1%>
     <%@recibidos.each do |r|%>
-        <tr class="d<%=invert_class(clase)%>">
+
+        <%clase = (r.leido_at) ? "d0": "noleido"%>
+
+        <tr class="<%=clase%>">
         <td style="vertical-align: middle; text-align: center;"><%=contador%></td>
         <td style="vertical-align: middle; text-align: center;"><%=r.created_at.strftime("%d de %b de %Y - %H:%M")%></td>
         <td style="vertical-align: middle;"><%=link_to r.remitente, {:action => "show", :id => r}, :style => "text-decoration: none; color: #404040;"%></td>
         <td style="vertical-align: middle;"><%=link_to r.asunto, {:action => "show", :id => r}, :style => "text-decoration: none; color: #404040;"%></td>
         <td style="vertical-align: middle;"><%= button_to 'Eliminar', {:action => "destroy", :id => r}, :confirm => '¿Esta seguro que desea eliminar el mensaje?', :method => :post, :class => 'boton' %></td>
-        <%clase = invert_class(clase)%>
         <%contador+=1%>
     </tr>
     <%end%>

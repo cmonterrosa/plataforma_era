@@ -270,3 +270,18 @@ background-color:#ffffff;
 	position:relative;
 	top:1px;
 }
+
+
+.leido {
+
+    background-color: inherit;
+    color: gray;
+    font-style: italic;
+
+}
+
+.noleido {
+    background-color: yellow;
+    color: blue;
+    font-style: oblique;
+}
