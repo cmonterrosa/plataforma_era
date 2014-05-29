@@ -121,10 +121,12 @@ class MensajesController < ApplicationController
     @mensaje.recibe_id =  (params[:recibe_id]) ? User.find(params[:recibe_id]).id : nil
     @mensaje.envia_id = current_user.id unless @mensaje.envia_id
     @mensaje.activo = true unless @mensaje.activo
-    @mensaje.asunto = "Comentarios y correcciones de evidencias del diagnóstico"
+    @mensaje.asunto = "Comentarios y correcciones de evidencias del diagnóstico, haga click en la liga en color rojo"
     @mensaje.descripcion = @diagnostico.observaciones_evidencias if @diagnostico
     @mensaje.url_notificacion_sistema = "#{url_for :host => SITE_URL, :action => "reporte_evidencias_diagnostico", :controller => 'upload', :diagnostico => params[:diagnostico], :id => params[:user]}"
     if @mensaje.save
+        ##### Cambiamo estatus para marcar que el diagnostico ha sido revisado ####
+        @diagnostico.escuela.update_bitacora!("diag-rev", current_user) if @diagnostico.escuela
         flash[:notice] = "Se envío reporte de evidencias a la escuela correspondiente"
         redirect_to :controller => "admin", :action => "menu_escuela", :id => params[:user]
     end

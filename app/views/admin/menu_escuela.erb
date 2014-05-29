@@ -8,6 +8,12 @@
     <div id="prellenado" style="background:#ebf7aa;">
 
       <div class="grid-4-12">
+        <label style=" font-weight: bold;">Estatus actual:</label>
+        <label style=" font-style: italic;"><%=h (@escuela.estatu) ?  @escuela.estatu.descripcion : "No existe información" %></label>
+      </div>
+
+
+      <div class="grid-4-12">
         <label style=" font-weight: bold;">Clave de la Escuela:</label>
         <label style=" font-style: italic;"><%= @escuela.clave %></label>
       </div>
