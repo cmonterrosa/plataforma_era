@@ -259,11 +259,18 @@ class AdminController < ApplicationController
   def save_comunitaria
     unless Escuela.find_by_clave(params[:escuela][:clave].strip)
       @escuela = Escuela.new
-      nivel = Nivel.find_by_descripcion("EXTRAESCOLAR")
+      nivel = params[:comunitaria] ? Nivel.find_by_descripcion("COMUNITARIA") : Nivel.find_by_clave(params[:escuela][:nivel_id])
       @escuela.clave = params[:escuela][:clave].strip
-      @escuela.comunitaria = true
-      @escuela.nivel_id = nivel.id if nivel
-      @escuela.nivel_descripcion = nivel.descripcion if nivel
+      
+      if params[:comunitaria]
+        @escuela.comunitaria = true
+        @escuela.nivel_id = nivel.id if nivel
+        @escuela.nivel_descripcion = nivel.descripcion if nivel
+      else
+        @escuela.agregada_usuario = true
+        @escuela.nivel_id = nivel.id if nivel
+        @escuela.nivel_descripcion = nivel.descripcion if nivel
+      end
 
       if @escuela.save
         flash[:notice] = "Registro guardado correctamente"

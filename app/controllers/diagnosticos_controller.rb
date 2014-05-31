@@ -86,7 +86,8 @@ class DiagnosticosController < ApplicationController
   end
 
   def reporte_completo
-    @diagnostico = Diagnostico.find(Base64.decode64(params[:id])) if params[:id]
+#    @diagnostico = Diagnostico.find(Base64.decode64(params[:id])) if params[:id]
+    @diagnostico = Diagnostico.find(params[:id]) if params[:id]
     @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
     # -- Diagnostico ---
     @competencia = @diagnostico.competencia if @diagnostico.competencia
@@ -175,7 +176,12 @@ class DiagnosticosController < ApplicationController
       @t_preparacions = Preparacion.all
       @t_utensilios = Utensilio.all
       @t_higiene = Higiene.all
-      @cop4 = (@s_preparacions.size + @s_utensilios.size + @s_higienes.size).to_f > 0 ? ((((@s_preparacions.size + @s_utensilios.size + @s_higienes.size).to_f / (@t_preparacions.size + @t_utensilios.size + @t_higiene.size).to_f) * 100 ) * $consumo_p4.to_f).round(3) : 0
+
+      @preparacions = @s_preparacions.size > 0 ? (((@s_preparacions.size.to_f / @t_preparacions.size.to_f) * 100) * $consumo_p4) : 0
+      @utensilios = @s_utensilios.size > 0 ? (((@s_utensilios.size.to_f / @t_utensilios.size.to_f) * 100) * $consumo_p4) : 0
+      @higienes = @s_higienes.size > 0 ? (((@s_higienes.size.to_f / @t_higiene.size.to_f) * 100) * $consumo_p4) : 0
+
+      @cop4 = (@s_preparacions.size + @s_utensilios.size + @s_higienes.size).to_f > 0 ? (@preparacions + @utensilios + @higienes).round(3) : 0
 
       @s_bebidas = multiple_selected(@consumo.bebidas) if @consumo.bebidas
       @s_alimentos = multiple_selected(@consumo.alimentos) if @consumo.alimentos
@@ -225,7 +231,7 @@ class DiagnosticosController < ApplicationController
 
       @cop8 = ptos_minutos(@consumo.minutos_activacion_fisica > 30 ? 30 : @consumo.minutos_activacion_fisica)
 
-      @co_maxptos = (($consumo_p2.to_f + $consumo_p3.to_f + $consumo_p4.to_f + $consumo_p5.to_f + $consumo_p6.to_f + $consumo_p7.to_f + $consumo_p8.to_f)*100).round(3)
+      @co_maxptos = (($consumo_p2.to_f + $consumo_p3.to_f + ($consumo_p4.to_f * 3) + ($consumo_p5.to_f * 4) + $consumo_p6.to_f + $consumo_p7.to_f + $consumo_p8.to_f)*100 ).round(3)
       @co_totalptos = (@cop2.to_f + @cop3.to_f + @cop4.to_f + @cop5.to_f + @cop6.to_f + @cop7.to_f + @cop8.to_f).round(3)
       @co_porcentaje = @co_totalptos.to_f > 0 ? ((@co_totalptos.to_f * 100) / @co_maxptos.to_f).round(3) : 0
 
@@ -241,8 +247,9 @@ class DiagnosticosController < ApplicationController
       @p_totalptos = (@pp2.to_f + @pp3.to_f + @pp4.to_f + @pp5.to_f).round(3)
       @p_porcentaje = @p_totalptos.to_f > 0 ? ((@p_totalptos.to_f * 100) / @p_maxptos.to_f).round(3) : 0
 
-      @max_ptos = @c_maxptos + @e_maxptos + @h_maxptos + @co_maxptos + @p_maxptos
-      @total_ptos = @c_totalptos + @e_totalptos + @h_totalptos + @co_totalptos + @p_totalptos
+    # -- Totales --
+      @max_ptos = (@c_maxptos + @e_maxptos + @h_maxptos + @co_maxptos + @p_maxptos).to_f.round(3)
+      @total_ptos = (@c_totalptos + @e_totalptos + @h_totalptos + @co_totalptos + @p_totalptos).to_f.round(3)
       @porcentaje = ((@total_ptos.to_f * 100) / @max_ptos.to_f).round(3)
 
     if current_user.roles.any? { |b| b[:name] == 'escuela' }

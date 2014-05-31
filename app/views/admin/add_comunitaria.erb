@@ -8,16 +8,25 @@
 
   <% form_for :escuela, :url => { :action => "save_comunitaria" }, :html => {:class => "formee", :name => "escuela"} do |f| -%>
   <fieldset style="margin:0px;padding:0px;">
-    <legend style="font-size:18px;">Agregar&nbsp;Escuela&nbsp;Comunitaria</legend>
+    <legend style="font-size:18px;">Agregar&nbsp;Escuela&nbsp;</legend>
 
    
     <div class="grid-12-12 clear"></div>
 
-    <div class="grid-4-12"></div>
-    <div class="grid-4-12">
+    <div class="grid-2-12"></div>
+    <div class="grid-3-12">
       <label>Clave de la Escuela: <em class="formee-req">*</em></label>
       <%= f.text_field :clave %>
     </div>
+    <div class="grid-3-12" >
+      <label>Nivel: <em class="formee-req">*</em></label>
+      <%= f.select :nivel_id, Nivel.all.collect {|n| [n.descripcion, n.clave]} %>
+    </div>
+    <div class="grid-3-12">
+      <label>Comunitaria: </label>
+      <label><%= check_box_tag :comunitaria, true %></label>
+    </div>
+
     
     <div class="grid-12-12 clear"></div>
 

@@ -27,81 +27,81 @@ module Functions
     return @selected
   end
 
-  $competencia_p1 = 0.03225
-  $competencia_p2 = 0.03225
-  $competencia_p3 = 0.03225
-  $competencia_p4 = 0.03225
-  $competencia_p5 = 0.03225
+  $competencia_p1 = 0.03125
+  $competencia_p2 = 0.03125
+  $competencia_p3 = 0.03125
+  $competencia_p4 = 0.03125
+  $competencia_p5 = 0.03125
 
-  $entorno_p2 = 0.03225
-  $entorno_p6 = 0.03225
+  $entorno_p2 = 0.03125
+  $entorno_p6 = 0.03125
 
   def ptos_superficie(porcentaje)
     case porcentaje
     when 0
       return 0
     when 1
-      return 0.1288
+      return 0.125
     when 2
-      return 0.2576
+      return 0.25
     when 3
-      return 0.3864
+      return 0.375
     when 4
-      return 0.5152
+      return 0.5
     when 5
-      return 0.644
+      return 0.625
     when 6
-      return 0.7728
+      return 0.75
     when 7
-      return 0.9016
+      return 0.875
     when 8
-      return 1.0304
+      return 1
     when 9
-      return 1.1592
+      return 1.125
     when 10
-      return 1.288
+      return 1.25
     when 11
-      return 1.4168
+      return 1.375
     when 12
-      return 1.5456
+      return 1.5
     when 13
-      return 1.6744
+      return 1.625
     when 14
-      return 1.8032
+      return 1.75
     when 15
-      return 1.932
+      return 1.875
     when 16
-      return 2.0608
+      return 2
     when 17
-      return 2.1896
+      return 2.125
     when 18
-      return 2.3184
+      return 2.25
     when 19
-      return 2.4472
+      return 2.375
     when 20
-      return 2.576
+      return 2.5
     when 21
-      return 2.7048
+      return 2.625
     when 22
-      return 2.8336
+      return 2.75
     when 23
-      return 2.9624
+      return 2.875
     when 24
-      return 3.0912
+      return 3
     when 25
-      return 3.225
+      return 3.125
     end
   end
 
-  $huella_p1 = 0.03225
-  $huella_p2 = 0.03225
-  $huella_p3 = 0.03225
-  $huella_p4 = 0.03225
-  $huella_p5 = 0.03225
-  $huella_p6 = 0.03225
-  $huella_p7 = 0.03225
-  $huella_p8 = 0.03225
-  $huella_p9 = 0.03225
+  $huella_p1 = 0.03125
+  $huella_p2 = 0.03125
+  $huella_p3 = 0.03125
+  $huella_p4 = 0.03125
+  $huella_p5 = 0.03125
+  $huella_p6 = 0.03125
+  $huella_p7 = 0.03125
+  $huella_p8 = 0.03125
+  $huella_p9 = 0.03125
 
   def ptos_inorganicos(porcentaje)
     case porcentaje
@@ -110,13 +110,13 @@ module Functions
     when 1
       return 0.645
     when 2
-      return 1.29
+      return 1.25
     when 3
-      return 1.935
+      return 1.875
     when 4
-      return 2.58
+      return 2.5
     when 5
-      return 3.225
+      return 3.125
     end
   end
 

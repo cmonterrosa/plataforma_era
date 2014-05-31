@@ -65,7 +65,7 @@
           <div class="grid-12-12 clear"></div>
           <div class="grid-6-12">
             <label>La institución educativa participa en algún programa: ¿Cúal?<em class="formee-req">*</em></label>
-            <fieldset style="padding: 5px 5px 5px 5px;" class="rpt">
+            <fieldset style="padding: 5px 5px 5px 5px;margin: 5px 5px 5px 5px;" class="rpt">
               <div id="programas">
                 <% Programa.find(:all).each do |c| %>
                   <%= check_box_tag "programas[#{c.id}]", c.clave, @s_programas.include?(c.id) ? true : false, :onclick => "checkRadioD(this, 'escuela_programa_desc')" %>&nbsp;<%= c.descripcion %><br />
@@ -144,7 +144,7 @@
             <%= f.text_field :total_personal_apoyo, :class => "rpt"  %>
           </div>-->
           <div class="grid-8-12">
-        <fieldset>
+        <fieldset  style="padding: 5px 5px 5px 5px;margin: 5px 5px 5px 5px;">
           <legend style=" font-size: 14px;" >Total personal:</legend>
           <div class="grid-2-12">
             <%@td = @escuela.doc_hom.to_i + @escuela.doc_muj.to_i%>
@@ -183,7 +183,7 @@
       </div>
 
       <div class="grid-4-12">
-        <fieldset>
+        <fieldset  style="padding: 5px 5px 5px 5px;margin: 5px 5px 5px 5px;">
           <legend style=" font-size: 14px;" >Total de alumnos:</legend>
           <div class="grid-6-12">
             <label>Mujeres: <em class="formee-req">*</em></label>

@@ -12,11 +12,59 @@
     <legend>Registro&nbsp;de&nbsp;Escuelas</legend>
 
     <div id="prellenado" style="background:#ebf7aa;">
-      <div class="grid-4-12">
+      <div class="grid-3-12">
         <label style=" font-weight: bold;">Clave:</label>
         <label style=" font-style: italic;"><%= @escuela.clave %></label>
       </div>
+      <% if @escuela.agregada_usuario %>
+      <div class="grid-9-12">
+        <label style=" font-weight: bold;">Nombre de la Escuela:</label>
+        <%= f.text_field :nombre %>
+      </div>
+
+      <div class="grid-4-12">
+        <label style=" font-weight: bold;">Zona Escolar:</label>
+        <%= f.text_field :zona_escolar %>
+      </div>
+      <div class="grid-4-12">
+        <label style=" font-weight: bold;">Sector:</label>
+        <%= f.text_field :sector %>
+      </div>
+      <div class="grid-4-12">
+        <label style=" font-weight: bold;">Turno:</label>
+        <%= f.select :turno, ['MATUTINO', 'VESPERTINO', 'MIXTO', 'DISCONTINUO'], {:include_blank => true } %>
+      </div>
+
+      <div class="grid-4-12" clear ></div>
+
+      <div class="grid-4-12">
+        <label style=" font-weight: bold;">Nivel:</label>
+        <label style=" font-style: italic;"><%= @escuela.nivel_descripcion %></label>
+      </div>
       <div class="grid-8-12">
+        <label style=" font-weight: bold;">Modalidad:</label>
+        <%= f.text_field :modalidad %>
+      </div>
+
+      <div class="grid-8-12">
+        <label style=" font-weight: bold;">Domicilio:</label>
+        <%= f.text_field :domicilio %>
+      </div>
+      <div class="grid-4-12">
+        <label style=" font-weight: bold;">Telefono:</label>
+        <%= f.text_field :telefono %>
+      </div>
+
+      <div class="grid-8-12">
+        <label style=" font-weight: bold;">Localidad:</label>
+        <%= f.text_field :localidad %>
+      </div>
+      <div class="grid-4-12">
+        <label style=" font-weight: bold;">Municipio:</label>
+        <%= f.text_field :municipio %>
+      </div>
+      <% else %>
+      <div class="grid-9-12">
         <label style=" font-weight: bold;">Nombre de la Escuela:</label>
         <label style=" font-style: italic;"><%= @escuela.nombre %></label>
       </div>
@@ -60,6 +108,7 @@
         <label style=" font-weight: bold;">Municipio:</label>
         <label style=" font-style: italic;"><%= @escuela.municipio %></label>
       </div>
+      <% end %>
     </div>
     
     <!-- categoria -->
@@ -192,10 +241,36 @@
   <%end%>
 </div>
 
+<% if @escuela.agregada_usuario %>
+<script type="text/javascript">
+  var nombre = new LiveValidation( 'escuela_nombre', {onlyOnSubmit: true} );
+  nombre.add( Validate.Presence );
+  var zona_escolar = new LiveValidation( 'escuela_zona_escolar' );
+  <%#*zona_escolar.add( Validate.Presence );%>
+  zona_escolar.add( Validate.Numericality, {onlyInteger: true} );
+  var sector = new LiveValidation( 'escuela_sector' );
+  <%#*sector.add( Validate.Presence );%>
+  sector.add( Validate.Numericality, {onlyInteger: true} );
+  <%#*var turno = new LiveValidation( 'escuela_turno', {onlyOnSubmit: true} );%>
+  <%#*turno.add( Validate.Presence );%>
+  <%#*var modalidad = new LiveValidation( 'escuela_modalidad', {onlyOnSubmit: true} );%>
+  <%#*modalidad.add( Validate.Presence );%>
+  var telefono = new LiveValidation( 'escuela_telefono' );
+  telefono.add( Validate.Numericality, {onlyInteger: true} );
+
+  var domicilio = new LiveValidation( 'escuela_domicilio', {onlyOnSubmit: true} );
+  domicilio.add( Validate.Presence );
+  var localidad = new LiveValidation( 'escuela_localidad', {onlyOnSubmit: true} );
+  localidad.add( Validate.Presence );
+  var municipio = new LiveValidation( 'escuela_municipio', {onlyOnSubmit: true} );
+  municipio.add( Validate.Presence );
+</script>
+<% end %>
+
 <script type="text/javascript">
   showDescription('escuela_categoria_escuela_id','escuela_categoria_desc');
   checkRadioD("programas", 'escuela_programa_desc');
-
+  
   var categoria_desc = new LiveValidation( 'escuela_categoria_desc', {onlyOnSubmit: true} );
   categoria_desc.add( Validate.Presence );
   var programa_desc = new LiveValidation( 'escuela_programa_desc', {onlyOnSubmit: true} );
