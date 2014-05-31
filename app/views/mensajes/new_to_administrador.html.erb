@@ -9,47 +9,21 @@
     <h3>Captura de nuevo mensaje</h3>
     <ul>
       <li>Los campos marcados con <em class="formee-req">*</em> son obligatorios.</li>
-      <li>&nbsp;</li>
-      <li>Escriba la clave completa de la escuela a la enviará mensaje.</li>
     </ul>
   </div>
 
-<%form_for(@mensaje, :url => {:action => "save"}, :html => {:class => "formee" }) do |f| -%>
+<%form_for(@mensaje, :url => {:action => "save_to_administrador", :destinatario => @destinatario}, :html => {:class => "formee" }) do |f| -%>
   <fieldset>
-    <legend>NUEVO&nbsp;MENSAJE</legend>
+    <legend>NUEVO&nbsp;MENSAJE&nbsp;A&nbsp;ADMINISTRADOR</legend>
 
-    <!-------- DESTINATARIO ------>
-    <%unless @escuela%>
-
-      <div class="grid-12-12">
-        <label>Escriba la clave completa de la escuela para realizar la búsqueda: <em class="formee-req">*</em></label>
-            <%= text_field :escuela, :clave %>
-      </div>
+   
+      
 
       <div class="grid-12-12">
         <label>Destinatario: <em class="formee-req">*</em> </label>
-        <div id="destinatario"></div>
+        <%= text_field :escuela, :destinatario, :value => @destinatario.nombre, :disabled => true %>
+
       </div>
-
-
-      <img alt="spinner" id="spinner" src="/images/loading_spinner.gif" style="display:none;" />
-                   <%= observe_field :escuela_clave,
-                    :on => "change",
-                    :before => "Element.show('spinner')",
-                    :success => "Element.hide('spinner')",
-                    :update => :destinatario,
-                    :url => { :controller => 'combos', :action => 'get_clave_escuela' },
-                    :with => :escuela_clave %>
-
-    <%else%>
-
-    <div class="grid-12-12">
-      <label>Asunto: <em class="formee-req">*</em></label>
-        <%=text_field "escuela", "clave_completa_disabled", :value => @escuela.descripcion_completa, :disabled => true%>
-        <%=hidden_field "escuela", "clave_completa", :value => @escuela.descripcion_completa%>
-    </div>
-
-    <%end%>
 
     <div class="grid-12-12 clear"></div>
    

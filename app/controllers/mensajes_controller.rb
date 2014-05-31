@@ -19,10 +19,38 @@ class MensajesController < ApplicationController
   end
 
   def new
-    @mensaje = Mensaje.new
-    @destinatario = User.find(params[:recibe_id]) if params[:recibe_id]
-    @escuela = Escuela.find_by_clave(@destinatario.login) if @destinatario
+    if current_user.has_role?("escuela")
+      redirect_to :action => "new_to_administrador"
+    else
+      @mensaje = Mensaje.new
+      @destinatario = User.find(params[:recibe_id]) if params[:recibe_id]
+      @escuela = Escuela.find_by_clave(@destinatario.login) if @destinatario
+    end
   end
+
+  ##### Mensaje a administrador #####
+
+  def new_to_administrador
+    @mensaje = Mensaje.new
+    @destinatario = User.find_by_login("esys")
+  end
+
+  def save_to_administrador
+    @mensaje = Mensaje.new(params[:mensaje])
+    usuario = User.find(params[:destinatario]) if params[:destinatario]
+    @mensaje.recibe_id = usuario.id if usuario
+    @mensaje.envia_id = current_user.id unless @mensaje.envia_id
+    @mensaje.activo = true unless @mensaje.activo
+    if usuario && @mensaje.save
+      flash[:notice] = "Mensaje enviado correctamente"
+      redirect_to :action => "list"
+    else
+      flash[:error] = "Su mensaje no pudo enviarse, inserte un destinatario"
+      render :action => "new"
+    end
+
+  end
+
 
   def save
     @mensaje = Mensaje.new(params[:mensaje])
@@ -93,10 +121,12 @@ class MensajesController < ApplicationController
     @mensaje.recibe_id =  (params[:recibe_id]) ? User.find(params[:recibe_id]).id : nil
     @mensaje.envia_id = current_user.id unless @mensaje.envia_id
     @mensaje.activo = true unless @mensaje.activo
-    @mensaje.asunto = "Comentarios y correcciones de evidencias del diagnóstico"
+    @mensaje.asunto = "Comentarios y correcciones de evidencias del diagnóstico, haga click en la liga en color rojo"
     @mensaje.descripcion = @diagnostico.observaciones_evidencias if @diagnostico
     @mensaje.url_notificacion_sistema = "#{url_for :host => SITE_URL, :action => "reporte_evidencias_diagnostico", :controller => 'upload', :diagnostico => params[:diagnostico], :id => params[:user]}"
     if @mensaje.save
+        ##### Cambiamo estatus para marcar que el diagnostico ha sido revisado ####
+        @diagnostico.escuela.update_bitacora!("diag-rev", current_user) if @diagnostico.escuela
         flash[:notice] = "Se envío reporte de evidencias a la escuela correspondiente"
         redirect_to :controller => "admin", :action => "menu_escuela", :id => params[:user]
     end
