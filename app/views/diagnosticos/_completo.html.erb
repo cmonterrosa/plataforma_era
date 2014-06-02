@@ -793,6 +793,41 @@
   </tr>
 </table>
 <% end %>
+<img src="/images/era/space.png" alt="" width="10" height="50" />
+<table class="formee" width="100%" border="0" align="center" cellpadding="2" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
+  <tr bgcolor="#58ACFA">
+    <td align="center"><h5>PUNTAJE GENERAL</h5></td>
+  </tr>
+  <tr align="center">
+    <td align="center">
+      <table class="subprincipal" width="100%" border="0" cellpadding="4" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
+        <!-- Barra de Porcentaje -->
+        <tr align="center" >
+          <td width="60%" ><label class="uper" style="font-weight:bold;" >Porcentaje Diagnóstico</label></td>
+          <td width="2%" >&nbsp;</td>
+          <td width="18%" ><label class="uper" style="font-weight:bold;" >Puntaje Máximo Diagnóstico</label></td>
+          <td width="2%" >&nbsp;</td>
+          <td width="18%" ><label class="uper" style="font-weight:bold;" >Puntaje Obtenido Diagnóstico</label></td>
+        </tr>
+        <tr align="center" >
+          <td>
+            <div class="bar_mortice rounded_tiny mortice_tiny green_mortice">
+              <div id="bar_participacion" class="progress rounded_tiny progress_tiny green" style="width: <%= @porcentaje.to_i %>%;" ></div>
+            </div>
+            <label style="font-weight:bold;" ><%= @porcentaje %> %</label>
+          </td>
+          <td>&nbsp;</td>
+          <td><label style="font-weight:bold;" ><%= @max_ptos %></label></td>
+          <td>&nbsp;</td>
+          <td><label style="font-weight:bold;" ><%= @total_ptos %></label></td>
+        </tr>
+        <tr>
+          <td colspan="5">&nbsp;</td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
 
 
 <script type="text/javascript">
