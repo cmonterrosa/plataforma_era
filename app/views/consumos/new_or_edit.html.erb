@@ -326,13 +326,15 @@
             </div>
             <!-- Línea campo -->
             <div class="grid-12-12">
-              <%= f.select :frecuencia_afisica_id, FrecuenciaAfisica.all.collect {|p| [ p.descripcion, p.clave ]}, {:selected => @s_afisicas} %>
+              <%= f.select :frecuencia_afisica_id, FrecuenciaAfisica.all.collect {|p| [ p.descripcion, p.clave ]}, {:selected => @s_afisicas}, :onchange => "enable_frecuencias_actividades_fisicas(consumo_frecuencia_afisica_id, consumo_minutos_activacion_fisica, consumo_momentos_activacion_fisica);" %>
             </div>
           </td>
         </tr>
         <tr>
           <td colspan="3">&nbsp;</td>
         </tr>
+
+       
         <tr>
           <td width="49%" align="justify" style=" vertical-align:top;" >
             <div class="grid-12-12">
@@ -354,6 +356,7 @@
           <td>&nbsp;</td>
           <td width="49%" align="justify" style=" vertical-align:top;"></td>
         </tr>
+        
       </table>
     </td>
   </tr>
@@ -388,6 +391,8 @@
   enaSelectMultiple('consumo_escuela_establecimiento', 'establecimientos');
   showImage('consumo_capacitacion_alim_bebidas_si', 'eje4_p3');
   showImage('consumo_capacitacion_alim_bebidas_no', 'eje4_p3');
+
+  enable_frecuencias_actividades_fisicas("consumo_frecuencia_afisica_id", "consumo_minutos_activacion_fisica", "consumo_momentos_activacion_fisica");
 
   
 

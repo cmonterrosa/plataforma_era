@@ -494,3 +494,33 @@ function checkRadioImage(arreglo, numRadio, image_id){
         image.style.display = "block";
     }
 }
+
+/* Habilita cuantas veces si realiza actividad fisica a la semana */
+function enable_frecuencias_actividades_fisicas(comboSelect1, comboSelect2, comboSelect3){
+    
+    if(typeof comboSelect1 == "object")
+        select1 = comboSelect1;
+    else
+        select1 = document.getElementById(comboSelect1);
+    if(typeof comboSelect1 == "object")
+        select2 = comboSelect2;
+    else
+        select2 = document.getElementById(comboSelect2);
+
+    if(typeof comboSelect1 == "object")
+        select3 = comboSelect3;
+    else
+        select3 = document.getElementById(comboSelect3);
+
+    if(select1.value != "NOSR"){
+     select2.disabled=false;
+     select3.disabled=false;
+     
+    }
+    else{
+     select2.disabled=true;
+     select3.disabled=true;
+     
+    }
+
+}
