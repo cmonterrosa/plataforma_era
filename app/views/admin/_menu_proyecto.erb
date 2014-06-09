@@ -56,6 +56,13 @@
             </div>
           <%end%>
       <%end%>
+      <%if @proyecto.avance == 3 %>
+          <% form_for :proyecto, @proyecto, :url => {:action => "habilitar_avance", :controller => "admin", :id => @proyecto, :escuela => @escuela, :num_avance => 2 } do -%>
+            <div class="grid-center">
+              <input type="submit" title="HABILITAR 2DO. AVANCE" value="HABILITAR 2DO. AVANCE" />
+            </div>
+          <%end%>
+      <%end%>
 
       <div class="grid-12-12 clear"></div>
 

@@ -64,7 +64,13 @@
 </div>
 
 <% if @finish == true %>
-<p style="text-align: center;">
-  <%= link_to image_tag("/images/botones/concluir_1er.png", :mouseover => "/images/botones/concluir_1er2.png" ), { :controller => "avances", :action => "concluir", :id =>  @proyecto, :avance => @num_avance } %>
-</p>
+  <% if @num_avance.to_i == 1  %>
+  <p style="text-align: center;">
+    <%= link_to image_tag("/images/botones/concluir_1er.png", :mouseover => "/images/botones/concluir_1er2.png" ), { :controller => "avances", :action => "concluir", :id =>  @proyecto, :avance => @num_avance } %>
+  </p>
+  <% else %>
+  <p style="text-align: center;">
+    <%= link_to image_tag("/images/botones/concluir_2do.png", :mouseover => "/images/botones/concluir_2do1.png" ), { :controller => "avances", :action => "concluir", :id =>  @proyecto, :avance => @num_avance } %>
+  </p>
+  <% end %>
 <% end %>

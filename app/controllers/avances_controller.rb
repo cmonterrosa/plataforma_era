@@ -17,7 +17,7 @@ class AvancesController < ApplicationController
 
   def index
     @num_avance = Base64.decode64(params[:num_avance]) if params[:num_avance]
-    if @num_avance.to_i == 1
+    if @num_avance.to_i > 0
       @escuela_id = Escuela.find_by_clave(current_user.login.upcase).id if current_user
       @diagnostico = Diagnostico.find_by_escuela_id(@escuela_id) if @escuela_id
       @proyecto = Proyecto.find_by_diagnostico_id(@diagnostico) if @diagnostico
@@ -34,7 +34,7 @@ class AvancesController < ApplicationController
         redirect_to :action => "index", :controller => "diagnosticos"
       end
     else
-      flash[:error] = "Este módulo aún no ha sido habilitado" if @num_avance.to_i == 2  # no imprime mensaje
+      flash[:error] = "Número de avance incorrecto"
       redirect_to :action => "list"
     end
   end
@@ -47,7 +47,7 @@ class AvancesController < ApplicationController
     @ejes = Eje.find(@id) if @id
     @avance = Array.new
     @ejes.actividads.each do | actividad |
-      if @av = Avance.find(:first, :conditions => ["actividad_id = ?", actividad.id])
+      if @av = Avance.find(:first, :conditions => ["actividad_id = ? and numero = ?", actividad.id, @num_avance.to_i])
       @avance << @av
       end
     end
@@ -71,7 +71,7 @@ class AvancesController < ApplicationController
       @actividades.each do | a |
         @actividad_eje = Actividad.find(:first, :conditions => ["eje_id = ? AND clave = ?", params[:eje], a[0]])
         eje = Eje.find(params[:eje].to_i)
-        if act = Avance.find(:first, :conditions => ["actividad_id = ?", @actividad_eje.id])
+        if act = Avance.find(:first, :conditions => ["actividad_id = ? and numero = ?", @actividad_eje.id, @num_avance.to_i])
             act.update_attributes!(:descripcion => a[1])
             eje.update_attributes!(:avance1 => true, :meta_lograda1 => params[:ejes][:meta_lograda1]) if @num_avance == '1'
             eje.update_attributes!(:avance2 => true, :meta_lograda2 => params[:ejes][:meta_lograda2]) if @num_avance == '2'
