@@ -412,10 +412,10 @@ function showImage(checkBox, divImage){
     var radio = document.getElementById(checkBox);
     var div = document.getElementById(divImage);
 
-    if(radio.checked && radio.id.match('_no'))
-        div.style.display = 'none';
-    else
+    if(radio.checked && radio.id.match('_si'))
         div.style.display = 'block';
+    else
+        div.style.display = 'none';
 }
 
 // Habilita/Deshabilita imagen evidencia si comboSelect > 0
