@@ -153,6 +153,21 @@ class AvancesController < ApplicationController
     return @fin
   end
 
+  def ver_avance
+    @num_avance = Base64.decode64(params[:num_avance]) if params[:num_avance]
+#    @escuela_id = params[:escuela]).id if params[:escuela]
+    @diagnostico = Diagnostico.find_by_escuela_id(params[:escuela]) if params[:escuela]
+    @proyecto = Proyecto.find_by_diagnostico_id(@diagnostico)
+
+    if @proyecto.oficializado
+       @proyecto = Proyecto.find_by_diagnostico_id(@diagnostico)
+       @ejes = Eje.find(:all, :conditions => ["proyecto_id = ?", @proyecto.id ]) if @proyecto
+    else
+      flash[:notice] = "Es necesario concluir la etapa de Proyecto"
+      redirect_to :action => "index", :controller => "Proyecto"
+    end
+  end
+
   def avance_to_pdf
     @num_avance = Base64.decode64(params[:num_avance]) if params[:num_avance]
     @escuela_id = Escuela.find_by_clave(current_user.login.upcase).id if current_user
@@ -171,6 +186,6 @@ class AvancesController < ApplicationController
   private
 
   def set_layout
-    (action_name == 'avance_to_pdf')? 'reporte_avance' : 'era2014'
+    (action_name == 'avance_to_pdf' or action_name == 'ver_avance')? 'reporte_avance' : 'era2014'
   end
 end

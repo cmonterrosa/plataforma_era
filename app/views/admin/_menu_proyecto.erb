@@ -49,23 +49,6 @@
 
       <div class="grid-12-12 clear"></div>
 
-      <%if @proyecto.avance == 2 %>
-          <% form_for :proyecto, @proyecto, :url => {:action => "habilitar_avance", :controller => "admin", :id => @proyecto, :escuela => @escuela, :num_avance => 1 } do -%>
-            <div class="grid-center">
-              <input type="submit" title="HABILITAR 1ER. AVANCE" value="HABILITAR 1ER. AVANCE" />
-            </div>
-          <%end%>
-      <%end%>
-      <%if @proyecto.avance == 3 %>
-          <% form_for :proyecto, @proyecto, :url => {:action => "habilitar_avance", :controller => "admin", :id => @proyecto, :escuela => @escuela, :num_avance => 2 } do -%>
-            <div class="grid-center">
-              <input type="submit" title="HABILITAR 2DO. AVANCE" value="HABILITAR 2DO. AVANCE" />
-            </div>
-          <%end%>
-      <%end%>
-
-      <div class="grid-12-12 clear"></div>
-
       <!-- visualizar -->
       <% form_for :escuela, @escuela, :url => { :action => "proyect_to_pdf", :controller => "proyectos", :id => @escuela}, :html => { :target => "_blank"} do |f| -%>
       <div class="grid-center">
@@ -74,6 +57,50 @@
       <%end%>
 
       <div class="grid-12-12 clear"></div>
+
+      <%if @proyecto.avance == 2 %>
+          <% form_for :proyecto, @proyecto, :url => {:action => "habilitar_avance", :controller => "admin", :id => @proyecto, :escuela => @escuela, :num_avance => 1 } do -%>
+            <div class="grid-center">
+              <input type="submit" title="HABILITAR 1ER. AVANCE" value="HABILITAR 1ER. AVANCE" />
+            </div>
+          <%end%>
+
+          <div class="grid-12-12 clear"></div>
+          
+          <% form_for :avance, @avance, :url => { :action => "ver_avance", :controller => "avances", :num_avance => Base64.encode64("1"), :escuela => @escuela}, :html => { :target => "_blank"} do |f| -%>
+            <div class="grid-center">
+              <input type="submit" title="VISUALIZAR 1ER. AVANCE" value="VISUALIZAR 1ER. AVANCE" />
+            </div>
+          <%end%>
+      <%end%>
+      
+      <%if @proyecto.avance == 3 %>
+          <% form_for :proyecto, @proyecto, :url => {:action => "habilitar_avance", :controller => "admin", :id => @proyecto, :escuela => @escuela, :num_avance => 2 } do -%>
+            <div class="grid-center">
+              <input type="submit" title="HABILITAR 2DO. AVANCE" value="HABILITAR 2DO. AVANCE" />
+            </div>
+          <%end%>
+          
+          <div class="grid-12-12 clear"></div>
+          
+          <% form_for :avance, @avance, :url => { :action => "ver_avance", :controller => "avances", :num_avance => Base64.encode64("1"), :escuela => @escuela}, :html => { :target => "_blank"} do |f| -%>
+            <div class="grid-center">
+              <input type="submit" title="VISUALIZAR 1ER. AVANCE" value="VISUALIZAR 1ER. AVANCE" />
+            </div>
+          <%end%>
+
+          <div class="grid-12-12 clear"></div>
+          
+          <% form_for :avance, @avance, :url => { :action => "ver_avance", :controller => "avances", :num_avance => Base64.encode64("2"), :escuela => @escuela }, :html => { :target => "_blank"} do |f| -%>
+            <div class="grid-center">
+              <input type="submit" title="VISUALIZAR 2DO. AVANCE" value="VISUALIZAR 2DO. AVANCE" />
+            </div>
+          <%end%>
+      <%end%>
+
+      <div class="grid-12-12 clear"></div>
+
+      
     </fieldset>
 
     <br />
