@@ -25,6 +25,7 @@
       <strong>PI = Proyecto Iniciado</strong><br/>
       <strong>PC = Proyecto Concluido</strong><br/>
       <strong>PA = Primer Avance</strong><br/>
+      <strong>SA = Segundo Avance</strong><br/>
       <strong>DR = Diagnostico Revisado</strong><br/>
       <strong>TP = Total que participan</strong><br/>
       <strong>TG = Total General</strong><br/>
@@ -46,6 +47,7 @@
       <th style="vertical-align: middle;">PI</th>
       <th style="vertical-align: middle;">PC</th>
       <th style="vertical-align: middle;">PA</th>
+      <th style="vertical-align: middle;">SA</th>
       <th style="vertical-align: middle;">DR</th>
       <th style="vertical-align: middle;">TP</th>
     </tr>
@@ -61,6 +63,7 @@
     escuelas_proyecto_iniciado =      Escuela.count(:id, :joins => "escuelas, users users", :conditions => ["users.login=escuelas.clave AND escuelas.nivel_id = ? AND escuelas.estatu_id = ? AND (users.blocked is NULL OR  users.blocked !=1)", nivel.id, Estatu.find_by_clave("proy-inic").id ])
     escuelas_proyecto_terminado =      Escuela.count(:id, :joins => "escuelas, users users", :conditions => ["users.login=escuelas.clave AND escuelas.nivel_id = ? AND escuelas.estatu_id = ? AND (users.blocked is NULL OR  users.blocked !=1)", nivel.id, Estatu.find_by_clave("proy-fin").id ])
     escuelas_primer_avance = Escuela.count(:id, :joins => "escuelas, users users", :conditions => ["users.login=escuelas.clave AND escuelas.nivel_id = ? AND escuelas.estatu_id = ? AND (users.blocked is NULL OR  users.blocked !=1)", nivel.id, Estatu.find_by_clave("avance1").id ])
+    escuelas_segundo_avance = Escuela.count(:id, :joins => "escuelas, users users", :conditions => ["users.login=escuelas.clave AND escuelas.nivel_id = ? AND escuelas.estatu_id = ? AND (users.blocked is NULL OR  users.blocked !=1)", nivel.id, Estatu.find_by_clave("avance2").id ])
     escuelas_diagnostico_revisado =      Escuela.count(:id, :joins => "escuelas, users users", :conditions => ["users.login=escuelas.clave AND escuelas.nivel_id = ? AND escuelas.estatu_id = ? AND (users.blocked is NULL OR  users.blocked !=1)", nivel.id, Estatu.find_by_clave("diag-rev").id ])
     total=0
     %>
@@ -74,6 +77,7 @@
       <td align="center"><%=h(escuelas_proyecto_iniciado) %><%total+= escuelas_proyecto_iniciado%></td>
       <td align="center"><%=h(escuelas_proyecto_terminado)%><% total+= escuelas_proyecto_terminado%></td>
       <td align="center"><%=h(escuelas_primer_avance)%><% total+= escuelas_primer_avance%></td>
+      <td align="center"><%=h(escuelas_segundo_avance)%><% total+= escuelas_segundo_avance%></td>
       <td align="center"><%=h(escuelas_diagnostico_revisado)%><% total+= escuelas_diagnostico_revisado%></td>
       <td align="center"><%=h total%></td>
       <%gran_total+=total%>
@@ -89,7 +93,7 @@
        <td>&nbsp;</td>
        <td>&nbsp;</td>
        <td>&nbsp;</td>
-       <td colspan="3" style="color: white;" align="right">TOTAL GENERAL => <%=h gran_total%></td>
+       <td colspan="4" style="color: white;" align="right">TOTAL GENERAL => <%=h gran_total%></td>
       </tr>
 
 
@@ -114,6 +118,7 @@
       <th style="vertical-align: middle;">PI</th>
       <th style="vertical-align: middle;">PC</th>
       <th style="vertical-align: middle;">PA</th>
+      <th style="vertical-align: middle;">SA</th>
       <th style="vertical-align: middle;">TP</th>
     </tr>
     <%clase=0%>
@@ -127,6 +132,7 @@
     gran_total+=escuelas_proyecto_iniciado =      Escuela.count(:id, :joins => "escuelas, users users", :conditions => ["users.login=escuelas.clave     AND  escuelas.nivel_id IS NOT NULL AND escuelas.estatu_id = ? AND (users.blocked is NULL OR  users.blocked !=1)",     Estatu.find_by_clave("proy-inic").id ])
     gran_total+=escuelas_proyecto_terminado =      Escuela.count(:id, :joins => "escuelas, users users", :conditions => ["users.login=escuelas.clave    AND  escuelas.nivel_id IS NOT NULL AND escuelas.estatu_id = ? AND (users.blocked is NULL OR  users.blocked !=1)",    Estatu.find_by_clave("proy-fin").id ])
     gran_total+=escuelas_primer_avance =           Escuela.count(:id, :joins => "escuelas, users users", :conditions => ["users.login=escuelas.clave    AND  escuelas.nivel_id IS NOT NULL AND escuelas.estatu_id = ? AND (users.blocked is NULL OR  users.blocked !=1)",    Estatu.find_by_clave("avance1").id ])
+    gran_total+=escuelas_segundo_avance =           Escuela.count(:id, :joins => "escuelas, users users", :conditions => ["users.login=escuelas.clave    AND  escuelas.nivel_id IS NOT NULL AND escuelas.estatu_id = ? AND (users.blocked is NULL OR  users.blocked !=1)",    Estatu.find_by_clave("avance2").id ])
 
    %>
 
@@ -139,6 +145,7 @@
       <td align="center"><%=h ("(#{"%0.2f" %((escuelas_proyecto_iniciado / gran_total.to_f) * 100.0)})%")%><%total+= escuelas_proyecto_iniciado%></td>
       <td align="center"><%=h ("(#{"%0.2f" %((escuelas_proyecto_terminado / gran_total.to_f) * 100.0)})%")%><% total+= escuelas_proyecto_terminado%></td>
       <td align="center"><%=h ("(#{"%0.2f" %((escuelas_primer_avance / gran_total.to_f) * 100.0)})%")%><% total+= escuelas_primer_avance%></td>
+      <td align="center"><%=h ("(#{"%0.2f" %((escuelas_segundo_avance / gran_total.to_f) * 100.0)})%")%><% total+= escuelas_segundo_avance%></td>
       <td align="center"><%=h total.to_s + "(100%)"%></td>
       <%gran_total%>
       <%clase = invert_class(clase)%>
