@@ -75,7 +75,7 @@ class UploadController < ApplicationController
     @diagnostico = Diagnostico.find(params[:diagnostico]) if params[:diagnostico]
     @user = (params[:id]) ? User.find(params[:id]): current_user
     @observaciones_evidencias = (@diagnostico.observaciones_evidencias) ? @diagnostico.observaciones_evidencias : nil
-    @evidencias = Adjunto.find(:all, :conditions => ["user_id = ? and avance = ?", @user, 0], :order => "eje_id, numero_pregunta")
+    @evidencias = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ?", @user, @diagnostico.id], :order => "eje_id, numero_pregunta")
     unless @evidencias.empty?
       return render(:partial => 'show_todas_evidencias', :layout => "only_jquery")
     else
