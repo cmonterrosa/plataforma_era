@@ -175,7 +175,7 @@ class AvancesController < ApplicationController
     @proyecto = Proyecto.find_by_diagnostico_id(@diagnostico)
 
     if @proyecto.oficializado
-       @proyecto = Proyecto.find_by_diagnostico_id(@diagnostico)
+#       @proyecto = Proyecto.find_by_diagnostico_id(@diagnostico)
        @ejes = Eje.find(:all, :conditions => ["proyecto_id = ?", @proyecto.id ]) if @proyecto
     else
       flash[:notice] = "Es necesario concluir la etapa de Proyecto"
