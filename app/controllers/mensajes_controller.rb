@@ -11,11 +11,11 @@ class MensajesController < ApplicationController
   end
 
   def enviados
-    @enviados = Mensaje.find(:all, :conditions => ["envia_id = ?", current_user.id])
+    @enviados = Mensaje.find(:all, :conditions => ["envia_id = ?", current_user.id], :order => "created_at DESC").paginate(:page => params[:page], :per_page => 10)
   end
   
   def recibidos
-    @recibidos = Mensaje.find(:all, :conditions => ["recibe_id = ?", current_user.id])
+    @recibidos = Mensaje.find(:all, :conditions => ["recibe_id = ?", current_user.id], :order => "created_at DESC").paginate(:page => params[:page], :per_page => 10)
   end
 
   def new

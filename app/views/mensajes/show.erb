@@ -33,8 +33,10 @@
 
     <div class="grid-12-12">
       <label><b>Descripción: </b></label>
-        <%= f.text_area :descripcion,  :placeholder => "Escriba la descripción detallada", :disabled => true %>
-    </div>
+      <p>
+        <%= f.text_area :descripcion,  :placeholder => "Escriba la descripción detallada", :disabled => true, :style => "width: 700px; height: 200px" %>
+      </p>
+     </div>
 
     <!-- Mostramos el mensaje si es una notificacion del sistema -->
     <%if @mensaje.url_notificacion_sistema%>

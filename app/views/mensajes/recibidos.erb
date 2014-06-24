@@ -23,8 +23,7 @@
 <div id="result">
     <table width="85%" border="0" cellspacing="0" cellpadding="0" class="sample" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid" align="center">
       <tr style="background-color:#2E6AB1; color:white;">
-        <th width="10%">NP</th>
-        <th width="10%">Fecha/Hora</th>
+        <th width="20%">Fecha/Hora</th>
         <th width="35%">Remitente</th>
         <th width="35%">Asunto</th>
         <th width="10%">&nbsp;</th>
@@ -36,7 +35,6 @@
         <%clase = (r.leido_at) ? "d0": "noleido"%>
 
         <tr class="<%=clase%>">
-        <td style="vertical-align: middle; text-align: center;"><%=contador%></td>
         <td style="vertical-align: middle; text-align: center;"><%=r.created_at.strftime("%d de %b de %Y - %H:%M")%></td>
         <td style="vertical-align: middle;"><%=link_to r.remitente, {:action => "show", :id => r}, :style => "text-decoration: none; color: #404040;"%></td>
         <td style="vertical-align: middle;"><%=link_to r.asunto, {:action => "show", :id => r}, :style => "text-decoration: none; color: #404040;"%></td>
@@ -46,3 +44,19 @@
     <%end%>
 </table>
 </div>
+
+ <br />
+
+
+  <% if @recibidos.total_entries > @recibidos.per_page.to_i %>
+    <tr class="d<%=invert_class(clase)%>" align="center" >
+      <td colspan="8" style="padding: 0;">
+        <div class="digg_pagination">
+          <div class="page_info">
+            <%= page_entries_info @recibidos %>
+          </div>
+          <%= will_paginate @recibidos %>
+        </div>
+      </td>
+    </tr>
+    <% end %>
