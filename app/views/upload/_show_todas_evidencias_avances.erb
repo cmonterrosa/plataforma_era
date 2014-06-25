@@ -53,7 +53,7 @@
                 <%end%>
               <%end%>
 
-              <td style="vertical-align: middle;"><%=h (evidencia.numero_pregunta)%></td>
+              <td style="vertical-align: middle;"><%=h (evidencia.numero_actividad) ? evidencia.numero_actividad : "---"%></td>
               <td style="vertical-align: middle;"><%=h (evidencia.descripcion)%></td>
               <td style="vertical-align: middle;"><%=h (evidencia.tipodoc) ? evidencia.tipodoc.descripcion : "---"%></td>
               <td style="vertical-align: middle;"><%=h evidencia.file_size %> Kb</td>
