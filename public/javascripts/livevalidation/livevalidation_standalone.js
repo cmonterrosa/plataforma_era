@@ -734,7 +734,8 @@ var Validate = {
         var wrongLengthMessage = paramsObj.wrongLengthMessage || "Must be " + is + " characters long!";
 //    	var tooShortMessage = paramsObj.tooShortMessage || "Must not be less than " + minimum + " characters long!";
     	var tooShortMessage = paramsObj.tooShortMessage || "No debe ser menor que " + minimum + " caracteres de largo!";
-    	var tooLongMessage = paramsObj.tooLongMessage || "Must not be more than " + maximum + " characters long!";
+//    	var tooLongMessage = paramsObj.tooLongMessage || "Must not be more than " + maximum + " characters long!";
+    	var tooLongMessage = paramsObj.tooLongMessage || "No debe contener más de " + maximum + " caracteres!";
     	switch(true){
     	  	case (is !== null):
     	  		if( value.length != Number(is) ) Validate.fail(wrongLengthMessage);

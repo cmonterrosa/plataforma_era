@@ -69,11 +69,14 @@
   
   var descripcion = new LiveValidation( 'proyecto_descripcion' );
   descripcion.add( Validate.Presence );
+  descripcion.add( Validate.Length, { maximum: 250 } );
 
   var antecedentes = new LiveValidation( 'proyecto_antecedentes' );
   antecedentes.add( Validate.Presence );
+  antecedentes.add( Validate.Length, { maximum: 350 } );
 
   var objetivo_general = new LiveValidation( 'proyecto_objetivo_general' );
   objetivo_general.add( Validate.Presence );
+  objetivo_general.add( Validate.Length, { maximum: 350 } );
 
 </script>

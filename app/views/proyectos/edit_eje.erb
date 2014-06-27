@@ -140,20 +140,26 @@
 
   var objetivo_especifico = new LiveValidation( 'eje_objetivo_especifico' );
   objetivo_especifico.add( Validate.Presence );
+  objetivo_especifico.add( Validate.Length, { maximum: 350 } );
 
   var meta = new LiveValidation( 'eje_meta' );
   meta.add( Validate.Presence );
+  meta..add( Validate.Length, { maximum: 350 } );
 
   var actividad1 = new LiveValidation( 'actividads_actividad1' );
   actividad1.add( Validate.Presence );
+  actividad1.add( Validate.Length, { maximum: 350 } );
 
   var actividad2 = new LiveValidation( 'actividads_actividad2' );
   actividad2.add( Validate.Presence );
+  actividad2.add( Validate.Length, { maximum: 350 } );
 
   var actividad3 = new LiveValidation( 'actividads_actividad3' );
   actividad3.add( Validate.Presence );
+  actividad3.add( Validate.Length, { maximum: 350 } );
 
   var actividad4 = new LiveValidation( 'actividads_actividad4' );
   actividad4.add( Validate.Presence );
+  actividad4.add( Validate.Length, { maximum: 350 } );
   
 </script>
