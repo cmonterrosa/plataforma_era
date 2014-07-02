@@ -32,4 +32,8 @@ class HomeController < ApplicationController
     redirect_to :action => "certificacion_manual"
   end
 
+  def periodo_expirado
+    
+  end
+
 end
