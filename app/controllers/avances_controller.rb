@@ -120,7 +120,8 @@ class AvancesController < ApplicationController
     @proyecto = Proyecto.find(params[:id]) if params[:id]
     @proyecto.avance = (params[:avance].to_i + 1) if params[:avance]
     @escuela = Escuela.find(@proyecto.diagnostico.escuela_id)
-    @escuela.update_bitacora!("avance1", current_user)
+    @escuela.update_bitacora!("avance1", current_user) if params[:avance].to_i == 1
+    @escuela.update_bitacora!("avance2", current_user) if params[:avance].to_i == 2
     if @proyecto.save
       flash[:notice] = "El avance núm. #{params[:avance]} del proyecto fue finalizado correctamente"
     else
