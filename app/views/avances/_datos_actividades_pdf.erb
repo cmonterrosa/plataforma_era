@@ -1,4 +1,6 @@
-<p style="font-family: verdana; font-size: 16px; font-weight: normal;" >REPORTE DEL <%= @num_avance %>ER AVANCE DE ACTIVIDADES</p>
+<%desc= (@num_avance && @num_avance == 2)? "DO" : "ER"%>
+<p style="font-family: verdana; font-size: 16px; font-weight: normal;" >REPORTE DEL <%= @num_avance %><%=desc%> AVANCE DE ACTIVIDADES</p>
+<p style="font-family: verdana; font-size: 14px; font-weight: normal; color: navy;"><%=h (@escuela) ? @escuela.descripcion_completa : ""%></p>
 <% @ejes.sort_by { |hsh| hsh[:catalogo_eje_id] }.each do |eje| %>
     <% @avance = Array.new %>
       <% eje.actividads.each do | actividad | %>

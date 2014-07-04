@@ -172,6 +172,7 @@ class AvancesController < ApplicationController
   def avance_to_pdf
     @num_avance = Base64.decode64(params[:num_avance]) if params[:num_avance]
     @escuela_id = Escuela.find_by_clave(current_user.login.upcase).id if current_user
+    @escuela = Escuela.find(@escuela_id) if @escuela_id
     @diagnostico = Diagnostico.find_by_escuela_id(@escuela_id) if @escuela_id
     @proyecto = Proyecto.find_by_diagnostico_id(@diagnostico)
 
