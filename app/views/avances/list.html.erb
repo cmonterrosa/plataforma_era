@@ -13,11 +13,25 @@
             <div class ="grid-3-12">&nbsp;</div>
             <div class ="grid-3-12"><%= link_to image_tag("/images/botones/imprimir_1avance.png", :mouseover => "/images/botones/imprimir_1avance1.png" ), { :action => "avance_to_pdf.pdf", :num_avance => Base64.encode64("1") }, :target => "_blank" %></div>
             <div class ="grid-3-12"><%= link_to image_tag("/images/botones/segundo_avance.png", :mouseover => "/images/botones/segundo_avance1.png" ), { :controller => "avances", :num_avance => Base64.encode64("2") } %></div>
-
+            
         <% when 3 %>
             <div class ="grid-3-12">&nbsp;</div>
             <div class ="grid-3-12"><%= link_to image_tag("/images/botones/imprimir_1avance.png", :mouseover => "/images/botones/imprimir_1avance1.png" ), { :action => "avance_to_pdf.pdf", :num_avance => Base64.encode64("1") }, :target => "_blank" %></div>
             <div class ="grid-3-12"><%= link_to image_tag("/images/botones/imprimir_2avance.png", :mouseover => "/images/botones/imprimir_2avance1.png" ), { :action => "avance_to_pdf.pdf", :num_avance => Base64.encode64("2") }, :target => "_blank" %></div>
+            
+      <!-- reporte de finalizacion -->
+      <div class="container">
+        <div class="formee">
+            <% form_for :proyecto, @proyecto, :url => { :action => "reporte_final", :controller => "registro", :id => "#{current_user.id}.pdf" }, :html => { :target => "_blank"} do -%>
+              <div class="grid-center">
+                <p id="pdf_link"><input type="submit" title="IMPRIMIR REPORTE DE FINALIZACIÓN DEL PROCESO" value="IMPRIMIR REPORTE DE FINALIZACIÓN DEL PROCESO" /></p>
+              </div>
+            <%end%>
+        </div>
+      </div>
+
+
+       
       <% end %>
   <% else %>
     

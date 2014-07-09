@@ -79,11 +79,20 @@ class RegistroController < ApplicationController
     @select_ce = selected(@escuela.categoria_escuela) if @escuela.categoria_escuela
     @s_programas = multiple_selected_id(@escuela.programas) if @escuela.programas
   end
+
+  def reporte_final
+    @user= User.find(params[:id])
+    @escuela = @user.escuela if @user
+    unless @escuela.estatu_id  == Estatu.find_by_clave("avance2").id
+       flash[:notice] = "La escuela aún no ha concluido el proceso de certificación"
+       redirect_to :controller => "home"
+    end
+  end
   
   private
 
   def set_layout
-    (action_name == 'formato_registro')? 'reporte' : 'era2014'
+    (action_name == 'formato_registro' || action_name == 'reporte_final')? 'reporte' : 'era2014'
   end
 
 end
