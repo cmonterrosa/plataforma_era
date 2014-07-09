@@ -88,9 +88,11 @@ class UploadController < ApplicationController
 
   def show_evidencias_avance
     @diagnostico = Diagnostico.find(params[:diagnostico]) if params[:diagnostico]
+    @proyecto = Proyecto.find(:first, :conditions => ["diagnostico_id = ?", @diagnostico.id]) if @diagnostico
     @user = (params[:id]) ? User.find(params[:id]): current_user
+    @avance = params[:avance]
     @observaciones_evidencias = (@diagnostico.observaciones_evidencias) ? @diagnostico.observaciones_evidencias : nil
-    @evidencias = Adjunto.find(:all, :conditions => ["user_id = ? and avance = ?", @user, 1], :order => "numero_actividad")
+    @evidencias = Adjunto.find(:all, :conditions => ["user_id = ? and avance = ?", @user, @avance], :order => "numero_actividad")
     unless @evidencias.empty?
       return render(:partial => 'show_todas_evidencias_avances', :layout => "only_jquery")
     else
@@ -238,6 +240,21 @@ class UploadController < ApplicationController
     @observaciones_evidencias ||= @diagnostico.observaciones_evidencias
     @diagnostico.update_attributes!(:observaciones_evidencias => @observaciones_evidencias, :validacion_evidencias => true) if @observaciones_evidencias
     @evidencias = Adjunto.find(:all, :conditions => ["validado = ? AND user_id = ? AND diagnostico_id = ?", false, @user, @diagnostico])
+  end
+
+  def reporte_evidencias_avances
+    @proyecto = Proyecto.find(params[:proyecto])
+    @diagnostico = Diagnostico.find(params[:diagnostico]) if params[:diagnostico]
+    @avance = params[:avance] if params[:avance]
+    @url = "observaciones_evidencias_avance#{@avance}"
+    @url_validacion = "validacion_evidencias_avance#{@avance}"
+    @user = User.find(params[:id]) if params[:id]
+    @user ||= User.find(params[:user]) if params[:user]
+    @observaciones_evidencias = params[:proyectos][:observaciones_evidencias] if params[:proyectos]
+    @observaciones_evidencias ||= @proyecto[@url]
+    @proyecto.update_attributes!(@url => @observaciones_evidencias, @url_validacion => true) if @observaciones_evidencias
+    @evidencias = Adjunto.find(:all, :conditions => ["validado = ? AND user_id = ? AND avance = ?", false, @user, @avance])
+
   end
 
 

@@ -1,0 +1,36 @@
+ <%if flash[:notice]%>
+            <div class="formee-msg-success">
+              <h3>Operación realizada exitosamente:</h3>
+              <ul>
+                <li><%=flash[:notice]%></li>
+              </ul>
+            </div>
+            <%elsif flash[:error]%>
+            <div class="formee-msg-error">
+              <h3>Error:</h3>
+              <ul>
+                <li><%=flash[:error]%></li>
+              </ul>
+            </div>
+  <%end%>
+
+
+<%=render :partial => "reporte_evidencias_avances"%>
+
+
+
+
+<%if current_user.has_role?("adminplat") || current_user.has_role?("admin")%>
+<div class="container">
+  <div class="formee">
+    <fieldset>
+      <!-- constancia -->
+      <% form_for :escuela, @escuela, :url => { :action => "send_reporte_evidencias_avances", :controller => "mensajes",  :user => @user, :proyecto => @proyecto, :diagnostico => @diagnostico, :avance => @avance } do |f| -%>
+      <div class="grid-center">
+        <input type="submit" title="ENVIAR REPORTE A ESCUELA" value="ENVIAR REPORTE A ESCUELA" />
+      </div>
+      <%end%>
+    </fieldset>
+  </div>
+</div>
+<%end%>
