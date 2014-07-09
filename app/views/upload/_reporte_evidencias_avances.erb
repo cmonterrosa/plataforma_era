@@ -2,7 +2,7 @@
   <div class="formee">
     <table align="center" class="subprincipal" width="90%" cellspacing="5" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
     <tr class="tdiagnostico">
-        <td align="center" ><label>ESCUELA: <%=@diagnostico.escuela.nombre%> | CLAVE: <%=@diagnostico.escuela.clave%></label></td>
+        <td align="center" ><label>ESCUELA: <%=@diagnostico.escuela.nombre%> | CLAVE: <%=@diagnostico.escuela.clave%> | AVANCE: <%=@avance%></label></td>
       </tr>
 
       <tr class="tdiagnostico">
@@ -15,7 +15,7 @@
         <table width="95%" border="0" cellspacing="0" cellpadding="0" class="sample" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid">
           <tr class="d0">
             <td style="vertical-align: middle;">&nbsp;</td>
-            <td style="vertical-align: middle;">Eje</td>
+            
             <td style="vertical-align: middle;">Actividad</td>
             <td style="vertical-align: middle;">Descripción</td>
             <td style="vertical-align: middle;">Tipo</td>
@@ -39,7 +39,7 @@
                 <%end%>
               <%end%>
 
-              <td style="vertical-align: middle;"><%=h (evidencia.eje_id)%></td>
+              
               <td style="vertical-align: middle;"><%=h (evidencia.numero_actividad)%></td>
               <td style="vertical-align: middle;"><%=h (evidencia.descripcion)%></td>
               <td style="vertical-align: middle;"><%=h (evidencia.tipodoc) ? evidencia.tipodoc.descripcion : "---"%></td>

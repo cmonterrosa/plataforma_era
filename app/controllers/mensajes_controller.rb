@@ -127,7 +127,26 @@ class MensajesController < ApplicationController
     if @mensaje.save
         ##### Cambiamo estatus para marcar que el diagnostico ha sido revisado ####
         @diagnostico.escuela.update_bitacora!("diag-rev", current_user) if @diagnostico.escuela
-        flash[:notice] = "Se envío reporte de evidencias a la escuela correspondiente"
+        flash[:notice] = "Se envío reporte de evidencias del diagnóstico a la escuela correspondiente"
+        redirect_to :controller => "admin", :action => "menu_escuela", :id => params[:user]
+    end
+  end
+
+    def send_reporte_evidencias_avance
+    @mensaje = Mensaje.new(params[:mensaje])
+    @diagnostico = Diagnostico.find(params[:diagnostico]) if params[:diagnostico]
+    @proyecto = Proyecto.find_by_diagnostico_id(@diagnostico.id) if @diagnostico
+    @avance = params[:avance] if params[:avance]
+    @mensaje.recibe_id =  (params[:recibe_id]) ? User.find(params[:recibe_id]).id : nil
+    @mensaje.envia_id = current_user.id unless @mensaje.envia_id
+    @mensaje.activo = true unless @mensaje.activo
+    @mensaje.asunto = "Comentarios y correcciones de evidencias del avance #{@avance}, haga click en la liga en color rojo"
+    @mensaje.descripcion = @diagnostico.observaciones_evidencias if @diagnostico
+    @mensaje.url_notificacion_sistema = "#{url_for :host => SITE_URL, :action => "reporte_evidencias_avance", :controller => 'upload', :avance => @avance, :diagnostico => params[:diagnostico], :id => params[:user], :proyecto => @proyecto}"
+    if @mensaje.save
+        ##### Cambiamo estatus para marcar que el diagnostico ha sido revisado ####
+       # @diagnostico.escuela.update_bitacora!("diag-rev", current_user) if @diagnostico.escuela
+        flash[:notice] = "Se envío reporte de evidencias del avance #{@avance} a la escuela correspondiente"
         redirect_to :controller => "admin", :action => "menu_escuela", :id => params[:user]
     end
   end

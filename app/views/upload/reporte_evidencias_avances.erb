@@ -25,7 +25,7 @@
   <div class="formee">
     <fieldset>
       <!-- constancia -->
-      <% form_for :escuela, @escuela, :url => { :action => "send_reporte_evidencias_avances", :controller => "mensajes",  :user => @user, :proyecto => @proyecto, :diagnostico => @diagnostico, :avance => @avance } do |f| -%>
+      <% form_for :escuela, @escuela, :url => { :action => "send_reporte_evidencias_avance", :controller => "mensajes", :avance => @avance, :recibe_id => @recibe, :user => @user, :proyecto => @proyecto, :diagnostico => @diagnostico, :avance => @avance } do |f| -%>
       <div class="grid-center">
         <input type="submit" title="ENVIAR REPORTE A ESCUELA" value="ENVIAR REPORTE A ESCUELA" />
       </div>

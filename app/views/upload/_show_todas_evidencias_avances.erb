@@ -60,10 +60,10 @@
               
               <td style="vertical-align: middle;"><%=h evidencia.created_at.strftime("%d/%m/%Y - %H:%M")%></td>
               <td style="vertical-align: middle;"><%= link_to "VISUALIZAR", { :action => "download", :id => evidencia }, :target => "_blank", :class => "BotonAzul"%></td>
-              <td style="vertical-align: middle;"><%= link_to "VÁLIDO", { :action => "validar", :id => evidencia, :diagnostico => @diagnostico, :user => @user }, :class => "BotonVerde"%></td>
-              <td style="vertical-align: middle;"><%= link_to "INVÁLIDO", { :action => "invalidar", :id => evidencia, :diagnostico => @diagnostico, :user => @user },  :class => "BotonRojo"%></td>
+              <td style="vertical-align: middle;"><%= link_to "VÁLIDO", { :action => "validar", :avance => @avance, :id => evidencia, :diagnostico => @diagnostico, :user => @user }, :class => "BotonVerde"%></td>
+              <td style="vertical-align: middle;"><%= link_to "INVÁLIDO", { :action => "invalidar", :avance => @avance, :id => evidencia, :diagnostico => @diagnostico, :user => @user },  :class => "BotonRojo"%></td>
               
-              <td style="vertical-align: middle;"><%= link_to "ELIMINAR", { :action => "destroy_evidencia", :id => evidencia }, :confirm => '¿Esta seguro que desea elimina la evidencia?', :class => "BotonVerde"%></td>
+              <td style="vertical-align: middle;"><%= link_to "ELIMINAR", { :action => "destroy_evidencia_avance", :avance => @avance, :id => evidencia, :user => @user }, :confirm => '¿Esta seguro que desea elimina la evidencia?', :class => "BotonVerde"%></td>
  
             </tr>
             <%contador+=1%>
