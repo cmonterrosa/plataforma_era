@@ -44,6 +44,13 @@
       </div>
       <%end%>
 
+      <!-- reporte de finalizacion -->
+      <% form_for :escuela, @escuela, :url => { :action => "reporte_final", :controller => "registro", :id => "#{@escuela.user.id}.pdf" }, :html => { :target => "_blank"} do -%>
+              <div class="grid-center">
+                <p id="pdf_link"><input type="submit" title="IMPRIMIR REPORTE DE FINALIZACIÓN DEL PROCESO" value="IMPRIMIR REPORTE DE FINALIZACIÓN DEL PROCESO" /></p>
+              </div>
+      <%end%>
+
     </fieldset>
 
     <br />
