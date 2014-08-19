@@ -14,6 +14,15 @@ class Adjunto < ActiveRecord::Base
    STORAGE_DIR = "#{RAILS_ROOT}/tmp/documentos/"
 
  
+  def eje_evidencia
+    eje = Eje.find(:first, :conditions => ["id = ?", self.eje_id]) if self.eje_id
+    catalogo_eje_id = eje.catalogo_eje_id if eje
+    catalogo = CatalogoEje.find(catalogo_eje_id) if catalogo_eje_id
+    caption = "#{catalogo.clave}-#{catalogo.descripcion}" if catalogo
+    caption = (caption) ? caption : "--"
+    return caption
+  end
+
 
   def inputfile=(input)
     @file_contents = input
