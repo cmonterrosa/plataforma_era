@@ -238,14 +238,14 @@ class AdminController < ApplicationController
 
   def total_escuelas_registradas
     @escuelas = User.find(:all, :select => "users.created_at as user_created_at, users.login, users.id as user_id, e.*", :joins => "users, escuelas e", :conditions => "users.login=e.clave AND (users.blocked is NULL OR  users.blocked !=1)")
-    csv_string = FasterCSV.generate(:col_sep => "|") do |csv|
+    csv_string = FasterCSV.generate(:col_sep => ",") do |csv|
       csv << ["CLAVE_ESCUELA", "NOMBRE", "ZONA_ESCOLAR",       "SECTOR",          "NIVEL",           "DOMICILIO",     "LOCALIDAD",   "MUNICIPIO",      "REGION",              "MODALIDAD",  "CORREO_ESCUELA",   "CORREO_RESPONSABLE",    "TELEFONO_ESCUELA", "TELEFONO_DIRECTOR", "FECHA_HORA_CAPTURA", "ALU_HOMBRES", "ALU_MUJERES", "TOTAL_ALUMNOS", "GRUPOS", "TOTAL_ALUMNOS",       "DOCENTES_H", "DOCENTES_M",  "TOTAL_DOCENTE_APOYO",              "TOTAL_PERSONAL_ADMVO",   "TOTAL_PERSONAL_APOYO", "ESTATUS_ACTUAL", "DOCENTES_CAPACITADOS", "DOCENTES_INVOLUCRADOS", "ALUMNOS_CAPACITADOS", "SUPERFICIE_AREAS_VERDES", "ARBOLES_ADULTOS", "ACCIONES_MANUAL_DE_SALUD", "CAPACITACION_AHORRO_DE_ENERGIA", "CONSUMO_ENERGIA_ELECTRICA", "FOCOS_AHORRADORES", "RED_PUBLICA_AGUA", "PROYECTO"]
       @escuelas.each do |i|
         diagnostico= Diagnostico.find(:first, :conditions => ["escuela_id = ?", i["id"]]) if i["id"]
         proyecto = Proyecto.find(:first, :conditions => ["diagnostico_id = ?", diagnostico.id]) if diagnostico
         proyecto = (proyecto) ? proyecto.descripcion : ""
         # campos diagnostico
-        if User.find_by_id(i.id)
+        if User.find_by_id(i.user_id)
             # -- competencia
             docentes_capacitados = diagnostico.competencia ? diagnostico.competencia.docentes_capacitados_sma : ""
             docentes_involucrados = diagnostico.competencia ? diagnostico.competencia.docentes_involucran_actividades : ""
