@@ -238,20 +238,20 @@ class AdminController < ApplicationController
 
   def total_escuelas_registradas
     @escuelas = User.find(:all, :select => "users.created_at as user_created_at, users.login, users.id as user_id, e.*", :joins => "users, escuelas e", :conditions => "users.login=e.clave AND (users.blocked is NULL OR  users.blocked !=1)")
-    csv_string = FasterCSV.generate(:col_sep => ",") do |csv|
-      csv << ["CLAVE_ESCUELA", "NOMBRE", "ZONA_ESCOLAR",       "SECTOR",          "NIVEL",           "DOMICILIO",     "LOCALIDAD",   "MUNICIPIO",      "REGION",              "MODALIDAD",  "CORREO_ESCUELA",   "CORREO_RESPONSABLE",    "TELEFONO_ESCUELA", "TELEFONO_DIRECTOR", "FECHA_HORA_CAPTURA", "ALU_HOMBRES", "ALU_MUJERES", "TOTAL_ALUMNOS", "GRUPOS", "TOTAL_ALUMNOS",       "DOCENTES_H", "DOCENTES_M",  "TOTAL_DOCENTE_APOYO",              "TOTAL_PERSONAL_ADMVO",   "TOTAL_PERSONAL_APOYO", "ESTATUS_ACTUAL", "DOCENTES_CAPACITADOS", "DOCENTES_INVOLUCRADOS", "ALUMNOS_CAPACITADOS", "SUPERFICIE_AREAS_VERDES", "ARBOLES_ADULTOS", "ACCIONES_MANUAL_DE_SALUD", "CAPACITACION_AHORRO_DE_ENERGIA", "CONSUMO_ENERGIA_ELECTRICA", "FOCOS_AHORRADORES", "RED_PUBLICA_AGUA", "PROYECTO"]
+    csv_string = FasterCSV.generate(:col_sep => "|") do |csv|
+      csv << ["CLAVE_ESCUELA", "NOMBRE", "ZONA_ESCOLAR",       "SECTOR",          "NIVEL",           "DOMICILIO",     "LOCALIDAD",   "MUNICIPIO",      "REGION",              "MODALIDAD",  "CORREO_ESCUELA",   "CORREO_RESPONSABLE",    "TELEFONO_ESCUELA", "TELEFONO_DIRECTOR", "FECHA_HORA_CAPTURA", "ALU_HOMBRES", "ALU_MUJERES", "TOTAL_ALUMNOS", "GRUPOS", "TOTAL_ALUMNOS",       "DOCENTES_H", "DOCENTES_M",  "TOTAL_DOCENTE_APOYO",              "TOTAL_PERSONAL_ADMVO",   "TOTAL_PERSONAL_APOYO", "ESTATUS_ACTUAL", "DOCENTES_CAPACITADOS", "DOCENTES_INVOLUCRADOS", "ALUMNOS_CAPACITADOS", "SUPERFICIE_AREAS_VERDES", "ARBOLES_ADULTOS", "ACCIONES_MANUAL_DE_SALUD", "CAPACITACION_AHORRO_DE_ENERGIA", "CONSUMO_ENERGIA_ELECTRICA", "FOCOS_AHORRADORES", "RED_PUBLICA_AGUA", "RECIPIENTES_RESIDUOS_SOLIDOS", "SEPARA_RESIDUOS_ORGANICOS_INORGANICOS", "ELABORA_COMPOSTAS", "FRECUENCIA_ACTIVACION_FISICA", "MINUTOS/MOMENTOS_ACTIVACION_FISICA", "NUM_PADRES_FAMILIA_TUTORES", "NUM_PADRES_FAMILIA_TUTORES_CAPACITADOS", "PROYECTO"]
       @escuelas.each do |i|
-        diagnostico= Diagnostico.find(:first, :conditions => ["escuela_id = ?", i["id"]]) if i["id"]
+        diagnostico = Diagnostico.find(:first, :conditions => ["escuela_id = ?", i["id"]]) if i["id"]
         proyecto = Proyecto.find(:first, :conditions => ["diagnostico_id = ?", diagnostico.id]) if diagnostico
         proyecto = (proyecto) ? proyecto.descripcion : ""
         # campos diagnostico
         if User.find_by_id(i.user_id)
-            # -- competencia
+          # -- competencia
             docentes_capacitados = diagnostico.competencia ? diagnostico.competencia.docentes_capacitados_sma : ""
             docentes_involucrados = diagnostico.competencia ? diagnostico.competencia.docentes_involucran_actividades : ""
             alumnos_capacitados = diagnostico.competencia ? diagnostico.competencia.alumnos_capacitados_docentes : ""
 
-            # -- entorno
+          # -- entorno
             superficie_areas_verdes = diagnostico.entorno ? diagnostico.entorno.superficie_terreno_escuela_av : ""
             arboles_adultos = diagnostico.entorno ? diagnostico.entorno.arboles_terreno_escuela : ""
 
@@ -264,41 +264,69 @@ class AdminController < ApplicationController
             end
             acciones ||= ''
 
-            # -- huella
-            capacitacion_ahorro_energia = diagnostico.huella ? diagnostico.huella.capacitacion_ahorro_energia : ""
+          # -- huella
+            if diagnostico.huella
+              capacitacion_ahorro_energia = diagnostico.huella.capacitacion_ahorro_energia #if diagnostico.huella.capacitacion_ahorro_energia
 
-            if diagnostico.huella.consumo_anterior.to_f >= 0 and diagnostico.huella.energia_electrica.nil?
-              consumo_energia = "Anterior: #{diagnostico.huella.consumo_anterior} - Actual: #{diagnostico.huella.consumo_actual}"
-            else
-              consumo_energia = diagnostico.huella.energia_electrica.descripcion
-            end if diagnostico.huella
-            consumo_energia ||= ''
+              if diagnostico.huella.consumo_anterior.to_f >= 0 and diagnostico.huella.energia_electrica.nil?
+                consumo_energia = "ANTERIOR: #{diagnostico.huella.consumo_anterior} - ACTUAL: #{diagnostico.huella.consumo_actual}"
+              else
+                consumo_energia = diagnostico.huella.energia_electrica.descripcion
+              end
+              
+              focos_ahorradores = diagnostico.huella.focos_ahorradores #if diagnostico.huella.focos_ahorradores
 
-            focos_ahorradores = diagnostico.huella ? diagnostico.huella.focos_ahorradores : ""
+              unless diagnostico.huella.servicio_agua.nil?
+                red_publica_agua = diagnostico.huella.servicio_agua.descripcion
+              else
+                red_publica_agua = diagnostico.huella.red_publica_agua
+              end 
 
-            unless diagnostico.huella.servicio_agua.nil?
-              red_publica_agua = diagnostico.huella.servicio_agua.descripcion
-            else
-              red_publica_agua = diagnostico.huella.red_publica_agua
-            end if diagnostico.huella
-            red_publica_agua ||= ''
+              if diagnostico.huella.recip_residuos_solid == "SI"
+                recip_residuos_solidos = diagnostico.huella.recip_residuos_solid
+              else
+                unless diagnostico.huella.elimina_residuos.nil?
+                  array_recip = []
+                  diagnostico.huella.elimina_residuos.each do |r|
+                    array_recip << r.descripcion
+                  end
+                  recip_residuos_solidos = array_recip.join(";")
+                end
+              end
 
-#            if diagnostico.huella.recip_residuos_solid == "SI"
-#              recip_residuos_solidos = diagnostico.huella.recip_residuos_solid
-#            else
-#              array_recip = []
-#              diagnostico.huella.elimina_residuos.each do |r|
-#                array_recip << r.descripcion
-#              end
-#              recip_residuos_solidos = array_recip.join(";")
-#            end
-#            recip_residuos_solidos ||= ''
+              separa_residuos_org_inorg = diagnostico.huella.sep_residuos_org_inorg #if diagnostico.huella.sep_residuos_org_inorg
+              elabora_compostas = diagnostico.huella.elabora_compostas #if diagnostico.huella.elabora_compostas
+            end
+              capacitacion_ahorro_energia ||= ""
+              consumo_energia ||= ""
+              focos_ahorradores ||= ""
+              red_publica_agua ||= ""
+              recip_residuos_solidos ||= ""
+              separa_residuos_org_inorg ||= ""
 
-            # --
-          end unless diagnostico.nil?
+          # -- consumo            
+            unless diagnostico.consumo.frecuencia_afisica.nil?
+              frecuencia_afisica = diagnostico.consumo.frecuencia_afisica.descripcion #if diagnostico.consumo.frecuencia_afisica.descripcion
+              unless diagnostico.consumo.frecuencia_afisica.clave == "NOSR"
+                minutos_afisica = "MINUTOS: #{diagnostico.consumo.minutos_activacion_fisica}"
+                momentos_afisica = "MOMENTOS: #{diagnostico.consumo.momentos_activacion_fisica}"
+              end
+            end if diagnostico.consumo
+
+            frecuencia_afisica ||= ""
+            minutos_afisica ||= ""
+            momentos_afisica ||= ""
+
+          # -- participacion
+            if diagnostico.participacion
+              num_padres_familia = diagnostico.participacion.num_padres_familia #if diagnostico.participacion.num_padres_familia
+              capacitacion_salud_ma = diagnostico.participacion.capacitacion_salud_ma
+            end
+      
+        end unless diagnostico.nil?
 
         estatus_actual = Estatu.find(i['estatu_id']) ? Estatu.find(i['estatu_id']).descripcion : "No existe información"  if i['estatu_id']
-        csv << [ i["clave"], i["nombre"], i['zona_escolar'],  i['sector'], i['nivel_descripcion'],  i["domicilio"], i["localidad"], i['municipio'], i['region_descripcion'], i['modalidad'], i["email"], i["email_responsable_proyecto"], i["telefono"], i["telefono_director"], i['user_created_at'], i['alu_hom'], i['alu_muj'], i['total_alumnos'], i['grupos'], i['total_alumnos'],  i['doc_hom'], i['doc_muj'], i["total_personal_docente_apoyo"], i['total_personal_admvo'], i["total_personal_apoyo"], estatus_actual, docentes_capacitados, docentes_involucrados, alumnos_capacitados, superficie_areas_verdes, arboles_adultos, acciones, capacitacion_ahorro_energia, consumo_energia, focos_ahorradores, red_publica_agua, proyecto]
+        csv << [ i["clave"], i["nombre"], i['zona_escolar'],  i['sector'], i['nivel_descripcion'],  i["domicilio"], i["localidad"], i['municipio'], i['region_descripcion'], i['modalidad'], i["email"], i["email_responsable_proyecto"], i["telefono"], i["telefono_director"], i['user_created_at'], i['alu_hom'], i['alu_muj'], i['total_alumnos'], i['grupos'], i['total_alumnos'],  i['doc_hom'], i['doc_muj'], i["total_personal_docente_apoyo"], i['total_personal_admvo'], i["total_personal_apoyo"], estatus_actual, docentes_capacitados, docentes_involucrados, alumnos_capacitados, superficie_areas_verdes, arboles_adultos, acciones, capacitacion_ahorro_energia, consumo_energia, focos_ahorradores, red_publica_agua, recip_residuos_solidos, separa_residuos_org_inorg, elabora_compostas, frecuencia_afisica, "#{minutos_afisica}  #{momentos_afisica}", num_padres_familia, capacitacion_salud_ma, proyecto]
       end
     end
     send_data csv_string, type => "text/plain",
