@@ -485,6 +485,95 @@ class AdminController < ApplicationController
      render :partial => "menu_proyecto", :layout => "only_jquery"
    end
 
-  
+   def dashboard
+    @eje1 = []
+    @eje2 = []
+    @eje3 = []
+    @eje4 = []
+    @eje5 = []
+    @diagnostico = Diagnostico.find(params[:diagnostico]) if params[:diagnostico]
+    @proyecto = Proyecto.find(:first, :conditions => ["diagnostico_id = ?", @diagnostico.id]) if @diagnostico
+    @user = (params[:id]) ? User.find(params[:id]): current_user
+    @escuela = Escuela.find_by_clave(@user.login) if @user
+    @evidencias = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ?", @user, @diagnostico.id], :order => "eje_id")
+    @evidencias.each do |e|
+      catalogo_eje = CatalogoEje.find(e.eje_id)
+      @eje1 << e if catalogo_eje.clave == "EJE1"
+      @eje2 << e if catalogo_eje.clave == "EJE2"
+      @eje3 << e if catalogo_eje.clave == "EJE3"
+#      @eje4 << e if catalogo_eje.clave == "EJE4"
+#      @eje5 << e if catalogo_eje.clave == "EJE5"
+    end
+
+    unless @eje1.empty?
+      @competencia = @diagnostico.competencia if @diagnostico.competencia
+      # -- Operaciones --
+      @cp1 = @competencia.docentes_capacitados_sma.to_i > 0 ? (((@competencia.docentes_capacitados_sma.to_i / @escuela.total_personal_docente.to_f ) * 100) * $competencia_p1.to_f).round(3) : 0
+      @cp2 = @competencia.docentes_aplican_conocimientos.to_i > 0 ? (((@competencia.docentes_aplican_conocimientos.to_i / @escuela.total_personal_docente.to_f ) * 100) * $competencia_p2.to_f).round(3) : 0
+      @cp3 = @competencia.docentes_involucran_actividades.to_i > 0 ? (((@competencia.docentes_involucran_actividades.to_i / @escuela.total_personal_docente.to_f ) * 100) * $competencia_p3.to_f).round(3) : 0
+      @cp4 = @competencia.alumnos_capacitados_docentes.to_i > 0 ? (((@competencia.alumnos_capacitados_docentes.to_i / (@escuela.alu_hom.to_i + @escuela.alu_muj.to_i) ).to_f * 100) * $competencia_p4.to_f).round(3) : 0
+      @cp5 = @competencia.alumnos_capacitados_instituciones.to_i > 0 ? (((@competencia.alumnos_capacitados_instituciones.to_i / (@escuela.alu_hom.to_i + @escuela.alu_muj.to_i) ).to_f * 100) * $competencia_p5.to_f).round(3) : 0
+
+      @c_maxptos = (($competencia_p1.to_f + $competencia_p2.to_f + $competencia_p3.to_f + $competencia_p5.to_f + $competencia_p5.to_f)*100).round(3)
+      @c_totalptos = (@cp1.to_f + @cp2.to_f + @cp3.to_f + @cp4.to_f + @cp5.to_f).round(3)
+    end
+
+    unless @eje2.empty?
+      @entorno = @diagnostico.entorno if @diagnostico.entorno
+      # -- Operaciones --
+      if @entorno.superficie_terreno_escuela_av.to_f > 0  and @entorno.superficie_terreno_escuela.to_f > 0
+        ((@entorno.superficie_terreno_escuela_av.to_f / @entorno.superficie_terreno_escuela.to_f) * 100).round > 25 ? @ep2 = ptos_superficie(25) : @ep2 = ptos_superficie(((@entorno.superficie_terreno_escuela_av.to_f / @entorno.superficie_terreno_escuela.to_f) * 100).round)
+      else
+        @ep2 = 0
+      end
+
+      @s_acciones = multiple_selected_id(@entorno.acciones) if @entorno.acciones
+      if @diagnostico.escuela.nivel_descripcion == "BACHILLERATO"
+        @acciones = Accione.find(:all, :conditions => ["clave not in ('AC01')"])
+        @ep6 = (((@s_acciones.size.to_f / 4)* 100) * $entorno_p6.to_f).round(3)
+      else
+        @acciones = Accione.find(:all, :conditions => ["clave not in ('AC00')"])
+        @ep6 = (((@s_acciones.size.to_f / 4)* 100) * $entorno_p6.to_f).round(3)
+      end
+
+      @e_maxptos = (($entorno_p2.to_f + $entorno_p6.to_f)*100).round(3)
+      @e_totalptos = (@ep2.to_f + @ep6.to_f).round(3)
+    end
+
+     unless @eje3.empty?
+      @huella = @diagnostico.huella if @diagnostico.huella
+      # -- Operaciones --
+      @hp1 = @huella.capacitacion_ahorro_energia.to_f > 0 ? (((@huella.capacitacion_ahorro_energia.to_f / 2 ) * 100) * $huella_p1.to_f).round(3) : 0
+
+      if @huella.consumo_anterior.to_f > 0 and @huella.consumo_actual.to_f > 0
+        @huella.consumo_anterior.to_f > @huella.consumo_actual.to_f ? @hp2 = $huella_p2 * 100 : @hp2 = 0 if @huella.consumo_anterior or @huella.consumo_actual
+      else
+        @hp2 = 0
+      end
+
+      @s_electricas = selected(@huella.energia_electrica) if @huella.energia_electrica
+      @hp3 = @huella.focos_ahorradores.to_f > 0 ? (((@huella.focos_ahorradores.to_f / @huella.total_focos.to_f ) * 100) * $huella_p3.to_f).round(3) : 0
+
+      @s_aguas = selected(@huella.servicio_agua) if @huella.servicio_agua
+      @huella.red_publica_agua == "SI" ? @hp4 = $huella_p4 * 100 : @hp4 = 0
+      @hp5 = (((@huella.mantto_inst.to_f / 2 ) * 100) * $huella_p5.to_f).round(3)
+
+      @s_elimina_residuos = multiple_selected_id(@huella.elimina_residuos) if @huella.elimina_residuos
+      @huella.recip_residuos_solid == "SI" ? @hp6 = $huella_p6 * 100 : @hp6 = 0
+
+      @huella.sep_residuos_org_inorg == "SI" ? @hp7 = $huella_p7 * 100 : @hp7 = 0
+
+      @huella.elabora_compostas == "SI" ? @hp8 = $huella_p8 * 100 : @hp8 = 0
+
+      @s_inorganicos = multiple_selected_id(@huella.inorganicos) if @huella.inorganicos
+      (@s_inorganicos.size == 1 and @huella.inorganicos[0]['clave'] == "NING") ? @hp9 = 0 : @hp9 = ptos_inorganicos(@s_inorganicos.size)
+
+      @h_maxptos = (($huella_p1.to_f + $huella_p2.to_f + $huella_p3.to_f + $huella_p4.to_f + $huella_p5.to_f + $huella_p6.to_f + $huella_p7.to_f + $huella_p8.to_f + $huella_p9.to_f)*100).round(3)
+      @h_totalptos = (@hp1.to_f + @hp2.to_f + @hp3.to_f + @hp4.to_f + @hp5.to_f + @hp6.to_f + @hp7.to_f + @hp8.to_f + @hp9.to_f).round(3)
+     end
+
+    
+    render :layout => "only_jquery"
+   end
 
 end
