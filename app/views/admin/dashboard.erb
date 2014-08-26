@@ -23,10 +23,14 @@
             <td width="10%" style="vertical-align: middle;">PUNTAJE OBTENIDO</td>
             <td width="20%" style="vertical-align: middle;" align="center" colspan="4">ACCIONES</td>
           </tr>
+          <% total_competencia = 0.0 %>
+          <% obtenido_competencia = 0.0 %>
           <% @eje1.each do |eje| %>
          <tr class="d1">
             <td><%= eje.numero_pregunta %></td>
             <td><%= eje.descripcion %></td>
+            <% total_competencia += (eval("$competencia_p#{eje.numero_pregunta}").to_f * 100) %>
+            <% obtenido_competencia += (eval("@cp#{eje.numero_pregunta}")).to_f %>
             <td align="right"><%= eval("$competencia_p#{eje.numero_pregunta}").to_f * 100 %></td>
             <td align="right"><%= eval("@cp#{eje.numero_pregunta}") %></td>
             <td><%=link_to image_tag('admin/view.png', :size => "30x30", :mouseover => 'admin/view.png') , {:action => "show_evidencias_avance", :controller => "upload", :id => @user, :diagnostico => @diagnostico, :avance => 2}, :html => { :target => "_blank"}, :title => "Ver Evidencia" %></td>
@@ -35,6 +39,12 @@
             <td><%=link_to image_tag('admin/delete.png', :size => "30x30", :mouseover => 'admin/delete.png') , {:action => "show_evidencias_avance", :controller => "upload", :id => @user, :diagnostico => @diagnostico, :avance => 2}, :html => { :target => "_blank"}, :title => "Eliminar Evidencia" %></td>
           </tr>
           <% end %>
+          <tr class="d1">
+            <td colspan="2">PUNTOS POR PREGUNTAS SIN EVIDENCIAS</td>
+            <td align="right"><%= @c_maxptos - total_competencia %></td>
+            <td align="right"><%= (@c_totalptos - obtenido_competencia).round(3) %></td>
+            <td colspan="4">&nbsp;</td>
+          </tr>
           <tr>
             <td colspan="8">&nbsp;</td>
           </tr>
@@ -61,16 +71,26 @@
             <td width="10%" style="vertical-align: middle;">PUNTAJE OBTENIDO</td>
             <td width="20%"style="vertical-align: middle;" align="center" colspan="4">ACCIONES</td>
           </tr>
+          <% total_entorno = 0.0 %>
+          <% obtenido_entorno = 0.0 %>
           <% @eje2.each do |eje| %>
          <tr class="d1">
             <td><%= eje.numero_pregunta %></td>
             <td><%= eje.descripcion %></td>
+            <% total_entorno += (eval("$entorno_p#{eje.numero_pregunta}").to_f * 100) %>
+            <% obtenido_entorno += (eval("@ep#{eje.numero_pregunta}")).to_f %>
             <td align="right"><%= eval("$entorno_p#{eje.numero_pregunta}").to_f * 100 %></td>
             <td align="right"><%= eval("@ep#{eje.numero_pregunta}") %></td>
             <td><%=link_to image_tag('admin/view.png', :size => "30x30", :mouseover => 'admin/view.png') , {:action => "show_evidencias_avance", :controller => "upload", :id => @user, :diagnostico => @diagnostico, :avance => 2}, :html => { :target => "_blank"}, :title => "Ver Evidencia" %></td>
             <td><%=link_to image_tag('admin/valid.png', :size => "30x30", :mouseover => 'admin/valid.png') , {:action => "show_evidencias_avance", :controller => "upload", :id => @user, :diagnostico => @diagnostico, :avance => 2}, :html => { :target => "_blank"}, :title => "Evidencia Válida" %></td>
             <td><%=link_to image_tag('admin/invalid.png', :size => "30x30", :mouseover => 'admin/invalid.png') , {:action => "show_evidencias_avance", :controller => "upload", :id => @user, :diagnostico => @diagnostico, :avance => 2}, :html => { :target => "_blank"}, :title => "Evidencia Inválida" %></td>
             <td><%=link_to image_tag('admin/delete.png', :size => "30x30", :mouseover => 'admin/delete.png') , {:action => "show_evidencias_avance", :controller => "upload", :id => @user, :diagnostico => @diagnostico, :avance => 2}, :html => { :target => "_blank"}, :title => "Eliminar Evidencia" %></td>
+          </tr>
+          <tr class="d1">
+            <td colspan="2">PUNTOS POR PREGUNTAS SIN EVIDENCIAS</td>
+            <td align="right"><%= @e_maxptos - total_entorno %></td>
+            <td align="right"><%= @e_totalptos - obtenido_entorno %></td>
+            <td colspan="4">&nbsp;</td>
           </tr>
           <tr>
             <td colspan="8">&nbsp;</td>
@@ -87,7 +107,7 @@
       </div>
 
       <div class="grid-12-12 clear">
-        <% unless @eje2.empty?  %>
+        <% unless @eje3.empty?  %>
         <table width="98%" border="0" cellspacing="0" cellpadding="0" class="sample" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid">
           <tr class="tdiagnostico">
             <td colspan="8" align="center" ><label>EJE: 3 &nbsp; <b>HUELLA ECOLOGICA</b></label></td>
@@ -99,12 +119,14 @@
             <td width="10%"style="vertical-align: middle;">PUNTAJE OBTENIDO</td>
             <td width="20%"style="vertical-align: middle;" align="center" colspan="4">ACCIONES</td>
           </tr>
+          <% total_huella = 0.0 %>
+          <% obtenido_huella = 0.0 %>
           <% @eje3.each do |eje| %>
          <tr class="d1">
             <td><%= eje.numero_pregunta %></td>
             <td><%= eje.descripcion %></td>
-            <%# total_huella += (eval("$huella_p#{eje.numero_pregunta}").to_f * 100) %>
-            <%# obtenido_huella += (eval("@hp#{eje.numero_pregunta}")) %>
+            <% total_huella += (eval("$huella_p#{eje.numero_pregunta}").to_f * 100) %>
+            <% obtenido_huella += (eval("@hp#{eje.numero_pregunta}")).to_f %>
             <td align="right"><%= eval("$huella_p#{eje.numero_pregunta}").to_f * 100 %></td>
             <td align="right"><%= eval("@hp#{eje.numero_pregunta}") %></td>
             <td><%=link_to image_tag('admin/view.png', :size => "30x30", :mouseover => 'admin/view.png') , {:action => "show_evidencias_avance", :controller => "upload", :id => @user, :diagnostico => @diagnostico, :avance => 2}, :html => { :target => "_blank"}, :title => "Ver Evidencia" %></td>
@@ -112,10 +134,10 @@
             <td><%=link_to image_tag('admin/invalid.png', :size => "30x30", :mouseover => 'admin/invalid.png') , {:action => "show_evidencias_avance", :controller => "upload", :id => @user, :diagnostico => @diagnostico, :avance => 2}, :html => { :target => "_blank"}, :title => "Evidencia Inválida" %></td>
             <td><%=link_to image_tag('admin/delete.png', :size => "30x30", :mouseover => 'admin/delete.png') , {:action => "show_evidencias_avance", :controller => "upload", :id => @user, :diagnostico => @diagnostico, :avance => 2}, :html => { :target => "_blank"}, :title => "Eliminar Evidencia" %></td>
           </tr>
-          <tr>
+          <tr class="d1">
             <td colspan="2">PUNTOS POR PREGUNTAS SIN EVIDENCIAS</td>
-            <td><%= total_huella %></td>
-            <td><%= obtenido_huella %></td>
+            <td align="right"><%= @h_maxptos - total_huella %></td>
+            <td align="right"><%= @h_totalptos - obtenido_huella %></td>
             <td colspan="4">&nbsp;</td>
           </tr>
           <tr>
