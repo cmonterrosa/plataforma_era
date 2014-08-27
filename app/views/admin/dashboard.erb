@@ -17,7 +17,7 @@
             <td colspan="8" align="center" ><label>EJE: 1 &nbsp; <b>DESARROLLO DE COMPETENCIAS</b></label></td>
           </tr>
           <tr class="d0" style=" font-weight: bold; " >
-            <td width="2%" style="vertical-align: middle;">NP</td>
+            <td width="2%" style="vertical-align: middle;">PREGUNTA</td>
             <td width="56%" style="vertical-align: middle;">DESCRIPCIÓN EVIDENCIA</td>
             <td width="10%" style="vertical-align: middle;">PUNTAJE PREGUNTA</td>
             <td width="10%" style="vertical-align: middle;">PUNTAJE OBTENIDO</td>
@@ -65,7 +65,7 @@
             <td colspan="8" align="center" ><label>EJE: 2 &nbsp; <b>ENTORNO SALUDABLE</b></label></td>
           </tr>
           <tr class="d0" style=" font-weight: bold; " >
-            <td width="2%" style="vertical-align: middle;">NP</td>
+            <td width="2%" style="vertical-align: middle;" align="center">PREGUNTA</td>
             <td width="56%" style="vertical-align: middle;">DESCRIPCIÓN EVIDENCIA</td>
             <td width="10%" style="vertical-align: middle;">PUNTAJE PREGUNTA</td>
             <td width="10%" style="vertical-align: middle;">PUNTAJE OBTENIDO</td>
@@ -75,16 +75,16 @@
           <% obtenido_entorno = 0.0 %>
           <% @eje2.each do |eje| %>
          <tr class="d1">
-            <td><%= eje.numero_pregunta %></td>
+            <td align="center"><%= eje.numero_pregunta %></td>
             <td><%= eje.descripcion %></td>
             <% total_entorno += (eval("$entorno_p#{eje.numero_pregunta}").to_f * 100) %>
             <% obtenido_entorno += (eval("@ep#{eje.numero_pregunta}")).to_f %>
             <td align="right"><%= eval("$entorno_p#{eje.numero_pregunta}").to_f * 100 %></td>
             <td align="right"><%= eval("@ep#{eje.numero_pregunta}") %></td>
-            <td><%=link_to image_tag('admin/view.png', :size => "30x30", :mouseover => 'admin/view.png') , {:action => "show_evidencias_avance", :controller => "upload", :id => @user, :diagnostico => @diagnostico, :avance => 2}, :html => { :target => "_blank"}, :title => "Ver Evidencia" %></td>
+            <td><%=link_to image_tag('admin/view.png', :size => "30x30", :mouseover => 'admin/view.png') , {:controller => "upload", :action => "download", :id => eje.id}, :class => 'fancybox fancybox.iframe', :title => "Ver Evidencia" %></td>
             <td><%=link_to image_tag('admin/valid.png', :size => "30x30", :mouseover => 'admin/valid.png') , {:action => "show_evidencias_avance", :controller => "upload", :id => @user, :diagnostico => @diagnostico, :avance => 2}, :html => { :target => "_blank"}, :title => "Evidencia Válida" %></td>
             <td><%=link_to image_tag('admin/invalid.png', :size => "30x30", :mouseover => 'admin/invalid.png') , {:action => "show_evidencias_avance", :controller => "upload", :id => @user, :diagnostico => @diagnostico, :avance => 2}, :html => { :target => "_blank"}, :title => "Evidencia Inválida" %></td>
-            <td><%=link_to image_tag('admin/delete.png', :size => "30x30", :mouseover => 'admin/delete.png') , {:action => "show_evidencias_avance", :controller => "upload", :id => @user, :diagnostico => @diagnostico, :avance => 2}, :html => { :target => "_blank"}, :title => "Eliminar Evidencia" %></td>
+            <td><%=link_to image_tag('admin/delete.png', :size => "30x30", :mouseover => 'admin/delete.png') , {:controller => "upload", :action => "destroy_evidencia", :id => eje.id, :dashboard => 1, :user_id => @user.id, :diagnostico_id => @diagnostico}, :confirm => '¿Esta seguro que desea elimina la evidencia?', :title => "Eliminar Evidencia" %></td>
           </tr>
           <tr class="d1">
             <td colspan="2">PUNTOS POR PREGUNTAS SIN EVIDENCIAS</td>
@@ -113,7 +113,7 @@
             <td colspan="8" align="center" ><label>EJE: 3 &nbsp; <b>HUELLA ECOLOGICA</b></label></td>
           </tr>
           <tr class="d0" style=" font-weight: bold; " >
-            <td width="2%"style="vertical-align: middle;">NP</td>
+            <td width="2%"style="vertical-align: middle;">PREGUNTA</td>
             <td width="56%"style="vertical-align: middle;">DESCRIPCIÓN EVIDENCIA</td>
             <td width="10%" style="vertical-align: middle;">PUNTAJE PREGUNTA</td>
             <td width="10%"style="vertical-align: middle;">PUNTAJE OBTENIDO</td>

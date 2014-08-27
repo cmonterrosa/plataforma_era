@@ -135,7 +135,8 @@ class UploadController < ApplicationController
     if @uploaded_file.destroy
       #return render(:partial => 'eliminar_evidencia_exitosa', :layout => "only_jquery")
       flash[:notice] = "Evidencia eliminada correctamente"
-      redirect_to :action => "list_evidencias", :diagnostico => @diagnostico, :eje => @eje, :numero_pregunta => @numero_pregunta
+      render = (params[:dashboard]) ? {:action => "dashboard", :controller => "admin", :diagnostico=> params[:diagnostico_id], :id => params[:user_id]} : {:action => "list_evidencias", :diagnostico => @diagnostico, :eje => @eje, :numero_pregunta => @numero_pregunta}
+      redirect_to render
     else
       return render(:partial => 'eliminar_evidencia_error', :layout => "only_jquery")
     end
