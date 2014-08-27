@@ -229,14 +229,15 @@ class DiagnosticosController < ApplicationController
       @s_afisicas = selected(@consumo.frecuencia_afisica) if @consumo.frecuencia_afisica
       @cop7 = ptos_afisica(@s_afisicas)
 
-      @cop8 = ptos_minutos(@consumo.minutos_activacion_fisica > 30 ? 30 : @consumo.minutos_activacion_fisica)
+      minutos_activacion_fisica = (@consumo.minutos_activacion_fisica) ? @consumo.minutos_activacion_fisica : 0
+      @cop8 = ptos_minutos(minutos_activacion_fisica > 30 ? 30 : @consumo.minutos_activacion_fisica)
 
       @co_maxptos = (($consumo_p2.to_f + $consumo_p3.to_f + ($consumo_p4.to_f * 3) + ($consumo_p5.to_f * 4) + $consumo_p6.to_f + $consumo_p7.to_f + $consumo_p8.to_f)*100 ).round(3)
       @co_totalptos = (@cop2.to_f + @cop3.to_f + @cop4.to_f + @cop5.to_f + @cop6.to_f + @cop7.to_f + @cop8.to_f).round(3)
       @co_porcentaje = @co_totalptos.to_f > 0 ? ((@co_totalptos.to_f * 100) / @co_maxptos.to_f).round(3) : 0
 
-    # -- Participación --
-    @participacion = @diagnostico.participacion if @diagnostico.participacion
+      # -- Participación --
+      @participacion = @diagnostico.participacion if @diagnostico.participacion
       # -- Operaciones --
       @pp2 = @participacion.num_padres_familia.to_i > 0 ? (((@participacion.capacitacion_salud_ma.to_f / @participacion.num_padres_familia.to_f ) * 100) * $participacion_p2.to_f).round(3) : 0
       @pp3 = @participacion.proy_escolares_ma.to_i > 0 ? ptos_participacion(@participacion.proy_escolares_ma) : 0
