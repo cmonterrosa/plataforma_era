@@ -492,9 +492,7 @@ class AdminController < ApplicationController
     @eje4 = []
     @eje5 = []
     @diagnostico = Diagnostico.find(params[:diagnostico]) if params[:diagnostico]
-    @proyecto = Proyecto.find(:first, :conditions => ["diagnostico_id = ?", @diagnostico.id]) if @diagnostico
     @user = (params[:id]) ? User.find(params[:id]): current_user
-    @escuela = Escuela.find_by_clave(@user.login) if @user
     @evidencias = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ?", @user, @diagnostico.id], :order => "eje_id")
     @evidencias.each do |e|
       catalogo_eje = CatalogoEje.find(e.eje_id)
@@ -505,18 +503,30 @@ class AdminController < ApplicationController
 #      @eje5 << e if catalogo_eje.clave == "EJE5"
     end
 
-    unless @eje1.empty?
-      @competencia = @diagnostico.competencia if @diagnostico.competencia
-      # -- Operaciones --
-      @cp1 = @competencia.docentes_capacitados_sma.to_i > 0 ? (((@competencia.docentes_capacitados_sma.to_i / @escuela.total_personal_docente.to_f ) * 100) * $competencia_p1.to_f).round(3) : 0
-      @cp2 = @competencia.docentes_aplican_conocimientos.to_i > 0 ? (((@competencia.docentes_aplican_conocimientos.to_i / @escuela.total_personal_docente.to_f ) * 100) * $competencia_p2.to_f).round(3) : 0
-      @cp3 = @competencia.docentes_involucran_actividades.to_i > 0 ? (((@competencia.docentes_involucran_actividades.to_i / @escuela.total_personal_docente.to_f ) * 100) * $competencia_p3.to_f).round(3) : 0
-      @cp4 = @competencia.alumnos_capacitados_docentes.to_i > 0 ? (((@competencia.alumnos_capacitados_docentes.to_i / (@escuela.alu_hom.to_i + @escuela.alu_muj.to_i) ).to_f * 100) * $competencia_p4.to_f).round(3) : 0
-      @cp5 = @competencia.alumnos_capacitados_instituciones.to_i > 0 ? (((@competencia.alumnos_capacitados_instituciones.to_i / (@escuela.alu_hom.to_i + @escuela.alu_muj.to_i) ).to_f * 100) * $competencia_p5.to_f).round(3) : 0
+    diagnostico = Evaluacion.new(:diagnostico_id => Diagnostico.find(params[:diagnostico]))
+    @cp1 = diagnostico.puntaje_eje1_p1
+    @cp2 = diagnostico.puntaje_eje1_p2
+    @cp3 = diagnostico.puntaje_eje1_p3
+    @cp4 = diagnostico.puntaje_eje1_p4
+    @cp5 = diagnostico.puntaje_eje1_p5
+    
+  
+    
+    
+    
 
-      @c_maxptos = (($competencia_p1.to_f + $competencia_p2.to_f + $competencia_p3.to_f + $competencia_p5.to_f + $competencia_p5.to_f)*100).round(3)
-      @c_totalptos = (@cp1.to_f + @cp2.to_f + @cp3.to_f + @cp4.to_f + @cp5.to_f).round(3)
-    end
+#    unless @eje1.empty?
+#      @competencia = @diagnostico.competencia if @diagnostico.competencia
+#      # -- Operaciones --
+#      @cp1 = @competencia.docentes_capacitados_sma.to_i > 0 ? (((@competencia.docentes_capacitados_sma.to_i / @escuela.total_personal_docente.to_f ) * 100) * $competencia_p1.to_f).round(3) : 0
+#      @cp2 = @competencia.docentes_aplican_conocimientos.to_i > 0 ? (((@competencia.docentes_aplican_conocimientos.to_i / @escuela.total_personal_docente.to_f ) * 100) * $competencia_p2.to_f).round(3) : 0
+#      @cp3 = @competencia.docentes_involucran_actividades.to_i > 0 ? (((@competencia.docentes_involucran_actividades.to_i / @escuela.total_personal_docente.to_f ) * 100) * $competencia_p3.to_f).round(3) : 0
+#      @cp4 = @competencia.alumnos_capacitados_docentes.to_i > 0 ? (((@competencia.alumnos_capacitados_docentes.to_i / (@escuela.alu_hom.to_i + @escuela.alu_muj.to_i) ).to_f * 100) * $competencia_p4.to_f).round(3) : 0
+#      @cp5 = @competencia.alumnos_capacitados_instituciones.to_i > 0 ? (((@competencia.alumnos_capacitados_instituciones.to_i / (@escuela.alu_hom.to_i + @escuela.alu_muj.to_i) ).to_f * 100) * $competencia_p5.to_f).round(3) : 0
+#
+#      @c_maxptos = (($competencia_p1.to_f + $competencia_p2.to_f + $competencia_p3.to_f + $competencia_p5.to_f + $competencia_p5.to_f)*100).round(3)
+#      @c_totalptos = (@cp1.to_f + @cp2.to_f + @cp3.to_f + @cp4.to_f + @cp5.to_f).round(3)
+#    end
 
     unless @eje2.empty?
       @entorno = @diagnostico.entorno if @diagnostico.entorno
@@ -556,6 +566,7 @@ class AdminController < ApplicationController
 
       @s_aguas = selected(@huella.servicio_agua) if @huella.servicio_agua
       @huella.red_publica_agua == "SI" ? @hp4 = $huella_p4 * 100 : @hp4 = 0
+      
       @hp5 = (((@huella.mantto_inst.to_f / 2 ) * 100) * $huella_p5.to_f).round(3)
 
       @s_elimina_residuos = multiple_selected_id(@huella.elimina_residuos) if @huella.elimina_residuos
