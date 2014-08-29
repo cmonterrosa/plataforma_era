@@ -191,7 +191,7 @@
 
             <%@preguntas_eje3.sort{|p1,p2| p1.numero_pregunta <=> p2.numero_pregunta}.each do |p|%>
             <tr class="d1" style="font-size: 14px;">
-              <%detalle_preguntas_eje3 = Adjunto.find(:all, :conditions => ["diagnostico_id = ? AND id= ?", p.diagnostico_id, p.id])%>
+              <%detalle_preguntas_eje3 = Adjunto.find(:all, :conditions => ["diagnostico_id = ? AND numero_pregunta= ?", p.diagnostico_id, p.numero_pregunta])%>
                 <td align="center" rowspan="<%= detalle_preguntas_eje3.size + 1%>"><%= p.numero_pregunta %></td>
                 <td align="center" style="font-size: 14px;" rowspan="<%=h detalle_preguntas_eje3.size + 1%>">1</td>
                 <td align="center" style="font-size: 14px;" rowspan="<%=h detalle_preguntas_eje3.size + 1%>">2</td>
@@ -261,7 +261,7 @@
 
             <%@preguntas_eje4.sort{|p1,p2| p1.numero_pregunta <=> p2.numero_pregunta}.each do |p|%>
             <tr class="d1" style="font-size: 14px;">
-              <%detalle_preguntas_eje4 = Adjunto.find(:all, :conditions => ["diagnostico_id = ? AND id= ?", p.diagnostico_id, p.id])%>
+              <%detalle_preguntas_eje4 = Adjunto.find(:all, :conditions => ["diagnostico_id = ? AND numero_pregunta= ?", p.diagnostico_id, p.numero_pregunta])%>
                 <td align="center" rowspan="<%= detalle_preguntas_eje4.size + 1%>"><%= p.numero_pregunta %></td>
                 <td align="center" style="font-size: 14px;" rowspan="<%=h detalle_preguntas_eje4.size + 1%>">1</td>
                 <td align="center" style="font-size: 14px;" rowspan="<%=h detalle_preguntas_eje4.size + 1%>">2</td>
@@ -330,7 +330,7 @@
 
             <%@preguntas_eje5.sort{|p1,p2| p1.numero_pregunta <=> p2.numero_pregunta}.each do |p|%>
             <tr class="d1" style="font-size: 14px;">
-              <%detalle_preguntas_eje4 = Adjunto.find(:all, :conditions => ["diagnostico_id = ? AND id= ?", p.diagnostico_id, p.id])%>
+              <%detalle_preguntas_eje4 = Adjunto.find(:all, :conditions => ["diagnostico_id = ? AND numero_pregunta= ?", p.diagnostico_id, p.numero_pregunta])%>
                 <td align="center" rowspan="<%= detalle_preguntas_eje4.size + 1%>"><%= p.numero_pregunta %></td>
                 <td align="center" style="font-size: 14px;" rowspan="<%=h detalle_preguntas_eje4.size + 1%>">1</td>
                 <td align="center" style="font-size: 14px;" rowspan="<%=h detalle_preguntas_eje4.size + 1%>">2</td>

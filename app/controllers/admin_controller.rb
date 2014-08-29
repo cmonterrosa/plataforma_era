@@ -513,12 +513,13 @@ class AdminController < ApplicationController
    def save_dashboard
      @evaluacion = Evaluacion.new(params[:evaluacion]) if params[:evaluacion]
      @evaluacion.user_id = User.find(params[:id]).id if params[:id]
-       @evaluacion.diagnostico_id = Diagnostico.find(params[:diagnostico]).id if params[:diagnostico]
+     @evaluacion.diagnostico_id = Diagnostico.find(params[:diagnostico]).id if params[:diagnostico]
+     @diagnostico = Diagnostico.find(@evaluacion.diagnostico_id) if @evaluacion.diagnostico_id
      @evaluacion.activa = true
      @evidencias_sin_evaluar = Adjunto.count(:id, :conditions => ["diagnostico_id = ? AND validado IS NULL", @evaluacion.diagnostico_id]) if @evaluacion.diagnostico_id
-     @evidencias_sin_evaluar ||=1
      @concluido = (@evidencias_sin_evaluar > 0 )? false : true
      if (@concluido && @evaluacion.save)
+       @diagnostico.escuela.update_bitacora!("diag-eva", User.find(@evaluacion.user_id)) if @diagnostico.escuela && @evaluacion.user_id
        flash[:notice] = "Registro de evaluacion guardado correctamente"
      else
        flash[:error] = "Necesita evaluar todas las evidencias para concluir"
