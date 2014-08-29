@@ -485,7 +485,51 @@ class AdminController < ApplicationController
      render :partial => "menu_proyecto", :layout => "only_jquery"
    end
 
+
+
+
+
    def dashboard
+     @diagnostico = Diagnostico.find(params[:diagnostico]) if params[:diagnostico]
+     @user = (params[:id]) ? User.find(params[:id]): current_user
+     @escuela = @user.escuela if @user
+     eje1 = CatalogoEje.find_by_clave("EJE1")
+     eje2 = CatalogoEje.find_by_clave("EJE2")
+     eje3 = CatalogoEje.find_by_clave("EJE3")
+     eje4 = CatalogoEje.find_by_clave("EJE4")
+     eje5 = CatalogoEje.find_by_clave("EJE5")
+     @preguntas_eje1 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? AND eje_id = ?", @user, @diagnostico.id, eje1.id], :group => "numero_pregunta")
+     @preguntas_eje2 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? AND eje_id = ?", @user, @diagnostico.id, eje2.id], :group => "numero_pregunta")
+     @preguntas_eje3 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? AND eje_id = ?", @user, @diagnostico.id, eje3.id], :group => "numero_pregunta")
+     @preguntas_eje4 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? AND eje_id = ?", @user, @diagnostico.id, eje4.id], :group => "numero_pregunta")
+     @preguntas_eje5 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? AND eje_id = ?", @user, @diagnostico.id, eje5.id], :group => "numero_pregunta")
+     @evaluacion = Evaluacion.find(:first, :conditions => ["diagnostico_id = ? AND user_id = ? AND activa=true", @diagnostico.id, @user.id])
+     @evaluacion ||= Evaluacion.new(:diagnostico_id => @diagnostico.id)
+     render :layout => "only_jquery"
+    end
+
+
+
+   def save_dashboard
+     @evaluacion = Evaluacion.new(params[:evaluacion]) if params[:evaluacion]
+     @evaluacion.user_id = User.find(params[:id]).id if params[:id]
+       @evaluacion.diagnostico_id = Diagnostico.find(params[:diagnostico]).id if params[:diagnostico]
+     @evaluacion.activa = true
+     @evidencias_sin_evaluar = Adjunto.count(:id, :conditions => ["diagnostico_id = ? AND validado IS NULL", @evaluacion.diagnostico_id]) if @evaluacion.diagnostico_id
+     @evidencias_sin_evaluar ||=1
+     @concluido = (@evidencias_sin_evaluar > 0 )? false : true
+     if (@concluido && @evaluacion.save)
+       flash[:notice] = "Registro de evaluacion guardado correctamente"
+     else
+       flash[:error] = "Necesita evaluar todas las evidencias para concluir"
+     end
+     redirect_to :action => "dashboard", :diagnostico => @evaluacion.diagnostico_id, :id => @evaluacion.user_id
+   end
+   
+
+
+
+   def dashboard2
     @eje1 = []
     @eje2 = []
     @eje3 = []
