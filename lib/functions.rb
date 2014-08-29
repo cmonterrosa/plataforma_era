@@ -161,6 +161,7 @@ module Functions
     end
   end
 
+  $participacion_p1 = 0 #Agregado porque requiere evidencia
   $participacion_p2 = 0.03125
   $participacion_p3 = 0.03125
   $participacion_p4 = 0.03125

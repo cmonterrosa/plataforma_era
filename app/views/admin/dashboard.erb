@@ -51,10 +51,12 @@
             
             <%@preguntas_eje1.sort{|p1,p2| p1.numero_pregunta <=> p2.numero_pregunta}.each do |p|%>
             <tr class="d1" style="font-size: 14px;">
-              <%detalle_preguntas_eje1 = Adjunto.find(:all, :conditions => ["diagnostico_id = ? AND id= ?", p.diagnostico_id, p.id])%>
+              <%# total_eje += eval("$competencia_p#{p.numero_pregunta}").to_f %>
+              <% total_obtenido += eval("@competencia_p#{p.numero_pregunta}") %>
+              <%  detalle_preguntas_eje1 = Adjunto.find(:all, :conditions => ["diagnostico_id = ? AND id= ?", p.diagnostico_id, p.id])%>
                 <td align="center" rowspan="<%= detalle_preguntas_eje1.size + 1%>"><%= p.numero_pregunta %></td>
-                <td align="center" style="font-size: 14px;" rowspan="<%=h detalle_preguntas_eje1.size + 1%>">1</td>
-                <td align="center" style="font-size: 14px;" rowspan="<%=h detalle_preguntas_eje1.size + 1%>">2</td>
+                <td align="center" style="font-size: 14px;" rowspan="<%=h detalle_preguntas_eje1.size + 1%>"><%= eval("$competencia_p#{p.numero_pregunta}")*100 %></td>
+                <td align="center" style="font-size: 14px;" rowspan="<%=h detalle_preguntas_eje1.size + 1%>"><%= eval("@competencia_p#{p.numero_pregunta}") %></td>
             </tr>
 
             <%detalle_preguntas_eje1.each do |eje|%>
@@ -85,7 +87,7 @@
            <tr class="d1">
               <td>&nbsp;</td>
               <td align="center"><%=h "MP" %></td>
-              <td align="center"><%=h "TP" %></td>
+              <td align="center"><%=h @ptos_obtenidos_eje1 - total_obtenido %></td>
               <td colspan="6">PUNTOS POR PREGUNTAS SIN EVIDENCIAS</td>
             </tr>
           <tr>
@@ -93,8 +95,8 @@
           </tr>
           <tr>
             <td align="right" ><b>TOTALES: &nbsp; </b></td>
-            <td align="center"><b><%= "xx"%></b></td>
-            <td align="center"><b><%= "yy" %></b></td>
+            <td align="center"><b><%= @total_puntos_eje1 %></b></td>
+            <td align="center"><b><%= @ptos_obtenidos_eje1 %></b></td>
             <td colspan="6"></td>
           </tr>
         </table>
@@ -124,8 +126,8 @@
             <tr class="d1" style="font-size: 14px;">
               <%detalle_preguntas_eje2 = Adjunto.find(:all, :conditions => ["diagnostico_id = ? AND numero_pregunta= ?", p.diagnostico_id, p.numero_pregunta])%>
                 <td align="center" rowspan="<%= detalle_preguntas_eje2.size + 1%>"><%= p.numero_pregunta %></td>
-                <td align="center" style="font-size: 14px;" rowspan="<%=h detalle_preguntas_eje2.size + 1%>">1</td>
-                <td align="center" style="font-size: 14px;" rowspan="<%=h detalle_preguntas_eje2.size + 1%>">2</td>
+                <td align="center" style="font-size: 14px;" rowspan="<%=h detalle_preguntas_eje2.size + 1%>"><%= eval("$entorno_p#{p.numero_pregunta}")*100 %></td>
+                <td align="center" style="font-size: 14px;" rowspan="<%=h detalle_preguntas_eje2.size + 1%>"><%= eval("@entorno_p#{p.numero_pregunta}") %></td>
             </tr>
 
             <%detalle_preguntas_eje2.each do |eje|%>
@@ -164,8 +166,8 @@
           </tr>
           <tr>
             <td align="right" ><b>TOTALES: &nbsp; </b></td>
-            <td align="center"><b><%= "xx"%></b></td>
-            <td align="center"><b><%= "yy" %></b></td>
+            <td align="center"><b><%= @total_puntos_eje2 %></b></td>
+            <td align="center"><b><%= @ptos_obtenidos_eje2 %></b></td>
             <td colspan="6"></td>
           </tr>
         </table>
@@ -193,8 +195,8 @@
             <tr class="d1" style="font-size: 14px;">
               <%detalle_preguntas_eje3 = Adjunto.find(:all, :conditions => ["diagnostico_id = ? AND numero_pregunta= ?", p.diagnostico_id, p.numero_pregunta])%>
                 <td align="center" rowspan="<%= detalle_preguntas_eje3.size + 1%>"><%= p.numero_pregunta %></td>
-                <td align="center" style="font-size: 14px;" rowspan="<%=h detalle_preguntas_eje3.size + 1%>">1</td>
-                <td align="center" style="font-size: 14px;" rowspan="<%=h detalle_preguntas_eje3.size + 1%>">2</td>
+                <td align="center" style="font-size: 14px;" rowspan="<%=h detalle_preguntas_eje3.size + 1%>"><%= eval("$huella_p#{p.numero_pregunta}")*100 %></td>
+                <td align="center" style="font-size: 14px;" rowspan="<%=h detalle_preguntas_eje3.size + 1%>"><%= eval("@huella_p#{p.numero_pregunta}") %></td>
             </tr>
 
             <%detalle_preguntas_eje3.each do |eje|%>
@@ -233,8 +235,8 @@
           </tr>
           <tr>
             <td align="right" ><b>TOTALES: &nbsp; </b></td>
-            <td align="center"><b><%= "xx"%></b></td>
-            <td align="center"><b><%= "yy" %></b></td>
+            <td align="center"><b><%= @total_puntos_eje3 %></b></td>
+            <td align="center"><b><%= @ptos_obtenidos_eje3 %></b></td>
             <td colspan="6"></td>
           </tr>
         </table>
@@ -261,10 +263,10 @@
 
             <%@preguntas_eje4.sort{|p1,p2| p1.numero_pregunta <=> p2.numero_pregunta}.each do |p|%>
             <tr class="d1" style="font-size: 14px;">
-              <%detalle_preguntas_eje4 = Adjunto.find(:all, :conditions => ["diagnostico_id = ? AND numero_pregunta= ?", p.diagnostico_id, p.numero_pregunta])%>
+              <%detalle_preguntas_eje4 = Adjunto.find(:all, :conditions => ["diagnostico_id = ? AND eje_id = ? AND numero_pregunta= ?", p.diagnostico_id, @eje4.id, p.numero_pregunta])%>
                 <td align="center" rowspan="<%= detalle_preguntas_eje4.size + 1%>"><%= p.numero_pregunta %></td>
-                <td align="center" style="font-size: 14px;" rowspan="<%=h detalle_preguntas_eje4.size + 1%>">1</td>
-                <td align="center" style="font-size: 14px;" rowspan="<%=h detalle_preguntas_eje4.size + 1%>">2</td>
+                <td align="center" style="font-size: 14px;" rowspan="<%=h detalle_preguntas_eje4.size + 1%>"><%= eval("$consumo_p#{p.numero_pregunta}")*100 %></td>
+                <td align="center" style="font-size: 14px;" rowspan="<%=h detalle_preguntas_eje4.size + 1%>"><%= eval("@consumo_p#{p.numero_pregunta}") %></td>
             </tr>
 
             <%detalle_preguntas_eje4.each do |eje|%>
@@ -303,8 +305,8 @@
           </tr>
           <tr>
             <td align="right" ><b>TOTALES: &nbsp; </b></td>
-            <td align="center"><b><%= "xx"%></b></td>
-            <td align="center"><b><%= "yy" %></b></td>
+            <td align="center"><b><%= @total_puntos_eje4 %></b></td>
+            <td align="center"><b><%= @ptos_obtenidos_eje4 %></b></td>
             <td colspan="6"></td>
           </tr>
         </table>
@@ -330,13 +332,13 @@
 
             <%@preguntas_eje5.sort{|p1,p2| p1.numero_pregunta <=> p2.numero_pregunta}.each do |p|%>
             <tr class="d1" style="font-size: 14px;">
-              <%detalle_preguntas_eje4 = Adjunto.find(:all, :conditions => ["diagnostico_id = ? AND numero_pregunta= ?", p.diagnostico_id, p.numero_pregunta])%>
-                <td align="center" rowspan="<%= detalle_preguntas_eje4.size + 1%>"><%= p.numero_pregunta %></td>
-                <td align="center" style="font-size: 14px;" rowspan="<%=h detalle_preguntas_eje4.size + 1%>">1</td>
-                <td align="center" style="font-size: 14px;" rowspan="<%=h detalle_preguntas_eje4.size + 1%>">2</td>
+              <%detalle_preguntas_eje5 = Adjunto.find(:all, :conditions => ["diagnostico_id = ? AND eje_id = ? AND numero_pregunta= ?", p.diagnostico_id, @eje5.id, p.numero_pregunta])%>
+                <td align="center" rowspan="<%= detalle_preguntas_eje5.size + 1%>"><%= p.numero_pregunta %></td>
+                <td align="center" style="font-size: 14px;" rowspan="<%=h detalle_preguntas_eje5.size + 1%>"><%= eval("$participacion_p#{p.numero_pregunta}")*100 %></td>
+                <td align="center" style="font-size: 14px;" rowspan="<%=h detalle_preguntas_eje5.size + 1%>"><%= eval("@participacion_p#{p.numero_pregunta}") %></td>
             </tr>
 
-            <%detalle_preguntas_eje4.each do |eje|%>
+            <%detalle_preguntas_eje5.each do |eje|%>
             <tr class="d1">
               <!-- icono de validado -->
               <%if eje.validado%>
@@ -372,8 +374,8 @@
           </tr>
           <tr>
             <td align="right" ><b>TOTALES: &nbsp; </b></td>
-            <td align="center"><b><%= "xx"%></b></td>
-            <td align="center"><b><%= "yy" %></b></td>
+            <td align="center"><b><%= @total_puntos_eje5 %></b></td>
+            <td align="center"><b><%= @ptos_obtenidos_eje5 %></b></td>
             <td colspan="6"></td>
           </tr>
         </table>

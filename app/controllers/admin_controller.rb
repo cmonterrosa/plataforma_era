@@ -493,18 +493,73 @@ class AdminController < ApplicationController
      @diagnostico = Diagnostico.find(params[:diagnostico]) if params[:diagnostico]
      @user = (params[:id]) ? User.find(params[:id]): current_user
      @escuela = @user.escuela if @user
-     eje1 = CatalogoEje.find_by_clave("EJE1")
-     eje2 = CatalogoEje.find_by_clave("EJE2")
-     eje3 = CatalogoEje.find_by_clave("EJE3")
-     eje4 = CatalogoEje.find_by_clave("EJE4")
-     eje5 = CatalogoEje.find_by_clave("EJE5")
-     @preguntas_eje1 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? AND eje_id = ?", @user, @diagnostico.id, eje1.id], :group => "numero_pregunta")
-     @preguntas_eje2 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? AND eje_id = ?", @user, @diagnostico.id, eje2.id], :group => "numero_pregunta")
-     @preguntas_eje3 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? AND eje_id = ?", @user, @diagnostico.id, eje3.id], :group => "numero_pregunta")
-     @preguntas_eje4 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? AND eje_id = ?", @user, @diagnostico.id, eje4.id], :group => "numero_pregunta")
-     @preguntas_eje5 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? AND eje_id = ?", @user, @diagnostico.id, eje5.id], :group => "numero_pregunta")
+     @eje1 = CatalogoEje.find_by_clave("EJE1")
+     @eje2 = CatalogoEje.find_by_clave("EJE2")
+     @eje3 = CatalogoEje.find_by_clave("EJE3")
+     @eje4 = CatalogoEje.find_by_clave("EJE4")
+     @eje5 = CatalogoEje.find_by_clave("EJE5")
+     @preguntas_eje1 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? AND eje_id = ?", @user, @diagnostico.id, @eje1.id], :group => "numero_pregunta")
+     @preguntas_eje2 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? AND eje_id = ?", @user, @diagnostico.id, @eje2.id], :group => "numero_pregunta")
+     @preguntas_eje3 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? AND eje_id = ?", @user, @diagnostico.id, @eje3.id], :group => "numero_pregunta")
+     @preguntas_eje4 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? AND eje_id = ?", @user, @diagnostico.id, @eje4.id], :group => "numero_pregunta")
+     @preguntas_eje5 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? AND eje_id = ?", @user, @diagnostico.id, @eje5.id], :group => "numero_pregunta")
      @evaluacion = Evaluacion.find(:first, :conditions => ["diagnostico_id = ? AND user_id = ? AND activa=true", @diagnostico.id, @user.id])
      @evaluacion ||= Evaluacion.new(:diagnostico_id => @diagnostico.id)
+
+     diagnostico = Evaluacion.new(:diagnostico_id => Diagnostico.find(params[:diagnostico]).id)
+#     Puntajes eje1
+     @competencia_p1 = diagnostico.puntaje_eje1_p1
+     @competencia_p2 = diagnostico.puntaje_eje1_p2
+     @competencia_p3 = diagnostico.puntaje_eje1_p3
+     @competencia_p4 = diagnostico.puntaje_eje1_p4
+     @competencia_p5 = diagnostico.puntaje_eje1_p5
+
+     @ptos_obtenidos_eje1 = (@competencia_p1 + @competencia_p2 + @competencia_p3 + @competencia_p4 + @competencia_p5)#.to_f.round(3)
+     @total_puntos_eje1 = diagnostico.puntaje_total_eje1
+     
+#     Puntajes eje2
+     @entorno_p2 = diagnostico.puntaje_eje2_p2
+     @entorno_p6 = diagnostico.puntaje_eje2_p6
+
+     @ptos_obtenidos_eje2 = (@entorno_p2 + @entorno_p2).to_f.round(3)
+     @total_puntos_eje2 = diagnostico.puntaje_total_eje2
+
+#     Puntajes eje3
+     @huella_p1 = diagnostico.puntaje_eje3_p1
+     @huella_p2 = diagnostico.puntaje_eje3_p2
+     @huella_p3 = diagnostico.puntaje_eje3_p3
+     @huella_p4 = diagnostico.puntaje_eje3_p4
+     @huella_p5 = diagnostico.puntaje_eje3_p5
+     @huella_p6 = diagnostico.puntaje_eje3_p6
+     @huella_p7 = diagnostico.puntaje_eje3_p7
+     @huella_p8 = diagnostico.puntaje_eje3_p8
+     @huella_p9 = diagnostico.puntaje_eje3_p9
+
+     @ptos_obtenidos_eje3 = (@huella_p1 + @huella_p2 + @huella_p3 + @huella_p4 + @huella_p5 + @huella_p6 + @huella_p7 + @huella_p8 + @huella_p9)#.to_f.round(3)
+     @total_puntos_eje3 = diagnostico.puntaje_total_eje3
+
+#     Puntaje eje4
+     @consumo_p2 = diagnostico.puntaje_eje4_p2
+     @consumo_p3 = diagnostico.puntaje_eje4_p3
+     @consumo_p4 = diagnostico.puntaje_eje4_p4
+     @consumo_p5 = diagnostico.puntaje_eje4_p5
+     @consumo_p6 = diagnostico.puntaje_eje4_p6
+     @consumo_p7 = diagnostico.puntaje_eje4_p7
+     @consumo_p8 = diagnostico.puntaje_eje4_p8
+
+     @ptos_obtenidos_eje4 = (@consumo_p2 + @consumo_p3 + @consumo_p4 + @consumo_p5 + @consumo_p6 + @consumo_p7 + @consumo_p8)#.to_f.round(3)
+     @total_puntos_eje4 = diagnostico.puntaje_total_eje4
+
+#     Puntaje eje5
+     @participacion_p1 = $participacion_p1
+     @participacion_p2 = diagnostico.puntaje_eje5_p2
+     @participacion_p3 = diagnostico.puntaje_eje5_p3
+     @participacion_p4 = diagnostico.puntaje_eje5_p4
+     @participacion_p5 = diagnostico.puntaje_eje5_p5
+
+     @ptos_obtenidos_eje5 = (@participacion_p1 + @participacion_p2 + @participacion_p3 +  @participacion_p4 + @participacion_p5)#.to_f.round(3)
+     @total_puntos_eje5 = diagnostico.puntaje_total_eje5
+
      render :layout => "only_jquery"
     end
 

@@ -5,17 +5,12 @@ class Evaluacion < ActiveRecord::Base
 def puntaje_eje1_p1
   @diagnostico = Diagnostico.find(self.diagnostico_id)
   valido = false
-  @eje1 = []
   @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
   @user = User.find_by_login(@escuela.clave) if @escuela
   @competencia = @diagnostico.competencia if @diagnostico.competencia
-
+  eje1 = CatalogoEje.find_by_clave("EJE1")
   if @competencia.docentes_capacitados_sma.to_i > 0
-    @adjuntos = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and numero_pregunta = ?", @user, @diagnostico.id, 1], :order => "eje_id")
-    @adjuntos.each do |e|
-      catalogo_eje = CatalogoEje.find(e.eje_id)
-      @eje1 << e if catalogo_eje.clave == "EJE1"
-    end
+    @eje1 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ?", @user, @diagnostico.id, eje1.id, 1], :order => "eje_id")
     @eje1.each do |ad|
       if ad.validado
         valido = true
@@ -31,17 +26,12 @@ end
 def puntaje_eje1_p2
   @diagnostico = Diagnostico.find(self.diagnostico_id)
   valido = false
-  @eje1 = []
   @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
   @user = User.find_by_login(@escuela.clave) if @escuela
   @competencia = @diagnostico.competencia if @diagnostico.competencia
-
+  eje1 = CatalogoEje.find_by_clave("EJE1")
   if @competencia.docentes_aplican_conocimientos.to_i > 0
-    @adjuntos = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and numero_pregunta = ?", @user, @diagnostico.id, 2], :order => "eje_id")
-    @adjuntos.each do |e|
-      catalogo_eje = CatalogoEje.find(e.eje_id)
-      @eje1 << e if catalogo_eje.clave == "EJE1"
-    end
+    @eje1 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ?", @user, @diagnostico.id, eje1.id, 2], :order => "eje_id")
     @eje1.each do |ad|
       if ad.validado
         valido = true
@@ -57,17 +47,12 @@ end
 def puntaje_eje1_p3
   @diagnostico = Diagnostico.find(self.diagnostico_id)
   valido = false
-  @eje1 = []
   @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
   @user = User.find_by_login(@escuela.clave) if @escuela
   @competencia = @diagnostico.competencia if @diagnostico.competencia
-
+  eje1 = CatalogoEje.find_by_clave("EJE1")
   if @competencia.docentes_involucran_actividades.to_i > 0
-    @adjuntos = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and numero_pregunta = ?", @user, @diagnostico.id, 3], :order => "eje_id")
-    @adjuntos.each do |e|
-      catalogo_eje = CatalogoEje.find(e.eje_id)
-      @eje1 << e if catalogo_eje.clave == "EJE1"
-    end
+    @eje1 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ?", @user, @diagnostico.id, eje1.id, 3], :order => "eje_id")
     @eje1.each do |ad|
       if ad.validado
         valido = true
@@ -83,17 +68,12 @@ end
 def puntaje_eje1_p4
   @diagnostico = Diagnostico.find(self.diagnostico_id)
   valido = false
-  @eje1 = []
   @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
   @user = User.find_by_login(@escuela.clave) if @escuela
   @competencia = @diagnostico.competencia if @diagnostico.competencia
-
+  eje1 = CatalogoEje.find_by_clave("EJE1")
   if @competencia.alumnos_capacitados_docentes.to_i > 0
-    @adjuntos = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and numero_pregunta = ?", @user, @diagnostico.id, 4], :order => "eje_id")
-    @adjuntos.each do |e|
-      catalogo_eje = CatalogoEje.find(e.eje_id)
-      @eje1 << e if catalogo_eje.clave == "EJE1"
-    end
+    @eje1 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ?", @user, @diagnostico.id, eje1.id, 4], :order => "eje_id")
     @eje1.each do |ad|
       if ad.validado
         valido = true
@@ -109,17 +89,12 @@ end
 def puntaje_eje1_p5
   @diagnostico = Diagnostico.find(self.diagnostico_id)
   valido = false
-  @eje1 = []
   @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
   @user = User.find_by_login(@escuela.clave) if @escuela
   @competencia = @diagnostico.competencia if @diagnostico.competencia
-
+  eje1 = CatalogoEje.find_by_clave("EJE1")
   if @competencia.alumnos_capacitados_instituciones.to_i > 0
-    @adjuntos = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and numero_pregunta = ?", @user, @diagnostico.id, 5], :order => "eje_id")
-    @adjuntos.each do |e|
-      catalogo_eje = CatalogoEje.find(e.eje_id)
-      @eje1 << e if catalogo_eje.clave == "EJE1"
-    end
+    @eje1 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ?", @user, @diagnostico.id, eje1.id, 5], :order => "eje_id")
     @eje1.each do |ad|
       if ad.validado
         valido = true
@@ -136,18 +111,13 @@ end
 def puntaje_eje2_p2
   @diagnostico = Diagnostico.find(self.diagnostico_id)
   valido = false
-  @eje2 = []
   @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
   @user = User.find_by_login(@escuela.clave) if @escuela
   @entorno = @diagnostico.entorno if @diagnostico.entorno
-
+  eje2 = CatalogoEje.find_by_clave("EJE2")
 #  if @entorno.superficie_terreno_escuela_av.to_f > 0  and @entorno.superficie_terreno_escuela.to_f > 0
   if @entorno.superficie_terreno_escuela.to_f > 0 and  @entorno.superficie_terreno_escuela_av.to_f <= @entorno.superficie_terreno_escuela.to_f
-    @adjuntos = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and numero_pregunta = ?", @user, @diagnostico.id, 2], :order => "eje_id")
-    @adjuntos.each do |e|
-      catalogo_eje = CatalogoEje.find(e.eje_id)
-      @eje2 << e if catalogo_eje.clave == "EJE2"
-    end
+    @eje2 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ?", @user, @diagnostico.id, eje2.id, 2], :order => "eje_id")
     @eje2.each do |ad|
       if ad.validado
         valido = true
@@ -163,18 +133,13 @@ end
 def puntaje_eje2_p6
   @diagnostico = Diagnostico.find(self.diagnostico_id)
   valido = false
-  @eje2 = []
   @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
   @user = User.find_by_login(@escuela.clave) if @escuela
   @entorno = @diagnostico.entorno if @diagnostico.entorno
   @s_acciones = multiple_selected(@entorno.acciones) if @entorno.acciones
-
+  eje2 = CatalogoEje.find_by_clave("EJE2")
   unless @s_acciones.nil? and @s_acciones.include?("NING")
-    @adjuntos = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and numero_pregunta = ?", @user, @diagnostico.id, 6], :order => "eje_id")
-    @adjuntos.each do |e|
-      catalogo_eje = CatalogoEje.find(e.eje_id)
-      @eje2 << e if catalogo_eje.clave == "EJE2"
-    end
+    @eje2 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ?", @user, @diagnostico.id, eje2.id, 6], :order => "eje_id")
     @eje2.each do |ad|
       if ad.validado
         valido = true
@@ -197,17 +162,12 @@ end
 def puntaje_eje3_p1
   @diagnostico = Diagnostico.find(self.diagnostico_id)
   valido = false
-  @eje3 = []
   @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
   @user = User.find_by_login(@escuela.clave) if @escuela
   @huella = @diagnostico.huella if @diagnostico.huella
-
+  eje3 = CatalogoEje.find_by_clave("EJE3")
   if @huella.capacitacion_ahorro_energia.to_f > 0
-    @adjuntos = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and numero_pregunta = ?", @user, @diagnostico.id, 1], :order => "eje_id")
-    @adjuntos.each do |e|
-      catalogo_eje = CatalogoEje.find(e.eje_id)
-      @eje3 << e if catalogo_eje.clave == "EJE3"
-    end
+    @eje3 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ?", @user, @diagnostico.id, eje3.id, 1], :order => "eje_id")
     @eje3.each do |ad|
       if ad.validado
         valido = true
@@ -223,17 +183,12 @@ end
 def puntaje_eje3_p2
   @diagnostico = Diagnostico.find(self.diagnostico_id)
   valido = false
-  @eje3 = []
   @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
   @user = User.find_by_login(@escuela.clave) if @escuela
   @huella = @diagnostico.huella if @diagnostico.huella
-
-  unless @huella.energia_electrica.clave == "SUOP"
-    @adjuntos = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and numero_pregunta = ?", @user, @diagnostico.id, 2], :order => "eje_id")
-    @adjuntos.each do |e|
-      catalogo_eje = CatalogoEje.find(e.eje_id)
-      @eje3 << e if catalogo_eje.clave == "EJE3"
-    end
+  eje3 = CatalogoEje.find_by_clave("EJE3")
+  unless @huella.energia_electrica and @huella.energia_electrica.clave == "SUOP"
+    @eje3 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ?", @user, @diagnostico.id, eje3.id, 2], :order => "eje_id")
     @eje3.each do |ad|
       if ad.validado
         valido = true
@@ -371,17 +326,12 @@ end
 def puntaje_eje4_p3
   @diagnostico = Diagnostico.find(self.diagnostico_id)
   valido = false
-  @eje4 = []
   @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
   @user = User.find_by_login(@escuela.clave) if @escuela
   @consumo = @diagnostico.consumo if @diagnostico.consumo
-
+  eje4 = CatalogoEje.find_by_clave("EJE4")
   if @consumo.capacitacion_alim_bebidas == "SI"
-    @adjuntos = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and numero_pregunta = ?", @user, @diagnostico.id, 3], :order => "eje_id")
-    @adjuntos.each do |e|
-      catalogo_eje = CatalogoEje.find(e.eje_id)
-      @eje4 << e if catalogo_eje.clave == "EJE4"
-    end
+    @eje4 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ?", @user, @diagnostico.id, eje4.id, 3], :order => "eje_id")
     @eje4.each do |ad|
       if ad.validado
         valido = true
@@ -517,17 +467,12 @@ end
 def puntaje_eje5_p2
   @diagnostico = Diagnostico.find(self.diagnostico_id)
   valido = false
-  @eje5 = []
   @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
   @user = User.find_by_login(@escuela.clave) if @escuela
   @participacion = @diagnostico.participacion if @diagnostico.participacion
-
+  eje5 = CatalogoEje.find_by_clave("EJE5")
   if @participacion.num_padres_familia.to_i > 0
-    @adjuntos = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and numero_pregunta = ?", @user, @diagnostico.id, 2], :order => "eje_id")
-    @adjuntos.each do |e|
-      catalogo_eje = CatalogoEje.find(e.eje_id)
-      @eje5 << e if catalogo_eje.clave == "EJE5"
-    end
+    @eje5 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ?", @user, @diagnostico.id, eje5.id, 2], :order => "eje_id")
     @eje5.each do |ad|
       if ad.validado
         valido = true
@@ -543,17 +488,12 @@ end
 def puntaje_eje5_p3
   @diagnostico = Diagnostico.find(self.diagnostico_id)
   valido = false
-  @eje5 = []
   @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
   @user = User.find_by_login(@escuela.clave) if @escuela
   @participacion = @diagnostico.participacion if @diagnostico.participacion
-
+  eje5 = CatalogoEje.find_by_clave("EJE5")
   if @participacion.proy_escolares_ma.to_i > 0
-    @adjuntos = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and numero_pregunta = ?", @user, @diagnostico.id, 2], :order => "eje_id")
-    @adjuntos.each do |e|
-      catalogo_eje = CatalogoEje.find(e.eje_id)
-      @eje5 << e if catalogo_eje.clave == "EJE5"
-    end
+    @eje5 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ?", @user, @diagnostico.id, eje5.id, 3], :order => "eje_id")
     @eje5.each do |ad|
       if ad.validado
         valido = true
@@ -569,16 +509,12 @@ end
 def puntaje_eje5_p4
   @diagnostico = Diagnostico.find(self.diagnostico_id)
   valido = false
-  @eje5 = []
   @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
   @user = User.find_by_login(@escuela.clave) if @escuela
   @participacion = @diagnostico.participacion if @diagnostico.participacion
+  eje5 = CatalogoEje.find_by_clave("EJE5")
   if @participacion.proy_escolares_salud.to_i > 0
-    @adjuntos = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and numero_pregunta = ?", @user, @diagnostico.id, 2], :order => "eje_id")
-    @adjuntos.each do |e|
-      catalogo_eje = CatalogoEje.find(e.eje_id)
-      @eje5 << e if catalogo_eje.clave == "EJE5"
-    end
+    @eje5 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ?", @user, @diagnostico.id, eje5.id, 4], :order => "eje_id")
     @eje5.each do |ad|
       if ad.validado
         valido = true
@@ -594,17 +530,12 @@ end
 def puntaje_eje5_p5
   @diagnostico = Diagnostico.find(self.diagnostico_id)
   valido = false
-  @eje5 = []
   @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
   @user = User.find_by_login(@escuela.clave) if @escuela
   @participacion = @diagnostico.participacion if @diagnostico.participacion
-
+  eje5 = CatalogoEje.find_by_clave("EJE5")
   if @participacion.act_salud_ma.to_i > 0
-    @adjuntos = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and numero_pregunta = ?", @user, @diagnostico.id, 2], :order => "eje_id")
-    @adjuntos.each do |e|
-      catalogo_eje = CatalogoEje.find(e.eje_id)
-      @eje5 << e if catalogo_eje.clave == "EJE5"
-    end
+    @eje5 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ?", @user, @diagnostico.id, eje5.id, 5], :order => "eje_id")
     @eje5.each do |ad|
       if ad.validado
         valido = true
@@ -620,7 +551,23 @@ end
 
 
 def puntaje_total_eje1
-  return puntaje_eje1_p1 + puntaje_eje1_p2 + puntaje_eje1_p3
+  return (($competencia_p1.to_f + $competencia_p2.to_f + $competencia_p3.to_f + $competencia_p5.to_f + $competencia_p5.to_f)*100).round(3)
+end
+
+def puntaje_total_eje2
+  return (($entorno_p2.to_f + $entorno_p6.to_f)*100).round(3)
+end
+
+def puntaje_total_eje3
+  return (($huella_p1.to_f + $huella_p2.to_f + $huella_p3.to_f + $huella_p4.to_f + $huella_p5.to_f + $huella_p6.to_f + $huella_p7.to_f + $huella_p8.to_f + $huella_p9.to_f)*100).round(3)
+end
+
+def puntaje_total_eje4
+  return (($consumo_p2.to_f + $consumo_p3.to_f + ($consumo_p4.to_f * 3) + ($consumo_p5.to_f * 4) + $consumo_p6.to_f + $consumo_p7.to_f + $consumo_p8.to_f)*100 ).round(3)
+end
+
+def puntaje_total_eje5
+  return (($participacion_p2.to_f + $participacion_p3.to_f + $participacion_p4.to_f + $participacion_p5.to_f)*100).round(3)
 end
 
 def puntaje_total_evidencias
