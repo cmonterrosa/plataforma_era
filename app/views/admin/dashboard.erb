@@ -1,3 +1,24 @@
+<!-- mensajes -->
+           <%if flash[:notice]%>
+            <div class="formee-msg-success">
+              <h3>Operación realizada exitosamente:</h3>
+              <ul>
+                <li><%=flash[:notice]%></li>
+              </ul>
+            </div>
+            <%elsif flash[:error]%>
+            <div class="formee-msg-error">
+              <h3>Error:</h3>
+              <ul>
+                <li><%=flash[:error]%></li>
+              </ul>
+            </div>
+            <%else%>
+            <%#*<p></p>%>
+            <%end%>
+
+
+
 <div class="container">
   <div class="formee">
     <table align="center" class="subprincipal" width="95%" cellspacing="5" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
@@ -10,192 +31,375 @@
     </table>
     <br />
     <fieldset>
-      <div class="grid-12-12 clear">
-        <% unless @eje1.empty?  %>
-        <table width="98%" border="0" cellspacing="0" cellpadding="0" class="sample" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid">
-          <tr class="tdiagnostico">
-            <td colspan="8" align="center" ><label>EJE: 1 &nbsp; <b>DESARROLLO DE COMPETENCIAS</b></label></td>
-          </tr>
-          <tr class="d0" style=" font-weight: bold; " >
-            <td width="2%" style="vertical-align: middle;">PREGUNTA</td>
-            <td width="56%" style="vertical-align: middle;">DESCRIPCIÓN EVIDENCIA</td>
-            <td width="10%" style="vertical-align: middle;">PUNTAJE PREGUNTA</td>
-            <td width="10%" style="vertical-align: middle;">PUNTAJE OBTENIDO</td>
-            <td width="20%" style="vertical-align: middle;" align="center" colspan="4">ACCIONES</td>
-          </tr>
-          <% total_competencia = 0.0 %>
-          <% obtenido_competencia = 0.0 %>
-          <% @eje1.each do |eje| %>
-         <tr class="d1">
-            <td><%= eje.numero_pregunta %></td>
-            <td><%= eje.descripcion %></td>
-            <% total_competencia += (eval("$competencia_p#{eje.numero_pregunta}").to_f * 100) %>
-            <% obtenido_competencia += (eval("@cp#{eje.numero_pregunta}")).to_f %>
-            <td align="right"><%= eval("$competencia_p#{eje.numero_pregunta}").to_f * 100 %></td>
-            <td align="right"><%= eval("@cp#{eje.numero_pregunta}") %></td>
-            <td><%=link_to image_tag('admin/view.png', :size => "30x30", :mouseover => 'admin/view.png') , {:action => "show_evidencias_avance", :controller => "upload", :id => @user, :diagnostico => @diagnostico, :avance => 2}, :html => { :target => "_blank"}, :title => "Ver Evidencia" %></td>
-            <td><%=link_to image_tag('admin/valid.png', :size => "30x30", :mouseover => 'admin/valid.png') , {:action => "show_evidencias_avance", :controller => "upload", :id => @user, :diagnostico => @diagnostico, :avance => 2}, :html => { :target => "_blank"}, :title => "Evidencia Válida" %></td>
-            <td><%=link_to image_tag('admin/invalid.png', :size => "30x30", :mouseover => 'admin/invalid.png') , {:action => "show_evidencias_avance", :controller => "upload", :id => @user, :diagnostico => @diagnostico, :avance => 2}, :html => { :target => "_blank"}, :title => "Evidencia Inválida" %></td>
-            <td><%=link_to image_tag('admin/delete.png', :size => "30x30", :mouseover => 'admin/delete.png') , {:action => "show_evidencias_avance", :controller => "upload", :id => @user, :diagnostico => @diagnostico, :avance => 2}, :html => { :target => "_blank"}, :title => "Eliminar Evidencia" %></td>
-          </tr>
-          <% end %>
-          <tr class="d1">
-            <td colspan="2">PUNTOS POR PREGUNTAS SIN EVIDENCIAS</td>
-            <td align="right"><%= @c_maxptos - total_competencia %></td>
-            <td align="right"><%= (@c_totalptos - obtenido_competencia).round(3) %></td>
-            <td colspan="4">&nbsp;</td>
-          </tr>
-          <tr>
-            <td colspan="8">&nbsp;</td>
-          </tr>
-          <tr>
-            <td colspan="2" align="right" ><b>TOTALES: &nbsp; </b></td>
-            <td align="right"><b><%= @c_maxptos %></b></td>
-            <td align="right"><b><%= @c_totalptos %></b></td>
-            <td colspan="4"></td>
-          </tr>
-        </table>
-        <% end %>
-      </div>
-
-
-      <!-- eje de ejemplo -->
-
-      <%eje2 = CatalogoEje.find_by_clave("EJE2")%>
-      <%@preguntas_eje2 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? AND eje_id = ?", @user, @diagnostico.id, eje2.id], :group => "numero_pregunta")%>
-
-
-      <div class="grid-12-12 clear">
-        <% unless @eje2.empty?  %>
+     
+     <!-- EJE 1 -->
+     <div class="grid-12-12 clear">
+        <% unless @preguntas_eje1.empty?  %>
           <table width="98%" border="0" cellspacing="0" cellpadding="0" class="sample" >
             <tr class="tdiagnostico">
-              <td colspan="9" align="center" ><label>EJE: 2 &nbsp; <b>ENTORNO SALUDABLE</b></label></td>
+              <td colspan="9" align="center" ><label>EJE: 1 &nbsp; <b>DESARROLLO DE COMPETENCIAS</b></label></td>
             </tr>
 
             <tr class="d0" style=" font-weight: bold; " >
-              <td width="7%" style="vertical-align: middle;" align="center">PREGUNTA</td>
-              <td width="10%" style="vertical-align: middle;">PUNTAJE PREGUNTA</td>
-              <td width="10%" style="vertical-align: middle;">PUNTAJE OBTENIDO</td>
-              <td width="3%" style="vertical-align: middle;" align="center">&nbsp;</td>
-              <td width="30%" style="vertical-align: middle;">DESCRIPCIÓN EVIDENCIA</td>
-              
-              <td width="20%"style="vertical-align: middle;" align="center" colspan="4">ACCIONES</td>
+              <td width=" 7%" style="vertical-align: middle;" align="center">PREGUNTA</td>
+              <td width="10%" style="vertical-align: middle;"align="center">PUNTAJE PREGUNTA</td>
+              <td width="10%" style="vertical-align: middle;" align="center">PUNTAJE OBTENIDO</td>
+              <td width=" 3%" style="vertical-align: middle;" align="center">&nbsp;</td>
+              <td width="30%" style="vertical-align: middle;" align="center">DESCRIPCIÓN EVIDENCIA</td>
+              <td width="20%" style="vertical-align: middle;" align="center" colspan="4">ACCIONES</td>
             </tr>
-            <% total_entorno = 0.0 %>
-            <% obtenido_entorno = 0.0 %>
-
-          <%@preguntas_eje2.sort{|p1,p2| p1.numero_pregunta <=> p2.numero_pregunta}.each do |p|%>
-            <tr class="d1" style="font-size: 14px;">
-              <%todas_preguntas = Adjunto.find(:all, :conditions => ["diagnostico_id = ? AND numero_pregunta= ?", p.diagnostico_id, p.numero_pregunta])%>
-                <td align="center" rowspan="<%= todas_preguntas.size + 1%>"><%= p.numero_pregunta %></td>
-                <% total_entorno += (eval("$entorno_p#{p.numero_pregunta}").to_f * 100) %>
-                <% obtenido_entorno += (eval("@ep#{p.numero_pregunta}")).to_f %>
-                <td align="center" style="font-size: 14px;" rowspan="<%=h todas_preguntas.size + 1%>"><%= eval("$entorno_p#{p.numero_pregunta}").to_f * 100 %></td>
-                <td align="center" style="font-size: 14px;" rowspan="<%=h todas_preguntas.size + 1%>"><%= eval("@ep#{p.numero_pregunta}") %></td>
-                <%#*<td colspan="6">&nbsp;</td>%>
-            </tr>
-
-            <%todas_preguntas.each do |eje|%>
-            <tr class="d1">
-              <%#*<td colspan="3">&nbsp;</td>%>
-            <!-- icono de validado -->
-            <%if eje.validado%>
-              <td style="vertical-align: middle;"><%=image_tag 'admin/disponible.png'%></td>
-            <%else%>
-              <%if eje.validado == false%>
-              <td style="vertical-align: middle;"><%=image_tag 'admin/bloqueado.png'%></td>
-              <%else%>
-             <td style="vertical-align: middle;">-</td>
-              <%end%>
-           <%end%>
             
-             <td><%= eje.descripcion %></td>
-             <td><%=link_to image_tag('admin/view.png', :size => "30x30", :mouseover => 'admin/view.png') , {:controller => "upload", :action => "download", :id => eje.id}, :class => 'fancybox fancybox.iframe', :title => "Ver Evidencia" %></td>
-             <td><%=link_to image_tag('admin/valid.png', :size => "30x30", :mouseover => 'admin/valid.png') , {:controller => "upload", :action => "validar", :id => eje.id, :diagnostico => @diagnostico, :user => @user, :dashboard => 1 }, :html => { :target => "_blank"}, :title => "Evidencia Válida" %></td>
-             <td><%=link_to image_tag('admin/invalid.png', :size => "30x30", :mouseover => 'admin/invalid.png') , {:controller => "upload", :action => "invalidar", :id => eje.id, :diagnostico => @diagnostico, :user => @user, :dashboard => 1 }, :html => { :target => "_blank"}, :title => "Evidencia Inválida" %></td>
-             <td><%=link_to image_tag('admin/delete.png', :size => "30x30", :mouseover => 'admin/delete.png') , {:controller => "upload", :action => "destroy_evidencia", :id => eje.id, :dashboard => 1, :user_id => @user.id, :diagnostico_id => @diagnostico}, :confirm => '¿Esta seguro que desea elimina la evidencia?', :title => "Eliminar Evidencia" %></td>
+            <%@preguntas_eje1.sort{|p1,p2| p1.numero_pregunta <=> p2.numero_pregunta}.each do |p|%>
+            <tr class="d1" style="font-size: 14px;">
+              <%detalle_preguntas_eje1 = Adjunto.find(:all, :conditions => ["diagnostico_id = ? AND id= ?", p.diagnostico_id, p.id])%>
+                <td align="center" rowspan="<%= detalle_preguntas_eje1.size + 1%>"><%= p.numero_pregunta %></td>
+                <td align="center" style="font-size: 14px;" rowspan="<%=h detalle_preguntas_eje1.size + 1%>">1</td>
+                <td align="center" style="font-size: 14px;" rowspan="<%=h detalle_preguntas_eje1.size + 1%>">2</td>
+            </tr>
 
+            <%detalle_preguntas_eje1.each do |eje|%>
+            <tr class="d1">
+              <!-- icono de validado -->
+              <%if eje.validado%>
+                  <td style="vertical-align: middle;"><%=image_tag 'admin/disponible.png'%></td>
+              <%else%>
+                <%if eje.validado == false%>
+                  <td style="vertical-align: middle;"><%=image_tag 'admin/bloqueado.png'%></td>
+                <%else%>
+                  <td style="vertical-align: middle;">-</td>
+                <%end%>
+              <%end%>
+              <td><%= eje.descripcion %></td>
+              <td><%=link_to image_tag('admin/view.png', :size => "30x30", :mouseover => 'admin/view.png') , {:controller => "upload", :action => "download", :id => eje.id}, :class => 'fancybox fancybox.iframe', :title => "Ver Evidencia" %></td>
+              <td><%=link_to image_tag('admin/valid.png', :size => "30x30", :mouseover => 'admin/valid.png') , {:controller => "upload", :action => "validar", :id => eje.id, :diagnostico => @diagnostico, :user => @user, :dashboard => 1 }, :html => { :target => "_blank"}, :title => "Evidencia Válida" %></td>
+              <td><%=link_to image_tag('admin/invalid.png', :size => "30x30", :mouseover => 'admin/invalid.png') , {:controller => "upload", :action => "invalidar", :id => eje.id, :diagnostico => @diagnostico, :user => @user, :dashboard => 1 }, :html => { :target => "_blank"}, :title => "Evidencia Inválida" %></td>
+              <td><%=link_to image_tag('admin/delete.png', :size => "30x30", :mouseover => 'admin/delete.png') , {:controller => "upload", :action => "destroy_evidencia", :id => eje.id, :dashboard => 1, :user_id => @user.id, :diagnostico_id => @diagnostico}, :confirm => '¿Esta seguro que desea elimina la evidencia?', :title => "Eliminar Evidencia" %></td>
             </tr>
             
             <%end%>
             <tr>
               <td colspan="9">&nbsp;</td>
             </tr>
+           <%end%>
 
-        <%#end%>
-       <%end%>
-
-
-          <tr class="d1">
-            <td>&nbsp;</td>
-            <td align="center"><%= @e_maxptos - total_entorno %></td>
-            <td align="center"><%= @e_totalptos - obtenido_entorno %></td>
-            <td colspan="6">PUNTOS POR PREGUNTAS SIN EVIDENCIAS</td>
-          </tr>
+           <tr class="d1">
+              <td>&nbsp;</td>
+              <td align="center"><%=h "MP" %></td>
+              <td align="center"><%=h "TP" %></td>
+              <td colspan="6">PUNTOS POR PREGUNTAS SIN EVIDENCIAS</td>
+            </tr>
           <tr>
             <td colspan="9">&nbsp;</td>
           </tr>
           <tr>
             <td align="right" ><b>TOTALES: &nbsp; </b></td>
-            <td align="center"><b><%= @e_maxptos %></b></td>
-            <td align="center"><b><%= @e_totalptos %></b></td>
+            <td align="center"><b><%= "xx"%></b></td>
+            <td align="center"><b><%= "yy" %></b></td>
             <td colspan="6"></td>
           </tr>
-          <%#end%>
-          
         </table>
         <%end%>
       </div>
 
-      <div class="grid-12-12 clear">
-        <% unless @eje3.empty?  %>
-        <table width="98%" border="0" cellspacing="0" cellpadding="0" class="sample" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid">
-          <tr class="tdiagnostico">
-            <td colspan="8" align="center" ><label>EJE: 3 &nbsp; <b>HUELLA ECOLOGICA</b></label></td>
-          </tr>
-          <tr class="d0" style=" font-weight: bold; " >
-            <td width="2%"style="vertical-align: middle;">PREGUNTA</td>
-            <td width="56%"style="vertical-align: middle;">DESCRIPCIÓN EVIDENCIA</td>
-            <td width="10%" style="vertical-align: middle;">PUNTAJE PREGUNTA</td>
-            <td width="10%"style="vertical-align: middle;">PUNTAJE OBTENIDO</td>
-            <td width="20%"style="vertical-align: middle;" align="center" colspan="4">ACCIONES</td>
-          </tr>
-          <% total_huella = 0.0 %>
-          <% obtenido_huella = 0.0 %>
-          <% @eje3.each do |eje| %>
-         <tr class="d1">
-            <td><%= eje.numero_pregunta %></td>
-            <td><%= eje.descripcion %></td>
-            <% total_huella += (eval("$huella_p#{eje.numero_pregunta}").to_f * 100) %>
-            <% obtenido_huella += (eval("@hp#{eje.numero_pregunta}")).to_f %>
-            <td align="right"><%= eval("$huella_p#{eje.numero_pregunta}").to_f * 100 %></td>
-            <td align="right"><%= eval("@hp#{eje.numero_pregunta}") %></td>
-            <td><%=link_to image_tag('admin/view.png', :size => "30x30", :mouseover => 'admin/view.png') , {:action => "show_evidencias_avance", :controller => "upload", :id => @user, :diagnostico => @diagnostico, :avance => 2}, :html => { :target => "_blank"}, :title => "Ver Evidencia" %></td>
-            <td><%=link_to image_tag('admin/valid.png', :size => "30x30", :mouseover => 'admin/valid.png') , {:action => "show_evidencias_avance", :controller => "upload", :id => @user, :diagnostico => @diagnostico, :avance => 2}, :html => { :target => "_blank"}, :title => "Evidencia Válida" %></td>
-            <td><%=link_to image_tag('admin/invalid.png', :size => "30x30", :mouseover => 'admin/invalid.png') , {:action => "show_evidencias_avance", :controller => "upload", :id => @user, :diagnostico => @diagnostico, :avance => 2}, :html => { :target => "_blank"}, :title => "Evidencia Inválida" %></td>
-            <td><%=link_to image_tag('admin/delete.png', :size => "30x30", :mouseover => 'admin/delete.png') , {:action => "show_evidencias_avance", :controller => "upload", :id => @user, :diagnostico => @diagnostico, :avance => 2}, :html => { :target => "_blank"}, :title => "Eliminar Evidencia" %></td>
-          </tr>
-          <tr class="d1">
-            <td colspan="2">PUNTOS POR PREGUNTAS SIN EVIDENCIAS</td>
-            <td align="right"><%= @h_maxptos - total_huella %></td>
-            <td align="right"><%= @h_totalptos - obtenido_huella %></td>
-            <td colspan="4">&nbsp;</td>
+
+
+     <!-- EJE 2 -->
+     <div class="grid-12-12 clear">
+        <% unless @preguntas_eje2.empty?  %>
+          <table width="98%" border="0" cellspacing="0" cellpadding="0" class="sample" >
+            <tr class="tdiagnostico">
+              <td colspan="9" align="center" ><label>EJE: 2 &nbsp; <b>ENTORNO SALUDABLE</b></label></td>
+            </tr>
+
+            <tr class="d0" style=" font-weight: bold; " >
+              <td width=" 7%" style="vertical-align: middle;" align="center">PREGUNTA</td>
+              <td width="10%" style="vertical-align: middle;"align="center">PUNTAJE PREGUNTA</td>
+              <td width="10%" style="vertical-align: middle;" align="center">PUNTAJE OBTENIDO</td>
+              <td width=" 3%" style="vertical-align: middle;" align="center">&nbsp;</td>
+              <td width="30%" style="vertical-align: middle;" align="center">DESCRIPCIÓN EVIDENCIA</td>
+              <td width="20%" style="vertical-align: middle;" align="center" colspan="4">ACCIONES</td>
+            </tr>
+
+            <%@preguntas_eje2.sort{|p1,p2| p1.numero_pregunta <=> p2.numero_pregunta}.each do |p|%>
+            <tr class="d1" style="font-size: 14px;">
+              <%detalle_preguntas_eje2 = Adjunto.find(:all, :conditions => ["diagnostico_id = ? AND numero_pregunta= ?", p.diagnostico_id, p.numero_pregunta])%>
+                <td align="center" rowspan="<%= detalle_preguntas_eje2.size + 1%>"><%= p.numero_pregunta %></td>
+                <td align="center" style="font-size: 14px;" rowspan="<%=h detalle_preguntas_eje2.size + 1%>">1</td>
+                <td align="center" style="font-size: 14px;" rowspan="<%=h detalle_preguntas_eje2.size + 1%>">2</td>
+            </tr>
+
+            <%detalle_preguntas_eje2.each do |eje|%>
+            <tr class="d1">
+              <!-- icono de validado -->
+              <%if eje.validado%>
+                  <td style="vertical-align: middle;"><%=image_tag 'admin/disponible.png'%></td>
+              <%else%>
+                <%if eje.validado == false%>
+                  <td style="vertical-align: middle;"><%=image_tag 'admin/bloqueado.png'%></td>
+                <%else%>
+                  <td style="vertical-align: middle;">-</td>
+                <%end%>
+              <%end%>
+              <td><%= eje.descripcion %></td>
+              <td><%=link_to image_tag('admin/view.png', :size => "30x30", :mouseover => 'admin/view.png') , {:controller => "upload", :action => "download", :id => eje.id}, :class => 'fancybox fancybox.iframe', :title => "Ver Evidencia" %></td>
+              <td><%=link_to image_tag('admin/valid.png', :size => "30x30", :mouseover => 'admin/valid.png') , {:controller => "upload", :action => "validar", :id => eje.id, :diagnostico => @diagnostico, :user => @user, :dashboard => 1 }, :html => { :target => "_blank"}, :title => "Evidencia Válida" %></td>
+              <td><%=link_to image_tag('admin/invalid.png', :size => "30x30", :mouseover => 'admin/invalid.png') , {:controller => "upload", :action => "invalidar", :id => eje.id, :diagnostico => @diagnostico, :user => @user, :dashboard => 1 }, :html => { :target => "_blank"}, :title => "Evidencia Inválida" %></td>
+              <td><%=link_to image_tag('admin/delete.png', :size => "30x30", :mouseover => 'admin/delete.png') , {:controller => "upload", :action => "destroy_evidencia", :id => eje.id, :dashboard => 1, :user_id => @user.id, :diagnostico_id => @diagnostico}, :confirm => '¿Esta seguro que desea elimina la evidencia?', :title => "Eliminar Evidencia" %></td>
+            </tr>
+            
+            <%end%>
+            <tr>
+              <td colspan="9">&nbsp;</td>
+            </tr>
+           <%end%>
+
+           <tr class="d1">
+              <td>&nbsp;</td>
+              <td align="center"><%=h "MP" %></td>
+              <td align="center"><%=h "TP" %></td>
+              <td colspan="6">PUNTOS POR PREGUNTAS SIN EVIDENCIAS</td>
+            </tr>
+          <tr>
+            <td colspan="9">&nbsp;</td>
           </tr>
           <tr>
-            <td colspan="8">&nbsp;</td>
+            <td align="right" ><b>TOTALES: &nbsp; </b></td>
+            <td align="center"><b><%= "xx"%></b></td>
+            <td align="center"><b><%= "yy" %></b></td>
+            <td colspan="6"></td>
           </tr>
-          <tr>
-            <td colspan="2" align="right" ><b>TOTALES: &nbsp; </b></td>
-            <td align="right"><b><%= @h_maxptos %></b></td>
-            <td align="right"><b><%= @h_totalptos %></b></td>
-            <td colspan="4"></td>
-          </tr>
-          <% end %>
         </table>
-        <% end %>
+        <%end%>
       </div>
-    </fieldset>
-    
+
+     <!-- EJE 3 -->
+     <div class="grid-12-12 clear">
+        <% unless @preguntas_eje3.empty?  %>
+          <table width="98%" border="0" cellspacing="0" cellpadding="0" class="sample" >
+            <tr class="tdiagnostico">
+              <td colspan="9" align="center" ><label>EJE: 3 &nbsp; <b>HUELLA ECOLOGICA</b></label></td>
+            </tr>
+
+            <tr class="d0" style=" font-weight: bold; " >
+              <td width=" 7%" style="vertical-align: middle;" align="center">PREGUNTA</td>
+              <td width="10%" style="vertical-align: middle;"align="center">PUNTAJE PREGUNTA</td>
+              <td width="10%" style="vertical-align: middle;" align="center">PUNTAJE OBTENIDO</td>
+              <td width=" 3%" style="vertical-align: middle;" align="center">&nbsp;</td>
+              <td width="30%" style="vertical-align: middle;" align="center">DESCRIPCIÓN EVIDENCIA</td>
+              <td width="20%" style="vertical-align: middle;" align="center" colspan="4">ACCIONES</td>
+            </tr>
+
+            <%@preguntas_eje3.sort{|p1,p2| p1.numero_pregunta <=> p2.numero_pregunta}.each do |p|%>
+            <tr class="d1" style="font-size: 14px;">
+              <%detalle_preguntas_eje3 = Adjunto.find(:all, :conditions => ["diagnostico_id = ? AND id= ?", p.diagnostico_id, p.id])%>
+                <td align="center" rowspan="<%= detalle_preguntas_eje3.size + 1%>"><%= p.numero_pregunta %></td>
+                <td align="center" style="font-size: 14px;" rowspan="<%=h detalle_preguntas_eje3.size + 1%>">1</td>
+                <td align="center" style="font-size: 14px;" rowspan="<%=h detalle_preguntas_eje3.size + 1%>">2</td>
+            </tr>
+
+            <%detalle_preguntas_eje3.each do |eje|%>
+            <tr class="d1">
+              <!-- icono de validado -->
+              <%if eje.validado%>
+                  <td style="vertical-align: middle;"><%=image_tag 'admin/disponible.png'%></td>
+              <%else%>
+                <%if eje.validado == false%>
+                  <td style="vertical-align: middle;"><%=image_tag 'admin/bloqueado.png'%></td>
+                <%else%>
+                  <td style="vertical-align: middle;">-</td>
+                <%end%>
+              <%end%>
+              <td><%= eje.descripcion %></td>
+              <td><%=link_to image_tag('admin/view.png', :size => "30x30", :mouseover => 'admin/view.png') , {:controller => "upload", :action => "download", :id => eje.id}, :class => 'fancybox fancybox.iframe', :title => "Ver Evidencia" %></td>
+              <td><%=link_to image_tag('admin/valid.png', :size => "30x30", :mouseover => 'admin/valid.png') , {:controller => "upload", :action => "validar", :id => eje.id, :diagnostico => @diagnostico, :user => @user, :dashboard => 1 }, :html => { :target => "_blank"}, :title => "Evidencia Válida" %></td>
+              <td><%=link_to image_tag('admin/invalid.png', :size => "30x30", :mouseover => 'admin/invalid.png') , {:controller => "upload", :action => "invalidar", :id => eje.id, :diagnostico => @diagnostico, :user => @user, :dashboard => 1 }, :html => { :target => "_blank"}, :title => "Evidencia Inválida" %></td>
+              <td><%=link_to image_tag('admin/delete.png', :size => "30x30", :mouseover => 'admin/delete.png') , {:controller => "upload", :action => "destroy_evidencia", :id => eje.id, :dashboard => 1, :user_id => @user.id, :diagnostico_id => @diagnostico}, :confirm => '¿Esta seguro que desea elimina la evidencia?', :title => "Eliminar Evidencia" %></td>
+            </tr>
+
+            <%end%>
+            <tr>
+              <td colspan="9">&nbsp;</td>
+            </tr>
+           <%end%>
+
+           <tr class="d1">
+              <td>&nbsp;</td>
+              <td align="center"><%=h "MP" %></td>
+              <td align="center"><%=h "TP" %></td>
+              <td colspan="6">PUNTOS POR PREGUNTAS SIN EVIDENCIAS</td>
+            </tr>
+          <tr>
+            <td colspan="9">&nbsp;</td>
+          </tr>
+          <tr>
+            <td align="right" ><b>TOTALES: &nbsp; </b></td>
+            <td align="center"><b><%= "xx"%></b></td>
+            <td align="center"><b><%= "yy" %></b></td>
+            <td colspan="6"></td>
+          </tr>
+        </table>
+        <%end%>
+      </div>
+
+
+     <!-- EJE 4 -->
+     <div class="grid-12-12 clear">
+        <% unless @preguntas_eje4.empty?  %>
+          <table width="98%" border="0" cellspacing="0" cellpadding="0" class="sample" >
+            <tr class="tdiagnostico">
+              <td colspan="9" align="center" ><label>EJE: 4 &nbsp; <b>CONSUMO RESPONSABLE</b></label></td>
+            </tr>
+
+            <tr class="d0" style=" font-weight: bold; " >
+              <td width=" 7%" style="vertical-align: middle;" align="center">PREGUNTA</td>
+              <td width="10%" style="vertical-align: middle;"align="center">PUNTAJE PREGUNTA</td>
+              <td width="10%" style="vertical-align: middle;" align="center">PUNTAJE OBTENIDO</td>
+              <td width=" 3%" style="vertical-align: middle;" align="center">&nbsp;</td>
+              <td width="30%" style="vertical-align: middle;" align="center">DESCRIPCIÓN EVIDENCIA</td>
+              <td width="20%" style="vertical-align: middle;" align="center" colspan="4">ACCIONES</td>
+            </tr>
+
+            <%@preguntas_eje4.sort{|p1,p2| p1.numero_pregunta <=> p2.numero_pregunta}.each do |p|%>
+            <tr class="d1" style="font-size: 14px;">
+              <%detalle_preguntas_eje4 = Adjunto.find(:all, :conditions => ["diagnostico_id = ? AND id= ?", p.diagnostico_id, p.id])%>
+                <td align="center" rowspan="<%= detalle_preguntas_eje4.size + 1%>"><%= p.numero_pregunta %></td>
+                <td align="center" style="font-size: 14px;" rowspan="<%=h detalle_preguntas_eje4.size + 1%>">1</td>
+                <td align="center" style="font-size: 14px;" rowspan="<%=h detalle_preguntas_eje4.size + 1%>">2</td>
+            </tr>
+
+            <%detalle_preguntas_eje4.each do |eje|%>
+            <tr class="d1">
+              <!-- icono de validado -->
+              <%if eje.validado%>
+                  <td style="vertical-align: middle;"><%=image_tag 'admin/disponible.png'%></td>
+              <%else%>
+                <%if eje.validado == false%>
+                  <td style="vertical-align: middle;"><%=image_tag 'admin/bloqueado.png'%></td>
+                <%else%>
+                  <td style="vertical-align: middle;">-</td>
+                <%end%>
+              <%end%>
+              <td><%= eje.descripcion %></td>
+              <td><%=link_to image_tag('admin/view.png', :size => "30x30", :mouseover => 'admin/view.png') , {:controller => "upload", :action => "download", :id => eje.id}, :class => 'fancybox fancybox.iframe', :title => "Ver Evidencia" %></td>
+              <td><%=link_to image_tag('admin/valid.png', :size => "30x30", :mouseover => 'admin/valid.png') , {:controller => "upload", :action => "validar", :id => eje.id, :diagnostico => @diagnostico, :user => @user, :dashboard => 1 }, :html => { :target => "_blank"}, :title => "Evidencia Válida" %></td>
+              <td><%=link_to image_tag('admin/invalid.png', :size => "30x30", :mouseover => 'admin/invalid.png') , {:controller => "upload", :action => "invalidar", :id => eje.id, :diagnostico => @diagnostico, :user => @user, :dashboard => 1 }, :html => { :target => "_blank"}, :title => "Evidencia Inválida" %></td>
+              <td><%=link_to image_tag('admin/delete.png', :size => "30x30", :mouseover => 'admin/delete.png') , {:controller => "upload", :action => "destroy_evidencia", :id => eje.id, :dashboard => 1, :user_id => @user.id, :diagnostico_id => @diagnostico}, :confirm => '¿Esta seguro que desea elimina la evidencia?', :title => "Eliminar Evidencia" %></td>
+            </tr>
+
+            <%end%>
+            <tr>
+              <td colspan="9">&nbsp;</td>
+            </tr>
+           <%end%>
+
+           <tr class="d1">
+              <td>&nbsp;</td>
+              <td align="center"><%=h "MP" %></td>
+              <td align="center"><%=h "TP" %></td>
+              <td colspan="6">PUNTOS POR PREGUNTAS SIN EVIDENCIAS</td>
+            </tr>
+          <tr>
+            <td colspan="9">&nbsp;</td>
+          </tr>
+          <tr>
+            <td align="right" ><b>TOTALES: &nbsp; </b></td>
+            <td align="center"><b><%= "xx"%></b></td>
+            <td align="center"><b><%= "yy" %></b></td>
+            <td colspan="6"></td>
+          </tr>
+        </table>
+        <%end%>
+      </div>
+
+      <!-- EJE 5 -->
+     <div class="grid-12-12 clear">
+        <% unless @preguntas_eje5.empty?  %>
+          <table width="98%" border="0" cellspacing="0" cellpadding="0" class="sample" >
+            <tr class="tdiagnostico">
+              <td colspan="9" align="center" ><label>EJE: 5 &nbsp; <b>PARTICIPACIÓN COMUNITARIA</b></label></td>
+            </tr>
+
+            <tr class="d0" style=" font-weight: bold; " >
+              <td width=" 7%" style="vertical-align: middle;" align="center">PREGUNTA</td>
+              <td width="10%" style="vertical-align: middle;"align="center">PUNTAJE PREGUNTA</td>
+              <td width="10%" style="vertical-align: middle;" align="center">PUNTAJE OBTENIDO</td>
+              <td width=" 3%" style="vertical-align: middle;" align="center">&nbsp;</td>
+              <td width="30%" style="vertical-align: middle;" align="center">DESCRIPCIÓN EVIDENCIA</td>
+              <td width="20%" style="vertical-align: middle;" align="center" colspan="4">ACCIONES</td>
+            </tr>
+
+            <%@preguntas_eje5.sort{|p1,p2| p1.numero_pregunta <=> p2.numero_pregunta}.each do |p|%>
+            <tr class="d1" style="font-size: 14px;">
+              <%detalle_preguntas_eje4 = Adjunto.find(:all, :conditions => ["diagnostico_id = ? AND id= ?", p.diagnostico_id, p.id])%>
+                <td align="center" rowspan="<%= detalle_preguntas_eje4.size + 1%>"><%= p.numero_pregunta %></td>
+                <td align="center" style="font-size: 14px;" rowspan="<%=h detalle_preguntas_eje4.size + 1%>">1</td>
+                <td align="center" style="font-size: 14px;" rowspan="<%=h detalle_preguntas_eje4.size + 1%>">2</td>
+            </tr>
+
+            <%detalle_preguntas_eje4.each do |eje|%>
+            <tr class="d1">
+              <!-- icono de validado -->
+              <%if eje.validado%>
+                  <td style="vertical-align: middle;"><%=image_tag 'admin/disponible.png'%></td>
+              <%else%>
+                <%if eje.validado == false%>
+                  <td style="vertical-align: middle;"><%=image_tag 'admin/bloqueado.png'%></td>
+                <%else%>
+                  <td style="vertical-align: middle;">-</td>
+                <%end%>
+              <%end%>
+              <td><%= eje.descripcion %></td>
+              <td><%=link_to image_tag('admin/view.png', :size => "30x30", :mouseover => 'admin/view.png') , {:controller => "upload", :action => "download", :id => eje.id}, :class => 'fancybox fancybox.iframe', :title => "Ver Evidencia" %></td>
+              <td><%=link_to image_tag('admin/valid.png', :size => "30x30", :mouseover => 'admin/valid.png') , {:controller => "upload", :action => "validar", :id => eje.id, :diagnostico => @diagnostico, :user => @user, :dashboard => 1 }, :html => { :target => "_blank"}, :title => "Evidencia Válida" %></td>
+              <td><%=link_to image_tag('admin/invalid.png', :size => "30x30", :mouseover => 'admin/invalid.png') , {:controller => "upload", :action => "invalidar", :id => eje.id, :diagnostico => @diagnostico, :user => @user, :dashboard => 1 }, :html => { :target => "_blank"}, :title => "Evidencia Inválida" %></td>
+              <td><%=link_to image_tag('admin/delete.png', :size => "30x30", :mouseover => 'admin/delete.png') , {:controller => "upload", :action => "destroy_evidencia", :id => eje.id, :dashboard => 1, :user_id => @user.id, :diagnostico_id => @diagnostico}, :confirm => '¿Esta seguro que desea elimina la evidencia?', :title => "Eliminar Evidencia" %></td>
+            </tr>
+
+            <%end%>
+            <tr>
+              <td colspan="9">&nbsp;</td>
+            </tr>
+           <%end%>
+
+           <tr class="d1">
+              <td>&nbsp;</td>
+              <td align="center"><%=h "MP" %></td>
+              <td align="center"><%=h "TP" %></td>
+              <td colspan="6">PUNTOS POR PREGUNTAS SIN EVIDENCIAS</td>
+            </tr>
+          <tr>
+            <td colspan="9">&nbsp;</td>
+          </tr>
+          <tr>
+            <td align="right" ><b>TOTALES: &nbsp; </b></td>
+            <td align="center"><b><%= "xx"%></b></td>
+            <td align="center"><b><%= "yy" %></b></td>
+            <td colspan="6"></td>
+          </tr>
+        </table>
+        <%end%>
+      </div>
+  </fieldset>
   </div>
+
+  <!-- observaciones -->
+  <%form_for(@evaluacion, :url => {:action => "save_dashboard", :id => @user.id, :diagnostico => @diagnostico}, :html => {:class => "formee" }) do |f| -%>
+  <fieldset>
+    <legend>OBSERVACIONES</legend>
+    <div class="grid-12-12">
+       <%= f.text_area :observaciones, :placeholder => "Escriba brevemente sus observaciones" %>
+    </div>
+    <div class="grid-12-12 clear"></div>
+    <div class="grid-6-12">
+      <input class="right" type="submit" title="CONCLUIR" value="CONCLUIR" />
+    </div>
+  </fieldset>
+ <%end%>
+
 </div>
+
+
+
+
+
 

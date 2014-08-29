@@ -11,9 +11,12 @@ class CreateEvaluacions < ActiveRecord::Migration
       t.integer :user_id #Evaluador
       t.timestamps
     end
+   add_index :evaluacions, [:diagnostico_id, :activa], :name => "diagnostico_activa"
+   add_index :evaluacions, [:diagnostico_id, :user_id, :activa], :name => "diagnostico_user_activa"
   end
 
   def self.down
     drop_table :evaluacions
   end
 end
+
