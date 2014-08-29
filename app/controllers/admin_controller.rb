@@ -521,7 +521,7 @@ class AdminController < ApplicationController
      @entorno_p2 = diagnostico.puntaje_eje2_p2
      @entorno_p6 = diagnostico.puntaje_eje2_p6
 
-     @ptos_obtenidos_eje2 = (@entorno_p2 + @entorno_p2).to_f.round(3)
+     @ptos_obtenidos_eje2 = (@entorno_p2 + @entorno_p6)#.to_f.round(3)
      @total_puntos_eje2 = diagnostico.puntaje_total_eje2
 
 #     Puntajes eje3
@@ -556,8 +556,9 @@ class AdminController < ApplicationController
      @participacion_p3 = diagnostico.puntaje_eje5_p3
      @participacion_p4 = diagnostico.puntaje_eje5_p4
      @participacion_p5 = diagnostico.puntaje_eje5_p5
+     @participacion_p6 = $participacion_p6
 
-     @ptos_obtenidos_eje5 = (@participacion_p1 + @participacion_p2 + @participacion_p3 +  @participacion_p4 + @participacion_p5)#.to_f.round(3)
+     @ptos_obtenidos_eje5 = (@participacion_p1 + @participacion_p2 + @participacion_p3 +  @participacion_p4 + @participacion_p5 + @participacion_p6)#.to_f.round(3)
      @total_puntos_eje5 = diagnostico.puntaje_total_eje5
 
      render :layout => "only_jquery"
@@ -570,7 +571,13 @@ class AdminController < ApplicationController
      @evaluacion.user_id = User.find(params[:id]).id if params[:id]
      @evaluacion.diagnostico_id = Diagnostico.find(params[:diagnostico]).id if params[:diagnostico]
      @diagnostico = Diagnostico.find(@evaluacion.diagnostico_id) if @evaluacion.diagnostico_id
+     diagnostico = Evaluacion.new(:diagnostico_id => @diagnostico.id)
      @evaluacion.activa = true
+     @evaluacion.puntaje_eje1 = diagnostico.puntaje_total_obtenido_eje1
+     @evaluacion.puntaje_eje2 = diagnostico.puntaje_total_obtenido_eje2
+     @evaluacion.puntaje_eje3 = diagnostico.puntaje_total_obtenido_eje3
+     @evaluacion.puntaje_eje4 = diagnostico.puntaje_total_obtenido_eje4
+     @evaluacion.puntaje_eje5 = diagnostico.puntaje_total_obtenido_eje5
      @evidencias_sin_evaluar = Adjunto.count(:id, :conditions => ["diagnostico_id = ? AND validado IS NULL", @evaluacion.diagnostico_id]) if @evaluacion.diagnostico_id
      @concluido = (@evidencias_sin_evaluar > 0 )? false : true
      if (@concluido && @evaluacion.save)

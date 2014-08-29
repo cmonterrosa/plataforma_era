@@ -110,24 +110,17 @@ end
 ###--- ENTORNO SALUDABLE
 def puntaje_eje2_p2
   @diagnostico = Diagnostico.find(self.diagnostico_id)
-  valido = false
   @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
   @user = User.find_by_login(@escuela.clave) if @escuela
   @entorno = @diagnostico.entorno if @diagnostico.entorno
-  eje2 = CatalogoEje.find_by_clave("EJE2")
-#  if @entorno.superficie_terreno_escuela_av.to_f > 0  and @entorno.superficie_terreno_escuela.to_f > 0
+
   if @entorno.superficie_terreno_escuela.to_f > 0 and  @entorno.superficie_terreno_escuela_av.to_f <= @entorno.superficie_terreno_escuela.to_f
-    @eje2 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ?", @user, @diagnostico.id, eje2.id, 2], :order => "eje_id")
-    @eje2.each do |ad|
-      if ad.validado
-        valido = true
-        break
-      end
-    end
     @eje2_p2 = ((@entorno.superficie_terreno_escuela_av.to_f / @entorno.superficie_terreno_escuela.to_f) * 100).round > 25 ? ptos_superficie(25) : ptos_superficie(((@entorno.superficie_terreno_escuela_av.to_f / @entorno.superficie_terreno_escuela.to_f) * 100).round)
+  else
+    @eje2_p2 = 0
   end
     
-  return valido ? @eje2_p2 : 0
+  return @eje2_p2
 end
 
 def puntaje_eje2_p6
@@ -570,8 +563,24 @@ def puntaje_total_eje5
   return (($participacion_p2.to_f + $participacion_p3.to_f + $participacion_p4.to_f + $participacion_p5.to_f)*100).round(3)
 end
 
-def puntaje_total_evidencias
-  return puntaje_total_eje1 + puntaje_total_eje2 + puntaje_total_eje3 + puntaje_total_eje4
+def puntaje_total_obtenido_eje1
+  return (puntaje_eje1_p1 + puntaje_eje1_p2 + puntaje_eje1_p3 + puntaje_eje1_p4 + puntaje_eje1_p5).round(3)
+end
+
+def puntaje_total_obtenido_eje2
+  return (puntaje_eje2_p2 + puntaje_eje2_p6).round(3)
+end
+
+def puntaje_total_obtenido_eje3
+  return (puntaje_eje3_p1 + puntaje_eje3_p2 + puntaje_eje3_p3 + puntaje_eje3_p4 + puntaje_eje3_p5 + puntaje_eje3_p6 + puntaje_eje3_p7 + puntaje_eje3_p8 + puntaje_eje3_p9).round(3)
+end
+
+def puntaje_total_obtenido_eje4
+  return (puntaje_eje4_p2 + puntaje_eje4_p3 + puntaje_eje4_p4 + puntaje_eje4_p5 + puntaje_eje4_p6 + puntaje_eje4_p7 + puntaje_eje4_p8).round(3)
+end
+
+def puntaje_total_obtenido_eje5
+  return (puntaje_eje5_p2 + puntaje_eje5_p3 + puntaje_eje5_p4 + puntaje_eje5_p5).round(3)
 end
 
 def puntaje_total_novidencias
