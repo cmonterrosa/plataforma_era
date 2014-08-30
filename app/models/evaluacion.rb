@@ -131,7 +131,7 @@ def puntaje_eje2_p6
   @entorno = @diagnostico.entorno if @diagnostico.entorno
   @s_acciones = multiple_selected(@entorno.acciones) if @entorno.acciones
   eje2 = CatalogoEje.find_by_clave("EJE2")
-  unless @s_acciones.nil? and @s_acciones.include?("NING")
+  unless @s_acciones.include?("NING")
     @eje2 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ?", @user, @diagnostico.id, eje2.id, 6], :order => "eje_id")
     @eje2.each do |ad|
       if ad.validado
