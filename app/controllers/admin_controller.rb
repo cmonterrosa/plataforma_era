@@ -551,12 +551,12 @@ class AdminController < ApplicationController
      @total_puntos_eje4 = diagnostico.puntaje_total_eje4
 
 #     Puntaje eje5
-     @participacion_p1 = $participacion_p1
+     @participacion_p1 = $participacion_p1.to_f
      @participacion_p2 = diagnostico.puntaje_eje5_p2
      @participacion_p3 = diagnostico.puntaje_eje5_p3
      @participacion_p4 = diagnostico.puntaje_eje5_p4
      @participacion_p5 = diagnostico.puntaje_eje5_p5
-     @participacion_p6 = $participacion_p6
+     @participacion_p6 = $participacion_p6.to_f
 
      @ptos_obtenidos_eje5 = (@participacion_p1 + @participacion_p2 + @participacion_p3 +  @participacion_p4 + @participacion_p5 + @participacion_p6)#.to_f.round(3)
      @total_puntos_eje5 = diagnostico.puntaje_total_eje5
