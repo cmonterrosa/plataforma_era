@@ -120,9 +120,15 @@
       </legend>
       <div class="grid-1-12"></div>
        <div class="grid-2-12">
-       <%=link_to image_tag('admin/dashboard.png', :size => "100x100", :mouseover => 'admin/dashboard.png') , {:action => "dashboard", :controller => "admin", :id => @user, :diagnostico => @diagnostico}, :html => { :target => "_blank"}, :title => "Monitor de Evaluación"%>
+       <%=link_to image_tag('admin/dashboard.png', :size => "100x100", :mouseover => 'admin/dashboard2.png') , {:action => "dashboard", :controller => "admin", :id => @user, :diagnostico => @diagnostico}, :html => { :target => "_blank"}, :title => "Monitor de Evaluación"%>
          <label style="font-family:verdana;font-size:14px;">Diagnóstico</label>
        </div>
+
+       <div class="grid-2-12">
+       <%=link_to image_tag('admin/dashboard.png', :size => "100x100", :mouseover => 'admin/dashboard2.png') , {:action => "dashboard_proyecto", :controller => "admin", :id => @user, :diagnostico => @diagnostico}, :html => { :target => "_blank"}, :title => "Monitor de Evaluación"%>
+         <label style="font-family:verdana;font-size:14px;">Proyecto</label>
+       </div>
+
     </fieldset>
     
 </div>
