@@ -1,3 +1,5 @@
+#!/bin/env ruby
+# encoding: utf-8
 require 'fastercsv'
 class AdminController < ApplicationController
   #protect_from_forgery
@@ -485,6 +487,29 @@ class AdminController < ApplicationController
      render :partial => "menu_proyecto", :layout => "only_jquery"
    end
 
+
+   #################################################
+   #   ACCIONES PARA EL MENU DE EVALUACION
+   #
+   #################################################
+
+   def dashboard_proyecto
+     @diagnostico = Diagnostico.find(params[:diagnostico]) if params[:diagnostico]
+     @proyecto = Proyecto.find(:first, :conditions => ["diagnostico_id = ?", @diagnostico.id]) if @diagnostico
+     @user = (params[:id]) ? User.find(params[:id]): current_user
+     @escuela = @user.escuela if @user
+     @evidencias_avance1 = @evidencias_avance2  = Hash.new
+     (1..5).each do |eje|
+       a1 = Adjunto.find(:all, :select => "adjuntos.numero_actividad",  :joins => "adjuntos, ejes e, catalogo_ejes ce", :conditions => ["adjuntos.avance = 1 AND adjuntos.proyecto_id = ? AND adjuntos.eje_id=e.id AND e.catalogo_eje_id=ce.id AND ce.clave= ?", @proyecto.id, "EJE#{eje}"], :group => "adjuntos.numero_actividad")
+       a2 = Adjunto.find(:all, :select => "adjuntos.numero_actividad",  :joins => "adjuntos, ejes e, catalogo_ejes ce", :conditions => ["adjuntos.avance = 2 AND adjuntos.proyecto_id = ? AND adjuntos.eje_id=e.id AND e.catalogo_eje_id=ce.id AND ce.clave= ?", @proyecto.id, "EJE#{eje}"], :group => "adjuntos.numero_actividad")
+       @evidencias_avance1["EJE#{eje}"] =  a1.map { |a| a.numero_actividad  } unless a1.empty?
+       @evidencias_avance2["EJE#{eje}"] =  a2.map { |b|b.numero_actividad  }  unless a2.empty?
+      end
+      @puntaje=0.879
+      render :layout => "only_jquery"
+  end
+
+     
 
 
 
