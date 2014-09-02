@@ -91,8 +91,9 @@
   <%end%>
   <!-- Menu -->
   <%if escuela%>
+    <td style="vertical-align: middle;"><%=link_to "Evaluador", {:action => "asignar_evaluador", :controller => "admin", :id => escuela.id}, :class => 'fancybox fancybox.iframe', :style => "cursor:pointer" %></td>
     <td style="vertical-align: middle;"><%=button_to "Menú", {:controller => "admin", :action => "menu_escuela", :id => user}, :style => "cursor:pointer" %></td>
-      <td style="vertical-align: middle;"><%=button_to "Enviar Mensaje Directo", {:controller => "mensajes", :action => "new", :recibe_id => user}, :style => "cursor:pointer" %></td>
+    <td style="vertical-align: middle;"><%=button_to "Enviar Mensaje Directo", {:controller => "mensajes", :action => "new", :recibe_id => user}, :style => "cursor:pointer" %></td>
   <%else%>
     <td style="vertical-align: middle;">&nbsp;</td>
      <td style="vertical-align: middle;">&nbsp;</td>
