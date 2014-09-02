@@ -43,7 +43,7 @@
       <th style="vertical-align: middle;">&nbsp;</th>
       <th style="vertical-align: middle;">Login</th>
       <th style="vertical-align: middle;">Nombre de Escuela/Usuario</th>
-      <th style="vertical-align: middle;" colspan="7">Acciones</th>
+      <th style="vertical-align: middle;" colspan="8">Acciones</th>
     </tr>
 <%clase=0%>
 <%@usuarios.each do |user|%>
@@ -78,7 +78,8 @@
   <%end%>
   <!-- Menu -->
   <%if escuela%>
-    <td style="vertical-align: middle;"><%=button_to "Menú", {:controller => "admin", :action => "menu_escuela", :id => user}, :style => "cursor:pointer" %></td>
+      <td style="vertical-align: middle;"><%=link_to "Evaluador", {:action => "asignar_evaluador", :controller => "admin", :id => escuela.id}, :class => 'fancybox fancybox.iframe', :style => "cursor:pointer" %></td>
+      <td style="vertical-align: middle;"><%=button_to "Menú", {:controller => "admin", :action => "menu_escuela", :id => user}, :style => "cursor:pointer" %></td>
       <td style="vertical-align: middle;"><%=button_to "Enviar Mensaje Directo", {:controller => "mensajes", :action => "new", :recibe_id => user}, :style => "cursor:pointer" %></td>
 
   <%else%>

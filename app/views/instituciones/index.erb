@@ -1,0 +1,75 @@
+
+<div class="formee">
+  <div class="grid-12-12 clear"></div>
+  <div class="grid-12-12">
+     <div class="titulos"><%=h current_user.nombre%></div>
+  </div>
+  <div class="grid-12-12 clear"></div>
+  <div class="grid-12-12">
+    <div class="titulos">Listado de Escuelas para evaluar</div>
+  </div>
+</div>
+
+
+<% unless flash[:error].nil? %>
+<div class="formee-msg-error">
+  <h3>Error:</h3>
+  <ul>
+    <li><%= flash[:error] %></li>
+  </ul>
+</div>
+<% end %>
+
+<% unless @escuelas.nil? %>
+<div id="divlista">
+<table width="90%" border="0" cellspacing="0" cellpadding="0" class="sample" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid" align="center">
+  <tr style="background-color:#2E6AB1;color:white;">
+    <th style="vertical-align: middle;">NP</th>
+    <th style="vertical-align: middle;">Clave</th>
+    <th style="vertical-align: middle;">Nombre de Escuela</th>
+    <th style="vertical-align: middle;" colspan="6">Acciones</th>
+  </tr>
+  <%clase=0%>
+  <%contador=1%>
+  <%@escuelas.each do |escuela|%>
+   <%user = User.find(:first, :conditions => ["escuela_id = ?", escuela.id])%>
+   <tr class="d<%=invert_class(clase)%>">
+     <td style="vertical-align: middle;"><%=h contador%><%contador+=1%></td>
+     <td style="vertical-align: middle;"><%=h(escuela.clave.upcase)%></td>
+     <td style="vertical-align: middle;"><%=h(escuela.nombre.upcase)%></td>
+     <!-- Acciones -->
+     <%if user%>
+        <%@diagnostico = (escuela)? Diagnostico.find(:first, :conditions => ["escuela_id = ?", escuela.id]) : nil%>
+        <%@proyecto = (@diagnostico) ? Proyecto.find(:first, :conditions => ["diagnostico_id", @diagnostico_id]) : nil%>
+        <td style="vertical-align: middle;"><%=button_to "Evaluar Diagnóstico", {:action => "dashboard", :controller => "admin", :id => user.id, :diagnostico => @diagnostico}, :class => 'boton', :style => "cursor:pointer" %></td>
+        <%if @proyecto%>
+          <td style="vertical-align: middle;"><%=button_to "Evaluar del Proyecto", {:action => "dashboard_proyecto", :controller => "admin", :id => user.id, :diagnostico => @diagnostico, :proyecto => @proyecto}, :class => 'boton', :style => "cursor:pointer" %></td>
+        <%else%>
+          <td>&nbsp;</td>
+        <%end%>
+        <td style="vertical-align: middle;"><%=button_to "Enviar Mensaje Directo", {:controller => "mensajes", :action => "new", :recibe_id => user.id}, :style => "cursor:pointer" %></td>
+     
+     <%else%>
+        <td style="vertical-align: middle;" colspan="4">&nbsp;</td>
+     <%end%>
+  <%end%>
+  <%clase = invert_class(clase)%>
+  </tr>
+
+  <% if @escuelas.total_entries > @escuelas.per_page.to_i %>
+  <tr class="d<%=invert_class(clase)%>" align="center" >
+      <td colspan="7" style="padding: 0;">
+        <div class="digg_pagination">
+          <div class="page_info">
+            <%= page_entries_info @escuelas %>
+          </div>
+          <%= will_paginate @escuelas, :params => { :find => 1, :buscar => params[:buscar], :clave_nombre => params[:clave_nombre], :estatus_escuela => params[:estatus_escuela], :action => 'index' } %>
+        </div>
+      </td>
+    </tr>
+    <% end %>
+</table>
+</div>
+<% end %>
+
+

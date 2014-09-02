@@ -16,6 +16,7 @@ class AdminController < ApplicationController
   ### Control de usuarios #####
   def new_from_admin
     @user = User.new
+    @roles = Role.find(:all, :conditions => ["name = ?", "revisor"])
   end
 
   # create user from admin role not need activation
@@ -717,5 +718,26 @@ class AdminController < ApplicationController
     
     render :layout => "only_jquery"
    end
+
+   ####### ASIGNACION DE EVALUADOR #######
+
+   def asignar_evaluador
+     @escuela = Escuela.find(params[:id])
+     @evaluadores = Role.find_by_name("revisor").users.sort{|p1,p2| p1.nombre <=> p2.nombre}
+     @evaluador = (@escuela.evaluador_id) ? User.find(@escuela.evaluador_id) : nil
+     render :layout => "only_jquery"
+   end
+
+   def save_asignar_evaluador
+     @escuela = Escuela.find(params[:id])
+     if @escuela
+        @escuela.update_attributes(params[:escuela])
+        msj = (@escuela.save) ? "Evaluador asignado correctamente" : "No se pudo guardar, verifique"
+     else
+       msj = "Escuela no existe"
+     end
+     render :text => "<h2 style='color:green'>#{msj}</h2>"
+   end
+
 
 end

@@ -44,7 +44,7 @@
     <%else%>
 
     <div class="grid-12-12">
-      <label>Asunto: <em class="formee-req">*</em></label>
+      <label>Destinatario: <em class="formee-req">*</em></label>
         <%=text_field "escuela", "clave_completa_disabled", :value => @escuela.descripcion_completa, :disabled => true%>
         <%=hidden_field "escuela", "clave_completa", :value => @escuela.descripcion_completa%>
     </div>

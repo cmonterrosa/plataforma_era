@@ -14,15 +14,8 @@
        <label style="font-family:verdana;font-size:14px;">Escuelas</label>
         </div>
 
-       <!--
-        <if current_user.has_role?("admin")%>
-          <div class="grid-3-12">
-            <=link_to image_tag('admin/usuarios.png', :size => "128x128", :size => "128x128", :mouseover => 'admin/usuarios2.png') , {:action => "show_roles", :controller => "admin"}, :title => "Mostrar roles y usuarios"%>
-            <label style="font-family:verdana;font-size:14px;">Perfiles</label>
-          </div>
-        <end%>
-       -->
-
+       
+        
        <!-- Listado -->
         <div class="grid-3-12">
        <%=link_to image_tag('admin/listado.png', :size => "128x128", :mouseover => 'admin/listado2.png') , {:action => "total_escuelas_registradas", :controller => "admin"}, :title => "Descargar listado de escuelas registradas"%>
@@ -72,7 +65,18 @@
             <label style="font-family:verdana;font-size:14px;">Respaldos</label>
           </div>
           <div class="grid-12-12 clear"></div>
+
+          <div class="grid-3-12">
+            <%=link_to image_tag('admin/usuarios.png', :size => "128x128", :size => "128x128", :mouseover => 'admin/usuarios2.png') , {:action => "show_roles", :controller => "admin"}, :title => "Mostrar roles y usuarios"%>
+            <label style="font-family:verdana;font-size:14px;">Evaluadores</label>
+          </div>
+
          <%end%>
+
+         
+       
+
+
       </td>
 
     </tr>

@@ -21,7 +21,7 @@
         <tr>
           <td align="center"><%= f.text_field :login, :required => true%> <div id="mensaje"></div></td>
           <td align="center"><%= f.text_field :nombre, :required => true%></td>
-           <td align="center"> <%= select :role, :id, Role.all.collect{|a| [a.descripcion, a.id]}, :prompt => 'Seleccione una opción' %></td>
+           <td align="center"> <%= select :role, :id, @roles.collect{|a| [a.descripcion, a.id]}, :prompt => 'Seleccione una opción' %></td>
         </tr>
       </table></td>
     </tr>
