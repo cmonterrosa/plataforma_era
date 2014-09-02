@@ -233,6 +233,7 @@ class UploadController < ApplicationController
     (@adjunto.update_attributes!(:validado => true, :user_validado => current_user.id))? flash[:notice] = "Evidencia se validó correctamente" : flash[:error] = "No se pudo validar, intente más tarde"
      ### Validamos si la peticion viene del monitor de evaluacion ###
      @url_regreso = (params[:dashboard]) ? {:action => "dashboard", :controller => "admin", :diagnostico=> @diagnostico, :id => @user} : nil
+     @url_regreso ||= (params[:dashboard_proyecto]) ? {:action => "dashboard_proyecto", :controller => "admin", :diagnostico=> @diagnostico, :id => @user, :proyecto => params[:proyecto]} : nil
      @url_regreso ||= (@avance)? {:action => "show_evidencias_avance", :id => @user, :diagnostico => @diagnostico, :avance => @avance} : {:action => "show_evidencias_por_usuario", :id => @user, :diagnostico => @diagnostico}
     redirect_to @url_regreso
   end
@@ -243,6 +244,7 @@ class UploadController < ApplicationController
      @user = User.find(params[:user])
      @avance = params[:avance] if params[:avance]
      @url_regreso = (params[:dashboard]) ? {:action => "dashboard", :controller => "admin", :diagnostico=> @diagnostico, :id => @user} : nil
+     @url_regreso ||= (params[:dashboard_proyecto]) ? {:action => "dashboard_proyecto", :controller => "admin", :diagnostico=> @diagnostico, :id => @user, :proyecto => params[:proyecto]} : nil
      @url_regreso ||= (@avance)? {:action => "show_evidencias_avance", :id => @user, :diagnostico => @diagnostico, :avance => @avance} : {:action => "show_evidencias_por_usuario", :id => @user, :diagnostico => @diagnostico}
     (@adjunto.update_attributes!(:validado => false, :user_validado => current_user.id))? flash[:notice] = "Evidencia se invalidó correctamente" : flash[:error] = "No se pudo validar, intente más tarde"
     redirect_to @url_regreso
