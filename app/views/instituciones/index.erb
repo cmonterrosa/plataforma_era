@@ -21,8 +21,10 @@
 <% end %>
 
 <% unless @escuelas.nil? %>
-<div id="divlista">
-<table width="90%" border="0" cellspacing="0" cellpadding="0" class="sample" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid" align="center">
+
+<div class="container">
+  <div class="formee">
+  <table width="90%" border="0" cellspacing="0" cellpadding="0" class="sample" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid" align="center">
   <tr style="background-color:#2E6AB1;color:white;">
     <th style="vertical-align: middle;">NP</th>
     <th style="vertical-align: middle;">Clave</th>
@@ -40,15 +42,45 @@
      <!-- Acciones -->
      <%if user%>
         <%@diagnostico = (escuela)? Diagnostico.find(:first, :conditions => ["escuela_id = ?", escuela.id]) : nil%>
-        <%@proyecto = (@diagnostico) ? Proyecto.find(:first, :conditions => ["diagnostico_id", @diagnostico_id]) : nil%>
-        <td style="vertical-align: middle;"><%=button_to "Evaluar Diagnóstico", {:action => "dashboard", :controller => "admin", :id => user.id, :diagnostico => @diagnostico}, :class => 'boton', :style => "cursor:pointer" %></td>
+        <%@proyecto = (@diagnostico) ? Proyecto.find(:first, :conditions => ["diagnostico_id", @diagnostico.id]) : nil%>
+        
+        <td>
+            <!-- validar diagnostico -->
+            <% form_for :escuela, escuela, :url => { :action => "dashboard", :controller => "admin", :id => user.id, :diagnostico=> @diagnostico.id }, :html => { :target => "_blank"} do -%>
+              <div class="grid-center" style="font-size: 8px;">
+                <p id="pdf_link"><input type="submit" title="Validar Diagnóstico" value="Validar Diagnóstico" /></p>
+              </div>
+            <%end%>
+        </td>
+
         <%if @proyecto%>
-          <td style="vertical-align: middle;"><%=button_to "Evaluar del Proyecto", {:action => "dashboard_proyecto", :controller => "admin", :id => user.id, :diagnostico => @diagnostico, :proyecto => @proyecto}, :class => 'boton', :style => "cursor:pointer" %></td>
+          <td>
+            <!-- validar proyecto -->
+            <% form_for :escuela, escuela, :url => { :action => "dashboard_proyecto", :controller => "admin", :id => user.id, :diagnostico=> @diagnostico.id, :proyecto => @proyecto }, :html => { :target => "_blank"} do -%>
+              <div class="grid-center" style="font-size: 8px;">
+                <p id="pdf_link"><input type="submit" title="Validar Proyecto" value="Validar Proyecto" /></p>
+              </div>
+            <%end%>
+          </td>
+
+
+
+
+
+
         <%else%>
           <td>&nbsp;</td>
         <%end%>
-        <td style="vertical-align: middle;"><%=button_to "Enviar Mensaje Directo", {:controller => "mensajes", :action => "new", :recibe_id => user.id}, :style => "cursor:pointer" %></td>
-     
+          
+          <td>
+            <!-- validar proyecto -->
+            <% form_for :escuela, escuela, :url => { :action => "new", :controller => "mensajes", :id => user.id, :recibe_id => user.id }, :html => { :target => "_blank"} do -%>
+              <div class="grid-center" style="font-size: 8px;">
+                <p id="pdf_link"><input type="submit" title="Mensaje directo" value="Mensaje directo" /></p>
+              </div>
+            <%end%>
+          </td>
+
      <%else%>
         <td style="vertical-align: middle;" colspan="4">&nbsp;</td>
      <%end%>
@@ -69,6 +101,7 @@
     </tr>
     <% end %>
 </table>
+</div>
 </div>
 <% end %>
 
