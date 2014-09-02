@@ -96,7 +96,7 @@ class User < ActiveRecord::Base
   end
   
   def nombre_full
-    nombre = (Escuela.find_by_clave(self.login)) ? Escuela.find_by_clave(self.login).nombre : "-------------"
+    nombre = (Escuela.find_by_clave(self.login)) ? Escuela.find_by_clave(self.login).nombre : "#{self.nombre}"
     "#{self.login.upcase} | #{nombre}"
   end
 
