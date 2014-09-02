@@ -166,6 +166,7 @@ module Functions
   $participacion_p3 = 0.03125
   $participacion_p4 = 0.03125
   $participacion_p5 = 0.03125
+  $participacion_p6 = 0 #Agregado porque requiere evidencia
 
   def ptos_participacion(valor)
     case valor
@@ -177,5 +178,7 @@ module Functions
       return 3.125
     end
   end
+
+  $avance_actividad = 0.390625
 
 end
