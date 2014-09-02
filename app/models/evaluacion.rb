@@ -16,7 +16,7 @@ def puntaje_eje1_p1
         valido = true
         break
       end
-    end
+    end unless @eje1.nil?
     @eje1_p1 = (((@competencia.docentes_capacitados_sma.to_i / @escuela.total_personal_docente.to_f ) * 100) * $competencia_p1.to_f).round(3)
   end
 
@@ -563,7 +563,7 @@ end
 
 ###--- OBTENIDOS EJES ---
 def puntaje_total_eje1
-  return (($competencia_p1.to_f + $competencia_p2.to_f + $competencia_p3.to_f + $competencia_p5.to_f + $competencia_p5.to_f)*100).round(3)
+  return (($competencia_p1.to_f + $competencia_p2.to_f + $competencia_p3.to_f + $competencia_p4.to_f + $competencia_p5.to_f) * 100).round(3)
 end
 
 def puntaje_total_eje2
@@ -583,23 +583,23 @@ def puntaje_total_eje5
 end
 
 def puntaje_total_obtenido_eje1
-  return (puntaje_eje1_p1 + puntaje_eje1_p2 + puntaje_eje1_p3 + puntaje_eje1_p4 + puntaje_eje1_p5).round(3)
+  return (puntaje_eje1_p1 + puntaje_eje1_p2 + puntaje_eje1_p3 + puntaje_eje1_p4 + puntaje_eje1_p5).to_f.round(3)
 end
 
 def puntaje_total_obtenido_eje2
-  return (puntaje_eje2_p2 + puntaje_eje2_p6).round(3)
+  return (puntaje_eje2_p2 + puntaje_eje2_p6).to_f.round(3)
 end
 
 def puntaje_total_obtenido_eje3
-  return (puntaje_eje3_p1 + puntaje_eje3_p2 + puntaje_eje3_p3 + puntaje_eje3_p4 + puntaje_eje3_p5 + puntaje_eje3_p6 + puntaje_eje3_p7 + puntaje_eje3_p8 + puntaje_eje3_p9).round(3)
+  return (puntaje_eje3_p1 + puntaje_eje3_p2 + puntaje_eje3_p3 + puntaje_eje3_p4 + puntaje_eje3_p5 + puntaje_eje3_p6 + puntaje_eje3_p7 + puntaje_eje3_p8 + puntaje_eje3_p9).to_f.round(3)
 end
 
 def puntaje_total_obtenido_eje4
-  return (puntaje_eje4_p2 + puntaje_eje4_p3 + puntaje_eje4_p4 + puntaje_eje4_p5 + puntaje_eje4_p6 + puntaje_eje4_p7 + puntaje_eje4_p8).round(3)
+  return (puntaje_eje4_p2 + puntaje_eje4_p3 + puntaje_eje4_p4 + puntaje_eje4_p5 + puntaje_eje4_p6 + puntaje_eje4_p7 + puntaje_eje4_p8).to_f.round(3)
 end
 
 def puntaje_total_obtenido_eje5
-  return (puntaje_eje5_p2 + puntaje_eje5_p3 + puntaje_eje5_p4 + puntaje_eje5_p5).round(3)
+  return (puntaje_eje5_p2 + puntaje_eje5_p3 + puntaje_eje5_p4 + puntaje_eje5_p5).to_f.round(3)
 end
 
 
