@@ -498,21 +498,24 @@ class AdminController < ApplicationController
      @proyecto = Proyecto.find(:first, :conditions => ["diagnostico_id = ?", @diagnostico.id]) if @diagnostico
      @user = (params[:id]) ? User.find(params[:id]): current_user
      @escuela = @user.escuela if @user
-     @evidencias_avance1 = @evidencias_avance2 = Hash.new
-     @puntaje_avance1 = @actividad_a1 = @actividad_a2 = @puntaje_avance2 = Hash.new{|hash, key| hash[key] = Hash.new}
-     #@puntaje_avance1 = @puntaje_avance2 = Hash.new()
+     @evidencias_avance1 = Hash.new
+     @evidencias_avance2 = Hash.new
+     @puntaje_avance1 = Hash.new{|hash, key| hash[key] = Hash.new}
+     @puntaje_avance2 = Hash.new{|hash, key| hash[key] = Hash.new}
+     @evaluacion = Evaluacion.find(:first, :conditions => ["proyecto_id = ? AND user_id = ? AND activa=true", @proyecto.id, @user.id])
+     @evaluacion ||= Evaluacion.new(:proyecto_id => @proyecto.id)
 
      diagnostico = Evaluacion.new(:diagnostico_id => Diagnostico.find(params[:diagnostico]).id)
      (1..5).each do |eje|
        a1 = Adjunto.find(:all, :select => "adjuntos.numero_actividad",  :joins => "adjuntos, ejes e, catalogo_ejes ce", :conditions => ["adjuntos.proyecto_id = ? AND adjuntos.eje_id=e.id AND e.catalogo_eje_id=ce.id AND adjuntos.avance = 1 AND ce.clave= ?", @proyecto.id, "EJE#{eje}"], :group => "adjuntos.numero_actividad")
        a2 = Adjunto.find(:all, :select => "adjuntos.numero_actividad",  :joins => "adjuntos, ejes e, catalogo_ejes ce", :conditions => ["adjuntos.proyecto_id = ? AND adjuntos.eje_id=e.id AND e.catalogo_eje_id=ce.id AND adjuntos.avance = 2 AND ce.clave= ?", @proyecto.id, "EJE#{eje}"], :group => "adjuntos.numero_actividad")
        @evidencias_avance1["EJE#{eje}"] =  a1.map { |a| a.numero_actividad  } unless a1.empty?
+       @evidencias_avance2["EJE#{eje}"] =  a2.map { |b|b.numero_actividad  }  unless a2.empty?
        (1..4).each do |actividad|
          @puntaje_avance1["EJE#{eje}"]["#{actividad}"]=   diagnostico.puntaje_avance_eje(1, eje, actividad)
+         @puntaje_avance2["EJE#{eje}"]["#{actividad}"]=   diagnostico.puntaje_avance_eje(2, eje, actividad)
         end
-       @evidencias_avance2["EJE#{eje}"] =  a2.map { |b|b.numero_actividad  }  unless a2.empty?
      end
-
 
      render :layout => "only_jquery"
   end
@@ -620,6 +623,35 @@ class AdminController < ApplicationController
        flash[:error] = "Necesita evaluar todas las evidencias para concluir"
      end
      redirect_to :action => "dashboard", :diagnostico => @evaluacion.diagnostico_id, :id => @evaluacion.user_id
+   end
+
+   def save_dashboard_proyecto
+     (1..2).each do |avance|
+       @evaluacion = Evaluacion.new(params[:evaluacion]) if params[:evaluacion]
+       @evaluacion.user_id = User.find(params[:id]).id if params[:id]
+       @diagnostico = Diagnostico.find(params[:diagnostico]) if params[:diagnostico]
+       @evaluacion.proyecto_id = Proyecto.find(:first, :conditions => ["diagnostico_id = ?", @diagnostico.id]).id if @diagnostico
+       diagnostico = Evaluacion.new(:diagnostico_id => @diagnostico.id)
+       @evaluacion.activa = true
+       (1..5).each do |eje|
+         @evaluacion.puntaje_eje1 = diagnostico.puntaje_obtenido_avance(avance, eje) if eje == 1
+         @evaluacion.puntaje_eje2 = diagnostico.puntaje_obtenido_avance(avance, eje) if eje == 2
+         @evaluacion.puntaje_eje3 = diagnostico.puntaje_obtenido_avance(avance, eje) if eje == 3
+         @evaluacion.puntaje_eje4 = diagnostico.puntaje_obtenido_avance(avance, eje) if eje == 4
+         @evaluacion.puntaje_eje5 = diagnostico.puntaje_obtenido_avance(avance, eje) if eje == 5
+       end
+       @evaluacion.avance = avance.to_i
+     end
+     @evidencias_sin_evaluar = Adjunto.count(:id, :conditions => ["proyecto_id = ? AND avance in (1,2) AND validado IS NULL", @evaluacion.proyecto_id]) if @evaluacion.proyecto_id
+     @concluido = (@evidencias_sin_evaluar.to_i > 0 )? false : true
+     if (@concluido && @evaluacion.save)
+       @diagnostico.escuela.update_bitacora!("proy-eva", User.find(@evaluacion.user_id)) if @diagnostico.escuela && @evaluacion.user_id
+       flash[:notice] = "Registro de evaluacion guardado correctamente"
+     else
+       flash[:error] = "Necesita evaluar todas las evidencias para concluir"
+     end
+     
+     redirect_to :action => "dashboard_proyecto", :diagnostico => @diagnostico, :id => @evaluacion.user_id
    end
    
 

@@ -609,13 +609,13 @@ def puntaje_total_avance
   return 1.5625 * 5
 end
 
-def puntaje_obtenido_avance(avance)
+def puntaje_obtenido_avance(avance, eje)
   total = 0.0
-  (1..5).each do |eje|
+#  (1..5).each do |eje|
     (1..4).each do |actividad|
       total += puntaje_avance_eje(eje, avance, actividad)
     end
-  end
+#  end
 
   return total
 end
