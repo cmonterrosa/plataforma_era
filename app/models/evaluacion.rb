@@ -541,8 +541,27 @@ def puntaje_eje5_p5
   return valido ? @eje5_p5 : 0
 end
 
+###--- OBTENIDOS AVANCE ---
+def puntaje_avance_eje(num_eje, avance, num_actividad)
+  valido = false
+  @diagnostico = Diagnostico.find(self.diagnostico_id)
+  @proyecto = Proyecto.find(:first, :conditions => ["diagnostico_id = ?", @diagnostico.id]) if @diagnostico
+  @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
+  @user = User.find_by_login(@escuela.clave) if @escuela
+  eje = CatalogoEje.find_by_clave("EJE#{num_eje}")
+#  @adjunto = Adjunto.find(:all, :conditions => ["user_id = ? AND diagnostico_id = ? AND eje_id = ? AND avance = ? AND numero_actividad = ?", @user, @diagnostico.id, eje.id, avance, num_actividad], :order => "eje_id")
+  @adjunto = Adjunto.find(:all, :select => "adjuntos.*",  :joins => "adjuntos, ejes e, catalogo_ejes ce", :conditions => ["adjuntos.eje_id = e.id AND e.catalogo_eje_id = ce.id AND adjuntos.avance = ? AND adjuntos.proyecto_id = ? AND ce.clave = ? AND adjuntos.numero_actividad = ?", avance, @proyecto.id, eje.clave, num_actividad])
+  @adjunto.each do |ad|
+    if ad.validado
+      valido = true
+      break
+    end
+  end
 
+  return valido ? $avance_actividad : 0
+end
 
+###--- OBTENIDOS EJES ---
 def puntaje_total_eje1
   return (($competencia_p1.to_f + $competencia_p2.to_f + $competencia_p3.to_f + $competencia_p5.to_f + $competencia_p5.to_f)*100).round(3)
 end
@@ -581,6 +600,24 @@ end
 
 def puntaje_total_obtenido_eje5
   return (puntaje_eje5_p2 + puntaje_eje5_p3 + puntaje_eje5_p4 + puntaje_eje5_p5).round(3)
+end
+
+
+###--- TOTALES AVANCES ---
+
+def puntaje_total_avance
+  return 1.5625 * 5
+end
+
+def puntaje_obtenido_avance(avance)
+  total = 0.0
+  (1..5).each do |eje|
+    (1..4).each do |actividad|
+      total += puntaje_avance_eje(eje, avance, actividad)
+    end
+  end
+
+  return total
 end
 
 def puntaje_total_novidencias
