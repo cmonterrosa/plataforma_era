@@ -45,7 +45,7 @@
         <% total_obtenido_eje1 = 0.0 %>
         <% eval("@evidencias_avance#{avance}['EJE1']").each do |p| %>
           <% total_eje1 += 1 %>
-          <% total_obtenido_eje1 += eval("@puntaje_avance#{avance}['EJE1'][p-1]") %>
+          <% total_obtenido_eje1 += eval("@puntaje_avance#{avance}_actividad#{p}") %>
           <% detalle_actividades_eje1 = Adjunto.find(:all, :select => "adjuntos.*",  :joins => "adjuntos, ejes e, catalogo_ejes ce", :conditions => ["adjuntos.eje_id=e.id AND e.catalogo_eje_id = ce.id AND adjuntos.avance = ? AND adjuntos.proyecto_id = ? AND ce.clave = ? AND adjuntos.numero_actividad = ?", avance.to_i, @proyecto.id, "EJE1", p]) %>
           <tr>
             <td colspan="9"></td>
@@ -53,7 +53,7 @@
           <tr class="d1" style="font-size: 14px;">
             <td align="center" rowspan="<%= detalle_actividades_eje1.size + 1%>"><%= p %></td>
             <td align="center" style="font-size: 14px;" rowspan="<%=h detalle_actividades_eje1.size + 1 %>"><%= $avance_actividad %></td>
-            <td align="center" style="font-size: 14px;" rowspan="<%=h detalle_actividades_eje1.size + 1 %>"><%= eval("@puntaje_avance#{avance}['EJE1'][p-1]") %></td>
+            <td align="center" style="font-size: 14px;" rowspan="<%=h detalle_actividades_eje1.size + 1 %>"><%= eval("@puntaje_avance#{avance}_actividad#{p}") %></td>
           </tr>
           <% detalle_actividades_eje1.each do |eje| %>
           <tr class="d1">
@@ -128,7 +128,7 @@
           <tr class="d1" style="font-size: 14px;">
             <td align="center" rowspan="<%=h (detalle_actividades_eje2.size + 1)%>"><%= p %></td>
             <td align="center" style="font-size: 14px;" rowspan="<%=h  (detalle_actividades_eje2.size + 1) %>"><%= $avance_actividad %></td>
-            <td align="center" style="font-size: 14px;" rowspan="<%=h  (detalle_actividades_eje2.size + 1) %>"><%= eval("@puntaje_avance#{avance}['EJE2'][p-1]") %></td>
+            <td align="center" style="font-size: 14px;" rowspan="<%=h  (detalle_actividades_eje2.size + 1) %>"><%= eval("@puntaje_avance#{avance}_actividad#{p}") %></td>
           </tr>
           <% detalle_actividades_eje2.each do |eje| %>
           <tr class="d1">
@@ -196,7 +196,7 @@
           <tr class="d1" style="font-size: 14px;">
             <td align="center" rowspan="<%=h (detalle_actividades_eje3.size + 1)%>"><%= p%></td>
             <td align="center" style="font-size: 14px;" rowspan="<%=h  (detalle_actividades_eje3.size + 1)%>"><%= $avance_actividad %></td>
-            <td align="center" style="font-size: 14px;" rowspan="<%=h  (detalle_actividades_eje3.size + 1)%>"><%= eval("@puntaje_avance#{avance}['EJE3'][p-1]") %></td>
+            <td align="center" style="font-size: 14px;" rowspan="<%=h  (detalle_actividades_eje3.size + 1)%>"><%= eval("@puntaje_avance#{avance}_actividad#{p}") %></td>
           </tr>
           <% detalle_actividades_eje3.each do |eje| %>
           <tr class="d1">
@@ -264,7 +264,7 @@
           <tr class="d1" style="font-size: 14px;">
             <td align="center" rowspan="<%=h (detalle_actividades_eje4.size + 1)%>"><%= p%></td>
             <td align="center" style="font-size: 14px;" rowspan="<%=h  (detalle_actividades_eje4.size + 1)%>"><%= $avance_actividad %></td>
-            <td align="center" style="font-size: 14px;" rowspan="<%=h  (detalle_actividades_eje4.size + 1)%>"><%= eval("@puntaje_avance#{avance}['EJE4'][p-1]") %></td>
+            <td align="center" style="font-size: 14px;" rowspan="<%=h  (detalle_actividades_eje4.size + 1)%>"><%= eval("@puntaje_avance#{avance}_actividad#{p}") %></td>
           </tr>
           <% detalle_actividades_eje4.each do |eje| %>
           <tr class="d1">
@@ -332,7 +332,7 @@
           <tr class="d1" style="font-size: 14px;">
             <td align="center" rowspan="<%=h (detalle_actividades_eje5.size + 1) %>"><%= p %></td>
             <td align="center" style="font-size: 14px;" rowspan="<%=h  (detalle_actividades_eje5.size + 1) %>"><%= $avance_actividad %></td>
-            <td align="center" style="font-size: 14px;" rowspan="<%=h  (detalle_actividades_eje5.size + 1) %>"><%= eval("@puntaje_avance#{avance}['EJE5'][p-1]") %></td>
+            <td align="center" style="font-size: 14px;" rowspan="<%=h  (detalle_actividades_eje5.size + 1) %>"><%= eval("@puntaje_avance#{avance}_actividad#{p}") %></td>
           </tr>
           <% detalle_actividades_eje5.each do |eje| %>
           <tr class="d1">

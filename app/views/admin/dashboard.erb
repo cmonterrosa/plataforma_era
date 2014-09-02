@@ -33,8 +33,8 @@
             <% total_obtenido_eje1 = 0.0 %>
             <%@preguntas_eje1.sort{|p1,p2| p1.numero_pregunta <=> p2.numero_pregunta}.each do |p|%>
             <tr class="d1" style="font-size: 14px;">
-              <% total_eje1 += (eval("$competencia_p#{p.numero_pregunta}")*100) %>
-              <% total_obtenido_eje1 += eval("@competencia_p#{p.numero_pregunta}") %>
+              <% total_eje1 += (eval("$competencia_p#{p.numero_pregunta}")*100).to_f %>
+              <% total_obtenido_eje1 += eval("@competencia_p#{p.numero_pregunta}").to_f %>
               <%detalle_preguntas_eje1 = Adjunto.find(:all, :conditions => ["diagnostico_id = ? AND eje_id = ? AND numero_pregunta= ?", p.diagnostico_id, @eje1.id, p.numero_pregunta])%>
                 <td align="center" rowspan="<%= detalle_preguntas_eje1.size + 1%>"><%= p.numero_pregunta %></td>
                 <td align="center" style="font-size: 14px;" rowspan="<%=h detalle_preguntas_eje1.size + 1%>"><%= eval("$competencia_p#{p.numero_pregunta}")*100 %></td>
@@ -106,8 +106,8 @@
             <% total_eje2 = 0.0 %>
             <% total_obtenido_eje2 = 0.0 %>
             <%@preguntas_eje2.sort{|p1,p2| p1.numero_pregunta <=> p2.numero_pregunta}.each do |p|%>
-            <% total_eje2 += (eval("$entorno_p#{p.numero_pregunta}")*100) %>
-            <% total_obtenido_eje2 += eval("@entorno_p#{p.numero_pregunta}") %>
+            <% total_eje2 += (eval("$entorno_p#{p.numero_pregunta}")*100).to_f %>
+            <% total_obtenido_eje2 += eval("@entorno_p#{p.numero_pregunta}").to_f %>
             <tr class="d1" style="font-size: 14px;">
               <%detalle_preguntas_eje2 = Adjunto.find(:all, :conditions => ["diagnostico_id = ? AND eje_id = ? AND numero_pregunta= ?", p.diagnostico_id, @eje2.id, p.numero_pregunta])%>
                 <td align="center" rowspan="<%= detalle_preguntas_eje2.size + 1%>"><%= p.numero_pregunta %></td>
@@ -178,8 +178,8 @@
             <% total_eje3 = 0.0 %>
             <% total_obtenido_eje3 = 0.0 %>
             <%@preguntas_eje3.sort{|p1,p2| p1.numero_pregunta <=> p2.numero_pregunta}.each do |p|%>
-            <% total_eje3 += (eval("$huella_p#{p.numero_pregunta}")*100) %>
-            <% total_obtenido_eje3 += eval("@huella_p#{p.numero_pregunta}") %>
+            <% total_eje3 += (eval("$huella_p#{p.numero_pregunta}")*100).to_f %>
+            <% total_obtenido_eje3 += eval("@huella_p#{p.numero_pregunta}").to_f %>
             <tr class="d1" style="font-size: 14px;">
               <%detalle_preguntas_eje3 = Adjunto.find(:all, :conditions => ["diagnostico_id = ? AND eje_id = ? AND numero_pregunta= ?", p.diagnostico_id, @eje3.id, p.numero_pregunta])%>
                 <td align="center" rowspan="<%= detalle_preguntas_eje3.size + 1%>"><%= p.numero_pregunta %></td>
@@ -251,8 +251,8 @@
             <% total_eje4 = 0.0 %>
             <% total_obtenido_eje4 = 0.0 %>
             <%@preguntas_eje4.sort{|p1,p2| p1.numero_pregunta <=> p2.numero_pregunta}.each do |p|%>
-            <% total_eje4 += (eval("$consumo_p#{p.numero_pregunta}")*100) %>
-            <% total_obtenido_eje4 += eval("@consumo_p#{p.numero_pregunta}") %>
+            <% total_eje4 += (eval("$consumo_p#{p.numero_pregunta}")*100).to_f %>
+            <% total_obtenido_eje4 += eval("@consumo_p#{p.numero_pregunta}").to_f %>
             <tr class="d1" style="font-size: 14px;">
               <%detalle_preguntas_eje4 = Adjunto.find(:all, :conditions => ["diagnostico_id = ? AND eje_id = ? AND numero_pregunta= ?", p.diagnostico_id, @eje4.id, p.numero_pregunta])%>
                 <td align="center" rowspan="<%= detalle_preguntas_eje4.size + 1%>"><%= p.numero_pregunta %></td>
@@ -323,8 +323,8 @@
             <% total_eje5 = 0.0 %>
             <% total_obtenido_eje5 = 0.0 %>
             <%@preguntas_eje5.sort{|p1,p2| p1.numero_pregunta <=> p2.numero_pregunta}.each do |p|%>
-            <% total_eje5 += (eval("$participacion_p#{p.numero_pregunta}")*100) %>
-            <% total_obtenido_eje5 += eval("@participacion_p#{p.numero_pregunta}") %>
+            <% total_eje5 += (eval("$participacion_p#{p.numero_pregunta}")*100).to_f %>
+            <% total_obtenido_eje5 += eval("@participacion_p#{p.numero_pregunta}").to_f %>
             <tr class="d1" style="font-size: 14px;">
               <%detalle_preguntas_eje5 = Adjunto.find(:all, :conditions => ["diagnostico_id = ? AND eje_id = ? AND numero_pregunta = ?", p.diagnostico_id, @eje5.id, p.numero_pregunta])%>
                 <td align="center" rowspan="<%= detalle_preguntas_eje5.size + 1%>"><%= p.numero_pregunta %></td>

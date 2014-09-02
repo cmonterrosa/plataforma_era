@@ -355,7 +355,7 @@ def puntaje_eje4_p4
   @higienes = @s_higienes.size > 0 ? (((@s_higienes.size.to_f / @t_higiene.size.to_f) * 100) * $consumo_p4) : 0
 
   if (@s_preparacions.size + @s_utensilios.size + @s_higienes.size).to_f > 0
-    @eje4_p4 = (@preparacions + @utensilios + @higienes).round(3)
+    @eje4_p4 = (@preparacions + @utensilios + @higienes).round(3).to_f
   else
     @eje4_p4 = 0
   end
@@ -403,7 +403,7 @@ def puntaje_eje4_p5
   @reposterias =  @select_reposterias.to_f > 0 ? (((@select_reposterias.to_f / @s_reposterias.size.to_f)* 100)* $consumo_p5).round(3) : 0
 
   if (@bebidas + @alimentos + @botanas + @reposterias).to_f > 0
-    @eje4_p5 = @bebidas + @alimentos + @botanas + @reposterias
+    @eje4_p5 = (@bebidas + @alimentos + @botanas + @reposterias).to_f
   else
     @eje4_p5 = 0
   end
@@ -423,7 +423,7 @@ def puntaje_eje4_p6
   @s_materials.each do |material|
     @select_materials+=1 if @m_recomendables.any? { |b| b[:clave] == material }
   end
-  @eje4_p6 = (((@select_materials.to_f / @s_materials.size.to_f)* 100)* $consumo_p6).round(3)
+  @eje4_p6 = (((@select_materials.to_f / @s_materials.size.to_f)* 100)* $consumo_p6).round(3).to_f
 
   return @eje4_p6
 end
@@ -435,7 +435,7 @@ def puntaje_eje4_p7
   @consumo = @diagnostico.consumo if @diagnostico.consumo
   
   @s_afisicas = selected(@consumo.frecuencia_afisica) if @consumo.frecuencia_afisica
-  @eje4_p7 = ptos_afisica(@s_afisicas)
+  @eje4_p7 = ptos_afisica(@s_afisicas).to_f
 
   return @eje4_p7
 end
@@ -448,9 +448,9 @@ def puntaje_eje4_p8
   
   minutos_activacion_fisica = (@consumo.minutos_activacion_fisica) ? @consumo.minutos_activacion_fisica : 0
   if minutos_activacion_fisica > 30
-    @eje4_p7 = ptos_minutos(30)
+    @eje4_p7 = ptos_minutos(30).to_f
   else
-    @eje4_p7 = ptos_minutos(@consumo.minutos_activacion_fisica)
+    @eje4_p7 = ptos_minutos(@consumo.minutos_activacion_fisica).to_f
   end
 
   return @eje4_p7
@@ -542,7 +542,7 @@ def puntaje_eje5_p5
 end
 
 ###--- OBTENIDOS AVANCE ---
-def puntaje_avance_eje(num_eje, avance, num_actividad)
+def puntaje_avance_eje(avance, num_eje, num_actividad)
   valido = false
   @diagnostico = Diagnostico.find(self.diagnostico_id)
   @proyecto = Proyecto.find(:first, :conditions => ["diagnostico_id = ?", @diagnostico.id]) if @diagnostico

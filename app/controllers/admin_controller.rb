@@ -499,18 +499,28 @@ class AdminController < ApplicationController
      @user = (params[:id]) ? User.find(params[:id]): current_user
      @escuela = @user.escuela if @user
      @evidencias_avance1 = @evidencias_avance2 = Hash.new
-     @puntaje_avance1 = @puntaje_avance2 = Hash.new { |hash, key| hash[key] = Array.new }
+     @puntaje_avance1 = @actividad_a1 = @actividad_a2 = @puntaje_avance2 = Hash.new
+     #@puntaje_avance1 = @puntaje_avance2 = Hash.new()
+
      diagnostico = Evaluacion.new(:diagnostico_id => Diagnostico.find(params[:diagnostico]).id)
      (1..5).each do |eje|
        a1 = Adjunto.find(:all, :select => "adjuntos.numero_actividad",  :joins => "adjuntos, ejes e, catalogo_ejes ce", :conditions => ["adjuntos.proyecto_id = ? AND adjuntos.eje_id=e.id AND e.catalogo_eje_id=ce.id AND adjuntos.avance = 1 AND ce.clave= ?", @proyecto.id, "EJE#{eje}"], :group => "adjuntos.numero_actividad")
        a2 = Adjunto.find(:all, :select => "adjuntos.numero_actividad",  :joins => "adjuntos, ejes e, catalogo_ejes ce", :conditions => ["adjuntos.proyecto_id = ? AND adjuntos.eje_id=e.id AND e.catalogo_eje_id=ce.id AND adjuntos.avance = 2 AND ce.clave= ?", @proyecto.id, "EJE#{eje}"], :group => "adjuntos.numero_actividad")
        @evidencias_avance1["EJE#{eje}"] =  a1.map { |a| a.numero_actividad  } unless a1.empty?
        (1..4).each do |actividad|
-         @puntaje_avance1["EJE#{eje}"] << diagnostico.puntaje_avance_eje(1, eje, actividad)
-         @puntaje_avance2["EJE#{eje}"] << diagnostico.puntaje_avance_eje(2, eje, actividad)
+         @puntaje_avance1["EJE#{eje}"]  {@actividad_a1["actividad"] => diagnostico.puntaje_avance_eje(1, eje, actividad)}
+#         @puntaje_avance1_actividad1 = diagnostico.puntaje_avance_eje(1, eje, actividad) if actividad == 1
+#         @puntaje_avance2_actividad1 = diagnostico.puntaje_avance_eje(2, eje, actividad) if actividad == 1
+#         @puntaje_avance1_actividad2 = diagnostico.puntaje_avance_eje(1, eje, actividad) if actividad == 2
+#         @puntaje_avance2_actividad2 = diagnostico.puntaje_avance_eje(2, eje, actividad) if actividad == 2
+#         @puntaje_avance1_actividad3 = diagnostico.puntaje_avance_eje(1, eje, actividad) if actividad == 3
+#         @puntaje_avance2_actividad3 = diagnostico.puntaje_avance_eje(2, eje, actividad) if actividad == 3
+#         @puntaje_avance1_actividad4 = diagnostico.puntaje_avance_eje(1, eje, actividad) if actividad == 4
+#         @puntaje_avance2_actividad4 = diagnostico.puntaje_avance_eje(2, eje, actividad) if actividad == 4
        end
        @evidencias_avance2["EJE#{eje}"] =  a2.map { |b|b.numero_actividad  }  unless a2.empty?
      end
+
 
      render :layout => "only_jquery"
   end
