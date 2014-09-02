@@ -1,7 +1,10 @@
 class HomeController < ApplicationController
   
+  before_filter :es_revisor?
+
   
   def index
+    
   end
 
   def certificacion_esys
@@ -35,5 +38,18 @@ class HomeController < ApplicationController
   def periodo_expirado
     
   end
+
+protected
+def es_revisor?
+  if @usuario=current_user
+        if @usuario.has_role?(:admin)
+          redirect_to :controller => "admin"
+        elsif @usuario.has_role?(:revisor)
+          #return render(:partial => 'instituciones/menu', :layout => "era2014")
+          redirect_to :controller => "instituciones"
+        end
+    end
+end
+
 
 end

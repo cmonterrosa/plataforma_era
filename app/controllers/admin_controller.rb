@@ -5,7 +5,8 @@ class AdminController < ApplicationController
   #protect_from_forgery
   require_role [:directivo], :only => [:show_escuelas]
   require_role [:admin], :for => ["show_respaldos"]
-  require_role [:admin, :adminplat]
+  require_role [:admin, :adminplat, :revisor]
+  
 
 
   
@@ -56,7 +57,7 @@ class AdminController < ApplicationController
   end
 
   def show_roles
-    @roles = Role.find(:all)
+    @roles = Role.find(:all, :conditions => ["name = ?", "revisor"])
   end
 
   def show_users
@@ -84,7 +85,7 @@ class AdminController < ApplicationController
   def members_by_role
     @role = Role.find(params[:id])
     @users = []
-    User.find(:all).each{|user|
+    User.find(:all, :conditions => "escuela_id IS NULL" ).each{|user|
       unless @role.users.include?(user)
         @users << user
       end
@@ -124,9 +125,7 @@ class AdminController < ApplicationController
       redirect_to :action => "members_by_role", :id => @role
   end
 
-  def show_roles
-    @roles = Role.find(:all)
-  end
+  
 
   def show_diagnostico
     @escuela = Escuela.find(params[:id]) if params[:id]
