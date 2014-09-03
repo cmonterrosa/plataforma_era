@@ -93,10 +93,10 @@ class DiagnosticosController < ApplicationController
     @competencia = @diagnostico.competencia if @diagnostico.competencia
       # -- Operaciones --
       @cp1 = @competencia.docentes_capacitados_sma.to_i > 0 ? (((@competencia.docentes_capacitados_sma.to_i / @escuela.total_personal_docente.to_f ) * 100) * $competencia_p1.to_f).round(3) : 0
-      @cp2 = @competencia.docentes_aplican_conocimientos.to_i > 0 ? (((@competencia.docentes_aplican_conocimientos.to_i / @escuela.total_personal_docente.to_f ) * 100) * $competencia_p2.to_f).round(3) : 0
-      @cp3 = @competencia.docentes_involucran_actividades.to_i > 0 ? (((@competencia.docentes_involucran_actividades.to_i / @escuela.total_personal_docente.to_f ) * 100) * $competencia_p3.to_f).round(3) : 0
-      @cp4 = @competencia.alumnos_capacitados_docentes.to_i > 0 ? (((@competencia.alumnos_capacitados_docentes.to_i / (@escuela.alu_hom.to_i + @escuela.alu_muj.to_i) ).to_f * 100) * $competencia_p4.to_f).round(3) : 0
-      @cp5 = @competencia.alumnos_capacitados_instituciones.to_i > 0 ? (((@competencia.alumnos_capacitados_instituciones.to_i / (@escuela.alu_hom.to_i + @escuela.alu_muj.to_i) ).to_f * 100) * $competencia_p5.to_f).round(3) : 0
+      @cp2 = @competencia.docentes_aplican_conocimientos.to_i > 0 ? (((@competencia.docentes_aplican_conocimientos.to_f / @escuela.total_personal_docente.to_f ) * 100) * $competencia_p2.to_f).round(3) : 0
+      @cp3 = @competencia.docentes_involucran_actividades.to_i > 0 ? (((@competencia.docentes_involucran_actividades.to_f / @escuela.total_personal_docente.to_f ) * 100) * $competencia_p3.to_f).round(3) : 0
+      @cp4 = @competencia.alumnos_capacitados_docentes.to_i > 0 ? ((((@competencia.alumnos_capacitados_docentes.to_f / (@escuela.alu_hom.to_i + @escuela.alu_muj.to_i) ).to_f * 100) * $competencia_p4.to_f).round(3)) : 0
+      @cp5 = @competencia.alumnos_capacitados_instituciones.to_i > 0 ? (((@competencia.alumnos_capacitados_instituciones.to_f / (@escuela.alu_hom + @escuela.alu_muj)) * 100) * $competencia_p5.to_f).round(3) : 0
 
       @c_maxptos = (($competencia_p1.to_f + $competencia_p2.to_f + $competencia_p3.to_f + $competencia_p5.to_f + $competencia_p5.to_f)*100).round(3)
       @c_totalptos = (@cp1.to_f + @cp2.to_f + @cp3.to_f + @cp4.to_f + @cp5.to_f).round(3)
@@ -112,12 +112,18 @@ class DiagnosticosController < ApplicationController
       end
       
       @s_acciones = multiple_selected_id(@entorno.acciones) if @entorno.acciones
-      if @diagnostico.escuela.nivel_descripcion == "BACHILLERATO"
-        @acciones = Accione.find(:all, :conditions => ["clave not in ('AC01')"])
-        @ep6 = (((@s_acciones.size.to_f / 4)* 100) * $entorno_p6.to_f).round(3)
+      @accione_s = multiple_selected(@entorno.acciones) if @entorno.acciones
+      unless @accione_s.include?("NING")
+        if @diagnostico.escuela.nivel_descripcion == "BACHILLERATO"
+          @acciones = Accione.find(:all, :conditions => ["clave not in ('AC01')"])
+          @ep6 = (((@accione_s.size.to_f / 4)* 100) * $entorno_p6.to_f).round(3)
+        else
+          @acciones = Accione.find(:all, :conditions => ["clave not in ('AC00')"])
+          @ep6 = (((@accione_s.size.to_f / 4)* 100) * $entorno_p6.to_f).round(3)
+        end
       else
-        @acciones = Accione.find(:all, :conditions => ["clave not in ('AC00')"])
-        @ep6 = (((@s_acciones.size.to_f / 4)* 100) * $entorno_p6.to_f).round(3)
+        @acciones = Accione.find(:all)
+        @ep6 = 0.0
       end
       
       @e_maxptos = (($entorno_p2.to_f + $entorno_p6.to_f)*100).round(3)

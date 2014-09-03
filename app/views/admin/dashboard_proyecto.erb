@@ -376,7 +376,7 @@
 
       <div class="grid-12-12 clear"></div>
       <!-- observaciones -->
-      <%form_for(@evaluacion, :url => {:action => "save_dashboard_proyecto", :id => @user.id, :diagnostico => @diagnostico.id }, :html => {:class => "formee" }) do |f| -%>
+      <%form_for(@evaluacion, :url => {:action => "save_dashboard_proyecto", :id => @user.id, :diagnostico => @diagnostico.id, :proyecto => @proyecto.id }, :html => {:class => "formee" }) do |f| -%>
       <fieldset>
         <legend>OBSERVACIONES</legend>
         <div class="grid-12-12">

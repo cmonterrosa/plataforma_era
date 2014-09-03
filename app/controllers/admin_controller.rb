@@ -239,15 +239,25 @@ class AdminController < ApplicationController
   end
 
   def total_escuelas_registradas
-    @escuelas = User.find(:all, :select => "users.created_at as user_created_at, users.login, users.id as user_id, e.*", :joins => "users, escuelas e", :conditions => "users.login=e.clave AND (users.blocked is NULL OR  users.blocked !=1)")
+#    @escuelas = User.find(:all, :select => "users.created_at as user_created_at, users.login, users.id as user_id, e.*", :joins => "users, escuelas e", :conditions => "users.login = e.clave AND (users.blocked is NULL OR  users.blocked !=1)")
+    @escuelas = User.find_by_sql("SELECT us.created_at as user_created_at, us.login, us.id as user_id, es.* from users us
+                                  INNER JOIN escuelas es ON us.login = es.clave
+                                  AND (us.blocked is NULL OR us.blocked !=1)")
     csv_string = FasterCSV.generate(:col_sep => "|") do |csv|
-      csv << ["CLAVE_ESCUELA", "NOMBRE", "ZONA_ESCOLAR",       "SECTOR",          "NIVEL",           "DOMICILIO",     "LOCALIDAD",   "MUNICIPIO",      "REGION",              "MODALIDAD",  "CORREO_ESCUELA",   "CORREO_RESPONSABLE",    "TELEFONO_ESCUELA", "TELEFONO_DIRECTOR", "FECHA_HORA_CAPTURA", "ALU_HOMBRES", "ALU_MUJERES", "TOTAL_ALUMNOS", "GRUPOS", "TOTAL_ALUMNOS",       "DOCENTES_H", "DOCENTES_M",  "TOTAL_DOCENTE_APOYO",              "TOTAL_PERSONAL_ADMVO",   "TOTAL_PERSONAL_APOYO", "ESTATUS_ACTUAL", "DOCENTES_CAPACITADOS", "DOCENTES_INVOLUCRADOS", "ALUMNOS_CAPACITADOS", "SUPERFICIE_AREAS_VERDES", "ARBOLES_ADULTOS", "ACCIONES_MANUAL_DE_SALUD", "CAPACITACION_AHORRO_DE_ENERGIA", "CONSUMO_ENERGIA_ELECTRICA", "FOCOS_AHORRADORES", "RED_PUBLICA_AGUA", "RECIPIENTES_RESIDUOS_SOLIDOS", "SEPARA_RESIDUOS_ORGANICOS_INORGANICOS", "ELABORA_COMPOSTAS", "FRECUENCIA_ACTIVACION_FISICA", "MINUTOS/MOMENTOS_ACTIVACION_FISICA", "NUM_PADRES_FAMILIA_TUTORES", "NUM_PADRES_FAMILIA_TUTORES_CAPACITADOS", "PROYECTO"]
+      csv << ["CLAVE_ESCUELA", "NOMBRE", "ZONA_ESCOLAR", "SECTOR", "NIVEL", "DOMICILIO", "LOCALIDAD", "MUNICIPIO", "REGION", "MODALIDAD",
+              "CORREO_ESCUELA", "CORREO_RESPONSABLE", "TELEFONO_ESCUELA", "TELEFONO_DIRECTOR", "FECHA_HORA_CAPTURA", "ALU_HOMBRES",
+              "ALU_MUJERES", "TOTAL_ALUMNOS", "GRUPOS", "TOTAL_ALUMNOS", "DOCENTES_H", "DOCENTES_M", "TOTAL_DOCENTE_APOYO", "TOTAL_PERSONAL_ADMVO",
+              "TOTAL_PERSONAL_APOYO", "ESTATUS_ACTUAL", "DOCENTES_CAPACITADOS", "DOCENTES_INVOLUCRADOS", "ALUMNOS_CAPACITADOS", "SUPERFICIE_AREAS_VERDES",
+              "ARBOLES_ADULTOS", "ACCIONES_MANUAL_DE_SALUD", "CAPACITACION_AHORRO_DE_ENERGIA", "CONSUMO_ENERGIA_ELECTRICA", "FOCOS_AHORRADORES",
+              "RED_PUBLICA_AGUA", "RECIPIENTES_RESIDUOS_SOLIDOS", "SEPARA_RESIDUOS_ORGANICOS_INORGANICOS", "ELABORA_COMPOSTAS", "FRECUENCIA_ACTIVACION_FISICA",
+              "MINUTOS/MOMENTOS_ACTIVACION_FISICA", "NUM_PADRES_FAMILIA_TUTORES", "NUM_PADRES_FAMILIA_TUTORES_CAPACITADOS", "PROYECTO"]
+
       @escuelas.each do |i|
-        diagnostico = Diagnostico.find(:first, :conditions => ["escuela_id = ?", i["id"]]) if i["id"]
+        diagnostico = Diagnostico.find(:first, :conditions => ["user_id = ?", i.user_id]) if i.user_id
         proyecto = Proyecto.find(:first, :conditions => ["diagnostico_id = ?", diagnostico.id]) if diagnostico
         proyecto = (proyecto) ? proyecto.descripcion : ""
         # campos diagnostico
-        if User.find_by_id(i.user_id)
+        if User.find_by_id(i.user_id).nil?
           # -- competencia
             docentes_capacitados = diagnostico.competencia ? diagnostico.competencia.docentes_capacitados_sma : ""
             docentes_involucrados = diagnostico.competencia ? diagnostico.competencia.docentes_involucran_actividades : ""
@@ -324,11 +334,24 @@ class AdminController < ApplicationController
               num_padres_familia = diagnostico.participacion.num_padres_familia #if diagnostico.participacion.num_padres_familia
               capacitacion_salud_ma = diagnostico.participacion.capacitacion_salud_ma
             end
-      
+
+            
         end unless diagnostico.nil?
 
-        estatus_actual = Estatu.find(i['estatu_id']) ? Estatu.find(i['estatu_id']).descripcion : "No existe información"  if i['estatu_id']
-        csv << [ i["clave"], i["nombre"], i['zona_escolar'],  i['sector'], i['nivel_descripcion'],  i["domicilio"], i["localidad"], i['municipio'], i['region_descripcion'], i['modalidad'], i["email"], i["email_responsable_proyecto"], i["telefono"], i["telefono_director"], i['user_created_at'], i['alu_hom'], i['alu_muj'], i['total_alumnos'], i['grupos'], i['total_alumnos'],  i['doc_hom'], i['doc_muj'], i["total_personal_docente_apoyo"], i['total_personal_admvo'], i["total_personal_apoyo"], estatus_actual, docentes_capacitados, docentes_involucrados, alumnos_capacitados, superficie_areas_verdes, arboles_adultos, acciones, capacitacion_ahorro_energia, consumo_energia, focos_ahorradores, red_publica_agua, recip_residuos_solidos, separa_residuos_org_inorg, elabora_compostas, frecuencia_afisica, "#{minutos_afisica}  #{momentos_afisica}", num_padres_familia, capacitacion_salud_ma, proyecto]
+        @estatus = Estatu.find(:first, :conditions => ["id = ?", i.estatu_id.to_i]) if i.estatu_id
+        if @estatus.nil?
+          estatus_actual = "No existe información"
+        else
+          estatus_actual = @estatus.descripcion
+        end
+        
+        csv << [ i.clave, i.nombre, i.zona_escolar,  i.sector, i.nivel_descripcion,  i.domicilio, i.localidad, i.municipio, i.region_descripcion, i.modalidad,
+                 i.email, i.email_responsable_proyecto, i.telefono, i.telefono_director, i.user_created_at, i.alu_hom,
+                 i.alu_muj, i.total_alumnos, i.grupos, i.total_alumnos, i.doc_hom, i.doc_muj, i.total_personal_docente_apoyo, i.total_personal_admvo,
+                 i.total_personal_apoyo, "#{estatus_actual}", docentes_capacitados, docentes_involucrados, alumnos_capacitados, superficie_areas_verdes,
+                 arboles_adultos, acciones, capacitacion_ahorro_energia, consumo_energia, focos_ahorradores,
+                 red_publica_agua, recip_residuos_solidos, separa_residuos_org_inorg, elabora_compostas, frecuencia_afisica,
+                 "#{minutos_afisica}  #{momentos_afisica}", num_padres_familia, capacitacion_salud_ma, proyecto ]
       end
     end
     send_data csv_string, type => "text/plain",
@@ -520,11 +543,6 @@ class AdminController < ApplicationController
      render :layout => "only_jquery"
   end
 
-     
-
-
-
-
    def dashboard
      @diagnostico = Diagnostico.find(params[:diagnostico]) if params[:diagnostico]
      @user = (params[:id]) ? User.find(params[:id]): current_user
@@ -552,6 +570,7 @@ class AdminController < ApplicationController
 
      @ptos_obtenidos_eje1 = (@competencia_p1 + @competencia_p2 + @competencia_p3 + @competencia_p4 + @competencia_p5)#.to_f.round(3)
      @total_puntos_eje1 = diagnostico.puntaje_total_eje1
+     @puntaje_total_eje1 = diagnostico.puntaje_total_obtenido_eje1
      
 #     Puntajes eje2
      @entorno_p2 = diagnostico.puntaje_eje2_p2
@@ -559,6 +578,7 @@ class AdminController < ApplicationController
 
      @ptos_obtenidos_eje2 = (@entorno_p2 + @entorno_p6)#.to_f.round(3)
      @total_puntos_eje2 = diagnostico.puntaje_total_eje2
+     @puntaje_total_eje2 = diagnostico.puntaje_total_obtenido_eje2
 
 #     Puntajes eje3
      @huella_p1 = diagnostico.puntaje_eje3_p1
@@ -573,6 +593,7 @@ class AdminController < ApplicationController
 
      @ptos_obtenidos_eje3 = (@huella_p1 + @huella_p2 + @huella_p3 + @huella_p4 + @huella_p5 + @huella_p6 + @huella_p7 + @huella_p8 + @huella_p9)#.to_f.round(3)
      @total_puntos_eje3 = diagnostico.puntaje_total_eje3
+     @puntaje_total_eje3 = diagnostico.puntaje_total_obtenido_eje3
 
 #     Puntaje eje4
      @consumo_p2 = diagnostico.puntaje_eje4_p2
@@ -585,6 +606,7 @@ class AdminController < ApplicationController
 
      @ptos_obtenidos_eje4 = (@consumo_p2 + @consumo_p3 + @consumo_p4 + @consumo_p5 + @consumo_p6 + @consumo_p7 + @consumo_p8)#.to_f.round(3)
      @total_puntos_eje4 = diagnostico.puntaje_total_eje4
+     @puntaje_total_eje4 = diagnostico.puntaje_total_obtenido_eje4
 
 #     Puntaje eje5
      @participacion_p1 = $participacion_p1.to_f
@@ -596,6 +618,7 @@ class AdminController < ApplicationController
 
      @ptos_obtenidos_eje5 = (@participacion_p1 + @participacion_p2 + @participacion_p3 +  @participacion_p4 + @participacion_p5 + @participacion_p6)#.to_f.round(3)
      @total_puntos_eje5 = diagnostico.puntaje_total_eje5
+     @puntaje_total_eje5 = diagnostico.puntaje_total_obtenido_eje5
 
      render :layout => "only_jquery"
     end
@@ -603,7 +626,8 @@ class AdminController < ApplicationController
 
 
    def save_dashboard
-     @evaluacion = Evaluacion.new(params[:evaluacion]) if params[:evaluacion]
+     @evaluacion = Evaluacion.find_by_diagnostico_id(params[:diagnostico])
+     @evaluacion ||= Evaluacion.new(params[:evaluacion]) if params[:evaluacion]
      @evaluacion.user_id = User.find(params[:id]).id if params[:id]
      @evaluacion.diagnostico_id = Diagnostico.find(params[:diagnostico]).id if params[:diagnostico]
      @diagnostico = Diagnostico.find(@evaluacion.diagnostico_id) if @evaluacion.diagnostico_id
@@ -616,7 +640,12 @@ class AdminController < ApplicationController
      @evaluacion.puntaje_eje5 = diagnostico.puntaje_total_obtenido_eje5
      @evidencias_sin_evaluar = Adjunto.count(:id, :conditions => ["diagnostico_id = ? AND validado IS NULL", @evaluacion.diagnostico_id]) if @evaluacion.diagnostico_id
      @concluido = (@evidencias_sin_evaluar > 0 )? false : true
-     if (@concluido && @evaluacion.save)
+     if (@concluido)
+       if Evaluacion.find_by_diagnostico_id(params[:diagnostico])
+         @evaluacion.update_attributes!(params[:evaluacion])
+       else
+         @evaluacion.save
+       end
        @diagnostico.escuela.update_bitacora!("diag-eva", User.find(@evaluacion.user_id)) if @diagnostico.escuela && @evaluacion.user_id
        flash[:notice] = "Registro de evaluacion guardado correctamente"
      else
@@ -627,7 +656,8 @@ class AdminController < ApplicationController
 
    def save_dashboard_proyecto
      (1..2).each do |avance|
-       @evaluacion = Evaluacion.new(params[:evaluacion]) if params[:evaluacion]
+       @evaluacion = Evaluacion.find_by_proyecto_id_and_avance(params[:proyecto], avance.to_i)
+       @evaluacion ||= Evaluacion.new(params[:evaluacion]) if params[:evaluacion]
        @evaluacion.user_id = User.find(params[:id]).id if params[:id]
        @diagnostico = Diagnostico.find(params[:diagnostico]) if params[:diagnostico]
        @evaluacion.proyecto_id = Proyecto.find(:first, :conditions => ["diagnostico_id = ?", @diagnostico.id]).id if @diagnostico
@@ -641,21 +671,23 @@ class AdminController < ApplicationController
          @evaluacion.puntaje_eje5 = diagnostico.puntaje_obtenido_avance(avance, eje) if eje == 5
        end
        @evaluacion.avance = avance.to_i
-     end
-     @evidencias_sin_evaluar = Adjunto.count(:id, :conditions => ["proyecto_id = ? AND avance in (1,2) AND validado IS NULL", @evaluacion.proyecto_id]) if @evaluacion.proyecto_id
-     @concluido = (@evidencias_sin_evaluar.to_i > 0 )? false : true
-     if (@concluido && @evaluacion.save)
-       @diagnostico.escuela.update_bitacora!("proy-eva", User.find(@evaluacion.user_id)) if @diagnostico.escuela && @evaluacion.user_id
-       flash[:notice] = "Registro de evaluacion guardado correctamente"
-     else
-       flash[:error] = "Necesita evaluar todas las evidencias para concluir"
+       @evidencias_sin_evaluar = Adjunto.count(:id, :conditions => ["proyecto_id = ? AND avance in (1,2) AND validado IS NULL", @evaluacion.proyecto_id]) if @evaluacion.proyecto_id
+       @concluido = (@evidencias_sin_evaluar.to_i > 0 )? false : true
+       if (@concluido)
+         if Evaluacion.find_by_proyecto_id(params[:proyecto])
+           @evaluacion.update_attributes!(params[:evaluacion])
+         else
+           @evaluacion.save
+         end
+         @diagnostico.escuela.update_bitacora!("proy-eva", User.find(@evaluacion.user_id)) if @diagnostico.escuela && @evaluacion.user_id
+         flash[:notice] = "Registro de evaluacion guardado correctamente"
+       else
+         flash[:error] = "Necesita evaluar todas las evidencias para concluir"
+       end
      end
      
      redirect_to :action => "dashboard_proyecto", :diagnostico => @diagnostico, :id => @evaluacion.user_id
    end
-   
-
-
 
    def dashboard2
     @eje1 = []

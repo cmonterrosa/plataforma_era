@@ -17,7 +17,7 @@ def puntaje_eje1_p1
         break
       end
     end unless @eje1.nil?
-    @eje1_p1 = (((@competencia.docentes_capacitados_sma.to_i / @escuela.total_personal_docente.to_f ) * 100) * $competencia_p1.to_f).round(3)
+    @eje1_p1 = (((@competencia.docentes_capacitados_sma.to_f / @escuela.total_personal_docente.to_f ) * 100) * $competencia_p1.to_f).round(3)
   end
 
   return valido ? @eje1_p1 : 0
@@ -38,7 +38,7 @@ def puntaje_eje1_p2
         break
       end
     end
-    @eje1_p2 = (((@competencia.docentes_aplican_conocimientos.to_i / @escuela.total_personal_docente.to_f ) * 100) * $competencia_p2.to_f).round(3)
+    @eje1_p2 = (((@competencia.docentes_aplican_conocimientos.to_f / @escuela.total_personal_docente.to_f ) * 100) * $competencia_p2.to_f).round(3)
   end
 
   return valido ? @eje1_p2 : 0
@@ -59,7 +59,7 @@ def puntaje_eje1_p3
         break
       end
     end
-    @eje1_p3 = (((@competencia.docentes_involucran_actividades.to_i / @escuela.total_personal_docente.to_f ) * 100) * $competencia_p3.to_f).round(3)
+    @eje1_p3 = (((@competencia.docentes_involucran_actividades.to_f / @escuela.total_personal_docente.to_f ) * 100) * $competencia_p3.to_f).round(3)
   end
 
   return valido ? @eje1_p3 : 0
@@ -80,7 +80,7 @@ def puntaje_eje1_p4
         break
       end
     end
-    @eje1_p4 = (((@competencia.alumnos_capacitados_docentes.to_i / (@escuela.alu_hom.to_i + @escuela.alu_muj.to_i) ).to_f * 100) * $competencia_p4.to_f).round(3)
+    @eje1_p4 = (((@competencia.alumnos_capacitados_docentes.to_f / (@escuela.alu_hom.to_i + @escuela.alu_muj.to_i) ).to_f * 100) * $competencia_p4.to_f).round(3)
   end
 
   return valido ? @eje1_p4 : 0
@@ -101,7 +101,7 @@ def puntaje_eje1_p5
         break
       end
     end
-    @eje1_p5 = (((@competencia.alumnos_capacitados_instituciones.to_i / (@escuela.alu_hom.to_i + @escuela.alu_muj.to_i) ).to_f * 100) * $competencia_p5.to_f).round(3)
+    @eje1_p5 = (((@competencia.alumnos_capacitados_instituciones.to_f / (@escuela.alu_hom.to_i + @escuela.alu_muj.to_i) ).to_f * 100) * $competencia_p5.to_f).round(3)
   end
 
   return valido ? @eje1_p5 : 0
@@ -567,7 +567,7 @@ def puntaje_total_eje1
 end
 
 def puntaje_total_eje2
-  return (($entorno_p2.to_f + $entorno_p6.to_f)*100).round(3)
+  return (($entorno_p2.to_f + $entorno_p6.to_f) * 100).to_f.round(3)
 end
 
 def puntaje_total_eje3
@@ -613,7 +613,7 @@ def puntaje_obtenido_avance(avance, eje)
   total = 0.0
 #  (1..5).each do |eje|
     (1..4).each do |actividad|
-      total += puntaje_avance_eje(eje, avance, actividad)
+      total += puntaje_avance_eje(avance, eje, actividad)
     end
 #  end
 
