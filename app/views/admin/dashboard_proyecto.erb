@@ -51,7 +51,7 @@
             <td colspan="9"></td>
           </tr>
           <tr class="d1" style="font-size: 14px;">
-            <td align="center" rowspan="<%= detalle_actividades_eje1.size + 1%>"><%= p %></td>
+            <td align="center" rowspan="<%= detalle_actividades_eje1.size + 1%>"><%=link_to p , {:controller => "upload", :action => "view_question", :diagnostico => @diagnostico.id, :eje => 1, :pregunta => p }, :class => 'fancybox fancybox.iframe', :title => "Ver Pregunta", :style => "font-size: 16px;" %></td>
             <td align="center" style="font-size: 14px;" rowspan="<%=h detalle_actividades_eje1.size + 1 %>"><%= $avance_actividad %></td>
             <td align="center" style="font-size: 14px;" rowspan="<%=h detalle_actividades_eje1.size + 1 %>"><%= eval("@puntaje_avance#{avance}['EJE1']['#{p}']") %></td>
           </tr>
@@ -126,7 +126,7 @@
             <td colspan="9">&nbsp;</td>
           </tr>
           <tr class="d1" style="font-size: 14px;">
-            <td align="center" rowspan="<%=h (detalle_actividades_eje2.size + 1)%>"><%= p %></td>
+            <td align="center" rowspan="<%=h (detalle_actividades_eje2.size + 1)%>"><%=link_to p , {:controller => "upload", :action => "view_question", :diagnostico => @diagnostico.id, :eje => 2, :pregunta => p }, :class => 'fancybox fancybox.iframe', :title => "Ver Pregunta", :style => "font-size: 16px;" %></td>
             <td align="center" style="font-size: 14px;" rowspan="<%=h  (detalle_actividades_eje2.size + 1) %>"><%= $avance_actividad %></td>
             <td align="center" style="font-size: 14px;" rowspan="<%=h  (detalle_actividades_eje2.size + 1) %>"><%= eval("@puntaje_avance#{avance}['EJE2']['#{p}']") %></td>
           </tr>
@@ -194,7 +194,7 @@
             <td colspan="9">&nbsp;</td>
           </tr>
           <tr class="d1" style="font-size: 14px;">
-            <td align="center" rowspan="<%=h (detalle_actividades_eje3.size + 1)%>"><%= p%></td>
+            <td align="center" rowspan="<%=h (detalle_actividades_eje3.size + 1)%>"><%=link_to p , {:controller => "upload", :action => "view_question", :diagnostico => @diagnostico.id, :eje => 3, :pregunta => p }, :class => 'fancybox fancybox.iframe', :title => "Ver Pregunta", :style => "font-size: 16px;" %></td>
             <td align="center" style="font-size: 14px;" rowspan="<%=h  (detalle_actividades_eje3.size + 1)%>"><%= $avance_actividad %></td>
             <td align="center" style="font-size: 14px;" rowspan="<%=h  (detalle_actividades_eje3.size + 1)%>"><%= eval("@puntaje_avance#{avance}['EJE3']['#{p}']") %></td>
           </tr>
@@ -262,7 +262,7 @@
             <td colspan="9">&nbsp;</td>
           </tr>
           <tr class="d1" style="font-size: 14px;">
-            <td align="center" rowspan="<%=h (detalle_actividades_eje4.size + 1)%>"><%= p%></td>
+            <td align="center" rowspan="<%=h (detalle_actividades_eje4.size + 1)%>"><%=link_to p , {:controller => "upload", :action => "view_question", :diagnostico => @diagnostico.id, :eje => 4, :pregunta => p }, :class => 'fancybox fancybox.iframe', :title => "Ver Pregunta", :style => "font-size: 16px;" %></td>
             <td align="center" style="font-size: 14px;" rowspan="<%=h  (detalle_actividades_eje4.size + 1)%>"><%= $avance_actividad %></td>
             <td align="center" style="font-size: 14px;" rowspan="<%=h  (detalle_actividades_eje4.size + 1)%>"><%= eval("@puntaje_avance#{avance}['EJE4']['#{p}']") %></td>
           </tr>
@@ -330,7 +330,7 @@
             <td colspan="9">&nbsp;</td>
           </tr>
           <tr class="d1" style="font-size: 14px;">
-            <td align="center" rowspan="<%=h (detalle_actividades_eje5.size + 1) %>"><%= p %></td>
+            <td align="center" rowspan="<%=h (detalle_actividades_eje5.size + 1) %>"><%=link_to p , {:controller => "upload", :action => "view_question", :diagnostico => @diagnostico.id, :eje => 5, :pregunta => p }, :class => 'fancybox fancybox.iframe', :title => "Ver Pregunta", :style => "font-size: 16px;" %></td>
             <td align="center" style="font-size: 14px;" rowspan="<%=h  (detalle_actividades_eje5.size + 1) %>"><%= $avance_actividad %></td>
             <td align="center" style="font-size: 14px;" rowspan="<%=h  (detalle_actividades_eje5.size + 1) %>"><%= eval("@puntaje_avance#{avance}['EJE5']['#{p}']") %></td>
           </tr>
@@ -378,18 +378,18 @@
       <!-- observaciones -->
       <%form_for(@evaluacion, :url => {:action => "save_dashboard_proyecto", :id => @user.id, :diagnostico => @diagnostico.id, :proyecto => @proyecto.id }, :html => {:class => "formee" }) do |f| -%>
       <fieldset>
-        <legend>OBSERVACIONES</legend>
+        <legend>OBSERVACIONES Y/O RECOMENDACIONES</legend>
         <div class="grid-12-12">
           <%= f.text_area :observaciones, :placeholder => "Escriba brevemente sus observaciones" %>
         </div>
       </fieldset>
       <%#*<div class="grid-12-12 clear"></div>%>
-      <div class="grid-4-12"></div>
+      <div class="grid-3-12"></div>
       <div class="grid-2-12">
         <%= link_to image_tag("botones/btn_regresar.png", :mouseover => "botones/btn_regresar1.png") , :controller => "admin", :action => "menu_escuela", :id => @user.id%>
       </div>
-      <div class="grid-2-12">
-        <input class="right" type="submit" title="CONCLUIR" value="CONCLUIR" />
+      <div class="grid-4-12">
+        <input class="right" type="submit" title="CONCLUIR VALIDACIÓN" value="CONCLUIR VALIDACIÓN" />
       </div>
       <%#*<div class="grid-1-12"></div>%>
       <%end%>

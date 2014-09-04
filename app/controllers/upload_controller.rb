@@ -45,6 +45,23 @@ class UploadController < ApplicationController
     end
   end
 
+  def view_question
+    eje = Eje.find(:first,
+                   :select => "ejes.id",
+                   :joins => "ejes, proyectos proy, diagnosticos di",
+                   :conditions => "ejes.proyecto_id = proy.id and proy.diagnostico_id = di.id and di.id = #{params[:diagnostico]} and ejes.catalogo_eje_id = #{params[:eje]}")
+
+    pregunta = Actividad.find(:first,
+                              :select => "actividads.clave, actividads.descripcion, actividads.eje_id",
+                              :joins => "actividads, ejes ej, proyectos proy, diagnosticos di",
+                              :conditions => "actividads.eje_id = ej.id and ej.proyecto_id = proy.id and proy.diagnostico_id = di.id  and di.id = #{params[:diagnostico]} and actividads.eje_id = #{eje.id} and actividads.clave = 'actividad#{params[:pregunta]}'")
+    if pregunta
+      render :text => "#{pregunta.descripcion}"
+    else
+      render :text => "Error al obtener la pregunta, intente mas tarde"
+    end
+  end
+
 
   ################# CARGA DE EVIDENCIAS #############################
   def new_evidencia
