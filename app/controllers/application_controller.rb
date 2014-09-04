@@ -104,7 +104,7 @@ def fecha_string(date=Time.now)
  end
 
   def to_iso(texto)
-    return Iconv.iconv('UTF-8', 'UTF-8//IGNORE', texto);
+    return Iconv.conv("ISO-8859-15//IGNORE", "UTF-8", texto);
   end
 
 
