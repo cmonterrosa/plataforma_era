@@ -29,16 +29,16 @@
               <label class="titulo">OBJETIVO GENERAL:</label>
               <label class="descripcion"> <%= @proyecto.objetivo_general %></label>
             </div>
-            <div class="grid-12-12 clear">&nbsp;</div>
             
-              <div class="grid-12-12">
-                <label class="titulo">EJE(S) A DESARROLLAR:</label>
-              </div>
+            <div class="grid-12-12">
+              <label class="titulo">EJE(S) A DESARROLLAR:</label>
+            </div>
+            
+            <div class="grid-12-12">
+            
             <% @proyecto.ejes.sort_by { |hsh| hsh[:catalogo_eje_id] }.each do |eje| %>
             <fieldset>
               <legend> &nbsp; :: &nbsp;<%= eje.catalogo_eje.completo %> &nbsp; </legend>
-         
-
                 <div class="grid-3-12">
                   <label class="subtitulo">LINEAS DE ACCIÓN: </label>
                   <%eje.catalogo_eje.lineas_accions.each do |linea|%>
@@ -63,7 +63,6 @@
               <label class="descripcion"> <%= eje.objetivo_especifico %></label>
             </div>
 
-            <div class="grid-12-12 clear"></div>
 
             <!-- actividads -->
             <%@actividades = Actividad.find(:all, :conditions => ["eje_id = ?", eje.id], :order => "clave")%>
@@ -87,8 +86,9 @@
             </div>
             
             </fieldset>
+            <div class="grid-12-12 clear">&nbsp;</div>
             <% end %>
-            
+            </div>
           </td>
         </tr>
       </table>

@@ -239,15 +239,28 @@ class AdminController < ApplicationController
   end
 
   def total_escuelas_registradas
-    @escuelas = User.find(:all, :select => "users.created_at as user_created_at, users.login, users.id as user_id, e.*", :joins => "users, escuelas e", :conditions => "users.login=e.clave AND (users.blocked is NULL OR  users.blocked !=1)")
-    csv_string = FasterCSV.generate(:col_sep => "|") do |csv|
-      csv << ["CLAVE_ESCUELA", "NOMBRE", "ZONA_ESCOLAR",       "SECTOR",          "NIVEL",           "DOMICILIO",     "LOCALIDAD",   "MUNICIPIO",      "REGION",              "MODALIDAD",  "CORREO_ESCUELA",   "CORREO_RESPONSABLE",    "TELEFONO_ESCUELA", "TELEFONO_DIRECTOR", "FECHA_HORA_CAPTURA", "ALU_HOMBRES", "ALU_MUJERES", "TOTAL_ALUMNOS", "GRUPOS", "TOTAL_ALUMNOS",       "DOCENTES_H", "DOCENTES_M",  "TOTAL_DOCENTE_APOYO",              "TOTAL_PERSONAL_ADMVO",   "TOTAL_PERSONAL_APOYO", "ESTATUS_ACTUAL", "DOCENTES_CAPACITADOS", "DOCENTES_INVOLUCRADOS", "ALUMNOS_CAPACITADOS", "SUPERFICIE_AREAS_VERDES", "ARBOLES_ADULTOS", "ACCIONES_MANUAL_DE_SALUD", "CAPACITACION_AHORRO_DE_ENERGIA", "CONSUMO_ENERGIA_ELECTRICA", "FOCOS_AHORRADORES", "RED_PUBLICA_AGUA", "RECIPIENTES_RESIDUOS_SOLIDOS", "SEPARA_RESIDUOS_ORGANICOS_INORGANICOS", "ELABORA_COMPOSTAS", "FRECUENCIA_ACTIVACION_FISICA", "MINUTOS/MOMENTOS_ACTIVACION_FISICA", "NUM_PADRES_FAMILIA_TUTORES", "NUM_PADRES_FAMILIA_TUTORES_CAPACITADOS", "PROYECTO"]
+#    @escuelas = User.find(:all, :select => "users.created_at as user_created_at, users.login, users.id as user_id, e.*", :joins => "users, escuelas e", :conditions => "users.login = e.clave AND (users.blocked is NULL OR  users.blocked !=1)")
+    @escuelas = User.find_by_sql("SELECT us.created_at as user_created_at, us.login, us.id as user_id, es.* from users us
+                                  INNER JOIN escuelas es ON us.login = es.clave
+                                  AND (us.blocked is NULL OR us.blocked !=1)")
+    csv_string = FasterCSV.generate(:col_sep => "\t") do |csv|
+      csv << ["CLAVE_ESCUELA", "NOMBRE", "ZONA_ESCOLAR", "SECTOR", "NIVEL", "DOMICILIO", "LOCALIDAD", "MUNICIPIO", "REGION", "MODALIDAD",
+              "CORREO_ESCUELA", "CORREO_RESPONSABLE", "TELEFONO_ESCUELA", "TELEFONO_DIRECTOR", "FECHA_HORA_CAPTURA", "ALU_HOMBRES",
+              "ALU_MUJERES", "TOTAL_ALUMNOS", "GRUPOS", "TOTAL_ALUMNOS", "DOCENTES_H", "DOCENTES_M", "TOTAL_DOCENTE_APOYO", "TOTAL_PERSONAL_ADMVO",
+              "TOTAL_PERSONAL_APOYO", "ESTATUS_ACTUAL", "DOCENTES_CAPACITADOS", "DOCENTES_INVOLUCRADOS", "ALUMNOS_CAPACITADOS", "SUPERFICIE_AREAS_VERDES",
+              "ARBOLES_ADULTOS", "ACCIONES_MANUAL_DE_SALUD", "CAPACITACION_AHORRO_DE_ENERGIA", "CONSUMO_ENERGIA_ELECTRICA", "FOCOS_AHORRADORES",
+              "RED_PUBLICA_AGUA", "RECIPIENTES_RESIDUOS_SOLIDOS", "SEPARA_RESIDUOS_ORGANICOS_INORGANICOS", "ELABORA_COMPOSTAS", "FRECUENCIA_ACTIVACION_FISICA",
+              "MINUTOS/MOMENTOS_ACTIVACION_FISICA", "NUM_PADRES_FAMILIA_TUTORES", "NUM_PADRES_FAMILIA_TUTORES_CAPACITADOS", "PROYECTO",
+              "DIAGNOSTICO_EJE1", "DIAGNOSTICO_EJE2", "DIAGNOSTICO_EJE3", "DIAGNOSTICO_EJE4", "DIAGNOSTICO_EJE5",
+              "AVANCE1_EJE1", "AVANCE1_EJE2", "AVANCE1_EJE3", "AVANCE1_EJE4", "AVANCE1_EJE5",
+              "AVANCE1_EJE2", "AVANCE2_EJE2", "AVANCE2_EJE3", "AVANCE2_EJE4", "AVANCE2_EJE5"]
+
       @escuelas.each do |i|
-        diagnostico = Diagnostico.find(:first, :conditions => ["escuela_id = ?", i["id"]]) if i["id"]
+        diagnostico = Diagnostico.find(:first, :conditions => ["user_id = ?", i.user_id]) if i.user_id
         proyecto = Proyecto.find(:first, :conditions => ["diagnostico_id = ?", diagnostico.id]) if diagnostico
-        proyecto = (proyecto) ? proyecto.descripcion : ""
+        proyecto_descripcion = (proyecto) ? proyecto.descripcion : ""
         # campos diagnostico
-        if User.find_by_id(i.user_id)
+        unless diagnostico.nil?
           # -- competencia
             docentes_capacitados = diagnostico.competencia ? diagnostico.competencia.docentes_capacitados_sma : ""
             docentes_involucrados = diagnostico.competencia ? diagnostico.competencia.docentes_involucran_actividades : ""
@@ -324,15 +337,39 @@ class AdminController < ApplicationController
               num_padres_familia = diagnostico.participacion.num_padres_familia #if diagnostico.participacion.num_padres_familia
               capacitacion_salud_ma = diagnostico.participacion.capacitacion_salud_ma
             end
-      
-        end unless diagnostico.nil?
 
-        estatus_actual = Estatu.find(i['estatu_id']) ? Estatu.find(i['estatu_id']).descripcion : "No existe información"  if i['estatu_id']
-        csv << [ i["clave"], i["nombre"], i['zona_escolar'],  i['sector'], i['nivel_descripcion'],  i["domicilio"], i["localidad"], i['municipio'], i['region_descripcion'], i['modalidad'], i["email"], i["email_responsable_proyecto"], i["telefono"], i["telefono_director"], i['user_created_at'], i['alu_hom'], i['alu_muj'], i['total_alumnos'], i['grupos'], i['total_alumnos'],  i['doc_hom'], i['doc_muj'], i["total_personal_docente_apoyo"], i['total_personal_admvo'], i["total_personal_apoyo"], estatus_actual, docentes_capacitados, docentes_involucrados, alumnos_capacitados, superficie_areas_verdes, arboles_adultos, acciones, capacitacion_ahorro_energia, consumo_energia, focos_ahorradores, red_publica_agua, recip_residuos_solidos, separa_residuos_org_inorg, elabora_compostas, frecuencia_afisica, "#{minutos_afisica}  #{momentos_afisica}", num_padres_familia, capacitacion_salud_ma, proyecto]
+            e_diagnostico = Evaluacion.find_by_diagnostico_id(diagnostico.id)
+        end
+        e_diagnostico ||= Evaluacion.new #(:puntaje_eje1 => 0, :puntaje_eje2 => 0, :puntaje_eje3 => 0, :puntaje_eje4 => 0, :puntaje_eje5 => 0)
+           
+        unless proyecto.nil?
+          a1_proyecto = Evaluacion.find_by_proyecto_id_and_avance(proyecto.id, 1) 
+          a2_proyecto = Evaluacion.find_by_proyecto_id_and_avance(proyecto.id, 2) 
+        end
+        a1_proyecto ||= Evaluacion.new #(:puntaje_eje1 => 0, :puntaje_eje2 => 0, :puntaje_eje3 => 0, :puntaje_eje4 => 0, :puntaje_eje5 => 0)
+        a2_proyecto ||= Evaluacion.new #(:puntaje_eje1 => 0, :puntaje_eje2 => 0, :puntaje_eje3 => 0, :puntaje_eje4 => 0, :puntaje_eje5 => 0)
+
+        @estatus = Estatu.find(:first, :conditions => ["id = ?", i.estatu_id.to_i]) if i.estatu_id
+        if @estatus.nil?
+          estatus_actual = "No existe información"
+        else
+          estatus_actual = @estatus.descripcion
+        end
+        
+        csv << [ i.clave, i.nombre, i.zona_escolar,  i.sector, i.nivel_descripcion,  i.domicilio, i.localidad, i.municipio, i.region_descripcion, i.modalidad,
+                 i.email, i.email_responsable_proyecto, i.telefono, i.telefono_director, i.user_created_at, i.alu_hom,
+                 i.alu_muj, i.total_alumnos, i.grupos, i.total_alumnos, i.doc_hom, i.doc_muj, i.total_personal_docente_apoyo, i.total_personal_admvo,
+                 i.total_personal_apoyo, "#{estatus_actual}", docentes_capacitados, docentes_involucrados, alumnos_capacitados, superficie_areas_verdes,
+                 arboles_adultos, acciones, capacitacion_ahorro_energia, consumo_energia, focos_ahorradores,
+                 red_publica_agua, recip_residuos_solidos, separa_residuos_org_inorg, elabora_compostas, frecuencia_afisica,
+                 "#{minutos_afisica}  #{momentos_afisica}", num_padres_familia, capacitacion_salud_ma, proyecto_descripcion,
+                 e_diagnostico.puntaje_eje1, e_diagnostico.puntaje_eje2, e_diagnostico.puntaje_eje3, e_diagnostico.puntaje_eje4, e_diagnostico.puntaje_eje5,
+                 a1_proyecto.puntaje_eje1, a1_proyecto.puntaje_eje2, a1_proyecto.puntaje_eje3, a1_proyecto.puntaje_eje4, a1_proyecto.puntaje_eje5,
+                 a2_proyecto.puntaje_eje1, a2_proyecto.puntaje_eje2, a2_proyecto.puntaje_eje3, a2_proyecto.puntaje_eje4, a2_proyecto.puntaje_eje5 ]
       end
     end
-    send_data csv_string, type => "text/plain",
-               :filename => "escuelas_ESyS_#{Time.now.strftime("%d-%m-%Y_%I%M_%p")}.csv",
+    send_data to_iso(csv_string), type => "application/xls",
+               :filename => "escuelas_ESyS_#{Time.now.strftime("%d-%m-%Y_%I%M_%p")}.xls",
                :disposition => "attachment"
   end
 
@@ -520,11 +557,6 @@ class AdminController < ApplicationController
      render :layout => "only_jquery"
   end
 
-     
-
-
-
-
    def dashboard
      @diagnostico = Diagnostico.find(params[:diagnostico]) if params[:diagnostico]
      @user = (params[:id]) ? User.find(params[:id]): current_user
@@ -552,6 +584,7 @@ class AdminController < ApplicationController
 
      @ptos_obtenidos_eje1 = (@competencia_p1 + @competencia_p2 + @competencia_p3 + @competencia_p4 + @competencia_p5)#.to_f.round(3)
      @total_puntos_eje1 = diagnostico.puntaje_total_eje1
+     @puntaje_total_eje1 = diagnostico.puntaje_total_obtenido_eje1
      
 #     Puntajes eje2
      @entorno_p2 = diagnostico.puntaje_eje2_p2
@@ -559,6 +592,7 @@ class AdminController < ApplicationController
 
      @ptos_obtenidos_eje2 = (@entorno_p2 + @entorno_p6)#.to_f.round(3)
      @total_puntos_eje2 = diagnostico.puntaje_total_eje2
+     @puntaje_total_eje2 = diagnostico.puntaje_total_obtenido_eje2
 
 #     Puntajes eje3
      @huella_p1 = diagnostico.puntaje_eje3_p1
@@ -573,6 +607,7 @@ class AdminController < ApplicationController
 
      @ptos_obtenidos_eje3 = (@huella_p1 + @huella_p2 + @huella_p3 + @huella_p4 + @huella_p5 + @huella_p6 + @huella_p7 + @huella_p8 + @huella_p9)#.to_f.round(3)
      @total_puntos_eje3 = diagnostico.puntaje_total_eje3
+     @puntaje_total_eje3 = diagnostico.puntaje_total_obtenido_eje3
 
 #     Puntaje eje4
      @consumo_p2 = diagnostico.puntaje_eje4_p2
@@ -585,6 +620,7 @@ class AdminController < ApplicationController
 
      @ptos_obtenidos_eje4 = (@consumo_p2 + @consumo_p3 + @consumo_p4 + @consumo_p5 + @consumo_p6 + @consumo_p7 + @consumo_p8)#.to_f.round(3)
      @total_puntos_eje4 = diagnostico.puntaje_total_eje4
+     @puntaje_total_eje4 = diagnostico.puntaje_total_obtenido_eje4
 
 #     Puntaje eje5
      @participacion_p1 = $participacion_p1.to_f
@@ -596,6 +632,7 @@ class AdminController < ApplicationController
 
      @ptos_obtenidos_eje5 = (@participacion_p1 + @participacion_p2 + @participacion_p3 +  @participacion_p4 + @participacion_p5 + @participacion_p6)#.to_f.round(3)
      @total_puntos_eje5 = diagnostico.puntaje_total_eje5
+     @puntaje_total_eje5 = diagnostico.puntaje_total_obtenido_eje5
 
      render :layout => "only_jquery"
     end
@@ -603,7 +640,8 @@ class AdminController < ApplicationController
 
 
    def save_dashboard
-     @evaluacion = Evaluacion.new(params[:evaluacion]) if params[:evaluacion]
+     @evaluacion = Evaluacion.find_by_diagnostico_id(params[:diagnostico])
+     @evaluacion ||= Evaluacion.new(params[:evaluacion]) if params[:evaluacion]
      @evaluacion.user_id = User.find(params[:id]).id if params[:id]
      @evaluacion.diagnostico_id = Diagnostico.find(params[:diagnostico]).id if params[:diagnostico]
      @diagnostico = Diagnostico.find(@evaluacion.diagnostico_id) if @evaluacion.diagnostico_id
@@ -616,7 +654,12 @@ class AdminController < ApplicationController
      @evaluacion.puntaje_eje5 = diagnostico.puntaje_total_obtenido_eje5
      @evidencias_sin_evaluar = Adjunto.count(:id, :conditions => ["diagnostico_id = ? AND validado IS NULL", @evaluacion.diagnostico_id]) if @evaluacion.diagnostico_id
      @concluido = (@evidencias_sin_evaluar > 0 )? false : true
-     if (@concluido && @evaluacion.save)
+     if (@concluido)
+       if Evaluacion.find_by_diagnostico_id(params[:diagnostico])
+         @evaluacion.update_attributes!(params[:evaluacion])
+       else
+         @evaluacion.save
+       end
        @diagnostico.escuela.update_bitacora!("diag-eva", User.find(@evaluacion.user_id)) if @diagnostico.escuela && @evaluacion.user_id
        flash[:notice] = "Registro de evaluacion guardado correctamente"
      else
@@ -627,7 +670,8 @@ class AdminController < ApplicationController
 
    def save_dashboard_proyecto
      (1..2).each do |avance|
-       @evaluacion = Evaluacion.new(params[:evaluacion]) if params[:evaluacion]
+       @evaluacion = Evaluacion.find_by_proyecto_id_and_avance(params[:proyecto], avance.to_i)
+       @evaluacion ||= Evaluacion.new(params[:evaluacion]) if params[:evaluacion]
        @evaluacion.user_id = User.find(params[:id]).id if params[:id]
        @diagnostico = Diagnostico.find(params[:diagnostico]) if params[:diagnostico]
        @evaluacion.proyecto_id = Proyecto.find(:first, :conditions => ["diagnostico_id = ?", @diagnostico.id]).id if @diagnostico
@@ -641,124 +685,25 @@ class AdminController < ApplicationController
          @evaluacion.puntaje_eje5 = diagnostico.puntaje_obtenido_avance(avance, eje) if eje == 5
        end
        @evaluacion.avance = avance.to_i
-     end
-     @evidencias_sin_evaluar = Adjunto.count(:id, :conditions => ["proyecto_id = ? AND avance in (1,2) AND validado IS NULL", @evaluacion.proyecto_id]) if @evaluacion.proyecto_id
-     @concluido = (@evidencias_sin_evaluar.to_i > 0 )? false : true
-     if (@concluido && @evaluacion.save)
-       @diagnostico.escuela.update_bitacora!("proy-eva", User.find(@evaluacion.user_id)) if @diagnostico.escuela && @evaluacion.user_id
-       flash[:notice] = "Registro de evaluacion guardado correctamente"
-     else
-       flash[:error] = "Necesita evaluar todas las evidencias para concluir"
+       @evidencias_sin_evaluar = Adjunto.count(:id, :conditions => ["proyecto_id = ? AND avance in (1,2) AND validado IS NULL", @evaluacion.proyecto_id]) if @evaluacion.proyecto_id
+       @concluido = (@evidencias_sin_evaluar.to_i > 0 )? false : true
+       if (@concluido)
+         if Evaluacion.find_by_proyecto_id(params[:proyecto])
+           @evaluacion.update_attributes!(params[:evaluacion])
+         else
+           @evaluacion.save
+         end
+         @diagnostico.escuela.update_bitacora!("proy-eva", User.find(@evaluacion.user_id)) if @diagnostico.escuela && @evaluacion.user_id
+         flash[:notice] = "Registro de evaluacion guardado correctamente"
+       else
+         flash[:error] = "Necesita evaluar todas las evidencias para concluir"
+       end
      end
      
      redirect_to :action => "dashboard_proyecto", :diagnostico => @diagnostico, :id => @evaluacion.user_id
    end
-   
 
-
-
-   def dashboard2
-    @eje1 = []
-    @eje2 = []
-    @eje3 = []
-    @eje4 = []
-    @eje5 = []
-    @diagnostico = Diagnostico.find(params[:diagnostico]) if params[:diagnostico]
-    @user = (params[:id]) ? User.find(params[:id]): current_user
-    @evidencias = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ?", @user, @diagnostico.id], :order => "eje_id")
-    @evidencias.each do |e|
-      catalogo_eje = CatalogoEje.find(e.eje_id)
-      @eje1 << e if catalogo_eje.clave == "EJE1"
-      @eje2 << e if catalogo_eje.clave == "EJE2"
-      @eje3 << e if catalogo_eje.clave == "EJE3"
-#      @eje4 << e if catalogo_eje.clave == "EJE4"
-#      @eje5 << e if catalogo_eje.clave == "EJE5"
-    end
-
-    diagnostico = Evaluacion.new(:diagnostico_id => Diagnostico.find(params[:diagnostico]))
-    @cp1 = diagnostico.puntaje_eje1_p1
-    @cp2 = diagnostico.puntaje_eje1_p2
-    @cp3 = diagnostico.puntaje_eje1_p3
-    @cp4 = diagnostico.puntaje_eje1_p4
-    @cp5 = diagnostico.puntaje_eje1_p5
-    
   
-    
-    
-    
-
-#    unless @eje1.empty?
-#      @competencia = @diagnostico.competencia if @diagnostico.competencia
-#      # -- Operaciones --
-#      @cp1 = @competencia.docentes_capacitados_sma.to_i > 0 ? (((@competencia.docentes_capacitados_sma.to_i / @escuela.total_personal_docente.to_f ) * 100) * $competencia_p1.to_f).round(3) : 0
-#      @cp2 = @competencia.docentes_aplican_conocimientos.to_i > 0 ? (((@competencia.docentes_aplican_conocimientos.to_i / @escuela.total_personal_docente.to_f ) * 100) * $competencia_p2.to_f).round(3) : 0
-#      @cp3 = @competencia.docentes_involucran_actividades.to_i > 0 ? (((@competencia.docentes_involucran_actividades.to_i / @escuela.total_personal_docente.to_f ) * 100) * $competencia_p3.to_f).round(3) : 0
-#      @cp4 = @competencia.alumnos_capacitados_docentes.to_i > 0 ? (((@competencia.alumnos_capacitados_docentes.to_i / (@escuela.alu_hom.to_i + @escuela.alu_muj.to_i) ).to_f * 100) * $competencia_p4.to_f).round(3) : 0
-#      @cp5 = @competencia.alumnos_capacitados_instituciones.to_i > 0 ? (((@competencia.alumnos_capacitados_instituciones.to_i / (@escuela.alu_hom.to_i + @escuela.alu_muj.to_i) ).to_f * 100) * $competencia_p5.to_f).round(3) : 0
-#
-#      @c_maxptos = (($competencia_p1.to_f + $competencia_p2.to_f + $competencia_p3.to_f + $competencia_p5.to_f + $competencia_p5.to_f)*100).round(3)
-#      @c_totalptos = (@cp1.to_f + @cp2.to_f + @cp3.to_f + @cp4.to_f + @cp5.to_f).round(3)
-#    end
-
-    unless @eje2.empty?
-      @entorno = @diagnostico.entorno if @diagnostico.entorno
-      # -- Operaciones --
-      if @entorno.superficie_terreno_escuela_av.to_f > 0  and @entorno.superficie_terreno_escuela.to_f > 0
-        ((@entorno.superficie_terreno_escuela_av.to_f / @entorno.superficie_terreno_escuela.to_f) * 100).round > 25 ? @ep2 = ptos_superficie(25) : @ep2 = ptos_superficie(((@entorno.superficie_terreno_escuela_av.to_f / @entorno.superficie_terreno_escuela.to_f) * 100).round)
-      else
-        @ep2 = 0
-      end
-
-      @s_acciones = multiple_selected_id(@entorno.acciones) if @entorno.acciones
-      if @diagnostico.escuela.nivel_descripcion == "BACHILLERATO"
-        @acciones = Accione.find(:all, :conditions => ["clave not in ('AC01')"])
-        @ep6 = (((@s_acciones.size.to_f / 4)* 100) * $entorno_p6.to_f).round(3)
-      else
-        @acciones = Accione.find(:all, :conditions => ["clave not in ('AC00')"])
-        @ep6 = (((@s_acciones.size.to_f / 4)* 100) * $entorno_p6.to_f).round(3)
-      end
-
-      @e_maxptos = (($entorno_p2.to_f + $entorno_p6.to_f)*100).round(3)
-      @e_totalptos = (@ep2.to_f + @ep6.to_f).round(3)
-    end
-
-     unless @eje3.empty?
-      @huella = @diagnostico.huella if @diagnostico.huella
-      # -- Operaciones --
-      @hp1 = @huella.capacitacion_ahorro_energia.to_f > 0 ? (((@huella.capacitacion_ahorro_energia.to_f / 2 ) * 100) * $huella_p1.to_f).round(3) : 0
-
-      if @huella.consumo_anterior.to_f > 0 and @huella.consumo_actual.to_f > 0
-        @huella.consumo_anterior.to_f > @huella.consumo_actual.to_f ? @hp2 = $huella_p2 * 100 : @hp2 = 0 if @huella.consumo_anterior or @huella.consumo_actual
-      else
-        @hp2 = 0
-      end
-
-      @s_electricas = selected(@huella.energia_electrica) if @huella.energia_electrica
-      @hp3 = @huella.focos_ahorradores.to_f > 0 ? (((@huella.focos_ahorradores.to_f / @huella.total_focos.to_f ) * 100) * $huella_p3.to_f).round(3) : 0
-
-      @s_aguas = selected(@huella.servicio_agua) if @huella.servicio_agua
-      @huella.red_publica_agua == "SI" ? @hp4 = $huella_p4 * 100 : @hp4 = 0
-      
-      @hp5 = (((@huella.mantto_inst.to_f / 2 ) * 100) * $huella_p5.to_f).round(3)
-
-      @s_elimina_residuos = multiple_selected_id(@huella.elimina_residuos) if @huella.elimina_residuos
-      @huella.recip_residuos_solid == "SI" ? @hp6 = $huella_p6 * 100 : @hp6 = 0
-
-      @huella.sep_residuos_org_inorg == "SI" ? @hp7 = $huella_p7 * 100 : @hp7 = 0
-
-      @huella.elabora_compostas == "SI" ? @hp8 = $huella_p8 * 100 : @hp8 = 0
-
-      @s_inorganicos = multiple_selected_id(@huella.inorganicos) if @huella.inorganicos
-      (@s_inorganicos.size == 1 and @huella.inorganicos[0]['clave'] == "NING") ? @hp9 = 0 : @hp9 = ptos_inorganicos(@s_inorganicos.size)
-
-      @h_maxptos = (($huella_p1.to_f + $huella_p2.to_f + $huella_p3.to_f + $huella_p4.to_f + $huella_p5.to_f + $huella_p6.to_f + $huella_p7.to_f + $huella_p8.to_f + $huella_p9.to_f)*100).round(3)
-      @h_totalptos = (@hp1.to_f + @hp2.to_f + @hp3.to_f + @hp4.to_f + @hp5.to_f + @hp6.to_f + @hp7.to_f + @hp8.to_f + @hp9.to_f).round(3)
-     end
-
-    
-    render :layout => "only_jquery"
-   end
-
    ####### ASIGNACION DE EVALUADOR #######
 
    def asignar_evaluador
