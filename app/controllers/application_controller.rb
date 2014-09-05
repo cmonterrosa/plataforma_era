@@ -97,14 +97,10 @@ def fecha_string(date=Time.now)
      return errores
    end
 
- def to_iso2(texto)
-    c = Iconv.new('ISO-8859-15//IGNORE//TRANSLIT', 'UTF-8')
-    iso = c.iconv(texto)
-    return iso
- end
-
+ 
   def to_iso(texto)
-    return Iconv.conv("ISO-8859-15//IGNORE", "UTF-8", texto);
+    return texto.upcase if texto
+    #Iconv.conv("ISO-8859-15//IGNORE", "UTF-8", texto);
   end
 
 
