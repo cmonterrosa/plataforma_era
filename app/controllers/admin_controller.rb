@@ -7,9 +7,6 @@ class AdminController < ApplicationController
   require_role [:admin], :for => ["show_respaldos"]
   require_role [:admin, :adminplat, :revisor]
   
-
-
-  
   def index
   end
 
@@ -128,8 +125,6 @@ class AdminController < ApplicationController
     end
       redirect_to :action => "members_by_role", :id => @role
   end
-
-  
 
   def show_diagnostico
     @escuela = Escuela.find(params[:id]) if params[:id]
@@ -376,8 +371,6 @@ class AdminController < ApplicationController
                :disposition => "attachment"
   end
 
-
-
   def add_comunitaria
 #    @escuela = Escuela.new
   end
@@ -417,12 +410,10 @@ class AdminController < ApplicationController
     render :partial => "show_diagnostico", :layout => "era2014"
   end
 
-
   ###############################################################################
   #  Funciones para habilitar y deshabilitar diagnostico y proyecto (solo admin)
   #
   ###############################################################################
-
 
   def habilitar_diagnostico
     @diagnostico = Diagnostico.find(params[:id])
@@ -527,7 +518,6 @@ class AdminController < ApplicationController
      render :partial => "menu_proyecto", :layout => "only_jquery"
    end
 
-
    #################################################
    #   ACCIONES PARA EL MENU DE EVALUACION
    #
@@ -542,7 +532,11 @@ class AdminController < ApplicationController
      @evidencias_avance2 = Hash.new
      @puntaje_avance1 = Hash.new{|hash, key| hash[key] = Hash.new}
      @puntaje_avance2 = Hash.new{|hash, key| hash[key] = Hash.new}
-     @evaluacion = Evaluacion.find(:first, :conditions => ["proyecto_id = ? AND user_id = ? AND activa=true", @proyecto.id, @user.id])
+#     if current_user.has_role?('revisor') or current_user.has_role?('adminplat')
+       @evaluacion = Evaluacion.find(:first, :conditions => ["proyecto_id = ? AND user_id = ?", @proyecto.id, current_user.id])
+#     else
+#       @evaluacion = Evaluacion.find(:first, :conditions => ["proyecto_id = ? AND user_id = ?", @proyecto.id, @user.id])
+#     end
      @evaluacion ||= Evaluacion.new(:proyecto_id => @proyecto.id)
 
      diagnostico = Evaluacion.new(:diagnostico_id => Diagnostico.find(params[:diagnostico]).id)
@@ -556,6 +550,9 @@ class AdminController < ApplicationController
          @puntaje_avance2["EJE#{eje}"]["#{actividad}"]=   diagnostico.puntaje_avance_eje(2, eje, actividad)
         end
      end
+
+     @historico = Evaluacion.find(:all, :conditions => ["proyecto_id = ?", @proyecto.id], :group => "user_id", :order => "updated_at DESC")
+     @husuario = Evaluacion.find(:all, :conditions => ["proyecto_id = ?", @proyecto.id], :group => "user_id", :order => "updated_at DESC")
 
      render :layout => "only_jquery"
   end
@@ -574,7 +571,8 @@ class AdminController < ApplicationController
      @preguntas_eje3 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? AND eje_id = ?", @user, @diagnostico.id, @eje3.id], :group => "numero_pregunta")
      @preguntas_eje4 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? AND eje_id = ?", @user, @diagnostico.id, @eje4.id], :group => "numero_pregunta")
      @preguntas_eje5 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? AND eje_id = ?", @user, @diagnostico.id, @eje5.id], :group => "numero_pregunta")
-     @evaluacion = Evaluacion.find(:first, :conditions => ["diagnostico_id = ? AND user_id = ? AND activa=true", @diagnostico.id, @user.id])
+#     @evaluacion = Evaluacion.find(:first, :conditions => ["diagnostico_id = ? AND user_id = ? AND activa = true", @diagnostico.id, @user.id])
+     @evaluacion = Evaluacion.find(:first, :conditions => ["diagnostico_id = ? AND user_id = ?", @diagnostico.id, current_user.id])
      @evaluacion ||= Evaluacion.new(:diagnostico_id => @diagnostico.id)
 
      diagnostico = Evaluacion.new(:diagnostico_id => Diagnostico.find(params[:diagnostico]).id)
@@ -637,15 +635,16 @@ class AdminController < ApplicationController
      @total_puntos_eje5 = diagnostico.puntaje_total_eje5
      @puntaje_total_eje5 = diagnostico.puntaje_total_obtenido_eje5
 
+     @historico = Evaluacion.find(:all, :conditions => ["diagnostico_id = ?", @diagnostico.id], :group => "user_id", :order => "updated_at DESC")
+     @husuario = Evaluacion.find(:all, :conditions => ["diagnostico_id = ?", @diagnostico.id], :group => "user_id", :order => "updated_at DESC")
+
      render :layout => "only_jquery"
     end
 
-
-
    def save_dashboard
-     @evaluacion = Evaluacion.find_by_diagnostico_id(params[:diagnostico])
+     @evaluacion = Evaluacion.find_by_diagnostico_id_and_user_id(params[:diagnostico], current_user.id)
      @evaluacion ||= Evaluacion.new(params[:evaluacion]) if params[:evaluacion]
-     @evaluacion.user_id = User.find(params[:id]).id if params[:id]
+     @evaluacion.user_id = User.find(current_user.id).id if current_user.id
      @evaluacion.diagnostico_id = Diagnostico.find(params[:diagnostico]).id if params[:diagnostico]
      @diagnostico = Diagnostico.find(@evaluacion.diagnostico_id) if @evaluacion.diagnostico_id
      diagnostico = Evaluacion.new(:diagnostico_id => @diagnostico.id)
@@ -658,8 +657,9 @@ class AdminController < ApplicationController
      @evidencias_sin_evaluar = Adjunto.count(:id, :conditions => ["diagnostico_id = ? AND validado IS NULL", @evaluacion.diagnostico_id]) if @evaluacion.diagnostico_id
      @concluido = (@evidencias_sin_evaluar > 0 )? false : true
      if (@concluido)
-       if Evaluacion.find_by_diagnostico_id(params[:diagnostico])
-         @evaluacion.update_attributes!(params[:evaluacion])
+       if Evaluacion.find_by_diagnostico_id_and_user_id(params[:diagnostico], current_user.id)
+         @evaluacion.update_attributes(:observaciones => params[:evaluacion][:observaciones])
+         activar_evaluacion(@evaluacion.id)
        else
          @evaluacion.save
        end
@@ -668,18 +668,24 @@ class AdminController < ApplicationController
      else
        flash[:error] = "Necesita evaluar todas las evidencias para concluir"
      end
-     redirect_to :action => "dashboard", :diagnostico => @evaluacion.diagnostico_id, :id => @evaluacion.user_id
+     redirect_to :action => "dashboard", :diagnostico => @diagnostico.id, :id => params[:id]
    end
 
    def save_dashboard_proyecto
      (1..2).each do |avance|
-       @evaluacion = Evaluacion.find_by_proyecto_id_and_avance(params[:proyecto], avance.to_i)
+#       if current_user.has_role?('revisor') or current_user.has_role?('adminplat')
+         @evaluacion = Evaluacion.find(:first, :conditions => ["proyecto_id = ? AND avance = ? AND user_id = ?", params[:proyecto], avance.to_i, current_user.id])
+#       else
+#         @evaluacion = Evaluacion.find(:first, :conditions => ["proyecto_id = ? AND avance = ? AND user_id = ?", params[:proyecto], avance.to_i, params[:id]])
+#       end
+#       @existe = true if @evaluacion
        @evaluacion ||= Evaluacion.new(params[:evaluacion]) if params[:evaluacion]
-       @evaluacion.user_id = User.find(params[:id]).id if params[:id]
+#       @evaluacion.user_id ||= User.find(params[:id]).id if params[:id]
+       @evaluacion.user_id ||= User.find(current_user.id).id if current_user.id
        @diagnostico = Diagnostico.find(params[:diagnostico]) if params[:diagnostico]
-       @evaluacion.proyecto_id = Proyecto.find(:first, :conditions => ["diagnostico_id = ?", @diagnostico.id]).id if @diagnostico
+       @evaluacion.proyecto_id ||= Proyecto.find(:first, :conditions => ["diagnostico_id = ?", @diagnostico.id]).id if @diagnostico
        diagnostico = Evaluacion.new(:diagnostico_id => @diagnostico.id)
-       @evaluacion.activa = true
+#       @evaluacion.observaciones = params[:evaluacion][:observaciones] if params[:evaluacion][:observaciones]
        (1..5).each do |eje|
          @evaluacion.puntaje_eje1 = diagnostico.puntaje_obtenido_avance(avance, eje) if eje == 1
          @evaluacion.puntaje_eje2 = diagnostico.puntaje_obtenido_avance(avance, eje) if eje == 2
@@ -688,24 +694,27 @@ class AdminController < ApplicationController
          @evaluacion.puntaje_eje5 = diagnostico.puntaje_obtenido_avance(avance, eje) if eje == 5
        end
        @evaluacion.avance = avance.to_i
+       @evaluacion.activa = true
        @evidencias_sin_evaluar = Adjunto.count(:id, :conditions => ["proyecto_id = ? AND avance in (1,2) AND validado IS NULL", @evaluacion.proyecto_id]) if @evaluacion.proyecto_id
        @concluido = (@evidencias_sin_evaluar.to_i > 0 )? false : true
        if (@concluido)
-         if Evaluacion.find_by_proyecto_id(params[:proyecto])
-           @evaluacion.update_attributes!(params[:evaluacion])
-         else
-           @evaluacion.save
-         end
-         @diagnostico.escuela.update_bitacora!("proy-eva", User.find(@evaluacion.user_id)) if @diagnostico.escuela && @evaluacion.user_id
+           desactivar_registro_proyecto(@evaluacion.proyecto_id, avance)
+#           if @existe
+           if (Evaluacion.find(:first, :conditions => ["proyecto_id = ? AND avance = ? AND user_id = ?", params[:proyecto], avance.to_i, current_user.id]))
+             @evaluacion.update_attributes(:observaciones => params[:evaluacion][:observaciones])
+             activar_evaluacion(@evaluacion.id)
+           else
+             @evaluacion.save
+           end
+           @diagnostico.escuela.update_bitacora!("proy-eva", User.find(@evaluacion.user_id)) if @diagnostico.escuela && @evaluacion.user_id
          flash[:notice] = "Registro de evaluacion guardado correctamente"
        else
          flash[:error] = "Necesita evaluar todas las evidencias para concluir"
        end
      end
      
-     redirect_to :action => "dashboard_proyecto", :diagnostico => @diagnostico, :id => @evaluacion.user_id
+     redirect_to :action => "dashboard_proyecto", :diagnostico => @diagnostico.id, :id => params[:id] #@evaluacion.user_id#, :proyecto => @proyecto.id
    end
-
   
    ####### ASIGNACION DE EVALUADOR #######
 
@@ -727,5 +736,19 @@ class AdminController < ApplicationController
      render :text => "<h2 style='color:green'>#{msj}</h2>"
    end
 
+  def activar_registro_diagnostico(diagnostico_id)
+    registros_diagnostico = Evaluacion.find(:all, :conditions => ["diagnostico_id = ?", diagnostico_id], :order => "created_at")
+    registros_diagnostico.each{|r| r.activa = false; r.save}
+  end
 
+  def desactivar_registro_proyecto(proyecto_id, avance)
+    registros_proyecto = Evaluacion.find(:all, :conditions => ["proyecto_id = ? AND avance = ?", proyecto_id, avance], :order => "created_at")
+    registros_proyecto.each{|r| r.activa = false; r.save}
+  end
+
+  def activar_evaluacion(evaluacion_id)
+    registro = Evaluacion.find(evaluacion_id)
+    registro.activa = true
+    registro.save
+  end
 end
