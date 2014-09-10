@@ -41,8 +41,8 @@
      <td style="vertical-align: middle;"><%=h(escuela.nombre.upcase)%></td>
      <!-- Acciones -->
      <%if user%>
-        <%@diagnostico = (escuela)? Diagnostico.find(:first, :conditions => ["escuela_id = ?", escuela.id]) : nil%>
-        <%@proyecto = (@diagnostico) ? Proyecto.find(:first, :conditions => ["diagnostico_id", @diagnostico.id]) : nil%>
+        <% @diagnostico = (escuela)? Diagnostico.find(:first, :conditions => ["escuela_id = ?", escuela.id]) : nil%>
+        <% @proyecto = (@diagnostico) ? Proyecto.find(:first, :conditions => ["diagnostico_id = ?", @diagnostico.id]) : nil%>
         
         <td>
             <!-- validar diagnostico -->
@@ -56,7 +56,8 @@
         <%if @proyecto%>
           <td>
             <!-- validar proyecto -->
-            <% form_for :escuela, escuela, :url => { :action => "dashboard_proyecto", :controller => "admin", :id => user.id, :diagnostico=> @diagnostico.id, :proyecto => @proyecto }, :html => { :target => "_blank"} do -%>
+            <% form_for :escuela, escuela, :url => { :action => "dashboard_proyecto", :controller => "admin", :id => user.id, :diagnostico=> @diagnostico.id, :proyecto => @proyecto.id }, :html => { :target => "_blank"} do -%>
+            <%# form_for :escuela, escuela, :url => { :action => "dashboard_proyecto", :controller => "admin", :diagnostico=> @diagnostico, :proyecto => @proyecto }, :html => { :target => "_blank"} do -%>
               <div class="grid-center" style="font-size: 8px;">
                 <p id="pdf_link"><input type="submit" title="Validar Proyecto" value="Validar Proyecto" /></p>
               </div>
