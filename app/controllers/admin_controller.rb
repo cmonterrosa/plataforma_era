@@ -16,7 +16,7 @@ class AdminController < ApplicationController
   ### Control de usuarios #####
   def new_from_admin
     @user = User.new
-    @roles = Role.find(:all, :conditions => ["name = ?", "revisor"])
+    @roles = Role.find(:all, :conditions => ["name in (?)", ["revisor", "enlaceevaluador"]])
   end
 
   # create user from admin role not need activation
@@ -58,7 +58,10 @@ class AdminController < ApplicationController
   end
 
   def show_roles
-    @roles = Role.find(:all, :conditions => ["name = ?", "revisor"])
+    @role_externos = Role.find(:first, :conditions => ["name in (?)", ['revisor']])
+    @role_internos = Role.find(:first, :conditions => ["name in (?)", ['enlaceevaluador']])
+    @usuarios = (@role_externos.users + @role_internos.users)
+    @usuarios = @usuarios.sort{|p1,p2| p1.login <=> p2.login}
   end
 
   def show_users

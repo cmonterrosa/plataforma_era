@@ -1,29 +1,32 @@
 <div class="titulos">
-  <%#*<p><%=link_to "Listado de Perfiles", {:action => "show_roles"}, :class => "titulos" ></p>%>
-  <p>Listado de Revisores</p>
+  <p>Listado de Revisores Internos y Externos</p>
 </div>
+
+
+
+
 
 
 <!-- contenido -->
 
-  <table width="65%" class="sample" border="0" cellspacing="0" cellpadding="0" style="color: navy; BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid">
+  <table width="55%" class="sample" border="0" cellspacing="0" cellpadding="0" style="color: navy; BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid">
     <tr class="d0">
-       <td style="vertical-align: middle;">Descripción</td>
+      <td style="vertical-align: middle;">Tipo</td>
+      <td style="vertical-align: middle;">Nombre</td>
     </tr>
-    <%@roles.each do |role|%>
+    <%@usuarios.each do |u|%>
     <tr class="d1">
-     <td style="vertical-align: middle;"><%=link_to "#{role.descripcion}", {:action => "members_by_role", :id => role}, :class => 'vinculo_negro'  -%></td>
+     <td><%=h u.roles.map{|x|x.name}%></td>
+     <td style="vertical-align: middle;"><%=h u.nombre%></td>
     </tr>
     <%end%>
   </table>
-
-
 
 <br />
 
 <div>
   <p align="center">
-    <%=link_to "Crear usuario", {:action => "new_from_admin", :controller => "admin"}, :class => 'vinculo_negro'  -%>
+    <%=button_to "Crear usuario", {:action => "new_from_admin", :controller => "admin"}, :class => "boton"-%>
   </p>
 </div>
 
