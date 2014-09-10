@@ -524,3 +524,17 @@ function enable_frecuencias_actividades_fisicas(comboSelect1, comboSelect2, comb
     }
 
 }
+
+function in_visible(obj, img){
+   var div = document.getElementById(obj);
+   var image = document.getElementById(img);
+
+   if (div.style.display == 'none'){
+    div.style.display = 'block'
+    image.src = "/images/admin/contract.png"
+   }
+   else{
+    div.style.display = 'none'
+    image.src = "/images/admin/expand.png"
+   }
+}
