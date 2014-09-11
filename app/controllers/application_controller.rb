@@ -1,5 +1,6 @@
 # Filters added to this controller apply to all controllers in the application.
 # Likewise, all the methods added will be available for all controllers.
+require 'iconv'
 
 class ApplicationController < ActionController::Base
 
@@ -96,11 +97,11 @@ def fecha_string(date=Time.now)
      return errores
    end
 
- def to_iso(texto)
-    c = Iconv.new('ISO-8859-15//IGNORE//TRANSLIT', 'UTF-8')
-    iso = c.iconv(texto)
-    return iso
- end
+ 
+  def to_iso(texto)
+    return texto.upcase if texto
+    #Iconv.conv("ISO-8859-15//IGNORE", "UTF-8", texto);
+  end
 
 
 

@@ -14,22 +14,23 @@
        <label style="font-family:verdana;font-size:14px;">Escuelas</label>
         </div>
 
-       
-        
-       <!-- Listado -->
+
+       <!-- Respaldos -->
+       <%if current_user.has_role?("adminplat")%>
+          <!-- Listado -->
         <div class="grid-3-12">
        <%=link_to image_tag('admin/listado.png', :size => "128x128", :mouseover => 'admin/listado2.png') , {:action => "total_escuelas_registradas", :controller => "admin"}, :title => "Descargar listado de escuelas registradas"%>
           <label style="font-family:verdana;font-size:14px;">Listado General de Escuelas</label>
         </div>
 
-       
+
        <!-- Comentarios -->
        <div class="grid-3-12">
        <%=link_to image_tag('admin/comentarios.png', :size => "128x128", :size => "128x128", :mouseover => 'admin/comentarios2.png') , {:action => "show_comentarios", :controller => "admin"}, :title => "Mostrar comentarios"%>
          <label style="font-family:verdana;font-size:14px;">Comentarios</label>
        </div>
-       
-        
+
+
        <!-- Indicadores -->
        <div class="grid-3-12">
        <%=link_to image_tag('admin/indicadores.png', :size => "128x128", :mouseover => 'admin/indicadores2.png') , {:action => "indicadores", :controller => "admin"}, :title => "Mostrar indicadores"%>
@@ -50,7 +51,7 @@
           <label style="font-family:verdana;font-size:14px;">Niveles Educativos</label>
         </div>
 
-        
+
         <!-- Galeria -->
         <div class="grid-3-12">
           <%=link_to image_tag('admin/galeria.png', :size => "128x128", :mouseover => 'admin/galeria2.png') , {:action => "global", :controller => "galeria"}, :title => "Galeria de fotos"%>
@@ -58,8 +59,7 @@
         </div>
 
 
-         <!-- Respaldos -->
-         <%if current_user.has_role?("admin")%>
+
           <div class="grid-3-12">
             <%=link_to image_tag('admin/respaldos.png', :size => "128x128", :size => "128x128", :mouseover => 'admin/respaldos2.png') , {:action => "show_respaldos", :controller => "admin"}, :title => "Respaldos de bases de datos"%>
             <label style="font-family:verdana;font-size:14px;">Respaldos</label>

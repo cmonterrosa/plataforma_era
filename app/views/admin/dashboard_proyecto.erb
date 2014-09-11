@@ -69,9 +69,13 @@
             <% end %>
             <td><%= eje.descripcion %></td>
             <td><%=link_to image_tag('admin/view.png', :size => "30x30", :mouseover => 'admin/view.png') , {:controller => "upload", :action => "download", :id => eje.id}, :class => 'fancybox fancybox.iframe', :title => "Ver Evidencia" %></td>
+            <% unless current_user.has_role?("revisor") %>
             <td><%=link_to image_tag('admin/valid.png', :size => "30x30", :mouseover => 'admin/valid.png') , {:controller => "upload", :action => "validar", :id => eje.id, :diagnostico => @diagnostico, :user => @user, :dashboard_proyecto => 1, :proyecto => @proyecto }, :html => { :target => "_blank"}, :title => "Evidencia Válida" %></td>
             <td><%=link_to image_tag('admin/invalid.png', :size => "30x30", :mouseover => 'admin/invalid.png') , {:controller => "upload", :action => "invalidar", :id => eje.id, :diagnostico => @diagnostico, :user => @user, :dashboard_proyecto => 1, :proyecto => @proyecto }, :html => { :target => "_blank"}, :title => "Evidencia Inválida" %></td>
             <td><%=link_to image_tag('admin/delete.png', :size => "30x30", :mouseover => 'admin/delete.png') , {:controller => "upload", :action => "destroy_evidencia", :id => eje.id, :dashboard_proyecto => 1, :user_id => @user.id, :diagnostico_id => @diagnostico, :proyecto => @proyecto}, :confirm => '¿Esta seguro que desea elimina la evidencia?', :title => "Eliminar Evidencia" %></td>
+            <% else %>
+            <td colspan="3">&nbsp;</td>
+            <% end %>
           </tr>
           <% end %>
         <% end %>
@@ -144,9 +148,13 @@
             <% end %>
             <td><%= eje.descripcion %></td>
             <td><%=link_to image_tag('admin/view.png', :size => "30x30", :mouseover => 'admin/view.png') , {:controller => "upload", :action => "download", :id => eje.id}, :class => 'fancybox fancybox.iframe', :title => "Ver Evidencia" %></td>
+            <% unless current_user.has_role?("revisor") %>
             <td><%=link_to image_tag('admin/valid.png', :size => "30x30", :mouseover => 'admin/valid.png') , {:controller => "upload", :action => "validar", :id => eje.id, :diagnostico => @diagnostico, :user => @user, :dashboard_proyecto => 1 }, :html => { :target => "_blank"}, :title => "Evidencia Válida" %></td>
             <td><%=link_to image_tag('admin/invalid.png', :size => "30x30", :mouseover => 'admin/invalid.png') , {:controller => "upload", :action => "invalidar", :id => eje.id, :diagnostico => @diagnostico, :user => @user, :dashboard_proyecto => 1 }, :html => { :target => "_blank"}, :title => "Evidencia Inválida" %></td>
             <td><%=link_to image_tag('admin/delete.png', :size => "30x30", :mouseover => 'admin/delete.png') , {:controller => "upload", :action => "destroy_evidencia", :id => eje.id, :dashboard => 1, :user_id => @user.id, :diagnostico_id => @diagnostico}, :confirm => '¿Esta seguro que desea elimina la evidencia?', :title => "Eliminar Evidencia" %></td>
+            <% else %>
+            <td colspan="3">&nbsp;</td>
+            <% end %>
           </tr>
           <% end %>
         <% end %>
@@ -212,9 +220,13 @@
             <% end %>
             <td><%= eje.descripcion %></td>
             <td><%=link_to image_tag('admin/view.png', :size => "30x30", :mouseover => 'admin/view.png') , {:controller => "upload", :action => "download", :id => eje.id}, :class => 'fancybox fancybox.iframe', :title => "Ver Evidencia" %></td>
+            <% unless current_user.has_role?("revisor") %>
             <td><%=link_to image_tag('admin/valid.png', :size => "30x30", :mouseover => 'admin/valid.png') , {:controller => "upload", :action => "validar", :id => eje.id, :diagnostico => @diagnostico, :user => @user, :dashboard_proyecto => 1 }, :html => { :target => "_blank"}, :title => "Evidencia Válida" %></td>
             <td><%=link_to image_tag('admin/invalid.png', :size => "30x30", :mouseover => 'admin/invalid.png') , {:controller => "upload", :action => "invalidar", :id => eje.id, :diagnostico => @diagnostico, :user => @user, :dashboard_proyecto => 1 }, :html => { :target => "_blank"}, :title => "Evidencia Inválida" %></td>
             <td><%=link_to image_tag('admin/delete.png', :size => "30x30", :mouseover => 'admin/delete.png') , {:controller => "upload", :action => "destroy_evidencia", :id => eje.id, :dashboard => 1, :user_id => @user.id, :diagnostico_id => @diagnostico}, :confirm => '¿Esta seguro que desea elimina la evidencia?', :title => "Eliminar Evidencia" %></td>
+            <% else %>
+            <td colspan="3">&nbsp;</td>
+            <% end %>
           </tr>
           <% end %>
         <% end %>
@@ -280,9 +292,13 @@
             <% end %>
             <td><%= eje.descripcion %></td>
             <td><%=link_to image_tag('admin/view.png', :size => "30x30", :mouseover => 'admin/view.png') , {:controller => "upload", :action => "download", :id => eje.id}, :class => 'fancybox fancybox.iframe', :title => "Ver Evidencia" %></td>
+            <% unless current_user.has_role?("revisor") %>
             <td><%=link_to image_tag('admin/valid.png', :size => "30x30", :mouseover => 'admin/valid.png') , {:controller => "upload", :action => "validar", :id => eje.id, :diagnostico => @diagnostico, :user => @user, :dashboard_proyecto => 1 }, :html => { :target => "_blank"}, :title => "Evidencia Válida" %></td>
             <td><%=link_to image_tag('admin/invalid.png', :size => "30x30", :mouseover => 'admin/invalid.png') , {:controller => "upload", :action => "invalidar", :id => eje.id, :diagnostico => @diagnostico, :user => @user, :dashboard_proyecto => 1 }, :html => { :target => "_blank"}, :title => "Evidencia Inválida" %></td>
             <td><%=link_to image_tag('admin/delete.png', :size => "30x30", :mouseover => 'admin/delete.png') , {:controller => "upload", :action => "destroy_evidencia", :id => eje.id, :dashboard => 1, :user_id => @user.id, :diagnostico_id => @diagnostico}, :confirm => '¿Esta seguro que desea elimina la evidencia?', :title => "Eliminar Evidencia" %></td>
+            <% else %>
+            <td colspan="3">&nbsp;</td>
+            <% end %>
           </tr>
           <% end %>
         <% end %>
@@ -348,9 +364,13 @@
             <% end %>
             <td><%= eje.descripcion %></td>
             <td><%=link_to image_tag('admin/view.png', :size => "30x30", :mouseover => 'admin/view.png') , {:controller => "upload", :action => "download", :id => eje.id}, :class => 'fancybox fancybox.iframe', :title => "Ver Evidencia" %></td>
+            <% unless current_user.has_role?("revisor") %>
             <td><%=link_to image_tag('admin/valid.png', :size => "30x30", :mouseover => 'admin/valid.png') , {:controller => "upload", :action => "validar", :id => eje.id, :diagnostico => @diagnostico, :user => @user, :dashboard_proyecto => 1 }, :html => { :target => "_blank"}, :title => "Evidencia Válida" %></td>
             <td><%=link_to image_tag('admin/invalid.png', :size => "30x30", :mouseover => 'admin/invalid.png') , {:controller => "upload", :action => "invalidar", :id => eje.id, :diagnostico => @diagnostico, :user => @user, :dashboard_proyecto => 1 }, :html => { :target => "_blank"}, :title => "Evidencia Inválida" %></td>
             <td><%=link_to image_tag('admin/delete.png', :size => "30x30", :mouseover => 'admin/delete.png') , {:controller => "upload", :action => "destroy_evidencia", :id => eje.id, :dashboard => 1, :user_id => @user.id, :diagnostico_id => @diagnostico}, :confirm => '¿Esta seguro que desea elimina la evidencia?', :title => "Eliminar Evidencia" %></td>
+            <% else %>
+            <td colspan="3">&nbsp;</td>
+            <% end %>
           </tr>
           <% end %>
         <% end %>
@@ -373,20 +393,43 @@
       <% end %>
       </div>
    <% end %>
+      
+      <div class="grid-12-12 clear">
+        <label><img id="img_hist" src="/images/admin/expand.png" alt="Histórico" onclick="in_visible('historico', 'img_hist');" style="cursor:pointer; vertical-align:middle;">&nbsp;HISTORICO:</img></label>
+        <div id="historico" style="display:none;" >
+            <% @husuario.each do |hu| %>
+            <div class="grid-12-12">
+              <label style="font-size:11px; font-style:italic;" >USUARIO: <%= hu.user.login.to_s.upcase %></label>
+              <% @historico.each do |h| %>
+                <% if h.user_id == hu.user_id %>
+                <div class="grid-12-12">
+                  <li style="font-size:10px; font-style:italic;"><%= h.observaciones %> &nbsp; &nbsp; <%= h.updated_at.strftime(":: %m/%d/%Y %I:%M%p") %></li>
+                </div>
+                <% end %>
+              <% end unless @historico.nil?  %>
+            <% end unless @husuario.nil?  %>
+            </div>
+        </div>
+      </div>
 
       <div class="grid-12-12 clear"></div>
+      
       <!-- observaciones -->
       <%form_for(@evaluacion, :url => {:action => "save_dashboard_proyecto", :id => @user.id, :diagnostico => @diagnostico.id, :proyecto => @proyecto.id }, :html => {:class => "formee" }) do |f| -%>
       <fieldset>
-        <legend>OBSERVACIONES Y/O RECOMENDACIONES</legend>
+        <legend>OBSERVACIONES&nbsp;Y/O&nbsp;RECOMENDACIONES</legend>
         <div class="grid-12-12">
-          <%= f.text_area :observaciones, :placeholder => "Escriba brevemente sus observaciones" %>
+          <%= f.text_area :observaciones, :placeholder => "Escriba brevemente sus observaciones", :class => "nta"%>
         </div>
       </fieldset>
       <%#*<div class="grid-12-12 clear"></div>%>
       <div class="grid-3-12"></div>
       <div class="grid-2-12">
+       <% if current_user.has_role?("revisor") %>
+        <%= link_to image_tag("botones/btn_regresar.png", :mouseover => "botones/btn_regresar1.png") , :controller => "instituciones" %>
+       <% else %>
         <%= link_to image_tag("botones/btn_regresar.png", :mouseover => "botones/btn_regresar1.png") , :controller => "admin", :action => "menu_escuela", :id => @user.id%>
+       <% end %>
       </div>
       <div class="grid-4-12">
         <input class="right" type="submit" title="CONCLUIR VALIDACIÓN" value="CONCLUIR VALIDACIÓN" />
@@ -397,3 +440,8 @@
    </fieldset>
   </div>
 </div>
+<script type="text/javascript">
+var observaciones = new LiveValidation( 'evaluacion_observaciones' );
+  observaciones.add( Validate.Presence );
+  observaciones.add( Validate.Length, { maximum: 500 } );
+</script>

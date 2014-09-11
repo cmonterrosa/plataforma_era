@@ -13,13 +13,14 @@ class Escuela < ActiveRecord::Base
   
   def update_bitacora!(clave_estatus, usuario)
     @estatus = Estatu.find_by_clave(clave_estatus) if (!clave_estatus.nil? && !usuario.nil?)
+    @estatus_actual = Estatu.find(self.estatu_id) if self.estatu_id
     @bitacora = Bitacora.new(:user_id => usuario.id, :estatu_id => @estatus.id) if @estatus
     @existe_registro = Escuela.find(:first, :conditions => ["id = ? AND estatu_id = ?", self.id, @estatus.id])
     tiene_historia = Bitacora.find(:all, :conditions => ["user_id = ? AND estatu_id = ?", usuario.id, @estatus.id]) if !usuario.nil?
     unless @existe_registro
       if @bitacora.save
         #---- actualizacion del registro principal --
-        self.update_attributes!(:estatu_id => @estatus.id)  if tiene_historia.empty?
+        self.update_attributes!(:estatu_id => @estatus.id)  if tiene_historia.empty? || (@estatus.id > @estatus_actual.id)
         return true
       end
     else

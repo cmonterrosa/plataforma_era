@@ -1,6 +1,13 @@
 include Functions
 class Evaluacion < ActiveRecord::Base
 
+  belongs_to :user
+  belongs_to :proyecto
+
+  def before_save
+    self.observaciones.upcase! unless self.observaciones.nil?
+  end
+
 ###--- DESARROLLO DE COMPETENCIAS
 def puntaje_eje1_p1
   @diagnostico = Diagnostico.find(self.diagnostico_id)
@@ -602,9 +609,7 @@ def puntaje_total_obtenido_eje5
   return (puntaje_eje5_p2 + puntaje_eje5_p3 + puntaje_eje5_p4 + puntaje_eje5_p5).to_f.round(3)
 end
 
-
 ###--- TOTALES AVANCES ---
-
 def puntaje_total_avance
   return 1.5625 * 5
 end
@@ -625,3 +630,4 @@ def puntaje_total_novidencias
 end
 
 end
+
