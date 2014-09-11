@@ -1,6 +1,6 @@
 class HomeController < ApplicationController
   
-  #before_filter :dispatch
+before_filter :dispatch
 
   
   def index
