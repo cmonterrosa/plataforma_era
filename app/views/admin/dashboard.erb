@@ -550,7 +550,7 @@
      <fieldset>
        <legend>OBSERVACIONES&nbsp;Y/O&nbsp;RECOMENDACIONES</legend>
        <div class="grid-12-12">
-         <%= f.text_area :observaciones, :placeholder => "Escriba brevemente sus observaciones" %>
+         <%= f.text_area :observaciones, :placeholder => "Escriba brevemente sus observaciones", :class => "nta" %>
        </div>
      </fieldset>
      <div class="grid-3-12"></div>
@@ -569,6 +569,12 @@
   </div>
 </div>
 
+
+<script type="text/javascript">
+var observaciones = new LiveValidation( 'evaluacion_observaciones' );
+  observaciones.add( Validate.Presence );
+  observaciones.add( Validate.Length, { maximum: 500 } );
+</script>
 
 
 
