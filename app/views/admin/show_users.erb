@@ -70,25 +70,30 @@
       <td style="vertical-align: middle;"><%=h nombre%></td>
       <!-- Acciones -->
       <td style="vertical-align: middle;"><%=button_to "Detalles", {:action => "show", :controller => "escuelas", :id => user.login}, :class => 'boton', :style => "cursor:pointer" %></td>
-      <td style="vertical-align: middle;"><%=button_to "Editar", {:action => "edit_user", :controller => "admin", :id => user.login}, :class => 'boton', :style => "cursor:pointer" %></td>
-  <%if user.is_blocked?%>
-      <td style="vertical-align: middle;"><%=button_to "Desbloquear", {:action => "block_user", :id => user.login}, :confirm => "¿Esta seguro que desea bloquearlo?", :method => :delete, :class => 'boton', :style => "cursor:pointer" %></td>
-  <%else%>
-      <td style="vertical-align: middle;"><%=button_to "Bloquear", {:action => "block_user", :id => user.login}, :confirm => "¿Esta seguro que desea bloquearlo?", :method => :delete, :class => 'boton', :style => "cursor:pointer" %></td>
-  <%end%>
-  <!-- Menu -->
-  <%if escuela%>
-      <td style="vertical-align: middle;"><%=link_to "Evaluador", {:action => "asignar_evaluador", :controller => "admin", :id => escuela.id}, :class => 'fancybox fancybox.iframe', :style => "cursor:pointer" %></td>
+
+
+      <%if current_user.has_role?("adminplat")%>
+        <td style="vertical-align: middle;"><%=button_to "Editar", {:action => "edit_user", :controller => "admin", :id => user.login}, :class => 'boton', :style => "cursor:pointer" %></td>
+          <%if user.is_blocked?%>
+              <td style="vertical-align: middle;"><%=button_to "Desbloquear", {:action => "block_user", :id => user.login}, :confirm => "¿Esta seguro que desea bloquearlo?", :method => :delete, :class => 'boton', :style => "cursor:pointer" %></td>
+          <%else%>
+              <td style="vertical-align: middle;"><%=button_to "Bloquear", {:action => "block_user", :id => user.login}, :confirm => "¿Esta seguro que desea bloquearlo?", :method => :delete, :class => 'boton', :style => "cursor:pointer" %></td>
+          <%end%>
+      <%end%>
+      <!-- Menu -->
+      <%if escuela%>
+      <%if current_user.has_role?("adminplat")%>
+        <td style="vertical-align: middle;"><%=link_to "Evaluador", {:action => "asignar_evaluador", :controller => "admin", :id => escuela.id}, :class => 'fancybox fancybox.iframe', :style => "cursor:pointer" %></td>
+      <%end%>
+
       <td style="vertical-align: middle;"><%=button_to "Menú", {:controller => "admin", :action => "menu_escuela", :id => user}, :style => "cursor:pointer" %></td>
       <td style="vertical-align: middle;"><%=button_to "Enviar Mensaje Directo", {:controller => "mensajes", :action => "new", :recibe_id => user}, :style => "cursor:pointer" %></td>
 
-  <%else%>
-    <td style="vertical-align: middle;">&nbsp;</td>
-     <td style="vertical-align: middle;">&nbsp;</td>
-  <%end%>
-
- 
-  <%clase = invert_class(clase)%>
+      <%else%>
+        <td style="vertical-align: middle;">&nbsp;</td>
+        <td style="vertical-align: middle;">&nbsp;</td>
+      <%end%>
+    <%clase = invert_class(clase)%>
     </tr>
 <%end%>
 <% if @usuarios.total_entries > @usuarios.per_page.to_i %>
