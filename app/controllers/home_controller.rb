@@ -42,7 +42,7 @@ class HomeController < ApplicationController
 protected
 def es_revisor?
   if @usuario=current_user
-        if @usuario.has_role?(:admin)
+        if @usuario.has_role?(:admin) || @usuario.has_role?(:enlaceevaluador)
           redirect_to :controller => "admin"
         elsif @usuario.has_role?(:revisor)
           #return render(:partial => 'instituciones/menu', :layout => "era2014")
