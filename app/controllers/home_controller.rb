@@ -39,7 +39,7 @@ class HomeController < ApplicationController
     
   end
 
-protected
+#protected
 def es_revisor?
      if @usuario=current_user
         if @usuario.has_role?(:revisor)
