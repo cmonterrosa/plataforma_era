@@ -1,10 +1,10 @@
 class HomeController < ApplicationController
   
-  before_filter :dispatch
+  #before_filter :dispatch
 
   
   def index
-    
+    dispatch
   end
 
   def certificacion_esys
@@ -50,7 +50,8 @@ def dispatch
         elsif @usuario.has_role?(:revisor)
           redirect_to :controller => "instituciones"
         else
-          redirect_to :action => "index"
+          #redirect_to :action => "index"
+          puts "..."
         end
    end
 end

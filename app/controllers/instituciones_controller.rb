@@ -1,5 +1,5 @@
 class InstitucionesController < ApplicationController
-#require_role [:revisor]
+require_role [:revisor]
 
 def index
    @condition= (params[:token]) ? params[:token] : "sin-evaluar"
