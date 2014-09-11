@@ -657,6 +657,7 @@ class AdminController < ApplicationController
      @evidencias_sin_evaluar = Adjunto.count(:id, :conditions => ["diagnostico_id = ? AND validado IS NULL", @evaluacion.diagnostico_id]) if @evaluacion.diagnostico_id
      @concluido = (@evidencias_sin_evaluar > 0 )? false : true
      if (@concluido)
+       desactivar_registro_diagnostico(@evaluacion.diagnostico_id)
        if Evaluacion.find_by_diagnostico_id_and_user_id(params[:diagnostico], current_user.id)
          @evaluacion.update_attributes(:observaciones => params[:evaluacion][:observaciones])
          activar_evaluacion(@evaluacion.id)
@@ -736,7 +737,7 @@ class AdminController < ApplicationController
      render :text => "<h2 style='color:green'>#{msj}</h2>"
    end
 
-  def activar_registro_diagnostico(diagnostico_id)
+  def desactivar_registro_diagnostico(diagnostico_id)
     registros_diagnostico = Evaluacion.find(:all, :conditions => ["diagnostico_id = ?", diagnostico_id], :order => "created_at")
     registros_diagnostico.each{|r| r.activa = false; r.save}
   end
