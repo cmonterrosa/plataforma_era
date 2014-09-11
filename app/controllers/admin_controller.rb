@@ -251,7 +251,8 @@ class AdminController < ApplicationController
               "MINUTOS/MOMENTOS_ACTIVACION_FISICA", "NUM_PADRES_FAMILIA_TUTORES", "NUM_PADRES_FAMILIA_TUTORES_CAPACITADOS", "PROYECTO",
               "DIAGNOSTICO_EJE1", "DIAGNOSTICO_EJE2", "DIAGNOSTICO_EJE3", "DIAGNOSTICO_EJE4", "DIAGNOSTICO_EJE5",
               "AVANCE1_EJE1", "AVANCE1_EJE2", "AVANCE1_EJE3", "AVANCE1_EJE4", "AVANCE1_EJE5",
-              "AVANCE1_EJE2", "AVANCE2_EJE2", "AVANCE2_EJE3", "AVANCE2_EJE4", "AVANCE2_EJE5"]
+              "AVANCE1_EJE2", "AVANCE2_EJE2", "AVANCE2_EJE3", "AVANCE2_EJE4", "AVANCE2_EJE5",
+              "TOTAL_DIAGNOSTICO", "TOTAL_PROYECTO", "TOTAL_GENERAL"]
 
       @escuelas.each do |i|
         diagnostico = Diagnostico.find(:first, :conditions => ["user_id = ?", i.user_id]) if i.user_id
@@ -353,7 +354,23 @@ class AdminController < ApplicationController
         else
           estatus_actual = @estatus.descripcion
         end
-        
+
+        total_diagnostico = 0.0
+        (1..5).each do |num|
+          unless eval("e_diagnostico.puntaje_eje#{num}").nil?
+            total_diagnostico += eval("e_diagnostico.puntaje_eje#{num}").to_f
+          end
+        end
+
+        total_proyecto = 0.0
+        (1..2).each do |na|
+          (1..5).each do |num|
+            unless eval("a#{na}_proyecto.puntaje_eje#{num}").nil?
+              total_proyecto += eval("a#{na}_proyecto.puntaje_eje#{num}").to_f
+            end
+          end
+        end
+
         csv << [ i.clave, i.nombre, i.zona_escolar,  i.sector, i.nivel_descripcion,  i.domicilio, i.localidad, i.municipio, i.region_descripcion, i.modalidad,
                  i.email, i.email_responsable_proyecto, i.telefono, i.telefono_director, i.user_created_at, i.alu_hom,
                  i.alu_muj, i.total_alumnos, i.grupos, i.total_alumnos, i.doc_hom, i.doc_muj, i.total_personal_docente_apoyo, i.total_personal_admvo,
@@ -363,7 +380,8 @@ class AdminController < ApplicationController
                  "#{minutos_afisica}  #{momentos_afisica}", num_padres_familia, capacitacion_salud_ma, proyecto_descripcion,
                  e_diagnostico.puntaje_eje1, e_diagnostico.puntaje_eje2, e_diagnostico.puntaje_eje3, e_diagnostico.puntaje_eje4, e_diagnostico.puntaje_eje5,
                  a1_proyecto.puntaje_eje1, a1_proyecto.puntaje_eje2, a1_proyecto.puntaje_eje3, a1_proyecto.puntaje_eje4, a1_proyecto.puntaje_eje5,
-                 a2_proyecto.puntaje_eje1, a2_proyecto.puntaje_eje2, a2_proyecto.puntaje_eje3, a2_proyecto.puntaje_eje4, a2_proyecto.puntaje_eje5 ]
+                 a2_proyecto.puntaje_eje1, a2_proyecto.puntaje_eje2, a2_proyecto.puntaje_eje3, a2_proyecto.puntaje_eje4, a2_proyecto.puntaje_eje5,
+                 total_diagnostico, total_proyecto, (total_diagnostico + total_proyecto)]
       end
     end
     send_data to_iso(csv_string), type => "application/xls",
