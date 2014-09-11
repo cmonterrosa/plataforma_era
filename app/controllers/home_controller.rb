@@ -42,11 +42,11 @@ class HomeController < ApplicationController
 protected
 def es_revisor?
       if @usuario=current_user
-        if @usuario.has_role?(:admin) || @usuario.has_role?(:enlaceevaluador)
+        if @usuario.has_role?("admin") || @usuario.has_role?("enlaceevaluador")
             redirect_to :controller => "admin"
         else
-            if current_user.has_role?(:revisor)
-              redirect_to :controller => "instituciones"
+            if current_user.has_role?("revisor")
+                redirect_to :controller => "instituciones"
             end
         end
       end
