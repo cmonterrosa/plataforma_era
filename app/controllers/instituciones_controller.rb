@@ -17,7 +17,7 @@ def index
      @escuelas = Escuela.find(:all, :conditions => ["evaluador_id = ? AND id not in (?)", current_user.id, repetidas[0].map{|i|i.id}]) if !repetidas.empty?
      @escuelas ||= Array.new
    end
-    @escuelas = @escuelas.paginate(:page => params[:page], :per_page => 25) if !@escuelas.empty?
+    @escuelas = @escuelas.paginate(:page => params[:page], :per_page => 25) #if !@escuelas.empty?
 end
 
 end
