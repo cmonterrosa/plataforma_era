@@ -425,10 +425,10 @@
       <%#*<div class="grid-12-12 clear"></div>%>
       <div class="grid-3-12"></div>
       <div class="grid-2-12">
-       <% if current_user.has_role?("revisor") %>
-        <%= link_to image_tag("botones/btn_regresar.png", :mouseover => "botones/btn_regresar1.png") , :controller => "instituciones" %>
+       <%if current_user.has_role?("adminplat") || current_user.has_role?("enlaceevaluador")%>
+          <%= link_to image_tag("botones/btn_regresar.png", :mouseover => "botones/btn_regresar1.png") , :controller => "admin", :action => "menu_escuela", :id => @user.id%>
        <% else %>
-        <%= link_to image_tag("botones/btn_regresar.png", :mouseover => "botones/btn_regresar1.png") , :controller => "admin", :action => "menu_escuela", :id => @user.id%>
+          <%= link_to image_tag("botones/btn_regresar.png", :mouseover => "botones/btn_regresar1.png") , :controller => "instituciones" %>
        <% end %>
       </div>
       <div class="grid-4-12">
