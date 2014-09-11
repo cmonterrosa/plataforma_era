@@ -16,7 +16,7 @@
     </tr>
     <%@usuarios.each do |u|%>
     <tr class="d1">
-     <td><%=h u.roles.map{|x|x.name}%></td>
+     <td><%=h u.roles.map{|x|x.descripcion}%></td>
      <td style="vertical-align: middle;"><%=h u.nombre%></td>
     </tr>
     <%end%>
@@ -24,7 +24,7 @@
 
 <br />
 
-<div>
+<div style="text-align: center">
   <p align="center">
     <%=button_to "Crear usuario", {:action => "new_from_admin", :controller => "admin"}, :class => "boton"-%>
   </p>

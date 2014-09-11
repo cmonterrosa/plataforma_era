@@ -46,7 +46,7 @@
     <div class="grid-12-12 clear"></div>
 
      <!-- submit -->
-    <% if @diagnostico.oficializado %>
+    <% if @diagnostico.oficializado && current_user.has_role?("adminplat") %>
       <div class="grid-12-12">
         <input class="right" type="submit" onclick="to_uppercase();" title="HABILITAR DIAGNOSTICO" value="HABILITAR DIAGNOSTICO" />
       </div>
