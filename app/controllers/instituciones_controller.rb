@@ -8,14 +8,16 @@ def index
       @proyectos_evaluados = Evaluacion.find(:all, :select => "proyecto_id", :conditions => ["diagnostico_id IS NULL AND user_id = ?", current_user.id], :group => "proyecto_id")
       @escuelas_diagnosticos_evaluados = Escuela.find(:all, :select => "escuelas.*", :joins => "escuelas, diagnosticos d", :conditions => ["escuelas.id = d.escuela_id AND d.id in (?)", @diagnosticos_evaluados.map { |i|i.diagnostico_id  }])
       @escuelas_diagnosticos_proyectos = Escuela.find(:all, :select => "escuelas.*", :joins => "escuelas, diagnosticos d, proyectos p", :conditions => ["escuelas.id = d.escuela_id AND d.id = p.diagnostico_id AND p.id in (?)", @proyectos_evaluados.map { |i|i.proyecto_id  }])
-      @escuelas_diagnosticos_evaluados.each{|e| repetidas << @escuelas_diagnosticos_proyectos === e } if (!@escuelas_diagnosticos_proyectos.empty? && ! @escuelas_diagnosticos_evaluados.empty?)
+      @escuelas_diagnosticos_evaluados.each{|e| repetidas << @escuelas_diagnosticos_proyectos === e } if (!@escuelas_diagnosticos_proyectos.empty? && !@escuelas_diagnosticos_evaluados.empty?)
       
    if @condition =="evaluadas"
       @escuelas = Escuela.find(:all, :conditions => ["evaluador_id = ? AND id in (?)", current_user.id, repetidas[0].map{|i|i.id}]) if !repetidas.empy?
-   else
+      @escuelas ||= Array.new
+  else
      @escuelas = Escuela.find(:all, :conditions => ["evaluador_id = ? AND id not in (?)", current_user.id, repetidas[0].map{|i|i.id}]) if !repetidas.empty?
+     @escuelas ||= Array.new
    end
-   @escuelas = @escuelas.paginate(:page => params[:page], :per_page => 25) if @escuelas
+    @escuelas = @escuelas.paginate(:page => params[:page], :per_page => 25) if !@escuelas.empty?
 end
 
 end
