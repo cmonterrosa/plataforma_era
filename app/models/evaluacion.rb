@@ -590,11 +590,18 @@ def puntaje_total_eje5
 end
 
 def puntaje_total_obtenido_eje1
-  return (puntaje_eje1_p1 + puntaje_eje1_p2 + puntaje_eje1_p3 + puntaje_eje1_p4 + puntaje_eje1_p5).to_f.round(3)
+  @vpuntaje_eje1_p1 = (puntaje_eje1_p1) ? (puntaje_eje1_p1) : 0
+  @vpuntaje_eje1_p2 = (puntaje_eje1_p2) ? (puntaje_eje1_p2) : 0
+  @vpuntaje_eje1_p3 = (puntaje_eje1_p3) ? (puntaje_eje1_p3) : 0
+  @vpuntaje_eje1_p4 = (puntaje_eje1_p4) ? (puntaje_eje1_p4) : 0
+  @vpuntaje_eje1_p5 = (puntaje_eje1_p5) ? (puntaje_eje1_p5) : 0
+  return (@vpuntaje_eje1_p1 + @vpuntaje_eje1_p2 + @vpuntaje_eje1_p3 + @vpuntaje_eje1_p4 + @vpuntaje_eje1_p5).to_f.round(3)
 end
 
 def puntaje_total_obtenido_eje2
-  return (puntaje_eje2_p2 + puntaje_eje2_p6).to_f.round(3)
+  @vpuntaje_eje2_p2 = (puntaje_eje2_p2) ? (puntaje_eje2_p2) : 0
+  @vpuntaje_eje2_p6 = (puntaje_eje2_p6) ? (puntaje_eje2_p6) : 0
+  return (@vpuntaje_eje2_p2 + @vpuntaje_eje2_p6).to_f.round(3)
 end
 
 def puntaje_total_obtenido_eje3
@@ -611,11 +618,22 @@ def puntaje_total_obtenido_eje3
 end
 
 def puntaje_total_obtenido_eje4
-  return (puntaje_eje4_p2 + puntaje_eje4_p3 + puntaje_eje4_p4 + puntaje_eje4_p5 + puntaje_eje4_p6 + puntaje_eje4_p7 + puntaje_eje4_p8).to_f.round(3)
+  @vpuntaje_eje4_p2 = (puntaje_eje4_p2) ? (puntaje_eje4_p2) : 0
+  @vpuntaje_eje4_p3 = (puntaje_eje4_p3) ? (puntaje_eje4_p3) : 0
+  @vpuntaje_eje4_p4 = (puntaje_eje4_p4) ? (puntaje_eje4_p4) : 0
+  @vpuntaje_eje4_p5 = (puntaje_eje4_p5) ? (puntaje_eje4_p5) : 0
+  @vpuntaje_eje4_p6 = (puntaje_eje4_p6) ? (puntaje_eje4_p6) : 0
+  @vpuntaje_eje4_p7 = (puntaje_eje4_p7) ? (puntaje_eje4_p7) : 0
+  @vpuntaje_eje4_p8 = (puntaje_eje4_p8) ? (puntaje_eje4_p8) : 0
+  return (@vpuntaje_eje4_p2 + @vpuntaje_eje4_p3 + @vpuntaje_eje4_p4 + @vpuntaje_eje4_p5 + @vpuntaje_eje4_p6 + @vpuntaje_eje4_p7 + @vpuntaje_eje4_p8).to_f.round(3)
 end
 
 def puntaje_total_obtenido_eje5
-  return (puntaje_eje5_p2 + puntaje_eje5_p3 + puntaje_eje5_p4 + puntaje_eje5_p5).to_f.round(3)
+  @vpuntaje_eje5_p2 = (puntaje_eje5_p2) ? (puntaje_eje5_p2) : 0
+  @vpuntaje_eje5_p3 = (puntaje_eje5_p3) ? (puntaje_eje5_p3) : 0
+  @vpuntaje_eje5_p4 = (puntaje_eje5_p4) ? (puntaje_eje5_p4) : 0
+  @vpuntaje_eje5_p5 = (puntaje_eje5_p5) ? (puntaje_eje5_p5) : 0
+  return (@vpuntaje_eje5_p2 + @vpuntaje_eje5_p3 + @vpuntaje_eje5_p4 + @vpuntaje_eje5_p5).to_f.round(3)
 end
 
 ###--- TOTALES AVANCES ---
