@@ -624,6 +624,17 @@ class AdminController < ApplicationController
      @huella_p8 = diagnostico.puntaje_eje3_p8
      @huella_p9 = diagnostico.puntaje_eje3_p9
 
+     ## Puntajes default ####
+     @huella_p1 ||= 0
+     @huella_p2 ||= 0
+     @huella_p3 ||= 0
+     @huella_p4 ||= 0
+     @huella_p5 ||= 0
+     @huella_p6 ||= 0
+     @huella_p7 ||= 0
+     @huella_p8 ||= 0
+     @huella_p9 ||= 0
+
      @ptos_obtenidos_eje3 = (@huella_p1 + @huella_p2 + @huella_p3 + @huella_p4 + @huella_p5 + @huella_p6 + @huella_p7 + @huella_p8 + @huella_p9)#.to_f.round(3)
      @total_puntos_eje3 = diagnostico.puntaje_total_eje3
      @puntaje_total_eje3 = diagnostico.puntaje_total_obtenido_eje3
