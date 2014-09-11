@@ -69,7 +69,7 @@
             <% end %>
             <td><%= eje.descripcion %></td>
             <td><%=link_to image_tag('admin/view.png', :size => "30x30", :mouseover => 'admin/view.png') , {:controller => "upload", :action => "download", :id => eje.id}, :class => 'fancybox fancybox.iframe', :title => "Ver Evidencia" %></td>
-            <% unless current_user.has_role?("revisor") %>
+            <%if current_user.has_role?("adminplat") || current_user.has_role?("enlaceevaluador")%>
             <td><%=link_to image_tag('admin/valid.png', :size => "30x30", :mouseover => 'admin/valid.png') , {:controller => "upload", :action => "validar", :id => eje.id, :diagnostico => @diagnostico, :user => @user, :dashboard_proyecto => 1, :proyecto => @proyecto }, :html => { :target => "_blank"}, :title => "Evidencia Válida" %></td>
             <td><%=link_to image_tag('admin/invalid.png', :size => "30x30", :mouseover => 'admin/invalid.png') , {:controller => "upload", :action => "invalidar", :id => eje.id, :diagnostico => @diagnostico, :user => @user, :dashboard_proyecto => 1, :proyecto => @proyecto }, :html => { :target => "_blank"}, :title => "Evidencia Inválida" %></td>
             <td><%=link_to image_tag('admin/delete.png', :size => "30x30", :mouseover => 'admin/delete.png') , {:controller => "upload", :action => "destroy_evidencia", :id => eje.id, :dashboard_proyecto => 1, :user_id => @user.id, :diagnostico_id => @diagnostico, :proyecto => @proyecto}, :confirm => '¿Esta seguro que desea elimina la evidencia?', :title => "Eliminar Evidencia" %></td>
@@ -148,7 +148,7 @@
             <% end %>
             <td><%= eje.descripcion %></td>
             <td><%=link_to image_tag('admin/view.png', :size => "30x30", :mouseover => 'admin/view.png') , {:controller => "upload", :action => "download", :id => eje.id}, :class => 'fancybox fancybox.iframe', :title => "Ver Evidencia" %></td>
-            <% unless current_user.has_role?("revisor") %>
+            <%if current_user.has_role?("adminplat") || current_user.has_role?("enlaceevaluador")%>
             <td><%=link_to image_tag('admin/valid.png', :size => "30x30", :mouseover => 'admin/valid.png') , {:controller => "upload", :action => "validar", :id => eje.id, :diagnostico => @diagnostico, :user => @user, :dashboard_proyecto => 1 }, :html => { :target => "_blank"}, :title => "Evidencia Válida" %></td>
             <td><%=link_to image_tag('admin/invalid.png', :size => "30x30", :mouseover => 'admin/invalid.png') , {:controller => "upload", :action => "invalidar", :id => eje.id, :diagnostico => @diagnostico, :user => @user, :dashboard_proyecto => 1 }, :html => { :target => "_blank"}, :title => "Evidencia Inválida" %></td>
             <td><%=link_to image_tag('admin/delete.png', :size => "30x30", :mouseover => 'admin/delete.png') , {:controller => "upload", :action => "destroy_evidencia", :id => eje.id, :dashboard => 1, :user_id => @user.id, :diagnostico_id => @diagnostico}, :confirm => '¿Esta seguro que desea elimina la evidencia?', :title => "Eliminar Evidencia" %></td>
@@ -220,7 +220,7 @@
             <% end %>
             <td><%= eje.descripcion %></td>
             <td><%=link_to image_tag('admin/view.png', :size => "30x30", :mouseover => 'admin/view.png') , {:controller => "upload", :action => "download", :id => eje.id}, :class => 'fancybox fancybox.iframe', :title => "Ver Evidencia" %></td>
-            <% unless current_user.has_role?("revisor") %>
+            <%if current_user.has_role?("adminplat") || current_user.has_role?("enlaceevaluador")%>
             <td><%=link_to image_tag('admin/valid.png', :size => "30x30", :mouseover => 'admin/valid.png') , {:controller => "upload", :action => "validar", :id => eje.id, :diagnostico => @diagnostico, :user => @user, :dashboard_proyecto => 1 }, :html => { :target => "_blank"}, :title => "Evidencia Válida" %></td>
             <td><%=link_to image_tag('admin/invalid.png', :size => "30x30", :mouseover => 'admin/invalid.png') , {:controller => "upload", :action => "invalidar", :id => eje.id, :diagnostico => @diagnostico, :user => @user, :dashboard_proyecto => 1 }, :html => { :target => "_blank"}, :title => "Evidencia Inválida" %></td>
             <td><%=link_to image_tag('admin/delete.png', :size => "30x30", :mouseover => 'admin/delete.png') , {:controller => "upload", :action => "destroy_evidencia", :id => eje.id, :dashboard => 1, :user_id => @user.id, :diagnostico_id => @diagnostico}, :confirm => '¿Esta seguro que desea elimina la evidencia?', :title => "Eliminar Evidencia" %></td>
@@ -292,7 +292,7 @@
             <% end %>
             <td><%= eje.descripcion %></td>
             <td><%=link_to image_tag('admin/view.png', :size => "30x30", :mouseover => 'admin/view.png') , {:controller => "upload", :action => "download", :id => eje.id}, :class => 'fancybox fancybox.iframe', :title => "Ver Evidencia" %></td>
-            <% unless current_user.has_role?("revisor") %>
+            <%if current_user.has_role?("adminplat") || current_user.has_role?("enlaceevaluador")%>
             <td><%=link_to image_tag('admin/valid.png', :size => "30x30", :mouseover => 'admin/valid.png') , {:controller => "upload", :action => "validar", :id => eje.id, :diagnostico => @diagnostico, :user => @user, :dashboard_proyecto => 1 }, :html => { :target => "_blank"}, :title => "Evidencia Válida" %></td>
             <td><%=link_to image_tag('admin/invalid.png', :size => "30x30", :mouseover => 'admin/invalid.png') , {:controller => "upload", :action => "invalidar", :id => eje.id, :diagnostico => @diagnostico, :user => @user, :dashboard_proyecto => 1 }, :html => { :target => "_blank"}, :title => "Evidencia Inválida" %></td>
             <td><%=link_to image_tag('admin/delete.png', :size => "30x30", :mouseover => 'admin/delete.png') , {:controller => "upload", :action => "destroy_evidencia", :id => eje.id, :dashboard => 1, :user_id => @user.id, :diagnostico_id => @diagnostico}, :confirm => '¿Esta seguro que desea elimina la evidencia?', :title => "Eliminar Evidencia" %></td>
@@ -364,7 +364,7 @@
             <% end %>
             <td><%= eje.descripcion %></td>
             <td><%=link_to image_tag('admin/view.png', :size => "30x30", :mouseover => 'admin/view.png') , {:controller => "upload", :action => "download", :id => eje.id}, :class => 'fancybox fancybox.iframe', :title => "Ver Evidencia" %></td>
-            <% unless current_user.has_role?("revisor") %>
+            <%if current_user.has_role?("adminplat") || current_user.has_role?("enlaceevaluador")%>
             <td><%=link_to image_tag('admin/valid.png', :size => "30x30", :mouseover => 'admin/valid.png') , {:controller => "upload", :action => "validar", :id => eje.id, :diagnostico => @diagnostico, :user => @user, :dashboard_proyecto => 1 }, :html => { :target => "_blank"}, :title => "Evidencia Válida" %></td>
             <td><%=link_to image_tag('admin/invalid.png', :size => "30x30", :mouseover => 'admin/invalid.png') , {:controller => "upload", :action => "invalidar", :id => eje.id, :diagnostico => @diagnostico, :user => @user, :dashboard_proyecto => 1 }, :html => { :target => "_blank"}, :title => "Evidencia Inválida" %></td>
             <td><%=link_to image_tag('admin/delete.png', :size => "30x30", :mouseover => 'admin/delete.png') , {:controller => "upload", :action => "destroy_evidencia", :id => eje.id, :dashboard => 1, :user_id => @user.id, :diagnostico_id => @diagnostico}, :confirm => '¿Esta seguro que desea elimina la evidencia?', :title => "Eliminar Evidencia" %></td>
