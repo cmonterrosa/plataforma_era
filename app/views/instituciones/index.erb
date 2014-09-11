@@ -1,4 +1,11 @@
 
+
+<p align="center">
+   <%= link_to image_tag("era/iconos/reload.png", :border =>0) , {:action => "index"}, :title => "Recargar"%>
+</p>
+
+
+
 <div class="formee">
   <div class="grid-12-12 clear"></div>
   <div class="grid-12-12">
@@ -6,7 +13,7 @@
   </div>
   <div class="grid-12-12 clear"></div>
   <div class="grid-12-12">
-    <div class="titulos">Listado de Escuelas para evaluar</div>
+    <div class="titulos"><%=link_to "Escuelas sin evaluar",  {:action => "index", :token => "sin-evaluar"}, :title => "Escuelas sin evaluar", :style => "color: #d33934; font-size: 13px;"%> | <%=link_to "Escuelas evaluadas",  {:action => "index", :token => "evaluadas"}, :title => "Escuelas sin evaluar", :style => "color: green; font-size: 13px;"%></div>
   </div>
 </div>
 
