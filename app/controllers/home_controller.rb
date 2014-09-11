@@ -1,6 +1,6 @@
 class HomeController < ApplicationController
   
-  before_filter :es_revisor?
+  before_filter :dispatch
 
   
   def index
@@ -39,19 +39,20 @@ class HomeController < ApplicationController
     
   end
 
-#protected
-def es_revisor?
-     if @usuario=current_user
-        if @usuario.has_role?(:revisor)
-                redirect_to :controller => "instituciones"
+
+protected
+def dispatch
+    if @usuario=current_user
+        if @usuario.has_role?(:admin)
+          redirect_to :controller => "admin"
+        elsif @usuario.has_role?(:enlaceevaluador)
+          redirect_to :controller => "admin"
+        elsif @usuario.has_role?(:revisor)
+          redirect_to :controller => "instituciones"
         else
-              if @usuario.has_role?(:admin) || @usuario.has_role?(:enlaceevaluador)
-                  redirect_to :controller => "admin"
-              end
+          redirect_to :action => "index"
         end
-
-      end
+   end
 end
-
 
 end
