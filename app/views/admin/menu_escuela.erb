@@ -43,10 +43,45 @@
         <label style=" font-weight: bold;">Municipio:</label>
         <label style=" font-style: italic;"><%= @escuela.municipio %></label>
       </div>
-    </div>
+   </div>
 
     <div class="grid-12-12 clear"></div>
 </fieldset>
+
+    <fieldset>
+
+      <legend>
+        <p class="titulos" >&nbsp;Histórico&nbsp;de&nbsp;evaluaciones&nbsp;</p>
+      </legend>
+        <!-- diagnostico -->
+        <%if @escuela.diagnostico%>
+         <%@evaluaciones_diagnostico = Evaluacion.find(:all, :conditions => ["diagnostico_id = ?", @escuela.diagnostico.id], :order => ["updated_at DESC"])%>
+         <%@evaluaciones_diagnostico.each do |ed|%>
+          <div class="grid-12-12">
+              <label style=" font-weight: bold;">Evaluador de diagnostico:</label>
+              <label style=" font-style: italic;"><%= User.find(ed.user_id).nombre %></label>
+              <br />
+              <label style=" font-weight: bold;">Observaciones de diagnostico:</label>
+              <label style=" font-style: italic;"><%= ed.observaciones %>&nbsp;Actualizacion: <%=ed.updated_at.strftime("%d-%m-%Y %H:%M")%></label>
+          </div>
+         <%end%>
+
+
+          <!-- proyecto -->
+        <%if @escuela.diagnostico.proyecto%>
+         <%@evaluaciones_proyecto = Evaluacion.find(:all, :conditions => ["proyecto_id = ?", @escuela.diagnostico.proyecto.id], :group => "user_id", :order => ["updated_at DESC"])%>
+         <%@evaluaciones_proyecto.each do |ed|%>
+          <div class="grid-12-12">
+              <label style=" font-weight: bold;">Evaluador de proyecto:</label>
+              <label style=" font-style: italic;"><%= User.find(ed.user_id).nombre %></label>
+              <br />
+              <label style=" font-weight: bold;">Observaciones de proyecto:</label>
+              <label style=" font-style: italic;"><%= ed.observaciones %>&nbsp;Actualizacion: <%=ed.updated_at.strftime("%d-%m-%Y %H:%M")%></label>
+          </div>
+         <%end%>
+       <%end%>
+      <%end%>
+    </fieldset>
 
     <!-- Menu -->
     <div class="titulos"><p> Menú de opciones</p></div>
