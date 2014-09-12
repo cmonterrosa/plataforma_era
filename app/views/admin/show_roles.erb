@@ -2,22 +2,20 @@
   <p>Listado de Revisores Internos y Externos</p>
 </div>
 
-
-
-
-
-
 <!-- contenido -->
 
-  <table width="55%" class="sample" border="0" cellspacing="0" cellpadding="0" style="color: navy; BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid">
-    <tr class="d0">
-      <td style="vertical-align: middle;">Tipo</td>
+  <table width="70%" class="sample" border="0" cellspacing="0" cellpadding="0" style="color: navy; BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid">
+    <tr class="d0" align="center"  style="font-size:16px; font-weight:bold;">
       <td style="vertical-align: middle;">Nombre</td>
+      <td style="vertical-align: middle;">Tipo</td>
+      <td colspan="2" style="vertical-align: middle;">Acciones</td>
     </tr>
     <%@usuarios.each do |u|%>
-    <tr class="d1">
-     <td><%=h u.roles.map{|x|x.descripcion}%></td>
+    <tr class="d1" align="center" style="font-size:15px;" >
      <td style="vertical-align: middle;"><%=h u.nombre%></td>
+     <td><%=h u.roles.map{|x|x.descripcion}%></td>
+     <td style="vertical-align: middle;"><%= link_to image_tag("/users/edit_user.png", :mouseover => "/users/edit_user1.png", :size => "35x35", :title => "Editar usuario" ) , :controller => "admin", :action => "new_from_admin", :id => u.id %></td>
+     <td style="vertical-align: middle;"><%= link_to image_tag("/users/delete_user.png", :mouseover => "/users/delete_user1.png", :size => "35x35", :title => "Eliminar usuario") , :controller => "admin", :action => "del_user", :id => u.id %></td>
     </tr>
     <%end%>
   </table>
@@ -25,9 +23,10 @@
 <br />
 
 <div style="text-align: center">
-  <p align="center">
-    <%=button_to "Crear usuario", {:action => "new_from_admin", :controller => "admin"}, :class => "boton"-%>
-  </p>
+    <label>
+      <%= link_to image_tag("/users/add_user.png", :mouseover => "/users/add_user1.png", :size => "50x50", :title => "Agregar usuario") , :controller => "admin", :action => "new_from_admin"%><br/>
+      Agregar Usuario
+    </label>
 </div>
 
 <br />

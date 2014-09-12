@@ -12,24 +12,31 @@ class AdminController < ApplicationController
 
   ### Control de usuarios #####
   def new_from_admin
-    @user = User.new
+    @user = User.find(params[:id]) if params[:id]
+    @user ||= User.new
     @roles = Role.find(:all, :conditions => ["name in (?)", ["revisor", "enlaceevaluador"]])
   end
 
   # create user from admin role not need activation
   def save_new_user
-    @user = User.new(params[:user])
-    @user.activated_at = Time.now
-    @user.email_not_required!
-    @roles = Role.find(:all, :conditions => ["name in (?)", ["revisor", "enlaceevaluador"]])
-    ## Main Role ###
-    @user.roles << Role.find(params[:role][:id])
-    success = @user && @user.save
-    if success && @user.errors.empty?
-      flash[:notice] = "Usuario creado correctamente"
-      redirect_to :action => "show_users", :controller => "admin"
+    @user = User.find(params[:id]) if params[:id]
+    if @user
+      success = @user.update_attributes(params[:user])
     else
-      flash[:notice]  = "No se puedo crear usuario, verifique los datos"
+      @user ||= User.new(params[:user])
+      @user.activated_at = Time.now
+      @user.email_not_required!
+      ## Main Role ###
+      @user.roles << Role.find(params[:role][:id])
+      success = @user && @user.save
+    end
+    
+    if success && @user.errors.empty?
+      flash[:notice] = "Usuario creado/actualizado correctamente"
+#      redirect_to :action => "show_users", :controller => "admin"
+      redirect_to :action => "show_roles", :controller => "admin"
+    else
+      flash[:error]  = "No se puedo crear usuario, verifique los datos"
       render :action => 'new_from_admin'
     end
   end
@@ -115,6 +122,20 @@ class AdminController < ApplicationController
     }
   end
 
+  def del_user
+    @user = User.find(params[:id]) if params[:id]
+    if @user
+      if @user.roles.delete_all and @user.delete
+        flash[:notice] = "Elemento eliminado correctamente"
+      else
+        flash[:error] = "No se pudo eliminar, verifique"
+      end
+    else
+      flash[:error] = "No se pudo eliminar, verifique"
+    end
+    redirect_to :action => "show_roles"
+  end
+  
   def delete_user
     @role = Role.find(params[:role])
     @user = User.find(params[:id])
