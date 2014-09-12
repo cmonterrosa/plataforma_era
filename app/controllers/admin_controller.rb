@@ -359,13 +359,13 @@ class AdminController < ApplicationController
               capacitacion_salud_ma = diagnostico.participacion.capacitacion_salud_ma
             end
 
-            e_diagnostico = Evaluacion.find_by_diagnostico_id(diagnostico.id)
+            e_diagnostico = Evaluacion.find_by_diagnostico_id_and_activa(diagnostico.id, true)
         end
         e_diagnostico ||= Evaluacion.new #(:puntaje_eje1 => 0, :puntaje_eje2 => 0, :puntaje_eje3 => 0, :puntaje_eje4 => 0, :puntaje_eje5 => 0)
            
         unless proyecto.nil?
-          a1_proyecto = Evaluacion.find_by_proyecto_id_and_avance(proyecto.id, 1) 
-          a2_proyecto = Evaluacion.find_by_proyecto_id_and_avance(proyecto.id, 2) 
+          a1_proyecto = Evaluacion.find_by_proyecto_id_and_avance_and_activa(proyecto.id, 1, true)
+          a2_proyecto = Evaluacion.find_by_proyecto_id_and_avance_and_activa(proyecto.id, 2, true)
         end
         a1_proyecto ||= Evaluacion.new #(:puntaje_eje1 => 0, :puntaje_eje2 => 0, :puntaje_eje3 => 0, :puntaje_eje4 => 0, :puntaje_eje5 => 0)
         a2_proyecto ||= Evaluacion.new #(:puntaje_eje1 => 0, :puntaje_eje2 => 0, :puntaje_eje3 => 0, :puntaje_eje4 => 0, :puntaje_eje5 => 0)
