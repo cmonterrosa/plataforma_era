@@ -21,6 +21,7 @@ class AdminController < ApplicationController
     @user = User.new(params[:user])
     @user.activated_at = Time.now
     @user.email_not_required!
+    @roles = Role.find(:all, :conditions => ["name in (?)", ["revisor", "enlaceevaluador"]])
     ## Main Role ###
     @user.roles << Role.find(params[:role][:id])
     success = @user && @user.save
