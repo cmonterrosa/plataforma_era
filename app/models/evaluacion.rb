@@ -3,6 +3,7 @@ class Evaluacion < ActiveRecord::Base
 
   belongs_to :user
   belongs_to :proyecto
+  belongs_to :diagnostico
 
   def before_save
     self.observaciones.upcase! unless self.observaciones.nil?

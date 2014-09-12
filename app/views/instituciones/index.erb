@@ -1,22 +1,9 @@
-
-
-<p align="center">
-   <%= link_to image_tag("era/iconos/reload.png", :border =>0) , {:action => "index"}, :title => "Recargar"%>
-</p>
-
-
-
 <div class="formee">
   <div class="grid-12-12 clear"></div>
   <div class="grid-12-12">
      <div class="titulos"><%=h current_user.nombre%></div>
   </div>
-  <div class="grid-12-12 clear"></div>
-  <div class="grid-12-12">
-    <div class="titulos"><%=link_to "Escuelas sin evaluar",  {:action => "index", :token => "sin-evaluar"}, :title => "Escuelas sin evaluar", :style => "color: #d33934; font-size: 13px;"%> | <%=link_to "Escuelas evaluadas",  {:action => "index", :token => "evaluadas"}, :title => "Escuelas sin evaluar", :style => "color: green; font-size: 13px;"%></div>
-  </div>
 </div>
-
 
 <% unless flash[:error].nil? %>
 <div class="formee-msg-error">
@@ -27,12 +14,10 @@
 </div>
 <% end %>
 
-<% unless @escuelas.nil? %>
-
-<div class="container">
-  <div class="formee">
-  <table width="90%" border="0" cellspacing="0" cellpadding="0" class="sample" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid" align="center">
-  <tr style="background-color:#2E6AB1;color:white;">
+<% unless @no_evaluadas.empty? %>
+<p class="titulos">Escuelas sin evaluar</p>
+<table width="90%" border="0" cellspacing="0" cellpadding="0" class="sample" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid" align="center">
+  <tr style="background-color:#2E6AB1;color:white;font-size:14px; font-weight:bold;">
     <th style="vertical-align: middle;">NP</th>
     <th style="vertical-align: middle;">Clave</th>
     <th style="vertical-align: middle;">Nombre de Escuela</th>
@@ -40,77 +25,137 @@
   </tr>
   <%clase=0%>
   <%contador=1%>
-  <%@escuelas.each do |escuela|%>
-   <%user = User.find(:first, :conditions => ["escuela_id = ?", escuela.id])%>
-   <tr class="d<%=invert_class(clase)%>">
-     <td style="vertical-align: middle;"><%=h contador%><%contador+=1%></td>
-     <td style="vertical-align: middle;"><%=h(escuela.clave.upcase)%></td>
-     <td style="vertical-align: middle;"><%=h(escuela.nombre.upcase)%></td>
+  <%@no_evaluadas.each do |escuela|%>
+    <%user = User.find(:first, :conditions => ["escuela_id = ?", escuela.id])%>
+  <tr class="d<%=invert_class(clase)%>">
+    <td style="vertical-align: middle;"><%=h contador%><%contador+=1%></td>
+    <td style="vertical-align: middle;"><%=h(escuela.clave.upcase)%></td>
+    <td style="vertical-align: middle;"><%=h(escuela.nombre.upcase)%></td>
      <!-- Acciones -->
-     <%if user%>
-        <% @diagnostico = (escuela)? Diagnostico.find(:first, :conditions => ["escuela_id = ?", escuela.id]) : nil%>
-        <% @proyecto = (@diagnostico) ? Proyecto.find(:first, :conditions => ["diagnostico_id = ?", @diagnostico.id]) : nil%>
-        
-        <td>
-            <!-- validar diagnostico -->
-            <% form_for :escuela, escuela, :url => { :action => "dashboard", :controller => "admin", :id => user.id, :diagnostico=> @diagnostico.id }, :html => { :target => "_blank"} do -%>
-              <div class="grid-center" style="font-size: 8px;">
-                <p id="pdf_link"><input type="submit" title="Validar Diagnóstico" value="Validar Diagnóstico" /></p>
-              </div>
-            <%end%>
-        </td>
+    <%if user%>
+      <% @diagnostico = (escuela)? Diagnostico.find(:first, :conditions => ["escuela_id = ?", escuela.id]) : nil%>
+      <% @proyecto = (@diagnostico) ? Proyecto.find(:first, :conditions => ["diagnostico_id = ?", @diagnostico.id]) : nil%>
+    <td>
+      <!-- validar diagnostico -->
+      <% form_for :escuela, escuela, :url => { :action => "dashboard", :controller => "admin", :id => user.id, :diagnostico=> @diagnostico.id }, :html => { :target => "_blank"} do -%>
+      <div class="grid-center" style="font-size: 8px;">
+        <p id="pdf_link"><input type="submit" title="Validar Diagnóstico" value="Validar Diagnóstico" style="cursor:pointer;" /></p>
+      </div>
+      <%end%>
+    </td>
 
-        <%if @proyecto%>
-          <td>
-            <!-- validar proyecto -->
-            <% form_for :escuela, escuela, :url => { :action => "dashboard_proyecto", :controller => "admin", :id => user.id, :diagnostico=> @diagnostico.id, :proyecto => @proyecto.id }, :html => { :target => "_blank"} do -%>
-            <%# form_for :escuela, escuela, :url => { :action => "dashboard_proyecto", :controller => "admin", :diagnostico=> @diagnostico, :proyecto => @proyecto }, :html => { :target => "_blank"} do -%>
-              <div class="grid-center" style="font-size: 8px;">
-                <p id="pdf_link"><input type="submit" title="Validar Proyecto" value="Validar Proyecto" /></p>
-              </div>
-            <%end%>
-          </td>
-
-
-
-
-
-
-        <%else%>
-          <td>&nbsp;</td>
+      <%if @proyecto%>
+    <td>
+      <!-- validar proyecto -->
+        <% form_for :escuela, escuela, :url => { :action => "dashboard_proyecto", :controller => "admin", :id => user.id, :diagnostico=> @diagnostico.id, :proyecto => @proyecto.id }, :html => { :target => "_blank"} do -%>
+      <div class="grid-center" style="font-size: 8px;">
+        <p id="pdf_link"><input type="submit" title="Validar Proyecto" value="Validar Proyecto" style="cursor:pointer;" /></p>
+      </div>
         <%end%>
-          
-          <td>
-            <!-- validar proyecto -->
-            <% form_for :escuela, escuela, :url => { :action => "new", :controller => "mensajes", :id => user.id, :recibe_id => user.id }, :html => { :target => "_blank"} do -%>
-              <div class="grid-center" style="font-size: 8px;">
-                <p id="pdf_link"><input type="submit" title="Mensaje directo" value="Mensaje directo" /></p>
-              </div>
-            <%end%>
-          </td>
-
-     <%else%>
-        <td style="vertical-align: middle;" colspan="4">&nbsp;</td>
-     <%end%>
-  <%end%>
+    </td>
+      <%else%>
+    <td>&nbsp;</td>
+      <%end%>
+    <td>
+      <!-- validar proyecto -->
+      <% form_for :escuela, escuela, :url => { :action => "new", :controller => "mensajes", :id => user.id, :recibe_id => user.id }, :html => { :target => "_blank"} do -%>
+      <div class="grid-center" style="font-size: 8px;">
+        <p id="pdf_link"><input type="submit" title="Mensaje directo" value="Mensaje directo" style="cursor:pointer;" /></p>
+      </div>
+      <%end%>
+    </td>
+    <%else%>
+      <td style="vertical-align: middle;" colspan="4">&nbsp;</td>
+    <%end%>
   <%clase = invert_class(clase)%>
   </tr>
+  <%end%>
 
-  <% if @escuelas.total_entries > @escuelas.per_page.to_i %>
+  <% if @no_evaluadas.total_entries > @no_evaluadas.per_page.to_i %>
   <tr class="d<%=invert_class(clase)%>" align="center" >
-      <td colspan="7" style="padding: 0;">
-        <div class="digg_pagination">
-          <div class="page_info">
-            <%= page_entries_info @escuelas %>
-          </div>
-          <%= will_paginate @escuelas, :params => { :find => 1, :buscar => params[:buscar], :clave_nombre => params[:clave_nombre], :estatus_escuela => params[:estatus_escuela], :action => 'index' } %>
+    <td colspan="7" style="padding: 0;">
+      <div class="digg_pagination">
+        <div class="page_info">
+          <%= page_entries_info @no_evaluadas %>
         </div>
-      </td>
-    </tr>
-    <% end %>
+        <%= will_paginate @no_evaluadas, :params => { :find => 1, :buscar => params[:buscar], :clave_nombre => params[:clave_nombre], :estatus_escuela => params[:estatus_escuela], :action => 'index' } %>
+      </div>
+    </td>
+  </tr>
+  <% end %>
 </table>
-</div>
-</div>
 <% end %>
 
 
+<% unless @evaluadas.empty? %>
+<br />
+<p class="titulos">Escuelas evaluadas</p>
+<table width="90%" border="0" cellspacing="0" cellpadding="0" class="sample" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid" align="center">
+  <tr style="background-color:#2E6AB1;color:white;font-size:14px; font-weight:bold;">
+    <th style="vertical-align: middle;">NP</th>
+    <th style="vertical-align: middle;">Clave</th>
+    <th style="vertical-align: middle;">Nombre de Escuela</th>
+    <th style="vertical-align: middle;" colspan="6">Acciones</th>
+  </tr>
+  <%clase=0%>
+  <%contador=1%>
+  <%@evaluadas.each do |escuela|%>
+    <%user = User.find(:first, :conditions => ["escuela_id = ?", escuela.id])%>
+  <tr class="d<%=invert_class(clase)%>">
+    <td style="vertical-align: middle;"><%=h contador%><%contador+=1%></td>
+    <td style="vertical-align: middle;"><%=h(escuela.clave.upcase)%></td>
+    <td style="vertical-align: middle;"><%=h(escuela.nombre.upcase)%></td>
+    <!-- Acciones -->
+    <%if user%>
+      <% @diagnostico = (escuela)? Diagnostico.find(:first, :conditions => ["escuela_id = ?", escuela.id]) : nil%>
+      <% @proyecto = (@diagnostico) ? Proyecto.find(:first, :conditions => ["diagnostico_id = ?", @diagnostico.id]) : nil%>
+    <td>
+    <!-- validar diagnostico -->
+      <% form_for :escuela, escuela, :url => { :action => "dashboard", :controller => "admin", :id => user.id, :diagnostico=> @diagnostico.id }, :html => { :target => "_blank"} do -%>
+      <div class="grid-center" style="font-size: 8px;">
+        <p id="pdf_link"><input type="submit" title="Validar Diagnóstico" value="Validar Diagnóstico" style="cursor:pointer;" /></p>
+      </div>
+      <%end%>
+    </td>
+
+      <%if @proyecto%>
+    <td>
+      <!-- validar proyecto -->
+        <% form_for :escuela, escuela, :url => { :action => "dashboard_proyecto", :controller => "admin", :id => user.id, :diagnostico=> @diagnostico.id, :proyecto => @proyecto.id }, :html => { :target => "_blank"} do -%>
+      <div class="grid-center" style="font-size: 8px;">
+        <p id="pdf_link"><input type="submit" title="Validar Proyecto" value="Validar Proyecto" style="cursor:pointer;" /></p>
+      </div>
+        <%end%>
+    </td>
+      <%else%>
+    <td>&nbsp;</td>
+      <%end%>
+    <td>
+      <!-- validar proyecto -->
+      <% form_for :escuela, escuela, :url => { :action => "new", :controller => "mensajes", :id => user.id, :recibe_id => user.id }, :html => { :target => "_blank"} do -%>
+      <div class="grid-center" style="font-size: 8px;">
+        <p id="pdf_link"><input type="submit" title="Mensaje directo" value="Mensaje directo" style="cursor:pointer;" /></p>
+      </div>
+      <%end%>
+    </td>
+    <%else%>
+      <td style="vertical-align: middle;" colspan="4">&nbsp;</td>
+    <%end%>
+  <%clase = invert_class(clase)%>
+  </tr>
+  <%end%>
+
+  <% if @evaluadas.total_entries > @evaluadas.per_page.to_i %>
+  <tr class="d<%=invert_class(clase)%>" align="center" >
+    <td colspan="7" style="padding: 0;">
+      <div class="digg_pagination">
+        <div class="page_info">
+          <%= page_entries_info @evaluadas %>
+        </div>
+        <%= will_paginate @evaluadas, :params => { :find => 1, :buscar => params[:buscar], :clave_nombre => params[:clave_nombre], :estatus_escuela => params[:estatus_escuela], :action => 'index' } %>
+      </div>
+    </td>
+  </tr>
+  <% end %>
+</table>
+<% end %>

@@ -2,22 +2,22 @@ class InstitucionesController < ApplicationController
 require_role [:revisor]
 
 def index
-      @condition= (params[:token]) ? params[:token] : "sin-evaluar"
-      repetidas = Array.new
-      @diagnosticos_evaluados = Evaluacion.find(:all, :select => "diagnostico_id", :conditions => ["proyecto_id IS NULL AND user_id = ?", current_user.id], :group => "diagnostico_id")
-      @proyectos_evaluados = Evaluacion.find(:all, :select => "proyecto_id", :conditions => ["diagnostico_id IS NULL AND user_id = ?", current_user.id], :group => "proyecto_id")
-      @escuelas_diagnosticos_evaluados = Escuela.find(:all, :select => "escuelas.*", :joins => "escuelas, diagnosticos d", :conditions => ["escuelas.id = d.escuela_id AND d.id in (?)", @diagnosticos_evaluados.map { |i|i.diagnostico_id  }])
-      @escuelas_diagnosticos_proyectos = Escuela.find(:all, :select => "escuelas.*", :joins => "escuelas, diagnosticos d, proyectos p", :conditions => ["escuelas.id = d.escuela_id AND d.id = p.diagnostico_id AND p.id in (?)", @proyectos_evaluados.map { |i|i.proyecto_id  }])
-      @escuelas_diagnosticos_evaluados.each{|e| repetidas << @escuelas_diagnosticos_proyectos === e } if (!@escuelas_diagnosticos_proyectos.empty? && !@escuelas_diagnosticos_evaluados.empty?)
-      case @condition
-      when "evaluadas"
-        @escuelas = Escuela.find(:all, :conditions => ["evaluador_id = ? AND id in (?)", current_user.id, repetidas[0].map{|i|i.id}]) if !repetidas.empy?
-        @escuelas ||= Array.new
-      when "sin-evaluar"
-        @escuelas = Escuela.find(:all, :conditions => ["evaluador_id = ? AND id not in (?)", current_user.id, repetidas[0].map{|i|i.id}]) if !repetidas.empty?
-        @escuelas ||= Array.new
+  @evaluadas = []
+  @no_evaluadas = []
+  @escuelas_asignadas = Escuela.find(:all, :conditions => ["evaluador_id = ?", current_user.id])
+  unless @escuelas_asignadas.empty?
+    @escuelas_asignadas.each do |escuela|
+      @evaluadas_p = Evaluacion.find(:all, :conditions => ["user_id = ? AND proyecto_id = ?", current_user.id, escuela.diagnostico.proyecto.id], :group => "user_id")
+      @evaluadas_d = Evaluacion.find(:all, :conditions => ["user_id = ? AND diagnostico_id = ?", current_user.id, escuela.diagnostico.id])
+      if !@evaluadas_p.empty? and !@evaluadas_d.empty?
+        @evaluadas << escuela
+      else
+        @no_evaluadas << escuela
       end
-      @escuelas = @escuelas.paginate(:page => params[:page], :per_page => 25) #if !@escuelas.empty?
+    end
+  end
+  @evaluadas = @evaluadas.paginate(:page => params[:page], :per_page => 10)
+  @no_evaluadas = @no_evaluadas.paginate(:page => params[:page], :per_page => 10)
 end
 
 end

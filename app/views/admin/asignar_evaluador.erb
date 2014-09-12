@@ -23,7 +23,7 @@
     <!-- evaluador -->
     <div class="grid-6-12">
       <label>Nuevo Evaluador: <em class="formee-req">*</em></label>
-      <%=f.select :evaluador_id, @evaluadores.collect {|p| [ p.nombre, p.id ] }, {:selected => @evaluador}, {:include_blank => true , :onchange => "alert('Has seleccionado evaluador');"} %>
+      <%=f.select :evaluador_id, @evaluadores.collect {|p| [ p.login_nombre, p.id ] }, {:selected => @evaluador}, {:include_blank => true , :onchange => "alert('Has seleccionado evaluador');"} %>
     </div>
     
 
