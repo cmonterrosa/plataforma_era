@@ -66,7 +66,7 @@ class AdminController < ApplicationController
     @role_externos = Role.find(:first, :conditions => ["name in (?)", ['revisor']])
     @role_internos = Role.find(:first, :conditions => ["name in (?)", ['enlaceevaluador']])
     @usuarios = (@role_externos.users + @role_internos.users)
-    @usuarios = @usuarios.sort{|p1,p2| p1.login <=> p2.login}
+    @usuarios = @usuarios.sort{|p1,p2| p1.login <=> p2.login}.paginate(:page => params[:page], :per_page => 15)
   end
 
   def show_users

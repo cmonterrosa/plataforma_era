@@ -22,6 +22,19 @@
     </tr>
     <% clase = invert_class(clase) %>
     <%end%>
+
+    <% if @usuarios.total_entries > @usuarios.per_page.to_i %>
+    <tr class="d<%=invert_class(clase)%>" align="center" >
+      <td colspan="9" style="padding: 0;">
+        <div class="digg_pagination">
+          <div class="page_info">
+            <%= page_entries_info @usuarios %>
+          </div>
+          <%= will_paginate @usuarios %>
+        </div>
+      </td>
+    </tr>
+    <% end %>
   </table>
 
 <br />
