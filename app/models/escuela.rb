@@ -32,6 +32,14 @@ class Escuela < ActiveRecord::Base
     "#{self.clave} | #{self.nombre}"
   end
 
+  def ever_had_status?(status)
+    @user = User.find(:first, :conditions => ["escuela_id = ?", self.id])
+    @status = Estatu.find_by_clave(status)
+    @rows = Bitacora.count(:id, :conditions => ["user_id = ? and estatu_id= ?", @user.id, @status.id])
+    @current = self.estatu
+    (@rows > 0 || @current == @status) ? true : false
+  end
+
  
 
 end
