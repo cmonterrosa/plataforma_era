@@ -9,6 +9,9 @@
       <tr class="tdiagnostico">
         <td align="center" ><label>ESCUELA: &nbsp; &nbsp;<b><%= @escuela.nombre %></b>, &nbsp; CLAVE: &nbsp; &nbsp;<b><%= @escuela.clave %></b>  </label></td>
       </tr>
+      <tr class="tdiagnostico">
+        <td align="center" ><label>MUNICIPIO: &nbsp; &nbsp;<b><%= @escuela.municipio %></b>, &nbsp; LOCALIDAD: &nbsp; &nbsp;<b><%= @escuela.localidad %></b> &nbsp; NIVEL: &nbsp; &nbsp;<b><%=h (@escuela.nivel)? @escuela.nivel.descripcion : "" %></b> </label></td>
+      </tr>
     </table>
     <br />
     <fieldset>
