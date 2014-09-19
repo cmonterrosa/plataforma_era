@@ -7,7 +7,7 @@ class CreateEvaluacions < ActiveRecord::Migration
       t.decimal :puntaje_eje3, :precision=> 15, :scale=> 6
       t.decimal :puntaje_eje4, :precision=> 15, :scale=> 6
       t.decimal :puntaje_eje5, :precision=> 15, :scale=> 6
-      t.string :observaciones, :limit => 500
+      t.string :observaciones, :limit => 750
       t.boolean :activa
       t.integer :user_id #Evaluador
       t.timestamps
