@@ -53,7 +53,10 @@ class AdminController < ApplicationController
     success = @user && @user.save
     if success && @user.errors.empty?
       ##### Actualizamos escuela si es el caso ####
-      escuela.update_attributes!(:nombre => params["escuela"]["nombre"]) if current_user.has_role?("adminplat") && params["escuela"]["nombre"]
+      unless params["escuela"].nil?
+        escuela.update_attributes!(:nombre => params["escuela"]["nombre"])
+      end if current_user.has_role?("adminplat")
+      
       flash[:notice] = "Los datos se actualizaron correctamente"
       redirect_to :controller => "admin", :action => "show_users"
     else
@@ -361,12 +364,32 @@ class AdminController < ApplicationController
 
             e_diagnostico = Evaluacion.find_by_diagnostico_id_and_activa(diagnostico.id, true)
         end
+
+        diag_ptaje_eje1 = e_diagnostico ? e_diagnostico.puntaje_eje1 : "NE"
+        diag_ptaje_eje2 = e_diagnostico ? e_diagnostico.puntaje_eje2 : "NE"
+        diag_ptaje_eje3 = e_diagnostico ? e_diagnostico.puntaje_eje3 : "NE"
+        diag_ptaje_eje4 = e_diagnostico ? e_diagnostico.puntaje_eje4 : "NE"
+        diag_ptaje_eje5 = e_diagnostico ? e_diagnostico.puntaje_eje5 : "NE"
+
         e_diagnostico ||= Evaluacion.new #(:puntaje_eje1 => 0, :puntaje_eje2 => 0, :puntaje_eje3 => 0, :puntaje_eje4 => 0, :puntaje_eje5 => 0)
            
         unless proyecto.nil?
           a1_proyecto = Evaluacion.find_by_proyecto_id_and_avance_and_activa(proyecto.id, 1, true)
           a2_proyecto = Evaluacion.find_by_proyecto_id_and_avance_and_activa(proyecto.id, 2, true)
         end
+
+        a1_proy_ptaje_eje1 = a1_proyecto ? a1_proyecto.puntaje_eje1 : "NE"
+        a1_proy_ptaje_eje2 = a1_proyecto ? a1_proyecto.puntaje_eje2 : "NE"
+        a1_proy_ptaje_eje3 = a1_proyecto ? a1_proyecto.puntaje_eje3 : "NE"
+        a1_proy_ptaje_eje4 = a1_proyecto ? a1_proyecto.puntaje_eje4 : "NE"
+        a1_proy_ptaje_eje5 = a1_proyecto ? a1_proyecto.puntaje_eje5 : "NE"
+
+        a2_proy_ptaje_eje1 = a2_proyecto ? a2_proyecto.puntaje_eje1 : "NE"
+        a2_proy_ptaje_eje2 = a2_proyecto ? a2_proyecto.puntaje_eje2 : "NE"
+        a2_proy_ptaje_eje3 = a2_proyecto ? a2_proyecto.puntaje_eje3 : "NE"
+        a2_proy_ptaje_eje4 = a2_proyecto ? a2_proyecto.puntaje_eje4 : "NE"
+        a2_proy_ptaje_eje5 = a2_proyecto ? a2_proyecto.puntaje_eje5 : "NE"
+
         a1_proyecto ||= Evaluacion.new #(:puntaje_eje1 => 0, :puntaje_eje2 => 0, :puntaje_eje3 => 0, :puntaje_eje4 => 0, :puntaje_eje5 => 0)
         a2_proyecto ||= Evaluacion.new #(:puntaje_eje1 => 0, :puntaje_eje2 => 0, :puntaje_eje3 => 0, :puntaje_eje4 => 0, :puntaje_eje5 => 0)
 
@@ -400,9 +423,12 @@ class AdminController < ApplicationController
                  arboles_adultos, acciones, capacitacion_ahorro_energia, consumo_energia, focos_ahorradores,
                  red_publica_agua, recip_residuos_solidos, separa_residuos_org_inorg, elabora_compostas, frecuencia_afisica,
                  "#{minutos_afisica}  #{momentos_afisica}", num_padres_familia, capacitacion_salud_ma, proyecto_descripcion,
-                 e_diagnostico.puntaje_eje1, e_diagnostico.puntaje_eje2, e_diagnostico.puntaje_eje3, e_diagnostico.puntaje_eje4, e_diagnostico.puntaje_eje5,
-                 a1_proyecto.puntaje_eje1, a1_proyecto.puntaje_eje2, a1_proyecto.puntaje_eje3, a1_proyecto.puntaje_eje4, a1_proyecto.puntaje_eje5,
-                 a2_proyecto.puntaje_eje1, a2_proyecto.puntaje_eje2, a2_proyecto.puntaje_eje3, a2_proyecto.puntaje_eje4, a2_proyecto.puntaje_eje5,
+#                 e_diagnostico.puntaje_eje1, e_diagnostico.puntaje_eje2, e_diagnostico.puntaje_eje3, e_diagnostico.puntaje_eje4, e_diagnostico.puntaje_eje5,
+                 diag_ptaje_eje1, diag_ptaje_eje2, diag_ptaje_eje3, diag_ptaje_eje4, diag_ptaje_eje5,
+                 a1_proy_ptaje_eje1, a1_proy_ptaje_eje2, a1_proy_ptaje_eje3, a1_proy_ptaje_eje4, a1_proy_ptaje_eje5,
+                 a2_proy_ptaje_eje1, a2_proy_ptaje_eje2, a2_proy_ptaje_eje3, a2_proy_ptaje_eje4, a2_proy_ptaje_eje5,
+#                 a1_proyecto.puntaje_eje1, a1_proyecto.puntaje_eje2, a1_proyecto.puntaje_eje3, a1_proyecto.puntaje_eje4, a1_proyecto.puntaje_eje5,
+#                 a2_proyecto.puntaje_eje1, a2_proyecto.puntaje_eje2, a2_proyecto.puntaje_eje3, a2_proyecto.puntaje_eje4, a2_proyecto.puntaje_eje5,
                  total_diagnostico, total_proyecto, (total_diagnostico + total_proyecto)]
       end
     end
