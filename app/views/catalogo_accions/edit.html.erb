@@ -1,0 +1,24 @@
+<h1>Editing catalogo_accion</h1>
+
+<% form_for(@catalogo_accion) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :clave %><br />
+    <%= f.text_field :clave %>
+  </p>
+  <p>
+    <%= f.label :descripcion %><br />
+    <%= f.text_field :descripcion %>
+  </p>
+  <p>
+    <%= f.label :institucion_id %><br />
+    <%= f.text_field :institucion_id %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @catalogo_accion %> |
+<%= link_to 'Back', catalogo_accions_path %>

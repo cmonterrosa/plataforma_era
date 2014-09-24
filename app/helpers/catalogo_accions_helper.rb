@@ -1,0 +1,2 @@
+module CatalogoAccionsHelper
+end

@@ -1,0 +1,58 @@
+<div class="titulos">
+  <p>Editar Institución</p>
+</div>
+
+<% form_for(@catalogo_institucion, :html => {:class => "formee"}) do |f| %>
+  <%= f.error_messages %>
+
+  <div class="grid-2-12">
+    <%= f.label :clave %><br />
+    <%= f.text_field :clave %>
+  </div>
+  <div class="grid-6-12">
+    <%= f.label :descripcion %><br />
+    <%= f.text_field :descripcion %>
+  </div>
+  <div class="grid-4-12">
+    <%= f.label :domicilio %><br />
+    <%= f.text_field :domicilio %>
+  </div>
+    <%#= f.submit 'Create' %>
+    <div class="grid-12-12 clear"></div>
+
+    <div class="grid-4-12">&nbsp;</div>
+    <div class="grid-4-12">
+      <input id="button4" onclick="to_uppercase();" class="buttonText" type="submit" title="Guardar y Regresar" value="Guardar y Regresar" />
+    </div>
+    <div class="grid-4-12">
+      <a href="<%= catalogo_institucions_path %>" id="buttonc" class="buttonText"><img src="/images/formee/form-ic-error.png"/>&nbsp;&nbsp;Regresar sin Guardar</a>
+    </div>
+
+<% end %>
+
+
+<!--<h1>Editing catalogo_institucion</h1>
+
+<% form_for(@catalogo_institucion) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :clave %><br />
+    <%= f.text_field :clave %>
+  </p>
+  <p>
+    <%= f.label :descripcion %><br />
+    <%= f.text_field :descripcion %>
+  </p>
+  <p>
+    <%= f.label :domicilio %><br />
+    <%= f.text_field :domicilio %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @catalogo_institucion %> |
+<%= link_to 'Back', catalogo_institucions_path %>
+-->

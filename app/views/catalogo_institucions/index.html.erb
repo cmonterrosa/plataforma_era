@@ -1,0 +1,78 @@
+<div class="titulos">
+  <p>Listado de Instituciones</p>
+</div>
+
+<!--
+<table>
+  <tr>
+    <th>Clave</th>
+    <th>Descripcion</th>
+    <th>Domicilio</th>
+  </tr>
+
+<% @catalogo_institucions.each do |catalogo_institucion| %>
+  <tr>
+    <td><%=h catalogo_institucion.clave %></td>
+    <td><%=h catalogo_institucion.descripcion %></td>
+    <td><%=h catalogo_institucion.domicilio %></td>
+    <td><%= link_to 'Show', catalogo_institucion %></td>
+    <td><%= link_to 'Edit', edit_catalogo_institucion_path(catalogo_institucion) %></td>
+    <td><%= link_to 'Destroy', catalogo_institucion, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New catalogo_institucion', new_catalogo_institucion_path %>
+-->
+
+<table width="95%" class="sample" border="0" cellspacing="0" cellpadding="0" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid">
+    <tr align="center" style="color:white;background-color:#70aedd;font-size:16px;font-weight:bold;">
+      <td style="vertical-align: middle;">Clave</td>
+      <td style="vertical-align: middle;">Descripción</td>
+      <td style="vertical-align: middle;">Domicilio</td>
+      <td colspan="2" style="vertical-align: middle;">Acciones</td>
+    </tr>
+    <% clase=0 %>
+    <% @catalogo_institucions.each do |institucion|%>
+    <tr class="d<%=invert_class(clase)%>" align="center" style="font-size:13px;" >
+     <td style="vertical-align: middle;"><%=h institucion.clave%></td>
+     <td style="vertical-align: middle;"><%=h institucion.descripcion%></td>
+     <td style="vertical-align: middle;"><%=h institucion.domicilio%></td>
+     <td style="vertical-align: middle;"><%= link_to image_tag("/users/edit_user.png", :mouseover => "/users/edit_user1.png", :size => "35x35", :title => "Editar usuario" ) , edit_catalogo_institucion_path(institucion) %></td>
+     <td style="vertical-align: middle;"><%= link_to image_tag("/users/delete_user.png", :mouseover => "/users/delete_user1.png", :size => "35x35", :title => "Eliminar usuario") , institucion, :confirm => '¿Estas seguro de eliminar el registro seleccionado?', :method => :delete %></td>
+    </tr>
+    <% clase = invert_class(clase) %>
+    <%end%>
+
+    <!--
+    <%# if @usuarios.total_entries > @usuarios.per_page.to_i %>
+    <%#*<tr class="d<%=invert_class(clase)%>" align="center" >%>
+      <%#*<td colspan="9" style="padding: 0;">%>
+        <%#*<div class="digg_pagination">%>
+          <%#*<div class="page_info">%>
+            <%#= page_entries_info @usuarios %>
+          <%#*</div>%>
+          <%#= will_paginate @usuarios %>
+        <%#*</div>%>
+      <%#*</td>%>
+    <%#*</tr>%>
+    <%# end %>
+    -->
+  </table>
+
+<br />
+
+<div style="text-align: center">
+    <label>
+      <%= link_to image_tag("/images/admin/add.png", :mouseover => "/images/admin/add1.png" , :title => "Agregar usuario") , new_catalogo_institucion_path %><br/>
+      Agregar Institucion
+    </label>
+</div>
+
+<br />
+
+<div class="titulos">
+<%= link_to image_tag("botones/btn_regresar.png", :mouseover => "botones/btn_regresar1.png") , :controller => "admin", :action => "index"%><br />
+</div>

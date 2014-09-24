@@ -1,0 +1,24 @@
+<h1>Listing catalogo_accions</h1>
+
+<table>
+  <tr>
+    <th>Clave</th>
+    <th>Descripcion</th>
+    <th>Institucion</th>
+  </tr>
+
+<% @catalogo_accions.each do |catalogo_accion| %>
+  <tr>
+    <td><%=h catalogo_accion.clave %></td>
+    <td><%=h catalogo_accion.descripcion %></td>
+    <td><%=h catalogo_accion.institucion_id %></td>
+    <td><%= link_to 'Show', catalogo_accion %></td>
+    <td><%= link_to 'Edit', edit_catalogo_accion_path(catalogo_accion) %></td>
+    <td><%= link_to 'Destroy', catalogo_accion, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New catalogo_accion', new_catalogo_accion_path %>
