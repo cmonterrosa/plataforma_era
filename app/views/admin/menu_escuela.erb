@@ -55,7 +55,7 @@
       </legend>
         <!-- diagnostico -->
         <%if @escuela.diagnostico%>
-         <%@evaluaciones_diagnostico = Evaluacion.find(:all, :conditions => ["diagnostico_id = ?", @escuela.diagnostico.id], :order => ["updated_at DESC"])%>
+         <%@evaluaciones_diagnostico = Evaluacion.find(:all, :conditions => ["diagnostico_id = ?", @escuela.diagnostico.id], :order => "updated_at DESC")%>
          <%@evaluaciones_diagnostico.each do |ed|%>
           <div class="grid-12-12">
               <label style=" font-weight: bold;">Evaluador de diagnostico:</label>
@@ -69,7 +69,7 @@
 
           <!-- proyecto -->
         <%if @escuela.diagnostico.proyecto%>
-         <%@evaluaciones_proyecto = Evaluacion.find(:all, :conditions => ["proyecto_id = ?", @escuela.diagnostico.proyecto.id], :group => "user_id", :order => ["updated_at DESC"])%>
+         <%@evaluaciones_proyecto = Evaluacion.find(:all, :conditions => ["proyecto_id = ?", @escuela.diagnostico.proyecto.id], :group => "user_id", :order => "updated_at DESC")%>
          <%@evaluaciones_proyecto.each do |ed|%>
           <div class="grid-12-12">
               <label style=" font-weight: bold;">Evaluador de proyecto:</label>
