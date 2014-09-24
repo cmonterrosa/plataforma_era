@@ -41,6 +41,63 @@ class Escuela < ActiveRecord::Base
     (@rows > 0 || @current == @status) ? true : false
   end
 
+  def puntaje_actual
+      gran_total=-1
+      if diagnostico=Diagnostico.find(:first, :select => "id", :conditions => ["escuela_id = ?", self.id])
+        gran_total=0
+        if e_diagnostico = Evaluacion.find_by_diagnostico_id_and_activa(diagnostico.id, true)
+          diag_ptaje_eje1 = e_diagnostico ? e_diagnostico.puntaje_eje1 : "NE"
+          diag_ptaje_eje2 = e_diagnostico ? e_diagnostico.puntaje_eje2 : "NE"
+          diag_ptaje_eje3 = e_diagnostico ? e_diagnostico.puntaje_eje3 : "NE"
+          diag_ptaje_eje4 = e_diagnostico ? e_diagnostico.puntaje_eje4 : "NE"
+          diag_ptaje_eje5 = e_diagnostico ? e_diagnostico.puntaje_eje5 : "NE"
+        end
+        e_diagnostico ||= Evaluacion.new
+        proyecto = Proyecto.find(:first, :select => "id", :conditions => ["diagnostico_id = ?", diagnostico])
+        unless proyecto.nil?
+          a1_proyecto = Evaluacion.find_by_proyecto_id_and_avance_and_activa(proyecto.id, 1, true)
+          a2_proyecto = Evaluacion.find_by_proyecto_id_and_avance_and_activa(proyecto.id, 2, true)
+        end
+
+        a1_proy_ptaje_eje1 = a1_proyecto ? a1_proyecto.puntaje_eje1 : "NE"
+        a1_proy_ptaje_eje2 = a1_proyecto ? a1_proyecto.puntaje_eje2 : "NE"
+        a1_proy_ptaje_eje3 = a1_proyecto ? a1_proyecto.puntaje_eje3 : "NE"
+        a1_proy_ptaje_eje4 = a1_proyecto ? a1_proyecto.puntaje_eje4 : "NE"
+        a1_proy_ptaje_eje5 = a1_proyecto ? a1_proyecto.puntaje_eje5 : "NE"
+
+        a2_proy_ptaje_eje1 = a2_proyecto ? a2_proyecto.puntaje_eje1 : "NE"
+        a2_proy_ptaje_eje2 = a2_proyecto ? a2_proyecto.puntaje_eje2 : "NE"
+        a2_proy_ptaje_eje3 = a2_proyecto ? a2_proyecto.puntaje_eje3 : "NE"
+        a2_proy_ptaje_eje4 = a2_proyecto ? a2_proyecto.puntaje_eje4 : "NE"
+        a2_proy_ptaje_eje5 = a2_proyecto ? a2_proyecto.puntaje_eje5 : "NE"
+
+        a1_proyecto ||= Evaluacion.new #(:puntaje_eje1 => 0, :puntaje_eje2 => 0, :puntaje_eje3 => 0, :puntaje_eje4 => 0, :puntaje_eje5 => 0)
+        a2_proyecto ||= Evaluacion.new #(:puntaje_eje1 => 0, :puntaje_eje2 => 0, :puntaje_eje3 => 0, :puntaje_eje4 => 0, :puntaje_eje5 => 0)
+
+        total_diagnostico = 0.0
+        (1..5).each do |num|
+          unless eval("e_diagnostico.puntaje_eje#{num}").nil?
+            total_diagnostico += eval("e_diagnostico.puntaje_eje#{num}").to_f
+          end
+        end
+
+        total_proyecto = 0.0
+        (1..2).each do |na|
+          (1..5).each do |num|
+            unless eval("a#{na}_proyecto.puntaje_eje#{num}").nil?
+              total_proyecto += eval("a#{na}_proyecto.puntaje_eje#{num}").to_f
+            end
+          end
+        end
+        gran_total = total_diagnostico + total_proyecto
+     end
+     return gran_total
+ end
+
+#  def nivel_certificacion(nivel)
+#    (nivel) ? nivel : 0
+#  end
+
  
 
 end
