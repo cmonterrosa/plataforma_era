@@ -14,9 +14,10 @@
           <fieldset style="padding: 5px 5px 5px 5px;">
             <div id="programas">
               <% @evaluadores.each do |c| %>
-                <%= check_box_tag "evaluadores[#{c.id}]", c.login, @s_evaluadores.include?(c.id) ? true : false %>&nbsp;<%= c.login_nombre %><br />
+                <%= check_box_tag "evaluadores[#{c.id}]", c.login, @s_evaluadores.include?(c.id) ? true : false %>&nbsp;<%= c.login_nombre %><br /><br />
               <% end %>
             </div>
+            
           </fieldset>
         </div>
 
