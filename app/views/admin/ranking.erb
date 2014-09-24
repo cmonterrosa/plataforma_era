@@ -1,0 +1,55 @@
+<div class="formee">
+  <div class="grid-12-12 clear"></div>
+  <div class="grid-12-12">
+    <div class="titulos">Ranking de Centros Escolares en Tiempo Real</div>
+  </div>
+
+  <div class="grid-12-12">
+    <p align="center"><%= link_to image_tag("era/iconos/reload.png", :border =>0) , {:action => "ranking"}, :title => "Recargar"%></p>
+  </div>
+</div>
+
+<div id="divlista">
+  <table width="95%" border="0" cellspacing="0" cellpadding="0" class="sample" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid" align="center">
+    <tr style="background-color:#2E6AB1;color:white;">
+      <th style="vertical-align: middle;">#Rank&nbsp;</th>
+      <th style="vertical-align: middle;">Nivel</th>
+      <th style="vertical-align: middle;">Puntaje Total</th>
+      <th style="vertical-align: middle;">Clave</th>
+      <th style="vertical-align: middle;">Nombre</th>
+      <th style="vertical-align: middle;">Municipio</th>
+      <th style="vertical-align: middle;">Nivel Educativo</th>
+     </tr>
+      <%clase=0%>
+     <%@escuelas.each do |e|%>
+      <tr class="d<%=invert_class(clase)%>">
+          <td style="vertical-align: middle;"><%=h e["rank"]%></td>
+          <td style="vertical-align: middle;"><%=h e["nivel_certificacion"]%></td>
+          <td style="vertical-align: middle;"><%=h (e.puntaje_actual) ? e.puntaje_actual.to_f.round(3) : "SE"%></td>
+
+          <td style="vertical-align: middle;"><%=h e.clave%></td>
+          <td style="vertical-align: middle;"><%=h e.nombre%></td>
+          <td style="vertical-align: middle;"><%=h e.municipio%></td>
+          <td style="vertical-align: middle;"><%=h (e.nivel)? e.nivel.descripcion : "--"%></td>
+          <%clase = invert_class(clase)%>
+      </tr>
+     <%end%>
+  </table>
+
+  <!-- Paginate -->
+  <% if @escuelas.total_entries > @escuelas.per_page.to_i %>
+    <tr class="d<%=invert_class(clase)%>" align="center" >
+      <td colspan="9" style="padding: 0;">
+        <div class="digg_pagination">
+          <div class="page_info">
+            <%= page_entries_info @escuelas %>
+          </div>
+          <%= will_paginate @escuelas %>
+        </div>
+      </td>
+    </tr>
+<% end %>
+
+
+  </div>
+
