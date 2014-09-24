@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
   # You may wish to modify it to suit your need
   has_many :reportes
   has_and_belongs_to_many :roles, :join_table => 'roles_users'
+  has_and_belongs_to_many :escuelas, :join_table => 'escuelas_users'
   belongs_to :escuela
   has_many :evaluacions
   

@@ -796,20 +796,36 @@ class AdminController < ApplicationController
   
    ####### ASIGNACION DE EVALUADOR #######
 
+#   def asignar_evaluador2
+#     @escuela = Escuela.find(params[:id])
+#     @evaluadores = Role.find_by_name("revisor").users.sort{|p1,p2| p1.nombre <=> p2.nombre}
+#     @evaluador = (@escuela.evaluador_id) ? User.find(@escuela.evaluador_id) : nil
+#     render :layout => "only_jquery"
+#   end
+
+
    def asignar_evaluador
      @escuela = Escuela.find(params[:id])
      @evaluadores = Role.find_by_name("revisor").users.sort{|p1,p2| p1.nombre <=> p2.nombre}
-     @evaluador = (@escuela.evaluador_id) ? User.find(@escuela.evaluador_id) : nil
+     @s_evaluadores = multiple_selected_id(@escuela.users) if @escuela.users
      render :layout => "only_jquery"
    end
+
+
 
    def save_asignar_evaluador
      @escuela = Escuela.find(params[:id])
      if @escuela
-        @escuela.update_attributes(params[:escuela])
-        msj = (@escuela.save) ? "Evaluador asignado correctamente" : "No se pudo guardar, verifique"
+        if params[:evaluadores]
+          @evaluadores = []
+          params[:evaluadores].each { |op| @evaluadores << User.find_by_login(op)  }
+          @escuela.users = User.find(@evaluadores)
+          msj = (@escuela.save) ? "Evaluadores asignados correctamente" : "No se pudo guardar, verifique"
+        else
+          @escuela.users.delete_all
+        end
      else
-       msj = "Escuela no existe"
+        msj = "Escuela no existe"
      end
      render :text => "<h2 style='color:green'>#{msj}</h2>"
    end

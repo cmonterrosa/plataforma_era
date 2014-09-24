@@ -6,6 +6,7 @@ class Escuela < ActiveRecord::Base
   belongs_to :estatu
   has_and_belongs_to_many :programas, :join_table => 'escuelas_programas'
   belongs_to :nivel
+  has_and_belongs_to_many :users, :join_table => 'escuelas_users'
 
 #  def clave_escuela
 #    self.clave_escuela = "#{self.clave} #{self.nombre}" if self.clave
