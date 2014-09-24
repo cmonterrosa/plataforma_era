@@ -1,46 +1,32 @@
 <div class="container">
 
   <div class="formee-msg-info">
-    <h3><%=@escuela.nombre%> | Información importante</h3>
+    <h3>Información importante</h3>
     <ul>
-      <li>El campo marcado <em class="formee-req">*</em> es obligatorio.</li>
+      <li>Los campos marcados con <em class="formee-req">*</em> son obligatorios.</li>
     </ul>
   </div>
-
   <% form_for :escuela, @escuela, :url => { :action => "save_asignar_evaluador", :id => @escuela, :clave => @escuela.clave }, :html => {:class => "formee", :name => "escuela"} do |f| -%>
-  <fieldset>
-    <legend>Evaluador</legend>
+    <fieldset>
+      <legend>Evaluadores</legend>
+        <div class="grid-6-12">
+          <label>Seleccione uno o varios registros<em class="formee-req">*</em></label>
+          <fieldset style="padding: 5px 5px 5px 5px;">
+            <div id="programas">
+              <% @evaluadores.each do |c| %>
+                <%= check_box_tag "evaluadores[#{c.id}]", c.login, @s_evaluadores.include?(c.id) ? true : false %>&nbsp;<%= c.login_nombre %><br />
+              <% end %>
+            </div>
+          </fieldset>
+        </div>
 
 
-    <%if @evaluador%>
-    <div class="grid-6-12">
-      <label>Evaluador: <%=@evaluador.nombre%></label>
-    </div>
-    <div class="grid-12-12 clear"></div>
-    <%end%>
+        <div class="grid-12-12 clear"></div>
 
-
-    <!-- evaluador -->
-    <div class="grid-6-12">
-      <label>Nuevo Evaluador: <em class="formee-req">*</em></label>
-      <%=f.select :evaluador_id, @evaluadores.collect {|p| [ p.login_nombre, p.id ] }, {:selected => @evaluador}, {:include_blank => true , :onchange => "alert('Has seleccionado evaluador');"} %>
-    </div>
-    
-
-    <div class="grid-12-12 clear"></div>
-
-    <!-- submit -->
-    <div class="grid-12-12">
-      <input class="right" type="submit" onclick="to_uppercase();" title="GUARDAR" value="GUARDAR" />
-    </div>
-
-  </fieldset>
-
+        <!-- submit -->
+        <div class="grid-12-12">
+          <input class="right" type="submit" onclick="to_uppercase();" title="GUARDAR" value="GUARDAR" />
+        </div>
+    </fieldset>
   <%end%>
 </div>
-
-
-<script type="text/javascript">
-  var evaluador = new LiveValidation( 'escuela_evaluador_id', {onlyOnSubmit: true} );
-  evaluador.add( Validate.Presence );
-</script>
