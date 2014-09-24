@@ -845,4 +845,25 @@ class AdminController < ApplicationController
     registro.activa = true
     registro.save
   end
+
+  #### RANKING ######
+ def ranking
+  @escuelas = Escuela.find_by_sql("SELECT es.id, es.clave, es.nombre, es.localidad, es.municipio, es.nivel_id from users us INNER JOIN escuelas es ON us.login = es.clave AND (us.blocked is NULL OR us.blocked !=1)")
+  @escuelas = @escuelas.sort{|a, b| a.puntaje_actual <=> b.puntaje_actual}.reverse
+  contador=1
+  nivel3 = (1..100)
+  nivel2 = (101..250)
+  nivel1 = (251..9999)
+  @escuelas.each do |e|
+     e["nivel_certificacion"] ||= (nivel3.include?(contador)) ? 3 : nil if e.puntaje_actual >= 0
+     e["nivel_certificacion"] ||= (nivel2.include?(contador)) ? 2 : nil if e.puntaje_actual >= 0
+     e["nivel_certificacion"] ||= (nivel1.include?(contador)) ? 1 : nil if e.puntaje_actual >= 0
+     e["nivel_certificacion"] ||= (e.puntaje_actual < 0) ? 0 : 1
+     e["rank"] = contador
+     contador+=1
+   end
+  @escuelas = @escuelas.paginate(:page => params[:page], :per_page => 45)
+ end
+
+
 end
