@@ -26,6 +26,12 @@
         <label style=" font-weight: bold;">Zona Escolar:</label>
         <label style=" font-style: italic;"><%= @escuela.zona_escolar %></label>
       </div>
+
+      <div class="grid-4-12">
+        <label style=" font-weight: bold;">Nivel:</label>
+        <label style=" font-style: italic;"><%=h (@escuela.nivel_descripcion) ? @escuela.nivel_descripcion: "No existe información"%></label>
+      </div>
+
       <div class="grid-4-12">
         <label style=" font-weight: bold;">Sector:</label>
         <label style=" font-style: italic;"><%= @escuela.sector %></label>
