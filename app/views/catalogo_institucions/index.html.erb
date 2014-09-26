@@ -10,7 +10,7 @@
     <td colspan="2" style="vertical-align: middle;">Acciones</td>
   </tr>
 <% clase=0 %>
-<% @catalogo_institucions.each do |institucion|%>
+<% @catalogo_institucions.sort_by { |hsh| hsh[:clave] }.each do |institucion|%>
   <tr class="d<%=invert_class(clase)%>" align="center" style="font-size:13px;" >
     <td style="vertical-align: middle;"><%=h institucion.clave%></td>
     <td style="vertical-align: middle;"><%=h institucion.descripcion%></td>
@@ -43,5 +43,5 @@
 </div>
 <br />
 <div class="titulos">
-  <%= link_to image_tag("botones/btn_regresar.png", :mouseover => "botones/btn_regresar1.png") , :controller => "admin", :action => "index"%><br />
+  <%= link_to image_tag("botones/btn_regresar.png", :mouseover => "botones/btn_regresar1.png") , :controller => "admin", :action => "catalogos"%><br />
 </div>

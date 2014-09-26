@@ -17,13 +17,21 @@
       <label style="font-size:16px;">Login</label>
       <%= f.text_field :login, :required => true%> <div id="mensaje"></div>
     </div>
-    <div class="grid-4-12">
+    <div class="grid-6-12">
       <label style="font-size:16px;">Nombre</label>
       <%= f.text_field :nombre, :required => true%>
     </div>
+    
+    <div class="grid-12-12 clear"></div>
+
     <div class="grid-4-12">
       <label style="font-size:16px;">Rol principal</label>
       <%= select :role, :id, @roles.collect{|a| [a.descripcion, a.id]} %>
+    </div>
+
+    <div class="grid-4-12">
+      <label style="font-size:16px;">Institución a la que pertenece:</label>
+      <%= f.select :catalogo_institucion_id, CatalogoInstitucion.all.collect{|a| [a.descripcion, a.id]} %>
     </div>
 
     <div class="grid-12-12 clear"></div>

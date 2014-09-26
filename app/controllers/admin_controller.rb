@@ -10,6 +10,9 @@ class AdminController < ApplicationController
   def index
   end
 
+  def catalogos
+  end
+
   ### Control de usuarios #####
   def new_from_admin
     @user = User.find(params[:id]) if params[:id]
