@@ -1,0 +1,33 @@
+<div class="container">
+  <div class="formee">
+      <!-- nuevo registro -->
+      <% form_for :corte, @corte, :url => { :action => "create_ranking_historico", :controller => "admin"} do |f| -%>
+      <div class="grid-center">
+        <input type="submit" title="NUEVO CORTE DE RANKING" value="NUEVO CORTE DE RANKING" />
+      </div>
+      <%end%>
+  </div>
+</div>
+
+
+<table width="90%" border="0" cellspacing="0" cellpadding="0" class="sample" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid" align="center">
+  <tr style="background-color:#2E6AB1; color:white">
+    <th style="vertical-align: middle;">&nbsp;</th>
+    <th style="vertical-align: middle;">Usuario</th>
+    <th style="vertical-align: middle;">Fecha/Hora</th>
+    <th style="vertical-align: middle;">Observaciones</th>
+    <th style="vertical-align: center;" colspan="2">&nbsp;</th>
+  </tr>
+<%clase=0%>
+<%@cortes.each do |c|%>
+  <tr class="d<%=invert_class(clase)%>">
+    <td style="vertical-align: middle;">&nbsp;</td>
+    <td style="vertical-align: middle;"><%=h (c.user) ? (c.user.login.upcase): "--"%></td>
+    <td style="vertical-align: middle;"><%=h (c.created_at)? c.created_at.strftime('%d de %B de %Y - %H:%M') : "----"%></td>
+    <td style="vertical-align: middle;"><%=h (c.observaciones)? c.observaciones : "----"%></td>
+    <td style="vertical-align: middle;"><%=button_to "Descargar", {:action => 'download_corte_ranking', :controller => 'admin', :id => c},  :title => "Descargar archivo"%></td>
+    <td style="vertical-align: middle;"><%=button_to "Eliminar", {:action => "destroy_corte_ranking", :id => c}, :confirm => "¿Esta seguro que desea eliminar el comentario?", :method => :delete, :class => 'boton'%></td>
+  <%clase = invert_class(clase)%>
+  </tr>
+<%end%>
+</table>

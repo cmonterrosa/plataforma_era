@@ -1,0 +1,27 @@
+<div class="container">
+
+  <div class="formee-msg-info">
+    <h3>Información importante</h3>
+    <ul>
+      <li>El procesamiento puede tardar unos minutos.</li>
+    </ul>
+  </div>
+
+  <% form_for :corte, @corte, :url => { :action => "save_corte_ranking" }, :html => {:class => "formee", :name => "corte"} do |f| -%>
+  <fieldset>
+    <legend>Corte&nbsp;de&nbsp;Ranking</legend>
+      <div class="grid-9-12">
+        <label style=" font-weight: bold;">Observaciones:</label>
+        <%= f.text_area :observaciones %>
+      </div>
+
+      
+    <!-- submit -->
+    <div class="grid-12-12">
+      <input class="right" type="submit" onclick="to_uppercase();" title="GUARDAR Y PROCESAR" value="GUARDAR Y PROCESAR" />
+    </div>
+
+  </fieldset>
+
+  <%end%>
+</div>
