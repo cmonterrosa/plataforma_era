@@ -266,7 +266,7 @@ class AdminController < ApplicationController
     @escuelas = User.find_by_sql("SELECT us.created_at as user_created_at, us.login, us.id as user_id, es.* from users us
                                   INNER JOIN escuelas es ON us.login = es.clave
                                   AND (us.blocked is NULL OR us.blocked !=1)")
-    csv_string = FasterCSV.generate(:col_sep => "\t") do |csv|
+      csv_string = FasterCSV.generate(:col_sep => "\t") do |csv|
       csv << ["CLAVE_ESCUELA", "NOMBRE", "ZONA_ESCOLAR", "SECTOR", "NIVEL", "DOMICILIO", "LOCALIDAD", "MUNICIPIO", "REGION", "MODALIDAD",
               "CORREO_ESCUELA", "CORREO_RESPONSABLE", "TELEFONO_ESCUELA", "TELEFONO_DIRECTOR", "FECHA_HORA_CAPTURA", "ALU_HOMBRES",
               "ALU_MUJERES", "TOTAL_ALUMNOS", "GRUPOS", "TOTAL_ALUMNOS", "DOCENTES_H", "DOCENTES_M", "TOTAL_DOCENTE_APOYO", "TOTAL_PERSONAL_ADMVO",
@@ -848,6 +848,73 @@ class AdminController < ApplicationController
 
   #### RANKING ######
  def ranking
+  @escuelas = get_ranking_escuelas_realtime
+  @escuelas = @escuelas.paginate(:page => params[:page], :per_page => 45)
+ end
+
+ #### RANKING HISTORICO ###
+ def cortes_ranking
+   @cortes = Corte.find(:all, :order => "created_at DESC")
+ end
+ 
+ def create_corte_ranking
+    @corte = Corte.new
+  end
+
+ def save_corte_ranking
+   @corte = Corte.new(params[:corte])
+   @corte.user ||= current_user
+   @escuelas = get_ranking_escuelas_realtime
+   if @corte.save
+     @escuelas.each do |e|
+      ##### Creamos registro en tabla historica ###
+      RankingHistorico.create(:corte_id => @corte.id,
+                               :rank => e["rank"],
+                               :nivel_certificacion => e["nivel_certificacion"],
+                               :escuela_id => e.id,
+                               :clave => e.clave,
+                               :puntaje_total => e.puntaje_actual,
+                               :municipio => e.municipio,
+                               :localidad => e.localidad
+                               )
+      end
+      flash[:notice] = "Proceso terminado"
+      redirect_to :action =>"cortes_ranking"
+   end
+
+ end
+ 
+ def download_corte_ranking
+   @corte = Corte.find(params[:id])
+   csv_string = FasterCSV.generate(:col_sep => "\t") do |csv|
+   csv << ["RANK", "NIVEL_CERTIFICACION", "PUNTAJE_TOTAL", "CLAVE", "NOMBRE_ESCUELA", "MUNICIPIO",  "LOCALIDAD"]
+   @corte.ranking_historicos.each do |r|
+      escuela = Escuela.find(r.escuela_id) if r.escuela_id
+      clave_escuela = (escuela) ? escuela.clave : ""
+      nombre_escuela = (escuela) ? escuela.nombre : ""
+      csv << [r.rank, r.nivel_certificacion, r.puntaje_total, clave_escuela, nombre_escuela, r.municipio, r.localidad]
+   end
+     
+   end
+   send_data to_iso(csv_string), type => "application/xls",
+               :filename => "Ranking_Escuelas_Corte_#{@corte.created_at.strftime("%d-%m-%Y_%I%M_%p")}.xls",
+               :disposition => "attachment"
+ end
+
+ def destroy_corte_ranking
+   @corte = Corte.find(params[:id])
+   @rows = RankingHistorico.find(:all, :conditions => ["corte_id = ?", @corte])
+   if @corte.destroy
+     unless @rows.empty?
+       @rows.each do |r| r.destroy end
+     end
+     flash[:notice] = "Corte eliminado correctamente"
+   end
+   redirect_to :action => "cortes_ranking"
+ end
+
+
+ def get_ranking_escuelas_realtime
   @escuelas = Escuela.find_by_sql("SELECT es.id, es.clave, es.nombre, es.localidad, es.municipio, es.nivel_id from users us INNER JOIN escuelas es ON us.login = es.clave AND (us.blocked is NULL OR us.blocked !=1)")
   @escuelas = @escuelas.sort{|a, b| a.puntaje_actual <=> b.puntaje_actual}.reverse
   contador=1
@@ -862,8 +929,9 @@ class AdminController < ApplicationController
      e["rank"] = contador
      contador+=1
    end
-  @escuelas = @escuelas.paginate(:page => params[:page], :per_page => 45)
+   return @escuelas
  end
+
 
 
 end

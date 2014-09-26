@@ -73,7 +73,12 @@
 
           <div class="grid-3-12">
             <%=link_to image_tag('admin/ranking.png', :size => "128x128", :size => "128x128", :mouseover => 'admin/ranking2.png') , {:action => "ranking", :controller => "admin"}, :title => "Ranking de escuelas"%>
-            <label style="font-family:verdana;font-size:14px;">Ranking</label>
+            <label style="font-family:verdana;font-size:14px;">Ranking&nbsp;Tiempo&nbsp;Real</label>
+          </div>
+
+           <div class="grid-4-12">
+            <%=link_to image_tag('admin/corte_ranking.png', :size => "128x128", :size => "128x128", :mouseover => 'admin/corte_ranking.png') , {:action => "cortes_ranking", :controller => "admin"}, :title => "Cortes de Ranking de escuelas"%>
+             <label style="font-family:verdana;font-size:14px;">Ranking&nbsp;Histórico</label>
           </div>
 
          <%end%>
