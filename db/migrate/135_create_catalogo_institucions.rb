@@ -1,7 +1,7 @@
 class CreateCatalogoInstitucions < ActiveRecord::Migration
   def self.up
     create_table :catalogo_institucions do |t|
-      t.string :clave
+      t.string :clave, :unique => true
       t.string :descripcion
       t.string :domicilio
 

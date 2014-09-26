@@ -1,24 +1,47 @@
-<h1>Listing catalogo_accions</h1>
+<div class="titulos">
+  <p>Listado de Acciones</p>
+</div>
 
-<table>
-  <tr>
-    <th>Clave</th>
-    <th>Descripcion</th>
-    <th>Institucion</th>
+<table width="95%" class="sample" border="0" cellspacing="0" cellpadding="0" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid">
+  <tr align="center" style="color:white;background-color:#70aedd;font-size:16px;font-weight:bold;">
+    <td style="vertical-align: middle;">Clave</td>
+    <td style="vertical-align: middle;">Descripción</td>
+    <td style="vertical-align: middle;">Institucion</td>
+    <td colspan="2" style="vertical-align: middle;">Acciones</td>
   </tr>
+<% clase=0 %>
+<% @catalogo_accions.each do |accion| %>
+  <tr class="d<%= invert_class(clase) %>" align="center" style="font-size:13px;" >
+    <td style="vertical-align: middle;"><%=h accion.clave %></td>
+    <td style="vertical-align: middle;"><%=h accion.descripcion %></td>
+    <td style="vertical-align: middle;"><%=h accion.catalogo_institucion.descripcion %></td>
+    <td style="vertical-align: middle;"><%= link_to image_tag("/images/teclas/tecla_edit.png", :mouseover => "/images/teclas/tecla_edit1.png", :title => "Editar usuario" ) , edit_catalogo_accion_path(accion) %></td>
+    <td style="vertical-align: middle;"><%= link_to image_tag("/images/teclas/tecla_del.png", :mouseover => "/images/teclas/tecla_del1.png", :title => "Eliminar usuario") , accion, :confirm => '¿Estas seguro de eliminar el registro seleccionado?', :method => :delete %></td>
+  </tr>
+  <% clase = invert_class(clase) %>
+<%end%>
 
-<% @catalogo_accions.each do |catalogo_accion| %>
-  <tr>
-    <td><%=h catalogo_accion.clave %></td>
-    <td><%=h catalogo_accion.descripcion %></td>
-    <td><%=h catalogo_accion.institucion_id %></td>
-    <td><%= link_to 'Show', catalogo_accion %></td>
-    <td><%= link_to 'Edit', edit_catalogo_accion_path(catalogo_accion) %></td>
-    <td><%= link_to 'Destroy', catalogo_accion, :confirm => 'Are you sure?', :method => :delete %></td>
+<% if @catalogo_accions.total_entries > @catalogo_accions.per_page.to_i %>
+  <tr class="d<%=invert_class(clase)%>" align="center" >
+    <td colspan="5" style="padding: 0;">
+      <div class="digg_pagination">
+        <div class="page_info">
+          <%= page_entries_info @catalogo_accions %>
+        </div>
+        <%= will_paginate @catalogo_accions %>
+      </div>
+    </td>
   </tr>
 <% end %>
 </table>
-
 <br />
-
-<%= link_to 'New catalogo_accion', new_catalogo_accion_path %>
+<div style="text-align: center">
+  <label>
+  <%= link_to image_tag("/images/teclas/tecla_add.png", :mouseover => "/images/teclas/tecla_add1.png" , :title => "Agregar usuario") , new_catalogo_accion_path %><br/>
+  Agregar Accion
+  </label>
+</div>
+<br />
+<div class="titulos">
+  <%= link_to image_tag("botones/btn_regresar.png", :mouseover => "botones/btn_regresar1.png") , :controller => "admin", :action => "index"%><br />
+</div>

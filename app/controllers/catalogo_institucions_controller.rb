@@ -3,7 +3,7 @@ class CatalogoInstitucionsController < ApplicationController
   # GET /catalogo_institucions
   # GET /catalogo_institucions.xml
   def index
-    @catalogo_institucions = CatalogoInstitucion.all
+    @catalogo_institucions = CatalogoInstitucion.all.paginate(:page => params[:page], :per_page => 15)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -41,17 +41,22 @@ class CatalogoInstitucionsController < ApplicationController
   # POST /catalogo_institucions
   # POST /catalogo_institucions.xml
   def create
-    @catalogo_institucion = CatalogoInstitucion.new(params[:catalogo_institucion])
+    if CatalogoInstitucion.find_by_clave(params[:catalogo_institucion][:clave]).nil?
+      @catalogo_institucion = CatalogoInstitucion.new(params[:catalogo_institucion])
 
-    respond_to do |format|
-      if @catalogo_institucion.save
-#        format.html { redirect_to(@catalogo_institucion, :notice => 'Registro creado satisfactoriamente.') }
-        format.html { redirect_to(:notice => 'Registro creado satisfactoriamente.') }
-        format.xml  { render :xml => @catalogo_institucion, :status => :created, :location => @catalogo_institucion }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @catalogo_institucion.errors, :status => :unprocessable_entity }
+      respond_to do |format|
+        if @catalogo_institucion.save
+#          format.html { redirect_to(@catalogo_institucion, :notice => 'Registro creado satisfactoriamente.') }
+          format.html { flash[:notice] =  "Registro creado satisfactoriamente.", redirect_to(:action => "index") }
+          format.xml  { render :xml => @catalogo_institucion, :status => :created, :location => @catalogo_institucion }
+        else
+          format.html { render :action => "new" }
+          format.xml  { render :xml => @catalogo_institucion.errors, :status => :unprocessable_entity }
+        end
       end
+    else
+      flash[:error] = "Existe un registro con la misma clave asignada"
+      redirect_to :action => "index"
     end
   end
 

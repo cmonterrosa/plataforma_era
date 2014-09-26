@@ -1,4 +1,8 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :catalogo_accions
+
+  map.resources :catalogo_institucions
+
   map.activate '/activate/:activation_code', :controller => 'users', :action => 'activate'
   map.logout '/logout', :controller => 'sessions', :action => 'destroy'
   map.login '/login', :controller => 'sessions', :action => 'new'
@@ -6,6 +10,7 @@ ActionController::Routing::Routes.draw do |map|
   map.signup '/signup', :controller => 'users', :action => 'new'
   map.forgot '/forgot', :controller => 'users', :action => 'forgot'
   map.reset     'reset/:reset_code',          :controller => 'users',     :action => 'reset'
+  map.add_avances     '/add_avances', :controller => 'avances', :action => 'add_avances'
 
 
   map.resources :users

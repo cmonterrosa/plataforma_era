@@ -1,18 +1,30 @@
-<p>
+<div class="titulos">
+  <p>Datos Actualizados</p>
+</div>
+
+<div class="container" style="text-align: center" >
+<div class="grid-12-12 clear">
   <b>Clave:</b>
   <%=h @catalogo_accion.clave %>
-</p>
+</div>
 
-<p>
+<div class="grid-12-12 clear">
   <b>Descripcion:</b>
   <%=h @catalogo_accion.descripcion %>
-</p>
+</div>
 
-<p>
+<div class="grid-12-12 clear">
   <b>Institucion:</b>
-  <%=h @catalogo_accion.institucion_id %>
-</p>
+  <%=h  @catalogo_accion.catalogo_institucion.descripcion %>
+</div>
 
+<div class="grid-12-12 clear"></div>
 
-<%= link_to 'Edit', edit_catalogo_accion_path(@catalogo_accion) %> |
-<%= link_to 'Back', catalogo_accions_path %>
+<div class="grid-4-12"></div>
+<div class="grid-2-12">
+  <a href="<%= edit_catalogo_accion_path(@catalogo_accion) %> "><input class="right" type="button" title="Volver a editar" value="Volver a editar" style="cursor: pointer;"/></a>
+</div>
+<div class="grid-2-12">
+  <a href="<%= catalogo_accions_path %> "><input class="right" type="button" title="Regresar" value="Regresar" style="cursor: pointer;" /></a>
+</div>
+</div>

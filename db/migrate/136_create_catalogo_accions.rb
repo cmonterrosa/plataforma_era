@@ -1,9 +1,9 @@
 class CreateCatalogoAccions < ActiveRecord::Migration
   def self.up
     create_table :catalogo_accions do |t|
-      t.string :clave
+      t.string :clave, :unique => true
       t.string :descripcion
-      t.integer :institucion_id
+      t.integer :catalogo_institucion_id
 
 #      t.timestamps
     end

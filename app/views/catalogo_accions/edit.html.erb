@@ -1,24 +1,30 @@
-<h1>Editing catalogo_accion</h1>
+<div class="titulos">
+  <p>Editar Acción</p>
+</div>
 
-<% form_for(@catalogo_accion) do |f| %>
+<% form_for(@catalogo_accion, :html => {:class => "formee"}) do |f| %>
   <%= f.error_messages %>
 
-  <p>
+  <div class="grid-2-12">
     <%= f.label :clave %><br />
     <%= f.text_field :clave %>
-  </p>
-  <p>
+  </div>
+  <div class="grid-6-12">
     <%= f.label :descripcion %><br />
     <%= f.text_field :descripcion %>
-  </p>
-  <p>
-    <%= f.label :institucion_id %><br />
-    <%= f.text_field :institucion_id %>
-  </p>
-  <p>
-    <%= f.submit 'Update' %>
-  </p>
-<% end %>
+  </div>
+  <div class="grid-4-12">
+    <%= f.label :institucion %><br />
+    <%= f.select :catalogo_institucion_id, CatalogoInstitucion.all.collect {|p| [ p.descripcion, p.id ]} %>
+  </div>
+  <div class="grid-12-12 clear"></div>
 
-<%= link_to 'Show', @catalogo_accion %> |
-<%= link_to 'Back', catalogo_accions_path %>
+  <div class="grid-4-12">&nbsp;</div>
+  <div class="grid-4-12">
+    <input id="button4" onclick="to_uppercase();" class="buttonText" type="submit" title="Guardar y Regresar" value="Guardar y Regresar" />
+  </div>
+  <div class="grid-4-12">
+    <a href="<%= catalogo_accions_path %>" id="buttonc" class="buttonText"><img src="/images/formee/form-ic-error.png"/>&nbsp;&nbsp;Regresar sin Guardar</a>
+  </div>
+
+<% end %>
