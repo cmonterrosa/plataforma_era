@@ -598,13 +598,17 @@ class AdminController < ApplicationController
      @proyecto = Proyecto.find(:first, :conditions => ["diagnostico_id = ?", @diagnostico.id]) if @diagnostico
      @user = (params[:id]) ? User.find(params[:id]): current_user
      @escuela = @user.escuela if @user
-     @s_catalogo_accions = multiple_selected_id(@user.catalogo_accions) if @user.catalogo_accions
+     @s_catalogo_accions = multiple_selected_id(current_user.catalogo_accions) if current_user.catalogo_accions and @evaluacion
      @evidencias_avance1 = Hash.new
      @evidencias_avance2 = Hash.new
      @puntaje_avance1 = Hash.new{|hash, key| hash[key] = Hash.new}
      @puntaje_avance2 = Hash.new{|hash, key| hash[key] = Hash.new}
 #     if current_user.has_role?('revisor') or current_user.has_role?('adminplat')
        @evaluacion = Evaluacion.find(:first, :conditions => ["proyecto_id = ? AND user_id = ?", @proyecto.id, current_user.id])
+       
+#       @s_catalogo_accions = multiple_selected_id(current_user.catalogo_accions) if current_user.catalogo_accions and @evaluacion
+#       @s_catalogo_accions ||= []
+
 #     else
 #       @evaluacion = Evaluacion.find(:first, :conditions => ["proyecto_id = ? AND user_id = ?", @proyecto.id, @user.id])
 #     end
@@ -757,13 +761,22 @@ class AdminController < ApplicationController
    def save_dashboard_proyecto
      (1..2).each do |avance|
        @user = User.find(current_user) if current_user
-       @acciones = []
-       if params[:catalogo_accions]
-        params[:catalogo_accions].each { |op| @acciones << CatalogoAccion.find_by_clave(op)  }
-        @user.catalogo_accions = CatalogoAccion.find(@acciones)
-#        @user.tipo = "proyecto"
-        @user.save!
-       end
+
+#       @acciones = []
+#       if params[:catalogo_accions]
+#        params[:catalogo_accions].each { |op| @acciones << CatalogoAccion.find_by_clave(op)  }
+#        @user.catalogo_accions = CatalogoAccion.find(@acciones)
+#        @user.save!
+#        CatalogoAccion.find(@acciones).each do |ac|
+#          @accion = Institucione.find(:all, :conditions => ["user_id = ? and catalogo_accion_id = ?", current_user.id, ac.id])
+#          @accion.each do |a|
+#            a.update_attribute(:tipo => "mientras")
+#            a=0
+#          end
+#          a=0
+#        end
+#       end
+
 #       if current_user.has_role?('revisor') or current_user.has_role?('adminplat')
          @evaluacion = Evaluacion.find(:first, :conditions => ["proyecto_id = ? AND avance = ? AND user_id = ?", params[:proyecto], avance.to_i, current_user.id])
 #       else
