@@ -24,6 +24,7 @@ class AdminController < ApplicationController
   def save_new_user
     @user = User.find(params[:id]) if params[:id]
     if @user
+      @user.catalogo_institucion_id = params[:user][:catalogo_institucion_id] if params[:user][:catalogo_institucion_id]
       success = @user.update_attributes(params[:user])
     else
       @user ||= User.new(params[:user])
@@ -597,6 +598,7 @@ class AdminController < ApplicationController
      @proyecto = Proyecto.find(:first, :conditions => ["diagnostico_id = ?", @diagnostico.id]) if @diagnostico
      @user = (params[:id]) ? User.find(params[:id]): current_user
      @escuela = @user.escuela if @user
+     @s_catalogo_accions = multiple_selected_id(@user.catalogo_accions) if @user.catalogo_accions
      @evidencias_avance1 = Hash.new
      @evidencias_avance2 = Hash.new
      @puntaje_avance1 = Hash.new{|hash, key| hash[key] = Hash.new}
@@ -754,6 +756,14 @@ class AdminController < ApplicationController
 
    def save_dashboard_proyecto
      (1..2).each do |avance|
+       @user = User.find(current_user) if current_user
+       @acciones = []
+       if params[:catalogo_accions]
+        params[:catalogo_accions].each { |op| @acciones << CatalogoAccion.find_by_clave(op)  }
+        @user.catalogo_accions = CatalogoAccion.find(@acciones)
+#        @user.tipo = "proyecto"
+        @user.save!
+       end
 #       if current_user.has_role?('revisor') or current_user.has_role?('adminplat')
          @evaluacion = Evaluacion.find(:first, :conditions => ["proyecto_id = ? AND avance = ? AND user_id = ?", params[:proyecto], avance.to_i, current_user.id])
 #       else

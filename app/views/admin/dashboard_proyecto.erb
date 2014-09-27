@@ -417,10 +417,22 @@
 
       <div class="grid-12-12 clear"></div>
       
+      <% form_for(@evaluacion, :url => {:action => "save_dashboard_proyecto", :id => @user.id, :diagnostico => @diagnostico.id, :proyecto => @proyecto.id }, :html => {:class => "formee" }) do |f| -%>
+      <!-- acciones -->
+      <div class="grid-12-12">
+        <fieldset style="padding: 5px 5px 5px 5px;">
+          <legend>OBSERVACIONES&nbsp;Y/O&nbsp;RECOMENDACIONES&nbsp;</legend>
+          <div id="catalogo_accions" class="grid-12-12">
+            <% CatalogoAccion.find(:all, :conditions => ["catalogo_institucion_id = ?", current_user.catalogo_institucion_id.to_i]).each do |c| %>
+              <%= check_box_tag "catalogo_accions[#{c.id}]", c.clave, @s_catalogo_accions.include?(c.id) ? true : false %>&nbsp;<%= c.descripcion %><br />
+            <% end %>
+          </div>
+        </fieldset>
+      </div>
+      
       <!-- observaciones -->
-      <%form_for(@evaluacion, :url => {:action => "save_dashboard_proyecto", :id => @user.id, :diagnostico => @diagnostico.id, :proyecto => @proyecto.id }, :html => {:class => "formee" }) do |f| -%>
       <fieldset>
-        <legend>OBSERVACIONES&nbsp;Y/O&nbsp;RECOMENDACIONES</legend>
+        <legend>OBSERVACIONES&nbsp;Y/O&nbsp;RECOMENDACIONES&nbsp;ADICIONALES</legend>
         <div class="grid-12-12">
           <%= f.text_area :observaciones, :placeholder => "Escriba brevemente sus observaciones", :class => "nta"%>
         </div>

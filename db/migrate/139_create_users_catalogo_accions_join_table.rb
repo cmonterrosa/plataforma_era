@@ -1,8 +1,9 @@
-class CreateUsersCatalogoAccions < ActiveRecord::Migration
+class CreateUsersCatalogoAccionsJoinTable < ActiveRecord::Migration
   def self.up
-    create_table :users_catalogo_accions do |t|
+    create_table :users_catalogo_accions, :id => false do |t|
       t.integer :user_id
       t.integer :catalogo_accion_id
+      t.string :tipo
     end
   end
 
