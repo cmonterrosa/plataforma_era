@@ -9,14 +9,29 @@
       <td style="vertical-align: middle;">Login</td>
       <td style="vertical-align: middle;">Nombre</td>
       <td style="vertical-align: middle;">Tipo</td>
-      <td colspan="2" style="vertical-align: middle;">Acciones</td>
+      <td colspan="3" style="vertical-align: middle;">Acciones</td>
     </tr>
     <% clase=0 %>
     <%@usuarios.each do |u|%>
     <tr class="d<%=invert_class(clase)%>" align="center" style="font-size:13px;" >
+      <td style="vertical-align: middle;">
+        <%= case u.is_blocked?
+          when true
+            h(image_tag("admin/bloqueado.png", :border =>0))
+          when false
+            h(image_tag("admin/disponible.png", :border =>0))
+          else
+            h(image_tag("admin/disponible.png", :border =>0))
+        end %>
+      </td>
      <td style="vertical-align: middle;"><%=h u.login%></td>
      <td style="vertical-align: middle;"><%=h u.nombre%></td>
      <td><%=h u.roles.map{|x|x.descripcion}%></td>
+      <% if u.is_blocked? %>
+     <td style="vertical-align: middle;"><%=button_to "Desbloquear", { :action => "block_user", :id => u.login, :show_roles => "show_roles" }, :confirm => "¿Esta seguro que desea bloquearlo?", :method => :delete, :style => "cursor:pointer" %></td>
+      <% else %>
+     <td style="vertical-align: middle;"><%=button_to "Bloquear", { :action => "block_user", :id => u.login, :show_roles => "show_roles" }, :confirm => "¿Esta seguro que desea bloquearlo?", :method => :delete, :style => "cursor:pointer" %></td>
+      <% end %>
      <td style="vertical-align: middle;"><%= link_to image_tag("/users/edit_user.png", :mouseover => "/users/edit_user1.png", :size => "35x35", :title => "Editar usuario" ) , :controller => "admin", :action => "new_from_admin", :id => u.id %></td>
      <td style="vertical-align: middle;"><%= link_to image_tag("/users/delete_user.png", :mouseover => "/users/delete_user1.png", :size => "35x35", :title => "Eliminar usuario") , :controller => "admin", :action => "del_user", :id => u.id %></td>
     </tr>
@@ -25,7 +40,7 @@
 
     <% if @usuarios.total_entries > @usuarios.per_page.to_i %>
     <tr class="d<%=invert_class(clase)%>" align="center" >
-      <td colspan="9" style="padding: 0;">
+      <td colspan="11" style="padding: 0;">
         <div class="digg_pagination">
           <div class="page_info">
             <%= page_entries_info @usuarios %>

@@ -95,7 +95,9 @@ class AdminController < ApplicationController
     else
       flash[:notice] = "No se pudo bloquear usuario, verifique"
     end
-    redirect_to :action => "show_users"
+    accion = "show_users"
+    accion = "show_roles" if params[:show_roles]
+    redirect_to :action => "#{accion}"
   end
  #------- Administracion de Roles ---------
   def members_by_role
