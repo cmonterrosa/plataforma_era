@@ -1,0 +1,86 @@
+<div class="container">
+<% form_for :user, @user, :url => { :action => "create", :controller => "consejeros"}, :html => {:class => "formee"} do |f| -%>
+  <fieldset>
+
+    <legend>&nbsp;Registro&nbsp;de&nbsp;usuarios&nbsp;</legend>
+    <div class="grid-form">
+      <% @user.password = @user.password_confirmation = nil %>
+      <%= error_messages_for :user %>
+    </div>
+    <div class="grid-12-12 clear"></div>
+
+    <div class="grid-form">
+      <label>Nombre de usuario: <em class="formee-req">*</em></label>
+      <%=f.text_field :login%>
+    </div>
+    <div class="grid-12-12 clear"></div>
+
+    <div class="grid-form">
+      <label>Nombre completo: <em class="formee-req">*</em></label>
+      <%=f.text_field :nombre%>
+    </div>
+    <div class="grid-12-12 clear"></div>
+
+    <div class="grid-form">
+      <label>Correo electrónico: (para recuperar contraseña)</label>
+      <%=f.text_field :email%>
+    </div>
+    <div class="grid-12-12 clear"></div>
+
+    <div class="grid-form">
+      <label>Contraseña: <em class="formee-req">*</em></label>
+      <%=f.password_field :password%>
+    </div>
+
+    <div class="grid-12-12 clear"></div>
+
+    <div class="grid-form">
+      <label>Confirmar contraseña: <em class="formee-req">*</em></label>
+      <%=f.password_field :password_confirmation%>
+    </div>
+
+    <div class="grid-12-12 clear"></div>
+
+    <div class="grid-form">
+      <label>Clave de seguridad: <em class="formee-req">*</em></label>
+      <%=password_field :clave, :clave_seguridad%>
+    </div>
+
+    <div class="grid-12-12 clear"></div>
+
+    <div class="grid-form">
+      <label style="font-size:16px;">Rol principal</label>
+      <%= select :role, :id, @roles.collect{|a| [a.descripcion, a.id]} %>
+    </div>
+
+    <div class="grid-12-12 clear"></div>
+
+    <div class="grid-form">
+      <input class="right" type="submit" title="CREAR USUARIO" value="CREAR USUARIO" />
+    </div>
+
+  </fieldset>
+<%end%>
+</div>
+
+<script type="text/javascript">
+  var login = new LiveValidation( 'user_login', {onlyOnSubmit: true} );
+  login.add( Validate.Presence );
+  var nombre = new LiveValidation( 'user_nombre', {onlyOnSubmit: true } );
+  nombre.add( Validate.Presence );
+  var email = new LiveValidation( 'user_email' );
+  email.add( Validate.Email );
+  <%#*var email = new LiveValidation( 'user_email', {onlyOnSubmit: true } );%>
+  <%#*email.add( Validate.Presence );%>
+  <%#*email.add( Validate.Email );%>
+  var password = new LiveValidation( 'user_password' );
+  password.add( Validate.Presence, {onlyOnSubmit: true } );
+  password.add( Validate.Length, { minimum: 6 } );
+  var password_confirmation = new LiveValidation( 'user_password_confirmation' );
+  password_confirmation.add( Validate.Confirmation, { match: 'user_password'} );
+</script>
+
+
+
+
+

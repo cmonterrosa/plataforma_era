@@ -24,7 +24,11 @@ class MensajesController < ApplicationController
       @destinatario = User.find(params[:recibe_id]) if params[:recibe_id]
       @escuela = Escuela.find_by_clave(@destinatario.login) if @destinatario
     else
-      redirect_to :action => "new_to_administrador"
+      if current_user.has_role?("equipotecnico") || current_user.has_role?("consejero")
+        redirect_to :action => "new_to_equipo_and_consejeros"
+      else
+        redirect_to :action => "new_to_administrador"
+      end
     end
   end
 
@@ -48,8 +52,36 @@ class MensajesController < ApplicationController
       flash[:error] = "Su mensaje no pudo enviarse, inserte un destinatario"
       render :action => "new"
     end
+ end
 
+
+  ### Mensajes entre consejeros y equipo tecnico ####
+  
+  def new_to_equipo_and_consejeros
+    @mensaje = Mensaje.new
+    @destinatarios = Role.find_by_name("equipotecnico").todos_usuarios
+    @destinatarios += Role.find_by_name("consejero").todos_usuarios
+    @destinatarios = @destinatarios.sort{|a,b| a.nombre <=> b.nombre}
   end
+
+  def save_to_consejeros
+    @mensaje = Mensaje.new(params[:mensaje])
+    usuario = User.find(params[:mensaje][:recibe_id]) if params[:mensaje][:recibe_id]
+    @mensaje.recibe_id = usuario.id if usuario
+    @mensaje.envia_id = current_user.id unless @mensaje.envia_id
+    @mensaje.activo = true unless @mensaje.activo
+    if usuario && @mensaje.save
+      flash[:notice] = "Mensaje enviado correctamente"
+      redirect_to :action => "list"
+    else
+      @destinatarios = Role.find_by_name("equipotecnico").todos_usuarios
+      @destinatarios += Role.find_by_name("consejero").todos_usuarios
+      @destinatarios = @destinatarios.sort{|a,b| a.nombre <=> b.nombre}
+      flash[:error] = "Su mensaje no pudo enviarse, inserte un destinatario"
+      render :action => "new_to_equipo_and_consejeros"
+    end
+ end
+
 
 
   def save

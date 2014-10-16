@@ -915,7 +915,7 @@ class AdminController < ApplicationController
  def download_corte_ranking
    @corte = Corte.find(params[:id])
    csv_string = FasterCSV.generate(:col_sep => "\t") do |csv|
-   csv << ["RANK", "NIVEL_CERTIFICACION", "PUNTAJE_TOTAL", "CLAVE", "NOMBRE_ESCUELA", "MUNICIPIO",  "LOCALIDAD", "NIVEL_EDUCATIVO", "MODALIDAD", "SOSTENIMIENTO"]
+   csv << ["RANK", "NIVEL_CERTIFICACION", "PUNTAJE_TOTAL", "CLAVE", "NOMBRE_ESCUELA", "MUNICIPIO",  "LOCALIDAD", "NIVEL_EDUCATIVO", "MODALIDAD", "SOSTENIMIENTO", "BENEFICIADA"]
    @corte.ranking_historicos.each do |r|
       escuela = Escuela.find(r.escuela_id) if r.escuela_id
       clave_escuela = (escuela) ? escuela.clave : ""
@@ -923,7 +923,8 @@ class AdminController < ApplicationController
       nivel_educativo = (escuela.nivel) ? escuela.nivel.descripcion : ""
       modalidad = (escuela) ? escuela.nivel_descripcion : ""
       sostenimiento = (escuela) ? escuela.sostenimiento : ""
-      csv << [r.rank, r.nivel_certificacion, r.puntaje_total, clave_escuela, nombre_escuela, r.municipio, r.localidad, nivel_educativo, modalidad, sostenimiento]
+      beneficiada = (escuela.beneficiada) ? "SI" : "NO"
+      csv << [r.rank, r.nivel_certificacion, r.puntaje_total, clave_escuela, nombre_escuela, r.municipio, r.localidad, nivel_educativo, modalidad, sostenimiento, beneficiada]
    end
      
    end
