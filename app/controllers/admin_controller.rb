@@ -6,6 +6,8 @@ class AdminController < ApplicationController
   require_role [:directivo], :only => [:show_escuelas]
   require_role [:admin], :for => ["show_respaldos"]
   require_role [:admin, :adminplat, :revisor, :enlaceevaluador]
+  #require_role [:equipotecnico], :only => [:report_by_niveles, :cortes_ranking]
+  
   
   def index
   end
@@ -283,7 +285,7 @@ class AdminController < ApplicationController
               "DIAGNOSTICO_EJE1", "DIAGNOSTICO_EJE2", "DIAGNOSTICO_EJE3", "DIAGNOSTICO_EJE4", "DIAGNOSTICO_EJE5",
               "AVANCE1_EJE1", "AVANCE1_EJE2", "AVANCE1_EJE3", "AVANCE1_EJE4", "AVANCE1_EJE5",
               "AVANCE1_EJE2", "AVANCE2_EJE2", "AVANCE2_EJE3", "AVANCE2_EJE4", "AVANCE2_EJE5",
-              "TOTAL_DIAGNOSTICO", "TOTAL_PROYECTO", "TOTAL_GENERAL"]
+              "TOTAL_DIAGNOSTICO", "TOTAL_PROYECTO", "TOTAL_GENERAL", "NOMBRE_DIRECTOR"]
 
       @escuelas.each do |i|
         diagnostico = Diagnostico.find(:first, :conditions => ["user_id = ?", i.user_id]) if i.user_id
@@ -422,7 +424,9 @@ class AdminController < ApplicationController
           end
         end
 
-        csv << [ i.clave, i.nombre, i.zona_escolar,  i.sector, i.nivel_descripcion, i.sostenimiento, i.domicilio, i.localidad, i.municipio, i.region_descripcion, i.modalidad,
+        sector =(i.sector)? i.sector : ""
+        nombre_director =(i.nombre_director)? i.nombre_director : ""
+        csv << [ i.clave, i.nombre, i.zona_escolar,  sector, i.nivel_descripcion, i.sostenimiento, i.domicilio, i.localidad, i.municipio, i.region_descripcion, i.modalidad,
                  i.email, i.email_responsable_proyecto, i.telefono, i.telefono_director, i.user_created_at, i.alu_hom,
                  i.alu_muj, i.total_alumnos, i.grupos, i.total_alumnos, i.doc_hom, i.doc_muj, i.total_personal_docente_apoyo, i.total_personal_admvo,
                  i.total_personal_apoyo, "#{estatus_actual}", docentes_capacitados, docentes_involucrados, alumnos_capacitados, superficie_areas_verdes,
@@ -435,7 +439,7 @@ class AdminController < ApplicationController
                  a2_proy_ptaje_eje1, a2_proy_ptaje_eje2, a2_proy_ptaje_eje3, a2_proy_ptaje_eje4, a2_proy_ptaje_eje5,
 #                 a1_proyecto.puntaje_eje1, a1_proyecto.puntaje_eje2, a1_proyecto.puntaje_eje3, a1_proyecto.puntaje_eje4, a1_proyecto.puntaje_eje5,
 #                 a2_proyecto.puntaje_eje1, a2_proyecto.puntaje_eje2, a2_proyecto.puntaje_eje3, a2_proyecto.puntaje_eje4, a2_proyecto.puntaje_eje5,
-                 total_diagnostico, total_proyecto, (total_diagnostico + total_proyecto)]
+                 total_diagnostico, total_proyecto, (total_diagnostico + total_proyecto), nombre_director]
       end
     end
     send_data to_iso(csv_string), type => "application/xls",
