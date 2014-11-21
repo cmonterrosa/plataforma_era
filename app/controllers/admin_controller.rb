@@ -60,6 +60,8 @@ class AdminController < ApplicationController
     if success && @user.errors.empty?
       ##### Actualizamos escuela si es el caso ####
       unless params["escuela"].nil?
+        beneficiada = (params[:beneficiada] == '1')? 1 : 0
+        escuela.update_attributes!(:beneficiada => beneficiada) if params[:beneficiada] && beneficiada
         escuela.update_attributes!(:nombre => params["escuela"]["nombre"])
       end if current_user.has_role?("adminplat")
       
@@ -951,7 +953,7 @@ class AdminController < ApplicationController
 
 
  def get_ranking_escuelas_realtime
-  @escuelas = Escuela.find_by_sql("SELECT es.id, es.clave, es.nombre, es.localidad, es.municipio, es.nivel_id from users us INNER JOIN escuelas es ON us.login = es.clave AND (us.blocked is NULL OR us.blocked !=1)")
+  @escuelas = Escuela.find_by_sql("SELECT es.id, es.clave, es.nombre, es.localidad, es.municipio, es.nivel_id from users us INNER JOIN escuelas es ON us.login = es.clave AND (us.blocked is NULL OR us.blocked !=1) AND (es.beneficiada IS NULL or es.beneficiada=0)")
   @escuelas = @escuelas.sort{|a, b| a.puntaje_actual <=> b.puntaje_actual}.reverse
   contador=1
   nivel3 = (1..100)
