@@ -31,6 +31,25 @@
     <%end%>
 
 
+    <!-- Agregamos si fue beneficiada -->
+    <%if current_user.has_role?("adminplat")%>
+    <div class="grid-6-12 clear">
+        ¿Ha sido beneficiada? id : <%= escuela.id %>&nbsp;
+        <%valor = (escuela.beneficiada==1)? '1' : '0'%>
+        <%if valor == 1%>
+          <%= check_box_tag 'beneficiada', valor, (escuela.beneficiada==nil)? false : true%>
+        <%else%>
+           <%= check_box_tag 'beneficiada', nil, (escuela.beneficiada==nil)? false : true%>
+        <%end%>
+        <br />
+    </div>
+    <%end%>
+
+
+
+          
+
+
     <div class="grid-6-12 clear">
       <label>Nombre de quien registró: </label>
       <%= f.text_field :nombre %>

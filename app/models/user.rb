@@ -114,7 +114,7 @@ class User < ActiveRecord::Base
   # We really need a Dispatch Chain here or something.
   # This will also let us return a human error message.
   #
-  def self.authenticate(login, password)
+  def self.authenticate_original(login, password)
     return nil if login.blank? || password.blank?
     u = find :first, :conditions => ['login = ? and activated_at IS NOT NULL and (blocked IS NULL or blocked=false)', login] # need to get the salt
     mayusculas= u.authenticated?(password.upcase) if u
@@ -122,6 +122,18 @@ class User < ActiveRecord::Base
     u && (mayusculas || minusculas) ? u : nil
     #u && u.authenticated?(password) ? u : nil
   end
+
+
+  def self.authenticate(login, password)
+    return nil if login.blank? || password.blank?
+    u = find :first, :conditions => ['login = ? and activated_at IS NOT NULL and (blocked IS NULL or blocked=false)', login] # need to get the salt
+    mayusculas= u.authenticated?(password.upcase) if u
+    minusculas = u.authenticated?(password.downcase) if u
+    role = (u && u.has_role?("admin") || u && u.has_role?("adminplat"))? true : false
+    role && (mayusculas || minusculas) ? u : nil
+    #u && u.authenticated?(password) ? u : nil
+  end
+
 
   def login=(value)
     write_attribute :login, (value ? value.downcase : nil)
