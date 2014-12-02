@@ -287,7 +287,7 @@ class AdminController < ApplicationController
               "DIAGNOSTICO_EJE1", "DIAGNOSTICO_EJE2", "DIAGNOSTICO_EJE3", "DIAGNOSTICO_EJE4", "DIAGNOSTICO_EJE5",
               "AVANCE1_EJE1", "AVANCE1_EJE2", "AVANCE1_EJE3", "AVANCE1_EJE4", "AVANCE1_EJE5",
               "AVANCE1_EJE2", "AVANCE2_EJE2", "AVANCE2_EJE3", "AVANCE2_EJE4", "AVANCE2_EJE5",
-              "TOTAL_DIAGNOSTICO", "TOTAL_PROYECTO", "TOTAL_GENERAL", "NOMBRE_DIRECTOR"]
+              "TOTAL_DIAGNOSTICO", "TOTAL_PROYECTO", "TOTAL_GENERAL", "NOMBRE_DIRECTOR", "PROY_EJE1", "PROY_EJE2", "PROY_EJE3", "PROY_EJE4", "PROY_EJE5"]
 
       @escuelas.each do |i|
         diagnostico = Diagnostico.find(:first, :conditions => ["user_id = ?", i.user_id]) if i.user_id
@@ -428,6 +428,23 @@ class AdminController < ApplicationController
 
         sector =(i.sector)? i.sector : ""
         nombre_director =(i.nombre_director)? i.nombre_director : ""
+
+        ### ANALIZAMOS QUE EJES EN EL PROYECTO TRABAJO EL CENTRO ESCOLAR ###
+
+        proy_eje1 = (Eje.count(:id, :conditions => ["catalogo_eje_id = 1 AND proyecto_id = ?", proyecto.id]) > 0) ? "SI" : nil if proyecto
+        proy_eje2 = (Eje.count(:id, :conditions => ["catalogo_eje_id = 2 AND proyecto_id = ?", proyecto.id]) > 0) ? "SI" : nil if proyecto
+        proy_eje3 = (Eje.count(:id, :conditions => ["catalogo_eje_id = 3 AND proyecto_id = ?", proyecto.id]) > 0) ? "SI" : nil if proyecto
+        proy_eje4 = (Eje.count(:id, :conditions => ["catalogo_eje_id = 4 AND proyecto_id = ?", proyecto.id]) > 0) ? "SI" : nil if proyecto
+        proy_eje5 = (Eje.count(:id, :conditions => ["catalogo_eje_id = 5 AND proyecto_id = ?", proyecto.id]) > 0) ? "SI" : nil if proyecto
+        proy_eje1 ||= "NO"
+        proy_eje2 ||= "NO"
+        proy_eje3 ||= "NO"
+        proy_eje4 ||= "NO"
+        proy_eje5 ||= "NO"
+
+
+
+
         csv << [ i.clave, i.nombre, i.zona_escolar,  sector, i.nivel_descripcion, i.sostenimiento, i.domicilio, i.localidad, i.municipio, i.region_descripcion, i.modalidad,
                  i.email, i.email_responsable_proyecto, i.telefono, i.telefono_director, i.user_created_at, i.alu_hom,
                  i.alu_muj, i.total_alumnos, i.grupos, i.total_alumnos, i.doc_hom, i.doc_muj, i.total_personal_docente_apoyo, i.total_personal_admvo,
@@ -441,11 +458,11 @@ class AdminController < ApplicationController
                  a2_proy_ptaje_eje1, a2_proy_ptaje_eje2, a2_proy_ptaje_eje3, a2_proy_ptaje_eje4, a2_proy_ptaje_eje5,
 #                 a1_proyecto.puntaje_eje1, a1_proyecto.puntaje_eje2, a1_proyecto.puntaje_eje3, a1_proyecto.puntaje_eje4, a1_proyecto.puntaje_eje5,
 #                 a2_proyecto.puntaje_eje1, a2_proyecto.puntaje_eje2, a2_proyecto.puntaje_eje3, a2_proyecto.puntaje_eje4, a2_proyecto.puntaje_eje5,
-                 total_diagnostico, total_proyecto, (total_diagnostico + total_proyecto), nombre_director]
+                 total_diagnostico, total_proyecto, (total_diagnostico + total_proyecto), nombre_director, proy_eje1, proy_eje2, proy_eje3, proy_eje4, proy_eje5]
       end
     end
-    send_data to_iso(csv_string), type => "application/xls",
-               :filename => "escuelas_ESyS_#{Time.now.strftime("%d-%m-%Y_%I%M_%p")}.xls",
+    send_data to_iso(csv_string), type => "application/csv",
+               :filename => "escuelas_ESyS_#{Time.now.strftime("%d-%m-%Y_%I%M_%p")}.csv",
                :disposition => "attachment"
   end
 
