@@ -51,13 +51,15 @@ class NuevoCicloEscolar2015 < ActiveRecord::Migration
                                       :agregada_usuario => 0,
                                       :beneficiada => nil,
                                       :fecha_beneficiada => nil)
-     puts("=> #{contador} Actualizada") if e.save
+     puts("=> TOTAL DE ESCUELAS ACTUALIZADAS: #{contador}") if e.save && contador+=1
     end
 
-    puts ("=> BORRANDO ARCHIVOS")
-    contador_archivos=1
+    puts ("=> BUSCANDO ARCHIVOS")
+    contador_archivos=0
     @adjuntos = Adjunto.all.each do |a|
-          contador_archivos+=1 if a.destroy
+      file_exists = File.exists?(a.full_path)
+      deleted = (file_exists)? a.destroy : nil
+      (deleted) ?  contador_archivos+=1 : nil
     end
     puts("=> ADJUNTOS BORRADOS: #{contador_archivos}")
     execute("truncate adjuntos;")
