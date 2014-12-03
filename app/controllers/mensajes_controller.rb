@@ -37,6 +37,10 @@ class MensajesController < ApplicationController
   def new_to_administrador
     @mensaje = Mensaje.new
     @destinatario = User.find_by_login("esys")
+    unless @destinatario
+      flash[:error] = "No existe ningun usuario administrador"
+      redirect_to :controller => "home"
+    end
   end
 
   def save_to_administrador
