@@ -1,3 +1,5 @@
+#!/bin/env ruby
+# encoding: utf-8
 # This controller handles the login/logout function of the site.  
 class SessionsController < ApplicationController
   # Be sure to include AuthenticationSystem in Application Controller instead
@@ -44,12 +46,13 @@ protected
    # is_user_blocked=(User.find(params[:login]) ? User.find(params[:login]).blocked : nil
     #msj=(User.find(params[:login]) ? User.find(params[:login]).blocked : nil)? "Usuario ha sido bloqueado, comuníquese con el administrador en la siguiente dirección: #{SITE_EMAIL}" : "Nombre de usuario o contraseña incorrectas, si tiene alguna duda, puede enviar un correo electrónico a: #{SITE_EMAIL}"
 
-#    flash[:error] = "Nombre de usuario o contraseña incorrectas, si tiene alguna duda, puede enviar un correo electrónico a: #{SITE_EMAIL}"
-#    logger.warn "Failed login for '#{params[:login]}' from #{request.remote_ip} at #{Time.now.utc}"
-#    
-    ### Bloqueo Noviembre de 2014
-    flash[:error] = "El acceso a la plataforma se encuentra deshabilitado, dudas o comentarios comuníquese con el Equipo de Certificación"
-    logger.warn "Blocked login for '#{params[:login]}' from #{request.remote_ip} at #{Time.now.utc}"
+    flash[:error] = "Nombre de usuario o contraseña incorrectas, si tiene alguna duda, puede enviar un correo electrónico a: #{SITE_EMAIL}"
+    logger.warn "Failed login for '#{params[:login]}' from #{request.remote_ip} at #{Time.now.utc}"
+    
+    ### Bloqueo de solo acceso a admin #####
+
+    #flash[:error] = "El acceso a la plataforma se encuentra deshabilitado, dudas o comentarios comuníquese con el Equipo de Certificación"
+    #logger.warn "Blocked login for '#{params[:login]}' from #{request.remote_ip} at #{Time.now.utc}"
 
   end
 end
