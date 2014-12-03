@@ -16,7 +16,8 @@
           margin-top: 5px;
           /*background-color: #F0F0F0;*/
           background-color: white;
-          font-family: Arial Narrow,Helvetica,sans-serif;
+          /*font-family: Arial Narrow,Helvetica,sans-serif;*/
+          font-family: "Arial Narrow", Arial, "Helvetica Condensed";
   }
 
   </style>
@@ -281,13 +282,13 @@ a:active {
         </tr>
         <tr>
           <td colspan="3">
-            <table width="600" border="0" cellspacing="0" cellpadding="0">
-              <tr style="text-shadow: gray 0.1em 0.1em 0.2em">
+            <table width="700px" border="0" cellspacing="0" cellpadding="0">
+              <tr>
                 <td width="60px" align="right"><img src="/images/era/iconos/ico_arbol.png" alt="2" width="34" height="17" /></td>
                 <!-- <td width="40" class="Txt_arbol"><a href="http://era.educacionchiapas.gob.mx" class="Txt_arbol">Inicio</a></td>-->
 
                 <!-- inicio -->
-                <td width="40px" class="Txt_arbol">
+                <td width="70px" class="Txt_arbol">
                  <%=h link_to "ERA", "http://era.educacionchiapas.gob.mx" , :style => "http://esys.educacionchiapas.gob.mx" , :style => "text-decoration: none; color: #404040;", :title => "SITIO PRINCIPAL DEL PROGRAMA 'ERA'", :confirm => "¿Desea ir al sitio principal?"%>
                 </td>
 
@@ -296,7 +297,7 @@ a:active {
                 <!--<td width="120" class="Txt_arbol"><a href="http://esys.educacionchiapas.gob.mx" class="Txt_arbol">Certificación ESyS</a></td> -->
 
                 <!-- esys -->
-                <td width="120px" class="Txt_arbol">
+                <td width="180px" class="Txt_arbol">
                  <%=h link_to "CERTIFICACIÓN ESyS", "http://esys.educacionchiapas.gob.mx" , :style => "text-decoration: none; color: #404040;", :title => "SITIO DE CERTIFICACIÓN DE ESCUELAS SALUDABLES Y SUSTENTABLES"%>
                 </td>
 
@@ -307,7 +308,7 @@ a:active {
                 <td width="34" align="center"><img src="/images/era/iconos/ico_arbol.png" alt="1" width="34" height="17" /></td>
 
                 <!-- Nombre de quien esta loggeado -->
-                <td width="280" class="Txt_arbol">
+                <td width="320" class="Txt_arbol">
                   <a href="/home" class="Txt_arbol">
                     <%if current_user.has_role?("directivo")%>
                       <%nombre= (@esc = Directivo.find_by_clave(current_user.login)) ? @esc.descripcion : nil%>
