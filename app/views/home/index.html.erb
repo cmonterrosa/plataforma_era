@@ -14,10 +14,10 @@
   </td>
   <%unless logged_in?%>
   <td>
-    <%=link_to image_tag("era/btn_iniciasesion.png", :size => "175x105", :mouseover => "era/btn_iniciasesion2.png", :border => 0), {:controller => "sessions", :action => "new" }, :title => "INGRESA A LA PLATAFORMA"%>
+    <%=link_to image_tag("era/inicio1.png", :size => "250x120", :mouseover => "era/inicio2.png", :border => 0), {:controller => "sessions", :action => "new" }, :title => "INGRESA A LA PLATAFORMA"%>
   </td>
   <td>
-    <%=link_to image_tag("era/btn_registro.png", :size => "175x105", :mouseover => "era/btn_registro2.png", :border => 0), {:controller => "users", :action => "new" }, :title => "REGISTRA A TU ESCUELA, ES FÁCIL y RÁPIDO"%>
+    <%=link_to image_tag("era/registro1.png", :size => "250x120", :mouseover => "era/registro2.png", :border => 0), {:controller => "users", :action => "new" }, :title => "REGISTRA A TU ESCUELA, ES FÁCIL y RÁPIDO"%>
   </td>
   <%else%>
     <td colspan="2" >&nbsp;</td>

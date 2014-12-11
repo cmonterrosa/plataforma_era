@@ -1,6 +1,6 @@
 class AddEstatusEvaluados < ActiveRecord::Migration
   def self.up
-    Estatu.create(:clave => "diag-eva", :descripcion => "Diagnóstico evaluado")
+    Estatu.create(:clave => "diag-eva", :descripcion => "Diagnostico evaluado")
     Estatu.create(:clave => "proy-eva", :descripcion => "Proyecto evaluado")
   end
 
