@@ -1,6 +1,7 @@
 class DiagnosticosController < ApplicationController
   layout :set_layout
   #before_filter :login_required, :except => [:reporte_completo, :set_layout]
+  before_filter :no_disponible
   
   def index
     if current_user.has_role?("adminplat") || current_user.has_role?("admin")
@@ -8,10 +9,12 @@ class DiagnosticosController < ApplicationController
       redirect_to :controller => "admin"
     end
 
+    
+
     @escuela= Escuela.find(params[:id]) if params[:id]
     @escuela ||= Escuela.find_by_clave(current_user.login.upcase)
     unless @escuela.registro_completo
-      flash[:notice] = "Para iniciar al diagnostico, es necesario primero concluir el registro de dátos básicos"
+      flash[:error] = "Para iniciar al diagnostico, es necesario primero concluir el registro de dátos básicos"
       redirect_to :controller => "registro"
     end
 
@@ -270,6 +273,13 @@ class DiagnosticosController < ApplicationController
 
   def set_layout
     (action_name == 'reporte_completo' || action_name == 'reporte_resumen' || action_name == 'reporte')? 'reporte' : 'diagnostico'
+  end
+
+  def no_disponible
+    if current_user.has_role?("escuela")
+      flash[:error] = "El proceso de diagnostico aún no está abierto"
+      redirect_to :controller => "home"
+    end
   end
 
 end
