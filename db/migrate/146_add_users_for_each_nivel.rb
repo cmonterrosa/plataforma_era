@@ -1,7 +1,7 @@
 class AddUsersForEachNivel < ActiveRecord::Migration
   def self.up
     Role.create(:name => "nivel", :descripcion => "Nivel Educativo") unless Role.find_by_name("nivel")
-    #add_column :users, :nivel_id, :integer
+    add_column :users, :nivel_id, :integer
 
     ### Reorganizo algunos centros de trabajo que no tienen campo de nivel #####
     esc_primarias = Escuela.find(:all, :conditions => ["nombre like ? AND nivel_id IS NULL", 'PRIMARIA%'])
@@ -24,15 +24,19 @@ class AddUsersForEachNivel < ActiveRecord::Migration
       password = "#{login}#{nivel.id.to_s}" if login
       puts password
       usuario = User.new(:login => login,
+                   :nombre => "Usuario de #{nivel.descripcion}",
                    :password => password.downcase,
                    :password_confirmation => password.downcase,
                    :email => "#{login.downcase}@educacionchiapas.gob.mx",
-                   :activated_at => Time.now
+                   :activated_at => Time.now,
+                   :nivel_id => nivel.id
                    ) if login && password
-      puts("=> Usuario: #{usuario.login} - Password:#{usuario.password}") if usuario && usuario.save
+      usuario.roles << Role.find_by_name("nivel") if usuario
+      puts("=> Usuario: #{usuario.login} - Password:#{usuario.password}") if (usuario && usuario.save) && usuario.activate!
 
 
-  end
+
+    end
 
 
   end
