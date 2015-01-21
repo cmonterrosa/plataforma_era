@@ -49,6 +49,8 @@ def dispatch
           redirect_to :controller => "admin"
         elsif @usuario.has_role?(:revisor)
           redirect_to :controller => "instituciones"
+        elsif @usuario.has_role?(:nivel)
+          redirect_to :controller => "niveles"
         else
           #redirect_to :action => "index"
           puts "..."
