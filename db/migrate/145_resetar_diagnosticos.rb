@@ -42,6 +42,12 @@ class ResetarDiagnosticos < ActiveRecord::Migration
       e.update_attributes(:estatu_id => estatu_solo_registro.id)
       puts("=> TOTAL DE ESCUELAS ACTUALIZADAS: #{contador}") if e.save && contador+=1
     end
+    registros_bitacora=0
+    bitacoras = Bitacora.find(:all, :conditions => ["estatu_id in (?)", estatus])
+    bitacoras.each do |b|
+      b.destroy && registros_bitacora+=1
+    end
+    puts ("=> #{registros_bitacora} REGISTROS DE BITACORA ELIMINADOS")
 
     puts ("=> BUSCANDO ARCHIVOS")
     contador_archivos=0
