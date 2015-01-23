@@ -7,9 +7,9 @@
   </div>
   <div class="grid-12-12"></div>
   <div class="grid-3-12"></div>
-
-  <div class="grid-6-12">
-    <div class="titulos">(Nivel <%=@nivel.descripcion%>)</div>
+  <div class="grid-12-12 clear"></div>
+  <div class="grid-12-12">
+    <div class="titulos">Nivel: <%=@nivel.descripcion%> / Subsistema: <%=@sostenimiento%></div>
   </div>
   <div class="grid-1-12">
     <%= link_to_remote (image_tag("admin/actualizar.png", :mouseover => "admin/actualizar1.png", :title => "Actualizar")),
