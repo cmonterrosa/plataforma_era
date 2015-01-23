@@ -33,7 +33,7 @@ class ResetarDiagnosticos < ActiveRecord::Migration
 
     queries.split(";").each do |c| execute(c.strip + ";") end
     puts("=> AJUSTANDO ESCUELAS QUE HICIERON DIAGNOSTICO")
-    estatus = Estatu.find(:all, :conditions => ["clave = ? OR clave = ?", "diag-inic", "diag-conc"])
+    estatus = Estatu.find(:all, :conditions => ["clave in (?)", ["diag-inic", "diag-conc", "proy-inic", "proy-fin", "avance1", "avance2"]])
     estatu_solo_registro = Estatu.find(:first, :conditions => ["clave = ?", "esc-datos"])
     total_escuelas = Escuela.count(:id, :conditions => ["estatu_id in (?)", estatus])
     puts("=> Total de Escuelas con diagnostico trabajado: #{total_escuelas}")
