@@ -33,7 +33,7 @@ class ResetarDiagnosticos < ActiveRecord::Migration
 
     queries.split(";").each do |c| execute(c.strip + ";") end
     puts("=> AJUSTANDO ESCUELAS QUE HICIERON DIAGNOSTICO")
-    estatus = Estatu.find(:all, :conditions => ["clave = ? OR clave = ?", "diag-inic", "diag-conc"])
+    estatus = Estatu.find(:all, :conditions => ["clave in (?)", ["diag-inic", "diag-conc", "proy-inic", "proy-fin", "avance1", "avance2"]])
     estatu_solo_registro = Estatu.find(:first, :conditions => ["clave = ?", "esc-datos"])
     total_escuelas = Escuela.count(:id, :conditions => ["estatu_id in (?)", estatus])
     puts("=> Total de Escuelas con diagnostico trabajado: #{total_escuelas}")
@@ -42,6 +42,12 @@ class ResetarDiagnosticos < ActiveRecord::Migration
       e.update_attributes(:estatu_id => estatu_solo_registro.id)
       puts("=> TOTAL DE ESCUELAS ACTUALIZADAS: #{contador}") if e.save && contador+=1
     end
+    registros_bitacora=0
+    bitacoras = Bitacora.find(:all, :conditions => ["estatu_id in (?)", estatus])
+    bitacoras.each do |b|
+      b.destroy && registros_bitacora+=1
+    end
+    puts ("=> #{registros_bitacora} REGISTROS DE BITACORA ELIMINADOS")
 
     puts ("=> BUSCANDO ARCHIVOS")
     contador_archivos=0

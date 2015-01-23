@@ -13,9 +13,14 @@
       </th>
      </tr>
 
-    <tr class="d0">
+    <tr class="d1">
        <td style="vertical-align: middle;"><b>Nivel educativo:</b></td>
        <td style="vertical-align: middle;"> <%=h(@escuela.nivel_id ? Nivel.find(@escuela.nivel_id).descripcion : "No existe información")%></td>
+    </tr>
+
+    <tr class="d0">
+       <td style="vertical-align: middle;"><b>Sostenimiento:</b></td>
+       <td style="vertical-align: middle;"> <%=h(@escuela.sostenimiento ? @escuela.sostenimiento : "No existe información")%></td>
     </tr>
 
     <tr class="d1">
