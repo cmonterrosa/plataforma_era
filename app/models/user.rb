@@ -180,10 +180,19 @@ end
     (self.email_not_required) ? true : false
   end
 
+  def make_autopassword(length=8)
+       chars = 'abcdefghjkmnpqrstuvwxyz0123456789'
+       password = ''
+       length.times { password << chars[rand(chars.size)] }
+       password
+  end
+
 
     protected
       def make_activation_code
             self.activation_code = self.class.make_token
       end
+
+
   
 end

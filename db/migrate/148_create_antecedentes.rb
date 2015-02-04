@@ -47,24 +47,67 @@ class CreateAntecedentes < ActiveRecord::Migration
     File.open("#{RAILS_ROOT}/db/migrate/catalogos/ultimas_escuelas_beneficiadas_2014.csv").each_line { |line|
        clave, estatus,proyecto,deje1,deje2, deje3,deje4,deje5,total_diagnostico, total_proyecto, total_general, nombre_director = line.split(",")
        begin
-       
-        Escuela.establish_connection "era2014"
-        puts clave
-        escuela = Escuela.find(:first, :conditions => ["clave = ?", clave.strip])
+
+
+       escuela = Escuela.find(:first, :conditions => ["clave = ?", clave.strip])
            if escuela
-            estatu_id = (Estatu.find_by_descripcion(estatus)) ? Estatu.find_by_descripcion(estatus).id : 1
+            estatu_id = (Estatu.find_by_descripcion(estatus))? Estatu.find_by_descripcion(estatus).id : nil
             a = Antecedente.new(:escuela_id => escuela,
                                              :clave => clave,
-                                             :ciclo_id => ciclo_actual
-                                             )
+                                             :ciclo_id => ciclo_actual,
+                                             :nombre_proyecto => proyecto,
+                                             :diagnostico_eje1 => deje1,
+                                             :diagnostico_eje2 => deje2,
+                                             :diagnostico_eje3 => deje3,
+                                             :diagnostico_eje4 => deje4,
+                                             :diagnostico_eje5 => deje5,
+                                             :puntaje_diagnostico => total_diagnostico,
+                                             :puntaje_proyecto => total_proyecto,
+                                             :puntaje_final => total_general,
+                                             :nombre_director => nombre_director,
+                                             :estatu_id => estatu_id
+                                      )
             contador+=1 if a.save
-          else
+            
+         ### Actualizamos registros de beneficiada ###
+         Escuela.establish_connection "era2014"
+          escuela_anterior = Escuela.find(:first, :conditions => ["clave = ?", clave.strip])
+          a.update_attributes(:beneficiada => escuela_anterior.beneficiada, :fecha_beneficiada =>  escuela_anterior.fecha_beneficiada)
+          a.save
+         Escuela.establish_connection "#{RAILS_ENV}"
+
+
+
+         ### Creamos usuarios ###
+         User.establish_connection "era2014"
+          usuarioa = User.find_by_login(clave)
+          login, nombre, email = usuarioa.login, usuarioa.nombre, usuarioa.email
+          
+          
+
+         User.establish_connection "#{RAILS_ENV}"
+          usuario = User.new
+          password = usuario.make_autopassword
+          usuario.update_attributes(:escuela_id => escuela,
+                                    :login => login,
+                                    :nombre => nombre,
+                                    :password => password,
+                                    :password_confirmation => password,
+                                    :email => email
+                                   )
+          usuario.activated_at = Time.now
+          puts("#{login},#{password},#{escuela.nivel.descripcion}") if usuario.save
+
+         else
             puts("=> Escuela: #{clave} no encontro resultados")
           end
         rescue => e
             puts e
       end
      }
+
+
+
        puts("=> Total de escuelas encontradas: #{contador}")
 
     
