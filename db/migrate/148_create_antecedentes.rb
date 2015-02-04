@@ -57,7 +57,7 @@ class CreateAntecedentes < ActiveRecord::Migration
        escuela = Escuela.find(:first, :conditions => ["clave = ?", clave.strip])
            if escuela
             estatu_id = (Estatu.find_by_descripcion(estatus))? Estatu.find_by_descripcion(estatus).id : nil
-            a = Antecedente.new(:escuela_id => escuela,
+            a = Antecedente.new(:escuela_id => escuela.id,
                                              :clave => clave,
                                              :ciclo_id => ciclo_actual,
                                              :nombre_proyecto => proyecto,
@@ -77,7 +77,8 @@ class CreateAntecedentes < ActiveRecord::Migration
          ### Actualizamos registros de beneficiada ###
          Escuela.establish_connection "era2014"
           escuela_anterior = Escuela.find(:first, :conditions => ["clave = ?", clave.strip])
-          a.update_attributes(:beneficiada => escuela_anterior.beneficiada, :fecha_beneficiada =>  escuela_anterior.fecha_beneficiada)
+          a.update_attributes(:beneficiada => true)
+          a.update_attributes(:fecha_beneficiada =>  escuela_anterior.fecha_beneficiada)
           a.save
          Escuela.establish_connection "#{RAILS_ENV}"
 
