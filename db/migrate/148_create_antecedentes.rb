@@ -43,7 +43,12 @@ class CreateAntecedentes < ActiveRecord::Migration
 
     puts("=> Actualizamos escuelas beneficiadas")
     contador=0
+    contador_usuarios=0
     ciclo_actual = Ciclo.find_by_activo(true)
+    nuevos_usuarios = File.open("tmp/nuevos_usuarios.csv", "w")
+    nuevos_usuarios.puts("usuario,password,nivel_educativo,subsistema")
+
+
     File.open("#{RAILS_ROOT}/db/migrate/catalogos/ultimas_escuelas_beneficiadas_2014.csv").each_line { |line|
        clave, estatus,proyecto,deje1,deje2, deje3,deje4,deje5,total_diagnostico, total_proyecto, total_general, nombre_director = line.split(",")
        begin
@@ -83,22 +88,37 @@ class CreateAntecedentes < ActiveRecord::Migration
           usuarioa = User.find_by_login(clave)
           login, nombre, email = usuarioa.login, usuarioa.nombre, usuarioa.email
           
-          
-
          User.establish_connection "#{RAILS_ENV}"
-          usuario = User.new
-          password = usuario.make_autopassword
-          usuario.update_attributes(:escuela_id => escuela,
-                                    :login => login,
-                                    :nombre => nombre,
-                                    :password => password,
-                                    :password_confirmation => password,
-                                    :email => email
-                                   )
-          usuario.activated_at = Time.now
-          puts("#{login},#{password},#{escuela.nivel.descripcion}") if usuario.save
 
-         else
+          ## Buscamos si el usuario ya esta registrado ##
+          unless User.find_by_login(login)
+              usuario = User.new
+              password = usuario.make_autopassword
+              usuario.update_attributes(:escuela_id => escuela,
+                                        :login => login,
+                                        :nombre => nombre,
+                                        :password => password,
+                                        :password_confirmation => password,
+                                        :email => email
+                                       )
+              usuario.activated_at = Time.now
+
+              if usuario.save
+                  nivel = (escuela.nivel) ? escuela.nivel.descripcion : "No existe informacion"
+                  nuevos_usuarios.puts("#{login.upcase},#{password},#{nivel}, #{escuela.sostenimiento}")
+                  puts("=> #{login.upcase},#{password},#{nivel},#{escuela.sostenimiento}")
+                  contador_usuarios +=1
+
+                  ## Cambio de estatus a escuela ###
+                  escuela.update_bitacora!("esc-regis", usuario)
+              end
+
+          else
+            puts("=> Escuela: #{login.upcase} YA ESTA REGISTRADA")
+
+          end
+
+       else
             puts("=> Escuela: #{clave} no encontro resultados")
           end
         rescue => e
@@ -106,12 +126,8 @@ class CreateAntecedentes < ActiveRecord::Migration
       end
      }
 
-
-
-       puts("=> Total de escuelas encontradas: #{contador}")
-
-    
-
+     puts("=> Total de escuelas encontradas: #{contador}")
+     puts("=> Total de usuarios creados: #{contador_usuarios}")
 
   end
 
