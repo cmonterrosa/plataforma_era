@@ -19,7 +19,7 @@ class MensajesController < ApplicationController
   end
 
   def new
-    if current_user.has_role?("esys") || current_user.has_role?("revisor") || current_user.has_role?("coordinador") || current_user.has_role?("nivel")
+    if current_user.has_role?("esys") || current_user.has_role?("revisor") || current_user.has_role?("coordinador") || current_user.has_role?("nivel") || current_user.login == "esys"
       @mensaje = Mensaje.new
       @destinatario = User.find(params[:recibe_id]) if params[:recibe_id]
       @escuela = Escuela.find_by_clave(@destinatario.login) if @destinatario
