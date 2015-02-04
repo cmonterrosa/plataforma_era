@@ -11,6 +11,7 @@ class EscuelasController < ApplicationController
     @user ||= User.find_by_login(params[:id])
     @user ||= current_user
     @escuela ||= Escuela.find_by_clave(@user.login) if @user
+    @antecedentes = (@escuela)?  Antecedente.find(:all, :conditions => ["escuela_id = ?", @escuela.id]) : Array.new
     unless @escuela
       flash[:error] = "El usuario no corresponde a un centro escolar"
       redirect_to :action => "show_users", :controller => "admin"
@@ -18,6 +19,7 @@ class EscuelasController < ApplicationController
   end
 
   def show_fancy
+
     @user ||= User.find(params[:id])
     @user ||= current_user
     @escuela ||= Escuela.find_by_clave(@user.login) if @user
