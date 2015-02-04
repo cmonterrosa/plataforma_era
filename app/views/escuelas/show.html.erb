@@ -60,7 +60,10 @@
   </table>
   <br /><br />
 
- 
+
+  <%unless @antecedentes.empty?%>
+      <%=render :partial => "antecedentes"%>
+  <%end%>
 
  <%=render :partial => "bitacora"%>
 
