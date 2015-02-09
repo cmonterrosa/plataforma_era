@@ -52,6 +52,6 @@ class AddUsersForEachNivel < ActiveRecord::Migration
   def self.down
     Role.find_by_name("nivel").destroy if Role.find_by_name("nivel")
     remove_column :users, :nivel_id
-    remove_column :users, :sistenimiento
+    remove_column :users, :sostenimiento
   end
 end
