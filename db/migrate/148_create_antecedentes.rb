@@ -46,7 +46,7 @@ class CreateAntecedentes < ActiveRecord::Migration
     contador_usuarios=0
     ciclo_actual = Ciclo.find_by_activo(true)
     nuevos_usuarios = File.open("tmp/nuevos_usuarios.csv", "w")
-    nuevos_usuarios.puts("usuario,password,nivel_educativo,subsistema")
+    nuevos_usuarios.puts("nombre_escuela,usuario,password,nivel_educativo,subsistema")
 
 
     File.open("#{RAILS_ROOT}/db/migrate/catalogos/ultimas_escuelas_beneficiadas_2014.csv").each_line { |line|
@@ -106,7 +106,7 @@ class CreateAntecedentes < ActiveRecord::Migration
 
               if usuario.save
                   nivel = (escuela.nivel) ? escuela.nivel.descripcion : "No existe informacion"
-                  nuevos_usuarios.puts("#{login.upcase},#{password},#{nivel}, #{escuela.sostenimiento}")
+                  nuevos_usuarios.puts("#{escuela.nombre},#{login.upcase},#{password},#{nivel}, #{escuela.sostenimiento}")
                   puts("=> #{login.upcase},#{password},#{nivel},#{escuela.sostenimiento}")
                   contador_usuarios +=1
 
