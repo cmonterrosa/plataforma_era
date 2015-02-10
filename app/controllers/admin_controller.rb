@@ -277,7 +277,7 @@ class AdminController < ApplicationController
                                   INNER JOIN escuelas es ON us.login = es.clave
                                   AND (us.blocked is NULL OR us.blocked !=1)")
       csv_string = FasterCSV.generate(:col_sep => "\t") do |csv|
-      csv << ["CLAVE_ESCUELA", "NOMBRE", "ZONA_ESCOLAR", "SECTOR", "NIVEL", "SOSTENIMIENTO", "DOMICILIO", "LOCALIDAD", "MUNICIPIO", "REGION", "MODALIDAD",
+      csv << ["CLAVE_ESCUELA", "NOMBRE", "ZONA_ESCOLAR", "SECTOR", "NIVEL_GENERAL", "NIVEL", "SOSTENIMIENTO", "DOMICILIO", "LOCALIDAD", "MUNICIPIO", "REGION", "MODALIDAD",
               "CORREO_ESCUELA", "CORREO_RESPONSABLE", "TELEFONO_ESCUELA", "TELEFONO_DIRECTOR", "FECHA_HORA_CAPTURA", "ALU_HOMBRES",
               "ALU_MUJERES", "TOTAL_ALUMNOS", "GRUPOS", "TOTAL_ALUMNOS", "DOCENTES_H", "DOCENTES_M", "TOTAL_DOCENTE_APOYO", "TOTAL_PERSONAL_ADMVO",
               "TOTAL_PERSONAL_APOYO", "ESTATUS_ACTUAL", "DOCENTES_CAPACITADOS", "DOCENTES_INVOLUCRADOS", "ALUMNOS_CAPACITADOS", "SUPERFICIE_AREAS_VERDES",
@@ -447,8 +447,9 @@ class AdminController < ApplicationController
         benef_2014 = "SI" if benef.ciclo.descripcion == "2013-2014" unless benef.nil?
         benef_2014 ||= "NO"
         
-
-        csv << [ i.clave, i.nombre, i.zona_escolar,  sector, i.nivel_descripcion, i.sostenimiento, i.domicilio, i.localidad, i.municipio, i.region_descripcion, i.modalidad,
+        nivel_general = (i.nivel) ? i.nivel.descripcion : "NO EXISTE INFORMACION"
+        
+        csv << [ i.clave, i.nombre, i.zona_escolar,  sector, nivel_general , i.nivel_descripcion, i.sostenimiento, i.domicilio, i.localidad, i.municipio, i.region_descripcion, i.modalidad,
                  i.email, i.email_responsable_proyecto, i.telefono, i.telefono_director, i.user_created_at, i.alu_hom,
                  i.alu_muj, i.total_alumnos, i.grupos, i.total_alumnos, i.doc_hom, i.doc_muj, i.total_personal_docente_apoyo, i.total_personal_admvo,
                  i.total_personal_apoyo, "#{estatus_actual}", docentes_capacitados, docentes_involucrados, alumnos_capacitados, superficie_areas_verdes,
