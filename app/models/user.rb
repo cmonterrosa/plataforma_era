@@ -13,6 +13,7 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :escuelas, :join_table => 'escuelas_users'
   has_and_belongs_to_many :catalogo_accions, :join_table => 'users_catalogo_accions'
   belongs_to :escuela
+  belongs_to :nivel
   belongs_to :catalogo_institucion
   has_many :evaluacions
   
