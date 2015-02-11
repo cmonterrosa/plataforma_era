@@ -311,7 +311,7 @@ class AdminController < ApplicationController
               end
               acciones = array_acciones.join(";")
             end
-            acciones ||= ''
+            acciones ||= ""
 
           # -- huella
             if diagnostico.huella
@@ -375,11 +375,11 @@ class AdminController < ApplicationController
             e_diagnostico = Evaluacion.find_by_diagnostico_id_and_activa(diagnostico.id, true)
         end
 
-        diag_ptaje_eje1 = e_diagnostico ? e_diagnostico.puntaje_eje1 : "NE"
-        diag_ptaje_eje2 = e_diagnostico ? e_diagnostico.puntaje_eje2 : "NE"
-        diag_ptaje_eje3 = e_diagnostico ? e_diagnostico.puntaje_eje3 : "NE"
-        diag_ptaje_eje4 = e_diagnostico ? e_diagnostico.puntaje_eje4 : "NE"
-        diag_ptaje_eje5 = e_diagnostico ? e_diagnostico.puntaje_eje5 : "NE"
+        diag_ptaje_eje1 = e_diagnostico ? e_diagnostico.puntaje_eje1 : ""
+        diag_ptaje_eje2 = e_diagnostico ? e_diagnostico.puntaje_eje2 : ""
+        diag_ptaje_eje3 = e_diagnostico ? e_diagnostico.puntaje_eje3 : ""
+        diag_ptaje_eje4 = e_diagnostico ? e_diagnostico.puntaje_eje4 : ""
+        diag_ptaje_eje5 = e_diagnostico ? e_diagnostico.puntaje_eje5 : ""
 
         e_diagnostico ||= Evaluacion.new #(:puntaje_eje1 => 0, :puntaje_eje2 => 0, :puntaje_eje3 => 0, :puntaje_eje4 => 0, :puntaje_eje5 => 0)
            
@@ -388,17 +388,17 @@ class AdminController < ApplicationController
           a2_proyecto = Evaluacion.find_by_proyecto_id_and_avance_and_activa(proyecto.id, 2, true)
         end
 
-        a1_proy_ptaje_eje1 = a1_proyecto ? a1_proyecto.puntaje_eje1 : "NE"
-        a1_proy_ptaje_eje2 = a1_proyecto ? a1_proyecto.puntaje_eje2 : "NE"
-        a1_proy_ptaje_eje3 = a1_proyecto ? a1_proyecto.puntaje_eje3 : "NE"
-        a1_proy_ptaje_eje4 = a1_proyecto ? a1_proyecto.puntaje_eje4 : "NE"
-        a1_proy_ptaje_eje5 = a1_proyecto ? a1_proyecto.puntaje_eje5 : "NE"
+        a1_proy_ptaje_eje1 = a1_proyecto ? a1_proyecto.puntaje_eje1 : ""
+        a1_proy_ptaje_eje2 = a1_proyecto ? a1_proyecto.puntaje_eje2 : ""
+        a1_proy_ptaje_eje3 = a1_proyecto ? a1_proyecto.puntaje_eje3 : ""
+        a1_proy_ptaje_eje4 = a1_proyecto ? a1_proyecto.puntaje_eje4 : ""
+        a1_proy_ptaje_eje5 = a1_proyecto ? a1_proyecto.puntaje_eje5 : ""
 
-        a2_proy_ptaje_eje1 = a2_proyecto ? a2_proyecto.puntaje_eje1 : "NE"
-        a2_proy_ptaje_eje2 = a2_proyecto ? a2_proyecto.puntaje_eje2 : "NE"
-        a2_proy_ptaje_eje3 = a2_proyecto ? a2_proyecto.puntaje_eje3 : "NE"
-        a2_proy_ptaje_eje4 = a2_proyecto ? a2_proyecto.puntaje_eje4 : "NE"
-        a2_proy_ptaje_eje5 = a2_proyecto ? a2_proyecto.puntaje_eje5 : "NE"
+        a2_proy_ptaje_eje1 = a2_proyecto ? a2_proyecto.puntaje_eje1 : ""
+        a2_proy_ptaje_eje2 = a2_proyecto ? a2_proyecto.puntaje_eje2 : ""
+        a2_proy_ptaje_eje3 = a2_proyecto ? a2_proyecto.puntaje_eje3 : ""
+        a2_proy_ptaje_eje4 = a2_proyecto ? a2_proyecto.puntaje_eje4 : ""
+        a2_proy_ptaje_eje5 = a2_proyecto ? a2_proyecto.puntaje_eje5 : ""
 
         a1_proyecto ||= Evaluacion.new #(:puntaje_eje1 => 0, :puntaje_eje2 => 0, :puntaje_eje3 => 0, :puntaje_eje4 => 0, :puntaje_eje5 => 0)
         a2_proyecto ||= Evaluacion.new #(:puntaje_eje1 => 0, :puntaje_eje2 => 0, :puntaje_eje3 => 0, :puntaje_eje4 => 0, :puntaje_eje5 => 0)
@@ -426,8 +426,8 @@ class AdminController < ApplicationController
           end
         end
 
-        sector =(i.sector)? i.sector : ""
-        nombre_director =(i.nombre_director)? i.nombre_director : ""
+        sector = i.sector ? i.sector : ""
+        nombre_director = i.nombre_director ? i.nombre_director : ""
 
         ### ANALIZAMOS QUE EJES EN EL PROYECTO TRABAJO EL CENTRO ESCOLAR ###
 
@@ -449,8 +449,8 @@ class AdminController < ApplicationController
         
         nivel_general = (i.nivel) ? i.nivel.descripcion : "NO EXISTE INFORMACION"
         
-        csv << [ i.clave, i.nombre, i.zona_escolar,  sector, nivel_general , i.nivel_descripcion, i.sostenimiento, i.domicilio, i.localidad, i.municipio, i.region_descripcion, i.modalidad,
-                 i.email, i.email_responsable_proyecto, i.telefono, i.telefono_director, i.user_created_at, i.alu_hom,
+        csv << [ i.clave, i.nombre, i.zona_escolar, sector, nivel_general, i.nivel_descripcion, i.sostenimiento, i.domicilio.to_s.gsub(',', ' '), i.localidad.to_s.gsub(',', ' '), i.municipio, i.region_descripcion, i.modalidad.to_s.gsub(',', ' -'),
+                 i.email, i.email_responsable_proyecto, i.telefono, i.telefono_director.to_s.gsub(',', ' -'), i.user_created_at, i.alu_hom,
                  i.alu_muj, i.total_alumnos, i.grupos, i.total_alumnos, i.doc_hom, i.doc_muj, i.total_personal_docente_apoyo, i.total_personal_admvo,
                  i.total_personal_apoyo, "#{estatus_actual}", docentes_capacitados, docentes_involucrados, alumnos_capacitados, superficie_areas_verdes,
                  arboles_adultos, acciones, capacitacion_ahorro_energia, consumo_energia, focos_ahorradores,
