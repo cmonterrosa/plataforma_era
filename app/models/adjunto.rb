@@ -1,13 +1,19 @@
 require 'ftools'
+require 'digest/md5'
+
 class Adjunto < ActiveRecord::Base
    belongs_to :tramite
    belongs_to :tipodoc
    belongs_to :diagnostico
    belongs_to :proyecto
-   validates_presence_of :tipodoc_id, :message => ".- Seleccione un tipo de archivo"
-   validates_numericality_of :file_size, :less_than => 10240, :message => ".- No puede excederse de 10 MB. "
+   validates_presence_of :tipodoc_id, :message => "Seleccione un tipo de archivo"
+   validates_numericality_of :file_size, :less_than => 5120, :message => "El archivo no puede excederse de 5 MB. "
+   validates_uniqueness_of :md5, :message => "El archivo ya fue cargado anteriormente"
 
+   
+   
    after_create :write_file
+   after_create :make_md5
    before_destroy :prepare_file_for_delete
    after_destroy :delete_file
 
@@ -90,6 +96,13 @@ class Adjunto < ActiveRecord::Base
     end
   end
 
+  def make_md5
+    if File.exists?(self.full_path)
+      self.update_attributes!(:md5 => Digest::MD5.hexdigest(File.read(self.full_path))) unless self.md5
+    end
+  end
+
+
   private
 
     # santize filenames removing non-alphanumeric
@@ -105,6 +118,8 @@ class Adjunto < ActiveRecord::Base
 def bytes_to_kilobytes bytes
     (bytes /  1024.0).truncate
 end
+
+
 
 
 end
