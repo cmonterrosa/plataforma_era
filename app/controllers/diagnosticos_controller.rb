@@ -280,6 +280,6 @@ class DiagnosticosController < ApplicationController
       flash[:warning] = "El proceso de diagnostico aún no está abierto"
       redirect_to :controller => "home"
     end
-  end
+end
 
 end
