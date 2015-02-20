@@ -29,7 +29,7 @@
           <td width="49%" align="justify" style=" vertical-align:top;" >
             <!-- Línea pregunta -->
             <div class="grid-12-12">
-              <label class="uper">1.- ¿Su centro escolar cuenta con establecimientos para el expendio de alimentos y bebidas?.<em class="formee-req"> *</em></label>
+              <label class="uper">1.- ¿Su centro escolar cuenta con establecimientos para el consumo de alimentos y bebidas?.<em class="formee-req"> *</em></label>
             </div>
             <!-- Línea campo -->
             <div class="grid-12-12">
@@ -42,7 +42,7 @@
               </div>
             </div>
             <div id="establecimientos" class="grid-12-12">
-              <fieldset style="padding: 5px 5px 5px 5px;">
+              <fieldset style="padding: 5px 5px 5px 5px;" id="lista_establecimientos">
                 <% @establecimientos.each do |c| %>
                   <%= check_box_tag "establecimientos[#{c.id}]", c.clave, @s_establecimientos.include?(c.clave) ? true : false %>&nbsp;<%= c.descripcion %><br />
                 <% end %>
@@ -391,6 +391,8 @@
   enaSelectMultiple('consumo_escuela_establecimiento', 'establecimientos');
   showImage('consumo_capacitacion_alim_bebidas_si', 'eje4_p3');
   showImage('consumo_capacitacion_alim_bebidas_no', 'eje4_p3');
+
+  /*enaDisDiv ("lista_establecimientos", "div233");*/
 
   enable_frecuencias_actividades_fisicas("consumo_frecuencia_afisica_id", "consumo_minutos_activacion_fisica", "consumo_momentos_activacion_fisica");
 
