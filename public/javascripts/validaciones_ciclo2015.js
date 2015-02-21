@@ -2,19 +2,35 @@
 
 
 /* Habilita o desahabilita un div si check tiene valores permitidos */
-function enableDisableDivWithFielset (fieldset_main, div, values) {
+function enableDisableDivWithFielset (fieldset_main, preguntas, valores_permitidos) {
     var fieldset = document.getElementById(fieldset_main);
-    var vis = "none";
+    var oculto = "none";
+    var visible = "inline";
+
     for(var i=0;i<fieldset.elements.length;i++) {
-        alert(fieldset.elements[i].value);
-        if(fieldset.elements[i].checked){
-            /*alert(fieldset.elements[i].value);*/
-         /*vis = "block";*/
-            break;
+//        alert(fieldset.elements[i].value);
+        /*Iteramos sobre valores permitidos*/
+        for(valor=0;valor<valores_permitidos.length;valor++){
+           if(fieldset.elements[i].value == valores_permitidos[valor]){
+                /* Cambiamos estilos de las preguntas a ocultos*/
+                for(pregunta=0;pregunta<preguntas.length;pregunta++){
+                    alert("Pregunta ocultada:  " + preguntas[pregunta] + ", Por valor: " + fieldset.elements[i].value );
+                    document.getElementById(preguntas[pregunta]).style.display = oculto;
+                    break;
+                }
+            }
+            else{
+                    /* Cambiamos estilos de las preguntas a visibles*/
+                    for(pregunta=0;pregunta<preguntas.length;pregunta++){
+                         //alert("Pregunta visivle: " + preguntas[pregunta] + ", Por valor:" + fieldset.elements[i].value );
+                        
+                        }
+                  }
+
         }
     }
     /*document.getElementById(box).style.display = vis; */
-    return vis;
+    return oculto;
 
 }
 
