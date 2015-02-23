@@ -27,10 +27,10 @@ Structure
 
 .formee {margin:0;padding:0 15px;}
 .formee fieldset {
-	border: 1px solid #d4d4d4;
+	border: 2px solid #d4d4d4;
 	position: relative;
 	height:100%;
-	padding: 1.2em 0;
+	padding: 1.3em 0;
 	margin: 0 0 4em;
 }
 .formee fieldset.report {
