@@ -34,36 +34,11 @@
           </td>
           <td>&nbsp;</td>
 
-        
-         
-          <td width="49%" align="justify" style=" vertical-align:top;" id="pregunta2">
-            <!-- Línea Pregunta -->
-            <div class="grid-12-12">
-              <label class="uper">2.- Los responsables de la elaboración y venta de  alimentos en cooperativas, cafeterías o expendios escolares, ¿conocen los  Lineamientos Generales para la venta y consumo de alimentos y bebidas  de la Secretaria de Salud?.<em class="formee-req"> *</em></label>
-            </div>
-            <!-- Línea campo -->
-            <div class="grid-3-12"></div>
-            <div class="grid-5-12">
-              <span id="responsables_conocen_lineamientos" class="InputGroup">
-                <label class="uper">SI <%= f.radio_button :conocen_lineamientos_grales, "SI" %></label>&nbsp;&nbsp;
-                <label class="uper">NO <%= f.radio_button :conocen_lineamientos_grales, "NO" %></label>
-              </span>
-            </div>
-          </td>
-         
-        </tr>
 
-
-
-
-        <tr>
-          <td colspan="3">&nbsp;</td>
-        </tr>
-        <tr>
-          <td width="49%" align="justify" style=" vertical-align:top;" >
+           <td width="49%" align="justify" style=" vertical-align:top;" id="pregunta2" >
             <!-- Línea pregunta -->
             <div class="grid-12-12">
-              <label class="uper">3.- Las personas encargadas del manejo y preparación de alimentos  dentro de la escuela, ¿han recibido capacitación(es)  para la preparación  e higiene de alimentos y bebidas en  los establecimientos de consumo escolar?<em class="formee-req"> *</em></label>
+              <label class="uper">2.- Las personas encargadas del manejo y preparación de alimentos  dentro de la escuela, ¿han recibido capacitación(es)  para la preparación  e higiene de alimentos y bebidas en  los establecimientos de consumo escolar?<em class="formee-req"> *</em></label>
             </div>
             <!-- Línea campo -->
             <div class="grid-12-12">
@@ -80,8 +55,31 @@
                                                               {:controller => "upload", :diagnostico => @diagnostico, :eje => 4, :numero_pregunta => 3, :action => "new_evidencia" },
                                                               :title => "EVIDENCIA DE LA PREGUNTA 3", :class => "fancybox fancybox.iframe"%>
               </div>
+             </div>
+            </td>
+          </tr>
+
+          <tr>
+            <td width="49%" align="justify" style=" vertical-align:top;" id="pregunta3">
+            <!-- Línea Pregunta -->
+            <div class="grid-12-12">
+              <label class="uper">3.- Los responsables de la elaboración y venta de  alimentos en cooperativas, cafeterías o expendios escolares, ¿Aplican los  Lineamientos Generales para la distribución de alimentos y bebidas preparados y procesados en las escuelas del Sistema Educativo Nacional?.<em class="formee-req"> *</em></label>
+            </div>
+            <!-- Línea campo -->
+            <div class="grid-3-12"></div>
+            <div class="grid-5-12">
+              <span id="responsables_conocen_lineamientos" class="InputGroup">
+                <label class="uper">SI <%= f.radio_button :conocen_lineamientos_grales, "SI" %></label>&nbsp;&nbsp;
+                <label class="uper">NO <%= f.radio_button :conocen_lineamientos_grales, "NO" %></label>
+              </span>
             </div>
           </td>
+
+
+          <td colspan="3">&nbsp;</td>
+        </tr>
+        <tr>
+ 
           <td>&nbsp;</td>
           <td>&nbsp;</td>
         </tr>
@@ -92,7 +90,7 @@
           <td colspan="3" align="justify" style=" vertical-align:top;">
             <!-- Línea Pregunta -->
             <div class="grid-12-12">
-              <label class="uper">4.- Los alimentos preparados que se venden en los establecimientos escolares, ¿cumplen los  requerimientos nutricionales  que señala la Norma Oficial Mexicana  NOM-0043-SSA2-2005, del Plato del Bien Comer?.<em class="formee-req"> *</em></label>
+              <label class="uper">¿Cúales de las siguientes recomendaciones del apéndice informativo C de la Norma Oficial Mexicana NOM-0043-SSA2-2012 Aplica la Institución Escolar?.<em class="formee-req"> *</em></label>
             </div>
           </td>
         </tr>
@@ -249,10 +247,12 @@
 
           <td width="49%" align="justify" style=" vertical-align:top;" >
               <div class="grid-12-12">
-                <label class="uper">7.- ¿Con qué frecuencia se realiza activación física en su escuela?. <em class="formee-req"> *</em></label>
+                <label class="uper">7.- ¿Con qué frecuencia se realiza activación física en su escuela? Con base a la recomendación del acuerdo nacional para la salud alimentaria estrategia contra el sobrepeso y la obesidad (Programa de acción en el contexto escolar). <em class="formee-req"> *</em></label>
               </div>
               <div class="grid-12-12">
-                <label class="formee-msg-info" style="text-transform:uppercase;font-size:1.1em;">Nota: esta se realizará con independencia y de manera adicional a la clase de Educación Física.</label>
+                <label class="formee-msg-info" style="text-transform:uppercase;font-size:1.1em;">
+                 Nota: esta se realizará con independencia y de manera adicional a la clase de Educación Física (Educación Básica) o Actividad deportiva habitual (Media Superior).
+                </label>
               </div>
               <!-- Línea campo -->
               <div class="grid-12-12">
@@ -268,7 +268,7 @@
          <tr>
             <td width="49%" align="justify" style=" vertical-align:top;" >
              <div class="grid-12-12">
-               <label class="uper">8.- Por día ¿Qué tiempo dedica y en cuántos momentos realiza la activación física?. <em class="formee-req"> *</em></label>
+               <label class="uper">8.- Por día, en qué tiempo realiza la activación física?. <em class="formee-req"> *</em></label>
              </div>
              <!-- Línea campo -->
              <div class="grid-2-12"></div>
@@ -276,11 +276,17 @@
                   <label class="uper">Minutos: </label>
                   <%= f.select :minutos_activacion_fisica, [10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60]%>
               </div>
-              <div class="grid-1-12"></div>
+              
+             
+             <!-- MOMENTOS -->
+             <!--
+             <div class="grid-1-12"></div>
               <div class="grid-3-12">
                 <label class="uper">Momentos: </label>
-                  <%= f.select :momentos_activacion_fisica, (1..4)%>
+                  <= f.select :momentos_activacion_fisica, (1..4)%>
               </div>
+             -->
+
               <div class="grid-3-12"></div>
             </td>
             <td>&nbsp;</td>
