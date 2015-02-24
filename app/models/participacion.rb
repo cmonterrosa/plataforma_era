@@ -2,6 +2,7 @@ class Participacion < ActiveRecord::Base
     belongs_to :diagnostico
     belongs_to :acomunitaria
     belongs_to :pcolectiva
+    has_and_belongs_to_many :pescolars
 
     validates_presence_of :evidencia_pregunta_1, :if => "self.num_padres_familia > 0"
     validates_presence_of :evidencia_pregunta_2, :if => "self.capacitacion_salud_ma.to_i >0"
