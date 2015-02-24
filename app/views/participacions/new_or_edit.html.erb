@@ -85,7 +85,7 @@
           <td width="49%" align="justify" style=" vertical-align:top;">
             <!-- Línea Pregunta -->
             <div class="grid-12-12">
-              <label class="uper">4.- ¿Qué Instituciones o Dependencias han impartido capacitaciones a los padres de familia?.<em class="formee-req"> *</em></label>
+              <label class="uper">4.- ¿Qué Instituciones o Dependencias han impartido capacitaciones a los padres de familia? / ¿Cuántas?.<em class="formee-req"> *</em></label>
             </div>
             <!-- Línea campo -->
             
@@ -98,12 +98,14 @@
             <fieldset style="padding: 5px 5px 5px 5px;">
                 <div id="preparacions" class="grid-12-12">
                   <% Dcapacitadora.find(:all).each do |c| %>
-                    <%= check_box_tag "capacitacion[#{c.id}]", c.clave, @s_dcapacitadoras.include?(c.clave) ? true : false %><%= c.descripcion %><%= text_field "capacitadora", "#{c.clave}", {:placeholder => 'user@domain.com', :size => 5, :style => "display: inline;"} %>&nbsp;<br />
+                    <%= check_box_tag "capacitacion[#{c.id}]", c.clave, @s_dcapacitadoras.include?(c.clave) ? true : false,  :onclick => " enable_disable_selects ('capacitacion_#{c.id}', 'capacitadora_#{c.clave}');"  %><%= c.descripcion %><%= select "capacitadora", "#{c.clave}", (1..12), {}, :onchange => "alert('cambio');", :style => "display:none;"%>&nbsp;<br />
                   <% end %>
                 </div>
             </fieldset>
 
-
+<!--
+<= text_field "capacitadora", "#{c.clave}", {:placeholder => '¿Cuantas?', :size => 4, :style => "display: inline;"} %>
+-->
 
 
             </div>

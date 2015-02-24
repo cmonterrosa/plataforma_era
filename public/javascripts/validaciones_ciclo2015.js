@@ -34,3 +34,19 @@ function enableDisableDivWithFielset (fieldset_main, preguntas, valores_permitid
 
 }
 
+
+
+function enable_disable_selects (checkbox_element, select_element) {
+     if (document.getElementById(checkbox_element).checked) {
+           document.getElementById(select_element).style.display = "inline";
+        } else {
+            document.getElementById(select_element).style.display = "none";
+        }
+}
+
+function enable_disable_check_value(value, select_element, checkbox_element){
+    d = document.getElementById("select_id").value;
+    alert(d)
+}
+
+
