@@ -78,7 +78,7 @@
                                                               :title => "EVIDENCIA DE LA PREGUNTA 3", :class => "fancybox fancybox.iframe"%>
             </div>
             <div class="grid-12-12">
-              <%= f.text_area :proy_escolares_ma_desc, :placeholder => "Especifique...", :disabled => 'disabled', :style => "display: none;" %>
+              <%#= f.text_area :proy_escolares_ma_desc, :placeholder => "Especifique...", :disabled => 'disabled', :style => "display: none;" %>
             </div>
           </td>
           <td>&nbsp;</td>
@@ -88,12 +88,35 @@
               <label class="uper">4.- ¿Qué Instituciones o Dependencias han impartido capacitaciones a los padres de familia?.<em class="formee-req"> *</em></label>
             </div>
             <!-- Línea campo -->
-            <div class="grid-3-12"></div>
-            <div class="grid-2-12">
+            
+            <div class="grid-12-12">
                <!--
                <= f.select :proy_escolares_salud, (0..2), {}, :onchange => "showDesc(this, 'participacion_proy_escolares_salud_desc', 'eje5_p4');"%>
                -->
+            
+               <!-- Línea campo -->
+            <fieldset style="padding: 5px 5px 5px 5px;">
+                <div id="preparacions" class="grid-12-12">
+                  <% Dcapacitadora.find(:all).each do |c| %>
+                    <%= check_box_tag "capacitacion[#{c.id}]", c.clave, @s_dcapacitadoras.include?(c.clave) ? true : false %><%= c.descripcion %><%= text_field "capacitadora", "#{c.clave}", {:placeholder => 'user@domain.com', :size => 5, :style => "display: inline;"} %>&nbsp;<br />
+                  <% end %>
+                </div>
+            </fieldset>
+
+
+
+
             </div>
+
+
+            
+
+            
+
+            
+            
+
+
             <div class="grid-1-12"></div>
             <div id="eje5_p4" class="grid-6-12" style="display: none;">
             <%= link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta4", :id => "pregunta4"),
@@ -125,7 +148,7 @@
                                                               :title => "EVIDENCIA DE LA PREGUNTA 5", :class => "fancybox fancybox.iframe"%>
             </div>
             <div class="grid-12-12">
-              <%= f.text_area :act_salud_ma_desc, :placeholder => "Especifique...", :disabled => 'disabled', :style => "display: none;" %>
+              <%#= f.text_area :act_salud_ma_desc, :placeholder => "Especifique...", :disabled => 'disabled', :style => "display: none;" %>
             </div>
           </td>
           <td>&nbsp;</td>
@@ -137,7 +160,7 @@
             <!-- Línea campo -->
             <div class="grid-3-12"></div>
             <div class="grid-2-12">
-              <%= f.select :act_dep_gobierno, (0..2), {}, :onchange => "showDesc(this, 'participacion_act_dep_gobierno_desc', 'eje5_p6');"%>
+              <%#= f.select :act_dep_gobierno, (0..2), {}, :onchange => "showDesc(this, 'participacion_act_dep_gobierno_desc', 'eje5_p6');"%>
             </div>
             <div class="grid-1-12"></div>
             <div id="eje5_p6" class="grid-6-12" style="display: none;">
@@ -146,7 +169,7 @@
                                                               :title => "EVIDENCIA DE LA PREGUNTA 6", :class => "fancybox fancybox.iframe"%>
             </div>
             <div class="grid-12-12">
-              <%= f.text_area :act_dep_gobierno_desc, :placeholder => "Especifique...", :disabled => 'disabled', :style => "display: none;" %>
+              <%#= f.text_area :act_dep_gobierno_desc, :placeholder => "Especifique...", :disabled => 'disabled', :style => "display: none;" %>
             </div>
           </td>
         </tr>
@@ -177,40 +200,50 @@
 </table>
 <% end %>
 
-<script type="text/javascript">
-  showImageNum('participacion_num_padres_familia', 'eje5_p1');
-  showImageNum('participacion_capacitacion_salud_ma', 'eje5_p2');
-  showDesc('participacion_proy_escolares_ma', 'participacion_proy_escolares_ma_desc', 'eje5_p3');
-  showDesc('participacion_proy_escolares_salud', 'participacion_proy_escolares_salud_desc', 'eje5_p4');
-  showDesc('participacion_act_salud_ma', 'participacion_act_salud_ma_desc', 'eje5_p5');
-  showDesc('participacion_act_dep_gobierno', 'participacion_act_dep_gobierno_desc', 'eje5_p6');
 
-  var num_padres_familia = new LiveValidation( 'participacion_num_padres_familia' );
-  num_padres_familia.add( Validate.Presence );
-  num_padres_familia.add( Validate.Numericality, { minimum: parseInt(document.getElementById("participacion_capacitacion_salud_ma").value)}, { onlyInteger: true } );
+<%= observe_field :eje_catalogo_eje_id,
+                  :frecuency => 0.2,
+                  :update => :contenido_eje,
+                  :url => { :controller => 'proyectos', :action => 'get_contenido_ejes' },
+                  :with => :eje_catalogo_eje_id %>
 
-  var capacitacion_salud_ma = new LiveValidation( 'participacion_capacitacion_salud_ma' );
-  capacitacion_salud_ma.add( Validate.Presence );
-  capacitacion_salud_ma.add( Validate.Numericality, { maximum: parseInt(document.getElementById("participacion_num_padres_familia").value)}, { onlyInteger: true } );
 
-  var proy_escolares_ma_desc = new LiveValidation( 'participacion_proy_escolares_ma_desc' );
-  proy_escolares_ma_desc.add( Validate.Presence );
 
-  var proy_escolares_salud_desc = new LiveValidation( 'participacion_proy_escolares_salud_desc' );
-  proy_escolares_salud_desc.add( Validate.Presence );
 
-  var act_salud_ma_desc = new LiveValidation( 'participacion_act_salud_ma_desc' );
-  act_salud_ma_desc.add( Validate.Presence );
+<%#*<script type="text/javascript">%>
+  <%#*showImageNum('participacion_num_padres_familia', 'eje5_p1');%>
+  <%#*showImageNum('participacion_capacitacion_salud_ma', 'eje5_p2');%>
+  <%#*showDesc('participacion_proy_escolares_ma', 'participacion_proy_escolares_ma_desc', 'eje5_p3');%>
+  <%#*showDesc('participacion_proy_escolares_salud', 'participacion_proy_escolares_salud_desc', 'eje5_p4');%>
+  <%#*showDesc('participacion_act_salud_ma', 'participacion_act_salud_ma_desc', 'eje5_p5');%>
+  <%#*showDesc('participacion_act_dep_gobierno', 'participacion_act_dep_gobierno_desc', 'eje5_p6');%>
 
-  var act_dep_gobierno_desc = new LiveValidation( 'participacion_act_dep_gobierno_desc' );
-  act_dep_gobierno_desc.add( Validate.Presence );
+  <%#*var num_padres_familia = new LiveValidation( 'participacion_num_padres_familia' );%>
+  <%#*num_padres_familia.add( Validate.Presence );%>
+  <%#*num_padres_familia.add( Validate.Numericality, { minimum: parseInt(document.getElementById("participacion_capacitacion_salud_ma").value)}, { onlyInteger: true } );%>
 
-  function add_validation(){
-    num_padres_familia.remove( Validate.Numericality, { minimum: parseInt(document.getElementById("participacion_capacitacion_salud_ma").value)}, { onlyInteger: true } );
-    num_padres_familia.add( Validate.Numericality, { minimum: parseInt(document.getElementById("participacion_capacitacion_salud_ma").value)}, { onlyInteger: true } );
-  }
-  function add_validation2(){
-    capacitacion_salud_ma.remove( Validate.Numericality, { maximum: parseInt(document.getElementById("participacion_num_padres_familia").value)}, { onlyInteger: true } );
-    capacitacion_salud_ma.add( Validate.Numericality, { maximum: parseInt(document.getElementById("participacion_num_padres_familia").value)}, { onlyInteger: true } );
-  }
-</script>
+  <%#*var capacitacion_salud_ma = new LiveValidation( 'participacion_capacitacion_salud_ma' );%>
+  <%#*capacitacion_salud_ma.add( Validate.Presence );%>
+  <%#*capacitacion_salud_ma.add( Validate.Numericality, { maximum: parseInt(document.getElementById("participacion_num_padres_familia").value)}, { onlyInteger: true } );%>
+
+  <%#*var proy_escolares_ma_desc = new LiveValidation( 'participacion_proy_escolares_ma_desc' );%>
+  <%#*proy_escolares_ma_desc.add( Validate.Presence );%>
+
+  <%#*var proy_escolares_salud_desc = new LiveValidation( 'participacion_proy_escolares_salud_desc' );%>
+  <%#*proy_escolares_salud_desc.add( Validate.Presence );%>
+
+  <%#*var act_salud_ma_desc = new LiveValidation( 'participacion_act_salud_ma_desc' );%>
+  <%#*act_salud_ma_desc.add( Validate.Presence );%>
+
+  <%#*var act_dep_gobierno_desc = new LiveValidation( 'participacion_act_dep_gobierno_desc' );%>
+  <%#*act_dep_gobierno_desc.add( Validate.Presence );%>
+
+  <%#*function add_validation(){%>
+    <%#*num_padres_familia.remove( Validate.Numericality, { minimum: parseInt(document.getElementById("participacion_capacitacion_salud_ma").value)}, { onlyInteger: true } );%>
+    <%#*num_padres_familia.add( Validate.Numericality, { minimum: parseInt(document.getElementById("participacion_capacitacion_salud_ma").value)}, { onlyInteger: true } );%>
+  <%#*}%>
+  <%#*function add_validation2(){%>
+    <%#*capacitacion_salud_ma.remove( Validate.Numericality, { maximum: parseInt(document.getElementById("participacion_num_padres_familia").value)}, { onlyInteger: true } );%>
+    <%#*capacitacion_salud_ma.add( Validate.Numericality, { maximum: parseInt(document.getElementById("participacion_num_padres_familia").value)}, { onlyInteger: true } );%>
+  <%#*}%>
+<%#*</script>%>
