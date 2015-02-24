@@ -11,6 +11,11 @@ class Participacion < ActiveRecord::Base
     validates_presence_of :evidencia_pregunta_5, :if => "self.act_salud_ma.to_i > 0"
     validates_presence_of :evidencia_pregunta_6, :if => "self.act_dep_gobierno.to_i > 0"
 
+
+    def dcapacitadoras
+      return CapacitacionPadre.find(:all, :conditions => ["participacion_id = ?", self.id])
+    end
+
     def evidencia_pregunta_1
       current_eje = 5
       contador = Adjunto.count(:id, :conditions => ["eje_id = ? AND diagnostico_id = ? AND numero_pregunta = ?", current_eje, self.diagnostico_id, 1])
