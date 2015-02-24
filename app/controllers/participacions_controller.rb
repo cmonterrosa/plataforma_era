@@ -6,6 +6,7 @@ class ParticipacionsController < ApplicationController
     @diagnostico = Diagnostico.find(params[:id]) if params[:id]
     @diagnostico ||= Diagnostico.new
     @participacion = @diagnostico.participacion || Participacion.new
+    @s_dcapacitadoras = multiple_selected(@participacion.dcapacitadoras)
   end
 
   def save

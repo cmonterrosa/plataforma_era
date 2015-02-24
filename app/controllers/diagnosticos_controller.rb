@@ -277,9 +277,10 @@ class DiagnosticosController < ApplicationController
 
   def no_disponible
     if current_user.has_role?("escuela")
-      flash[:warning] = "El proceso de diagnostico aún no está abierto"
+      flash[:error] = "El proceso de diagnostico aún no está abierto"
       redirect_to :controller => "home"
     end
-end
+  end
+
 
 end
