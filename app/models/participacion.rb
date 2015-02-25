@@ -13,7 +13,8 @@ class Participacion < ActiveRecord::Base
 
 
     def dcapacitadoras
-      return CapacitacionPadre.find(:all, :conditions => ["participacion_id = ?", self.id])
+      capacitaciones = CapacitacionPadre.find(:all, :conditions => ["participacion_id = ?", self.id])
+      (capacitaciones)? Dcapacitadora.find(capacitaciones.map{ |i|i.dcapacitadora_id  }) : nil
     end
 
     def evidencia_pregunta_1

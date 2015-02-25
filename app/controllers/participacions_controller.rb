@@ -7,6 +7,7 @@ class ParticipacionsController < ApplicationController
     @diagnostico ||= Diagnostico.new
     @participacion = @diagnostico.participacion || Participacion.new
     @s_dcapacitadoras = multiple_selected(@participacion.dcapacitadoras)
+    a=10
   end
 
   def save
@@ -30,11 +31,11 @@ class ParticipacionsController < ApplicationController
         ## Capacitadoras ##
         @capacitadoras = params[:capacitacion] if params[:capacitacion]
         @capacitadoras.each do |c|
-            dc = Dcapacitadora.find_by_clave(c)
-            capacitacion = CapacitacionPadre.find_by_dcapacitadora_id(dc) if dc
+            dc = Dcapacitadora.find_by_clave(c.last)
+            capacitacion = CapacitacionPadre.find_by_dcapacitadora_id(dc.id) if dc
             capacitacion ||= CapacitacionPadre.new
             capacitacion.participacion_id  ||= @participacion.id
-            capacitacion.dcapacitadora_id ||= dc
+            capacitacion.dcapacitadora_id ||= dc.id if dc
             capacitacion.numero_capacitaciones =(params[:capacitadora]["#{dc.clave}"]) ?  params[:capacitadora]["#{dc.clave}"] : nil
             (capacitacion.numero_capacitaciones) ? capacitacion.save : nil
         end

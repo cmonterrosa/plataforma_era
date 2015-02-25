@@ -83,40 +83,28 @@
           </td>
           <td>&nbsp;</td>
           <td width="49%" align="justify" style=" vertical-align:top;">
-            <!-- Línea Pregunta -->
+            <!-- Pregunta -->
             <div class="grid-12-12">
               <label class="uper">4.- ¿Qué Instituciones o Dependencias han impartido capacitaciones a los padres de familia? / ¿Cuántas?.<em class="formee-req"> *</em></label>
             </div>
-            <!-- Línea campo -->
-            
+
+            <!-- Respuestas -->
+
             <div class="grid-12-12">
-               <!--
-               <= f.select :proy_escolares_salud, (0..2), {}, :onchange => "showDesc(this, 'participacion_proy_escolares_salud_desc', 'eje5_p4');"%>
-               -->
-            
-               <!-- Línea campo -->
             <fieldset style="padding: 5px 5px 5px 5px;">
                 <div id="preparacions" class="grid-12-12">
                   <% Dcapacitadora.find(:all).each do |c| %>
-                    <%= check_box_tag "capacitacion[#{c.id}]", c.clave, @s_dcapacitadoras.include?(c.clave) ? true : false,  :onclick => " enable_disable_selects ('capacitacion_#{c.id}', 'capacitadora_#{c.clave}');"  %><%= c.descripcion %><%= select "capacitadora", "#{c.clave}", (1..12), {}, :onchange => "alert('cambio');", :style => "display:none;"%>&nbsp;<br />
+                    <%= check_box_tag "capacitacion[#{c.id}]", c.clave, @s_dcapacitadoras.include?(c.clave) ? true : false,  
+                                 :onload  =>  "enable_disable_selects ('capacitacion_#{c.id}', 'capacitadora_#{c.clave}');",
+                                 :onclick =>  "enable_disable_selects ('capacitacion_#{c.id}', 'capacitadora_#{c.clave}');"  %>
+                    <%= c.descripcion %>
+                    <%numero_capacitaciones = (CapacitacionPadre.find(:first, :conditions => ["participacion_id = ? AND dcapacitadora_id = ?", @participacion.id, c.id]))? CapacitacionPadre.find(:first, :select => 'numero_capacitaciones', :conditions => ["participacion_id = ? AND dcapacitadora_id = ?", @participacion.id, c.id]).numero_capacitaciones.to_i  : nil %>
+                    <%clase = (numero_capacitaciones)? "inline" : "none"%>
+                    <%= select "capacitadora", "#{c.clave}", (1..12), {:selected => numero_capacitaciones}, :onload => "enable_disable_selects('capacitacion_#{c.id}', 'capacitadora_#{c.clave}');", :style => "display:#{clase};"%>&nbsp;<br />
                   <% end %>
                 </div>
             </fieldset>
-
-<!--
-<= text_field "capacitadora", "#{c.clave}", {:placeholder => '¿Cuantas?', :size => 4, :style => "display: inline;"} %>
--->
-
-
             </div>
-
-
-            
-
-            
-
-            
-            
 
 
             <div class="grid-1-12"></div>

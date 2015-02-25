@@ -44,9 +44,5 @@ function enable_disable_selects (checkbox_element, select_element) {
         }
 }
 
-function enable_disable_check_value(value, select_element, checkbox_element){
-    d = document.getElementById("select_id").value;
-    alert(d)
-}
 
 
