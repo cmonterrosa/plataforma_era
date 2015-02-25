@@ -35,6 +35,12 @@ function enableDisableDivWithFielset (fieldset_main, preguntas, valores_permitid
 }
 
 
+function sumatoria_dos_elementos(elemento1, elemento2, resultado){
+ total = parseInt(document.getElementById(elemento1).value)+parseInt(document.getElementById(elemento2).value);
+ document.getElementById(resultado).innerHTML = total;
+}
+
+
 
 function enable_disable_selects (checkbox_element, select_element) {
      if (document.getElementById(checkbox_element).checked) {
@@ -43,6 +49,8 @@ function enable_disable_selects (checkbox_element, select_element) {
             document.getElementById(select_element).style.display = "none";
         }
 }
+
+
 
 
 

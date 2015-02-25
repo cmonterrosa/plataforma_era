@@ -58,17 +58,17 @@
             <div class="grid-12-12">
               <label class="uper">3.- ¿Cuantas capacitaciones relacionadas con temas de salud y ambiente han impartido los docentes a los padres de familia?.<em class="formee-req"> *</em></label>
             </div>
-            <!-- Línea campo -->
-            <div class="grid-3-12"></div>
+            <!-- Salud -->
             <div class="grid-2-12">
-              Ambiente: <%= f.select :capacitacion_salud, (0..10)%>
+                Ambiente: <%= f.select :capacitacion_salud, (0..10), {:selected => @participacion.capacitacion_salud}, {:onchange => "sumatoria_dos_elementos('participacion_capacitacion_salud', 'participacion_capacitacion_medioambiente', 'total_capacitaciones');"} %>
             </div>
+            <!-- Medio ambiente -->
             <div class="grid-2-12">
-              Salud: <%= f.select :capacitacion_medioambiente, (0..10)%>
+                Salud: <%= f.select :capacitacion_medioambiente, (0..10), {:selected => @participacion.capacitacion_medioambiente}, {:onchange => "sumatoria_dos_elementos('participacion_capacitacion_salud', 'participacion_capacitacion_medioambiente', 'total_capacitaciones');"}%>
             </div>
-
-            <div class="grid-2-12">
-              Total: <div id="total_capacitaciones"></div>
+             <!-- Total -->
+            <div class="grid-3-12">
+              Total: <label id="total_capacitaciones" style="font-size: 14px;"></label>
             </div>
             
             <div class="grid-1-12"></div>
@@ -104,7 +104,7 @@
                       <div  class="grid-2-12">
                         <%numero_capacitaciones = (CapacitacionPadre.find(:first, :conditions => ["participacion_id = ? AND dcapacitadora_id = ?", @participacion.id, c.id]))? CapacitacionPadre.find(:first, :select => 'numero_capacitaciones', :conditions => ["participacion_id = ? AND dcapacitadora_id = ?", @participacion.id, c.id]).numero_capacitaciones.to_i  : nil %>
                         <%clase = (numero_capacitaciones)? "inline" : "none"%>
-                        <%= select "capacitadora", "#{c.clave}", (1..12), {:selected => numero_capacitaciones}, :onload => "enable_disable_selects('capacitacion_#{c.id}', 'capacitadora_#{c.clave}');", :style => "display:#{clase};"%>
+                        <%= select "capacitadora", "#{c.clave}", (1..12), {:selected => numero_capacitaciones}, {:onchange => "enable_disable_selects('capacitacion_#{c.id}', 'capacitadora_#{c.clave}');", :style => "display:#{clase};"}%>
                       </div>
                       <div class="grid-12-12 clear"></div>
                   <% end %>
@@ -141,9 +141,13 @@
               <label class="uper">5.- ¿Cuántos proyectos escolares en materia del cuidado del ambiente realizó la escuela en vinculación con la comunidad?.<em class="formee-req"> *</em></label>
             </div>
             <!-- Línea campo -->
-            <div class="grid-3-12"><%= select "proyectos", "ambiente", (0..12), :onchange => "alert('seleccionaste xxx');"%></div>
-            
-            <div id="detalle_proyectos_ambiente" class="grid-12-12"></div>
+            <div class="grid-3-12"><%= select "proyectos", "ambiente", (0..12), {:selected => @proyectos_seleccionados_ambiente}%></div>
+
+            <!-- detalle de proyectos -->
+            <div id="detalle_proyectos_ambiente" class="grid-12-12">
+              <%=text_field "informacion", "participacion", :value => @participacion.id, :style => "display:none;"%>
+              <%=render :partial => 'formularios_proyectos_ambientes'%>
+            </div>
 
             <div id="eje5_p5" class="grid-6-12" style="display: none;">
               <%= link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta5", :id => "pregunta5"),
@@ -208,7 +212,7 @@
                   :on => 'change',
                   :update => :detalle_proyectos_ambiente,
                   :url => { :controller => 'participacions', :action => 'formularios_proyectos_ambientes' },
-                  :with => :proyectos_ambiente %>
+                  :with=>"Form.serializeElements($('proyectos_ambiente', 'informacion_participacion'))"%>
 
 
 

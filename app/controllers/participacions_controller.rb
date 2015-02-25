@@ -7,6 +7,9 @@ class ParticipacionsController < ApplicationController
     @diagnostico ||= Diagnostico.new
     @participacion = @diagnostico.participacion || Participacion.new
     @s_dcapacitadoras = multiple_selected(@participacion.dcapacitadoras)
+    ### Proyectos medio ambiente ###
+    @s_proyectos_ma =  Pescolar.find(:all, :conditions => ["participacion_id = ? AND materia= ?", @participacion.id, 'MEDIOAMBIENTE'])
+    @proyectos_seleccionados_ambiente = ( @s_proyectos_ma.empty?)? 0: @s_proyectos_ma.size
   end
 
   def save
@@ -27,8 +30,8 @@ class ParticipacionsController < ApplicationController
     
       if @participacion.save
 
-        ## Capacitadoras ##
-        @capacitadoras = params[:capacitacion] if params[:capacitacion]
+        ## Dependencias Capacitadoras ##
+        @capacitadoras = ( params[:capacitacion]) ?  params[:capacitacion] : Array.new
         @capacitadoras.each do |c|
             dc = Dcapacitadora.find_by_clave(c.last)
             capacitacion = CapacitacionPadre.find_by_dcapacitadora_id(dc.id) if dc
@@ -38,20 +41,7 @@ class ParticipacionsController < ApplicationController
             capacitacion.numero_capacitaciones =(params[:capacitadora]["#{dc.clave}"]) ?  params[:capacitadora]["#{dc.clave}"] : nil
             (capacitacion.numero_capacitaciones) ? capacitacion.save : nil
         end
-
-        ### Proyectos Medio Ambiente ####
-        @proyectos_ma = params[:pescolaresambiente] if params[:pescolaresambiente]
-        @proyectos_ma.each do |nombre, valor|
-          objeto_proyecto = Pescolar.new
-          objeto_proyecto.materia = "MEDIOAMBIENTE"
-
-#          objeto_proyecto.nombre= proyecto.last if proyecto.first =~/nombre/
-#          objeto_proyecto.descripcion= proyecto.last if proyecto.first =~/descripcion/
-          objeto_proyecto.save
-        end
-        
-
-
+        guardar_proyectos(params[:pescolaresambiente], "MEDIOAMBIENTE", @participacion) if params[:pescolaresambiente]
         flash[:notice] = "Registro guardado correctamente"
         redirect_to :controller => "diagnosticos"
       else
@@ -66,7 +56,25 @@ class ParticipacionsController < ApplicationController
   end
 
   def formularios_proyectos_ambientes
-    @proyectos_seleccionados = (params[:proyectos_ambiente])? params[:proyectos_ambiente].to_i : Array.new
+    @proyectos_seleccionados_ambiente = (params[:proyectos][:ambiente])? params[:proyectos][:ambiente].to_i : Array.new
+    @participacion = Participacion.find(params[:informacion][:participacion]) if params[:informacion][:participacion]
     render :partial => "formularios_proyectos_ambientes", :layout => "only_jquery"
   end
+
+  protected
+
+  #### Funcion que guarda los proyectos escolares por tipo #####
+  def guardar_proyectos(parametros, tipo, participacion)
+        if @proyectos = parametros
+        ids_olds =  Pescolar.find(:all, :conditions => ["participacion_id = ? AND materia= ?", @participacion.id, tipo]).map{|i|i.id}
+          (1..12).each do |numero|
+            if @proyectos.has_key?("nombre_#{numero}")
+                  Pescolar.create(:participacion_id => participacion.id, :materia => tipo, :descripcion => @proyectos["descripcion_#{numero}"], :nombre => @proyectos["nombre_#{numero}"] )
+            end
+          end
+          Pescolar.find(ids_olds).each do |p| p.destroy end unless ids_olds.empty?
+        end
+  end
+
+
 end

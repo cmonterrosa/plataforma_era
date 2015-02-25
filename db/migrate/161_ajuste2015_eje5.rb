@@ -13,14 +13,10 @@ class Ajuste2015Eje5 < ActiveRecord::Migration
     # Pregunta 3
     add_column:participacions, :capacitacion_salud, :integer
     add_column:participacions, :capacitacion_medioambiente, :integer
-
-    ## Pregunta 5,6,7 (Uno a muchos)
-    create_table :participacions_pescolars, :id => false do |t|
-      t.integer :participacion_id
-      t.integer :pescolar_id
-    end
   end
 
   def self.down
-  end
+    remove_column :participacions, :capacitacion_salud
+    remove_column :participacions, :capacitacion_medioambiente
+   end
 end
