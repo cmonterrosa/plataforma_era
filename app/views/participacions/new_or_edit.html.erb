@@ -94,15 +94,26 @@
             <fieldset style="padding: 5px 5px 5px 5px;">
                 <div id="preparacions" class="grid-12-12">
                   <% Dcapacitadora.find(:all).each do |c| %>
-                    <%= check_box_tag "capacitacion[#{c.id}]", c.clave, @s_dcapacitadoras.include?(c.clave) ? true : false,  
-                                 :onload  =>  "enable_disable_selects ('capacitacion_#{c.id}', 'capacitadora_#{c.clave}');",
-                                 :onclick =>  "enable_disable_selects ('capacitacion_#{c.id}', 'capacitadora_#{c.clave}');"  %>
-                    <%= c.descripcion %>
-                    <%numero_capacitaciones = (CapacitacionPadre.find(:first, :conditions => ["participacion_id = ? AND dcapacitadora_id = ?", @participacion.id, c.id]))? CapacitacionPadre.find(:first, :select => 'numero_capacitaciones', :conditions => ["participacion_id = ? AND dcapacitadora_id = ?", @participacion.id, c.id]).numero_capacitaciones.to_i  : nil %>
-                    <%clase = (numero_capacitaciones)? "inline" : "none"%>
-                    <%= select "capacitadora", "#{c.clave}", (1..12), {:selected => numero_capacitaciones}, :onload => "enable_disable_selects('capacitacion_#{c.id}', 'capacitadora_#{c.clave}');", :style => "display:#{clase};"%>&nbsp;<br />
+                      <div  class="grid-10-12">
+                        <%= check_box_tag "capacitacion[#{c.id}]", c.clave, @s_dcapacitadoras.include?(c.clave) ? true : false,
+                                  :onload  =>  "enable_disable_selects ('capacitacion_#{c.id}', 'capacitadora_#{c.clave}');",
+                                  :onclick =>  "enable_disable_selects ('capacitacion_#{c.id}', 'capacitadora_#{c.clave}');"  %>
+                        <%= c.descripcion %>
+                      </div>
+
+                      <div  class="grid-2-12">
+                        <%numero_capacitaciones = (CapacitacionPadre.find(:first, :conditions => ["participacion_id = ? AND dcapacitadora_id = ?", @participacion.id, c.id]))? CapacitacionPadre.find(:first, :select => 'numero_capacitaciones', :conditions => ["participacion_id = ? AND dcapacitadora_id = ?", @participacion.id, c.id]).numero_capacitaciones.to_i  : nil %>
+                        <%clase = (numero_capacitaciones)? "inline" : "none"%>
+                        <%= select "capacitadora", "#{c.clave}", (1..12), {:selected => numero_capacitaciones}, :onload => "enable_disable_selects('capacitacion_#{c.id}', 'capacitadora_#{c.clave}');", :style => "display:#{clase};"%>
+                      </div>
+                      <div class="grid-12-12 clear"></div>
                   <% end %>
                 </div>
+              <div class="grid-4-12">
+                
+              </div>
+
+
             </fieldset>
             </div>
 
@@ -130,8 +141,10 @@
               <label class="uper">5.- ¿Cuántos proyectos escolares en materia del cuidado del ambiente realizó la escuela en vinculación con la comunidad?.<em class="formee-req"> *</em></label>
             </div>
             <!-- Línea campo -->
-            <div class="grid-3-12"><%= select "proyectos", "ambiente", (0..10), :onchange => "alert('seleccionaste xxx');"%></div>
-            <div class="grid-1-12"></div>
+            <div class="grid-3-12"><%= select "proyectos", "ambiente", (0..12), :onchange => "alert('seleccionaste xxx');"%></div>
+            
+            <div id="detalle_proyectos_ambiente" class="grid-12-12"></div>
+
             <div id="eje5_p5" class="grid-6-12" style="display: none;">
               <%= link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta5", :id => "pregunta5"),
                                                               {:controller => "upload", :diagnostico => @diagnostico, :eje => 5, :numero_pregunta => 5, :action => "list_evidencias" },
@@ -191,11 +204,11 @@
 <% end %>
 
 
-<%= observe_field :eje_catalogo_eje_id,
-                  :frecuency => 0.2,
-                  :update => :contenido_eje,
-                  :url => { :controller => 'proyectos', :action => 'get_contenido_ejes' },
-                  :with => :eje_catalogo_eje_id %>
+<%= observe_field :proyectos_ambiente,
+                  :on => 'change',
+                  :update => :detalle_proyectos_ambiente,
+                  :url => { :controller => 'participacions', :action => 'formularios_proyectos_ambientes' },
+                  :with => :proyectos_ambiente %>
 
 
 

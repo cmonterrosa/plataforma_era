@@ -7,7 +7,6 @@ class ParticipacionsController < ApplicationController
     @diagnostico ||= Diagnostico.new
     @participacion = @diagnostico.participacion || Participacion.new
     @s_dcapacitadoras = multiple_selected(@participacion.dcapacitadoras)
-    a=10
   end
 
   def save
@@ -40,6 +39,18 @@ class ParticipacionsController < ApplicationController
             (capacitacion.numero_capacitaciones) ? capacitacion.save : nil
         end
 
+        ### Proyectos Medio Ambiente ####
+        @proyectos_ma = params[:pescolaresambiente] if params[:pescolaresambiente]
+        @proyectos_ma.each do |nombre, valor|
+          objeto_proyecto = Pescolar.new
+          objeto_proyecto.materia = "MEDIOAMBIENTE"
+
+#          objeto_proyecto.nombre= proyecto.last if proyecto.first =~/nombre/
+#          objeto_proyecto.descripcion= proyecto.last if proyecto.first =~/descripcion/
+          objeto_proyecto.save
+        end
+        
+
 
         flash[:notice] = "Registro guardado correctamente"
         redirect_to :controller => "diagnosticos"
@@ -54,4 +65,8 @@ class ParticipacionsController < ApplicationController
     end
   end
 
+  def formularios_proyectos_ambientes
+    @proyectos_seleccionados = (params[:proyectos_ambiente])? params[:proyectos_ambiente].to_i : Array.new
+    render :partial => "formularios_proyectos_ambientes", :layout => "only_jquery"
+  end
 end
