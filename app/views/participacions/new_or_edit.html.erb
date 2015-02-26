@@ -60,15 +60,15 @@
             </div>
             <!-- Salud -->
             <div class="grid-2-12">
-                Ambiente: <%= f.select :capacitacion_salud, (0..10), {:selected => @participacion.capacitacion_salud}, {:onchange => "sumatoria_dos_elementos('participacion_capacitacion_salud', 'participacion_capacitacion_medioambiente', 'total_capacitaciones');"} %>
+              <p><b>Ambiente:</b></p> <%= f.select :capacitacion_salud, (0..10), {:selected => @participacion.capacitacion_salud}, {:onchange => "sumatoria_dos_elementos('participacion_capacitacion_salud', 'participacion_capacitacion_medioambiente', 'total_capacitaciones'); showImageNum('total_capacitaciones', 'eje5_p3');"} %>
             </div>
             <!-- Medio ambiente -->
             <div class="grid-2-12">
-                Salud: <%= f.select :capacitacion_medioambiente, (0..10), {:selected => @participacion.capacitacion_medioambiente}, {:onchange => "sumatoria_dos_elementos('participacion_capacitacion_salud', 'participacion_capacitacion_medioambiente', 'total_capacitaciones');"}%>
+                <p><b>Salud:</b></p> <%= f.select :capacitacion_medioambiente, (0..10), {:selected => @participacion.capacitacion_medioambiente}, {:onchange => "sumatoria_dos_elementos('participacion_capacitacion_salud', 'participacion_capacitacion_medioambiente', 'total_capacitaciones'); showImageNum('total_capacitaciones', 'eje5_p3');"}%>
             </div>
              <!-- Total -->
             <div class="grid-3-12">
-              Total: <label id="total_capacitaciones" style="font-size: 14px;"></label>
+              <p><b>Total:</b></p> <label id="total_capacitaciones" style="font-size: 14px;"/>
             </div>
             
             <div class="grid-1-12"></div>
@@ -77,71 +77,59 @@
                                                               {:controller => "upload", :diagnostico => @diagnostico, :eje => 5, :numero_pregunta => 3, :action => "list_evidencias" },
                                                               :title => "EVIDENCIA DE LA PREGUNTA 3", :class => "fancybox fancybox.iframe"%>
             </div>
-            <div class="grid-12-12">
-              <%#= f.text_area :proy_escolares_ma_desc, :placeholder => "Especifique...", :disabled => 'disabled', :style => "display: none;" %>
-            </div>
-          </td>
-          <td>&nbsp;</td>
-          <td width="49%" align="justify" style=" vertical-align:top;">
-            <!-- Pregunta -->
-            <div class="grid-12-12">
-              <label class="uper">4.- ¿Qué Instituciones o Dependencias han impartido capacitaciones a los padres de familia? / ¿Cuántas?.<em class="formee-req"> *</em></label>
-            </div>
-
-            <!-- Respuestas -->
-
-            <div class="grid-12-12">
-            <fieldset style="padding: 5px 5px 5px 5px;">
-                <div id="preparacions" class="grid-12-12">
-                  <% Dcapacitadora.find(:all).each do |c| %>
-                      <div  class="grid-10-12">
-                        <%= check_box_tag "capacitacion[#{c.id}]", c.clave, @s_dcapacitadoras.include?(c.clave) ? true : false,
-                                  :onload  =>  "enable_disable_selects ('capacitacion_#{c.id}', 'capacitadora_#{c.clave}');",
-                                  :onclick =>  "enable_disable_selects ('capacitacion_#{c.id}', 'capacitadora_#{c.clave}');"  %>
-                        <%= c.descripcion %>
-                      </div>
-
-                      <div  class="grid-2-12">
-                        <%numero_capacitaciones = (CapacitacionPadre.find(:first, :conditions => ["participacion_id = ? AND dcapacitadora_id = ?", @participacion.id, c.id]))? CapacitacionPadre.find(:first, :select => 'numero_capacitaciones', :conditions => ["participacion_id = ? AND dcapacitadora_id = ?", @participacion.id, c.id]).numero_capacitaciones.to_i  : nil %>
-                        <%clase = (numero_capacitaciones)? "inline" : "none"%>
-                        <%= select "capacitadora", "#{c.clave}", (1..12), {:selected => numero_capacitaciones}, {:onchange => "enable_disable_selects('capacitacion_#{c.id}', 'capacitadora_#{c.clave}');", :style => "display:#{clase};"}%>
-                      </div>
-                      <div class="grid-12-12 clear"></div>
-                  <% end %>
-                </div>
-              <div class="grid-4-12">
-                
+            </td>
+            <td>&nbsp;</td>
+            <td width="49%" align="justify" style=" vertical-align:top;">
+              <!-- Pregunta -->
+              <div class="grid-12-12">
+                <label class="uper">4.- ¿Qué Instituciones o Dependencias han impartido capacitaciones a los padres de familia? / ¿Cuántas?.<em class="formee-req"> *</em></label>
               </div>
 
+              <!-- Respuestas -->
 
-            </fieldset>
-            </div>
+              <div class="grid-12-12">
+                <fieldset id ="contenedor" style="padding: 5px 5px 5px 5px;">
+                  <div id="preparacions" class="grid-12-12">
+                    <% Dcapacitadora.find(:all).each do |c| %>
+                        <div class="grid-10-12">
+                          <%= check_box_tag "capacitacion[#{c.id}]", c.clave, @s_dcapacitadoras.include?(c.clave) ? true : false,
+                                    :onload  =>  "enable_disable_selects ('capacitacion_#{c.id}', 'capacitadora_#{c.clave}', 'eje5_p4');  showImageFieldset('contenedor', 'eje5_p4');",
+                                    :onclick =>  "enable_disable_selects ('capacitacion_#{c.id}', 'capacitadora_#{c.clave}', 'eje5_p4');  showImageFieldset('contenedor', 'eje5_p4');" %>
+                          <%= c.descripcion %>
+                        </div>
 
+                        <div  class="grid-2-12">
+                          <%numero_capacitaciones = (CapacitacionPadre.find(:first, :conditions => ["participacion_id = ? AND dcapacitadora_id = ?", @participacion.id, c.id]))? CapacitacionPadre.find(:first, :select => 'numero_capacitaciones', :conditions => ["participacion_id = ? AND dcapacitadora_id = ?", @participacion.id, c.id]).numero_capacitaciones.to_i  : nil %>
+                          <%clase = (numero_capacitaciones)? "inline" : "none"%>
+                          <%= select "capacitadora", "#{c.clave}", (1..12), {:selected => numero_capacitaciones}, {:onchange => "enable_disable_selects('capacitacion_#{c.id}', 'capacitadora_#{c.clave}');", :style => "display:#{clase};"}%>
+                        </div>
+                        <div class="grid-12-12 clear"></div>
+                  <% end %>
+                  </div>
+                </fieldset>
+              </div>
 
-            <div class="grid-1-12"></div>
-            <div id="eje5_p4" class="grid-6-12" style="display: none;">
-            <%= link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta4", :id => "pregunta4"),
+              <div class="grid-1-12"></div>
+              <%estilo_eje5_p4 = (@s_dcapacitadoras.empty?)? "none" : "inline"%>
+              <div id="eje5_p4" class="grid-6-12" style="display: <%=h estilo_eje5_p4%>;">
+                <%= link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta4", :id => "pregunta4"),
                                                               {:controller => "upload", :diagnostico => @diagnostico, :eje => 5, :numero_pregunta => 4, :action => "list_evidencias" },
                                                               :title => "EVIDENCIA DE LA PREGUNTA 4", :class => "fancybox fancybox.iframe"%>
-            </div>
-            <!--
-            <div class="grid-12-12">
-              <= f.text_area :proy_escolares_salud_desc, :placeholder => "Especifique...", :disabled => 'disabled', :style => "display: none;" %>
-            </div>
-            -->
-          </td>
+              </div>
+           </td>
         </tr>
+
         <tr>
           <td colspan="3">&nbsp;</td>
         </tr>
+
         <tr>
           <td width="49%" align="justify" style=" vertical-align:top;" >
             <!-- Línea pregunta -->
             <div class="grid-12-12">
               <label class="uper">5.- ¿Cuántos proyectos escolares en materia del cuidado del ambiente realizó la escuela en vinculación con la comunidad?.<em class="formee-req"> *</em></label>
             </div>
-            <!-- Línea campo -->
-            <div class="grid-3-12"><%= select "proyectos", "ambiente", (0..12), {:selected => @proyectos_seleccionados_ambiente}%></div>
+            <div class="grid-3-12"><%= select "proyectos", "ambiente", (0..12), {:selected => @proyectos_seleccionados_ambiente}, {:onchange => "showImageNum('proyectos_ambiente', 'eje5_p5');"}%></div>
 
             <!-- detalle de proyectos -->
             <div id="detalle_proyectos_ambiente" class="grid-12-12">
@@ -154,32 +142,54 @@
                                                               {:controller => "upload", :diagnostico => @diagnostico, :eje => 5, :numero_pregunta => 5, :action => "list_evidencias" },
                                                               :title => "EVIDENCIA DE LA PREGUNTA 5", :class => "fancybox fancybox.iframe"%>
             </div>
-            <div class="grid-12-12">
-              <%#= f.text_area :act_salud_ma_desc, :placeholder => "Especifique...", :disabled => 'disabled', :style => "display: none;" %>
-            </div>
           </td>
           <td>&nbsp;</td>
           <td width="49%" align="justify" style=" vertical-align:top;">
             <!-- Línea Pregunta -->
             <div class="grid-12-12">
-              <label class="uper">6.- De los proyectos o actividades que realiza la institución escolar, ¿cuáles se desarrollan, con apoyos de organismos no gubernamentales o dependencias gubernamentales?.<em class="formee-req"> *</em></label>
+              <label class="uper">6.-¿ Cuántos proyectos escolares en materia del cuidado de la salud realizó la escuela en vinculación con la comunidad?.<em class="formee-req"> *</em></label>
             </div>
-            <!-- Línea campo -->
-            <div class="grid-3-12"></div>
-            <div class="grid-2-12">
-              <%#= f.select :act_dep_gobierno, (0..2), {}, :onchange => "showDesc(this, 'participacion_act_dep_gobierno_desc', 'eje5_p6');"%>
+
+            <div class="grid-3-12"><%= select "proyectos", "salud", (0..12), {:selected => @proyectos_seleccionados_salud}, {:onchange => "showImageNum('proyectos_salud', 'eje5_p6');"}%></div>
+
+            <!-- detalle de proyectos -->
+            <div id="detalle_proyectos_salud" class="grid-12-12">
+              <%=text_field "informacion", "participacion", :value => @participacion.id, :style => "display:none;"%>
+              <%=render :partial => 'formularios_proyectos_salud'%>
             </div>
-            <div class="grid-1-12"></div>
+
             <div id="eje5_p6" class="grid-6-12" style="display: none;">
-            <%= link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta6", :id => "pregunta6"),
+              <%= link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta6", :id => "pregunta6"),
                                                               {:controller => "upload", :diagnostico => @diagnostico, :eje => 5, :numero_pregunta => 6, :action => "list_evidencias" },
                                                               :title => "EVIDENCIA DE LA PREGUNTA 6", :class => "fancybox fancybox.iframe"%>
             </div>
-            <div class="grid-12-12">
-              <%#= f.text_area :act_dep_gobierno_desc, :placeholder => "Especifique...", :disabled => 'disabled', :style => "display: none;" %>
-            </div>
           </td>
         </tr>
+
+        <!-- Nueva pregunta 7 -->
+
+         <tr>
+          <td width="49%" align="justify" style=" vertical-align:top;" >
+            <!-- Línea pregunta -->
+            <div class="grid-12-12">
+              <label class="uper">7.- De los proyectos o actividades que realiza la Institución Escolar, ¿Cuáles se desarrollan con apoyos de organismos no gubernamentales o dependencias gubernamentales?.<em class="formee-req"> *</em></label>
+            </div>
+            <div class="grid-3-12"><%= select "proyectos", "dependencias", (0..12), {:selected => @proyectos_seleccionados_dependencias}, {:onchange => "showImageNum('proyectos_dependencias', 'eje5_p7');"}%></div>
+
+            <!-- detalle de proyectos -->
+            <div id="detalle_proyectos_dependencias" class="grid-12-12">
+              <%=text_field "informacion", "participacion", :value => @participacion.id, :style => "display:none;"%>
+              <%=render :partial => 'formularios_proyectos_dependencias'%>
+            </div>
+
+            <div id="eje5_p7" class="grid-6-12" style="display: none;">
+              <%= link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta7", :id => "pregunta7"),
+                                                              {:controller => "upload", :diagnostico => @diagnostico, :eje => 5, :numero_pregunta => 7, :action => "list_evidencias" },
+                                                              :title => "EVIDENCIA DE LA PREGUNTA 7", :class => "fancybox fancybox.iframe"%>
+            </div>
+          </td>
+         </tr>
+
       </table>
     </td>
   </tr>
@@ -215,23 +225,44 @@
                   :with=>"Form.serializeElements($('proyectos_ambiente', 'informacion_participacion'))"%>
 
 
+<%= observe_field :proyectos_salud,
+                  :on => 'change',
+                  :update => :detalle_proyectos_salud,
+                  :url => { :controller => 'participacions', :action => 'formularios_proyectos_salud' },
+                  :with=>"Form.serializeElements($('proyectos_salud', 'informacion_participacion'))"%>
 
 
-<%#*<script type="text/javascript">%>
-  <%#*showImageNum('participacion_num_padres_familia', 'eje5_p1');%>
-  <%#*showImageNum('participacion_capacitacion_salud_ma', 'eje5_p2');%>
+<%= observe_field :proyectos_dependencias,
+                  :on => 'change',
+                  :update => :detalle_proyectos_dependencias,
+                  :url => { :controller => 'participacions', :action => 'formularios_proyectos_dependencias' },
+                  :with=>"Form.serializeElements($('proyectos_dependencias', 'informacion_participacion'))"%>
+
+
+
+
+<script type="text/javascript">
+  showImageNum('participacion_num_padres_familia', 'eje5_p1');
+  showImageNum('participacion_capacitacion_salud_ma', 'eje5_p2');
+  sumatoria_dos_elementos('participacion_capacitacion_salud', 'participacion_capacitacion_medioambiente', 'total_capacitaciones'); //pregunta 3
+  showImageNum('total_capacitaciones', 'eje5_p3');
+  showImageNum('proyectos_ambiente', 'eje5_p5');
+  showImageNum('proyectos_salud', 'eje5_p6');
+  showImageNum('proyectos_dependencias', 'eje5_p7');
+  showImageFieldset('contenedor', 'eje5_p4');
+
   <%#*showDesc('participacion_proy_escolares_ma', 'participacion_proy_escolares_ma_desc', 'eje5_p3');%>
   <%#*showDesc('participacion_proy_escolares_salud', 'participacion_proy_escolares_salud_desc', 'eje5_p4');%>
   <%#*showDesc('participacion_act_salud_ma', 'participacion_act_salud_ma_desc', 'eje5_p5');%>
   <%#*showDesc('participacion_act_dep_gobierno', 'participacion_act_dep_gobierno_desc', 'eje5_p6');%>
 
-  <%#*var num_padres_familia = new LiveValidation( 'participacion_num_padres_familia' );%>
-  <%#*num_padres_familia.add( Validate.Presence );%>
-  <%#*num_padres_familia.add( Validate.Numericality, { minimum: parseInt(document.getElementById("participacion_capacitacion_salud_ma").value)}, { onlyInteger: true } );%>
+  var num_padres_familia = new LiveValidation( 'participacion_num_padres_familia' );
+  num_padres_familia.add( Validate.Presence );
+  num_padres_familia.add( Validate.Numericality, { minimum: parseInt(document.getElementById("participacion_capacitacion_salud_ma").value)}, { onlyInteger: true } );
 
-  <%#*var capacitacion_salud_ma = new LiveValidation( 'participacion_capacitacion_salud_ma' );%>
-  <%#*capacitacion_salud_ma.add( Validate.Presence );%>
-  <%#*capacitacion_salud_ma.add( Validate.Numericality, { maximum: parseInt(document.getElementById("participacion_num_padres_familia").value)}, { onlyInteger: true } );%>
+  var capacitacion_salud_ma = new LiveValidation( 'participacion_capacitacion_salud_ma' );
+  capacitacion_salud_ma.add( Validate.Presence );
+  capacitacion_salud_ma.add( Validate.Numericality, { maximum: parseInt(document.getElementById("participacion_num_padres_familia").value)}, { onlyInteger: true } );
 
   <%#*var proy_escolares_ma_desc = new LiveValidation( 'participacion_proy_escolares_ma_desc' );%>
   <%#*proy_escolares_ma_desc.add( Validate.Presence );%>
@@ -245,12 +276,12 @@
   <%#*var act_dep_gobierno_desc = new LiveValidation( 'participacion_act_dep_gobierno_desc' );%>
   <%#*act_dep_gobierno_desc.add( Validate.Presence );%>
 
-  <%#*function add_validation(){%>
-    <%#*num_padres_familia.remove( Validate.Numericality, { minimum: parseInt(document.getElementById("participacion_capacitacion_salud_ma").value)}, { onlyInteger: true } );%>
-    <%#*num_padres_familia.add( Validate.Numericality, { minimum: parseInt(document.getElementById("participacion_capacitacion_salud_ma").value)}, { onlyInteger: true } );%>
-  <%#*}%>
-  <%#*function add_validation2(){%>
-    <%#*capacitacion_salud_ma.remove( Validate.Numericality, { maximum: parseInt(document.getElementById("participacion_num_padres_familia").value)}, { onlyInteger: true } );%>
-    <%#*capacitacion_salud_ma.add( Validate.Numericality, { maximum: parseInt(document.getElementById("participacion_num_padres_familia").value)}, { onlyInteger: true } );%>
-  <%#*}%>
-<%#*</script>%>
+  function add_validation(){
+    num_padres_familia.remove( Validate.Numericality, { minimum: parseInt(document.getElementById("participacion_capacitacion_salud_ma").value)}, { onlyInteger: true } );
+    num_padres_familia.add( Validate.Numericality, { minimum: parseInt(document.getElementById("participacion_capacitacion_salud_ma").value)}, { onlyInteger: true } );
+  }
+  function add_validation2(){
+    capacitacion_salud_ma.remove( Validate.Numericality, { maximum: parseInt(document.getElementById("participacion_num_padres_familia").value)}, { onlyInteger: true } );
+    capacitacion_salud_ma.add( Validate.Numericality, { maximum: parseInt(document.getElementById("participacion_num_padres_familia").value)}, { onlyInteger: true } );
+  }
+</script>

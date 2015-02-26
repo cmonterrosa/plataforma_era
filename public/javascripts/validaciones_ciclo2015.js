@@ -38,17 +38,32 @@ function enableDisableDivWithFielset (fieldset_main, preguntas, valores_permitid
 function sumatoria_dos_elementos(elemento1, elemento2, resultado){
  total = parseInt(document.getElementById(elemento1).value)+parseInt(document.getElementById(elemento2).value);
  document.getElementById(resultado).innerHTML = total;
+ document.getElementById(resultado).value = total;
 }
 
-
-
-function enable_disable_selects (checkbox_element, select_element) {
+function enable_disable_selects (checkbox_element, select_element,divEv) {
      if (document.getElementById(checkbox_element).checked) {
            document.getElementById(select_element).style.display = "inline";
+           document.getElementById(divEv).style.display = "inline";
         } else {
             document.getElementById(select_element).style.display = "none";
+            document.getElementById(divEv).style.display = "none";
         }
 }
+
+
+function showImageFieldset(fieldset_main, divEv){
+      fieldset = document.getElementById(fieldset_main);
+      evidencia = document.getElementById(divEv);
+      evidencia.style.display = "none";
+      for(var i=0;i<fieldset.elements.length;i++) {
+        if(fieldset.elements[i].type == 'checkbox' && fieldset.elements[i].checked ){
+              evidencia.style.display = "inline";
+              break;
+            }
+      }
+}
+
 
 
 

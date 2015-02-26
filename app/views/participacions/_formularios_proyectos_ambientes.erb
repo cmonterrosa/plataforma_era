@@ -17,12 +17,12 @@
                   <div class="grid-12-12"></div>
                   <div class="grid-12-12">
                      <label style=" font-weight: bold;"><%=h proyecto%>.- Nombre del proyecto: <em class="formee-req">*</em></label>
-                      <%= text_field "pescolaresambiente", "nombre_#{proyecto}", :value => valores_por_defecto["nombre_#{proyecto}"] %>
+                      <%= text_field "pescolaresambiente", "nombre_#{proyecto}", :value => valores_por_defecto["nombre_#{proyecto}"], :required => true %>
                   </div>
 
                   <div class="grid-12-12">
                     <label style=" font-weight: bold;">Descripción del proyecto: </label>
-                    <%= text_area "pescolaresambiente", "descripcion_#{proyecto}", :value => valores_por_defecto["descripcion_#{proyecto}"] %>
+                    <%= text_area "pescolaresambiente", "descripcion_#{proyecto}", :value => valores_por_defecto["descripcion_#{proyecto}"], :required => true %>
                   </div>
                   <div class="grid-12-12 clear"></div>
           <%end%>
