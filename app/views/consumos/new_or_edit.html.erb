@@ -21,13 +21,13 @@
                 <span id="ct_escuela_establecimiento" class="InputGroup">
                   <label class="uper">SI <%= f.radio_button :escuela_establecimiento, "SI", :onclick => "enaSelectMultiple(this, 'establecimientos');" %></label>&nbsp;&nbsp;
                   <label class="uper">NO <%= f.radio_button :escuela_establecimiento, "NO", :onclick => "enaSelectMultiple(this, 'establecimientos');" %></label>
-                </span>
+                  </span>
               </div>
             </div>
             <div id="establecimientos" class="grid-12-12">
               <fieldset style="padding: 5px 5px 5px 5px;" id="lista_establecimientos">
                 <% @establecimientos.each do |c| %>
-                  <%= check_box_tag "establecimientos[#{c.id}]", c.clave, @s_establecimientos.include?(c.clave) ? true : false, :onclick => 'var preguntas = ["pregunta2"]; var valores_permitidos = ["CLAE", "CAEC"];enableDisableDivWithFielset ("lista_establecimientos", preguntas, valores_permitidos);' %>&nbsp;<%= c.descripcion %><br />
+                  <%= check_box_tag "establecimientos[#{c.id}]", c.clave, @s_establecimientos.include?(c.clave) ? true : false, {:onclick => "showPreguntasEstablecimientos('lista_establecimientos', 'pregunta2', 'pregunta3', 'espacios', 'norma_oficial_mexicana', 'preparacion', 'higiene', 'productos', 'alimentos_bebidas', 'botanas', 'materials');"} %>&nbsp;<%= c.descripcion %><br />
                 <% end %>
               </fieldset>
             </div>
@@ -59,8 +59,8 @@
             </td>
           </tr>
 
-          <tr>
-            <td width="49%" align="justify" style=" vertical-align:top;" id="pregunta3">
+          <tr id="pregunta3">
+            <td width="49%" align="justify" style=" vertical-align:top;">
             <!-- Línea Pregunta -->
             <div class="grid-12-12">
               <label class="uper">3.- Los responsables de la elaboración y venta de  alimentos en cooperativas, cafeterías o expendios escolares, ¿Aplican los  Lineamientos Generales para la distribución de alimentos y bebidas preparados y procesados en las escuelas del Sistema Educativo Nacional?.<em class="formee-req"> *</em></label>
@@ -77,25 +77,26 @@
 
 
           <td colspan="3">&nbsp;</td>
-        </tr>
-        <tr>
- 
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-        </tr>
-        <tr>
-          <td colspan="3">&nbsp;</td>
-        </tr>
-        <tr>
+          </tr>
+          <div id="espacios">
+            <tr>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+            </tr>
+            <tr>
+              <td colspan="3">&nbsp;</td>
+            </tr>
+          </div>
+        <tr id="norma_oficial_mexicana">
           <td colspan="3" align="justify" style=" vertical-align:top;">
             <!-- Línea Pregunta -->
             <div class="grid-12-12">
-              <label class="uper">¿Cúales de las siguientes recomendaciones del apéndice informativo C de la Norma Oficial Mexicana NOM-0043-SSA2-2012 Aplica la Institución Escolar?.<em class="formee-req"> *</em></label>
+              <label class="uper">4.- ¿Cúales de las siguientes recomendaciones del apéndice informativo C de la Norma Oficial Mexicana NOM-0043-SSA2-2012 Aplica la Institución Escolar?.<em class="formee-req"> *</em></label>
             </div>
           </td>
         </tr>
-        <tr>
-          <td width="49%" align="justify" style=" vertical-align:top;" >
+        <tr id="preparacion">
+          <td width="49%" align="justify" style=" vertical-align:top;">
             <!-- Línea pregunta -->
             <div class="grid-12-12">
               <label class="uper">Preparación:</label>
@@ -110,7 +111,7 @@
             </fieldset>
           </td>
           <td>&nbsp;</td>
-          <td width="49%" align="justify" style=" vertical-align:top;" >
+          <td width="49%" align="justify" style=" vertical-align:top;">
             <!-- Línea pregunta -->
             <div class="grid-12-12">
               <label class="uper">Utensilios:</label>
@@ -125,8 +126,8 @@
             </fieldset>
           </td>
         </tr>
-        <tr>
-          <td width="49%" align="justify" style=" vertical-align:top;" >
+        <tr id="higiene">
+          <td width="49%" align="justify" style=" vertical-align:top;">
             <!-- Línea pregunta -->
             <div class="grid-12-12">
               <label class="uper">Higiene:</label>
@@ -143,8 +144,8 @@
           <td>&nbsp;</td>
           <td>&nbsp;</td>
         </tr>
-        <tr>
-          <td colspan="3" align="justify" style=" vertical-align:top;" >
+        <tr id="productos">
+          <td colspan="3" align="justify" style=" vertical-align:top;">
             <!-- Línea pregunta -->
             <div class="grid-12-12">
               <label class="uper">5.- Del siguiente listado marque los que se comercializan en su escuela:<em class="formee-req"> *</em></label>
@@ -154,7 +155,7 @@
             </div>
           </td>
         </tr>
-        <tr>
+        <tr id="alimentos_bebidas">
           <!-- Bebidas -->
           <td width="49%" align="justify" style=" vertical-align:top;" >
             <!-- Línea pregunta -->
@@ -191,7 +192,7 @@
           </td>
         </tr>
 
-        <tr>
+        <tr id="botanas">
             <td width="49%" align="justify" style=" vertical-align:top;" >
               <!-- Línea pregunta -->
               <div class="grid-12-12">
@@ -231,7 +232,7 @@
         </tr>
         
         <tr>
-          <td width="49%" align="justify" style=" vertical-align:top;">
+          <td width="49%" align="justify" style=" vertical-align:top;" id="materials">
             <div class="grid-12-12">
               <label class="uper">6.- ¿Cuál es el tipo de material de los recipientes y utensilios (platos, vasos, cucharas, cuchillos, tenedores, etc) que se utilizan para servir alimentos en los establecimientos de consumo escolar?. <em class="formee-req"> *</em></label>
             </div>
@@ -256,7 +257,7 @@
               </div>
               <!-- Línea campo -->
               <div class="grid-12-12">
-                <%= f.select :frecuencia_afisica_id, FrecuenciaAfisica.all.collect {|p| [ p.descripcion, p.clave ]}, {:selected => @s_afisicas}, :onchange => "enable_frecuencias_actividades_fisicas(consumo_frecuencia_afisica_id, consumo_minutos_activacion_fisica, consumo_momentos_activacion_fisica);" %>
+                <%= f.select :frecuencia_afisica_id, FrecuenciaAfisica.all.collect {|p| [ p.descripcion, p.clave ]}, {:selected => @s_afisicas}, {:onchange => "enable_frecuencias_actividades_fisicas('consumo_frecuencia_afisica_id', 'consumo_minutos_activacion_fisica', 'consumo_momentos_activacion_fisica');"} %>
               </div>
           </td>
           </tr>
@@ -324,15 +325,15 @@
 
 <script type="text/javascript">
   enaSelectMultiple('consumo_escuela_establecimiento', 'establecimientos');
-  showImage('consumo_capacitacion_alim_bebidas_si', 'eje4_p3');
-  showImage('consumo_capacitacion_alim_bebidas_no', 'eje4_p3');
+  <%#*showImage('consumo_capacitacion_alim_bebidas_si', 'eje4_p3');%>
+  <%#*showImage('consumo_capacitacion_alim_bebidas_no', 'eje4_p3');%>
 
   /*enaDisDiv ("lista_establecimientos", "div233");*/
 
 
-  var preguntas = ["pregunta2"];
-  var valores_permitidos = ["CLAE", "CAEC"];
-  enableDisableDivWithFielset ("lista_establecimientos", preguntas, valores_permitidos);
+  <%#*var preguntas = ["pregunta2"];%>
+  <%#*var valores_permitidos = ["CLAE", "CAEC"];%>
+  <%#*enableDisableDivWithFielset ("lista_establecimientos", preguntas, valores_permitidos);%>
 
   enable_frecuencias_actividades_fisicas("consumo_frecuencia_afisica_id", "consumo_minutos_activacion_fisica", "consumo_momentos_activacion_fisica");
 
