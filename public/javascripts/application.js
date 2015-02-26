@@ -502,12 +502,12 @@ function enable_frecuencias_actividades_fisicas(comboSelect1, comboSelect2, comb
         select1 = comboSelect1;
     else
         select1 = document.getElementById(comboSelect1);
-    if(typeof comboSelect1 == "object")
+    if(typeof comboSelect2 == "object")
         select2 = comboSelect2;
     else
         select2 = document.getElementById(comboSelect2);
 
-    if(typeof comboSelect1 == "object")
+    if(typeof comboSelect3 == "object")
         select3 = comboSelect3;
     else
         select3 = document.getElementById(comboSelect3);
@@ -518,9 +518,8 @@ function enable_frecuencias_actividades_fisicas(comboSelect1, comboSelect2, comb
      
     }
     else{
-     select2.disabled=true;
-     select3.disabled=true;
-     
+     if(select2 != null){select2.disabled=true;}
+     if(select3 != null){select3.disabled=true;}
     }
 
 }
