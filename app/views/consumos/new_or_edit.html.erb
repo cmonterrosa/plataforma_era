@@ -42,17 +42,17 @@
             <!-- Línea campo -->
             <div class="grid-12-12">
               <div class="grid-2-12"></div>
-              <div class="grid-5-12">
+              <div class="grid-12-12">
                 <span id="r_capacitacion_alim_bebidas" class="InputGroup">
-                  <label class="uper">SI <%= f.radio_button :capacitacion_alim_bebidas, "SI", :onclick => "showImage('consumo_capacitacion_alim_bebidas_si', 'eje4_p3');"%></label>&nbsp;&nbsp;
-                  <label class="uper">NO <%= f.radio_button :capacitacion_alim_bebidas, "NO", :onclick => "showImage('consumo_capacitacion_alim_bebidas_no', 'eje4_p3');"%></label>
+                  <label class="uper">SI <%= f.radio_button :capacitacion_alim_bebidas, "SI", {:onclick => "showImage('consumo_capacitacion_alim_bebidas_si', 'eje4_p2');"}%></label>&nbsp;&nbsp;
+                  <label class="uper">NO <%= f.radio_button :capacitacion_alim_bebidas, "NO", {:onclick => "showImage('consumo_capacitacion_alim_bebidas_no', 'eje4_p2');"}%></label>
                 </span>
               </div>
-              <div class="grid-1-12"></div>
-              <div id="eje4_p3" class="grid-4-12" style="display: none;">
-                  <%= link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "evidencia_pregunta3", :id => "evidencia_pregunta3"),
-                                                              {:controller => "upload", :diagnostico => @diagnostico, :eje => 4, :numero_pregunta => 3, :action => "new_evidencia" },
-                                                              :title => "EVIDENCIA DE LA PREGUNTA 3", :class => "fancybox fancybox.iframe"%>
+              <div class="grid-12-12"></div>
+              <div id="eje4_p2" class="grid-12-12" style="display: none; text-align: center;">
+                  <%= link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "evidencia_pregunta2", :id => "evidencia_pregunta2"),
+                                                              {:controller => "upload", :diagnostico => @diagnostico, :eje => 4, :numero_pregunta => 2, :action => "new_evidencia" },
+                                                              :title => "EVIDENCIA DE LA PREGUNTA 2", :class => "fancybox fancybox.iframe"%>
               </div>
              </div>
             </td> <!-- pregunta 2 -->
@@ -70,10 +70,17 @@
                 <div class="grid-12-12"></div>
                 <div class="grid-12-12">
                   <span id="responsables_conocen_lineamientos" class="InputGroup">
-                    <label class="uper">SI <%= f.radio_button :conocen_lineamientos_grales, "SI" %></label>&nbsp;&nbsp;
-                    <label class="uper">NO <%= f.radio_button :conocen_lineamientos_grales, "NO" %></label>
+                    <label class="uper">SI <%= f.radio_button :conocen_lineamientos_grales, "SI", {:onclick => "showImage('consumo_conocen_lineamientos_grales_si', 'eje4_p3');"} %></label>&nbsp;&nbsp;
+                    <label class="uper">NO <%= f.radio_button :conocen_lineamientos_grales, "NO", {:onclick => "showImage('consumo_conocen_lineamientos_grales_no', 'eje4_p3');"} %></label>
                   </span>
                 </div>
+                <div class="grid-12-12 clean"></div>
+                <div id="eje4_p3" class="grid-12-12" style="display: none; text-align: center;">
+                  <%= link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "evidencia_pregunta3", :id => "evidencia_pregunta3"),
+                                                              {:controller => "upload", :diagnostico => @diagnostico, :eje => 4, :numero_pregunta => 3, :action => "new_evidencia" },
+                                                              :title => "EVIDENCIA DE LA PREGUNTA 3", :class => "fancybox fancybox.iframe"%>
+                </div>
+
                 </td><!-- pregunta 3 -->
                 <td colspan="2">&nbsp;</td> <!-- espacio -->
               </tr>
@@ -276,12 +283,21 @@
                   </div>
                   <!-- Línea campo -->
                   <div class="grid-12-12">
-                    <%= f.select :frecuencia_afisica_id, FrecuenciaAfisica.all.collect {|p| [ p.descripcion, p.clave ]}, {:selected => @s_afisicas}, {:onchange => "enable_frecuencias_actividades_fisicas('consumo_frecuencia_afisica_id', 'consumo_minutos_activacion_fisica', 'consumo_momentos_activacion_fisica');"} %>
+                    <%= f.select :frecuencia_afisica_id, FrecuenciaAfisica.all.collect {|p| [ p.descripcion, p.clave ]}, {:selected => @s_afisicas}, {:onchange => "showImageValue('consumo_frecuencia_afisica_id', 'eje4_p7','NOSR'); enable_frecuencias_actividades_fisicas('consumo_frecuencia_afisica_id', 'consumo_minutos_activacion_fisica');"} %>
                   </div>
+
+                  <!-- Evidencia --->
+                 <div class="grid-12-12 clean"></div>
+                 <div id="eje4_p7" class="grid-12-12" style="display: none; text-align: center;">
+                 <%= link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "evidencia_pregunta7", :id => "evidencia_pregunta7"),
+                                                              {:controller => "upload", :diagnostico => @diagnostico, :eje => 4, :numero_pregunta => 7, :action => "new_evidencia" },
+                                                              :title => "EVIDENCIA DE LA PREGUNTA 7", :class => "fancybox fancybox.iframe"%>
+                 </div>
+
                 </td> <!-- frecuencia fisica -->
                 <td>&nbsp;</td>
               
-                <td width="49%" align="justify" style=" vertical-align:top;" >
+                <td id="pregunta8" width="49%" align="justify" style=" vertical-align:top;" >
                   <div class="grid-12-12">
                     <label class="uper">8.- Por día, en qué tiempo realiza la activación física?. <em class="formee-req"> *</em></label>
                   </div> <!-- pregunta 8 -->
@@ -327,8 +343,12 @@
 
 <script type="text/javascript">
   enaSelectMultiple('consumo_escuela_establecimiento', 'establecimientos');
-  <%#*showImage('consumo_capacitacion_alim_bebidas_si', 'eje4_p3');%>
-  <%#*showImage('consumo_capacitacion_alim_bebidas_no', 'eje4_p3');%>
+  showImage('consumo_capacitacion_alim_bebidas_si', 'eje4_p2');
+  showImage('consumo_capacitacion_alim_bebidas_no', 'eje4_p2');
+  showImage('consumo_conocen_lineamientos_grales_si', 'eje4_p3');
+  showImage('consumo_conocen_lineamientos_grales_no', 'eje4_p3');
+
+
 
   /*enaDisDiv ("lista_establecimientos", "div233");*/
 
@@ -337,8 +357,8 @@
   <%#*var valores_permitidos = ["CLAE", "CAEC"];%>
   <%#*enableDisableDivWithFielset ("lista_establecimientos", preguntas, valores_permitidos);%>
   showPreguntasEstablecimientos('lista_establecimientos');
-  enable_frecuencias_actividades_fisicas("consumo_frecuencia_afisica_id", "consumo_minutos_activacion_fisica", "consumo_momentos_activacion_fisica");
-
+  enable_frecuencias_actividades_fisicas("consumo_frecuencia_afisica_id", "consumo_minutos_activacion_fisica");
+  showImageValue('consumo_frecuencia_afisica_id', 'eje4_p7','NOSR');
   
 
   jQuery("#establecimientos").validate({ expression: "if (skipSelect(SelfID, 'consumo_escuela_establecimiento')) return true; else return false;", message: "Seleccione una opción!" });
