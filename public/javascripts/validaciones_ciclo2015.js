@@ -90,37 +90,73 @@ function showPreguntasEstablecimientos(fieldset_main){
       materiales = document.getElementById("materiales");
       for(var i=0;i<fieldset.elements.length;i++) {
         if(fieldset.elements[i].type == 'checkbox' && fieldset.elements[i].checked && (fieldset.elements[i].value == "CLAE" || fieldset.elements[i].value == "CAEC" ) ){
-              pregunta2.style.display = "none";
-              pregunta3.style.display = "none";
-              pregunta4.style.display = "none";
-              preparacion_utensilios.style.display = "none";
-              higiene.style.display = "none";
-              productos.style.display = "none";
-              bebidas_alimentos.style.display = "none";
-              botanas_reposterias.style.display = "none";
-              materiales.style.display = "none";
-              alert("ok");
+               pregunta2.style.display = 'none';
+                pregunta3.style.display = 'none';
+                pregunta4.style.display = 'none';
+                preparacion_utensilios.style.display = "none";
+                higiene.style.display = "none";
+                productos.style.display = "none";
+                bebidas_alimentos.style.display = "none";
+                botanas_reposterias.style.display = "none";
+                materiales.style.display = "none";
+//                alert("deshabilita preguntas");
               break;
             }
             else{
-               pregunta2.style.display = "inline";
-              pregunta3.style.display =  "inline";
-              pregunta4.style.display =  "inline";
-              preparacion_utensilios.style.display =  "inline";
-              higiene.style.display =  "inline";
-              productos.style.display =  "inline";
-              bebidas_alimentos.style.display =  "inline";
-              botanas_reposterias.style.display =  "inline";
-              materiales.style.display =  "inline";
-                 alert("habilita preguntas");
+               pregunta2.style.display =  "";
+               pregunta3.style.display =  "";
+               pregunta4.style.display =  "";
+               preparacion_utensilios.style.display =  "";
+               higiene.style.display =  "";
+               productos.style.display =  "";
+               bebidas_alimentos.style.display =  "";
+               botanas_reposterias.style.display =  "";
+               materiales.style.display =  "";
+//               alert("habilita preguntas");
+               break;
                }
       }
 }
 
-
-
-
-
+function showUnicaPreguntaEstablecimientos(checked_object){
+      checked_controller = document.getElementById(checked_object);
+      pregunta2 = document.getElementById("pregunta2");
+      pregunta3 = document.getElementById("pregunta3");
+      pregunta4 = document.getElementById("pregunta4");
+      preparacion_utensilios = document.getElementById("preparacion_utensilios");
+      higiene = document.getElementById("higiene");
+      productos = document.getElementById("productos");
+      bebidas_alimentos = document.getElementById("bebidas_alimentos");
+      botanas_reposterias = document.getElementById("botanas_reposterias");
+      materiales = document.getElementById("materiales");
+      
+        if(checked_controller.type == 'checkbox' && checked_controller.checked && (checked_controller.value == "CLAE" || checked_controller.value == "CAEC" ))
+             {
+                pregunta2.style.display = 'none';
+                pregunta3.style.display = 'none';
+                pregunta4.style.display = 'none';
+                preparacion_utensilios.style.display = "none";
+                higiene.style.display = "none";
+                productos.style.display = "none";
+                bebidas_alimentos.style.display = "none";
+                botanas_reposterias.style.display = "none";
+                materiales.style.display = "none";
+//                alert("deshabilita preguntas");
+               }
+         else{
+               pregunta2.style.display =  "";
+               pregunta3.style.display =  "";
+               pregunta4.style.display =  "";
+               preparacion_utensilios.style.display =  "";
+               higiene.style.display =  "";
+               productos.style.display =  "";
+               bebidas_alimentos.style.display =  "";
+               botanas_reposterias.style.display =  "";
+               materiales.style.display =  "";
+//               alert("habilita preguntas");
+              }
+        }
+      
 
 
 /* Funciones usadas en EJE 5 */
