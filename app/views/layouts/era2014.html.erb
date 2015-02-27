@@ -16,8 +16,7 @@
           margin-top: 5px;
           /*background-color: #F0F0F0;*/
           background-color: white;
-          /*font-family: Arial Narrow,Helvetica,sans-serif;*/
-          font-family: "Arial Narrow", Arial, "Helvetica Condensed";
+          font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
   }
 
   </style>
@@ -286,7 +285,7 @@ a:active {
         </tr>
         <tr>
           <td colspan="3">
-            <table width="800px" border="0" cellspacing="0" cellpadding="0">
+            <table width="880px" border="0" cellspacing="0" cellpadding="0">
               <tr>
                 <td width="60px" align="right"><img src="/images/era/iconos/ico_arbol.png" alt="2" width="34" height="17" /></td>
                 <!-- <td width="40" class="Txt_arbol"><a href="http://era.educacionchiapas.gob.mx" class="Txt_arbol">Inicio</a></td>-->
@@ -312,7 +311,7 @@ a:active {
                 <td width="34" align="center"><img src="/images/era/iconos/ico_arbol.png" alt="1" width="34" height="17" /></td>
 
                 <!-- Nombre de quien esta loggeado -->
-                <td width="320" class="Txt_arbol">
+                <td width="520" class="Txt_arbol">
                   <a href="/home" class="Txt_arbol">
                     <%if current_user.has_role?("directivo")%>
                       <%nombre= (@esc = Directivo.find_by_clave(current_user.login)) ? @esc.descripcion : nil%>
@@ -337,10 +336,10 @@ a:active {
 
 
                   <td width="34" align="center"><img src="/images/era/iconos/ico_arbol.png" alt="1" width="34" height="17" /></td>
-                  <td width="120" class="Txt_arbol"><a href="/home" class="Txt_arbol"><%=link_to "CERRAR SESIÓN", {:action => "destroy", :controller => "sessions"}, :style => "http://esys.educacionchiapas.gob.mx" , :style => "text-decoration: none; color: #404040;", :title => "¿ESTÁ SEGURO(A) QUE DESEA SALIR DE LA PLATAFORMA"%></a></td>
+                  <td width="180" class="Txt_arbol"><a href="/home" class="Txt_arbol"><%=link_to "CERRAR SESIÓN", {:action => "destroy", :controller => "sessions"}, :style => "http://esys.educacionchiapas.gob.mx" , :style => "text-decoration: none; color: #404040;", :title => "¿ESTÁ SEGURO(A) QUE DESEA SALIR DE LA PLATAFORMA"%></a></td>
                 <%else%>
                   <td width="34" align="center"><img src="/images/era/iconos/ico_arbol.png" alt="1" width="34" height="17" /></td>
-                  <td width="120" class="Txt_arbol"><a href="/home" class="Txt_arbol"><%=link_to "INICIAR SESIÓN", {:action => "new", :controller => "sessions"}, :style => "http://esys.educacionchiapas.gob.mx" , :style => "text-decoration: none; color: #404040;", :title => "HAGA CLICK PARA INICIAR SESIÓN"%></a></td>
+                  <td width="180" class="Txt_arbol"><a href="/home" class="Txt_arbol"><%=link_to "INICIAR SESIÓN", {:action => "new", :controller => "sessions"}, :style => "http://esys.educacionchiapas.gob.mx" , :style => "text-decoration: none; color: #404040;", :title => "HAGA CLICK PARA INICIAR SESIÓN"%></a></td>
                 <%end%>
 
                 <td>&nbsp;</td>
