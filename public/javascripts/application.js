@@ -402,8 +402,8 @@ function showDescReport(obj_select, obj_desc){
     var select = document.getElementById(obj_select);
     var desc = document.getElementById(obj_desc);
     
-    if(select.value != '0'){ enableTextarea(desc);}
-    else{ disableTextarea(desc); }
+    if(select.value != '0'){enableTextarea(desc);}
+    else{disableTextarea(desc);}
 }
 
 
@@ -496,8 +496,8 @@ function checkRadioImage(arreglo, numRadio, image_id){
 }
 
 /* Habilita cuantas veces si realiza actividad fisica a la semana */
-function enable_frecuencias_actividades_fisicas(comboSelect1, comboSelect2, comboSelect3){
-    
+function enable_frecuencias_actividades_fisicas(comboSelect1, comboSelect2){
+    pregunta8 = document.getElementById("pregunta8");
     if(typeof comboSelect1 == "object")
         select1 = comboSelect1;
     else
@@ -507,19 +507,13 @@ function enable_frecuencias_actividades_fisicas(comboSelect1, comboSelect2, comb
     else
         select2 = document.getElementById(comboSelect2);
 
-    if(typeof comboSelect3 == "object")
-        select3 = comboSelect3;
-    else
-        select3 = document.getElementById(comboSelect3);
-
     if(select1.value != "NOSR"){
-     select2.disabled=false;
-     select3.disabled=false;
-     
+      select2.disabled=false;
+      pregunta8.style.display="inline";
     }
     else{
-     if(select2 != null){select2.disabled=true;}
-     if(select3 != null){select3.disabled=true;}
+     if(select2 != null){select2.disabled=true;pregunta8.style.display="none";}
+     if(select3 != null){select3.disabled=true;pregunta8.style.display="none";}
     }
 
 }
