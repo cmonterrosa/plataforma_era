@@ -42,6 +42,16 @@ class ConsumosController < ApplicationController
           @consumo.establecimientos.delete_all if @consumo.establecimientos
         end
 
+      ## Validación de clave ###
+      if params[:establecimientos]
+        if params[:establecimientos].has_value?("CLAE") || params[:establecimientos].has_value?("CLAEC")
+           params[:preparacions] = params[:utensilios] = params[:higienes] = params[:alimentos] = params[:bebidas] = params[:botanas] = Array.new
+           params[:consumo][:conocen_lineamientos_grales] = nil
+           params[:consumo][:capacitacion_alim_bebidas] = nil
+        end
+      end
+
+
         if params[:preparacions]
             @preparacions = []
             params[:preparacions].each { |op| @preparacions << Preparacion.find_by_clave(op)  }
