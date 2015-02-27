@@ -27,7 +27,12 @@ Style
 
 /* Form legend and titles */
 
-.formee {font: normal 10px/1.1em Arial,Sans-Serif;}
+.formee {
+    /*font: normal 10px/1.1em Arial,Sans-Serif;*/
+    font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+    font-size: 0.6em;
+    
+}
 .formee legend, .formee h3 {
 	font-size:2.6em;
 	line-height:1.2em;
