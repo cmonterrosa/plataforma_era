@@ -27,6 +27,24 @@ module Functions
     return @selected
   end
 
+  def multiple_selected_espacios(relacion)
+    if relacion.empty?
+      @selected=[]
+    else
+      @selected=relacion.collect{|cat|cat.espacio_id}
+    end
+    return @selected
+  end
+
+  def multiple_selected_dcapacitadora(relacion)
+    if relacion.empty?
+      @selected=[]
+    else
+      @selected=relacion.collect{|cat|cat.dcapacitadora_id}
+    end
+    return @selected
+  end
+
   $competencia_p1 = 0.03125
   $competencia_p2 = 0.03125
   $competencia_p3 = 0.03125
