@@ -513,7 +513,6 @@ function enable_frecuencias_actividades_fisicas(comboSelect1, comboSelect2){
     }
     else{
      if(select2 != null){select2.disabled=true;pregunta8.style.display="none";}
-     if(select3 != null){select3.disabled=true;pregunta8.style.display="none";}
     }
 
 }

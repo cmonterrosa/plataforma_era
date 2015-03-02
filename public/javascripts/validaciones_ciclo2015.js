@@ -2,6 +2,27 @@
 
 /* Funciones usadas en Eje 4 */
 
+function enableElementosDiv(Fieldset, DivElement, condition){
+ fieldset_element = document.getElementById(Fieldset);
+ fieldset_element2 = document.getElementById(Fieldset);
+ div_element = document.getElementById(DivElement);
+ div_element.style.display = 'inline';
+
+ if (condition == 'SI')
+    {
+     for(var i=0;i<fieldset_element.elements.length;i++) {document.getElementById('contenedor_' + fieldset_element.elements[i].value).style.display = 'inline';}
+     showPreguntasEstablecimientos('lista_establecimientos');
+    }
+ else
+     {
+         for(var j=0;j<fieldset_element2.elements.length;j++) {document.getElementById('contenedor_' + fieldset_element2.elements[j].value).style.display = 'none';}
+         document.getElementById('contenedor_CLAE').style.display = 'inline';
+         document.getElementById('contenedor_CAEC').style.display = 'inline';
+     }
+ 
+}
+
+
 function showPreguntasEstablecimientos(fieldset_main){
       fieldset = document.getElementById(fieldset_main);
       pregunta2 = document.getElementById("pregunta2");
@@ -13,8 +34,10 @@ function showPreguntasEstablecimientos(fieldset_main){
       bebidas_alimentos = document.getElementById("bebidas_alimentos");
       botanas_reposterias = document.getElementById("botanas_reposterias");
       materiales = document.getElementById("materiales");
+
       for(var i=0;i<fieldset.elements.length;i++) {
-        if(fieldset.elements[i].type == 'checkbox' && fieldset.elements[i].checked && (fieldset.elements[i].value == "CLAE" || fieldset.elements[i].value == "CAEC" ) ){
+         /* DESHABILITAR PREGUNTAS */
+         if(fieldset.elements[i].type == 'checkbox' && fieldset.elements[i].checked && (document.getElementById('consumo_escuela_establecimiento_no').checked) && (fieldset.elements[i].value == "CLAE" || fieldset.elements[i].value == "CAEC" ) ){
                pregunta2.style.display = 'none';
                 pregunta3.style.display = 'none';
                 pregunta4.style.display = 'none';
@@ -53,7 +76,7 @@ function showUnicaPreguntaEstablecimientos(checked_object){
       botanas_reposterias = document.getElementById("botanas_reposterias");
       materiales = document.getElementById("materiales");
       
-        if(checked_controller.type == 'checkbox' && checked_controller.checked && (checked_controller.value == "CLAE" || checked_controller.value == "CAEC" ))
+        if(checked_controller.type == 'checkbox' && checked_controller.checked && (document.getElementById('consumo_escuela_establecimiento_no').checked) && (checked_controller.value == "CLAE" || checked_controller.value == "CAEC" ))
              {
                 pregunta2.style.display = 'none';
                 pregunta2.disabled = true;

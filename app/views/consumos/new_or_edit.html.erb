@@ -19,16 +19,19 @@
               <div class="grid-3-12"></div>
               <div class="grid-5-12">
                   <span id="ct_escuela_establecimiento" class="InputGroup">
-                   <label class="uper">SI <%= f.radio_button :escuela_establecimiento, "SI", :onclick => "enaSelectMultiple(this, 'establecimientos');" %></label>&nbsp;&nbsp;
-                   <label class="uper">NO <%= f.radio_button :escuela_establecimiento, "NO", :onclick => "enaSelectMultiple(this, 'establecimientos');" %></label>
+                   <label class="uper">SI <%= f.radio_button :escuela_establecimiento, "SI", :onclick => "enaSelectMultiple(this, 'establecimientos'); enableElementosDiv('lista_establecimientos','establecimientos', 'SI');" %></label>&nbsp;&nbsp;
+                   <label class="uper">NO <%= f.radio_button :escuela_establecimiento, "NO", :onclick => "enaSelectMultiple(this, 'establecimientos'); enableElementosDiv('lista_establecimientos','establecimientos', 'NO');showPreguntasEstablecimientos('lista_establecimientos');" %></label>
                   </span>
               </div>
             </div>
             <div id="establecimientos" class="grid-12-12">
               <fieldset style="padding: 5px 5px 5px 5px;" id="lista_establecimientos">
                 <% @establecimientos.each do |c| %>
-                  <%= check_box_tag "establecimientos[#{c.id}]", c.clave, @s_establecimientos.include?(c.clave) ? true : false, {:onclick => "showUnicaPreguntaEstablecimientos('establecimientos_#{c.id}');" } %>&nbsp;<%= c.descripcion %><br />
-                   <%= linea_horizontal%>
+                    <%estilo = (c.clave.include?('CLAE') || c.clave.include?('CAEC'))? 'inline' : 'none'%>
+                    <div id="contenedor_<%=h c.clave%>" style="display: <%=h estilo%>">
+                      <%= check_box_tag "establecimientos[#{c.id}]", c.clave, @s_establecimientos.include?(c.clave) ? true : false, {:onclick => "showUnicaPreguntaEstablecimientos('establecimientos_#{c.id}');" } %>&nbsp;<%= c.descripcion %><br />
+                      <%= linea_horizontal%>
+                    </div>
                 <% end %>
               </fieldset>
             </div>
@@ -348,6 +351,8 @@
   showImage('consumo_conocen_lineamientos_grales_si', 'eje4_p3');
   showImage('consumo_conocen_lineamientos_grales_no', 'eje4_p3');
 
+  enableElementosDiv('lista_establecimientos','establecimientos', 'SI');
+ 
 
 
   /*enaDisDiv ("lista_establecimientos", "div233");*/
@@ -359,11 +364,10 @@
   showPreguntasEstablecimientos('lista_establecimientos');
   enable_frecuencias_actividades_fisicas("consumo_frecuencia_afisica_id", "consumo_minutos_activacion_fisica");
   showImageValue('consumo_frecuencia_afisica_id', 'eje4_p7','NOSR');
-  
+  <%#*jQuery("#establecimientos").validate({ expression: "if (skipSelect(SelfID, 'consumo_escuela_establecimiento')) return true; else return false;", message: "Seleccione una opción!" });%>
+  jQuery("#lista_establecimientos").validate({ expression: "if (isCheckedC(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
 
-  jQuery("#establecimientos").validate({ expression: "if (skipSelect(SelfID, 'consumo_escuela_establecimiento')) return true; else return false;", message: "Seleccione una opción!" });
-  <%#*jQuery("#preparacions").validate({ expression: "if (isCheckedC(SelfID)) return true; else return false;", message: "Seleccione una opción!" });%>
-  <%#*jQuery("#utensilios").validate({ expression: "if (isCheckedC(SelfID)) return true; else return false;", message: "Seleccione una opción!" });%>
+<%#*jQuery("#utensilios").validate({ expression: "if (isCheckedC(SelfID)) return true; else return false;", message: "Seleccione una opción!" });%>
   <%#*jQuery("#higienes").validate({ expression: "if (isCheckedC(SelfID)) return true; else return false;", message: "Seleccione una opción!" });%>
   <%#*jQuery("#bebidas").validate({ expression: "if (isCheckedC(SelfID)) return true; else return false;", message: "Seleccione una opción!" });%>
   <%#*jQuery("#alimentos").validate({ expression: "if (isCheckedC(SelfID)) return true; else return false;", message: "Seleccione una opción!" });%>
