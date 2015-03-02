@@ -48,3 +48,16 @@ function skipSelect(id, opcion){
         });
     return ReturnVal;
 }
+
+function skipSelect2(id, opcion){
+    var ReturnVal = false;
+
+    if(parseInt(document.getElementById(opcion).value) == 0)
+        ReturnVal = true;
+    else
+        jQuery("#" + id).find('input[type="checkbox"]').each(function(){
+            if (jQuery(this).is(":checked"))
+                ReturnVal = true;
+        });
+    return ReturnVal;
+}

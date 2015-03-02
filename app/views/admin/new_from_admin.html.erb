@@ -29,10 +29,10 @@
       <%= select :role, :id, @roles.collect{|a| [a.descripcion, a.id]} %>
     </div>
 
-    <div class="grid-4-12">
-      <label style="font-size:16px;">Institución a la que pertenece:</label>
-      <%= f.select :catalogo_institucion_id, CatalogoInstitucion.all.collect{|a| [a.descripcion, a.id]} %>
-    </div>
+    <%#*<div class="grid-4-12">%>
+      <%#*<label style="font-size:16px;">Institución a la que pertenece:</label>%>
+      <%#= f.select :catalogo_institucion_id, CatalogoInstitucion.all.collect{|a| [a.descripcion, a.id]} %>
+    <%#*</div>%>
 
     <div class="grid-12-12 clear"></div>
 

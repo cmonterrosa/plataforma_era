@@ -5,8 +5,12 @@ class CreateServicioAguas < ActiveRecord::Migration
       t.string :clave, :limit => 5
     end
 
-    ServicioAgua.create(:descripcion => "LA ESCUELA NO CUENTA CON SERVICIO DE AGUA", :clave => "NCSA")
-    ServicioAgua.create(:descripcion => "SE CUENTA CON EL SERVICIO PERO ES INDEPENDIENTE DE LA RED PUBLICA DE AGUA", :clave => "SAIN")
+    ServicioAgua.create(:descripcion => "SISTEMA DE USO PÚBLICO (SMAPA, SAPAM U OTRO OFICIAL)", :clave => "SDUP")
+    ServicioAgua.create(:descripcion => "VERTIENTE POR GRAVEDAD", :clave => "VEGR")
+    ServicioAgua.create(:descripcion => "POZO ARTESIANO", :clave => "POAR")
+    ServicioAgua.create(:descripcion => "COMPRA DE AGUA EN PIPAS", :clave => "CAEP")
+    ServicioAgua.create(:descripcion => "ACARREO", :clave => "ACAR")
+    ServicioAgua.create(:descripcion => "CAPTACIÓN PLUVIAL", :clave => "CAPL")
   end
 
   def self.down

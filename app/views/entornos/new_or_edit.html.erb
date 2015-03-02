@@ -21,50 +21,48 @@
             <div class="grid-12-12">
               <div class="grid-4-12"></div>
               <div class="grid-3-12">
-                <%= f.text_field :superficie_terreno_escuela, :onFocus => "add_validation();", :style => "text-align: right;" %>
+                <%= f.text_field :superficie_terreno_escuela, :onkeyup => "enaTxtField('entorno_superficie_terreno_escuela', 'entorno_superficie_terreno_escuela_av', 'areas_verdes');", :style => "text-align: right;" %>
               </div>
-              <label class="uper" style="padding: 10px 0;" >M<sup>2</sup></label>
+              <label class="uper" style="padding: 10px 0;" >M&sup2;</label>
+            </div>
+            <div id="areas_verdes" class="grid-12-12" style="display: none;">
+              <label class="uper">1.2.- ¿Qué superficie (mts. cuadrados) de la escuela se destina para áreas verdes? (Espacio cubierto por vegetación que brindan beneficios tanto al ambiente en el que se encuentran como a las personas localizadas cerca de ellos). <em class="formee-req"> *</em></label>
+              <div class="grid-12-12">
+                <div class="grid-4-12"></div>
+                <div class="grid-3-12">
+                  <%= f.text_field :superficie_terreno_escuela_av, :onkeyup => "enaTxtField('entorno_superficie_terreno_escuela', 'entorno_superficie_terreno_escuela_av', 'areas_verdes');", :style => "text-align: right;", :disabled => "disabled" %>
+                </div>
+                <label class="uper" style="padding: 10px 0;" >M&sup2;</label>
+              </div>
+              <div class="grid-12-12"></div>
+              <div id="eje2_p1" class="grid-12-12" style="text-align: center;" >
+                <%= link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta1", :id => "pregunta1"),
+                                                                { :controller => "upload", :diagnostico => @diagnostico, :eje => 2, :numero_pregunta => 1, :action => "list_evidencias" },
+                                                                  :title => "EVIDENCIA DE LA PREGUNTA 1", :class => "fancybox fancybox.iframe"%>
+              </div>
             </div>
           </td>
           <td>&nbsp;</td>
-          <td width="49%" align="justify">
+          <td width="49%" align="justify" style="vertical-align:top;" >
             <!-- Línea pregunta -->
             <div class="grid-12-12">
-              <label class="uper">2.- ¿Qué superficie (mts. cuadrados) de la escuela se destina para áreas verdes? (Se considera áreas verdes al "espacio cubierto por vegetación. Un bosque, un parque y el jardín de una escuela son ejemplos de áreas verdes. Estos espacios brindan beneficios tanto al ambiente en el que se encuentran como a las personas localizadas cerca de ellos"). <em class="formee-req"> *</em></label>
-              <label class="uper">Rangos: 0 en adelante.</label><br />
-              <label class="uper">Posibles áreas verdes:</label><br />
-              <ul class="formee-lbl-vinetas" style="text-transform:uppercase;">
-                <li>Jardín de ornato</li>
-                <li>Jardín de césped</li>
-                <li>Jardín herbal</li>
-                <li>Jardín de macetas</li>
-                <li>Jardin de suelo elevado</li>
-                <li>Parcelas</li>
-                <li>Huerto escolar</li>
-              </ul>
+              <label class="uper">2.- ¿Cuenta la escuela con algunos de los siguientes espacios?<em class="formee-req"> *</em></label>
             </div>
-            <div class="grid-12-12">
-              <label class="formee-msg-info" style="text-transform:uppercase;font-size:1.1em;" >
-                Este valor debe de ser menor o igual a la superficie total del terreno.
-              </label>
-            </div>
-            <!-- Línea barra porcentaje -->
-            <!--<div class="grid-12-12">
-              <div class="grid-2-12">Porcentaje:</div>
-              <div class="grid-8-12">
-                <div class="bar_mortice rounded_tiny mortice_tiny green_mortice">
-                  <div id="bar_docentes_aplican_conocimientos" class="progress rounded_tiny progress_tiny green"></div>
-                </div>
+            <fieldset style="padding: 5px 5px 5px 5px;">
+              <div id="espacios" class="grid-12-12">
+                <% Espacio.find(:all).each do |c| %>
+                  <% @valor = nil %>
+                  <%  @entorno.escuelas_espacios.each do |x| %>
+                    <% @valor = x.numero if x[:espacio_id] == c.id %>
+                  <% end %>
+                  <%= check_box_tag "espacios[#{c.id}]", c.clave, @s_espacios.include?(c.id) ? true : false, :onclick => "checkBoxTotextField(this, 'eje2_p2');" %>&nbsp;<%= c.descripcion %><div id="div_<%= c.clave %>" style="display: none; padding: 2px;">&nbsp;CANTIDAD&nbsp;EN&nbsp;M&sup2;&nbsp;<input name="<%= c.clave %>" id="<%= c.clave %>" size="4px" style="text-align:center;" value="<%=h @valor ? @valor : "" %>" disabled /></div><br /><br />
+                <% end %>
               </div>
-              <div class="grid-2-12"><%= text_field :porcentaje, :docentes_aplican_conocimientos, :class => "ninguno", :disabled => "disabled", :value => :porcentaje_docentes_aplican_conocimientos? ? '0 %': :porcentaje_docentes_aplican_conocimientos %></div>
-            </div>-->
-            <!-- Línea campo -->
-            <div class="grid-12-12">
-              <div class="grid-4-12"></div>
-              <div class="grid-3-12">
-                <%= f.text_field :superficie_terreno_escuela_av, :onKeyPress => "add_validation();", :style => "text-align: right;" %>
-              </div>
-              <label class="uper" style="padding: 10px 0;" >M<sup>2</sup></label>
+            </fieldset>
+            <div id="eje2_p2" class="grid-12-12" style="display: none; text-align: center;">
+                <%= link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta2", :id => "pregunta2"),
+                                                              {:controller => "upload", :diagnostico => @diagnostico, :eje => 2, :numero_pregunta => 2, :action => "list_evidencias" },
+                                                              :title => "EVIDENCIA DE LA PREGUNTA 2", :class => "fancybox fancybox.iframe"%>
             </div>
           </td>
         </tr>
@@ -72,112 +70,107 @@
           <td colspan="3" >&nbsp;</td>
         </tr>
         <tr>
-          <td>
+          <td align="justify" style="vertical-align:top;">
             <!-- Línea Pregunta -->
             <div class="grid-12-12">
-              <label class="uper">3.- ¿La escuela cuenta con espacios destinados para jardines verticales (paredes verdes)?<em class="formee-req"> *</em></label>
+              <label class="uper">3.- ¿La escuela realiza o ha realizado acciones de reforestación dentro o fuera del plantel?<em class="formee-req"> *</em></label>
             </div>
             <!-- Línea campo -->
             <div class="grid-12-12">
-              <div class="grid-2-12"></div>
-              <div class="grid-4-12">
-                <span id="r_jardines_verticales" class="InputGroup">
-                  <label class="uper">SI <%= f.radio_button :jardines_verticales, "SI", :onclick => "showImage('entorno_jardines_verticales_si', 'eje3_p3');" %></label>&nbsp;&nbsp;
-                  <label class="uper">NO <%= f.radio_button :jardines_verticales, "NO", :onclick => "showImage('entorno_jardines_verticales_no', 'eje3_p3');" %></label>
+              <div class="grid-3-12"></div>
+              <div class="grid-5-12">
+                <span id="escuela_reforesta" class="InputGroup">
+                  <label class="uper">SI <%= f.radio_button :escuela_reforesta, "SI", :onclick => "radioButtonTotxtField(this, 'entorno_escuela_reforesta_num', 'reforesta');" %></label>&nbsp;&nbsp;
+                  <label class="uper">NO <%= f.radio_button :escuela_reforesta, "NO", :onclick => "radioButtonTotxtField(this, 'entorno_escuela_reforesta_num', 'reforesta');" %></label>
                 </span>
               </div>
-              <div class="grid-1-12"></div>
-              <div id="eje3_p3" class="grid-5-12" style="display: none;">
-                <%= link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta3", :id => "pregunta3"),
+              <div class="grid-4-12"></div>
+              <div id="reforesta" style="display:none;">
+                <div class="grid-6-12">CANTIDAD DE ARBOLES SEMBRADOS:</div>
+                <div class="grid-2-12">
+                  <%= f.text_field :escuela_reforesta_num, :style => "text-align: center;", :disabled => "disabled" %>
+                </div>
+                <div class="grid-4-12"></div>
+                <div id="eje3_p3" class="grid-12-12" style="text-align: center;">
+                  <%= link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta3", :id => "pregunta3"),
                                                               {:controller => "upload", :diagnostico => @diagnostico, :eje => 2, :numero_pregunta => 3, :action => "list_evidencias" },
                                                               :title => "EVIDENCIA DE LA PREGUNTA 3", :class => "fancybox fancybox.iframe"%>
+                </div>
               </div>
             </div>
           </td>
           <td>&nbsp;</td>
-          <td>
+          <td align="justify" style="vertical-align:top;">
             <!-- Línea Pregunta -->
             <div class="grid-12-12">
-              <label class="uper">4.- ¿La escuela cuenta con espacios destinados para jardines y/o cultivo hidropónicos?<em class="formee-req"> *</em></label>
+              <label class="uper">4.- ¿La escuela cuenta con árboles nativos y propios de la región? (Consultar listado de arboles nativos de más comunes de clic <a href="/arboles_nativos_no_nativos.pdf" target="_blank" style="color: black;">Aquí</a>.)<em class="formee-req"> *</em></label>
             </div>
             <!-- Línea campo -->
             <div class="grid-12-12">
-              <div class="grid-2-12"></div>
-              <div class="grid-4-12">
-                <span id="r_jardines_hidroponicos" class="InputGroup">
-                  <label class="uper">SI <%= f.radio_button :jardines_hidroponicos, "SI", :onclick => "showImage('entorno_jardines_hidroponicos_si', 'eje3_p4');" %></label>&nbsp;&nbsp;
-                  <label class="uper">NO <%= f.radio_button :jardines_hidroponicos, "NO", :onclick => "showImage('entorno_jardines_hidroponicos_no', 'eje3_p4');" %></label>
-                </span>
+              <div id="arboles_nativos" style="">
+                <div class="grid-2-12">CANTIDAD: </div>
+                <div class="grid-2-12">
+                  <%= f.text_field :arboles_nativos_num, :style => "text-align: center;" %>
+                </div>
+                <div class="grid-3-12">NOMBRE COMÚN: </div>
+                <div class="grid-5-12">
+                  <%= f.text_field :arboles_nativos_desc, :style => "text-align: justify;" %>
+                </div>
               </div>
-              <div class="grid-1-12"></div>
-              <div id="eje3_p4" class="grid-5-12" style="display: none;">
-                <%= link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta4", :id => "pregunta4"),
-                                                              {:controller => "upload", :diagnostico => @diagnostico, :eje => 2, :numero_pregunta => 4, :action => "list_evidencias" },
-                                                              :title => "EVIDENCIA DE LA PREGUNTA 4", :class => "fancybox fancybox.iframe"%>
+              <div class="grid-12-12">
+                <%= f.check_box :arboles_nativos, { :onclick => "ena_txtField(this, 'arboles_nativos');" }, "NO", "SI" %>&nbsp;NO CUENTA CON ÁRBOLES NATIVOS
               </div>
+              <div class="grid-12-12"><br /></div>
+              <div class="grid-12-12">
+                <label class="uper">4.1.- ¿Árboles no nativos e impropios de la región existentes en la escuela? (Consultar listado de arboles nativos de más comunes de clic <a href="/arboles_nativos_no_nativos.pdf" target="_blank" style="color: black;">Aquí</a>.)<em class="formee-req"> *</em></label>
+              </div>
+                <div id="arboles_no_nativos" style="">
+                  <div class="grid-2-12">CANTIDAD: </div>
+                  <div class="grid-2-12">
+                    <%= f.text_field :arboles_no_nativos_num, :style => "text-align: center;" %>
+                  </div>
+                  <div class="grid-3-12">NOMBRE COMÚN: </div>
+                  <div class="grid-5-12">
+                    <%= f.text_field :arboles_no_nativos_desc, :style => "text-align: justify;" %>
+                  </div>
+                </div>
+                <div class="grid-12-12">
+                  <%= f.check_box :arboles_no_nativos, { :onclick => "ena_txtField(this, 'arboles_no_nativos');" }, "NO", "Si" %>&nbsp;NO CUENTA CON ÁRBOLES NO NATIVOS E IMPROPIOS
+                </div>
             </div>
           </td>
         </tr>
         <tr>
-          <td width="49%" align="justify" style=" vertical-align:top;" >
-            <!-- Línea pregunta -->
-            <div class="grid-12-12">
-              <label class="uper">5.- ¿Cuántos árboles adultos se encuentran dentro del terreno de la escuela?<em class="formee-req"> *</em></label>
-            </div>
-            <div class="grid-12-12">
-              <label class="formee-msg-info" style="text-transform:uppercase;font-size:1.1em;" >
-                Para que un árbol sea considerado adulto, debe contar con una altura no menor a 4 metros y erguirse de un solo tronco. <br />
-                Si la escuela cuenta con áreas extensas arboladas agregue un número apróximado.
-              </label>
-            </div>
-            <!-- Línea campo -->
-            <div class="grid-12-12">
-              <div class="grid-5-12"></div>
-              <div class="grid-2-12">
-                <%= f.text_field :arboles_terreno_escuela, :style => "text-align: center;" %>
-              </div>
-            </div>
-          </td>
-          <td>&nbsp;</td>
-          <td width="49%" align="justify">
+          <td width="49%" align="justify" style="vertical-align:top;">
             <!-- Liíne pregunta -->
             <div class="grid-12-12">
-              <label class="uper">6.- ¿Cuáles de las siguientes acciones del Manual de Salud realiza la institución educativa?<em class="formee-req"> *</em></label>
+              <label class="uper">5.- ¿Cuáles de las siguientes acciones del Manual de Salud realiza la institución educativa?<em class="formee-req"> *</em></label>
             </div>
             <div class="grid-12-12">
               <label class="formee-msg-info" style="text-transform:uppercase;font-size:1.1em;" >
                 Consultar manual de salud: Manual para el maestro del programa Escuela y Salud. Enfoque actual del programa: Determinantes de la salud, página 42 - 45. Puede consultarlo dando clic <a class="notchange" href="/Manual_de_Salud.pdf" target="_blank"><b>aquí</b></a>
               </label>
             </div>
-            <!-- Línea barra porcentaje -->
-            <!--<div class="grid-12-12">
-              <div class="grid-2-12">Porcentaje:</div>
-              <div class="grid-8-12">
-                <div class="bar_mortice rounded_tiny mortice_tiny green_mortice">
-                  <div id="bar_alumnos_capacitados_docentes" class="progress rounded_tiny progress_tiny green"></div>
-                </div>
-              </div>
-              <input id="val_max_alu" name="val_max_alu" type="hidden" value="" />
-              <div class="grid-2-12"><%= text_field :porcentaje, :alumnos_capacitados_docentes, :class => "ninguno", :disabled => "disabled", :value => :porcentaje_porcentaje_alumnos_capacitados_docentes? ? '0 %': :porcentaje_porcentaje_alumnos_capacitados_docentes %></div>
-            </div>-->
             <!-- Línea campo -->
             <fieldset style="padding: 5px 5px 5px 5px;">
               <legend style="text-transform:uppercase;font-size:1.1em;">&nbsp;Acciones:&nbsp;</legend>
                 <div id="acciones" class="grid-12-12">
                   <% i= 1 %>
                   <% @acciones.each do |c| %>
-                    <%= check_box_tag "acciones[#{i}]", c.clave, @s_acciones.include?(c.id) ? true : false, :onclick => "checkRadioImage('acciones', #{@acciones.size}, 'pregunta6')" %>&nbsp;<%= c.descripcion %><br />
+                    <%= check_box_tag "acciones[#{i}]", c.clave, @s_acciones.include?(c.id) ? true : false, :onclick => "verifyCheckboxs(this, 'acciones', 'eje2_p5');" %>&nbsp;<%= c.descripcion %><br /><br />
                     <% i+=1 %>
                   <% end %>
                 </div>
             </fieldset>
             <div class="grid-4-12"></div>
-            <div class="grid-8-12">
-              <%= link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta6", :id => "pregunta6"),
-                                                              {:controller => "upload", :diagnostico => @diagnostico, :eje => 2, :numero_pregunta => 6, :action => "list_evidencias" },
-                                                              :title => "EVIDENCIA DE LA PREGUNTA 6", :class => "fancybox fancybox.iframe"%>
+            <div id="eje2_p5" class="grid-8-12" style="display: none;">
+              <%= link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta5", :id => "pregunta5"),
+                                                              {:controller => "upload", :diagnostico => @diagnostico, :eje => 2, :numero_pregunta => 5, :action => "list_evidencias" },
+                                                              :title => "EVIDENCIA DE LA PREGUNTA 5", :class => "fancybox fancybox.iframe"%>
             </div>
           </td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
         </tr>
         <tr>
           <td>&nbsp;</td>
@@ -210,39 +203,48 @@
 <% end %>
 
 <script type="text/javascript">
-  showImage('entorno_jardines_verticales_si', 'eje3_p3');
-  showImage('entorno_jardines_verticales_no', 'eje3_p3');
-  showImage('entorno_jardines_hidroponicos_si', 'eje3_p4');
-  showImage('entorno_jardines_hidroponicos_no', 'eje3_p4');
+  enaTxtField('entorno_superficie_terreno_escuela', 'entorno_superficie_terreno_escuela_av', 'areas_verdes');
+  checkBoxTotextField('espacios', 'eje2_p2')
+  radioButtonTotxtField('entorno_escuela_reforesta_si', 'entorno_escuela_reforesta_num', 'reforesta');
+  radioButtonTotxtField('entorno_escuela_reforesta_no', 'entorno_escuela_reforesta_num', 'reforesta');
+  ena_txtField('entorno_arboles_nativos', 'arboles_nativos');
+  ena_txtField('entorno_arboles_no_nativos', 'arboles_no_nativos');
+  verifyCheckboxs('', 'acciones', 'eje2_p5');
   
   var superficie_terreno_escuela = new LiveValidation( 'entorno_superficie_terreno_escuela' );
   superficie_terreno_escuela.add( Validate.Presence );
-  superficie_terreno_escuela.add( Validate.Numericality, {minimum: document.getElementById('entorno_superficie_terreno_escuela_av').value} );
+  superficie_terreno_escuela.add( Validate.Numericality, { minimum: parseInt(document.getElementById('entorno_superficie_terreno_escuela_av').value) } );
 
-  var superficie_terreno_escuela_av = new LiveValidation('entorno_superficie_terreno_escuela_av');
+  var superficie_terreno_escuela_av = new LiveValidation( 'entorno_superficie_terreno_escuela_av' );
   superficie_terreno_escuela_av.add( Validate.Presence );
-  superficie_terreno_escuela_av.add( Validate.Numericality, {maximum: document.getElementById('entorno_superficie_terreno_escuela').value} );
+  superficie_terreno_escuela_av.add( Validate.Numericality, { maximum: parseInt(document.getElementById('entorno_superficie_terreno_escuela').value) } );
   
-  function add_validation(){
-    superficie_terreno_escuela_av.remove( Validate.Numericality, {maximum: document.getElementById('entorno_superficie_terreno_escuela').value} );
-    superficie_terreno_escuela_av.add( Validate.Numericality, {maximum: document.getElementById('entorno_superficie_terreno_escuela').value} );
-  }
-  function add_validation2(){
-    superficie_terreno_escuela.remove( Validate.Numericality, {minimum: document.getElementById('entorno_superficie_terreno_escuela_av').value} );
-    superficie_terreno_escuela.add( Validate.Numericality, {minimum: document.getElementById('entorno_superficie_terreno_escuela_av').value} );
-  }
 
-  /*function remove_validation(){
-    superficie_terreno_escuela_av.add( Validate.Numericality, {maximum: document.getElementById('entorno_superficie_terreno_escuela').value});
-  }*/
+  var arboles_nativos_num = new LiveValidation( 'entorno_arboles_nativos_num' );
+  arboles_nativos_num.add( Validate.Presence );
+  arboles_nativos_num.add( Validate.Numericality );
 
-  var arboles_terreno_escuela = new LiveValidation( 'entorno_arboles_terreno_escuela' );
-  arboles_terreno_escuela.add( Validate.Presence );
-  arboles_terreno_escuela.add( Validate.Numericality, {onlyInteger: true} );
+  var arboles_nativos_desc = new LiveValidation( 'entorno_arboles_nativos_desc' );
+  arboles_nativos_desc.add( Validate.Presence );
+
+  var arboles_no_nativos_num = new LiveValidation( 'entorno_arboles_no_nativos_num' );
+  arboles_no_nativos_num.add( Validate.Presence );
+  arboles_no_nativos_num.add( Validate.Numericality );
+
+  var arboles_no_nativos_desc = new LiveValidation( 'entorno_arboles_no_nativos_desc' );
+  arboles_no_nativos_desc.add( Validate.Presence );
 
   jQuery(function(){
-    jQuery("#r_jardines_verticales").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
-    jQuery("#r_jardines_hidroponicos").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
+    jQuery("#espacios").validate({ expression: "if (isCheckedC(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
+    jQuery("#escuela_reforesta").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
     jQuery("#acciones").validate({ expression: "if (isCheckedC(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
   });
+
+  (function ($) {
+    $("#entorno_superficie_terreno_escuela").change(function() {
+    superficie_terreno_escuela_av.remove( Validate.Numericality, { maximum: parseInt(document.getElementById('entorno_superficie_terreno_escuela').value) } );
+    superficie_terreno_escuela_av.add( Validate.Numericality, { maximum: parseInt(document.getElementById('entorno_superficie_terreno_escuela').value) } );
+  });
+  }(jQuery));
+  
 </script>

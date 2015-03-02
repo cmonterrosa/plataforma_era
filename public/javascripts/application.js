@@ -402,8 +402,8 @@ function showDescReport(obj_select, obj_desc){
     var select = document.getElementById(obj_select);
     var desc = document.getElementById(obj_desc);
     
-    if(select.value != '0'){ enableTextarea(desc);}
-    else{ disableTextarea(desc); }
+    if(select.value != '0'){enableTextarea(desc);}
+    else{disableTextarea(desc);}
 }
 
 
@@ -418,15 +418,58 @@ function showImage(checkBox, divImage){
         div.style.display = 'none';
 }
 
-// Habilita/Deshabilita imagen evidencia si comboSelect > 0
-function showImageNum(comboSelect, divField){
-    var select = document.getElementById(comboSelect);
-    var div = document.getElementById(divField);
-    
-    if(parseInt(select.value) > 0)
-        div.style.display = 'block';
+
+
+function MultSelectEna(select, type){
+    var MtpSelect, elements, tipo, i, txtField, txtFieldDesc, divField;
+    MtpSelect = document.getElementById(select);
+    elements = MtpSelect.getElementsByTagName("input");
+
+    if (type == "docentes")
+        tipo = "dctes_";
     else
-        div.style.display = 'none';
+        tipo = "alumn_";
+
+    for (i=0; i < elements.length; i++){
+        if(elements[i].checked){
+            txtField = document.getElementById("competencia_"+ tipo + elements[i].value.toLowerCase());
+            divField = document.getElementById(tipo + elements[i].value.toLowerCase());
+            divField.style.display = "block";
+            txtField.disabled = false;
+            if(elements[i].value == "OTRA"){
+                txtFieldDesc = document.getElementById("competencia_"+ tipo + elements[i].value.toLowerCase() +"_desc");
+                txtFieldDesc.disabled = false;
+            }
+        }
+    }
+}
+
+function enableNum(checkbox, type){
+    var aux, tipo, div, textField, textFieldOtr;
+    if (type == "docentes")
+        tipo = "dctes";
+    else
+        tipo = "alumn";
+
+    aux = tipo+"_"+checkbox.value.toLowerCase();
+    textField = document.getElementById("competencia_"+aux);
+    textFieldOtr = document.getElementById("competencia_"+aux+"_desc");
+    div = document.getElementById(aux);
+
+    if (checkbox.checked){
+        div.style.display = "block";
+        textField.disabled = false;
+        if(checkbox.value.toLowerCase() == "otra") textFieldOtr.disabled = false;
+    }
+    else{
+        textField.value = "";
+        if (checkbox.value.toLowerCase() == "otra"){
+            textFieldOtr.value = "";
+            textFieldOtr.disabled = true;
+        }
+        div.style.display = "none";
+        textField.disabled = true;
+    }
 }
 
 // Habilita/Deshabilita 2 text_field e imagen si comboSelect != SUOP
@@ -441,21 +484,26 @@ function showImageText(comboSelect, textBox1, textBox2, divField){
     else
         select = document.getElementById(comboSelect);
 
-    if(select.value != "SUOP"){
-     clearTextarea(text1);
-     disableTextarea(text1);
-     clearTextarea(text2);
-     disableTextarea(text2);
-     div.style.display = "none";
-    }
+//    if(select.value != "SUOP"){
+    if(select.value == "NING" || select.value == "SECC")
+        if(typeof comboSelect == "object") {
+            enableTextarea(text1);
+            enableTextarea(text2);
+//            clearTextarea(text1);
+//            clearTextarea(text2);
+            div.style.display = "block";
+        }
+        else{
+            enableTextarea(text1);
+            enableTextarea(text2);
+            div.style.display = "block";
+        }
     else{
-     if(typeof comboSelect == "object") {
-         clearTextarea(text1);
-         clearTextarea(text2);
-     }
-     enableTextarea(text1);
-     enableTextarea(text2);
-     div.style.display = "block";
+        clearTextarea(text1);
+        disableTextarea(text1);
+        clearTextarea(text2);
+        disableTextarea(text2);
+        div.style.display = "none";
     }
 }
 
@@ -538,3 +586,331 @@ function in_visible(obj, img){
     image.src = "/images/admin/expand.png"
    }
 }
+
+
+//***** Funciones eje 1 Competencias ******//
+function checkBoxToSelct(cBox){
+    var select, elemCount, checkBox, txtDesc, validacion;
+    var otra_desc = false;
+    txtDesc = document.getElementById(cBox+"sOTRA");
+    checkBox = document.getElementById(cBox+"s");
+    elemCount = checkBox.getElementsByTagName("input");
+    
+    for(var i=0; i < (elemCount.length - 1); i++){
+        select = document.getElementById(cBox+"_"+elemCount[i].value);
+        if(elemCount[i].checked){
+            if(elemCount[i].value == "OTRA"){
+                txtDesc.disabled = false;
+                txtDesc.style.display = "inline";
+                validacion = new LiveValidation(cBox+"sOTRA");
+                validacion.add( Validate.Presence );
+                otra_desc = true;
+            }
+            select.style.display = "inline";
+            select.disabled = false;
+        }
+        else{
+            select.style.display = "none";
+            select.disabled = true;
+        }
+    }
+    if(otra_desc == false){
+        if(otra_desc) validacion.destroy();
+        txtDesc.disabled = true;
+        txtDesc.style.display = "none";
+    }
+}
+
+// Habilita/Deshabilita imagen evidencia si comboSelect > 0
+function showImageDctesAlumn(type, divField, divField2){
+    var salud, ma, ambos, total, total_DocAlumn, cSalud, cMa, cAmbos;
+    var divQuestion = document.getElementById(divField);
+
+    var divImage = document.getElementById(divField2);
+    
+    if (type == "docentes"){
+        salud = document.getElementById("competencia_dctes_cap_salud");
+        ma = document.getElementById("competencia_dctes_cap_ma");
+        ambos = document.getElementById("competencia_dctes_cap_ambos");
+        total_DocAlumn = document.getElementById("total_docentes");
+    }
+    else{
+        salud = document.getElementById("competencia_alumn_cap_salud");
+        ma = document.getElementById("competencia_alumn_cap_ma");
+        ambos = document.getElementById("competencia_alumn_cap_ambos");
+        total_DocAlumn = document.getElementById("total_alumn");
+    }
+
+    if(salud.value == "") 
+        cSalud = 0;
+    else
+        cSalud = salud.value;
+
+    if(ma.value == "")
+        cMa = 0;
+    else
+        cMa = ma.value;
+
+    if(ambos.value == "") 
+        cAmbos = 0;
+    else
+        cAmbos = ambos.value;
+
+    total = parseInt(cSalud) + parseInt(cMa) + parseInt(cAmbos);
+
+    if(parseInt(total) == 0){
+        var MtpSelect = document.getElementById(divField+"s");
+        var elements = MtpSelect.getElementsByTagName("input");
+        for (var i = 0; i < elements.length; i++){
+            elements[i].checked = false;
+            elements[i].disabled = false;
+        }
+    }
+    
+    if(parseInt(total) > 0){
+        divImage.style.display = "block";
+        divQuestion.style.display = "block";
+    }
+    else{
+        divImage.style.display = "none";
+        divQuestion.style.display = "none";
+    }
+    if (parseInt(total) >= 0)
+        total_DocAlumn.value = parseInt(total);
+    else
+        total_DocAlumn.value = 0;
+
+}
+
+// Habilita/Deshabilita imagen evidencia si comboSelect > 0
+function showImageNum(comboSelect, divField){
+    var select = document.getElementById(comboSelect);
+    var div = document.getElementById(divField);
+
+    if(parseInt(select.value) > 0)
+        div.style.display = 'block';
+    else
+        div.style.display = 'none';
+}
+
+//*** fin funciones Eje 1 Competencias ***//
+
+//*** Funciones Eje 2 Entorno ***//
+
+function checkBoxTotextField(cBox, div){
+    var validacion, divTxtField, txtField, elemCount, checkBox, divEv;
+    divEv = document.getElementById(div);
+
+    if(typeof cBox == "object"){
+        checkBox = cBox;
+        divTxtField = document.getElementById("div_"+ checkBox.value);
+        txtField = document.getElementById(checkBox.value);
+
+        if (checkBox.checked){
+            txtField.disabled = false;
+            divTxtField.style.display = "inline";
+            divEv.style.display = "inline";
+            validacion = new LiveValidation(checkBox.value);
+            validacion.add( Validate.Presence );
+            validacion.add( Validate.Numericality, {minimum: 1});
+        }
+        else{
+            txtField.value = "";
+            txtField.disabled = true;
+            divTxtField.style.display = "none";
+            divEv.style.display = "none";
+        }
+
+    }
+    else{
+        checkBox = document.getElementById(cBox);
+        elemCount = checkBox.getElementsByTagName("input");
+
+        for(var i=0; i < elemCount.length; i++)
+            if(elemCount[i].checked){
+                txtField = document.getElementById(elemCount[i].value);
+                divTxtField = document.getElementById("div_"+ elemCount[i].value);
+                txtField.disabled = false;
+                divTxtField.style.display = "inline";
+                validacion = new LiveValidation(elemCount[i].value);
+                validacion.add( Validate.Presence );
+                validacion.add( Validate.Numericality, {minimum: 1});
+                divEv.style.display = "inline";
+            }
+    }
+
+
+}
+
+function enaTxtField(txt1, txt2, div){
+    var txtField1, txtField2, divTxt;
+
+    divTxt = document.getElementById(div);
+    txtField1 = document.getElementById(txt1);
+    txtField2 = document.getElementById(txt2);
+
+    if(parseInt(txtField1.value) > 0) {
+        divTxt.style.display = "block";
+        txtField2.disabled = false;
+    }
+    else{
+        divTxt.style.display = "none";
+        txtField2.value = "";
+        txtField2.disabled = true;
+    }
+}
+
+function radioButtonTotxtField(radio, txtF, div){
+    var txtField, divEv, radioB, validacion;
+    if(typeof radio == "object")
+        radioB = radio;
+    else
+        radioB = document.getElementById(radio);
+
+    txtField = document.getElementById(txtF);
+    divEv = document.getElementById(div);
+
+    if(radioB.checked){
+         if(radioB.value == "SI"){
+            divEv.style.display = "block";
+            txtField.disabled = false;
+            validacion = new LiveValidation(txtF);
+            validacion.add( Validate.Presence );
+            validacion.add( Validate.Numericality, {onlyInteger: true} );
+        }
+        else{
+            txtField.value = "";
+            txtField.disabled = true;
+            divEv.style.display = "none";
+        }
+    }
+}
+
+function ena_txtField(checkBox, tField){
+    var txtFieldDesc, txtFieldNum, cBox, div;
+
+    if(typeof checkBox == "object")
+        cBox = checkBox;
+    else
+        cBox = document.getElementById(checkBox)
+
+    txtFieldNum = document.getElementById("entorno_"+ tField +"_num");
+    txtFieldDesc = document.getElementById("entorno_"+ tField +"_desc");
+    div = document.getElementById(tField);
+
+    if(cBox.checked)
+        if(cBox.value == "NO"){
+            txtFieldNum.value = "";
+            txtFieldDesc.value = "";
+            txtFieldNum.disabled = true;
+            txtFieldDesc.disabled = true;
+            div.style.display = "none"
+        }
+        else{
+            txtFieldNum.disabled = false;
+            txtFieldDesc.disabled = false;
+            div.style.display = "block"
+        }
+    else{
+        if(cBox.value == "NO"){
+            txtFieldNum.disabled = false;
+            txtFieldDesc.disabled = false;
+            div.style.display = "block"
+        }
+        else{
+            txtFieldNum.value = "";
+            txtFieldDesc.value = "";
+            txtFieldNum.disabled = false;
+            txtFieldDesc.disabled = false;
+            div.style.display = "block"
+        }
+    }
+}
+
+function verifyCheckboxs(checkSelect, objCheckox, objPreg){
+    var i, checkBox, elemCount, divPreg;
+    
+    checkBox = document.getElementById(objCheckox);
+    divPreg = document.getElementById(objPreg);
+    elemCount = checkBox.getElementsByTagName("input");
+
+    if(checkSelect.checked){
+        if(checkSelect.value == "NING"){
+            divPreg.style.display = "none";
+            for(i=0; i < elemCount.length; i++)
+                if(elemCount[i].value != "NING") elemCount[i].checked = false;
+        }
+        else{
+            divPreg.style.display = "block";
+            for(i=0; i < elemCount.length; i++)
+                if(elemCount[i].value == "NING") elemCount[i].checked = false;
+        }
+    }
+    else{
+        divPreg.style.display = "none";
+        for(i=0; i < elemCount.length; i++)
+            if (elemCount[i].checked == true){
+                divPreg.style.display = "block";
+                break;
+            }
+    }
+}
+
+//*** fin funciones Eje 2 Entornos ***//
+
+//*** Funciones Eje 3 Huellas ***//
+
+function showImageCheck(cBox, div){
+    var checkBox, divField;
+
+    divField = document.getElementById(div);
+
+    if(typeof cBox == "object"){
+        checkBox = cBox;
+        if(checkBox.checked)
+            if(checkBox.value == "SI")
+                divField.style.display = 'block';
+            else
+                divField.style.display = 'none';
+        else
+            divField.style.display = 'none';
+    }
+    else{
+        checkBox = document.getElementById(cBox+"_si");
+        if(checkBox.checked)
+            divField.style.display = 'block';
+        else
+            divField.style.display = 'none';
+    }
+
+    
+
+    
+
+//    if(checkBox.value == "SI")
+//        if(checkBox.checked)
+//            divField.style.display = 'block';
+//        else
+//            divField.style.display = 'none';
+//    else
+//        if(checkBox.checked)
+//            divField.style.display = 'none';
+//        else
+//            divField.style.display = 'block';
+//        divField.style.display = 'none';
+}
+
+function sumFocos(select, select2, label){
+    var selectVal, selectVal2, labelVal;
+    if(typeof select == "object")
+        selectVal = select;
+    else
+        selectVal = document.getElementById(select);
+
+    selectVal2 = document.getElementById(select2);
+    labelVal = document.getElementById(label);
+    labelVal.innerHTML = parseInt(selectVal.value) + parseInt(selectVal2.value);
+    labelVal.value = parseInt(selectVal.value) + parseInt(selectVal2.value);
+}
+
+//*** fin funciones Eje 3 Huellas ***//
