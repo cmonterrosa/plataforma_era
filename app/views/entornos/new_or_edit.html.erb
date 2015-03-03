@@ -56,6 +56,7 @@
                     <% @valor = x.numero if x[:espacio_id] == c.id %>
                   <% end %>
                   <%= check_box_tag "espacios[#{c.id}]", c.clave, @s_espacios.include?(c.id) ? true : false, :onclick => "checkBoxTotextField(this, 'eje2_p2', 'entorno_no_espacios');" %>&nbsp;<%= c.descripcion %>&nbsp;CANTIDAD&nbsp;EN&nbsp;M&sup2;&nbsp;<input name="<%= c.clave %>" id="<%= c.clave %>" size="4px" type="others" style="text-align:center; display: none;" value="<%=h @valor ? @valor : "" %>" disabled /><br /><br />
+                  <hr />
                 <% end %>
               </div>
               <%= f.check_box :no_espacios, { :onclick => "edMultiSelect('entorno_no_espacios', 'espacios', 'eje2_p2');" }, "NO", "SI" %>&nbsp;NO CUENTA CON ESPACIOS
@@ -150,6 +151,7 @@
                   <% @acciones.each do |c| %>
                     <%= check_box_tag "acciones[#{i}]", c.clave, @s_acciones.include?(c.id) ? true : false, :onclick => "verifyCheckboxs(this, 'acciones', 'eje2_p5');" %>&nbsp;<%= c.descripcion %><br /><br />
                     <% i+=1 %>
+                    <hr />
                   <% end %>
                 </div>
             </fieldset>

@@ -182,7 +182,7 @@ Structure
     background: #f2f2f2;
     color: #424242;
 }
-.formee select {padding: 5px; height: 2.1em;}
+.formee select {padding: 2px; height: 2.1em;}
 /*.formee select[multiple="multiple"] {padding:5px;height:8em;}*/
 .formee select[multiple="multiple"] {padding: 5px; height: auto;}
 .formee-list .formee-lbl, .formee-list label {
