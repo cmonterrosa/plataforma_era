@@ -12,12 +12,14 @@ Style
 ********************************************************************/
 
 .formee fieldset {
-	background:#fff;
+/*	background:#fff;*/
 	/*corner*/
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
 	border-radius: 12px;
         line-height: 2em;
+        background:#7f7f7f;
+        background:rgba(255,255,255,0.8);
 }
 
 /* hover effect */
