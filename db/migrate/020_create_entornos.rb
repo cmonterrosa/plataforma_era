@@ -3,6 +3,7 @@ class CreateEntornos < ActiveRecord::Migration
     create_table :entornos do |t|
       t.float :superficie_terreno_escuela
       t.float :superficie_terreno_escuela_av
+      t.string :no_espacios, :limit => 2
       t.string :escuela_reforesta, :limit => 2
       t.integer :escuela_reforesta_num
       t.string :arboles_nativos, :limit => 2

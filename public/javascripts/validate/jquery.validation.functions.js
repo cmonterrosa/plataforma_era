@@ -61,3 +61,16 @@ function skipSelect2(id, opcion){
         });
     return ReturnVal;
 }
+
+function skipSelectEspacios(id, opcion){
+    var ReturnVal = false;
+
+    if(document.getElementById(opcion).checked)
+        ReturnVal = true;
+    else
+        jQuery("#" + id).find('input[type="checkbox"]').each(function(){
+            if (jQuery(this).is(":checked"))
+                ReturnVal = true;
+        });
+    return ReturnVal;
+}

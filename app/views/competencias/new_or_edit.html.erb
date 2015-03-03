@@ -199,34 +199,33 @@
   checkBoxToSelct('dcapacitadora');
   checkBoxToSelct('acapacitadora');
 
-  var dctes_cap_salud = new LiveValidation( 'competencia_dctes_cap_salud' );
+  var dctes_cap_salud = new LiveValidation('competencia_dctes_cap_salud');
   dctes_cap_salud.add( Validate.Presence );
   dctes_cap_salud.add( Validate.Numericality, { onlyInteger: true } );
   
-  var dctes_cap_ma = new LiveValidation( 'competencia_dctes_cap_ma' );
+  var dctes_cap_ma = new LiveValidation('competencia_dctes_cap_ma');
   dctes_cap_ma.add( Validate.Presence );
   dctes_cap_ma.add( Validate.Numericality, { onlyInteger: true } );
 
-  var dctes_cap_ambos = new LiveValidation( 'competencia_dctes_cap_ambos' );
+  var dctes_cap_ambos = new LiveValidation('competencia_dctes_cap_ambos');
   dctes_cap_ambos.add( Validate.Presence );
   dctes_cap_ambos.add( Validate.Numericality, { onlyInteger: true } );
 
   var total_docentes = new LiveValidation('total_docentes');
   total_docentes.add( Validate.Presence );
-  total_docentes.add( Validate.Numericality, { maximum: parseInt(document.getElementById("val_max_doc").value)} );
+  total_docentes.add( Validate.Numericality, { maximum: parseInt(document.getElementById("val_max_doc").value), onlyInteger: true} );
 
-  var dctes_aplican_conocimto = new LiveValidation( 'competencia_dctes_aplican_conocimto' );
+  var dctes_aplican_conocimto = new LiveValidation('competencia_dctes_aplican_conocimto');
   dctes_aplican_conocimto.add( Validate.Presence );
-  dctes_aplican_conocimto.add( Validate.Numericality, { onlyInteger: true } );
-  <%#*dctes_aplican_conocimto.add( Validate.Numericality, { maximum: parseInt(document.getElementById('total_docentes').value) } );%>
-
+  dctes_aplican_conocimto.add( Validate.Numericality, { maximum: parseInt(document.getElementById("total_docentes").value), onlyInteger: true } );
+ 
   var dctes_invol_act = new LiveValidation( 'competencia_dctes_invol_act' );
   dctes_invol_act.add( Validate.Presence );
-  dctes_invol_act.add( Validate.Numericality, { onlyInteger: true } );
+  dctes_invol_act.add( Validate.Numericality, { maximum: parseInt(document.getElementById("val_max_doc").value), onlyInteger: true} );
 
   var alumn_cap_dctes = new LiveValidation( 'competencia_alumn_cap_dctes' );
   alumn_cap_dctes.add( Validate.Presence );
-  alumn_cap_dctes.add( Validate.Numericality, { onlyInteger: true } );
+  alumn_cap_dctes.add( Validate.Numericality, { maximum: parseInt(document.getElementById("val_max_alu").value), onlyInteger: true } );
 
   var dctes_cap_salud = new LiveValidation( 'competencia_dctes_cap_salud' );
   dctes_cap_salud.add( Validate.Presence );
@@ -242,18 +241,24 @@
 
   var total_alumn = new LiveValidation( 'total_alumn' );
   total_alumn.add( Validate.Presence );
-  total_alumn.add( Validate.Numericality, { maximum: parseInt(document.getElementById("val_max_alu").value) } );
+  total_alumn.add( Validate.Numericality, { maximum: parseInt(document.getElementById("val_max_alu").value), onlyInteger: true } );
   
   jQuery(function(){
     jQuery("#dcapacitadoras").validate({ expression: "if (skipSelect2(SelfID, 'total_docentes')) return true; else return false;", message: "Seleccione una opción!" });
     jQuery("#acapacitadoras").validate({ expression: "if (skipSelect2(SelfID, 'total_alumn')) return true; else return false;", message: "Seleccione una opción!" });
   });
+  
+  jQuery("#competencia_dctes_cap_salud").keyup(function() {
+      dctes_aplican_conocimto.remove( Validate.Numericality, { maximum: parseInt(document.getElementById("total_docentes").value), onlyInteger: true } );
+      dctes_aplican_conocimto.add( Validate.Numericality, { maximum: parseInt(document.getElementById("total_docentes").value), onlyInteger: true } );
+  });
+  jQuery("#competencia_dctes_cap_ma").keyup(function() {
+      dctes_aplican_conocimto.remove( Validate.Numericality, { maximum: parseInt(document.getElementById("total_docentes").value), onlyInteger: true } );
+      dctes_aplican_conocimto.add( Validate.Numericality, { maximum: parseInt(document.getElementById("total_docentes").value), onlyInteger: true } );
+  });
+  jQuery("#competencia_dctes_cap_ambos").keyup(function() {
+      dctes_aplican_conocimto.remove( Validate.Numericality, { maximum: parseInt(document.getElementById("total_docentes").value), onlyInteger: true } );
+      dctes_aplican_conocimto.add( Validate.Numericality, { maximum: parseInt(document.getElementById("total_docentes").value), onlyInteger: true } );
+  });
 
-  <%#*(function ($) {%>
-    <%#*$("#total_docentes").change(function() {%>
-      <%#*alert("aa");%>
-      <%#*dctes_aplican_conocimto.remove( Validate.Numericality, { maximum: parseInt(document.getElementById('total_docentes').value) } );%>
-      <%#*dctes_aplican_conocimto.add( Validate.Numericality, { maximum: parseInt(document.getElementById('total_docentes').value) } );%>
-    <%#*});%>
-  <%#*});%>
 </script>

@@ -30,7 +30,6 @@ class EntornosController < ApplicationController
       @entorno.arboles_no_nativos_num = @entorno.arboles_no_nativos_desc = nil if @entorno.arboles_no_nativos == "NO"
       @entorno.escuela_reforesta_num = nil if @entorno.escuela_reforesta == "NO"
       @entorno.superficie_terreno_escuela_av = nil if @entorno.superficie_terreno_escuela.to_i == 0
-
       
       if params[:acciones]
         @acciones = []
@@ -40,18 +39,21 @@ class EntornosController < ApplicationController
         @entorno.acciones.delete_all
       end
 
-#      EscuelasEspacio.delete_all(@entorno.id) if @entorno
       if params[:espacios]
+        @s_espacios = []
+        params[:espacios].each_key { |id| @s_espacios << id }
+        @entorno.escuelas_espacios.each { |escuela_espacio| escuela_espacio.delete if @s_espacios.include?("#{escuela_espacio.espacio_id.to_s}") == false }
         params[:espacios].each_key do |esp|
           espacio = Espacio.find(esp)
-          espacio_escuela = EscuelasEspacio.find_by_espacio_id(esp)
+          espacio_escuela = EscuelasEspacio.find_by_entorno_id_and_espacio_id(@entorno.id, espacio.id)
           espacio_escuela ||= EscuelasEspacio.new
           espacio_escuela.entorno_id = @entorno
           espacio_escuela.espacio_id = espacio.id
           espacio_escuela.numero = params[:"#{espacio.clave}"].to_i
           @entorno.escuelas_espacios << espacio_escuela
         end
-        
+      else
+        @entorno.escuelas_espacios.each { |i| i.delete } if @entorno.escuelas_espacios
       end
     
       if @entorno.save
@@ -71,6 +73,7 @@ class EntornosController < ApplicationController
         flash[:evidencias] = @entorno.errors.full_messages.join(", ")
         render :action => "new_or_edit"
       end
+
     else
       @escuela = Escuela.find_by_clave(current_user.login)
       @s_acciones = multiple_selected_id(@entorno.acciones) if @entorno.acciones

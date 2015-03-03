@@ -55,9 +55,10 @@
                   <%  @entorno.escuelas_espacios.each do |x| %>
                     <% @valor = x.numero if x[:espacio_id] == c.id %>
                   <% end %>
-                  <%= check_box_tag "espacios[#{c.id}]", c.clave, @s_espacios.include?(c.id) ? true : false, :onclick => "checkBoxTotextField(this, 'eje2_p2');" %>&nbsp;<%= c.descripcion %><div id="div_<%= c.clave %>" style="display: none; padding: 2px;">&nbsp;CANTIDAD&nbsp;EN&nbsp;M&sup2;&nbsp;<input name="<%= c.clave %>" id="<%= c.clave %>" size="4px" style="text-align:center;" value="<%=h @valor ? @valor : "" %>" disabled /></div><br /><br />
+                  <%= check_box_tag "espacios[#{c.id}]", c.clave, @s_espacios.include?(c.id) ? true : false, :onclick => "checkBoxTotextField(this, 'eje2_p2', 'entorno_no_espacios');" %>&nbsp;<%= c.descripcion %>&nbsp;CANTIDAD&nbsp;EN&nbsp;M&sup2;&nbsp;<input name="<%= c.clave %>" id="<%= c.clave %>" size="4px" type="others" style="text-align:center; display: none;" value="<%=h @valor ? @valor : "" %>" disabled /><br /><br />
                 <% end %>
               </div>
+              <%= f.check_box :no_espacios, { :onclick => "edMultiSelect('entorno_no_espacios', 'espacios', 'eje2_p2');" }, "NO", "SI" %>&nbsp;NO CUENTA CON ESPACIOS
             </fieldset>
             <div id="eje2_p2" class="grid-12-12" style="display: none; text-align: center;">
                 <%= link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta2", :id => "pregunta2"),
@@ -100,7 +101,7 @@
             </div>
           </td>
           <td>&nbsp;</td>
-          <td align="justify" style="vertical-align:top;">
+          <td align="left" style="vertical-align:top;">
             <!-- Línea Pregunta -->
             <div class="grid-12-12">
               <label class="uper">4.- ¿La escuela cuenta con árboles nativos y propios de la región? (Consultar listado de arboles nativos de más comunes de clic <a href="/arboles_nativos_no_nativos.pdf" target="_blank" style="color: black;">Aquí</a>.)<em class="formee-req"> *</em></label>
@@ -108,14 +109,9 @@
             <!-- Línea campo -->
             <div class="grid-12-12">
               <div id="arboles_nativos" style="">
-                <div class="grid-2-12">CANTIDAD: </div>
-                <div class="grid-2-12">
-                  <%= f.text_field :arboles_nativos_num, :style => "text-align: center;" %>
-                </div>
-                <div class="grid-3-12">NOMBRE COMÚN: </div>
-                <div class="grid-5-12">
-                  <%= f.text_field :arboles_nativos_desc, :style => "text-align: justify;" %>
-                </div>
+                <div class="grid-2-12">CANTIDAD:&nbsp;<%= f.text_field :arboles_nativos_num, :style => "text-align: center;" %></div>
+                <div class="grid-1-12"></div>
+                <div class="grid-9-12">NOMBRE&nbsp;COMÚN:&nbsp;<%= f.text_area :arboles_nativos_desc, :style => "text-align: justify;" %></div>
               </div>
               <div class="grid-12-12">
                 <%= f.check_box :arboles_nativos, { :onclick => "ena_txtField(this, 'arboles_nativos');" }, "NO", "SI" %>&nbsp;NO CUENTA CON ÁRBOLES NATIVOS
@@ -125,17 +121,12 @@
                 <label class="uper">4.1.- ¿Árboles no nativos e impropios de la región existentes en la escuela? (Consultar listado de arboles nativos de más comunes de clic <a href="/arboles_nativos_no_nativos.pdf" target="_blank" style="color: black;">Aquí</a>.)<em class="formee-req"> *</em></label>
               </div>
                 <div id="arboles_no_nativos" style="">
-                  <div class="grid-2-12">CANTIDAD: </div>
-                  <div class="grid-2-12">
-                    <%= f.text_field :arboles_no_nativos_num, :style => "text-align: center;" %>
-                  </div>
-                  <div class="grid-3-12">NOMBRE COMÚN: </div>
-                  <div class="grid-5-12">
-                    <%= f.text_field :arboles_no_nativos_desc, :style => "text-align: justify;" %>
-                  </div>
+                  <div class="grid-2-12">CANTIDAD:&nbsp;<%= f.text_field :arboles_no_nativos_num, :style => "text-align: center;" %></div>
+                  <div class="grid-1-12"></div>
+                  <div class="grid-9-12">NOMBRE&nbsp;COMÚN:&nbsp;<%= f.text_area :arboles_no_nativos_desc, :style => "text-align: justify;" %></div>
                 </div>
                 <div class="grid-12-12">
-                  <%= f.check_box :arboles_no_nativos, { :onclick => "ena_txtField(this, 'arboles_no_nativos');" }, "NO", "Si" %>&nbsp;NO CUENTA CON ÁRBOLES NO NATIVOS E IMPROPIOS
+                  <%= f.check_box :arboles_no_nativos, { :onclick => "ena_txtField(this, 'arboles_no_nativos');" }, "NO", "SI" %>&nbsp;NO CUENTA CON ÁRBOLES NO NATIVOS E IMPROPIOS
                 </div>
             </div>
           </td>
@@ -204,7 +195,8 @@
 
 <script type="text/javascript">
   enaTxtField('entorno_superficie_terreno_escuela', 'entorno_superficie_terreno_escuela_av', 'areas_verdes');
-  checkBoxTotextField('espacios', 'eje2_p2')
+  checkBoxTotextField('espacios', 'eje2_p2', 'entorno_no_espacios');
+  edMultiSelect('entorno_no_espacios', 'espacios', 'eje2_p2');
   radioButtonTotxtField('entorno_escuela_reforesta_si', 'entorno_escuela_reforesta_num', 'reforesta');
   radioButtonTotxtField('entorno_escuela_reforesta_no', 'entorno_escuela_reforesta_num', 'reforesta');
   ena_txtField('entorno_arboles_nativos', 'arboles_nativos');
@@ -235,16 +227,19 @@
   arboles_no_nativos_desc.add( Validate.Presence );
 
   jQuery(function(){
-    jQuery("#espacios").validate({ expression: "if (isCheckedC(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
+    jQuery("#espacios").validate({ expression: "if (skipSelectEspacios(SelfID, 'entorno_no_espacios')) return true; else return false;", message: "Seleccione una opción!" });
     jQuery("#escuela_reforesta").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
     jQuery("#acciones").validate({ expression: "if (isCheckedC(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
   });
 
-  (function ($) {
-    $("#entorno_superficie_terreno_escuela").change(function() {
-    superficie_terreno_escuela_av.remove( Validate.Numericality, { maximum: parseInt(document.getElementById('entorno_superficie_terreno_escuela').value) } );
-    superficie_terreno_escuela_av.add( Validate.Numericality, { maximum: parseInt(document.getElementById('entorno_superficie_terreno_escuela').value) } );
+  jQuery("#entorno_superficie_terreno_escuela").keyup(function() {
+      superficie_terreno_escuela_av.remove( Validate.Numericality, { maximum: parseInt(document.getElementById("entorno_superficie_terreno_escuela").value), onlyInteger: true } );
+      superficie_terreno_escuela_av.add( Validate.Numericality, { maximum: parseInt(document.getElementById("entorno_superficie_terreno_escuela").value), onlyInteger: true } );
   });
-  }(jQuery));
+
+  jQuery("#entorno_superficie_terreno_escuela_av").keyup(function() {
+      superficie_terreno_escuela.remove( Validate.Numericality, { minimum: parseInt(document.getElementById("entorno_superficie_terreno_escuela_av").value), onlyInteger: true } );
+      superficie_terreno_escuela.add( Validate.Numericality, { minimum: parseInt(document.getElementById("entorno_superficie_terreno_escuela_av").value), onlyInteger: true } );
+  });
   
 </script>

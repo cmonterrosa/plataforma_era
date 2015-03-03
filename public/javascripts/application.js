@@ -697,27 +697,31 @@ function showImageNum(comboSelect, divField){
 
 //*** Funciones Eje 2 Entorno ***//
 
-function checkBoxTotextField(cBox, div){
-    var validacion, divTxtField, txtField, elemCount, checkBox, divEv;
+function checkBoxTotextField(cBox, div, check){
+    var validacion, divTxtField, txtField, elemCount, checkBox, checkV, divEv;
     divEv = document.getElementById(div);
+    checkV = document.getElementById(check);
 
     if(typeof cBox == "object"){
         checkBox = cBox;
-        divTxtField = document.getElementById("div_"+ checkBox.value);
+//        divTxtField = document.getElementById("div_"+ checkBox.value);
         txtField = document.getElementById(checkBox.value);
 
         if (checkBox.checked){
-            txtField.disabled = false;
-            divTxtField.style.display = "inline";
-            divEv.style.display = "inline";
-            validacion = new LiveValidation(checkBox.value);
-            validacion.add( Validate.Presence );
-            validacion.add( Validate.Numericality, {minimum: 1});
+                txtField.disabled = false;
+                txtField.style.display = "inline";
+//                divTxtField.style.display = "inline";
+                divEv.style.display = "inline";
+                validacion = new LiveValidation(checkBox.value);
+                validacion.add( Validate.Presence );
+                validacion.add( Validate.Numericality, {minimum: 1});
+                checkV.checked = false;
         }
         else{
             txtField.value = "";
             txtField.disabled = true;
-            divTxtField.style.display = "none";
+            txtField.style.display = "none";
+//            divTxtField.style.display = "none";
             divEv.style.display = "none";
         }
 
@@ -729,13 +733,15 @@ function checkBoxTotextField(cBox, div){
         for(var i=0; i < elemCount.length; i++)
             if(elemCount[i].checked){
                 txtField = document.getElementById(elemCount[i].value);
-                divTxtField = document.getElementById("div_"+ elemCount[i].value);
+//                divTxtField = document.getElementById("div_"+ elemCount[i].value);
                 txtField.disabled = false;
-                divTxtField.style.display = "inline";
+                txtField.style.display = "inline";
+//                divTxtField.style.display = "inline";
                 validacion = new LiveValidation(elemCount[i].value);
                 validacion.add( Validate.Presence );
                 validacion.add( Validate.Numericality, {minimum: 1});
                 divEv.style.display = "inline";
+                checkV.checked = false;
             }
     }
 
@@ -882,22 +888,6 @@ function showImageCheck(cBox, div){
         else
             divField.style.display = 'none';
     }
-
-    
-
-    
-
-//    if(checkBox.value == "SI")
-//        if(checkBox.checked)
-//            divField.style.display = 'block';
-//        else
-//            divField.style.display = 'none';
-//    else
-//        if(checkBox.checked)
-//            divField.style.display = 'none';
-//        else
-//            divField.style.display = 'block';
-//        divField.style.display = 'none';
 }
 
 function sumFocos(select, select2, label){
@@ -914,3 +904,48 @@ function sumFocos(select, select2, label){
 }
 
 //*** fin funciones Eje 3 Huellas ***//
+
+// Limpia multiselect
+function edMultiSelect(cBox, objSelect, divQuestion){
+    var i, checkBox, elemCount, SelectM, divPreg, txtField;
+
+    checkBox = document.getElementById(cBox);
+    SelectM = document.getElementById(objSelect);
+    divPreg = document.getElementById(divQuestion);
+    elemCount = SelectM.getElementsByTagName("input");
+
+    if(checkBox.checked){
+        for(i=0; i < elemCount.length; i++){
+            if(elemCount[i].type == "checkbox"){
+                txtField = document.getElementById(elemCount[i].value);
+                elemCount[i].checked = false;
+                elemCount[i].disabled = true;
+                txtField.value = "";
+                txtField.disabled = true;
+                txtField.style.display = "none";
+            }
+        }
+        SelectM.style.display = "none";
+        divPreg.style.display = "none";
+    }
+    else{
+        for(i=0; i < elemCount.length; i++){
+            if(elemCount[i].type == "checkbox"){
+                txtField = document.getElementById(elemCount[i].value);
+                if(elemCount[i].checked == false){
+                    elemCount[i].disabled = false;
+                    txtField.value = "";
+                    txtField.disabled = true;
+                    txtField.style.display = "none";
+                }
+                else{
+                    txtField.disabled = false;
+                    txtField.style.display = "inline";
+                }
+            }
+
+        }
+        SelectM.style.display = "block";
+        divPreg.style.display = "block";
+    }
+}
