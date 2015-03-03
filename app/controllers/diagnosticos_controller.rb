@@ -282,4 +282,5 @@ class DiagnosticosController < ApplicationController
     end
   end
 
+
 end

@@ -42,6 +42,16 @@ class ConsumosController < ApplicationController
           @consumo.establecimientos.delete_all if @consumo.establecimientos
         end
 
+      ## Validación de clave ###
+      if params[:establecimientos]
+        if params[:establecimientos].has_value?("CLAE") || params[:establecimientos].has_value?("CLAEC")
+           params[:preparacions] = params[:utensilios] = params[:higienes] = params[:alimentos] = params[:bebidas] = params[:botanas] = params[:reposterias] = Array.new
+           params[:consumo][:conocen_lineamientos_grales] = nil
+           params[:consumo][:capacitacion_alim_bebidas] = nil
+        end
+      end
+
+
         if params[:preparacions]
             @preparacions = []
             params[:preparacions].each { |op| @preparacions << Preparacion.find_by_clave(op)  }
@@ -105,7 +115,8 @@ class ConsumosController < ApplicationController
         end
 
         @consumo.frecuencia_afisica_id = FrecuenciaAfisica.find_by_clave(params[:consumo][:frecuencia_afisica_id]).id if params[:consumo][:frecuencia_afisica_id]
-
+        @consumo.minutos_activacion_fisica = nil unless @consumo.frecuencia_afisica
+        
         if @consumo.save
           flash[:notice] = "Registro guardado correctamente"
           redirect_to :controller => "diagnosticos"
@@ -120,6 +131,7 @@ class ConsumosController < ApplicationController
           @s_botanas = multiple_selected(@consumo.botanas) if @consumo.botanas
           @s_reposterias = multiple_selected(@consumo.reposterias) if @consumo.reposterias
           @s_materials = multiple_selected(@consumo.materials) if @consumo.materials
+          @s_afisicas = selected(@consumo.frecuencia_afisica) if @consumo.frecuencia_afisica
           flash[:evidencias] = @consumo.errors.full_messages.join(", ")
           render :action => "new_or_edit"
         end

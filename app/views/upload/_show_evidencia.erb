@@ -1,3 +1,4 @@
+
  <%if flash[:notice]%>
             <div class="formee-msg-success">
               <h3>Operación realizada exitosamente:</h3>
@@ -9,7 +10,7 @@
             <div class="formee-msg-error">
               <h3>Error:</h3>
               <ul>
-                <li><%=flash[:error]%></li>
+                <li><%= error_messages_for :uploaded_file %></li>
               </ul>
             </div>
             <%else%>

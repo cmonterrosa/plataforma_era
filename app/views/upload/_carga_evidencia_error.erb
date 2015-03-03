@@ -1,8 +1,10 @@
 <div class="titulos">
   <p align="center">
-    Error en la carga de la evidencia, verifique e vuelva a intentarlo.
+    Error en la carga de la evidencia, verifique y vuelva a intentarlo.
   </p>
   <p align="center">
-    <%=@errores %>
+    <%if @errores%>
+      <%=h @errores.map{|e|e.last} %>
+    <%end%>
   </p>
 </div>
