@@ -12,12 +12,14 @@ Style
 ********************************************************************/
 
 .formee fieldset {
-	background:#fff;
+/*	background:#fff;*/
 	/*corner*/
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
 	border-radius: 12px;
         line-height: 2em;
+        background:#7f7f7f;
+        background:rgba(255,255,255,0.8);
 }
 
 /* hover effect */
@@ -37,9 +39,9 @@ Style
 	font-size:2.6em;
 	line-height:1.2em;
 	letter-spacing: -.025em;
-	color: #001014;
-	font-weight: normal;
-         text-shadow: 1px 1px 1px #00313D;
+	color: black;
+	font-weight: bold;
+/*        text-shadow: 1px 1px 1px #00313D;*/
 }
 .formee h4 {
 	font-size:1.5em;
@@ -59,10 +61,11 @@ Style
 }
 /* form elements  */
 .formee-lbl, .formee label {
-	color:#2b2b2b;
-	font-size:1.4em;
+	color: #505050;
+	font-size:1.3em;
 	line-height: 1.3em;
 	vertical-align:middle;
+        font-weight: bold;
 }
 .formee label.uper {
       color:#2b2b2b;
