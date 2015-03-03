@@ -5,18 +5,18 @@ class Ajuste2015Eje2 < ActiveRecord::Migration
     puts("=> Eliminando campos no usados")
     remove_column :entornos, :arboles_terreno_escuela
 
-    pust("=> Agrega campos nuevos")
-    add_column :entornos, :no_espacios
-    add_column :entornos, :escuela_reforesta
-    add_column :entornos, :escuela_reforesta_num
-    add_column :entornos, :arboles_nativos
-    add_column :entornos, :arboles_nativos_num
-    add_column :entornos, :arboles_nativos_desc
-    add_column :entornos, :arboles_no_nativos
-    add_column :entornos, :arboles_no_nativos_num
-    add_column :entornos, :arboles_no_nativos_desc
+    puts("=> Agrega campos nuevos")
+    add_column :entornos, :no_espacios, :integer
+    add_column :entornos, :escuela_reforesta, :string, :limit => 2
+    add_column :entornos, :escuela_reforesta_num, :integer
+    add_column :entornos, :arboles_nativos, :string, :limit => 2
+    add_column :entornos, :arboles_nativos_num, :integer
+    add_column :entornos, :arboles_nativos_desc, :string, :limit => 100
+    add_column :entornos, :arboles_no_nativos, :string, :limit => 2
+    add_column :entornos, :arboles_no_nativos_num, :integer
+    add_column :entornos, :arboles_no_nativos_desc, :string, :limit => 100
 
-    pust("=> Crea tabla espacios")
+    puts("=> Crea tabla espacios")
     create_table :espacios do |t|
       t.string :descripcion, :limit => 200
       t.string :clave, :limit => 10
@@ -32,15 +32,15 @@ class Ajuste2015Eje2 < ActiveRecord::Migration
     Espacio.create(:descripcion => "CULTIVO HIDROPÓNICO.", :clave => "CHIDRO")
     add_index :acciones, :clave, :name => "espacios_clave"
 
-    pust("=> Crea tabla escuelas_espacios")
+    puts("=> Crea tabla escuelas_espacios")
     create_table :escuelas_espacios do |t|
-      t.integer :numero
+      t.float :numero
       t.integer :espacio_id
       t.integer :entorno_id
     end
 
-    pust("=> Trunca tabla espacios y carga nuevos valores")
-    execute("truncate espacios;")
+    puts("=> Trunca tabla acciones y carga nuevos valores")
+    execute("truncate acciones;")
     Accione.create(:descripcion => "TUTORÍA.", :clave => "AC00")
     Accione.create(:descripcion => "PROYECTO DE MEJORA CONTINUA (PMC).", :clave => "AC01")
     Accione.create(:descripcion => "USO Y MANEJO DE LA CARTILLA NACIONAL DE VACUNACIÓN.", :clave => "AC032")
@@ -54,10 +54,13 @@ class Ajuste2015Eje2 < ActiveRecord::Migration
   def self.down
     puts("=> Eliminando Ajuste del Eje 2 del diagnostico, ciclo 2014-2015")
 
-    puts("=> Agrega campos no usados")
-    add_column :entornos, :arboles_terreno_escuela
+    puts("=> Trunca tabla entornos")
+    execute("truncate entornos;")
 
-    pust("=> Elimina campos nuevos")
+    puts("=> Agrega campos no usados")
+    add_column :entornos, :arboles_terreno_escuela, :integer
+
+    puts("=> Elimina campos nuevos")
     remove_column :entornos, :no_espacios
     remove_column :entornos, :escuela_reforesta
     remove_column :entornos, :escuela_reforesta_num
@@ -68,14 +71,14 @@ class Ajuste2015Eje2 < ActiveRecord::Migration
     remove_column :entornos, :arboles_no_nativos_num
     remove_column :entornos, :arboles_no_nativos_desc
 
-    pust("=> Elimina tabla espacios")
+    puts("=> Elimina tabla espacios")
     drop_table :espacios
 
-    pust("=> Elimina tabla escuelas_espacios")
+    puts("=> Elimina tabla escuelas_espacios")
     drop_table :escuelas_espacios
 
-    pust("=> Trunca tabla espacios y carga nuevos anteriores")
-    execute("truncate espacios;")
+    puts("=> Trunca tabla acciones y carga nuevos anteriores")
+    execute("truncate acciones;")
     Accione.create(:descripcion => "ORIENTACIÓN Y ASESORÍA.", :clave => "AC00")
     Accione.create(:descripcion => "USO Y MANEJO DE LA CARTILLA NACIONAL DE VACUNACIÓN.", :clave => "AC01")
     Accione.create(:descripcion => "ACTIVIDADES ARTÍSTICAS Y DEPORTIVAS.", :clave => "AC02")

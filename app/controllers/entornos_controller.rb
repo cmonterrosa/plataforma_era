@@ -29,7 +29,7 @@ class EntornosController < ApplicationController
       @entorno.arboles_nativos_num = @entorno.arboles_nativos_desc = nil if @entorno.arboles_nativos == "NO"
       @entorno.arboles_no_nativos_num = @entorno.arboles_no_nativos_desc = nil if @entorno.arboles_no_nativos == "NO"
       @entorno.escuela_reforesta_num = nil if @entorno.escuela_reforesta == "NO"
-      @entorno.superficie_terreno_escuela_av = nil if @entorno.superficie_terreno_escuela.to_i == 0
+      @entorno.superficie_terreno_escuela_av = nil if @entorno.superficie_terreno_escuela.to_f == 0
       
       if params[:acciones]
         @acciones = []
@@ -49,7 +49,7 @@ class EntornosController < ApplicationController
           espacio_escuela ||= EscuelasEspacio.new
           espacio_escuela.entorno_id = @entorno
           espacio_escuela.espacio_id = espacio.id
-          espacio_escuela.numero = params[:"#{espacio.clave}"].to_i
+          espacio_escuela.numero = params[:"#{espacio.clave}"].to_f
           @entorno.escuelas_espacios << espacio_escuela
         end
       else

@@ -61,8 +61,8 @@ class CompetenciasController < ApplicationController
         flash[:error] = "No se pudo guardar, verifique los datos"
         flash[:evidencias] = @competencia.errors.full_messages.join(", ")
         
-        @s_dcapacitadoras = multiple_selected(@competencia.docentes_capacitados) if @competencia.docentes_capacitados
-        @s_acapacitadoras = multiple_selected(@competencia.alumnos_capacitados) if @competencia.alumnos_capacitados
+        @s_dcapacitadoras = multiple_selected_dcapacitadora(@competencia.docentes_capacitados) if @competencia.docentes_capacitados
+        @s_acapacitadoras = multiple_selected_dcapacitadora(@competencia.alumnos_capacitados) if @competencia.alumnos_capacitados
         render :action => "new_or_edit", :id => @diagnostico.id
       end
     else

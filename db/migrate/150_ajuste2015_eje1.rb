@@ -1,7 +1,7 @@
 class Ajuste2015Eje1 < ActiveRecord::Migration
   def self.up
     puts("=> Ajuste del Eje 1 del diagnostico, ciclo 2014-2015")
-    
+
     puts("=> Elimina campos no usados")
     remove_column :competencias, :docentes_capacitados_sma
     remove_column :competencias, :docentes_aplican_conocimientos
@@ -10,15 +10,15 @@ class Ajuste2015Eje1 < ActiveRecord::Migration
     remove_column :competencias, :alumnos_capacitados_instituciones
     
     puts("=> Agrega campos nuevos")
-    add_column :competencias, :dctes_cap_salud
-    add_column :competencias, :dctes_cap_ma
-    add_column :competencias, :dctes_cap_ambos
-    add_column :competencias, :dctes_aplican_conocimto
-    add_column :competencias, :dctes_invol_act
-    add_column :competencias, :alumn_cap_dctes
-    add_column :competencias, :alumn_cap_salud
-    add_column :competencias, :alumn_cap_ma
-    add_column :competencias, :alumn_cap_ambos
+    add_column :competencias, :dctes_cap_salud, :integer
+    add_column :competencias, :dctes_cap_ma, :integer
+    add_column :competencias, :dctes_cap_ambos, :integer
+    add_column :competencias, :dctes_aplican_conocimto, :integer
+    add_column :competencias, :dctes_invol_act, :integer
+    add_column :competencias, :alumn_cap_dctes, :integer
+    add_column :competencias, :alumn_cap_salud, :integer
+    add_column :competencias, :alumn_cap_ma, :integer
+    add_column :competencias, :alumn_cap_ambos, :integer
 
     puts("=> Crea tabla dcapacitadoras")
     create_table :dcapacitadoras do |t|
@@ -55,6 +55,9 @@ class Ajuste2015Eje1 < ActiveRecord::Migration
 
   def self.down
     puts("=> Eliminando Ajuste del Eje 1 del diagnostico, ciclo 2014-2015")
+
+    puts("=> Trunca tabla competencias")
+    execute("truncate competencias;")
     
     puts("=> Elimina campos nuevos")
     remove_column :competencias, :dctes_cap_salud
@@ -68,11 +71,11 @@ class Ajuste2015Eje1 < ActiveRecord::Migration
     remove_column :competencias, :alumn_cap_ambos
     
     puts("=> Agrega campos anteriores")
-    add_column :competencias, :docentes_capacitados_sma
-    add_column :competencias, :docentes_aplican_conocimientos
-    add_column :competencias, :docentes_involucran_actividades
-    add_column :competencias, :alumnos_capacitados_docentes
-    add_column :competencias, :alumnos_capacitados_instituciones
+    add_column :competencias, :docentes_capacitados_sma, :integer
+    add_column :competencias, :docentes_aplican_conocimientos, :integer
+    add_column :competencias, :docentes_involucran_actividades, :integer
+    add_column :competencias, :alumnos_capacitados_docentes, :integer
+    add_column :competencias, :alumnos_capacitados_instituciones, :integer
 
     puts("=> Elimina tabla dcapacitadoras")
     drop_table :dcapacitadoras
