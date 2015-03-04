@@ -76,7 +76,7 @@ class Ajuste2015Eje2 < ActiveRecord::Migration
     puts("=> Elimina tabla escuelas_espacios")
     drop_table :escuelas_espacios
 
-    puts("=> Trunca tabla acciones y carga nuevos anteriores")
+    puts("=> Trunca tabla acciones y carga valores anteriores")
     execute("truncate acciones;")
     Accione.create(:descripcion => "ORIENTACIÓN Y ASESORÍA.", :clave => "AC00")
     Accione.create(:descripcion => "USO Y MANEJO DE LA CARTILLA NACIONAL DE VACUNACIÓN.", :clave => "AC01")
