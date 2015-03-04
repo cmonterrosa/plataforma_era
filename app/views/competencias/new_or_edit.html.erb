@@ -49,7 +49,7 @@
                     <%= check_box_tag "dcapacitadoras[#{c.id}]", c.clave, @s_dcapacitadoras.include?(c.id) ? true : false, :onclick => "checkBoxToSelct('dcapacitadora');" %>&nbsp;<%= c.descripcion %>
                     &nbsp;NÚM.&nbsp;DE&nbsp;CAPACITACIONES:&nbsp;<%= select "dcapacitadora", "#{c.clave}", (1..9), {:selected => @valor}, {:style => "display: none; width:40px;"}%><br /><br />
                     <% if c.clave == "OTRA" %>&nbsp;DESCRIPCIÓN:&nbsp;<input name="dcapacitadoras<%= c.clave %>" id="dcapacitadoras<%= c.clave %>" size="35px" style="text-align:justify; display: none; text-transform: uppercase;" value="<%=h @desc_dep ? @desc_dep : "" %>" /><% end %>
-                    <hr />
+                    <%=linea_horizontal%>
                   <% end %>
                 </div>
               </fieldset>
@@ -143,7 +143,7 @@
                     <%= check_box_tag "acapacitadoras[#{c.id}]", c.clave, @s_acapacitadoras.include?(c.id) ? true : false, :onclick => "checkBoxToSelct('acapacitadora');" %>&nbsp;<%= c.descripcion %>
                     &nbsp;NÚM.&nbsp;DE&nbsp;CAPACITACIONES:&nbsp;<%= select "acapacitadora", "#{c.clave}", (1..9), {:selected => @valor}, {:style => "display: none; width: 40px;"}%><br /><br />
                     <% if c.clave == "OTRA" %>&nbsp;DESCRIPCIÓN:&nbsp;<input name="acapacitadoras<%= c.clave %>" id="acapacitadoras<%= c.clave %>" size="35px" style="text-align: justify; display: none; text-transform: uppercase;" value="<%=h @desc_dep ? @desc_dep : "" %>" /><% end %>
-                    <hr />
+                    <%=linea_horizontal%>
                   <% end %>
                 </div>
               </fieldset>
