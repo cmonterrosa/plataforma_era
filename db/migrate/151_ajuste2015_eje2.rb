@@ -30,7 +30,6 @@ class Ajuste2015Eje2 < ActiveRecord::Migration
     Espacio.create(:descripcion => "PARCELAS.", :clave => "PARCELAS")
     Espacio.create(:descripcion => "HUERTO ESCOLAR.", :clave => "HESCOLAR")
     Espacio.create(:descripcion => "CULTIVO HIDROPÓNICO.", :clave => "CHIDRO")
-    add_index :acciones, :clave, :name => "espacios_clave"
 
     puts("=> Crea tabla escuelas_espacios")
     create_table :escuelas_espacios do |t|
