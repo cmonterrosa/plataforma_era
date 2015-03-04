@@ -416,6 +416,15 @@ a:active {
                 <li><%=flash[:notice]%></li>
               </ul>
             </div>
+
+            <%elsif flash[:warning]%>
+            <div class="formee-msg-warning">
+              <h3>Atención:</h3>
+              <ul>
+                <li><%=flash[:warning]%></li>
+              </ul>
+            </div>
+
             <%elsif flash[:error]%>
             <div class="formee-msg-error">
               <h3>Error:</h3>

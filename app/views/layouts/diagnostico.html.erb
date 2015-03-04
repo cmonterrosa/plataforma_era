@@ -332,6 +332,15 @@ a:active {
                 <li><%=flash[:notice]%></li>
               </ul>
             </div>
+
+            <%elsif flash[:warning]%>
+            <div class="formee-msg-warning">
+              <h3>Atención:</h3>
+              <ul>
+                <li><%=flash[:warning]%></li>
+              </ul>
+            </div>
+
             <%elsif flash[:error]%>
             <div class="formee-msg-error">
               <h3>Error:</h3>
@@ -342,12 +351,12 @@ a:active {
             <%else%>
             <%#*<p></p>%>
             <%end%>
-
             <%=yield%>
-
           </td>
         </tr>
         <!-- termina contenido principal -->
+
+
 
         <tr>
           <td colspan="3"><img src="/images/era/space.png" width="10" height="30px" /></td>
