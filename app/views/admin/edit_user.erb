@@ -33,17 +33,17 @@
 
     <!-- Agregamos si fue beneficiada -->
     <%if current_user.has_role?("adminplat")%>
-    <div class="grid-6-12 clear">
-        ¿Ha sido beneficiada? id : <%= escuela.id %>&nbsp;
-        <%valor = (escuela.beneficiada==1)? '1' : '0'%>
-        <%if valor == 1%>
-          <%= check_box_tag 'beneficiada', valor, (escuela.beneficiada==nil)? false : true%>
-        <%else%>
-           <%= check_box_tag 'beneficiada', nil, (escuela.beneficiada==nil)? false : true%>
-        <%end%>
-        <br />
-    </div>
-    <%end%>
+        <div class="grid-12-12">
+              <label>¿Ha sido beneficiada en el presente ciclo: <%=CICLO_ESCOLAR%>?</label><br />
+              
+              <label class="uper">SI <%= radio_button :escuela, :beneficiada, 1, :checked => (@user.escuela.beneficiada?) %></label>
+              <label class="uper">NO <%= radio_button :escuela, :beneficiada, 0, :checked => (!@user.escuela.beneficiada?) %></label>
+              <!--
+              <label class="uper">SI <= radio_button :escuela, :beneficiada, "SI", @user.escuela.beneficiada %></label>&nbsp;&nbsp;
+              <label class="uper">NO <= radio_button :escuela,  :beneficiada, "NO", @user.escuela.beneficiada%></label>
+              -->
+        </div>
+     <%end%>
 
 
 
@@ -98,7 +98,6 @@
     var email = new LiveValidation( 'user_email' );
     email.add( Validate.Email );
     var password = new LiveValidation( 'user_password' );
-    password.add( Validate.Presence, {onlyOnSubmit: true } );
     password.add( Validate.Length, { minimum: 6 } );
     var password_confirmation = new LiveValidation( 'user_password_confirmation' );
     password_confirmation.add( Validate.Confirmation, { match: 'user_password'} );
