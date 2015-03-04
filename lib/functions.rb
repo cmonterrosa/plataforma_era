@@ -45,78 +45,79 @@ module Functions
     return @selected
   end
 
+  # Puntajes de preguntas del Eje 1 Competencias
   $competencia_p1 = 0.03125
   $competencia_p2 = 0.03125
   $competencia_p3 = 0.03125
   $competencia_p4 = 0.03125
   $competencia_p5 = 0.03125
 
+  # Puntajes de preguntas del Eje 2 Entornos
   $entorno_p2 = 0.03125
-  $entorno_p6 = 0.03125
+  $entorno_p3 = 0.03125
+  $entorno_p5 = 0.03125
 
-  def ptos_superficie(porcentaje)
-    case porcentaje
-    when 0
-      return 0
-    when 1
-      return 0.125
-    when 2
-      return 0.25
-    when 3
-      return 0.375
-    when 4
-      return 0.5
-    when 5
-      return 0.625
-    when 6
-      return 0.75
-    when 7
-      return 0.875
-    when 8
-      return 1
-    when 9
-      return 1.125
-    when 10
-      return 1.25
-    when 11
-      return 1.375
-    when 12
-      return 1.5
-    when 13
-      return 1.625
-    when 14
-      return 1.75
-    when 15
-      return 1.875
-    when 16
-      return 2
-    when 17
-      return 2.125
-    when 18
-      return 2.25
-    when 19
-      return 2.375
-    when 20
-      return 2.5
-    when 21
-      return 2.625
-    when 22
-      return 2.75
-    when 23
-      return 2.875
-    when 24
-      return 3
-    when 25
-      return 3.125
-    end
-  end
+#  def ptos_superficie(porcentaje)
+#    case porcentaje
+#    when 0
+#      return 0
+#    when 1
+#      return 0.125
+#    when 2
+#      return 0.25
+#    when 3
+#      return 0.375
+#    when 4
+#      return 0.5
+#    when 5
+#      return 0.625
+#    when 6
+#      return 0.75
+#    when 7
+#      return 0.875
+#    when 8
+#      return 1
+#    when 9
+#      return 1.125
+#    when 10
+#      return 1.25
+#    when 11
+#      return 1.375
+#    when 12
+#      return 1.5
+#    when 13
+#      return 1.625
+#    when 14
+#      return 1.75
+#    when 15
+#      return 1.875
+#    when 16
+#      return 2
+#    when 17
+#      return 2.125
+#    when 18
+#      return 2.25
+#    when 19
+#      return 2.375
+#    when 20
+#      return 2.5
+#    when 21
+#      return 2.625
+#    when 22
+#      return 2.75
+#    when 23
+#      return 2.875
+#    when 24
+#      return 3
+#    when 25
+#      return 3.125
+#    end
+#  end
 
+  # Puntajes de preguntas del Eje 3 Huella Ecológica
   $huella_p1 = 0.03125
-  $huella_p2 = 0.03125
   $huella_p3 = 0.03125
-  $huella_p4 = 0.03125
   $huella_p5 = 0.03125
-  $huella_p6 = 0.03125
   $huella_p7 = 0.03125
   $huella_p8 = 0.03125
   $huella_p9 = 0.03125
