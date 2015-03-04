@@ -31,7 +31,7 @@ Style
 
 .formee {
     /*font: normal 10px/1.1em Arial,Sans-Serif;*/
-    font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+    font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 0.6em;
     
 }
@@ -148,6 +148,9 @@ form .formee-txt:focus, .formee input[type="text"]:focus, .formee input[type="pa
 	-moz-border-radius: 16px 4px 16px 4px;
 	-webkit-border-radius: 16px 4px 16px 4px;
 	border-radius: 16px 4px 16px 4px;
+        font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
+
+
 }
 .formee-msg-suggest {
 	color: black;
@@ -164,6 +167,7 @@ form .formee-txt:focus, .formee input[type="text"]:focus, .formee input[type="pa
 	letter-spacing:-.02em;
 	padding:0;
 	margin:0 0 -1em 0;
+        font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 .formee-msg-info {
 /*	background: #d1ecf7 url(/images/formee/form-ic-info.png) no-repeat 12px 23px;*/
@@ -255,7 +259,7 @@ form .formee-txt:focus, .formee input[type="text"]:focus, .formee input[type="pa
 }
 
 .tdiagnostico label{
-    font-family: helvetica;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 16px;
     text-align: justify;
 /*    display: block;*/
@@ -264,7 +268,7 @@ form .formee-txt:focus, .formee input[type="text"]:focus, .formee input[type="pa
 }
 
 .tdiagnostico h3{
-    font-family: helvetica;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 18px;
 }
 
@@ -296,7 +300,7 @@ table.diagnostico{
 }
 
 table.diagnostico tr, table.diagnostico td{
-    font-family: helvetica;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 16px;
     text-align: justify;
     height: auto;
