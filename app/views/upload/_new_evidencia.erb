@@ -1,30 +1,27 @@
 <!-- Carga de Evidencias -->
-<div class="container" style="width: 70%">
-
-
-    <div class="formee-msg-info">
+<div class="container" style="width: 89%">
+  <div class="formee-msg-info">
     <h3>Información importante:</h3>
     <ul>
       <li>Los campos marcados con <em class="formee-req">*</em> son obligatorios.</li>
     </ul>
-    <ul> <li>El tamaño de un archivo no debe excederse los 10 MB.</li></ul>
+    <ul>
+      <li>Los archivos no pueden repetirse ni excederse de 5 MB.</li>
+    </ul>
   </div>
 
 
 <%form_for(@uploaded_file, :url => {:action => "create_evidencia", :diagnostico => @diagnostico, :eje => @eje, :numero_pregunta => @numero_pregunta}, :html => { :multipart => true, :class => "formee" }) do |f| -%>
   <fieldset>
 
-    <legend>Cargar&nbsp;Nueva&nbsp;Evidencia</legend>
+    <legend>Cargar&nbsp;Nueva&nbsp;Evidencia&nbsp;para&nbsp;el&nbsp;Eje:&nbsp;<%=@eje%></legend>
 
-    <div class="grid-form">
-      <label>Tipo de archivo: <em class="formee-req">*</em></label>
-      <%= f.select :tipodoc_id, Tipodoc.all.collect{|a| [a.descripcion, a.id]}, :prompt => 'Seleccione una opción'%>
-    </div>
+    <%#*<div class="grid-form">%>
+      <%#*<label>Tipo de archivo: <em class="formee-req">*</em></label>%>
+      <%#= f.select :tipodoc_id, Tipodoc.all.collect{|a| [a.descripcion, a.id]}, :prompt => 'Seleccione una opción'%>
+    <%#*</div>%>
     <div class="grid-12-12 clear"></div>
 
-    <div class="grid-form">
-      <label>EJE: <%=h @eje %></label>
-    </div>
     <div class="grid-12-12 clear"></div>
 
     <div class="grid-form">
@@ -40,7 +37,7 @@
     <div class="grid-12-12 clear"></div>
 
     <div class="grid-form">
-       <label>Descripción: <em class="formee-req">*</em></label>
+       <label>Descripción detallada: <em class="formee-req">*</em></label>
       <%= f.text_area :descripcion, :placeholder => "Escriba la descripción del archivo" %>
     </div>
 
@@ -54,10 +51,7 @@
 </div>
 
 <script type="text/javascript">
-  var tipodoc_id = new LiveValidation( 'adjunto_tipodoc_id', {onlyOnSubmit: true} );
-  tipodoc_id.add( Validate.Presence );
-
-  var inputfile = new LiveValidation( 'adjunto_inputfile', {onlyOnSubmit: true} );
+ var inputfile = new LiveValidation( 'adjunto_inputfile', {onlyOnSubmit: true} );
   inputfile.add( Validate.Presence );
 
   var descripcion = new LiveValidation( 'adjunto_descripcion', {onlyOnSubmit: true} );
