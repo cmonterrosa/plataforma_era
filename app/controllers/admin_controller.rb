@@ -59,11 +59,10 @@ class AdminController < ApplicationController
     success = @user && @user.save
     if success && @user.errors.empty?
       ##### Actualizamos escuela si es el caso ####
-      unless params["escuela"].nil?
-        beneficiada = (params[:beneficiada] == '1')? 1 : 0
-        escuela.update_attributes!(:beneficiada => beneficiada) if params[:beneficiada] && beneficiada
-        escuela.update_attributes!(:nombre => params["escuela"]["nombre"])
-      end if current_user.has_role?("adminplat")
+      if escuela && current_user.has_role?("adminplat")
+#        (params[:escuela_beneficiada] == '1') ? params[:escuela][:beneficiada] = 1 : params[:escuela_beneficiada] = 0
+        escuela.update_attributes!(params[:escuela]) if params[:escuela]
+      end
       
       flash[:notice] = "Los datos se actualizaron correctamente"
       redirect_to :controller => "admin", :action => "show_users"
