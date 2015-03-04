@@ -5,7 +5,6 @@ class EntornosController < ApplicationController
   def new_or_edit
     @diagnostico = Diagnostico.find(params[:id]) if params[:id]
     @diagnostico ||= Diagnostico.new
-    @recupera_entorno = (@diagnostico.entorno) ? true : false
     @entorno = @diagnostico.entorno || Entorno.new
     @s_acciones = multiple_selected_id(@entorno.acciones) if @entorno.acciones
     @s_espacios = multiple_selected_espacios(@entorno.escuelas_espacios) if @entorno.escuelas_espacios

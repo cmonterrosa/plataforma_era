@@ -6,7 +6,7 @@ class Ajuste2015Eje2 < ActiveRecord::Migration
     remove_column :entornos, :arboles_terreno_escuela
 
     puts("=> Agrega campos nuevos")
-    add_column :entornos, :no_espacios, :integer
+    add_column :entornos, :no_espacios, :string => 2
     add_column :entornos, :escuela_reforesta, :string, :limit => 2
     add_column :entornos, :escuela_reforesta_num, :integer
     add_column :entornos, :arboles_nativos, :string, :limit => 2
