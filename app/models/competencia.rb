@@ -47,10 +47,10 @@ class Competencia < ActiveRecord::Base
   end
 
   def validate_docentes
-    "self.dctes_cap_salud.to_i > 0" || "self.dctes_cap_ma.to_i > 0" || "self.dctes_cap_ambos.to_i > 0"
+    self.dctes_cap_salud.to_i > 0 || self.dctes_cap_ma.to_i > 0 || self.dctes_cap_ambos.to_i > 0
   end
 
   def validate_alumnos
-    "self.alumn_cap_salud.to_i > 0" || "self.alumn_cap_ma.to_i > 0" || "self.alumn_cap_ambos.to_i > 0"
+    self.alumn_cap_salud.to_i > 0 || self.alumn_cap_ma.to_i > 0 || self.alumn_cap_ambos.to_i > 0
   end
 end
