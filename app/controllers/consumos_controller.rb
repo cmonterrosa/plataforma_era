@@ -5,7 +5,7 @@ class ConsumosController < ApplicationController
   def new_or_edit
     @diagnostico = Diagnostico.find(params[:id]) if params[:id]
     @diagnostico ||= Diagnostico.new
-    @consumo = @diagnostico.consumo || Consumo.new
+    @consumo = (@diagnostico.consumo)? @diagnostico.consumo : Consumo.new
     
     @escuela = Escuela.find_by_clave(current_user.login.upcase)
     if @escuela.nivel_descripcion == "BACHILLERATO"
