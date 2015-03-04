@@ -111,7 +111,7 @@
                   <% ServicioAgua.find(:all).each do |c| %>
                     <%= check_box_tag "servicio_aguas[#{i}]", c.clave, @s_servicio_aguas.include?(c.id) ? true : false %>&nbsp;<%= c.descripcion %><br /><br />
                     <% i+=1 %>
-                    <hr />
+                    <%=linea_horizontal%>
                   <% end %>
                 </div>
             </fieldset>
@@ -141,7 +141,7 @@
               <fieldset style="padding: 5px 5px 5px 5px;">
                   <% EliminaResiduo.find(:all).each do |c| %>
                     <%= check_box_tag "elimina_residuos[#{c.id}]", c.clave, @s_elimina_residuos.include?(c.id) ? true : false %>&nbsp;<%= c.descripcion %><br /><br />
-                    <hr />
+                    <%=linea_horizontal%>
                   <% end %>
               </fieldset>
             </div>
@@ -207,7 +207,7 @@
                 <div id="inorganicos" class="grid-12-12">
                   <% Inorganico.find(:all).each do |c| %>
                     <%= check_box_tag "inorganicos[#{c.id}]", c.clave, @s_inorganicos.include?(c.id) ? true : false, :onclick => "verifyCheckboxs(this, 'inorganicos', 'eje3_p9');" %>&nbsp;<%= c.descripcion %><br /><br />
-                    <hr />
+                    <%=linea_horizontal%>
                   <% end %>
                 </div>
             </fieldset>
