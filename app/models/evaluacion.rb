@@ -16,16 +16,18 @@ def puntaje_eje1_p1
   @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
   @user = User.find_by_login(@escuela.clave) if @escuela
   @competencia = @diagnostico.competencia if @diagnostico.competencia
+  docentes_capacitados = @competencia.dctes_cap_salud.to_i + @competencia.dctes_cap_ma.to_i + @competencia.dctes_cap_ambos.to_i
   eje1 = CatalogoEje.find_by_clave("EJE1")
-  if @competencia.docentes_capacitados_sma.to_i > 0
+  if docentes_capacitados > 0
     @eje1 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ?", @user, @diagnostico.id, eje1.id, 1], :order => "eje_id")
     @eje1.each do |ad|
       if ad.validado
         valido = true
         break
       end
-    end unless @eje1.nil?
-    @eje1_p1 = (((@competencia.docentes_capacitados_sma.to_f / @escuela.total_personal_docente.to_f ) * 100) * $competencia_p1.to_f).round(3)
+    end
+    
+    @eje1_p1 = (((docentes_capacitados / @escuela.total_personal_docente.to_f ) * 100) * $competencia_p1.to_f).round(3)
   end
 
   return valido ? @eje1_p1 : 0
@@ -38,7 +40,7 @@ def puntaje_eje1_p2
   @user = User.find_by_login(@escuela.clave) if @escuela
   @competencia = @diagnostico.competencia if @diagnostico.competencia
   eje1 = CatalogoEje.find_by_clave("EJE1")
-  if @competencia.docentes_aplican_conocimientos.to_i > 0
+  if @competencia.dctes_aplican_conocimto.to_i > 0
     @eje1 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ?", @user, @diagnostico.id, eje1.id, 2], :order => "eje_id")
     @eje1.each do |ad|
       if ad.validado
@@ -46,7 +48,7 @@ def puntaje_eje1_p2
         break
       end
     end
-    @eje1_p2 = (((@competencia.docentes_aplican_conocimientos.to_f / @escuela.total_personal_docente.to_f ) * 100) * $competencia_p2.to_f).round(3)
+    @eje1_p2 = (((@competencia.dctes_aplican_conocimto.to_f / @escuela.total_personal_docente.to_f ) * 100) * $competencia_p2).round(3)
   end
 
   return valido ? @eje1_p2 : 0
@@ -59,7 +61,7 @@ def puntaje_eje1_p3
   @user = User.find_by_login(@escuela.clave) if @escuela
   @competencia = @diagnostico.competencia if @diagnostico.competencia
   eje1 = CatalogoEje.find_by_clave("EJE1")
-  if @competencia.docentes_involucran_actividades.to_i > 0
+  if @competencia.dctes_invol_act.to_i > 0
     @eje1 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ?", @user, @diagnostico.id, eje1.id, 3], :order => "eje_id")
     @eje1.each do |ad|
       if ad.validado
@@ -67,7 +69,7 @@ def puntaje_eje1_p3
         break
       end
     end
-    @eje1_p3 = (((@competencia.docentes_involucran_actividades.to_f / @escuela.total_personal_docente.to_f ) * 100) * $competencia_p3.to_f).round(3)
+    @eje1_p3 = (((@competencia.dctes_invol_act.to_f / @escuela.total_personal_docente.to_f ) * 100) * $competencia_p3).round(3)
   end
 
   return valido ? @eje1_p3 : 0
@@ -80,7 +82,7 @@ def puntaje_eje1_p4
   @user = User.find_by_login(@escuela.clave) if @escuela
   @competencia = @diagnostico.competencia if @diagnostico.competencia
   eje1 = CatalogoEje.find_by_clave("EJE1")
-  if @competencia.alumnos_capacitados_docentes.to_i > 0
+  if @competencia.alumn_cap_dctes.to_i > 0
     @eje1 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ?", @user, @diagnostico.id, eje1.id, 4], :order => "eje_id")
     @eje1.each do |ad|
       if ad.validado
@@ -88,7 +90,7 @@ def puntaje_eje1_p4
         break
       end
     end
-    @eje1_p4 = (((@competencia.alumnos_capacitados_docentes.to_f / (@escuela.alu_hom.to_i + @escuela.alu_muj.to_i) ).to_f * 100) * $competencia_p4.to_f).round(3)
+    @eje1_p4 = (((@competencia.alumn_cap_dctes.to_f / (@escuela.alu_hom.to_i + @escuela.alu_muj.to_i) ).to_f * 100) * $competencia_p4).round(3)
   end
 
   return valido ? @eje1_p4 : 0
@@ -100,8 +102,9 @@ def puntaje_eje1_p5
   @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
   @user = User.find_by_login(@escuela.clave) if @escuela
   @competencia = @diagnostico.competencia if @diagnostico.competencia
+  alumnos_capacitados = @competencia.alumn_cap_salud.to_i + @competencia.alumn_cap_ma + @competencia.alumn_cap_ambos.to_i
   eje1 = CatalogoEje.find_by_clave("EJE1")
-  if @competencia.alumnos_capacitados_instituciones.to_i > 0
+  if alumnos_capacitados.to_i > 0
     @eje1 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ?", @user, @diagnostico.id, eje1.id, 5], :order => "eje_id")
     @eje1.each do |ad|
       if ad.validado
@@ -109,7 +112,7 @@ def puntaje_eje1_p5
         break
       end
     end
-    @eje1_p5 = (((@competencia.alumnos_capacitados_instituciones.to_f / (@escuela.alu_hom.to_i + @escuela.alu_muj.to_i) ).to_f * 100) * $competencia_p5.to_f).round(3)
+    @eje1_p5 = (((alumnos_capacitados / (@escuela.alu_hom.to_i + @escuela.alu_muj.to_i) ).to_f * 100) * $competencia_p5).round(3)
   end
 
   return valido ? @eje1_p5 : 0
@@ -118,20 +121,45 @@ end
 ###--- ENTORNO SALUDABLE
 def puntaje_eje2_p2
   @diagnostico = Diagnostico.find(self.diagnostico_id)
+  valido = false
   @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
   @user = User.find_by_login(@escuela.clave) if @escuela
   @entorno = @diagnostico.entorno if @diagnostico.entorno
-
-  if @entorno.superficie_terreno_escuela.to_f > 0 and  @entorno.superficie_terreno_escuela_av.to_f <= @entorno.superficie_terreno_escuela.to_f
-    @eje2_p2 = ((@entorno.superficie_terreno_escuela_av.to_f / @entorno.superficie_terreno_escuela.to_f) * 100).round > 25 ? ptos_superficie(25) : ptos_superficie(((@entorno.superficie_terreno_escuela_av.to_f / @entorno.superficie_terreno_escuela.to_f) * 100).round)
-  else
-    @eje2_p2 = 0
+  eje2 = CatalogoEje.find_by_clave("EJE2")
+  if @competencia.escuelas_espacios.size.to_i > 0
+    @eje2 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ?", @user, @diagnostico.id, eje2.id, 2], :order => "eje_id")
+    @eje2.each do |ad|
+      if ad.validado
+        valido = true
+        break
+      end
+    end
+    @eje2_p2 = (((@entorno.escuelas_espacios.size.to_f / Espacio.all.size.to_f) * 100) * $entorno_p2).round(3) if @entorno.escuelas_espacios
   end
-    
-  return @eje2_p2
+  return valido ? @eje2_p2 : 0
 end
 
-def puntaje_eje2_p6
+def puntaje_eje2_p3
+  @diagnostico = Diagnostico.find(self.diagnostico_id)
+  valido = false
+  @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
+  @user = User.find_by_login(@escuela.clave) if @escuela
+  @entorno = @diagnostico.entorno if @diagnostico.entorno
+  eje2 = CatalogoEje.find_by_clave("EJE2")
+  if @entorno.escuela_reforesta == "SI"
+    @eje2 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ?", @user, @diagnostico.id, eje2.id, 3], :order => "eje_id")
+    @eje2.each do |ad|
+      if ad.validado
+        valido = true
+        break
+      end
+    end
+    @eje2_p3 = $entorno_p3 * 100
+  end
+  return valido ? @eje2_p3 : 0
+end
+
+def puntaje_eje2_p5
   @diagnostico = Diagnostico.find(self.diagnostico_id)
   valido = false
   @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
@@ -140,23 +168,24 @@ def puntaje_eje2_p6
   @s_acciones = multiple_selected(@entorno.acciones) if @entorno.acciones
   eje2 = CatalogoEje.find_by_clave("EJE2")
   unless @s_acciones.include?("NING")
-    @eje2 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ?", @user, @diagnostico.id, eje2.id, 6], :order => "eje_id")
+    @eje2 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ?", @user, @diagnostico.id, eje2.id, 5], :order => "eje_id")
     @eje2.each do |ad|
       if ad.validado
         valido = true
         break
       end
     end
+
     if @diagnostico.escuela.nivel_descripcion == "BACHILLERATO"
-      @acciones = Accione.find(:all, :conditions => ["clave not in ('AC01')"])
-      @eje2_p6 = (((@s_acciones.size.to_f / 4)* 100) * $entorno_p6.to_f).round(3)
+      @acciones = Accione.find(:all, :conditions => ["clave not in ('AC03')"])
+      @eje2_p5 = (((@s_acciones.size.to_f / 4)* 100) * $entorno_p5).round(3)
     else
-      @acciones = Accione.find(:all, :conditions => ["clave not in ('AC00')"])
-      @eje2_p6 = (((@s_acciones.size.to_f / 4)* 100) * $entorno_p6.to_f).round(3)
+      @acciones = Accione.find(:all, :conditions => ["clave not in ('AC00', 'AC01')"])
+      @eje2_p5 = (((@s_acciones.size.to_f / 4)* 100) * $entorno_p5).round(3)
     end
   end
   
-  return valido ? @eje2_p6 : 0
+  return valido ? @eje2_p5 : 0
 end
 
 ##-- HUELLA ECOLOGICA
@@ -167,7 +196,7 @@ def puntaje_eje3_p1
   @user = User.find_by_login(@escuela.clave) if @escuela
   @huella = @diagnostico.huella if @diagnostico.huella
   eje3 = CatalogoEje.find_by_clave("EJE3")
-  if @huella.capacitacion_ahorro_energia.to_f > 0
+  if @huella.capacitacion_ahorro_energia == "SI"
     @eje3 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ?", @user, @diagnostico.id, eje3.id, 1], :order => "eje_id")
     @eje3.each do |ad|
       if ad.validado
@@ -175,36 +204,10 @@ def puntaje_eje3_p1
         break
       end
     end
-    @eje3_p1 = (((@huella.capacitacion_ahorro_energia.to_f / 2 ) * 100) * $huella_p1.to_f).round(3)
+    @eje3_p1 = ($huella_p1 * 100).to_f
   end
 
   return valido ? @eje3_p1 : 0
-end
-
-def puntaje_eje3_p2
-  @diagnostico = Diagnostico.find(self.diagnostico_id)
-  valido = false
-  @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
-  @user = User.find_by_login(@escuela.clave) if @escuela
-  @huella = @diagnostico.huella if @diagnostico.huella
-  eje3 = CatalogoEje.find_by_clave("EJE3")
-  unless @huella.energia_electrica and @huella.energia_electrica.clave == "SUOP"
-    @eje3 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ?", @user, @diagnostico.id, eje3.id, 2], :order => "eje_id")
-    @eje3.each do |ad|
-      if ad.validado
-        valido = true
-        break
-      end
-    end
-    if @huella.consumo_anterior.to_f > @huella.consumo_actual.to_f and valido
-      @eje3_p2 = $huella_p2 * 100
-    else
-      @eje3_p2 = 0
-    end
-  
-  end
-
-  return @eje3_p2
 end
 
 def puntaje_eje3_p3
@@ -212,29 +215,9 @@ def puntaje_eje3_p3
   @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
   @user = User.find_by_login(@escuela.clave) if @escuela
   @huella = @diagnostico.huella if @diagnostico.huella
-
-  if @huella.focos_ahorradores.to_f > 0
-    @eje3_p3 = (((@huella.focos_ahorradores.to_f / @huella.total_focos.to_f ) * 100) * $huella_p3.to_f).round(3)
-  else
-    @eje3_p3 = 0
-  end
+  @eje3_p3 = (((@huella.focos_ahorradores.to_f / @huella.total_focos.to_f ) * 100) * $huella_p3).round(3) if @huella.focos_ahorradores.to_f > 0
   
-  return @eje3_p3
-end
-
-def puntaje_eje3_p4
-  @diagnostico = Diagnostico.find(self.diagnostico_id)
-  @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
-  @user = User.find_by_login(@escuela.clave) if @escuela
-  @huella = @diagnostico.huella if @diagnostico.huella
-
-  if @huella.red_publica_agua == "SI"
-    @eje3_p4 = $huella_p4 * 100
-  else
-    @eje3_p4 = 0
-  end
-
-  return @eje3_p4
+  return @eje3_p3 ? @eje3_p3 : 0
 end
 
 def puntaje_eje3_p5
@@ -242,70 +225,75 @@ def puntaje_eje3_p5
   @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
   @user = User.find_by_login(@escuela.clave) if @escuela
   @huella = @diagnostico.huella if @diagnostico.huella
-  @eje3_p5 = (((@huella.mantto_inst.to_f / 2 ) * 100) * $huella_p5.to_f).round(3)
+  @eje3_p5 = (((@huella.mantto_inst.to_f / 2 ) * 100) * $huella_p5).round(3)
   
-  return @eje3_p5
-end
-
-def puntaje_eje3_p6
-  @diagnostico = Diagnostico.find(self.diagnostico_id)
-  @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
-  @user = User.find_by_login(@escuela.clave) if @escuela
-  @huella = @diagnostico.huella if @diagnostico.huella
-
-  if @huella.recip_residuos_solid == "SI"
-    @eje3_p6 = $huella_p6 * 100
-  else
-    @eje3_p6 = 0
-  end
-  
-  return @eje3_p6
+  return @eje3_p5 ? @eje3_p5 : 0
 end
 
 def puntaje_eje3_p7
   @diagnostico = Diagnostico.find(self.diagnostico_id)
+  valido = false
   @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
   @user = User.find_by_login(@escuela.clave) if @escuela
   @huella = @diagnostico.huella if @diagnostico.huella
-
+  eje3 = CatalogoEje.find_by_clave("EJE3")
   if @huella.sep_residuos_org_inorg == "SI"
-    @eje3_p7 = $huella_p7 * 100
-  else
-    @eje3_p7 = 0
+    @eje3 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ?", @user, @diagnostico.id, eje3.id, 7], :order => "eje_id")
+    @eje3.each do |ad|
+      if ad.validado
+        valido = true
+        break
+      end
+    end
+    @eje3_p7 = ($huella_p7 * 100).to_f
   end
-
-  return @eje3_p7
+  return valido ? @eje3_p7 : 0
 end
 
 def puntaje_eje3_p8
   @diagnostico = Diagnostico.find(self.diagnostico_id)
+  valido = false
   @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
   @user = User.find_by_login(@escuela.clave) if @escuela
   @huella = @diagnostico.huella if @diagnostico.huella
-
+  eje3 = CatalogoEje.find_by_clave("EJE3")
   if @huella.elabora_compostas == "SI"
-    @eje3_p8 = $huella_p8 * 100
-  else
-    @eje3_p8 = 0
+    @eje3 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ?", @user, @diagnostico.id, eje3.id, 8], :order => "eje_id")
+    @eje3.each do |ad|
+      if ad.validado
+        valido = true
+        break
+      end
+    end
+    @eje3_p8 = ($huella_p8 * 100).to_f
   end
-
-  return @eje3_p8
+  
+  return valido ? @eje3_p8 : 0
 end
 
 def puntaje_eje3_p9
   @diagnostico = Diagnostico.find(self.diagnostico_id)
+  valido = false
   @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
   @user = User.find_by_login(@escuela.clave) if @escuela
   @huella = @diagnostico.huella if @diagnostico.huella
-  
-  @s_inorganicos = multiple_selected_id(@huella.inorganicos) if @huella.inorganicos
-  if @s_inorganicos.size == 1 and @huella.inorganicos[0]['clave'] == "NING"
-    @eje3_p9 = 0
-  else
-    @eje3_p9 = ptos_inorganicos(@s_inorganicos.size)
+  eje3 = CatalogoEje.find_by_clave("EJE3")
+  if @huella.capacitacion_ahorro_energia.to_f > 0
+    @eje3 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ?", @user, @diagnostico.id, eje3.id, 9], :order => "eje_id")
+    @eje3.each do |ad|
+      if ad.validado
+        valido = true
+        break
+      end
+    end
+    @s_inorganicos = multiple_selected_id(@huella.inorganicos) if @huella.inorganicos
+    if @s_inorganicos.size == 1 and @huella.inorganicos[0]['clave'] == "NING"
+      @eje3_p9 = 0
+    else
+      @eje3_p9 = ptos_inorganicos(@s_inorganicos.size)
+    end
   end
-
-  return @eje3_p9
+  return valido ? @eje3_p9 : 0
 end
 
 ##-- CONSUMO RESPONSABLE / SALUDABLE
@@ -575,11 +563,11 @@ def puntaje_total_eje1
 end
 
 def puntaje_total_eje2
-  return (($entorno_p2.to_f + $entorno_p6.to_f) * 100).to_f.round(3)
+  return (($entorno_p2.to_f + $entorno_p3.to_f + $entorno_p5.to_f) * 100).to_f.round(3)
 end
 
 def puntaje_total_eje3
-  return (($huella_p1.to_f + $huella_p2.to_f + $huella_p3.to_f + $huella_p4.to_f + $huella_p5.to_f + $huella_p6.to_f + $huella_p7.to_f + $huella_p8.to_f + $huella_p9.to_f)*100).round(3)
+  return (($huella_p1.to_f + $huella_p3.to_f + $huella_p5.to_f + $huella_p7.to_f + $huella_p8.to_f + $huella_p9.to_f)*100).round(3)
 end
 
 def puntaje_total_eje4
@@ -591,31 +579,32 @@ def puntaje_total_eje5
 end
 
 def puntaje_total_obtenido_eje1
-  @vpuntaje_eje1_p1 = (puntaje_eje1_p1) ? (puntaje_eje1_p1) : 0
-  @vpuntaje_eje1_p2 = (puntaje_eje1_p2) ? (puntaje_eje1_p2) : 0
-  @vpuntaje_eje1_p3 = (puntaje_eje1_p3) ? (puntaje_eje1_p3) : 0
-  @vpuntaje_eje1_p4 = (puntaje_eje1_p4) ? (puntaje_eje1_p4) : 0
-  @vpuntaje_eje1_p5 = (puntaje_eje1_p5) ? (puntaje_eje1_p5) : 0
-  return (@vpuntaje_eje1_p1 + @vpuntaje_eje1_p2 + @vpuntaje_eje1_p3 + @vpuntaje_eje1_p4 + @vpuntaje_eje1_p5).to_f.round(3)
+  @vpuntaje_eje1_p1 = puntaje_eje1_p1 ? puntaje_eje1_p1 : 0
+  @vpuntaje_eje1_p2 = puntaje_eje1_p2 ? puntaje_eje1_p2 : 0
+  @vpuntaje_eje1_p3 = puntaje_eje1_p3 ? puntaje_eje1_p3 : 0
+  @vpuntaje_eje1_p4 = puntaje_eje1_p4 ? puntaje_eje1_p4 : 0
+  @vpuntaje_eje1_p5 = puntaje_eje1_p5 ? puntaje_eje1_p5 : 0
+  return (@vpuntaje_eje1_p1.to_f + @vpuntaje_eje1_p2.to_f + @vpuntaje_eje1_p3.to_f + @vpuntaje_eje1_p4.to_f + @vpuntaje_eje1_p5.to_f).to_f.round(3)
 end
 
 def puntaje_total_obtenido_eje2
-  @vpuntaje_eje2_p2 = (puntaje_eje2_p2) ? (puntaje_eje2_p2) : 0
-  @vpuntaje_eje2_p6 = (puntaje_eje2_p6) ? (puntaje_eje2_p6) : 0
-  return (@vpuntaje_eje2_p2 + @vpuntaje_eje2_p6).to_f.round(3)
+  @vpuntaje_eje2_p2 = puntaje_eje2_p2 ? puntaje_eje2_p2 : 0
+  @vpuntaje_eje2_p3 = puntaje_eje2_p3 ? puntaje_eje2_p3 : 0
+  @vpuntaje_eje2_p5 = puntaje_eje2_p5 ? puntaje_eje2_p5 : 0
+  return (@vpuntaje_eje2_p2.to_f + @vpuntaje_eje2_p3.to_f + @vpuntaje_eje2_p5.to_f).to_f.round(3)
 end
 
 def puntaje_total_obtenido_eje3
-  @vpuntaje_eje3_p1 = (puntaje_eje3_p1) ? (puntaje_eje3_p1) : 0
-  @vpuntaje_eje3_p2 = (puntaje_eje3_p2) ? (puntaje_eje3_p2) : 0
-  @vpuntaje_eje3_p3 = (puntaje_eje3_p3) ? (puntaje_eje3_p3) : 0
-  @vpuntaje_eje3_p4 = (puntaje_eje3_p4) ? (puntaje_eje3_p4) : 0
-  @vpuntaje_eje3_p5 = (puntaje_eje3_p5) ? (puntaje_eje3_p5) : 0
-  @vpuntaje_eje3_p6 = (puntaje_eje3_p6) ? (puntaje_eje3_p6) : 0
-  @vpuntaje_eje3_p7 = (puntaje_eje3_p7) ? (puntaje_eje3_p7) : 0
-  @vpuntaje_eje3_p8 = (puntaje_eje3_p8) ? (puntaje_eje3_p8) : 0
-  @vpuntaje_eje3_p9 = (puntaje_eje3_p9) ? (puntaje_eje3_p9) : 0
- return (@vpuntaje_eje3_p1 + @vpuntaje_eje3_p2 + @vpuntaje_eje3_p3 + @vpuntaje_eje3_p4 + @vpuntaje_eje3_p5 + @vpuntaje_eje3_p6 + @vpuntaje_eje3_p7 + @vpuntaje_eje3_p8 + @vpuntaje_eje3_p9).to_f.round(3)
+  @vpuntaje_eje3_p1 = puntaje_eje3_p1 ? puntaje_eje3_p1 : 0
+  @vpuntaje_eje3_p2 = puntaje_eje3_p2 ? puntaje_eje3_p2 : 0
+  @vpuntaje_eje3_p3 = puntaje_eje3_p3 ? puntaje_eje3_p3 : 0
+  @vpuntaje_eje3_p4 = puntaje_eje3_p4 ? puntaje_eje3_p4 : 0
+  @vpuntaje_eje3_p5 = puntaje_eje3_p5 ? puntaje_eje3_p5 : 0
+  @vpuntaje_eje3_p6 = puntaje_eje3_p6 ? puntaje_eje3_p6 : 0
+  @vpuntaje_eje3_p7 = puntaje_eje3_p7 ? puntaje_eje3_p7 : 0
+  @vpuntaje_eje3_p8 = puntaje_eje3_p8 ? puntaje_eje3_p8 : 0
+  @vpuntaje_eje3_p9 = puntaje_eje3_p9 ? puntaje_eje3_p9 : 0
+ return (@vpuntaje_eje3_p1.to_f + @vpuntaje_eje3_p3.to_f + @vpuntaje_eje3_p5.to_f + @vpuntaje_eje3_p7.to_f + @vpuntaje_eje3_p8.to_f + @vpuntaje_eje3_p9.to_f).to_f.round(3)
 end
 
 def puntaje_total_obtenido_eje4
