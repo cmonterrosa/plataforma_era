@@ -227,17 +227,17 @@
   alumn_cap_dctes.add( Validate.Presence );
   alumn_cap_dctes.add( Validate.Numericality, { maximum: parseInt(document.getElementById("val_max_alu").value), onlyInteger: true } );
 
-  var dctes_cap_salud = new LiveValidation( 'competencia_dctes_cap_salud' );
-  dctes_cap_salud.add( Validate.Presence );
-  dctes_cap_salud.add( Validate.Numericality, { onlyInteger: true } );
+  var alumn_cap_salud = new LiveValidation( 'competencia_alumn_cap_salud' );
+  alumn_cap_salud.add( Validate.Presence );
+  alumn_cap_salud.add( Validate.Numericality, { onlyInteger: true } );
 
-  var dctes_cap_ma = new LiveValidation( 'competencia_dctes_cap_ma' );
-  dctes_cap_ma.add( Validate.Presence );
-  dctes_cap_ma.add( Validate.Numericality, { onlyInteger: true } );
+  var alumn_cap_ma = new LiveValidation( 'competencia_alumn_cap_ma' );
+  alumn_cap_ma.add( Validate.Presence );
+  alumn_cap_ma.add( Validate.Numericality, { onlyInteger: true } );
 
-  var dctes_cap_ambos = new LiveValidation( 'competencia_dctes_cap_ambos' );
-  dctes_cap_ambos.add( Validate.Presence );
-  dctes_cap_ambos.add( Validate.Numericality, { onlyInteger: true } );
+  var alumn_cap_ambos = new LiveValidation( 'competencia_alumn_cap_ambos' );
+  alumn_cap_ambos.add( Validate.Presence );
+  alumn_cap_ambos.add( Validate.Numericality, { onlyInteger: true } );
 
   var total_alumn = new LiveValidation( 'total_alumn' );
   total_alumn.add( Validate.Presence );
