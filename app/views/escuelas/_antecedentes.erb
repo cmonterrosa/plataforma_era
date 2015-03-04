@@ -23,20 +23,22 @@
          <td style="vertical-align: middle;"><%=h (a.nombre_proyecto.size > 0)? a.nombre_proyecto : "---"%></td>
        </tr>
 
-       <tr class="d0">
-         <td style="vertical-align: middle;"><b>Puntaje diagnóstico</b></td>
-         <td style="vertical-align: middle;"><%=h (a.puntaje_diagnostico.size > 0)? a.puntaje_diagnostico : "---" %></td>
-       </tr>
+       <%if current_user.has_role?("adminplat")%>
+            <tr class="d0">
+              <td style="vertical-align: middle;"><b>Puntaje diagnóstico</b></td>
+              <td style="vertical-align: middle;"><%=h (a.puntaje_diagnostico.size > 0)? a.puntaje_diagnostico : "---" %></td>
+            </tr>
 
-       <tr class="d1">
-         <td style="vertical-align: middle;"><b>Puntaje Proyecto</b></td>
-         <td style="vertical-align: middle;"><%=h (a.puntaje_proyecto.size > 0) ? a.puntaje_proyecto : "---" %></td>
-       </tr>
+            <tr class="d1">
+              <td style="vertical-align: middle;"><b>Puntaje Proyecto</b></td>
+              <td style="vertical-align: middle;"><%=h (a.puntaje_proyecto.size > 0) ? a.puntaje_proyecto : "---" %></td>
+             </tr>
 
-       <tr class="d0">
-         <td style="vertical-align: middle;"><b>Puntaje final</b></td>
-         <td style="vertical-align: middle;"><%=h (a.puntaje_final.size > 0)? a.puntaje_final : "---"%></td>
-       </tr>
+            <tr class="d0">
+              <td style="vertical-align: middle;"><b>Puntaje final</b></td>
+              <td style="vertical-align: middle;"><%=h (a.puntaje_final.size > 0)? a.puntaje_final : "---"%></td>
+            </tr>
+        <%end%>
 
        <tr class="d1">
          <td style="vertical-align: middle;"><b>Beneficiada</b></td>
