@@ -126,7 +126,8 @@ def puntaje_eje2_p2
   @user = User.find_by_login(@escuela.clave) if @escuela
   @entorno = @diagnostico.entorno if @diagnostico.entorno
   eje2 = CatalogoEje.find_by_clave("EJE2")
-  if @competencia.escuelas_espacios.size.to_i > 0
+  @escuelas_espacios = EscuelasEspacio.find(:all, :conditions => ["entorno_id = ?", @entorno.id])
+  if @escuelas_espacios.size.to_i > 0
     @eje2 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ?", @user, @diagnostico.id, eje2.id, 2], :order => "eje_id")
     @eje2.each do |ad|
       if ad.validado
@@ -134,7 +135,7 @@ def puntaje_eje2_p2
         break
       end
     end
-    @eje2_p2 = (((@entorno.escuelas_espacios.size.to_f / Espacio.all.size.to_f) * 100) * $entorno_p2).round(3) if @entorno.escuelas_espacios
+    @eje2_p2 = (((@escuelas_espacios.size.to_f / Espacio.all.size.to_f) * 100) * $entorno_p2).round(3) unless @escuelas_espacios.empty?
   end
   return valido ? @eje2_p2 : 0
 end
@@ -453,6 +454,7 @@ def puntaje_eje4_p8
 end
 
 ##-- PARTICIPACION COMUNITARIA
+
 def puntaje_eje5_p2
   @diagnostico = Diagnostico.find(self.diagnostico_id)
   valido = false
@@ -481,7 +483,7 @@ def puntaje_eje5_p3
   @user = User.find_by_login(@escuela.clave) if @escuela
   @participacion = @diagnostico.participacion if @diagnostico.participacion
   eje5 = CatalogoEje.find_by_clave("EJE5")
-  if @participacion.proy_escolares_ma.to_i > 0
+  if @participacion.capacitacion_salud.to_i > 0 && @participacion.capacitacion_medioambiente.to_i > 0
     @eje5 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ?", @user, @diagnostico.id, eje5.id, 3], :order => "eje_id")
     @eje5.each do |ad|
       if ad.validado
@@ -489,7 +491,7 @@ def puntaje_eje5_p3
         break
       end
     end
-    @eje5_p3 = ptos_participacion(@participacion.proy_escolares_ma)
+    @eje5_p3 = ptos_capacitaciones(@participacion.capacitacion_salud) +  ptos_capacitaciones(@participacion.capacitacion_medioambiente)
   end
 
   return valido ? @eje5_p3 : 0
@@ -502,7 +504,8 @@ def puntaje_eje5_p4
   @user = User.find_by_login(@escuela.clave) if @escuela
   @participacion = @diagnostico.participacion if @diagnostico.participacion
   eje5 = CatalogoEje.find_by_clave("EJE5")
-  if @participacion.proy_escolares_salud.to_i > 0
+  capacitaciones_padres = CapacitacionPadre.sum(:numero_capacitaciones, :conditions => ["participacion_id = ?", @participacion.id ])
+  if capacitaciones_padres.to_i > 0
     @eje5 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ?", @user, @diagnostico.id, eje5.id, 4], :order => "eje_id")
     @eje5.each do |ad|
       if ad.validado
@@ -510,9 +513,8 @@ def puntaje_eje5_p4
         break
       end
     end
-    @eje5_p4 = ptos_participacion(@participacion.proy_escolares_salud)
+    @eje5_p4 = ptos_proyectos(capacitaciones_padres.to_i)
   end
-
   return valido ? @eje5_p4 : 0
 end
 
@@ -523,7 +525,8 @@ def puntaje_eje5_p5
   @user = User.find_by_login(@escuela.clave) if @escuela
   @participacion = @diagnostico.participacion if @diagnostico.participacion
   eje5 = CatalogoEje.find_by_clave("EJE5")
-  if @participacion.act_salud_ma.to_i > 0
+  proyectos = Pescolar.count(:id, :conditions => ["participacion_id = ? AND materia = ?", @participacion.id, 'MEDIOAMBIENTE'])
+  if proyectos.to_i > 0
     @eje5 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ?", @user, @diagnostico.id, eje5.id, 5], :order => "eje_id")
     @eje5.each do |ad|
       if ad.validado
@@ -531,11 +534,55 @@ def puntaje_eje5_p5
         break
       end
     end
-    @eje5_p5 = ptos_participacion(@participacion.act_salud_ma)
+    @eje5_p5 = ptos_proyectos(proyectos.to_i)
+  end
+ return valido ? @eje5_p5 : 0
+end
+
+def puntaje_eje5_p6
+  @diagnostico = Diagnostico.find(self.diagnostico_id)
+  valido = false
+  @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
+  @user = User.find_by_login(@escuela.clave) if @escuela
+  @participacion = @diagnostico.participacion if @diagnostico.participacion
+  eje5 = CatalogoEje.find_by_clave("EJE5")
+  proyectos = Pescolar.count(:id, :conditions => ["participacion_id = ? AND materia = ?", @participacion.id, 'SALUD'])
+  if proyectos.to_i > 0
+    @eje6 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ?", @user, @diagnostico.id, eje5.id, 6], :order => "eje_id")
+    @eje6.each do |ad|
+      if ad.validado
+        valido = true
+        break
+      end
+    end
+    @eje5_p6 = ptos_proyectos(proyectos.to_i)
   end
 
-  return valido ? @eje5_p5 : 0
+  return valido ? @eje5_p6 : 0
 end
+
+def puntaje_eje5_p7
+  @diagnostico = Diagnostico.find(self.diagnostico_id)
+  valido = false
+  @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
+  @user = User.find_by_login(@escuela.clave) if @escuela
+  @participacion = @diagnostico.participacion if @diagnostico.participacion
+  eje5 = CatalogoEje.find_by_clave("EJE5")
+  proyectos = Pescolar.count(:id, :conditions => ["participacion_id = ? AND materia = ?", @participacion.id, 'DEPENDENCIAS'])
+  if proyectos.to_i > 0
+    @eje7 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ?", @user, @diagnostico.id, eje5.id, 7], :order => "eje_id")
+    @eje7.each do |ad|
+      if ad.validado
+        valido = true
+        break
+      end
+    end
+    @eje5_p7 = ptos_proyectos(proyectos.to_i)
+  end
+
+  return valido ? @eje5_p7 : 0
+end
+
 
 ###--- OBTENIDOS AVANCE ---
 def puntaje_avance_eje(avance, num_eje, num_actividad)
@@ -575,8 +622,14 @@ def puntaje_total_eje4
 end
 
 def puntaje_total_eje5
-  return (($participacion_p2.to_f + $participacion_p3.to_f + $participacion_p4.to_f + $participacion_p5.to_f)*100).round(3)
+  return (($participacion_p2.to_f + $participacion_p3.to_f + $participacion_p4.to_f + $participacion_p5.to_f + $participacion_p6.to_f + $participacion_p7.to_f)*100).round(3)
 end
+
+def puntaje_total_obtenido
+  return (puntaje_total_obtenido_eje1.to_f + puntaje_total_obtenido_eje2.to_f + puntaje_total_obtenido_eje3.to_f + puntaje_total_obtenido_eje4.to_f + puntaje_total_obtenido_eje5.to_f).to_f.round(3)
+end
+
+
 
 def puntaje_total_obtenido_eje1
   @vpuntaje_eje1_p1 = puntaje_eje1_p1 ? puntaje_eje1_p1 : 0
@@ -596,11 +649,8 @@ end
 
 def puntaje_total_obtenido_eje3
   @vpuntaje_eje3_p1 = puntaje_eje3_p1 ? puntaje_eje3_p1 : 0
-  @vpuntaje_eje3_p2 = puntaje_eje3_p2 ? puntaje_eje3_p2 : 0
   @vpuntaje_eje3_p3 = puntaje_eje3_p3 ? puntaje_eje3_p3 : 0
-  @vpuntaje_eje3_p4 = puntaje_eje3_p4 ? puntaje_eje3_p4 : 0
   @vpuntaje_eje3_p5 = puntaje_eje3_p5 ? puntaje_eje3_p5 : 0
-  @vpuntaje_eje3_p6 = puntaje_eje3_p6 ? puntaje_eje3_p6 : 0
   @vpuntaje_eje3_p7 = puntaje_eje3_p7 ? puntaje_eje3_p7 : 0
   @vpuntaje_eje3_p8 = puntaje_eje3_p8 ? puntaje_eje3_p8 : 0
   @vpuntaje_eje3_p9 = puntaje_eje3_p9 ? puntaje_eje3_p9 : 0
@@ -623,7 +673,9 @@ def puntaje_total_obtenido_eje5
   @vpuntaje_eje5_p3 = (puntaje_eje5_p3) ? (puntaje_eje5_p3) : 0
   @vpuntaje_eje5_p4 = (puntaje_eje5_p4) ? (puntaje_eje5_p4) : 0
   @vpuntaje_eje5_p5 = (puntaje_eje5_p5) ? (puntaje_eje5_p5) : 0
-  return (@vpuntaje_eje5_p2 + @vpuntaje_eje5_p3 + @vpuntaje_eje5_p4 + @vpuntaje_eje5_p5).to_f.round(3)
+  @vpuntaje_eje5_p6 = (puntaje_eje5_p6) ? (puntaje_eje5_p6) : 0
+  @vpuntaje_eje5_p7 = (puntaje_eje5_p7) ? (puntaje_eje5_p7) : 0
+  return (@vpuntaje_eje5_p2 + @vpuntaje_eje5_p3 + @vpuntaje_eje5_p4 + @vpuntaje_eje5_p5 + @vpuntaje_eje5_p6 + @vpuntaje_eje5_p7 ).to_f.round(3)
 end
 
 ###--- TOTALES AVANCES ---
