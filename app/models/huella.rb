@@ -9,7 +9,7 @@ class Huella < ActiveRecord::Base
   validates_presence_of :evidencia_pregunta_2, :if => "self.consumo_anterior.to_i > 0 and self.consumo_actual.to_i > 0"
   validates_presence_of :evidencia_pregunta_7, :if => "self.sep_residuos_org_inorg == 'SI'"
   validates_presence_of :evidencia_pregunta_8, :if => "self.elabora_compostas == 'SI'"
-  validates_presence_of :evidencia_pregunta_9, :if => "self.inorganicos"
+  validates_presence_of :evidencia_pregunta_9, :if => :valida_inorganicos
   
 
   def evidencia_pregunta_1
@@ -45,5 +45,12 @@ class Huella < ActiveRecord::Base
     contador = Adjunto.count(:id, :conditions => ["eje_id = ? AND diagnostico_id = ? AND numero_pregunta = ?", current_eje, self.diagnostico_id, 9])
     #self.errors.add(:pregunta_3, "=> Requiere evidencia") if contador < 1
     (contador.to_i > 0)?  true : false
+  end
+
+  def valida_inorganicos
+    self.inorganicos.each do |i|
+      return false if i.clave == "NING"
+    end
+    return true
   end
 end

@@ -19,6 +19,14 @@ class HuellasController < ApplicationController
     @huella.update_attributes(params[:huella])
     @diagnostico = @huella.diagnostico = Diagnostico.find(params[:diagnostico])
 
+    if params[:inorganicos]
+      @inorganicos = []
+      params[:inorganicos].each { |op| @inorganicos << Inorganico.find_by_clave(op)  }
+      @huella.inorganicos = Inorganico.find(@inorganicos)
+    else
+      @huella.inorganicos.delete_all
+    end
+
     validador = verifica_evidencias(@diagnostico,3)
 
     if validador["valido"]
@@ -37,15 +45,7 @@ class HuellasController < ApplicationController
       else
         @huella.servicio_aguas.delete_all
       end
-
-      if params[:inorganicos]
-        @inorganicos = []
-        params[:inorganicos].each { |op| @inorganicos << Inorganico.find_by_clave(op)  }
-        @huella.inorganicos = Inorganico.find(@inorganicos)
-      else
-        @huella.inorganicos.delete_all
-      end
-    
+       
       if params[:elimina_residuos]
         @elimina_residuos = []
         params[:elimina_residuos].each { |op| @elimina_residuos << EliminaResiduo.find_by_clave(op)  }

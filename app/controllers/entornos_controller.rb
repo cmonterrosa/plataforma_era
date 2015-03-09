@@ -23,6 +23,14 @@ class EntornosController < ApplicationController
     @entorno.update_attributes(params[:entorno])
     @diagnostico = @entorno.diagnostico = Diagnostico.find(params[:diagnostico])
 
+    if params[:acciones]
+        @acciones = []
+        params[:acciones].each { |op| @acciones << Accione.find_by_clave(op)  }
+        @entorno.acciones = Accione.find(@acciones)
+    else
+        @entorno.acciones.delete_all
+    end
+
     validador = verifica_evidencias(@diagnostico,2)
     
     if validador["valido"]
@@ -31,13 +39,13 @@ class EntornosController < ApplicationController
       @entorno.escuela_reforesta_num = nil if @entorno.escuela_reforesta == "NO"
       @entorno.superficie_terreno_escuela_av = nil if @entorno.superficie_terreno_escuela.to_f == 0
       
-      if params[:acciones]
-        @acciones = []
-        params[:acciones].each { |op| @acciones << Accione.find_by_clave(op)  }
-        @entorno.acciones = Accione.find(@acciones)
-      else
-        @entorno.acciones.delete_all
-      end
+#      if params[:acciones]
+#        @acciones = []
+#        params[:acciones].each { |op| @acciones << Accione.find_by_clave(op)  }
+#        @entorno.acciones = Accione.find(@acciones)
+#      else
+#        @entorno.acciones.delete_all
+#      end
 
       if params[:espacios]
         @s_espacios = []

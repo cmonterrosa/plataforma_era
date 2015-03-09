@@ -38,9 +38,7 @@ class Entorno < ActiveRecord::Base
 
   def valida_acciones
     self.acciones.each do |a|
-      if a.clave == 'NING'
-        return false
-      end
+      return false if a.clave == 'NING'
     end
     return true
   end
