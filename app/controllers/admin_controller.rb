@@ -520,9 +520,9 @@ class AdminController < ApplicationController
     if @diagnostico.save
       flash[:notice] = "Diagnóstico habilitado"
     else
-      flash[:notice] = "DIagnóstico no se pudo habilitar"
+      flash[:error] = "DIagnóstico no se pudo habilitar"
     end
-    redirect_to :action => "menu_diagnostico", :id => @escuela
+    redirect_to :action => "menu_diagnostico", :id => @escuela, :layout => false
   end
 
   def habilitar_proyecto
