@@ -42,7 +42,7 @@ class Ajuste2015Eje2 < ActiveRecord::Migration
     execute("truncate acciones;")
     Accione.create(:descripcion => "TUTORÍA.", :clave => "AC00")
     Accione.create(:descripcion => "PROYECTO DE MEJORA CONTINUA (PMC).", :clave => "AC01")
-    Accione.create(:descripcion => "USO Y MANEJO DE LA CARTILLA NACIONAL DE VACUNACIÓN.", :clave => "AC032")
+    Accione.create(:descripcion => "USO Y MANEJO DE LA CARTILLA NACIONAL DE VACUNACIÓN.", :clave => "AC02")
     Accione.create(:descripcion => "ACTIVIDADES ARTÍSTICAS Y DEPORTIVAS.", :clave => "AC03")
     Accione.create(:descripcion => "PREVENCIÓN DE RIESGO.", :clave => "AC04")
     Accione.create(:descripcion => "MEJORAMIENTOS DE ESPACIOS, AMBIENTE NATURAL E INFRAESTRUCTURA.", :clave => "AC05")
