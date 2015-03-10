@@ -53,19 +53,19 @@ class ParticipacionsController < ApplicationController
 
   def formularios_proyectos_ambientes
     @proyectos_seleccionados_ambiente = (params[:proyectos][:ambiente])? params[:proyectos][:ambiente].to_i : Array.new
-    @participacion = Participacion.find(params[:informacion][:participacion]) if params[:informacion][:participacion]
+    @participacion = Participacion.find(params[:informacion][:participacion]) if params[:informacion][:participacion].size > 0
     render :partial => "formularios_proyectos_ambientes", :layout => "only_jquery"
   end
 
   def formularios_proyectos_salud
     @proyectos_seleccionados_salud = (params[:proyectos][:salud])? params[:proyectos][:salud].to_i : Array.new
-    @participacion = Participacion.find(params[:informacion][:participacion]) if params[:informacion][:participacion]
+    @participacion = Participacion.find(params[:informacion][:participacion]) if params[:informacion][:participacion].size > 0
     render :partial => "formularios_proyectos_salud", :layout => "only_jquery"
   end
 
    def formularios_proyectos_dependencias
     @proyectos_seleccionados_dependencias = (params[:proyectos][:dependencias])? params[:proyectos][:dependencias].to_i : Array.new
-    @participacion = Participacion.find(params[:informacion][:participacion]) if params[:informacion][:participacion]
+    @participacion = Participacion.find(params[:informacion][:participacion]) if params[:informacion][:participacion].size > 0
     render :partial => "formularios_proyectos_dependencias", :layout => "only_jquery"
   end
 
