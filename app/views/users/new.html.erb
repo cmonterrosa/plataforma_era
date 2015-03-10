@@ -16,26 +16,30 @@
     <div class="grid-12-12 clear"></div>
 
     <div class="grid-form">
-      <label>Nombre completo de quien registra: <em class="formee-req">*</em></label>
-      <%=f.text_field :nombre%>
-    </div>
-    <div class="grid-12-12 clear"></div>
-
-    <div class="grid-form">
-      <label>Correo electrónico: (para recuperar contraseña)</label>
+      <label>Correo electrónico: (con el cual pueda recuperar contraseña)</label>
       <%=f.text_field :email%>
     </div>
+
+    <div class="grid-12-12 clear"></div>
+
+
+    <div class="grid-form">
+      <label>Nombre completo de la persona que registra: <em class="formee-req">*</em></label>
+      <%=f.text_field :nombre%>
+    </div>
+    
+
     <div class="grid-12-12 clear"></div>
 
     <div class="grid-form">
-      <label>Contraseña: <em class="formee-req">*</em></label>
+      <label>Escriba una contraseña con la ingresará a la plataforma: <em class="formee-req">*</em></label>
       <%=f.password_field :password%>
     </div>
 
     <div class="grid-12-12 clear"></div>
 
     <div class="grid-form">
-      <label>Confirmar contraseña: <em class="formee-req">*</em></label>
+      <label>Escriba la confirmación de contraseña con la que ingresará a la plataforma: <em class="formee-req">*</em></label>
       <%=f.password_field :password_confirmation%>
     </div>
 
