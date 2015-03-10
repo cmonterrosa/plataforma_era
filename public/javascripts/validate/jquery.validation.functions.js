@@ -1,3 +1,11 @@
+function ElementIsChecked(id){
+    var ReturnVal = false;
+    if(jQuery("#" + id).is(":checked")){
+        ReturnVal = true;
+    }
+    return ReturnVal;
+}
+
 function isChecked(id){
     var ReturnVal = false;
     jQuery("#" + id).find('input[type="radio"]').each(function(){
