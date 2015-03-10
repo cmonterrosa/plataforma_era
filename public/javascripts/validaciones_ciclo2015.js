@@ -30,6 +30,34 @@ function enableElementosDiv(Fieldset, DivElement, condition){
 }
 
 
+function MuestraEstablecimientos_SI_NO(Fieldset, DivElement){
+ fieldset_element = document.getElementById(Fieldset);
+ fieldset_element2 = document.getElementById(Fieldset);
+ div_element = document.getElementById(DivElement);
+ div_element.style.display = 'inline';
+ radio_button_si = document.getElementById("consumo_escuela_establecimiento_si")
+ radio_button_no = document.getElementById("consumo_escuela_establecimiento_no")
+ if (radio_button_si.checked == true)
+    {
+     for(var i=0;i<fieldset_element.elements.length;i++) {document.getElementById('contenedor_' + fieldset_element.elements[i].value).style.display = 'inline';}
+     document.getElementById('contenedor_CLAE').style.display = 'none';
+     document.getElementById('contenedor_CAEC').style.display = 'none';
+     showPreguntasEstablecimientos('lista_establecimientos');
+    }
+ else
+     {
+         for(var j=0;j<fieldset_element2.elements.length;j++) {document.getElementById('contenedor_' + fieldset_element2.elements[j].value).style.display = 'none';}
+         document.getElementById('contenedor_CLAE').style.display = 'inline';
+         document.getElementById('contenedor_CAEC').style.display = 'inline';
+     }
+
+}
+
+
+
+
+
+
 function showPreguntasEstablecimientos(fieldset_main){
       fieldset = document.getElementById(fieldset_main);
       pregunta2 = document.getElementById("pregunta2");

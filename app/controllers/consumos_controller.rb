@@ -50,9 +50,10 @@ class ConsumosController < ApplicationController
         end
 
        unless @establecimientos
+            @establecimientos = []
             if params[:establecimientos]
               params[:establecimientos].each { |op|
-                @establecimientos << Establecimiento.find_by_clave(op)
+                @establecimientos << Establecimiento.find_by_clave(op) unless (op.include?("CLAE") || op.include?("CAEC"))
               }
               @consumo.establecimientos = Establecimiento.find(@establecimientos)
             else

@@ -27,11 +27,22 @@
             <div id="establecimientos" class="grid-12-12">
               <fieldset style="padding: 5px 5px 5px 5px;" id="lista_establecimientos">
                 <% @establecimientos.each do |c| %>
-                    <%estilo = (@consumo.escuela_establecimiento == 'NO' && (c.clave.include?('CLAE') || c.clave.include?('CAEC')))? 'none' : 'inline'%>
-                    <div id="contenedor_<%=h c.clave%>" style="display: <%=h 'inline'%>">
-                      <%= check_box_tag "establecimientos[#{c.id}]", c.clave, @s_establecimientos.include?(c.clave) ? true : false, {:onclick => "showUnicaPreguntaEstablecimientos('establecimientos_#{c.id}');" } %>&nbsp;<%= c.descripcion %><br />
-                      <%= linea_horizontal%>
-                    </div>
+                    <%if @consumo.escuela_establecimiento == 'NO'%>
+                              <%estilo = (c.clave.include?('CLAE') || c.clave.include?('CAEC')) ? 'inline' : 'none' %>
+                                    <div id="contenedor_<%=h c.clave%>" style="display: <%=h estilo%>">
+                                        <%= check_box_tag "establecimientos[#{c.id}]", c.clave, @s_establecimientos.include?(c.clave) ? true : false, {:onclick => "showUnicaPreguntaEstablecimientos('establecimientos_#{c.id}');" } %>&nbsp;<%= c.descripcion %><br />
+                                        <%= linea_horizontal%>
+                                    </div>
+                      <%else%>
+                               <%estilo = (c.clave.include?('CLAE') || c.clave.include?('CAEC')) ? 'none' : 'inline' %>
+                                    <div id="contenedor_<%=h c.clave%>" style="display: <%=h estilo%>">
+                                        <%= check_box_tag "establecimientos[#{c.id}]", c.clave, @s_establecimientos.include?(c.clave) ? true : false, {:onclick => "showUnicaPreguntaEstablecimientos('establecimientos_#{c.id}');" } %>&nbsp;<%= c.descripcion %><br />
+                                          <%= linea_horizontal%>
+                                    </div>
+                      <%end%>
+
+
+
                 <% end %>
               </fieldset>
             </div>
@@ -349,7 +360,8 @@
   showImage('consumo_capacitacion_alim_bebidas_no', 'eje4_p2');
   showImage('consumo_conocen_lineamientos_grales_si', 'eje4_p3');
   showImage('consumo_conocen_lineamientos_grales_no', 'eje4_p3');
-  enableElementosDiv('lista_establecimientos','establecimientos', 'SI');
+  <%#*enableElementosDiv('lista_establecimientos','establecimientos', 'NO');%>
+  MuestraEstablecimientos_SI_NO('lista_establecimientos','establecimientos');
 
  
 
