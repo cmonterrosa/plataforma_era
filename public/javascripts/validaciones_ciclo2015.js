@@ -2,6 +2,7 @@
 
 /* Funciones usadas en Eje 4 */
 
+
 function enableElementosDiv(Fieldset, DivElement, condition){
  fieldset_element = document.getElementById(Fieldset);
  fieldset_element2 = document.getElementById(Fieldset);
