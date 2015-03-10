@@ -13,18 +13,16 @@ function enableElementosDiv(Fieldset, DivElement, condition){
      for(var i=0;i<fieldset_element.elements.length;i++) {document.getElementById('contenedor_' + fieldset_element.elements[i].value).style.display = 'inline';}
      document.getElementById('contenedor_CLAE').style.display = 'none';
      document.getElementById('contenedor_CAEC').style.display = 'none';
-     document.getElementById('establecimientos_1').checked = false;
-     document.getElementById('establecimientos_2').checked = false;
-
-
+//     document.getElementById('establecimientos_1').checked = false;
+//     document.getElementById('establecimientos_2').checked = false;
      showPreguntasEstablecimientos('lista_establecimientos');
     }
  else
      {
          for(var j=0;j<fieldset_element2.elements.length;j++) {document.getElementById('contenedor_' + fieldset_element2.elements[j].value).style.display = 'none';}
-         document.getElementById('establecimientos_3').checked = false;
-         document.getElementById('establecimientos_4').checked = false;
-         document.getElementById('establecimientos_5').checked = false;
+//         document.getElementById('establecimientos_3').checked = false;
+//         document.getElementById('establecimientos_4').checked = false;
+//         document.getElementById('establecimientos_5').checked = false;
          document.getElementById('contenedor_CLAE').style.display = 'inline';
          document.getElementById('contenedor_CAEC').style.display = 'inline';
      }

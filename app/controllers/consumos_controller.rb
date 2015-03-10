@@ -34,22 +34,32 @@ class ConsumosController < ApplicationController
 
     validador = verifica_evidencias(@diagnostico,4)
     if validador["valido"]
-        if(params[:establecimientos] and params[:consumo][:escuela_establecimiento] == 'NO')
-          @establecimientos = []
-          params[:establecimientos].each { |op| @establecimientos << Establecimiento.find_by_clave(op)  }
-          @consumo.establecimientos = Establecimiento.find(@establecimientos)
-        else
-          @consumo.establecimientos.delete_all if @consumo.establecimientos
-        end
-
-      ## Validación de clave ###
-      if params[:establecimientos]
-        if params[:establecimientos].has_value?("CLAE") || params[:establecimientos].has_value?("CLAEC")
+        ## Validación de preguntas si cuenta con establecimientos ###
+        if @consumo.escuela_establecimiento == 'NO'
            params[:preparacions] = params[:utensilios] = params[:higienes] = params[:alimentos] = params[:bebidas] = params[:botanas] = params[:reposterias] = Array.new
            params[:consumo][:conocen_lineamientos_grales] = nil
            params[:consumo][:capacitacion_alim_bebidas] = nil
+           ### Solo establecimientos en respuesta negativa ###
+           if params[:establecimientos]
+             @establecimientos = []
+             params[:establecimientos].each { |op|
+               @establecimientos << Establecimiento.find_by_clave(op) if (op.include?("CLAE") || op.include?("CAEC"))
+               @consumo.establecimientos = Establecimiento.find(@establecimientos)
+            }
+           end
         end
-      end
+
+       unless @establecimientos
+            if params[:establecimientos]
+              params[:establecimientos].each { |op|
+                @establecimientos << Establecimiento.find_by_clave(op)
+              }
+              @consumo.establecimientos = Establecimiento.find(@establecimientos)
+            else
+              @consumo.establecimientos.delete_all
+          end
+       end
+      
 
 
         if params[:preparacions]
