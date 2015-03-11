@@ -14,34 +14,25 @@ class ParticipacionsController < ApplicationController
     @participacion ||= Participacion.new
     @participacion.update_attributes(params[:participacion])
     @diagnostico = @participacion.diagnostico = Diagnostico.find(params[:diagnostico])
-    validador="valido"
-    if validador == "valido"
-        guardar_proyectos(params[:pescolaresambiente], "MEDIOAMBIENTE", @participacion)
-        guardar_proyectos(params[:pescolaressalud], "SALUD", @participacion)
-        guardar_proyectos(params[:pescolaresdependencias], "DEPENDENCIAS", @participacion)
-
-
+    guardar_proyectos(params[:pescolaresambiente], "MEDIOAMBIENTE", @participacion)
+    guardar_proyectos(params[:pescolaressalud], "SALUD", @participacion)
+    guardar_proyectos(params[:pescolaresdependencias], "DEPENDENCIAS", @participacion)
+    validador = valida_evidencias_proyectos(@participacion)
+    if validador["valido"]
         ## Dependencias Capacitadoras ##
         @capacitadoras = ( params[:capacitacion]) ?  params[:capacitacion] : Array.new
         @capacitadoras.each do |c|
-            dc = Dcapacitadora.find_by_clave(c.last)
-            capacitacion = CapacitacionPadre.find_by_dcapacitadora_id(dc.id) if dc
-            capacitacion ||= CapacitacionPadre.new
-            capacitacion.participacion_id  ||= @participacion.id if @participacion
-            capacitacion.dcapacitadora_id ||= dc.id if dc
-            capacitacion.numero_capacitaciones =(params[:capacitadora]["#{dc.clave}"]) ?  params[:capacitadora]["#{dc.clave}"] : nil
-            (capacitacion.numero_capacitaciones) ? capacitacion.save : nil
+           dc = Dcapacitadora.find_by_clave(c.last)
+           capacitacion = CapacitacionPadre.find_by_dcapacitadora_id(dc.id) if dc
+           capacitacion ||= CapacitacionPadre.new
+           capacitacion.participacion_id  ||= @participacion.id if @participacion
+           capacitacion.dcapacitadora_id ||= dc.id if dc
+           capacitacion.numero_capacitaciones =(params[:capacitadora]["#{dc.clave}"]) ?  params[:capacitadora]["#{dc.clave}"] : nil
+           (capacitacion.numero_capacitaciones) ? capacitacion.save : nil
         end
         (@capacitadoras.empty?)? (@participacion.capacitacion_padres.each{|x|x.destroy}) : true
 
         #### Si apenas se va a crear el registro, validamos si lleva proyectos y si tiene evidencias
-
-      
-
-
-
-
-
         if @participacion.save
           flash[:notice] = "Registro guardado correctamente"
           redirect_to :controller => "diagnosticos"
@@ -50,9 +41,10 @@ class ParticipacionsController < ApplicationController
           cargar_proyectos_actuales
           render :action => "new_or_edit"
         end
+
     else
       errores = validador["sin_validar"].join(" y ")
-      flash[:evidencias] = "Cargue archivos para la(s) pregunta(s): #{errores}"
+      flash[:evidencias] = "Cargue evidencias para la(s) pregunta(s): #{errores}"
       cargar_proyectos_actuales
       render :action => "new_or_edit"
     end
@@ -80,6 +72,50 @@ class ParticipacionsController < ApplicationController
 
 
 protected
+
+  def valida_evidencias_proyectos(participacion)
+     h= Hash.new
+     h["valido"] = true
+     h["sin_validar"] = Array.new
+     current_eje=5
+    unless participacion.pescolars.empty?
+        h= Hash.new
+        h["valido"] = true
+        h["sin_validar"] = Array.new
+        participacion.pescolars.each do |p|
+          if p.materia.include?('MEDIOAMBIENTE')
+            contador = Adjunto.count(:id, :conditions => ["eje_id = ? AND diagnostico_id = ? AND numero_pregunta = ?", current_eje, participacion.diagnostico_id, 5])
+            #### Si la pregunta necesita evidencia ###
+            if contador < 1
+              h["valido"] = false
+              h["sin_validar"] << 5
+            end
+          end
+        if p.materia.include?('SALUD')
+          contador = Adjunto.count(:id, :conditions => ["eje_id = ? AND diagnostico_id = ? AND numero_pregunta = ?", current_eje, participacion.diagnostico_id, 5])
+          #### Si la pregunta necesita evidencia ###
+          if contador < 1
+            h["valido"] = false
+            h["sin_validar"] << 6
+          end
+        end
+
+        if p.materia.include?('DEPENDENCIAS')
+          contador = Adjunto.count(:id, :conditions => ["eje_id = ? AND diagnostico_id = ? AND numero_pregunta = ?", current_eje, participacion.diagnostico_id, 5])
+          #### Si la pregunta necesita evidencia ###
+          if contador < 1
+            h["valido"] = false
+            h["sin_validar"] << 7
+          end
+        end
+      end
+      return h
+    else
+      return h
+  end
+  end
+
+
 
   #### Funcion que guarda los proyectos escolares por tipo #####
   def guardar_proyectos(parametros, tipo, participacion)
