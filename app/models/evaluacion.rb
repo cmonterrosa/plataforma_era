@@ -435,14 +435,22 @@ end
 
 def puntaje_eje4_p7
   @diagnostico = Diagnostico.find(self.diagnostico_id)
+  valido = false
   @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
   @user = User.find_by_login(@escuela.clave) if @escuela
   @consumo = @diagnostico.consumo if @diagnostico.consumo
+  eje4 = CatalogoEje.find_by_clave("EJE4")
   
   @s_afisicas = selected(@consumo.frecuencia_afisica) if @consumo.frecuencia_afisica
   @eje4_p7 = ptos_afisica(@s_afisicas).to_f
-
-  return @eje4_p7
+  @eje4 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ?", @user, @diagnostico.id, eje4.id, 7], :order => "eje_id")
+    @eje4.each do |ad|
+      if ad.validado
+        valido = true
+        break
+      end
+    end
+    return valido ? @eje4_p7 : 0
 end
 
 def puntaje_eje4_p8
