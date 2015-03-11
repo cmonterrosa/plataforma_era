@@ -102,7 +102,7 @@ def puntaje_eje1_p5
   @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
   @user = User.find_by_login(@escuela.clave) if @escuela
   @competencia = @diagnostico.competencia if @diagnostico.competencia
-  alumnos_capacitados = @competencia.alumn_cap_salud.to_i + @competencia.alumn_cap_ma + @competencia.alumn_cap_ambos.to_i
+  alumnos_capacitados = @competencia.alumn_cap_salud.to_i + @competencia.alumn_cap_ma.to_i + @competencia.alumn_cap_ambos.to_i
   eje1 = CatalogoEje.find_by_clave("EJE1")
   if alumnos_capacitados.to_i > 0
     @eje1 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ?", @user, @diagnostico.id, eje1.id, 5], :order => "eje_id")
@@ -112,7 +112,7 @@ def puntaje_eje1_p5
         break
       end
     end
-    @eje1_p5 = (((alumnos_capacitados / (@escuela.alu_hom.to_i + @escuela.alu_muj.to_i) ).to_f * 100) * $competencia_p5).round(3)
+    @eje1_p5 = (((alumnos_capacitados.to_f / (@escuela.alu_hom.to_f + @escuela.alu_muj.to_f) ).to_f * 100) * $competencia_p5).round(3)
   end
 
   return valido ? @eje1_p5 : 0
@@ -279,7 +279,7 @@ def puntaje_eje3_p9
   @user = User.find_by_login(@escuela.clave) if @escuela
   @huella = @diagnostico.huella if @diagnostico.huella
   eje3 = CatalogoEje.find_by_clave("EJE3")
-  if @huella.capacitacion_ahorro_energia.to_f > 0
+  if @huella.capacitacion_ahorro_energia == "SI"
     @eje3 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ?", @user, @diagnostico.id, eje3.id, 9], :order => "eje_id")
     @eje3.each do |ad|
       if ad.validado
@@ -288,10 +288,10 @@ def puntaje_eje3_p9
       end
     end
     @s_inorganicos = multiple_selected_id(@huella.inorganicos) if @huella.inorganicos
-    if @s_inorganicos.size == 1 and @huella.inorganicos[0]['clave'] == "NING"
+    if @s_inorganicos.size.to_i == 1 and @huella.inorganicos[0]['clave'] == "NING"
       @eje3_p9 = 0
     else
-      @eje3_p9 = ptos_inorganicos(@s_inorganicos.size)
+      @eje3_p9 = ptos_inorganicos(@s_inorganicos.size.to_i)
     end
   end
   return valido ? @eje3_p9 : 0
