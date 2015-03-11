@@ -43,7 +43,7 @@ class ParticipacionsController < ApplicationController
         end
 
     else
-      errores = validador["sin_validar"].join(" y ")
+      errores = validador["sin_validar"].join(" , ")
       flash[:evidencias] = "Cargue evidencias para la(s) pregunta(s): #{errores}"
       cargar_proyectos_actuales
       render :action => "new_or_edit"
@@ -114,8 +114,6 @@ protected
       return h
   end
   end
-
-
 
   #### Funcion que guarda los proyectos escolares por tipo #####
   def guardar_proyectos(parametros, tipo, participacion)
