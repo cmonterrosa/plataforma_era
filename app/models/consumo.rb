@@ -14,7 +14,7 @@ class Consumo < ActiveRecord::Base
   validates_presence_of :evidencia_pregunta_2, :if => "self.capacitacion_alim_bebidas == 'SI'"
   validates_presence_of :evidencia_pregunta_3, :if => "self.conocen_lineamientos_grales == 'SI'"
   validates_presence_of :evidencia_pregunta_7, :if => :realiza_actividad_fisica!
-  validates_presence_of :evidencia_pregunta_8, :if => :tiempo_actividad_fisica!
+#  validates_presence_of :evidencia_pregunta_8, :if => :tiempo_actividad_fisica!
 
   def tiempo_actividad_fisica!
     (realiza_actividad_fisica! && self.minutos_activacion_fisica) ?   self.minutos_activacion_fisica > 0 : nil

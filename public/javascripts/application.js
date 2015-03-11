@@ -678,8 +678,8 @@ function showImageDctesAlumn(type, divField, divField2){
 function showImageNum(comboSelect, divField){
     var select = document.getElementById(comboSelect);
     var div = document.getElementById(divField);
-
-    if(parseInt(select.value) > 0)
+    var num = isNaN(parseInt(select.value)) ? 0 : parseInt(select.value)
+    if(num > 0)
         div.style.display = 'block';
     else
         div.style.display = 'none';
