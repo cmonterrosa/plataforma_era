@@ -316,6 +316,7 @@ def puntaje_eje4_p2
     end
     @eje4_p2 = $consumo_p2 * 100
   end
+  return valido ? @eje4_p2 : 0
 end
 
 
