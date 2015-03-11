@@ -121,7 +121,7 @@
         </tr>
 
         <tr>
-          <td colspan="3">&nbsp;</td>
+          <td colspan="3"><%=text_field "informacion", "participacion", :value => @participacion.id, :style => "display:none;"%></td>
         </tr>
 
         <tr>
@@ -134,7 +134,6 @@
 
             <!-- detalle de proyectos -->
             <div id="detalle_proyectos_ambiente" class="grid-12-12">
-              <%=text_field "informacion", "participacion", :value => @participacion.id, :style => "display:none;"%>
               <%=render :partial => 'formularios_proyectos_ambientes'%>
             </div>
 

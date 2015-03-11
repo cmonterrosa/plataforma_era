@@ -33,14 +33,23 @@ class ParticipacionsController < ApplicationController
             (capacitacion.numero_capacitaciones) ? capacitacion.save : nil
         end
         (@capacitadoras.empty?)? (@participacion.capacitacion_padres.each{|x|x.destroy}) : true
+
+        #### Si apenas se va a crear el registro, validamos si lleva proyectos y si tiene evidencias
+
+      
+
+
+
+
+
         if @participacion.save
           flash[:notice] = "Registro guardado correctamente"
           redirect_to :controller => "diagnosticos"
-      else
+        else
           flash[:evidencias] = @participacion.errors.full_messages.join(", ")
           cargar_proyectos_actuales
           render :action => "new_or_edit"
-      end
+        end
     else
       errores = validador["sin_validar"].join(" y ")
       flash[:evidencias] = "Cargue archivos para la(s) pregunta(s): #{errores}"
