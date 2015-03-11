@@ -692,35 +692,30 @@ class AdminController < ApplicationController
      
 #     Puntajes eje2
      @entorno_p2 = diagnostico.puntaje_eje2_p2
-     @entorno_p6 = diagnostico.puntaje_eje2_p6
+     @entorno_p3 = diagnostico.puntaje_eje2_p3
+     @entorno_p5 = diagnostico.puntaje_eje2_p5
 
-     @ptos_obtenidos_eje2 = (@entorno_p2 + @entorno_p6)#.to_f.round(3)
+     @ptos_obtenidos_eje2 = (@entorno_p2 + @entorno_p3 + @entorno_p5)#.to_f.round(3)
      @total_puntos_eje2 = diagnostico.puntaje_total_eje2
      @puntaje_total_eje2 = diagnostico.puntaje_total_obtenido_eje2
 
 #     Puntajes eje3
      @huella_p1 = diagnostico.puntaje_eje3_p1
-     @huella_p2 = diagnostico.puntaje_eje3_p2
      @huella_p3 = diagnostico.puntaje_eje3_p3
-     @huella_p4 = diagnostico.puntaje_eje3_p4
      @huella_p5 = diagnostico.puntaje_eje3_p5
-     @huella_p6 = diagnostico.puntaje_eje3_p6
      @huella_p7 = diagnostico.puntaje_eje3_p7
      @huella_p8 = diagnostico.puntaje_eje3_p8
      @huella_p9 = diagnostico.puntaje_eje3_p9
 
      ## Puntajes default ####
      @huella_p1 ||= 0
-     @huella_p2 ||= 0
      @huella_p3 ||= 0
-     @huella_p4 ||= 0
      @huella_p5 ||= 0
-     @huella_p6 ||= 0
      @huella_p7 ||= 0
      @huella_p8 ||= 0
      @huella_p9 ||= 0
 
-     @ptos_obtenidos_eje3 = (@huella_p1 + @huella_p2 + @huella_p3 + @huella_p4 + @huella_p5 + @huella_p6 + @huella_p7 + @huella_p8 + @huella_p9)#.to_f.round(3)
+     @ptos_obtenidos_eje3 = (@huella_p1 + @huella_p3 + @huella_p5 + @huella_p7 + @huella_p8 + @huella_p9)#.to_f.round(3)
      @total_puntos_eje3 = diagnostico.puntaje_total_eje3
      @puntaje_total_eje3 = diagnostico.puntaje_total_obtenido_eje3
 
@@ -738,14 +733,15 @@ class AdminController < ApplicationController
      @puntaje_total_eje4 = diagnostico.puntaje_total_obtenido_eje4
 
 #     Puntaje eje5
-     @participacion_p1 = $participacion_p1.to_f
+#     @participacion_p1 = diagnostico.puntaje_eje5_p1
      @participacion_p2 = diagnostico.puntaje_eje5_p2
      @participacion_p3 = diagnostico.puntaje_eje5_p3
      @participacion_p4 = diagnostico.puntaje_eje5_p4
      @participacion_p5 = diagnostico.puntaje_eje5_p5
-     @participacion_p6 = $participacion_p6.to_f
+     @participacion_p6 = diagnostico.puntaje_eje5_p6
+     @participacion_p7 = diagnostico.puntaje_eje5_p7
 
-     @ptos_obtenidos_eje5 = (@participacion_p1 + @participacion_p2 + @participacion_p3 +  @participacion_p4 + @participacion_p5 + @participacion_p6)#.to_f.round(3)
+     @ptos_obtenidos_eje5 = (@participacion_p2 + @participacion_p3 +  @participacion_p4 + @participacion_p5 + @participacion_p6 + @participacion_p7)#.to_f.round(3)
      @total_puntos_eje5 = diagnostico.puntaje_total_eje5
      @puntaje_total_eje5 = diagnostico.puntaje_total_obtenido_eje5
 
