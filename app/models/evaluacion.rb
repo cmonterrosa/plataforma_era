@@ -298,20 +298,27 @@ def puntaje_eje3_p9
 end
 
 ##-- CONSUMO RESPONSABLE / SALUDABLE
+
 def puntaje_eje4_p2
   @diagnostico = Diagnostico.find(self.diagnostico_id)
+  valido = false
   @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
   @user = User.find_by_login(@escuela.clave) if @escuela
   @consumo = @diagnostico.consumo if @diagnostico.consumo
-
+  eje4 = CatalogoEje.find_by_clave("EJE4")
   if @consumo.conocen_lineamientos_grales == "SI"
+    @eje4 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ?", @user, @diagnostico.id, eje4.id, 2], :order => "eje_id")
+    @eje4.each do |ad|
+      if ad.validado
+        valido = true
+        break
+      end
+    end
     @eje4_p2 = $consumo_p2 * 100
-  else
-    @eje4_p2 = 0
   end
-
-  return @eje4_p2
 end
+
+
 
 def puntaje_eje4_p3
   @diagnostico = Diagnostico.find(self.diagnostico_id)
