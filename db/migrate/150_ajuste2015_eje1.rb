@@ -33,7 +33,7 @@ class Ajuste2015Eje1 < ActiveRecord::Migration
     Dcapacitadora.create(:descripcion => "PROTECCIÓN CIVIL.", :clave => "PC")
     Dcapacitadora.create(:descripcion => "COMISIÓN NACIONAL FORESTAL (CONAFOR).", :clave => "CONAFOR")
     Dcapacitadora.create(:descripcion => "COMISIÓN NACIONAL DEL AGUA (CONAGUA).", :clave => "CONAGUA")
-    Dcapacitadora.create(:descripcion => "OTRA DEPENDENCIA GUBERNAMNETAL O PRIVADA.", :clave => "OTRA")
+    Dcapacitadora.create(:descripcion => "OTRA DEPENDENCIA GUBERNAMENTAL O PRIVADA.", :clave => "OTRA")
 
     puts("=> Crea tabla docentes_capacitados")
     create_table :docentes_capacitados do |t|

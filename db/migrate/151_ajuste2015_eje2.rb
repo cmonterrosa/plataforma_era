@@ -24,7 +24,7 @@ class Ajuste2015Eje2 < ActiveRecord::Migration
     Espacio.create(:descripcion => "AZOTEAS VERDES.", :clave => "AVERDES")
     Espacio.create(:descripcion => "PAREDES VERDES O JARDINES VERTICALES.", :clave => "PVERDES")
     Espacio.create(:descripcion => "JARDÍN DE ORNATO.", :clave => "JORNATO")
-    Espacio.create(:descripcion => "JARDÍN DE HERBAL.", :clave => "JHERBAL")
+    Espacio.create(:descripcion => "JARDÍN HERBAL.", :clave => "JHERBAL")
     Espacio.create(:descripcion => "JARDÍN DE MACETAS.", :clave => "JMACETAS")
     Espacio.create(:descripcion => "JARDÍN DE SUELO ELEVADO.", :clave => "JSUELO")
     Espacio.create(:descripcion => "PARCELAS.", :clave => "PARCELAS")
