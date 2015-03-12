@@ -93,7 +93,6 @@
                     <% Dcapacitadora.find(:all).each do |c| %>
                         <div class="grid-10-12">
                           <%= check_box_tag "capacitacion[#{c.id}]", c.clave, @s_dcapacitadoras.include?(c.clave) ? true : false,
-                                    :onload  =>  "enable_disable_selects ('capacitacion_#{c.id}', 'capacitadora_#{c.clave}', 'eje5_p4');  showImageFieldset('contenedor', 'eje5_p4');",
                                     :onclick =>  "enable_disable_selects ('capacitacion_#{c.id}', 'capacitadora_#{c.clave}', 'eje5_p4');  showImageFieldset('contenedor', 'eje5_p4');" %>
                           <%= c.descripcion %>
                           <%= linea_horizontal%>
@@ -102,7 +101,7 @@
                         <div  class="grid-2-12">
                           <%numero_capacitaciones = (CapacitacionPadre.find(:first, :conditions => ["participacion_id = ? AND dcapacitadora_id = ?", @participacion.id, c.id]))? CapacitacionPadre.find(:first, :select => 'numero_capacitaciones', :conditions => ["participacion_id = ? AND dcapacitadora_id = ?", @participacion.id, c.id]).numero_capacitaciones.to_i  : nil %>
                           <%clase = (numero_capacitaciones)? "inline" : "none"%>
-                          <%= select "capacitadora", "#{c.clave}", (1..12), {:selected => numero_capacitaciones}, {:onchange => "enable_disable_selects('capacitacion_#{c.id}', 'capacitadora_#{c.clave}');", :style => "display:#{clase};"}%>
+                          <%= select "capacitadora", "#{c.clave}", (1..12), {:selected => numero_capacitaciones}, {:onchange => "enable_disable_selects('capacitacion_#{c.id}', 'capacitadora_#{c.clave}', 'eje5_p4');", :style => "display:#{clase};"}%>
                         </div>
                         <div class="grid-12-12 clear"></div>
                   <% end %>
