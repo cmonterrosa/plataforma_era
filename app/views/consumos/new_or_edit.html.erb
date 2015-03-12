@@ -378,7 +378,10 @@
   enable_frecuencias_actividades_fisicas("consumo_frecuencia_afisica_id", "consumo_minutos_activacion_fisica");
   showImageValue('consumo_frecuencia_afisica_id', 'eje4_p7','NOSR');
   <%#*jQuery("#establecimientos").validate({ expression: "if (skipSelect(SelfID, 'consumo_escuela_establecimiento')) return true; else return false;", message: "Seleccione una opción!" });%>
-  jQuery("#lista_establecimientos").validate({ expression: "if (isCheckedC(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
+  
+  <%#*jQuery("#lista_establecimientos").validate({ expression: "if (isCheckedC(SelfID)) return true; else return false;", message: "Seleccione una opción!" });%>
+  jQuery("#lista_establecimientos").validate({ expression: "if (ValidarEstablecimientosChecked('establecimientos')) return true; else return false;", message: "Seleccione una opción!" });
+
 
   
   jQuery("#preparacions").validate({ expression: "if ( isCheckedC(SelfID) || ElementIsChecked('consumo_escuela_establecimiento_no')) return true; else return false;", message: "Seleccione una opción!" });

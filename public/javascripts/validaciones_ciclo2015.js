@@ -2,6 +2,38 @@
 
 /* Funciones usadas en Eje 4 */
 
+function ValidarEstablecimientosChecked(id){
+    var ReturnVal = false;  
+    if (ElementIsChecked("consumo_escuela_establecimiento_si") == true){
+        jQuery("#" + id).find('input[type="checkbox"]').each(function(){
+            if (jQuery(this).is(":checked") && (jQuery(this).attr('id') == 'establecimientos_3' || jQuery(this).attr('id') == 'establecimientos_4' || jQuery(this).attr('id') == 'establecimientos_5'  ))
+                ReturnVal = true;
+        });
+    }
+    else {
+        if (ElementIsChecked("consumo_escuela_establecimiento_no") == true){
+            jQuery("#" + id).find('input[type="checkbox"]').each(function(){
+            if (jQuery(this).is(":checked") && (jQuery(this).attr('id') == 'establecimientos_1' || jQuery(this).attr('id') == 'establecimientos_2'))
+                ReturnVal = true;
+            });
+        }
+    }
+    return ReturnVal;
+}
+
+
+
+
+
+function ElementIsChecked(id){
+    var ReturnVal = false;
+    if(jQuery("#" + id).is(":checked")){
+        ReturnVal = true;
+    }
+    return ReturnVal;
+}
+
+
 
 function enableElementosDiv(Fieldset, DivElement, condition){
  fieldset_element = document.getElementById(Fieldset);
