@@ -423,14 +423,16 @@ def puntaje_eje4_p6
   @consumo = @diagnostico.consumo if @diagnostico.consumo
   
   @s_materials = multiple_selected(@consumo.materials) if @consumo.materials
-  @m_recomendables = Material.find_all_by_tipo("RECOMENDABLES")
-  @select_materials = 0
-  @s_materials.each do |material|
-    @select_materials+=1 if @m_recomendables.any? { |b| b[:clave] == material }
+  if @s_materials.size.to_i > 0
+    @m_recomendables = Material.find_all_by_tipo("RECOMENDABLES")
+    @select_materials = 0
+    @s_materials.each do |material|
+      @select_materials+=1 if @m_recomendables.any? { |b| b[:clave] == material }
+    end
+    @eje4_p6 = (((@select_materials.to_f / @s_materials.size.to_f)* 100)* $consumo_p6).round(3).to_f
   end
-  @eje4_p6 = (((@select_materials.to_f / @s_materials.size.to_f)* 100)* $consumo_p6).round(3).to_f
 
-  return @eje4_p6
+  return @eje4_p6 ? @eje4_p6 : 0
 end
 
 def puntaje_eje4_p7
