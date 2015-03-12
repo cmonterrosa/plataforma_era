@@ -3,7 +3,7 @@ class Entorno < ActiveRecord::Base
   has_and_belongs_to_many :acciones, :join_table => 'entornos_acciones'
   has_many :escuelas_espacios
 
-  validates_presence_of :evidencia_pregunta_1, :if => "self.superficie_terreno_escuela.to_i > 0"
+  validates_presence_of :evidencia_pregunta_1, :if => "self.superficie_terreno_escuela_av.to_f > 0"
   validates_presence_of :evidencia_pregunta_2, :if => "!self.escuelas_espacios.empty?"
   validates_presence_of :evidencia_pregunta_3, :if => "self.escuela_reforesta == 'SI'"
   validates_presence_of :evidencia_pregunta_5, :if => :valida_acciones
