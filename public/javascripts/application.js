@@ -749,12 +749,14 @@ function enaTxtField(txt1, txt2, div){
 
     if(parseInt(txtField1.value) > 0) {
         divTxt.style.display = "block";
-        txtField2.disabled = false;
+        if(txt2 != "") txtField2.disabled = false;
     }
     else{
         divTxt.style.display = "none";
-        txtField2.value = "";
-        txtField2.disabled = true;
+        if(txt2 != ""){
+            txtField2.value = "";
+            txtField2.disabled = true;
+        }
     }
 }
 
@@ -847,7 +849,7 @@ function verifyCheckboxs(checkSelect, objCheckox, objPreg){
     else{
         divPreg.style.display = "none";
         for(i=0; i < elemCount.length; i++)
-            if (elemCount[i].checked == true){
+            if (elemCount[i].checked == true && elemCount[i].value != "NING"){
                 divPreg.style.display = "block";
                 break;
             }

@@ -30,12 +30,12 @@
               <div class="grid-12-12">
                 <div class="grid-4-12"></div>
                 <div class="grid-3-12">
-                  <%= f.text_field :superficie_terreno_escuela_av, :onkeyup => "enaTxtField('entorno_superficie_terreno_escuela', 'entorno_superficie_terreno_escuela_av', 'areas_verdes');", :style => "text-align: right;", :disabled => "disabled" %>
+                  <%= f.text_field :superficie_terreno_escuela_av, :onkeyup => "enaTxtField('entorno_superficie_terreno_escuela_av', '', 'eje2_p1');", :style => "text-align: right;", :disabled => "disabled" %>
                 </div>
                 <label class="uper" style="padding: 10px 0;" >M&sup2;</label>
               </div>
               <div class="grid-12-12"></div>
-              <div id="eje2_p1" class="grid-12-12" style="text-align: center;" >
+              <div id="eje2_p1" class="grid-12-12" style="text-align: center; display: none;" >
                 <%= link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta1", :id => "pregunta1"),
                                                                 { :controller => "upload", :diagnostico => @diagnostico, :eje => 2, :numero_pregunta => 1, :action => "list_evidencias" },
                                                                   :title => "EVIDENCIA DE LA PREGUNTA 1", :class => "fancybox fancybox.iframe"%>
@@ -197,6 +197,7 @@
 
 <script type="text/javascript">
   enaTxtField('entorno_superficie_terreno_escuela', 'entorno_superficie_terreno_escuela_av', 'areas_verdes');
+  enaTxtField('entorno_superficie_terreno_escuela_av', '', 'eje2_p1');
   checkBoxTotextField('espacios', 'eje2_p2', 'entorno_no_espacios');
   edMultiSelect('entorno_no_espacios', 'espacios', 'eje2_p2');
   radioButtonTotxtField('entorno_escuela_reforesta_si', 'entorno_escuela_reforesta_num', 'reforesta');
