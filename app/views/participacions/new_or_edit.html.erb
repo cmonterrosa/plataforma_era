@@ -277,7 +277,8 @@
 
   function add_validation(){
     num_padres_familia.remove( Validate.Numericality, { minimum: parseInt(document.getElementById("participacion_capacitacion_salud_ma").value)}, { onlyInteger: true } );
-    num_padres_familia.add( Validate.Numericality, { minimum: parseInt(document.getElementById("participacion_capacitacion_salud_ma").value)}, { onlyInteger: true } );
+    <%#*num_padres_familia.add( Validate.Numericality, { minimum: parseInt(document.getElementById("participacion_capacitacion_salud_ma").value)}, { onlyInteger: true } );%>
+    num_padres_familia.add( Validate.Numericality, { minimum: 1 } );
   }
   function add_validation2(){
     capacitacion_salud_ma.remove( Validate.Numericality, { maximum: parseInt(document.getElementById("participacion_num_padres_familia").value)}, { onlyInteger: true } );
