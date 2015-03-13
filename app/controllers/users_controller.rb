@@ -66,7 +66,7 @@ class UsersController < ApplicationController
           user.create_reset_code
           #UserMailer.deliver_forgot(user) #sends the email
           UserMailer.deliver_reset_notification(user) if user.recently_reset? && user.email_valid?
-          flash[:notice] = "Código de recuperacón enviado a: #{user.email}"
+          flash[:notice] = "Código de recuperación enviado a: #{user.email}"
           format.html { redirect_to login_path }
           format.xml { render :xml => user.email, :status => :created }
         else
