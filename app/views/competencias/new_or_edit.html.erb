@@ -34,7 +34,7 @@
             </div>
             
             <div class="grid-12-12" id="dcapacitadora" style="display: none;">
-              <label class="uper">¿QUE&nbsp;INSTTUCIONES&nbsp;O&nbsp;DEPENDENCIAS&nbsp;IMPARTIERON&nbsp;ESTAS CAPACITACIONES?</label>
+              <label class="uper">¿QUE&nbsp;INSTITUCIONES&nbsp;O&nbsp;DEPENDENCIAS&nbsp;IMPARTIERON&nbsp;ESTAS&nbsp;CAPACITACIONES?</label>
             
               <fieldset style="padding: 5px 5px 5px 5px;">
                 <div id="dcapacitadoras" class="grid-12-12">
@@ -49,7 +49,7 @@
                     <%= check_box_tag "dcapacitadoras[#{c.id}]", c.clave, @s_dcapacitadoras.include?(c.id) ? true : false, :onclick => "checkBoxToSelct('dcapacitadora');" %>&nbsp;<%= c.descripcion %>
                     &nbsp;NÚM.&nbsp;DE&nbsp;CAPACITACIONES:&nbsp;<%= select "dcapacitadora", "#{c.clave}", (1..9), {:selected => @valor}, {:style => "display: none; width:40px;"}%><br /><br />
                     <% if c.clave == "OTRA" %>&nbsp;DESCRIPCIÓN:&nbsp;<input name="dcapacitadoras<%= c.clave %>" id="dcapacitadoras<%= c.clave %>" size="35px" style="text-align:justify; display: none; text-transform: uppercase;" value="<%=h @desc_dep ? @desc_dep : "" %>" /><% end %>
-                    <%=linea_horizontal%>
+                    <%= linea_horizontal %>
                   <% end %>
                 </div>
               </fieldset>

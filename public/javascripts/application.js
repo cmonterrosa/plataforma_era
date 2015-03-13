@@ -943,3 +943,58 @@ function edMultiSelect(cBox, objSelect, divQuestion){
         divPreg.style.display = "block";
     }
 }
+
+
+function edMultiSelect2(cBox, objSelect, divQuestion){
+    var i, checkBox, elemCount, elemCountS, SelectM, divPreg, txtField;
+
+    checkBox = document.getElementById(cBox);
+    SelectM = document.getElementById(objSelect);
+    divPreg = document.getElementById(divQuestion);
+    elemCount = SelectM.getElementsByTagName("input");
+    elemCountS = SelectM.getElementsByTagName("select");
+
+    if(checkBox.checked){
+        for(i=0; i < elemCount.length; i++){
+            if(elemCount[i].type == "checkbox"){
+                elemCount[i].checked = false;
+                elemCount[i].disabled = true;
+                if(elemCount[i].value == "OTRA"){
+                    txtField = document.getElementById(objSelect+elemCount[i].value);
+                    txtField.value = "";
+                    txtField.disabled = true;
+                    txtField.style.display = "none";
+                }
+            }
+        }
+        for(i=0; i < elemCountS.length; i++){
+//                elemCountS[i].value = "";
+                elemCountS[i].disabled = true;
+        }
+        SelectM.style.display = "none";
+        divPreg.style.display = "none";
+    }
+    else{
+        for(i=0; i < elemCount.length; i++){
+            if(elemCount[i].type == "checkbox"){
+                elemCount[i].style.display = "inline";
+                elemCount[i].disabled = false;
+                if(elemCount[i].checked == false){
+                    elemCountS[i].disabled = true;
+                    elemCountS[i].style.display = "none";
+                }
+                else{
+                    if(elemCount[i].value == "OTRA"){
+                        txtField = document.getElementById(objSelect+elemCount[i].value);
+                        txtField.disabled = false;
+                        txtField.style.display = "inline";
+                    }
+                    elemCountS[i].disabled = false;
+                    elemCountS[i].style.display = "inline";
+                }
+            }
+        }
+        SelectM.style.display = "block";
+        divPreg.style.display = "block";
+    }
+}

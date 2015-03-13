@@ -6,6 +6,7 @@ class ParticipacionsController < ApplicationController
     @diagnostico = Diagnostico.find(params[:id]) if params[:id]
     @diagnostico ||= Diagnostico.new
     @participacion = @diagnostico.participacion || Participacion.new
+    @s_dcapacitadoras = multiple_selected_dcapacitadora(@participacion.capacitacion_padres) if  @participacion.capacitacion_padres
     cargar_proyectos_actuales
    end
 
@@ -19,18 +20,36 @@ class ParticipacionsController < ApplicationController
     guardar_proyectos(params[:pescolaresdependencias], "DEPENDENCIAS", @participacion)
     validador = valida_evidencias_proyectos(@participacion)
     if validador["valido"]
-        ## Dependencias Capacitadoras ##
-        @capacitadoras = ( params[:capacitacion]) ?  params[:capacitacion] : Array.new
-        @capacitadoras.each do |c|
-           dc = Dcapacitadora.find_by_clave(c.last)
-           capacitacion = CapacitacionPadre.find_by_dcapacitadora_id(dc.id) if dc
-           capacitacion ||= CapacitacionPadre.new
-           capacitacion.participacion_id  ||= @participacion.id if @participacion
-           capacitacion.dcapacitadora_id ||= dc.id if dc
-           capacitacion.numero_capacitaciones =(params[:capacitadora]["#{dc.clave}"]) ?  params[:capacitadora]["#{dc.clave}"] : nil
-           (capacitacion.numero_capacitaciones) ? capacitacion.save : nil
+        if params[:dcapacitadoras]
+        @s_padres = []
+        params[:dcapacitadoras].each_key { |id| @s_padres << id }
+        @participacion.capacitacion_padres.each { |padre| padre.delete if @s_padres.include?("#{padre.dcapacitadora_id.to_s}") == false }
+        params[:dcapacitadoras].each_key do |dcap|
+          dcapacitadora = Dcapacitadora.find(dcap)
+          padre_capacitado = CapacitacionPadre.find_by_dcapacitadora_id_and_participacion_id(dcapacitadora.id, @participacion.id)
+          padre_capacitado ||= CapacitacionPadre.new
+          padre_capacitado.participacion_id = @participacion
+          padre_capacitado.dcapacitadora_id = dcapacitadora.id
+          padre_capacitado.descripcion_dep = params[:dcapacitadorasOTRA] if params[:dcapacitadorasOTRA] and dcapacitadora.clave == "OTRA"
+          padre_capacitado.numero_capacitaciones = params[:dcapacitadora][:"#{dcapacitadora.clave}"].to_i
+          @participacion.capacitacion_padres << padre_capacitado
         end
-        (@capacitadoras.empty?)? (@participacion.capacitacion_padres.each{|x|x.destroy}) : true
+      else
+        @participacion.capacitacion_padres.each { |i| i.delete } if @participacion.capacitacion_padres
+      end
+
+        ## Dependencias Capacitadoras ##
+#        @capacitadoras = ( params[:capacitacion]) ?  params[:capacitacion] : Array.new
+#        @capacitadoras.each do |c|
+#           dc = Dcapacitadora.find_by_clave(c.last)
+#           capacitacion = CapacitacionPadre.find_by_dcapacitadora_id(dc.id) if dc
+#           capacitacion ||= CapacitacionPadre.new
+#           capacitacion.participacion_id  ||= @participacion.id if @participacion
+#           capacitacion.dcapacitadora_id ||= dc.id if dc
+#           capacitacion.numero_capacitaciones =(params[:capacitadora]["#{dc.clave}"]) ?  params[:capacitadora]["#{dc.clave}"] : nil
+#           (capacitacion.numero_capacitaciones) ? capacitacion.save : nil
+#        end
+#        (@capacitadoras.empty?)? (@participacion.capacitacion_padres.each{|x|x.destroy}) : true
 
         #### Si apenas se va a crear el registro, validamos si lleva proyectos y si tiene evidencias
         if @participacion.save
@@ -38,6 +57,7 @@ class ParticipacionsController < ApplicationController
           redirect_to :controller => "diagnosticos"
         else
           flash[:evidencias] = @participacion.errors.full_messages.join(", ")
+          @s_dcapacitadoras = multiple_selected_dcapacitadora(@participacion.capacitacion_padres) if  @participacion.capacitacion_padres
           cargar_proyectos_actuales
           render :action => "new_or_edit"
         end
@@ -45,6 +65,7 @@ class ParticipacionsController < ApplicationController
     else
       errores = validador["sin_validar"].join(" , ")
       flash[:evidencias] = "Cargue evidencias para la(s) pregunta(s): #{errores}"
+      @s_dcapacitadoras = multiple_selected_dcapacitadora(@participacion.capacitacion_padres) if  @participacion.capacitacion_padres
       cargar_proyectos_actuales
       render :action => "new_or_edit"
     end
@@ -129,7 +150,7 @@ protected
 
   ### Funcion que recupera los datos de los proyectos actuales #####
   def cargar_proyectos_actuales
-       @s_dcapacitadoras = multiple_selected(@participacion.dcapacitadoras)
+#       @s_dcapacitadoras = multiple_selected(@participacion.dcapacitadoras)
       ### Proyectos medio ambiente ###
         @s_proyectos_ma =  Pescolar.find(:all, :conditions => ["participacion_id = ? AND materia= ?", @participacion.id, 'MEDIOAMBIENTE'])
         @proyectos_seleccionados_ambiente = ( @s_proyectos_ma.empty?)? 0: @s_proyectos_ma.size

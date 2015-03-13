@@ -88,30 +88,29 @@
               <!-- Respuestas -->
 
               <div class="grid-12-12">
-                <fieldset id ="contenedor" style="padding: 5px 5px 5px 5px;">
-                  <div id="preparacions" class="grid-12-12">
+                <fieldset style="padding: 5px 5px 5px 5px;">
+                  <div id="dcapacitadoras" class="grid-12-12">
                     <% Dcapacitadora.find(:all).each do |c| %>
-                        <div class="grid-10-12">
-                          <%= check_box_tag "capacitacion[#{c.id}]", c.clave, @s_dcapacitadoras.include?(c.clave) ? true : false,
-                                    :onclick =>  "enable_disable_selects ('capacitacion_#{c.id}', 'capacitadora_#{c.clave}', 'eje5_p4');  showImageFieldset('contenedor', 'eje5_p4');" %>
-                          <%= c.descripcion %>
-                          <%= linea_horizontal%>
-                        </div>
-
-                        <div  class="grid-2-12">
-                          <%numero_capacitaciones = (CapacitacionPadre.find(:first, :conditions => ["participacion_id = ? AND dcapacitadora_id = ?", @participacion.id, c.id]))? CapacitacionPadre.find(:first, :select => 'numero_capacitaciones', :conditions => ["participacion_id = ? AND dcapacitadora_id = ?", @participacion.id, c.id]).numero_capacitaciones.to_i  : nil %>
-                          <%clase = (numero_capacitaciones)? "inline" : "none"%>
-                          <%= select "capacitadora", "#{c.clave}", (1..12), {:selected => numero_capacitaciones}, {:onchange => "enable_disable_selects('capacitacion_#{c.id}', 'capacitadora_#{c.clave}', 'eje5_p4');", :style => "display:#{clase};"}%>
-                        </div>
-                        <div class="grid-12-12 clear"></div>
-                  <% end %>
-                  </div>
+                      <% @valor = nil %>
+                      <% @participacion.capacitacion_padres.each do |x| %>
+                        <% if x[:dcapacitadora_id] == c.id %>
+                          <% @valor = x.numero_capacitaciones  %>
+                          <% @desc_dep = x.descripcion_dep %>
+                        <% end %>
+                      <% end %>
+                      <%= check_box_tag "dcapacitadoras[#{c.id}]", c.clave, @s_dcapacitadoras.include?(c.id) ? true : false, :onclick => "checkBoxToSelct('dcapacitadora');" %>&nbsp;<%= c.descripcion %>
+                       &nbsp;NÚM.&nbsp;DE&nbsp;CAPACITACIONES:&nbsp;<%= select "dcapacitadora", "#{c.clave}", (1..9), {:selected => @valor}, {:style => "display: none; width:40px;"}%><br /><br />
+                       <% if c.clave == "OTRA" %>&nbsp;DESCRIPCIÓN:&nbsp;<input name="dcapacitadoras<%= c.clave %>" id="dcapacitadoras<%= c.clave %>" size="35px" style="text-align:justify; display: none; text-transform: uppercase;" value="<%=h @desc_dep ? @desc_dep : "" %>" /><% end %>
+                       <%= linea_horizontal %>
+                       <% end %>
+                     </div>
+                  <br />
+                     <%= f.check_box :no_capacitacion, { :checked => @participacion.no_capacitacion == "NO" ? true : false,  :onclick => "edMultiSelect2('participacion_no_capacitacion', 'dcapacitadoras', 'eje5_p4');" }, "NO", "SI" %>&nbsp;NINGUNA
                 </fieldset>
               </div>
 
               <div class="grid-12-12 clear"></div>
-              <%estilo_eje5_p4 = (@s_dcapacitadoras.empty?)? "none" : "inline"%>
-              <div id="eje5_p4" class="grid-12-12" style="text-align: center; display: <%=h estilo_eje5_p4%>;">
+              <div id="eje5_p4" class="grid-12-12" style="text-align: center; display: none">
                 <%= link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta4", :id => "pregunta4"),
                                                               {:controller => "upload", :diagnostico => @diagnostico, :eje => 5, :numero_pregunta => 4, :action => "list_evidencias" },
                                                               :title => "EVIDENCIA DE LA PREGUNTA 4", :class => "fancybox fancybox.iframe"%>
@@ -248,7 +247,9 @@
   showImageNum('proyectos_ambiente', 'eje5_p5');
   showImageNum('proyectos_salud', 'eje5_p6');
   showImageNum('proyectos_dependencias', 'eje5_p7');
-  showImageFieldset('contenedor', 'eje5_p4');
+  <%#*showImageFieldset('contenedor', 'eje5_p4');%>
+    edMultiSelect2('participacion_no_capacitacion', 'dcapacitadoras', 'eje5_p4');
+    checkBoxToSelct('dcapacitadora');
 
   <%#*showDesc('participacion_proy_escolares_ma', 'participacion_proy_escolares_ma_desc', 'eje5_p3');%>
   <%#*showDesc('participacion_proy_escolares_salud', 'participacion_proy_escolares_salud_desc', 'eje5_p4');%>
@@ -284,4 +285,7 @@
     capacitacion_salud_ma.remove( Validate.Numericality, { maximum: parseInt(document.getElementById("participacion_num_padres_familia").value)}, { onlyInteger: true } );
     capacitacion_salud_ma.add( Validate.Numericality, { maximum: parseInt(document.getElementById("participacion_num_padres_familia").value)}, { onlyInteger: true } );
   }
+  jQuery(function(){
+    jQuery("#dcapacitadoras").validate({ expression: "if (skipSelectEspacios(SelfID, 'participacion_no_capacitacion')) return true; else return false;", message: "Seleccione una opción!" });
+  });
 </script>
