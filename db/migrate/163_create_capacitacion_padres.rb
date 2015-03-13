@@ -5,6 +5,7 @@ class CreateCapacitacionPadres < ActiveRecord::Migration
       t.integer :participacion_id
       t.integer :dcapacitadora_id
       t.integer :numero_capacitaciones
+      t.string :descripcion_dep, :limit => 160
       t.timestamps
     end
 
