@@ -594,8 +594,8 @@ function checkBoxToSelct(cBox){
             if(elemCount[i].value == "OTRA"){
                 txtDesc.disabled = false;
                 txtDesc.style.display = "inline";
-                validacion = new LiveValidation(cBox+"sOTRA");
-                validacion.add( Validate.Presence );
+                validacion = new LiveValidation(cBox+"sOTRA", {onlyOnSubmit: true });
+                validacion.add( Validate.Presence);
                 otra_desc = true;
             }
             select.style.display = "inline";
