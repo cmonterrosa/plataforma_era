@@ -179,8 +179,9 @@ Structure
 .formee textarea.nta {
     height: 7.5em;
     border-color:#acacac;
-    background: #f2f2f2;
+/*    background: #f2f2f2;*/
     color: #424242;
+    font-size: 10px;
 }
 .formee select {padding: 2px; height: 2.1em;}
 /*.formee select[multiple="multiple"] {padding:5px;height:8em;}*/

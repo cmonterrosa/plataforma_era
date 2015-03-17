@@ -268,7 +268,82 @@ class DiagnosticosController < ApplicationController
       render :partial => 'completo', :layout => 'reporte'
     end
   end
+
+  def eje1_to_pdf
+    @diagnostico = Diagnostico.find(Base64.decode64(params[:id])) if params[:id]
+    @diagnostico ||= Diagnostico.new
+    @competencia = @diagnostico.competencia || Competencia.new
+
+    @s_dcapacitadoras = multiple_selected_dcapacitadora(@competencia.docentes_capacitados) if @competencia.docentes_capacitados
+    @s_acapacitadoras = multiple_selected_dcapacitadora(@competencia.alumnos_capacitados) if @competencia.alumnos_capacitados
+    render :partial => "competencias", :layout => "reporte"
+  end
   
+  def eje2_to_pdf
+    @diagnostico = Diagnostico.find(Base64.decode64(params[:id])) if params[:id]
+    @diagnostico ||= Diagnostico.new
+    @entorno = @diagnostico.entorno || Entorno.new
+    @s_acciones = multiple_selected_id(@entorno.acciones) if @entorno.acciones
+    @s_espacios = multiple_selected_espacios(@entorno.escuelas_espacios) if @entorno.escuelas_espacios
+    @escuela = Escuela.find_by_clave(current_user.login)
+    if @escuela.nivel_descripcion == "BACHILLERATO"
+      @acciones = Accione.find(:all, :conditions => ["clave not in ('AC03')"])
+    else
+      @acciones = Accione.find(:all, :conditions => ["clave not in ('AC00', 'AC01')"])
+    end
+
+    render :partial => "entornos", :layout => "reporte"
+  end
+
+  def eje3_to_pdf
+    @diagnostico = Diagnostico.find(Base64.decode64(params[:id])) if params[:id]
+    @diagnostico ||= Diagnostico.new
+    @huella = @diagnostico.huella || Huella.new
+    @s_electricas = selected(@huella.energia_electrica) if @huella.energia_electrica
+    @s_inorganicos = multiple_selected_id(@huella.inorganicos) if @huella.inorganicos
+    @s_servicio_aguas = multiple_selected_id(@huella.servicio_aguas) if @huella.servicio_aguas
+    @s_elimina_residuos = multiple_selected_id(@huella.elimina_residuos) if @huella.elimina_residuos
+    @focos = 0..499
+
+    render :partial => "huellas", :layout => "reporte"
+  end
+
+  def eje4_to_pdf
+    @diagnostico = Diagnostico.find(Base64.decode64(params[:id])) if params[:id]
+    @diagnostico ||= Diagnostico.new
+    @consumo = (@diagnostico.consumo)? @diagnostico.consumo : Consumo.new
+
+    @escuela = Escuela.find_by_clave(current_user.login.upcase)
+    if @escuela.nivel_descripcion == "BACHILLERATO"
+      @establecimientos = Establecimiento.find(:all, :conditions => ["nivel not in ('BASICA')"])
+    else
+      @establecimientos = Establecimiento.find(:all)
+    end
+
+    @s_establecimientos = multiple_selected(@consumo.establecimientos) if @consumo.establecimientos
+    @s_preparacions = multiple_selected(@consumo.preparacions) if @consumo.preparacions
+    @s_utensilios = multiple_selected(@consumo.utensilios) if @consumo.utensilios
+    @s_higienes = multiple_selected(@consumo.higienes) if @consumo.higienes
+    @s_bebidas = multiple_selected(@consumo.bebidas) if @consumo.bebidas
+    @s_alimentos = multiple_selected(@consumo.alimentos) if @consumo.alimentos
+    @s_botanas = multiple_selected(@consumo.botanas) if @consumo.botanas
+    @s_reposterias = multiple_selected(@consumo.reposterias) if @consumo.reposterias
+    @s_materials = multiple_selected(@consumo.materials) if @consumo.materials
+    @s_afisicas = selected(@consumo.frecuencia_afisica) if @consumo.frecuencia_afisica
+
+    render :partial => "consumos", :layout => "reporte"
+  end
+  
+  def eje5_to_pdf
+    @diagnostico = Diagnostico.find(Base64.decode64(params[:id])) if params[:id]
+    @diagnostico ||= Diagnostico.new
+    @participacion = @diagnostico.participacion || Participacion.new
+    @s_dcapacitadoras = multiple_selected_dcapacitadora(@participacion.capacitacion_padres) if  @participacion.capacitacion_padres
+    cargar_proyectos_actuales
+
+    render :partial => "participacions", :layout => "reporte"
+  end
+
   private
 
   def set_layout
@@ -280,6 +355,15 @@ class DiagnosticosController < ApplicationController
       flash[:error] = "El proceso de diagnostico aún no está abierto"
       redirect_to :controller => "home"
     end
+  end
+  
+  def cargar_proyectos_actuales
+    @s_proyectos_ma =  Pescolar.find(:all, :conditions => ["participacion_id = ? AND materia= ?", @participacion.id, 'MEDIOAMBIENTE'])
+    @proyectos_seleccionados_ambiente = ( @s_proyectos_ma.empty?)? 0: @s_proyectos_ma.size
+    @s_proyectos_salud =  Pescolar.find(:all, :conditions => ["participacion_id = ? AND materia= ?", @participacion.id, 'SALUD'])
+    @proyectos_seleccionados_salud = ( @s_proyectos_salud.empty?)? 0: @s_proyectos_salud.size
+    @s_proyectos_dependencias =  Pescolar.find(:all, :conditions => ["participacion_id = ? AND materia= ?", @participacion.id, 'DEPENDENCIAS'])
+    @proyectos_seleccionados_dependencias = ( @s_proyectos_dependencias.empty?)? 0: @s_proyectos_dependencias.size
   end
 
 

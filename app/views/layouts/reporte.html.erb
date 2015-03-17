@@ -15,6 +15,12 @@ body {
 </style>
 <link rel="stylesheet" type="text/css" href="/stylesheets/era/estilo.css" />
 
+<%= javascript_include_tag 'prototype'%>
+<%= javascript_include_tag 'BubbleTooltips' %>
+<%= stylesheet_link_tag "bt.css" %>
+
+
+<link rel="stylesheet" type="text/css" href="/stylesheets/era/estilo.css" />
 <!-- TOOLTIPS -->
 <%= javascript_include_tag 'prototype'%>
 <%= javascript_include_tag 'BubbleTooltips' %>
@@ -22,12 +28,22 @@ body {
 <!-- formee -->
 <%=javascript_include_tag "formee/jquery-1.6.4.min.js"%>
 <%=javascript_include_tag "formee/formee.js"%>
+<%=javascript_include_tag "livevalidation/livevalidation_standalone.js" %>
+<%=javascript_include_tag "fancybox/jquery.fancybox.js" %>
+<%=javascript_include_tag "validate/jquery.validate.js" %>
+<%=javascript_include_tag "validate/jquery.validation.functions.js" %>
+<%=javascript_include_tag "validaciones_ciclo2015" %>
 <%=javascript_include_tag :defaults%>
+
 <%= stylesheet_link_tag "formee/formee-structure.css", :media => 'all'%>
 <%= stylesheet_link_tag "formee/formee-style.css", :media => 'all'%>
 
 <%= stylesheet_link_tag "progressbar/css3-progress-bar-ie.css", :media => 'all' %>
 <%= stylesheet_link_tag "progressbar/css3-progress-bar.css", :media => 'all' %>
+
+<script type="text/javascript">
+  jQuery.noConflict();
+</script>
 </head>
 
 <body onload="enableTooltips();">
@@ -35,28 +51,11 @@ body {
   <tr>
     <td><img src="/images/era/ban.jpg" width="900" height="104" /></td>
   </tr>
-  <%#*<tr>%>
-    <%#*<td><img src="/images/era/space.png" width="10" height="5" /></td>%>
-  <%#*</tr>%>
-  <!--
-   <tr>
-    <td><img src="/images/era/ban_esys.jpg" width="900" height="104" /></td>
-   </tr>
-  -->
-   <%#*<tr>%>
-    <%#*<td><img src="/images/era/space.png" width="10" height="5" /></td>%>
-   <%#*</tr>%>
   <tr>
     <td>
-      <%=yield%>
+      <%= yield %>
     </td>
   </tr>
-  <%#*<tr>%>
-    <%#*<td><img src="/images/era/space.png" alt="" width="10" height="10" /></td>%>
-  <%#*</tr>%>
-  <%#*<tr>%>
-    <%#*<td colspan="3" align="right"><img src="/images/era/pie_pag.jpg" width="900" height="185" /></td>%>
-  <%#*</tr>%>
 </table>
 </body>
 </html>

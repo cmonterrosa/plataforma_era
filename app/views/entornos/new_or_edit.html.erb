@@ -218,14 +218,14 @@
 
   var arboles_nativos_num = new LiveValidation( 'entorno_arboles_nativos_num' );
   arboles_nativos_num.add( Validate.Presence );
-  arboles_nativos_num.add( Validate.Numericality );
+  arboles_nativos_num.add( Validate.Numericality, { minimum: 1, onlyInteger: true } );
 
   var arboles_nativos_desc = new LiveValidation( 'entorno_arboles_nativos_desc' );
   arboles_nativos_desc.add( Validate.Presence );
 
   var arboles_no_nativos_num = new LiveValidation( 'entorno_arboles_no_nativos_num' );
   arboles_no_nativos_num.add( Validate.Presence );
-  arboles_no_nativos_num.add( Validate.Numericality );
+  arboles_no_nativos_num.add( Validate.Numericality, { minimum: 1, onlyInteger: true }  );
 
   var arboles_no_nativos_desc = new LiveValidation( 'entorno_arboles_no_nativos_desc' );
   arboles_no_nativos_desc.add( Validate.Presence );
