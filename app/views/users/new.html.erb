@@ -2,7 +2,7 @@
 <% form_for :user, @user, :url => { :action => "create", :controller => "users"}, :html => {:class => "formee"} do |f| -%>
   <fieldset>
 
-    <legend>&nbsp;Registro&nbsp;de&nbsp;nueva&nbsp;escuela&nbsp;</legend>
+    <legend>&nbsp;REGISTRO&nbsp;DE&nbsp;NUEVA&nbsp;ESCUELA&nbsp;</legend>
     <div class="grid-form">
       <% @user.password = @user.password_confirmation = nil %>
       <%= error_messages_for :user %>
@@ -10,37 +10,49 @@
     <div class="grid-12-12 clear"></div>
 
     <div class="grid-form">
-      <label>Clave de escuela: <em class="formee-req">*</em></label>
-      <%=f.text_field :login%>
+      <div class="grid-6-12">
+      <label><b>CLAVE DE LA ESCUELA: </b><em class="formee-req">*</em></label>
+      </div>
+      <div class="grid-6-12"><%=f.text_field :login%></div>
     </div>
     <div class="grid-12-12 clear"></div>
 
     <div class="grid-form">
-      <label>Correo electrónico: (con el cual pueda recuperar contraseña)</label>
-      <%=f.text_field :email%>
+      <div class="grid-6-12">
+      <label><b>CORREO ELECTRÓNICO </b> (SI MÁS ADELANTE DESEA RECUPERAR LA CONTRASEÑA)<em class="formee-req">*</em></label>
+      </div>
+      <div class="grid-6-12"><%=f.text_field :email, :placeholder => "Escriba una dirección válida", :size => 40%></div>
     </div>
 
     <div class="grid-12-12 clear"></div>
 
 
     <div class="grid-form">
-      <label>Nombre completo de la persona que registra: <em class="formee-req">*</em></label>
-      <%=f.text_field :nombre%>
+      <div class="grid-12-12">
+      <label><b>NOMBRE COMPLETO DE LA PERSONA QUE REGISTRA</b>: <em class="formee-req">*</em></label>
+      </div>
+      <div class="grid-12-12"><%=f.text_field :nombre%></div>
     </div>
     
 
     <div class="grid-12-12 clear"></div>
 
     <div class="grid-form">
-      <label>Escriba una contraseña con la ingresará a la plataforma: <em class="formee-req">*</em></label>
-      <%=f.password_field :password%>
+       <div class="grid-6-12">
+        <label><b>ESCRIBA SU PROPIA CONTRASEÑA PARA ACCEDER A LA PLATAFORMA:</b> <em class="formee-req">*</em></label>
+       </div>
+       <div class="grid-6-12">
+        <%=f.password_field :password, :placeholder => "6 Caracteres como mínimo" %>
+       </div>
     </div>
 
     <div class="grid-12-12 clear"></div>
 
     <div class="grid-form">
-      <label>Escriba la confirmación de contraseña con la que ingresará a la plataforma: <em class="formee-req">*</em></label>
-      <%=f.password_field :password_confirmation%>
+      <div class="grid-6-12">
+      <label><b>ESCRIBA LA CONFIRMACIÓN DE LA CONTRASEÑA</b>: <em class="formee-req">*</em></label>
+      </div>
+      <div class="grid-6-12"><%=f.password_field :password_confirmation%></div>
     </div>
 
     <div class="grid-12-12 clear"></div>
@@ -59,6 +71,7 @@
   var nombre = new LiveValidation( 'user_nombre', {onlyOnSubmit: true } );
   nombre.add( Validate.Presence );
   var email = new LiveValidation( 'user_email' );
+  email.add( Validate.Presence );
   email.add( Validate.Email );
   <%#*var email = new LiveValidation( 'user_email', {onlyOnSubmit: true } );%>
   <%#*email.add( Validate.Presence );%>
