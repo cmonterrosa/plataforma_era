@@ -205,6 +205,12 @@ a:active {
           <td colspan="3">
             <table width="880" border="0" cellspacing="0" cellpadding="0">
               <tr>
+
+                <!-- home -->
+                <td width="32px">
+                  <%=link_to image_tag("admin/home.png", :size => "32x32", :mouseover => "admin/home.png",  :border => 0), {:controller => "home", :action => "index" }, :title => "INICIO"%>
+                </td>
+
                 <td width="60px" align="right"><img src="/images/era/iconos/ico_arbol.png" alt="2" width="34" height="17" /></td>
                 <!-- <td width="40" class="Txt_arbol"><a href="http://era.educacionchiapas.gob.mx" class="Txt_arbol">Inicio</a></td>-->
 
@@ -245,7 +251,7 @@ a:active {
                             <td width="350" class="Txt_arbol"><%=image_tag ("mensajes/mensajes_recibidos_small.png")%>&nbsp;<a href="/home" class="Txt_arbol"><%=link_to "(#{current_user.numero_mensaje_bandeja}) MENSAJES NUEVOS", {:action => "recibidos", :controller => "mensajes"}, :style => "text-decoration: none; color: #99ffbb;", :title => "BANDEJA DE ENTRADA"%></a></td>
                         <%else%>
                             <td width="34" align="center"><img src="/images/era/iconos/ico_arbol.png" alt="1" width="34" height="17" /></td>
-                            <td width="350" class="Txt_arbol"><%=image_tag ("mensajes/mensajes.png")%>&nbsp;<a href="/home" class="Txt_arbol"><%=link_to "PLATAFORMA DE MENSAJES", {:action => "list", :controller => "mensajes"}, :style => "text-decoration: none; color: #99ffbb;", :title => "NO HAY MENSAJES NUEVOS"%></a></td>
+                            <td width="350" class="Txt_arbol"><%=image_tag ("mensajes/mensajes.png")%>&nbsp;<a href="/home" class="Txt_arbol"><%=link_to "NOTIFICACIONES", {:action => "list", :controller => "mensajes"}, :style => "text-decoration: none; color: #99ffbb;", :title => "NO HAY MENSAJES NUEVOS"%></a></td>
                         <%end%>
 
 
