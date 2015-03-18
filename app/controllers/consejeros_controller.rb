@@ -1,4 +1,5 @@
 class ConsejerosController < ApplicationController
+  require_role [:coordinador, :consejero, :equipotecnico]
 
   def menu
     @user = current_user
@@ -140,6 +141,4 @@ class ConsejerosController < ApplicationController
     flash[:notice] = "Has cerrado sesión"
     redirect_back_or_default('/')
   end
-
-
 end
