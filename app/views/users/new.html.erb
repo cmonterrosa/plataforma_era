@@ -7,57 +7,57 @@
       <% @user.password = @user.password_confirmation = nil %>
       <%= error_messages_for :user %>
     </div>
-    <div class="grid-12-12 clear"></div>
+    
 
-    <div class="grid-form">
-      <div class="grid-6-12">
+    <div class="grid-form-login">
+      <div class="grid-8-12">
       <label><b>CLAVE DE LA ESCUELA: </b><em class="formee-req">*</em></label>
       </div>
-      <div class="grid-6-12"><%=f.text_field :login%></div>
-    </div>
-    <div class="grid-12-12 clear"></div>
-
-    <div class="grid-form">
-      <div class="grid-6-12">
-      <label><b>CORREO ELECTRÓNICO </b> (SI MÁS ADELANTE DESEA RECUPERAR LA CONTRASEÑA)<em class="formee-req">*</em></label>
-      </div>
-      <div class="grid-6-12"><%=f.text_field :email, :placeholder => "Escriba una dirección válida", :size => 40%></div>
-    </div>
-
-    <div class="grid-12-12 clear"></div>
-
-
-    <div class="grid-form">
-      <div class="grid-12-12">
-      <label><b>NOMBRE COMPLETO DE LA PERSONA QUE REGISTRA</b>: <em class="formee-req">*</em></label>
-      </div>
-      <div class="grid-12-12"><%=f.text_field :nombre%></div>
+      <div class="grid-4-12"><%=f.text_field :login%></div>
     </div>
     
 
-    <div class="grid-12-12 clear"></div>
+    <div class="grid-form-login">
+      <div class="grid-8-12">
+      <label><b>CORREO ELECTRÓNICO </b> (ESCRÍBALO CORRECTAMENTE PORQUE PODRÁ RECUPERAR SU CONTRASEÑA POR ESTE MEDIO)<em class="formee-req">*</em></label>
+      </div>
+      <div class="grid-4-12"><%=f.text_field :email, :placeholder => "Escriba una dirección válida", :size => 40%></div>
+    </div>
 
-    <div class="grid-form">
-       <div class="grid-6-12">
+    
+
+
+    <div class="grid-form-login">
+      <div class="grid-6-12">
+      <label><b>NOMBRE COMPLETO DE LA PERSONA QUE REGISTRA</b>: <em class="formee-req">*</em></label>
+      </div>
+      <div class="grid-6-12"><%=f.text_field :nombre%></div>
+    </div>
+    
+
+    
+
+    <div class="grid-form-login">
+       <div class="grid-8-12">
         <label><b>ESCRIBA SU PROPIA CONTRASEÑA PARA ACCEDER A LA PLATAFORMA:</b> <em class="formee-req">*</em></label>
        </div>
-       <div class="grid-6-12">
-        <%=f.password_field :password, :placeholder => "6 Caracteres como mínimo" %>
+       <div class="grid-4-12">
+        <%=f.password_field :password, :placeholder => "6 CARACTERES MÍNIMO" %>
        </div>
     </div>
 
-    <div class="grid-12-12 clear"></div>
 
-    <div class="grid-form">
-      <div class="grid-6-12">
-      <label><b>ESCRIBA LA CONFIRMACIÓN DE LA CONTRASEÑA</b>: <em class="formee-req">*</em></label>
+
+    <div class="grid-form-login">
+      <div class="grid-8-12">
+      <label><b>ESCRIBA LA CONFIRMACIÓN DE LA CONTRASEÑA (LA QUE ESCRIBIÓ EN EL PUNTO ANTERIOR)</b>: <em class="formee-req">*</em></label>
       </div>
-      <div class="grid-6-12"><%=f.password_field :password_confirmation%></div>
+      <div class="grid-4-12"><%=f.password_field :password_confirmation, :placeholder => "6 CARACTERES MÍNIMO"%></div>
     </div>
 
     <div class="grid-12-12 clear"></div>
 
-    <div class="grid-form">
+    <div class="grid-form-login">
       <input class="right" type="submit" title="CREAR USUARIO" value="CREAR USUARIO" />
     </div>
     
