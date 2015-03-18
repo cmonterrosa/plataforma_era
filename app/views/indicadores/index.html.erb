@@ -1,0 +1,23 @@
+<div class="grid-12-12">
+  <h1 align="center">Indicadores en tiempo real</h1>
+  <p align="center"><%= link_to_remote (image_tag("admin/actualizar.png", :mouseover => "admin/actualizar1.png", :title => "Actualizar")),
+                        :url => {:action => "update_indicadores", :actualizar => 1},
+                        :update => "contenido_indicadores",
+                        :loading => "Element.show('indicador');Element.hide('contenido_indicadores');",
+                        :complete =>"Element.hide('indicador');Element.show('contenido_indicadores');"%>
+  </p>
+  </div>
+
+<div class="grid-12-12">
+    <span id="indicador" style="display:none;"><img src="/images/admin/spinner.gif" /></span>
+</div>
+
+<div id="contenido_indicadores">
+<%=render :partial => "detalle"%>
+</div>
+
+
+
+
+
+
