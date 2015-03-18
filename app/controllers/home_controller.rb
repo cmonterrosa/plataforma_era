@@ -49,6 +49,8 @@ def dispatch
           redirect_to :controller => "admin"
         elsif @usuario.has_role?(:revisor)
           redirect_to :controller => "instituciones"
+        elsif @usuario.has_role?(:coordinador) || @usuario.has_role?(:consejero) || @usuario.has_role?(:equipotecnico)
+          redirect_to :controller => "consejeros"
         elsif @usuario.has_role?(:nivel)
           redirect_to :controller => "niveles"
         else
