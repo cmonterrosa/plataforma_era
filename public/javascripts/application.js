@@ -998,3 +998,27 @@ function edMultiSelect2(cBox, objSelect, divQuestion){
         divPreg.style.display = "block";
     }
 }
+
+/* Si radiobutton si esta seleccionado muestra div */
+function enaDivRadioChecked(radioButton, Div1, Div2){
+    var select1 = document.getElementById(Div1);
+    var select2 = document.getElementById(Div2);
+    if(typeof radioButton == "object")
+        var radio = radioButton;
+    else
+        if(document.getElementById(radioButton+'_si').checked)
+            {
+                select1.style.display = 'inline';
+                select2.style.display = 'none';
+                
+            }
+
+        else{
+             if(document.getElementById(radioButton+'_no').checked){
+                 select1.style.display = 'none';
+            select2.style.display = 'inline';
+             }
+            
+            
+        }
+}

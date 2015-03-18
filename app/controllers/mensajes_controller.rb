@@ -70,7 +70,8 @@ class MensajesController < ApplicationController
 
   def save_to_consejeros
     @mensaje = Mensaje.new(params[:mensaje])
-    usuario = User.find(params[:mensaje][:recibe_id]) if params[:mensaje][:recibe_id]
+    usuario = (params[:destinatario][:escuela] == "SI")? User.find_by_login(params[:escuela][:clave]) :   User.find(params[:mensaje][:recibe_id])
+    usuario ||= User.find(params[:mensaje][:recibe_id]) if params[:mensaje][:recibe_id]
     @mensaje.recibe_id = usuario.id if usuario
     @mensaje.envia_id = current_user.id unless @mensaje.envia_id
     @mensaje.activo = true unless @mensaje.activo

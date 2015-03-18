@@ -16,8 +16,44 @@
   <fieldset>
     <legend>NUEVO&nbsp;MENSAJE</legend>
 
+    <!-- Línea campo -->
 
-    <div class="grid-form">
+            <div class="grid-12-12">
+              <label class="uper">¿El destinatario es un centro escolar?<em class="formee-req"> *</em></label>
+            </div>
+            <div class="grid-12-12">
+              <div class="grid-3-12"></div>
+              <div class="grid-5-12">
+                  <span id="ct_escuela_establecimiento" class="InputGroup">
+                   <label class="uper">SI <%= radio_button :destinatario, :escuela, "SI", :onclick => "enaDivRadioChecked('destinatario_escuela', 'busqueda_destinatario', 'destinatario_equipo');" %></label>&nbsp;&nbsp;
+                   <label class="uper">NO <%= radio_button :destinatario, :escuela, "NO", :onclick => "enaDivRadioChecked('destinatario_escuela', 'busqueda_destinatario', 'destinatario_equipo');" %></label>
+                  </span>
+              </div>
+            </div>
+
+
+    <div id="busqueda_destinatario" style="display: none;">
+        <div class="grid-12-12">
+          <label>Escriba la clave completa de la escuela para realizar la búsqueda: <em class="formee-req">*</em></label>
+              <%= text_field :escuela, :clave %>
+        </div>
+
+        <div class="grid-12-12">
+          <label>Destinatario: <em class="formee-req">*</em> </label>
+          <div id="destinatario"></div>
+        </div>
+
+        <img alt="spinner" id="spinner" src="/images/loading_spinner.gif" style="display:none;" />
+                       <%= observe_field :escuela_clave,
+                        :on => "change",
+                        :before => "Element.show('spinner')",
+                        :success => "Element.hide('spinner')",
+                        :update => :destinatario,
+                        :url => { :controller => 'combos', :action => 'get_clave_escuela' },
+                        :with => :escuela_clave %>
+  </div>
+   
+      <div class="grid-form" id="destinatario_equipo" style="display:none;">
       <label>Destinatario: <em class="formee-req">*</em> </label>
       <%= f.select :recibe_id, @destinatarios.collect{|a| [a.nombre, a.id]}, :style => "width: 700px; height: 1px"%>
     </div>
