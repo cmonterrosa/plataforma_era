@@ -9,8 +9,6 @@ class DiagnosticosController < ApplicationController
       redirect_to :controller => "admin"
     end
 
-    
-
     @escuela= Escuela.find(params[:id]) if params[:id]
     @escuela ||= Escuela.find_by_clave(current_user.login.upcase)
     unless @escuela.registro_completo
@@ -276,7 +274,7 @@ class DiagnosticosController < ApplicationController
 
     @s_dcapacitadoras = multiple_selected_dcapacitadora(@competencia.docentes_capacitados) if @competencia.docentes_capacitados
     @s_acapacitadoras = multiple_selected_dcapacitadora(@competencia.alumnos_capacitados) if @competencia.alumnos_capacitados
-    render :partial => "competencias", :layout => "reporte"
+    render :partial => "competencias", :layout => "reporte_diagnostico"
   end
   
   def eje2_to_pdf
@@ -292,7 +290,7 @@ class DiagnosticosController < ApplicationController
       @acciones = Accione.find(:all, :conditions => ["clave not in ('AC00', 'AC01')"])
     end
 
-    render :partial => "entornos", :layout => "reporte"
+    render :partial => "entornos", :layout => "reporte_diagnostico"
   end
 
   def eje3_to_pdf
@@ -305,7 +303,7 @@ class DiagnosticosController < ApplicationController
     @s_elimina_residuos = multiple_selected_id(@huella.elimina_residuos) if @huella.elimina_residuos
     @focos = 0..499
 
-    render :partial => "huellas", :layout => "reporte"
+    render :partial => "huellas", :layout => "reporte_diagnostico"
   end
 
   def eje4_to_pdf
@@ -331,7 +329,7 @@ class DiagnosticosController < ApplicationController
     @s_materials = multiple_selected(@consumo.materials) if @consumo.materials
     @s_afisicas = selected(@consumo.frecuencia_afisica) if @consumo.frecuencia_afisica
 
-    render :partial => "consumos", :layout => "reporte"
+    render :partial => "consumos", :layout => "reporte_diagnostico"
   end
   
   def eje5_to_pdf
@@ -341,7 +339,7 @@ class DiagnosticosController < ApplicationController
     @s_dcapacitadoras = multiple_selected_dcapacitadora(@participacion.capacitacion_padres) if  @participacion.capacitacion_padres
     cargar_proyectos_actuales
 
-    render :partial => "participacions", :layout => "reporte"
+    render :partial => "participacions", :layout => "reporte_diagnostico"
   end
 
   private
