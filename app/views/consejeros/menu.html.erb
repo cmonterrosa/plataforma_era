@@ -16,7 +16,13 @@
        </div>
 
         <%if current_user.has_role?("equipotecnico")%>
-              <!-- Niveles -->
+          <!-- Indicadores -->
+            <div class="grid-3-12">
+              <%=link_to image_tag('admin/indicadores.png', :size => "128x128", :mouseover => 'admin/indicadores2.png') , {:action => "indicadores", :controller => "admin"}, :title => "Mostrar indicadores"%>
+              <label style="font-family:verdana;font-size:14px;">Indicadores</label>
+            </div>
+
+            <!-- Niveles -->
                 <div class="grid-4-12">
                     <%=link_to image_tag('admin/niveles.png', :size => "128x128", :mouseover => 'admin/niveles2.png') , {:action => "report_by_niveles", :controller => "admin"}, :title => "Reporte General por niveles educativos"%>
                   <label style="font-family:verdana;font-size:14px;">Niveles&nbsp;Educativos</label>
