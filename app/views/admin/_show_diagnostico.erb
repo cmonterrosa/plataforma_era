@@ -64,7 +64,7 @@
   <%end%>
 
   <% if @diagnostico.oficializado %>
-    <% form_for :diagnostico, @diagnostico, :url => {:action => "reporte_completo", :controller => "diagnosticos", :id => "#{Base64.encode64(@diagnostico.id.to_s)}.pdf" }, :html => {:class => "formee", :target => "_blank"} do -%>
+    <% form_for :diagnostico, @diagnostico, :url => {:action => "reporte_completo", :controller => "diagnosticos", :id => "#{Base64.encode64(@diagnostico.id.to_s)}" }, :html => {:class => "formee", :target => "_blank"} do -%>
       <div class="grid-12-12" style="text-align: center;" ><input type="submit" title="Imprimir" value="Imprimir Diagnostico" /></div>
     <% end %>
   <% end %>
