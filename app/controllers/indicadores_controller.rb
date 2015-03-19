@@ -34,14 +34,7 @@ private
     #@escuelas = Escuela.find(:all, :select => "e.id", :joins => "e, users u", :conditions => ["e.id = u.escuela_id"])
     ### Solo las registradas ##3
     @escuelas = Escuela.find(:all, :select => "id", :conditions => ["registro_completo = 1"])
-    @turnos = Escuela.find(:all, :select => "count(turno)", :conditions => ["turno IS NOT NULL"], :group => "turno")
-
-    ELECT species, COUNT(*) FROM pet GROUP BY species;
-
-
-    @escuelas_matutinas = Escuela.count(:id, :conditions => ["turno = ? AND id in (?)", "MATUTINO", @escuelas.map{|i|i.id}])
-    @escuelas_vespertinas = Escuela.count(:id, :conditions => ["turno = ? AND id in (?)", "VESPERTINO", @escuelas.map{|i|i.id}])
-
+    @turnos = Escuela.find(:all, :select => "turno, count(id) as numero", :conditions => ["id in (?)", @escuelas.map{|i|i.id}], :group => "turno")
     @alumnos = Escuela.sum(:alu_hom, :conditions => ["alu_hom IS NOT NULL AND id in (?)", @escuelas.map{|i|i.id}])
     @alumnas = Escuela.sum(:alu_muj, :conditions => ["alu_muj IS NOT NULL AND id in (?)", @escuelas.map{|i|i.id}])
     @docentes = Escuela.sum(:total_personal_docente, :conditions => ["total_personal_docente IS NOT NULL AND id in (?)", @escuelas.map{|i|i.id}])
@@ -54,6 +47,7 @@ private
     @docentes_capacitados_medio_ambiente = Competencia.sum(:dctes_cap_ma, :conditions => [" dctes_cap_ma IS NOT NULL"])
     @alumnos_capacitados_salud = Competencia.sum(:alumn_cap_salud, :conditions => ["alumn_cap_salud IS NOT NULL"])
     @alumnos_capacitados_medio_ambiente = Competencia.sum(:alumn_cap_ma, :conditions => ["alumn_cap_ma IS NOT NULL"])
+    @docentes_aplican_conocimientos = Competencia.sum(:dctes_aplican_conocimto, :conditions => ["dctes_aplican_conocimto IS NOT NULL"])
   end
 
   def indicadores_eje2
@@ -61,6 +55,11 @@ private
     @total_areas_verdes = Entorno.sum(:superficie_terreno_escuela_av, :conditions => ["superficie_terreno_escuela_av IS NOT NULL"])
     @porcentaje_total_areas_verdes = (@total_terreno > 0 )? ((@total_areas_verdes.to_f/@total_terreno.to_f) * 100.0).round(3) : 0
     @escuelas_realizan_reforestacion = Entorno.count(:id, :conditions => ["escuela_reforesta = ?", 'SI'])
+    @espacios = EscuelasEspacio.find(:all, :select => "sum(escesp.numero) as numero, e.descripcion",
+                                                       :joins => "escesp, espacios e, entornos en",
+                                                       :conditions => "en.id=escesp.entorno_id AND escesp.espacio_id=e.id",
+                                                       :group => "escesp.espacio_id")
+      a=10
   end
 
   def indicadores_eje3
