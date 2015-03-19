@@ -19,5 +19,9 @@ module ApplicationHelper
     return "<hr style='#{style};' />"
   end
 
+  def separa_miles(number, delimiter = ',')
+      number.to_s.reverse.gsub(%r{([0-9]{3}(?=([0-9])))}, "\\1#{delimiter}").reverse
+  end
+
 
 end
