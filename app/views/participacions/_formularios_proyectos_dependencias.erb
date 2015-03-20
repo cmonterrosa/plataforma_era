@@ -1,0 +1,39 @@
+<%if @proyectos_seleccionados_dependencias > 0%>
+        <%valores_por_defecto = Hash.new%>
+        <%@s_proyectos_dependencias =  Pescolar.find(:all, :conditions => ["participacion_id = ? AND materia= ?", @participacion, 'DEPENDENCIAS'])%>
+        <%unless @s_proyectos_dependencias.empty?%>
+                <%contador_proyectos=1%>
+                <%@s_proyectos_dependencias.each do |p|%>
+                    <%valores_por_defecto["nombre_#{contador_proyectos}"] =  p.nombre%>
+                    <%valores_por_defecto["descripcion_#{contador_proyectos}"] =  p.descripcion%>
+                    <%valores_por_defecto["dependencia_secretaria_apoya_#{contador_proyectos}"] =  p.dependencia_secretaria_apoya%>
+                    <%contador_proyectos+=1%>
+                <%end%>
+        <%end%>
+
+  <div class="grid-12-12">
+      <fieldset>
+        <legend style=" font-size: 14px;" >DETALLE&nbsp;DE&nbsp;PROYECTOS:</legend>
+          <%(1..@proyectos_seleccionados_dependencias).each do | proyecto|%>
+                  <div class="grid-12-12"></div>
+                  <div class="grid-12-12">
+                     <label style=" font-weight: bold;"><%=h proyecto%>.- Nombre del proyecto: <em class="formee-req">*</em></label>
+                      <%= text_field "pescolaresdependencias", "nombre_#{proyecto}", :value => valores_por_defecto["nombre_#{proyecto}"], :required => true %>
+                  </div>
+
+                  <div class="grid-12-12">
+                    <label style=" font-weight: bold;">Descripción del proyecto: </label>
+                    <%= text_area "pescolaresdependencias", "descripcion_#{proyecto}", :value => valores_por_defecto["descripcion_#{proyecto}"], :required => true %>
+                  </div>
+
+                  <div class="grid-12-12">
+                    <label style=" font-weight: bold;">Dependencia o Secretaría que apoya: </label>
+                    <%= text_area "pescolaresdependencias", "dependencia_secretaria_apoya_#{proyecto}", :value => valores_por_defecto["dependencia_secretaria_apoya_#{proyecto}"], :required => true %>
+                  </div>
+                  
+           <%end%>
+      </fieldset>
+    <%end%>
+</div>
+
+

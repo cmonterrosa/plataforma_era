@@ -9,18 +9,10 @@
     <td align="center">
       <table class="subprincipal" width="100%" border="0" cellpadding="4" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
         <tr>
-          <td width="49%" align="justify"><label class="uper">1.- ¿Cuántos docentes se han capacitado en materia de salud y/o medio ambiente en el último ciclo escolar?<em class="formee-req"> *</em></label></td>
+          <td width="49%" align="justify"><label class="uper">1.- ¿Cuántos docentes se han capacitado en el último ciclo escolar? en materia de: <em class="formee-req"> *</em></label></td>
           <td>&nbsp;</td>
-          <td width="49%" align="justify"><label class="uper">2.- De los docentes capacitados, ¿cuántos aplican con sus alumnos los conocimientos adquiridos en materia de salud y medio ambiente en otras acciones pedagógicas o extracurriculares?<em class="formee-req"> *</em></label></td>
+          <td width="49%" align="justify"><label class="uper">2.- De los docentes capacitados, ¿cuántos aplican con sus alumnos los conocimientos adquiridos?<em class="formee-req"> *</em></label></td>
         </tr>
-        <!--<tr>
-          <td>
-            <div class="grid-2-12">Porcentaje:</div>
-            <div class="grid-8-12">
-              <div class="bar_mortice rounded_tiny mortice_tiny green_mortice">
-                <div id="bar_docentes_capacitados_sma" class="progress rounded_tiny progress_tiny green" ></div>
-              </div>
-            </div>-->
             <% totales = Escuela.find_by_clave(current_user.login.upcase)
                if totales.nivel_descripcion == "BACHILLERATO"
                     docentes = totales.perfil_ciencias_naturales
@@ -30,52 +22,57 @@
             %>
             <input id="val_max_doc" name="val_max_doc" type="hidden" value="<%= docentes %>" />
             <input id="val_max_alu" name="val_max_alu" type="hidden" value="<%= totales.alu_hom + totales.alu_muj%>" />
-            <!--
-            <div class="grid-2-12"><%= text_field :porcentaje, :docentes_capacitados_sma, :class => "ninguno", :disabled => "disabled", :value => :porcentaje_docentes_capacitados_sma? ? '0 %': :porcentaje_docentes_capacitados_sma %></div>
-          </td>
-          <td>&nbsp;</td>
-          <td>
-            <div class="grid-2-12">Porcentaje:</div>
-            <div class="grid-8-12">
-              <div class="bar_mortice rounded_tiny mortice_tiny green_mortice">
-                <div id="bar_docentes_aplican_conocimientos" class="progress rounded_tiny progress_tiny green"></div>
-              </div>
-            </div>
-            <div class="grid-2-12"><%= text_field :porcentaje, :docentes_aplican_conocimientos, :class => "ninguno", :disabled => "disabled", :value => :porcentaje_docentes_aplican_conocimientos? ? '0 %': :porcentaje_docentes_aplican_conocimientos %></div>
-          </td>
-        </tr>-->
         <tr>
-          <td align="center" >
-            <div class="grid-3-12"></div>
-            <div class="grid-2-12">
-              <!--
-              <= f.text_field :docentes_capacitados_sma, :onkeyup => "showImageNum('competencia_docentes_capacitados_sma', 'eje1_p1'); porcentaje('competencia_docentes_capacitados_sma', 'porcentaje_docentes_capacitados_sma', 'bar_docentes_capacitados_sma', 'val_max_doc'); "%>-->
-              <!-- pregunta 1 -->
-              <%= f.text_field :docentes_capacitados_sma, :style => "text-align: center;", :onkeyup => "showImageNum('competencia_docentes_capacitados_sma', 'eje1_p1');" %>
-            </div>
+          <td align="left" style="vertical-align:middle;" >
             <div class="grid-1-12"></div>
-            <div class="grid-6-12" id="eje1_p1" style="display: none;">
+            <div class="grid-2-12">SALUD: <%= f.text_field :dctes_cap_salud, :style => "text-align: center;", :onkeyup => "showImageDctesAlumn('docentes', 'dcapacitadora', 'eje1_p1');" %></div>
+            <div class="grid-2-12">AMBIENTE: <%= f.text_field :dctes_cap_ma, :style => "text-align: center;", :onkeyup => "showImageDctesAlumn('docentes', 'dcapacitadora', 'eje1_p1');" %></div>
+            <div class="grid-2-12">AMBOS: <%= f.text_field :dctes_cap_ambos, :style => "text-align: center;", :onkeyup => "showImageDctesAlumn('docentes', 'dcapacitadora', 'eje1_p1');" %></div>
+            <div class="grid-1-12"></div>
+            <div class="grid-3-12" style="text-align:center;">TOTAL&nbsp;CAPACITADOS:
+              <input id="total_docentes" name="total_docentes" type="text" style="border-width: 0; width: 55px; font-size: 15px; text-align: center; color: black; background-color: #e6f8e0;" onkeyup="showImageDctesAlumn('docentes', 'dcapacitadora', 'eje1_p1');" />
+            </div>
+            
+            <div class="grid-12-12" id="dcapacitadora" style="display: none;">
+              <label class="uper">¿QUE&nbsp;INSTITUCIONES&nbsp;O&nbsp;DEPENDENCIAS&nbsp;IMPARTIERON&nbsp;ESTAS&nbsp;CAPACITACIONES?</label>
+            
+              <fieldset style="padding: 5px 5px 5px 5px;">
+                <div id="dcapacitadoras" class="grid-12-12">
+                  <% Dcapacitadora.find(:all).each do |c| %>
+                    <% @valor = nil %>
+                    <% @competencia.docentes_capacitados.each do |x| %>
+                      <% if x[:dcapacitadora_id] == c.id %>
+                        <% @valor = x.numero  %>
+                        <% @desc_dep = x.descripcion_dep %>
+                      <% end %>
+                    <% end %>
+                    <%= check_box_tag "dcapacitadoras[#{c.id}]", c.clave, @s_dcapacitadoras.include?(c.id) ? true : false, :onclick => "checkBoxToSelct('dcapacitadora');" %>&nbsp;<%= c.descripcion %>
+                    &nbsp;NÚM.&nbsp;DE&nbsp;CAPACITACIONES:&nbsp;<%= select "dcapacitadora", "#{c.clave}", (1..9), {:selected => @valor}, {:style => "display: none; width:40px;"}%><br /><br />
+                    <% if c.clave == "OTRA" %>&nbsp;DESCRIPCIÓN:&nbsp;<input name="dcapacitadoras<%= c.clave %>" id="dcapacitadoras<%= c.clave %>" size="35px" style="text-align:justify; display: none; text-transform: uppercase;" value="<%=h @desc_dep ? @desc_dep : "" %>" /><% end %>
+                    <%= linea_horizontal %>
+                  <% end %>
+                </div>
+              </fieldset>
+            </div>
+
+            <div class="grid-12-12" id="eje1_p1" style="display: none; text-align: center;">
               <%=link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta1", :id => "pregunta1"),
                                                               {:controller => "upload", :diagnostico => @diagnostico, :eje => 1, :numero_pregunta => 1, :action => "list_evidencias" },
                                                               :title => "EVIDENCIA DE LA PREGUNTA 1", :class => "fancybox fancybox.iframe"%>
-              <!--<div id="div_pregunta1">
-                <%= text_field :verifica, :pregunta1, :class => "ninguno", :style => "width:15px;", :disabled => "disabled", :value => :verifica_pregunta1? ? '0': :verifica_pregunta1 %> Archivo(s) cargado(s)
-              </div>-->
             </div>
           </td>
           <td>&nbsp;</td>
-          <td align="center">
+          <td align="justify" style="vertical-align:top;" >
             <div class="grid-3-12"></div>
             <div class="grid-2-12">
-              <%= f.text_field :docentes_aplican_conocimientos, :style => "text-align: center;", :onkeyup => "showImageNum('competencia_docentes_aplican_conocimientos', 'eje1_p2');" %>
+              <%= f.text_field :dctes_aplican_conocimto, :style => "text-align: center;", :onkeyup => "showImageNum('competencia_dctes_aplican_conocimto', 'eje1_p2');" %>
             </div>
+            <div class="grid-1-12"></div>
             <div class="grid-6-12" id="eje1_p2" style="display: none;">
               <%=link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta2", :id => "pregunta2"),
                                                               {:controller => "upload", :diagnostico => @diagnostico, :eje => 1, :numero_pregunta => 2, :action => "list_evidencias" },
                                                               :title => "EVIDENCIA DE LA PREGUNTA 2", :class => "fancybox fancybox.iframe"%>
-              <!--<%= text_field :verifica, :pregunta2, :class => "ninguno", :style => "width:15px;", :disabled => "disabled", :value => :verifica_pregunta2? ? '0': :verifica_pregunta2 %> Archivo(s) cargado(s)-->
             </div>
-            <div class="grid-6-12"></div>
           </td>
         </tr>
 
@@ -84,47 +81,24 @@
           <td>&nbsp;</td>
           <td width="49%" align="justify"><label class="uper">4.- Del total de alumnos, ¿cuántos recibieron capacitación relacionada con temas salud y medio ambiente por parte de los docentes en el último ciclo escolar?<em class="formee-req"> *</em></label></td>
         </tr>
-        <!--<tr>
-          <td>
-            <div class="grid-2-12">Porcentaje:</div>
-            <div class="grid-8-12">
-              <div class="bar_mortice rounded_tiny mortice_tiny green_mortice">
-                <div id="bar_docentes_involucran_actividades" class="progress rounded_tiny progress_tiny green"></div>
-              </div>
-            </div>
-            <div class="grid-2-12"><%= text_field :porcentaje, :docentes_involucran_actividades, :class => "ninguno", :disabled => "disabled", :value => :porcentaje_docentes_involucran_actividades? ? '0 %': :porcentaje_docentes_involucran_actividades %></div>
-          </td>
-          <td>&nbsp;</td>
-          <td>
-            <div class="grid-2-12">Porcentaje:</div>
-            <div class="grid-8-12">
-              <div class="bar_mortice rounded_tiny mortice_tiny green_mortice">
-                <div id="bar_alumnos_capacitados_docentes" class="progress rounded_tiny progress_tiny green"></div>
-              </div>
-            </div>
-            <input id="val_max_alu" name="val_max_alu" type="hidden" value="<%= totales.total_alumnos %>" />
-            <div class="grid-2-12"><%= text_field :porcentaje, :alumnos_capacitados_docentes, :class => "ninguno", :disabled => "disabled", :value => :porcentaje_porcentaje_alumnos_capacitados_docentes? ? '0 %': :porcentaje_porcentaje_alumnos_capacitados_docentes %></div>
-          </td>
-        </tr>-->
         <tr>
           <td align="center" >
             <div class="grid-3-12"></div>
             <div class="grid-2-12">
-              <%= f.text_field :docentes_involucran_actividades, :style => "text-align: center;", :onkeyup => "showImageNum('competencia_docentes_involucran_actividades', 'eje1_p3');" %>
+              <%= f.text_field :dctes_invol_act, :style => "text-align: center;", :onkeyup => "showImageNum('competencia_dctes_invol_act', 'eje1_p3');" %>
             </div>
             <div class="grid-1-12"></div>
             <div class="grid-6-12" id="eje1_p3" style="display: none;">
               <%=link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta3", :id => "pregunta3"),
                                                               {:controller => "upload", :diagnostico => @diagnostico, :eje => 1, :numero_pregunta => 3, :action => "list_evidencias" },
                                                               :title => "EVIDENCIA DE LA PREGUNTA 3", :class => "fancybox fancybox.iframe"%>
-              <!--<%= text_field :verifica, :pregunta3, :class => "ninguno", :style => "width:15px;", :disabled => "disabled", :value => :verifica_pregunta3? ? '0': :verifica_pregunta3 %> Archivo(s) cargado(s)-->
             </div>
           </td>
           <td>&nbsp;</td>
           <td align="center">
             <div class="grid-3-12"></div>
             <div class="grid-2-12">
-              <%= f.text_field :alumnos_capacitados_docentes, :style => "text-align: center;", :onkeyup => "showImageNum('competencia_alumnos_capacitados_docentes', 'eje1_p4');" %>
+              <%= f.text_field :alumn_cap_dctes, :style => "text-align: center;", :onkeyup => "showImageNum('competencia_alumn_cap_dctes', 'eje1_p4');" %>
             </div>
             <div class="grid-1-12"></div>
             <div class="grid-6-12" id="eje1_p4" style="display: none;">
@@ -141,31 +115,43 @@
           <td>&nbsp;</td>
           <td width="49%" align="justify">&nbsp;</td>
         </tr>
-        <!--<tr>
-          <td>
-            <div class="grid-2-12">Porcentaje:</div>
-            <div class="grid-8-12">
-              <div class="bar_mortice rounded_tiny mortice_tiny green_mortice">
-                <div id="bar_alumnos_capacitados_instituciones" class="progress rounded_tiny progress_tiny green"></div>
-              </div>
-            </div>
-            <div class="grid-2-12"><%= text_field :porcentaje, :alumnos_capacitados_instituciones, :class => "ninguno", :disabled => "disabled", :value => :porcentaje_alumnos_capacitados_instituciones? ? '0 %': :porcentaje_alumnos_capacitados_instituciones %></div>
-          </td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-        </tr>-->
         <tr>
-          <td align="center" >
-            <div class="grid-3-12"></div>
-            <div class="grid-2-12">
-              <%= f.text_field :alumnos_capacitados_instituciones, :style => "text-align: center;", :onkeyup => "showImageNum('competencia_alumnos_capacitados_instituciones', 'eje1_p5');" %>
+          <td align="left" >
+            <div class="grid-1-12"></div>
+            <div class="grid-2-12">SALUD: <%= f.text_field :alumn_cap_salud, :style => "text-align: center;", :onkeyup => "showImageDctesAlumn('alumnos', 'acapacitadora', 'eje1_p5');" %></div>
+            <div class="grid-2-12">AMBIENTE: <%= f.text_field :alumn_cap_ma, :style => "text-align: center;", :onkeyup => "showImageDctesAlumn('alumnos', 'acapacitadora', 'eje1_p5');" %></div>
+            <div class="grid-2-12">AMBOS: <%= f.text_field :alumn_cap_ambos, :style => "text-align: center;", :onkeyup => "showImageDctesAlumn('alumnos', 'acapacitadora', 'eje1_p5');" %></div>
+            <div class="grid-1-12"></div>
+            <div class="grid-3-12" style="text-align:center;">TOTAL&nbsp;CAPACITADOS:
+              <input id="total_alumn" name="total_alumn" type="text" style="border-width: 0; width: 55px; font-size: 15px; text-align: center; color: black; background-color: #e6f8e0;" />
             </div>
             <div class="grid-1-12"></div>
-            <div class="grid-6-12" id="eje1_p5" style="display: none;">
+            <!-- Línea pregunta -->
+            <div class="grid-12-12" id="acapacitadora" style="display: none;">
+              <label class="uper">¿QUE&nbsp;INSTICUCIONES&nbsp;O&nbsp;DEPENDENCIAS&nbsp;IMPARTIERON&nbsp;ESTAS CAPACITACIONES?</label>
+              <!-- Línea campo -->
+              <fieldset style="padding: 5px 5px 5px 5px;">
+                <div id="acapacitadoras" class="grid-12-12">
+                  <% Dcapacitadora.find(:all).each do |c| %>
+                  <% @valor = nil %>
+                    <% @competencia.alumnos_capacitados.each do |x| %>
+                      <% if x[:dcapacitadora_id] == c.id %>
+                        <% @valor = x.numero  %>
+                        <% @desc_dep = x.descripcion_dep %>
+                      <% end %>
+                    <% end %>
+                    <%= check_box_tag "acapacitadoras[#{c.id}]", c.clave, @s_acapacitadoras.include?(c.id) ? true : false, :onclick => "checkBoxToSelct('acapacitadora');" %>&nbsp;<%= c.descripcion %>
+                    &nbsp;NÚM.&nbsp;DE&nbsp;CAPACITACIONES:&nbsp;<%= select "acapacitadora", "#{c.clave}", (1..9), {:selected => @valor}, {:style => "display: none; width: 40px;"}%><br /><br />
+                    <% if c.clave == "OTRA" %>&nbsp;DESCRIPCIÓN:&nbsp;<input name="acapacitadoras<%= c.clave %>" id="acapacitadoras<%= c.clave %>" size="35px" style="text-align: justify; display: none; text-transform: uppercase;" value="<%=h @desc_dep ? @desc_dep : "" %>" /><% end %>
+                    <%=linea_horizontal%>
+                  <% end %>
+                </div>
+              </fieldset>
+            </div>
+            <div class="grid-12-12" id="eje1_p5" style="display: none; text-align: center;">
               <%=link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta5", :id => "pregunta5"),
                                                               {:controller => "upload", :diagnostico => @diagnostico, :eje => 1, :numero_pregunta => 5, :action => "list_evidencias" },
-                                                              :title => "EVIDENCIA DE LA PREGUNTA 5", :class => "fancybox fancybox.iframe"%>
-              <!--<%= text_field :verifica, :pregunta5, :class => "ninguno", :style => "width:15px;", :disabled => "disabled", :value => :verifica_pregunta5? ? '0': :verifica_pregunta5 %> Archivo(s) cargado(s)-->
+                                                              :title => "EVIDENCIA DE LA PREGUNTA 5", :class => "fancybox fancybox.iframe"%>              
             </div>
           </td>
           <td>&nbsp;</td>
@@ -178,11 +164,8 @@
   <tr>
     <td colspan="3">&nbsp;</td>
   </tr>
-
-
   
   <%= render :partial => "diagnosticos/errores_evidencias"%>
-
 
   <tr>
     <td align="right">
@@ -204,40 +187,78 @@
 </table>
 <% end %>
 
-<%#= observe_form  :competencia,
-                  :url => {:controller => 'getnumbers', :action => 'getnumberadj'},
-                  :frequency => 0.05,
-                  :update => "div_pregunta1"%>
  
 <script type="text/javascript">
-  showImageNum('competencia_docentes_capacitados_sma', 'eje1_p1');
-  showImageNum('competencia_docentes_aplican_conocimientos', 'eje1_p2');
-  showImageNum('competencia_docentes_involucran_actividades', 'eje1_p3');
-  showImageNum('competencia_alumnos_capacitados_docentes', 'eje1_p4');
-  showImageNum('competencia_alumnos_capacitados_instituciones', 'eje1_p5');
-  <%#*porcentaje('competencia_docentes_capacitados_sma', 'porcentaje_docentes_capacitados_sma', 'bar_docentes_capacitados_sma', 'val_max_doc');%>
-  <%#*porcentaje('competencia_docentes_aplican_conocimientos', 'porcentaje_docentes_aplican_conocimientos', 'bar_docentes_aplican_conocimientos', 'val_max_doc');%>
-  <%#*porcentaje('competencia_docentes_involucran_actividades', 'porcentaje_docentes_involucran_actividades', 'bar_docentes_involucran_actividades', 'val_max_doc');%>
-  <%#*porcentaje('competencia_alumnos_capacitados_docentes', 'porcentaje_alumnos_capacitados_docentes', 'bar_alumnos_capacitados_docentes', 'val_max_alu');%>
-  <%#*porcentaje('competencia_alumnos_capacitados_instituciones', 'porcentaje_alumnos_capacitados_instituciones', 'bar_alumnos_capacitados_instituciones', 'val_max_alu');%>
+  showImageDctesAlumn('docentes', 'dcapacitadora', 'eje1_p1');
+  showImageDctesAlumn('alumnos', 'acapacitadora', 'eje1_p5');
+  showImageNum('competencia_dctes_aplican_conocimto', 'eje1_p2');
+  showImageNum('competencia_dctes_invol_act', 'eje1_p3');
+  showImageNum('competencia_alumn_cap_dctes', 'eje1_p4');
+  <%#*showImageDctesAlumn('alumnos', 'acapacitadora', 'eje1_p5');%>
+    
+  checkBoxToSelct('dcapacitadora');
+  checkBoxToSelct('acapacitadora');
 
-  var docentes_capacitados_sma = new LiveValidation( 'competencia_docentes_capacitados_sma' );
-  docentes_capacitados_sma.add( Validate.Presence );
-  docentes_capacitados_sma.add( Validate.Numericality, { maximum: parseInt(document.getElementById("val_max_doc").value), onlyInteger: true } );
+  var dctes_cap_salud = new LiveValidation('competencia_dctes_cap_salud');
+  dctes_cap_salud.add( Validate.Presence );
+  dctes_cap_salud.add( Validate.Numericality, { onlyInteger: true } );
   
-  var docentes_aplican_conocimientos = new LiveValidation( 'competencia_docentes_aplican_conocimientos' );
-  docentes_aplican_conocimientos.add( Validate.Presence );
-  docentes_aplican_conocimientos.add( Validate.Numericality, { maximum: parseInt(document.getElementById("val_max_doc").value), onlyInteger: true } );
+  var dctes_cap_ma = new LiveValidation('competencia_dctes_cap_ma');
+  dctes_cap_ma.add( Validate.Presence );
+  dctes_cap_ma.add( Validate.Numericality, { onlyInteger: true } );
 
-  var docentes_involucran_actividades = new LiveValidation( 'competencia_docentes_involucran_actividades' );
-  docentes_involucran_actividades.add( Validate.Presence );
-  docentes_involucran_actividades.add( Validate.Numericality, { maximum: parseInt(document.getElementById("val_max_doc").value), onlyInteger: true } );
+  var dctes_cap_ambos = new LiveValidation('competencia_dctes_cap_ambos');
+  dctes_cap_ambos.add( Validate.Presence );
+  dctes_cap_ambos.add( Validate.Numericality, { onlyInteger: true } );
 
-  var alumnos_capacitados_docentes = new LiveValidation( 'competencia_alumnos_capacitados_docentes' );
-  alumnos_capacitados_docentes.add( Validate.Presence );
-  alumnos_capacitados_docentes.add( Validate.Numericality, { maximum: parseInt(document.getElementById("val_max_alu").value), onlyInteger: true } );
+  var total_docentes = new LiveValidation('total_docentes');
+  total_docentes.add( Validate.Presence );
+  total_docentes.add( Validate.Numericality, { maximum: parseInt(document.getElementById("val_max_doc").value), onlyInteger: true} );
 
-  var alumnos_capacitados_instituciones = new LiveValidation( 'competencia_alumnos_capacitados_instituciones' );
-  alumnos_capacitados_instituciones.add( Validate.Presence );
-  alumnos_capacitados_instituciones.add( Validate.Numericality, { maximum: parseInt(document.getElementById("val_max_alu").value), onlyInteger: true } );
+  var dctes_aplican_conocimto = new LiveValidation('competencia_dctes_aplican_conocimto');
+  dctes_aplican_conocimto.add( Validate.Presence );
+  dctes_aplican_conocimto.add( Validate.Numericality, { maximum: parseInt(document.getElementById("total_docentes").value), onlyInteger: true } );
+ 
+  var dctes_invol_act = new LiveValidation( 'competencia_dctes_invol_act' );
+  dctes_invol_act.add( Validate.Presence );
+  dctes_invol_act.add( Validate.Numericality, { maximum: parseInt(document.getElementById("val_max_doc").value), onlyInteger: true} );
+
+  var alumn_cap_dctes = new LiveValidation( 'competencia_alumn_cap_dctes' );
+  alumn_cap_dctes.add( Validate.Presence );
+  alumn_cap_dctes.add( Validate.Numericality, { maximum: parseInt(document.getElementById("val_max_alu").value), onlyInteger: true } );
+
+  var alumn_cap_salud = new LiveValidation( 'competencia_alumn_cap_salud' );
+  alumn_cap_salud.add( Validate.Presence );
+  alumn_cap_salud.add( Validate.Numericality, { onlyInteger: true } );
+
+  var alumn_cap_ma = new LiveValidation( 'competencia_alumn_cap_ma' );
+  alumn_cap_ma.add( Validate.Presence );
+  alumn_cap_ma.add( Validate.Numericality, { onlyInteger: true } );
+
+  var alumn_cap_ambos = new LiveValidation( 'competencia_alumn_cap_ambos' );
+  alumn_cap_ambos.add( Validate.Presence );
+  alumn_cap_ambos.add( Validate.Numericality, { onlyInteger: true } );
+
+  var total_alumn = new LiveValidation( 'total_alumn' );
+  total_alumn.add( Validate.Presence );
+  total_alumn.add( Validate.Numericality, { maximum: parseInt(document.getElementById("val_max_alu").value), onlyInteger: true } );
+  
+  jQuery(function(){
+    jQuery("#dcapacitadoras").validate({ expression: "if (skipSelect2(SelfID, 'total_docentes')) return true; else return false;", message: "Seleccione una opción!" });
+    jQuery("#acapacitadoras").validate({ expression: "if (skipSelect2(SelfID, 'total_alumn')) return true; else return false;", message: "Seleccione una opción!" });
+  });
+  
+  jQuery("#competencia_dctes_cap_salud").keyup(function() {
+      dctes_aplican_conocimto.remove( Validate.Numericality, { maximum: parseInt(document.getElementById("total_docentes").value), onlyInteger: true } );
+      dctes_aplican_conocimto.add( Validate.Numericality, { maximum: parseInt(document.getElementById("total_docentes").value), onlyInteger: true } );
+  });
+  jQuery("#competencia_dctes_cap_ma").keyup(function() {
+      dctes_aplican_conocimto.remove( Validate.Numericality, { maximum: parseInt(document.getElementById("total_docentes").value), onlyInteger: true } );
+      dctes_aplican_conocimto.add( Validate.Numericality, { maximum: parseInt(document.getElementById("total_docentes").value), onlyInteger: true } );
+  });
+  jQuery("#competencia_dctes_cap_ambos").keyup(function() {
+      dctes_aplican_conocimto.remove( Validate.Numericality, { maximum: parseInt(document.getElementById("total_docentes").value), onlyInteger: true } );
+      dctes_aplican_conocimto.add( Validate.Numericality, { maximum: parseInt(document.getElementById("total_docentes").value), onlyInteger: true } );
+  });
+
 </script>

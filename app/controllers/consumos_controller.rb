@@ -5,7 +5,7 @@ class ConsumosController < ApplicationController
   def new_or_edit
     @diagnostico = Diagnostico.find(params[:id]) if params[:id]
     @diagnostico ||= Diagnostico.new
-    @consumo = @diagnostico.consumo || Consumo.new
+    @consumo = (@diagnostico.consumo)? @diagnostico.consumo : Consumo.new
     
     @escuela = Escuela.find_by_clave(current_user.login.upcase)
     if @escuela.nivel_descripcion == "BACHILLERATO"
@@ -34,13 +34,34 @@ class ConsumosController < ApplicationController
 
     validador = verifica_evidencias(@diagnostico,4)
     if validador["valido"]
-        if(params[:establecimientos] and params[:consumo][:escuela_establecimiento] == 'NO')
-          @establecimientos = []
-          params[:establecimientos].each { |op| @establecimientos << Establecimiento.find_by_clave(op)  }
-          @consumo.establecimientos = Establecimiento.find(@establecimientos)
-        else
-          @consumo.establecimientos.delete_all if @consumo.establecimientos
+        ## Validación de preguntas si cuenta con establecimientos ###
+        if @consumo.escuela_establecimiento == 'NO'
+           params[:preparacions] = params[:utensilios] = params[:higienes] = params[:alimentos] = params[:bebidas] = params[:botanas] = params[:reposterias] = Array.new
+           params[:consumo][:conocen_lineamientos_grales] = nil
+           params[:consumo][:capacitacion_alim_bebidas] = nil
+           ### Solo establecimientos en respuesta negativa ###
+           if params[:establecimientos]
+             @establecimientos = []
+             params[:establecimientos].each { |op|
+               @establecimientos << Establecimiento.find_by_clave(op) if (op.include?("CLAE") || op.include?("CAEC"))
+               @consumo.establecimientos = Establecimiento.find(@establecimientos)
+            }
+           end
         end
+
+       unless @establecimientos
+            @establecimientos = []
+            if params[:establecimientos]
+              params[:establecimientos].each { |op|
+                @establecimientos << Establecimiento.find_by_clave(op) unless (op.include?("CLAE") || op.include?("CAEC"))
+              }
+              @consumo.establecimientos = Establecimiento.find(@establecimientos)
+            else
+              @consumo.establecimientos.delete_all
+          end
+       end
+      
+
 
         if params[:preparacions]
             @preparacions = []
@@ -105,7 +126,8 @@ class ConsumosController < ApplicationController
         end
 
         @consumo.frecuencia_afisica_id = FrecuenciaAfisica.find_by_clave(params[:consumo][:frecuencia_afisica_id]).id if params[:consumo][:frecuencia_afisica_id]
-
+        @consumo.minutos_activacion_fisica = nil unless @consumo.frecuencia_afisica
+        
         if @consumo.save
           flash[:notice] = "Registro guardado correctamente"
           redirect_to :controller => "diagnosticos"
@@ -120,6 +142,7 @@ class ConsumosController < ApplicationController
           @s_botanas = multiple_selected(@consumo.botanas) if @consumo.botanas
           @s_reposterias = multiple_selected(@consumo.reposterias) if @consumo.reposterias
           @s_materials = multiple_selected(@consumo.materials) if @consumo.materials
+          @s_afisicas = selected(@consumo.frecuencia_afisica) if @consumo.frecuencia_afisica
           flash[:evidencias] = @consumo.errors.full_messages.join(", ")
           render :action => "new_or_edit"
         end

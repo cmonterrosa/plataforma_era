@@ -8,7 +8,7 @@ class CreateMensajes < ActiveRecord::Migration
       t.integer :activo
       t.timestamps
     end
-   
+
    add_index :mensajes, :envia_id, :name => "mensajes_usuario_envio"
    add_index :mensajes, :recibe_id, :name => "mensajes_usuario_recibido"
   end

@@ -21,7 +21,7 @@ class UserMailer < ActionMailer::Base
   protected
     def setup_email(user)
       @recipients = "#{user.email}"
-      @from = "Educar con Responsabilidad Ambiental <plataforma.era@gmail.com>"
+      @from = "Educar con Responsabilidad Ambiental <#{SITE_EMAIL}>"
       @sent_on  = Time.now
       @body[:user] = user
       @subject   = " "

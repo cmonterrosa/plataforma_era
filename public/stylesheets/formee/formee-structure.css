@@ -27,10 +27,10 @@ Structure
 
 .formee {margin:0;padding:0 15px;}
 .formee fieldset {
-	border: 1px solid #d4d4d4;
+	border: 2px solid #d4d4d4;
 	position: relative;
 	height:100%;
-	padding: 1.2em 0;
+	padding: 1.3em 0;
 	margin: 0 0 4em;
 }
 .formee fieldset.report {
@@ -95,6 +95,21 @@ Structure
 *padding: 0.8% 0.25% 1%;
 }
 
+.grid-form-login{
+      display:inline-block;
+	position:relative;
+        margin: auto;
+	padding: 1% 1% 2% 6%;
+	height:90%;
+/*ie7*/
+*margin-left:.8%;
+*margin-right:.8%;
+*padding: 0.8% 0.25% 1%;
+}
+
+
+
+
 .grid-center{
     text-align: center;
     margin-left:1%;
@@ -131,7 +146,8 @@ Structure
 .grid-10-12 {width: 80.333%;}
 .grid-11-12 {width: 88.666%;}
 .grid-12-12 {width: 97%;}
-.grid-form {width: 47%;}
+.grid-form {width: 62%;}
+.grid-form-login {width: 88%;}
 .grid-login {width: 50%;}
 
 
@@ -163,7 +179,7 @@ Structure
 .formee .formee-txt, .formee input[type="text"], .formee input[type="password"], .formee input[type="file"], .formee textarea, .formee select{
 	vertical-align: middle;
 	line-height: 1.1em;
-	width: 100%;
+        width: 100%;
 	padding:10px;
 	border-style: solid;
 	border-width: 1px;
@@ -179,10 +195,11 @@ Structure
 .formee textarea.nta {
     height: 7.5em;
     border-color:#acacac;
-    background: #f2f2f2;
+/*    background: #f2f2f2;*/
     color: #424242;
+    font-size: 10px;
 }
-.formee select {padding: 5px; height: 2.1em;}
+.formee select {padding: 2px; height: 2.1em;}
 /*.formee select[multiple="multiple"] {padding:5px;height:8em;}*/
 .formee select[multiple="multiple"] {padding: 5px; height: auto;}
 .formee-list .formee-lbl, .formee-list label {

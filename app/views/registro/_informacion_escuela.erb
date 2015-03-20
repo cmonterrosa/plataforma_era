@@ -11,7 +11,7 @@
   <fieldset>
     <legend>Registro&nbsp;de&nbsp;Escuelas</legend>
 
-    <div id="prellenado" style="background:#ebf7aa;">
+    <div id="prellenado" style="background: rgba(255, 255, 0, 0.2);">
       <div class="grid-3-12">
         <label style=" font-weight: bold;">Clave:</label>
         <label style=" font-style: italic;"><%= @escuela.clave %></label>
@@ -51,7 +51,7 @@
         <%= f.text_field :domicilio %>
       </div>
       <div class="grid-4-12">
-        <label style=" font-weight: bold;">Telefono:</label>
+        <label style=" font-weight: bold;">Teléfono:</label>
         <%= f.text_field :telefono %>
       </div>
 
@@ -146,7 +146,7 @@
 
     <!-- director -->
     <div class="grid-12-12">
-      <label>Nombre del director: <em class="formee-req">*</em></label>
+      <label>Nombre completo del director: <em class="formee-req">*</em></label>
       <%= f.text_field  :nombre_director%>
     </div>
 
@@ -168,13 +168,13 @@
 
     <!-- responsables -->
     <div class="grid-12-12">
-      <label>Nombre del responsable del proyecto: <em class="formee-req">*</em></label>
+      <label>Nombre completo del responsable del proyecto: <em class="formee-req">*</em></label>
       <%= f.text_field :responsables_proyecto %>
     </div>
 
     <!-- telefono y correo electronico de responsables -->
     <div class="grid-6-12">
-      <label>Teléfono (lada): </label>
+      <label>Teléfono (con lada): </label>
       <%= f.text_field :tel_responsable_proyecto%>
     </div>
 
@@ -230,9 +230,11 @@
         </div>
         </fieldset>
       </div>
+
+    
     
     <!-- submit -->
-    <div class="grid-12-12">
+    <div class="grid-12-12" style="text-align: center;">
       <input class="right" type="submit" onclick="to_uppercase();" title="GUARDAR REGISTRO Y GENERAR DOCUMENTOS" value="GUARDAR REGISTRO Y GENERAR DOCUMENTOS" />
     </div>
 

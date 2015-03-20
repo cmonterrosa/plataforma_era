@@ -16,9 +16,9 @@
           margin-top: 5px;
           /*background-color: #F0F0F0;*/
           background-color: white;
-          /*font-family: Arial Narrow,Helvetica,sans-serif;*/
-          font-family: "Arial Narrow", Arial, "Helvetica Condensed";
-  }
+          font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+          }
 
   </style>
 
@@ -58,6 +58,10 @@
 <%#= javascript_include_tag "acordeon/acordeon.js" %>
 <%= stylesheet_link_tag "acordeon/style.css" %>
 <%#= stylesheet_link_tag "acordeon/demo.css" %>
+
+
+<!-- Validaciones nuevas -->
+<%=javascript_include_tag "validaciones_ciclo2015" %>
 
 <script type="text/javascript">
   jQuery.noConflict();
@@ -282,8 +286,14 @@ a:active {
         </tr>
         <tr>
           <td colspan="3">
-            <table width="800px" border="0" cellspacing="0" cellpadding="0">
+            <table width="880px" border="0" cellspacing="0" cellpadding="0">
               <tr>
+
+                <!-- home -->
+                <td width="32px">
+                  <%=link_to image_tag("admin/home.png", :size => "32x32", :mouseover => "admin/home.png",  :border => 0), {:controller => "home", :action => "index" }, :title => "INICIO"%>
+                </td>
+                
                 <td width="60px" align="right"><img src="/images/era/iconos/ico_arbol.png" alt="2" width="34" height="17" /></td>
                 <!-- <td width="40" class="Txt_arbol"><a href="http://era.educacionchiapas.gob.mx" class="Txt_arbol">Inicio</a></td>-->
 
@@ -308,7 +318,7 @@ a:active {
                 <td width="34" align="center"><img src="/images/era/iconos/ico_arbol.png" alt="1" width="34" height="17" /></td>
 
                 <!-- Nombre de quien esta loggeado -->
-                <td width="320" class="Txt_arbol">
+                <td width="520" class="Txt_arbol">
                   <a href="/home" class="Txt_arbol">
                     <%if current_user.has_role?("directivo")%>
                       <%nombre= (@esc = Directivo.find_by_clave(current_user.login)) ? @esc.descripcion : nil%>
@@ -327,16 +337,16 @@ a:active {
                             <td width="350" class="Txt_arbol"><%=image_tag ("mensajes/mensajes_recibidos_small.png")%>&nbsp;<a href="/home" class="Txt_arbol"><%=link_to "(#{current_user.numero_mensaje_bandeja}) MENSAJES NUEVOS", {:action => "recibidos", :controller => "mensajes"}, :style => "text-decoration: none; color: #e51414;", :title => "BANDEJA DE ENTRADA"%></a></td>
                         <%else%>
                             <td width="34" align="center"><img src="/images/era/iconos/ico_arbol.png" alt="1" width="34" height="17" /></td>
-                            <td width="350" class="Txt_arbol"><%=image_tag ("mensajes/mensajes.png")%>&nbsp;<a href="/home" class="Txt_arbol"><%=link_to "PLATAFORMA DE MENSAJES", {:action => "list", :controller => "mensajes"}, :style => "text-decoration: none; color: #027bed;", :title => "NO HAY MENSAJES NUEVOS"%></a></td>
+                            <td width="350" class="Txt_arbol"><%=image_tag ("mensajes/mensajes.png")%>&nbsp;<a href="/home" class="Txt_arbol"><%=link_to "NOTIFICACIONES", {:action => "list", :controller => "mensajes"}, :style => "text-decoration: none; color: #027bed;", :title => "NO HAY MENSAJES NUEVOS"%></a></td>
                         <%end%>
 
 
 
                   <td width="34" align="center"><img src="/images/era/iconos/ico_arbol.png" alt="1" width="34" height="17" /></td>
-                  <td width="120" class="Txt_arbol"><a href="/home" class="Txt_arbol"><%=link_to "CERRAR SESIÓN", {:action => "destroy", :controller => "sessions"}, :style => "http://esys.educacionchiapas.gob.mx" , :style => "text-decoration: none; color: #404040;", :title => "¿ESTÁ SEGURO(A) QUE DESEA SALIR DE LA PLATAFORMA"%></a></td>
+                  <td width="180" class="Txt_arbol"><a href="/home" class="Txt_arbol"><%=link_to "CERRAR SESIÓN", {:action => "destroy", :controller => "sessions"}, :style => "http://esys.educacionchiapas.gob.mx" , :style => "text-decoration: none; color: #404040;", :title => "¿ESTÁ SEGURO(A) QUE DESEA SALIR DE LA PLATAFORMA"%></a></td>
                 <%else%>
                   <td width="34" align="center"><img src="/images/era/iconos/ico_arbol.png" alt="1" width="34" height="17" /></td>
-                  <td width="120" class="Txt_arbol"><a href="/home" class="Txt_arbol"><%=link_to "INICIAR SESIÓN", {:action => "new", :controller => "sessions"}, :style => "http://esys.educacionchiapas.gob.mx" , :style => "text-decoration: none; color: #404040;", :title => "HAGA CLICK PARA INICIAR SESIÓN"%></a></td>
+                  <td width="180" class="Txt_arbol"><a href="/home" class="Txt_arbol"><%=link_to "INICIAR SESIÓN", {:action => "new", :controller => "sessions"}, :style => "http://esys.educacionchiapas.gob.mx" , :style => "text-decoration: none; color: #404040;", :title => "HAGA CLICK PARA INICIAR SESIÓN"%></a></td>
                 <%end%>
 
                 <td>&nbsp;</td>
@@ -412,6 +422,15 @@ a:active {
                 <li><%=flash[:notice]%></li>
               </ul>
             </div>
+
+            <%elsif flash[:warning]%>
+            <div class="formee-msg-warning">
+              <h3>Atención:</h3>
+              <ul>
+                <li><%=flash[:warning]%></li>
+              </ul>
+            </div>
+
             <%elsif flash[:error]%>
             <div class="formee-msg-error">
               <h3>Error:</h3>
@@ -470,7 +489,7 @@ a:active {
                     Calzada Mayor Julio Sabines S/N,
                     Col. 24 de Junio, Tuxtla Gutiérrez, Chiapas.<br />
                     Teléfono: (961) 61 70800 Ext. 41270<br />
-                    Correo Electrónico: <a href="mailto:era.chiapas@gmail.com" class="Txt_piepagina">era.chiapas@gmail.com</a>
+                    Correo Electrónico: <a href="mailto:era.chiapas@gmail.com" class="Txt_piepagina">certificacion.esys@gmail.com</a>
                   </span>
                 </td>
               </tr>

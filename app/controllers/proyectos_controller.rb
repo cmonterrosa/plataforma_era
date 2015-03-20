@@ -20,11 +20,13 @@ class ProyectosController < ApplicationController
     @escuela_id = Escuela.find_by_clave(current_user.login.upcase).id if current_user
     @diagnostico = Diagnostico.find_by_escuela_id(@escuela_id) if @escuela_id
     @diagnostico_concluido = (@diagnostico.oficializado) ? @diagnostico.oficializado : false  if @diagnostico
-    if @diagnostico_concluido
+    @proyecto_habilitado = false
+    notice = (@proyecto_habilitado) ? "Bienvenido a la captura del proyecto" : "La fase de captura de proyecto aún no se encuentra disponible"
+    if @diagnostico_concluido && @proyecto_habilitado
        @proyecto = Proyecto.find_by_diagnostico_id(@diagnostico)
        @ejes = Eje.find(:all, :conditions => ["proyecto_id = ?", @proyecto.id ]) if @proyecto
     else
-      flash[:notice] = "Para iniciar la captura del proyecto, es necesario concluir la etapa de diagnóstico"
+      flash[:warning] = notice
       redirect_to :action => "index", :controller => "diagnosticos"
     end
     a=0

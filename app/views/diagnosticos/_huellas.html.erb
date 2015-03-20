@@ -1,0 +1,205 @@
+<% form_for :huella, @huella, :url => { :action => "save", :id => @huella, :diagnostico => @diagnostico.id }, :html => {:class => "formee", :id => "huella"} do |f| -%>
+<table class="principal" width="100%" border="0" align="center" cellpadding="2" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
+  <tr bgcolor="#003366" style="opacity: 0.7;" >
+    <td align="center"><h4>EJE 3: HUELLA ECOLÓGICA</h4></td>
+  </tr>
+  <tr align="center">
+    <td align="center">
+      <table class="subprincipal" width="100%" border="0" cellpadding="4" cellspacing="1" style="background-color: #ffffff; BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
+        <tr>
+          <td width="49%" align="justify" style="vertical-align:top;" >
+            <!-- Línea Pregunta -->
+            <div class="grid-12-12">
+              <label class="uper">1.- ¿La escuela promueve acciones enfocadas al fomento en la cultura del ahorro y uso eficiente de la energía eléctrica por medio del Fideicomiso para el Ahorro de la Energía Eléctrica (FIDE).?<em class="formee-req"> *</em></label>
+            </div>
+            <!-- Línea campo -->
+            <div class="grid-3-12"></div>
+            <div class="grid-5-12">
+              <span id="ahorro_energia" class="InputGroup">
+                <label class="uper">SI <%= f.radio_button :capacitacion_ahorro_energia, "SI", :onclick => "showImageCheck(this, 'eje3_p1');" %></label>&nbsp;&nbsp;
+                <label class="uper">NO <%= f.radio_button :capacitacion_ahorro_energia, "NO", :onclick => "showImageCheck(this, 'eje3_p1');" %></label>
+              </span>
+            </div>
+            <div class="grid-8-12"></div>
+            <div id="eje3_p1" class="grid-12-12" style="text-align: center; display: none;">
+            </div>
+          </td>
+          <td>&nbsp;</td>
+          <td width="49%" align="justify">
+            <!-- Línea pregunta -->
+            <div class="grid-12-12">
+              <label class="uper">2.- Tomando en cuenta el último bimestre de consumo con relación al mismo bimestre del año anterior ¿Cuál es la variación en el consumo eléctrico de la institución escolar?.<em class="formee-req"> *</em></label>
+            </div>
+            <div class="grid-12-12">
+              <label class="formee-msg-info" style="text-transform:uppercase;font-size:1.1em;">
+                Para obtener el valor de consumo, debe de considerar el historial en kWh consumidos en su recibo de energía eléctrica.
+              </label>
+            </div>
+            <div class="grid-12-12">
+              <label class="uper">Seleccione una opción:</label>
+                <% energias = EnergiaElectrica.all.sort{|p1,p2|p2.id  <=> p1.id } %>
+                <%= f.select :energia_electrica_id, energias.collect {|p| [ p.descripcion, p.clave ]}, {:selected => @s_electricas}, :class => "rpt"%>
+            </div>
+            <div id="eje3_p2" class="grid-12-12">
+              <div class="grid-4-12">
+                <label class="uper">Consumo&nbsp;ant.:</label>
+                <div class="grid-8-12">
+                  <%= f.text_field :consumo_anterior, :style => "text-align: right;", :class => "rpt" %>
+                </div>
+                <div class="grid-2-12">
+                  <label class="uper" style="padding: 10px 0;" >kWh</label>
+                </div>
+              </div>
+              <div class="grid-4-12">
+                <label class="uper">Consumo&nbsp;actual:</label>
+                <div class="grid-8-12">
+                  <%= f.text_field :consumo_actual, :style => "text-align: right;", :class => "rpt" %>
+                </div>
+                <div class="grid-2-12">
+                  <label class="uper" style="padding: 10px 0;" >kWh</label>
+                </div>
+              </div>
+              <div class="grid-4-12">
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="vertical-align:top;">
+            <!-- Línea Pregunta -->
+            <div class="grid-12-12">
+              <label class="uper">3.- De los focos existentes en la institución, ¿cuál es el total de?: <em class="formee-req"> *</em></label>
+            </div>
+            <!-- Línea campo -->
+            <div class="grid-6-12">
+              <label class="uper">Focos incandescentes:</label>
+              <%= f.select(:focos_incandescentes, @focos.map { |value| [ value, value ] }, {}, {:class => "rpt"})%>
+            </div>
+            <div class="grid-1-12"></div>
+            <div class="grid-5-12">
+              <label class="uper">Focos ahorradores:</label>
+              <%= f.select(:focos_ahorradores, @focos.map { |value| [ value, value ] }, {}, {:class => "rpt"})%>
+            </div>
+            <div class="grid-12-12" style="text-align: center;">
+              <label class="uper">Total focos:&nbsp; &nbsp;</label><label id="total_focos"/>
+            </div>
+          </td>
+          <td>&nbsp;</td>
+          <td style="vertical-align:top;">
+            <!-- Línea Pregunta -->
+            <div class="grid-12-12">
+              <label class="uper">4.- ¿Con que tipo de abastecimiento de agua cuenta la escuela?.<em class="formee-req"> *</em></label>
+            </div>
+            <!-- Línea campo -->
+            <fieldset style="padding: 5px 5px 5px 5px;">
+                <div id="servicio_aguas" class="grid-12-12">
+                  <% i= 1 %>
+                  <% ServicioAgua.find(:all).each do |c| %>
+                    <% if @s_servicio_aguas.include?(c.id) %>
+                      <%= check_box_tag "servicio_aguas[#{i}]", c.clave, @s_servicio_aguas.include?(c.id) ? true : false %>&nbsp;<%= c.descripcion %><br /><br />
+                      <% i+=1 %>
+                      <%=linea_horizontal%>
+                    <% end %>
+                  <% end %>
+                </div>
+            </fieldset>
+          </td>
+        </tr>
+        <tr>
+          <td width="49%" align="justify" style=" vertical-align:top;" >
+            <!-- Línea pregunta -->
+
+              <label class="uper">5.- ¿Cuántas veces la escuela da mantenimiento preventivo y/o correctivo a las instalaciones hidráulicas en el ciclo escolar?.<em class="formee-req"> *</em></label>
+            <!-- Línea campo -->
+            <div class="grid-5-12"></div>
+            <div class="grid-2-12">
+              <%= f.select :mantto_inst, (0..2),{}, :class => "rpt" %>
+            </div>
+          </td>
+          <td>&nbsp;</td>
+          <td align="justify" style=" vertical-align:top;" >
+            <!-- Línea Pregunta -->
+              <label class="uper">6.- ¿Que tipo de acciones realiza para la disposición de los residuos sólidos.?<em class="formee-req"> *</em></label>
+            <!-- Línea campo -->
+            <div id="elimina_residuos" class="grid-12-12" style="text-align: justify;">
+              <label class="uper"></label>
+              <fieldset style="padding: 5px 5px 5px 5px;">
+                  <% EliminaResiduo.find(:all).each do |c| %>
+                    <% if @s_elimina_residuos.include?(c.id) %>
+                      <%= check_box_tag "elimina_residuos[#{c.id}]", c.clave, @s_elimina_residuos.include?(c.id) ? true : false %>&nbsp;<%= c.descripcion %><br /><br />
+                      <%=linea_horizontal%>
+                    <% end %>
+                  <% end %>
+              </fieldset>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td width="49%" align="justify" style=" vertical-align:top;" >
+            <!-- Línea pregunta -->
+            <%#*<div class="grid-12-12">%>
+              <label class="uper">7.- De los residuos sólidos, generados en la institución. ¿Se realiza en toda la escuela la adecuada separación según las características de  su composición? (ORGANICO E INORGANICO).<em class="formee-req"> *</em></label>
+            <%#*</div>%>
+            <!-- Línea campo -->
+            <div class="grid-3-12"></div>
+            <div class="grid-5-12">
+              <span id="sep_residuos_org_inorg" class="InputGroup">
+                <label class="uper">SI <%= f.radio_button :sep_residuos_org_inorg, "SI" %></label>&nbsp;&nbsp;
+                <label class="uper">NO <%= f.radio_button :sep_residuos_org_inorg, "NO" %></label>
+              </span>
+            </div>
+            <div class="grid-8-12"></div>
+          </td>
+          <td>&nbsp;</td>
+          <td align="justify" style=" vertical-align:top;">
+            <!-- Línea Pregunta -->
+            <%#*<div class="grid-12-12">%>
+              <label class="uper">8.- ¿Los residuos orgánicos (hojas, cascaras de frutas o verduras, etc.) son reutilizados en elaboración de compostas para abono en áreas verdes?.<em class="formee-req"> *</em></label>
+            <%#*</div>%>
+            <!-- Línea campo -->
+            <div class="grid-3-12"></div>
+            <div class="grid-5-12">
+              <span id="elabora_compostas" class="InputGroup">
+                <label class="uper">SI <%= f.radio_button :elabora_compostas, "SI"%></label>&nbsp;&nbsp;
+                <label class="uper">NO <%= f.radio_button :elabora_compostas, "NO"%></label>
+              </span>
+            </div>
+            <div class="grid-8-12"></div>
+          </td>
+        </tr>
+        <tr>
+          <td width="49%" align="justify" style=" vertical-align:top;" >
+            <!-- Línea pregunta -->
+            <div class="grid-12-12">
+              <label class="uper">9.- Selecciona de la siguiente lista los residuos inorgánicos  que son reutilizados y/o reciclados en el centro escolar. <em class="formee-req"> *</em></label>
+            </div>
+            <!-- Línea campo -->
+            <fieldset style="padding: 5px 5px 5px 5px;">
+                <div id="inorganicos" class="grid-12-12">
+                  <% Inorganico.find(:all).each do |c| %>
+                    <% if @s_inorganicos.include?(c.id) %>
+                      <%= check_box_tag "inorganicos[#{c.id}]", c.clave, @s_inorganicos.include?(c.id) ? true : false, :onclick => "verifyCheckboxs(this, 'inorganicos', 'eje3_p9');" %>&nbsp;<%= c.descripcion %><br /><br />
+                      <%=linea_horizontal%>
+                    <% end %>
+                  <% end %>
+                </div>
+            </fieldset>
+          </td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<% end %>
+
+<script type="text/javascript">
+  showImageCheck('huella_capacitacion_ahorro_energia', 'eje3_p1');
+  
+  showImageText('huella_energia_electrica_id', 'huella_consumo_actual', 'huella_consumo_anterior', 'eje3_p2');
+
+  sumFocos('huella_focos_ahorradores', 'huella_focos_incandescentes', 'total_focos');
+  sumFocos('huella_focos_incandescentes', 'huella_focos_ahorradores', 'total_focos');
+</script>
+

@@ -10,7 +10,7 @@ class Diagnostico < ActiveRecord::Base
    has_many :evaluacions
 
    def folio
-     "#{self.id.to_s.rjust(5, '0')}"
+     "#{Time.now.year}#{self.id.to_s.rjust(5, '0')}"
    end
 
 end

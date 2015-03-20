@@ -1,7 +1,7 @@
 <!-- Menú de consejeros y equipo ERA -->
 <div class="titulos">
   <p>
-    Bienvenido: <%=h @user.nombre%>
+    Bienvenido: <%=h @user.nombre.upcase%>
   </p>
 </div>
 
@@ -16,11 +16,29 @@
        </div>
 
         <%if current_user.has_role?("equipotecnico")%>
-              <!-- Niveles -->
+          <!-- Indicadores -->
+
+          <div class="grid-3-12">
+              <%=link_to image_tag('admin/indicadores_diagnostico.png', :size => "128x128", :mouseover => 'admin/indicadores_diagnostico.png') , {:action => "index", :controller => "indicadores", :ciclo => "2013-2014"},   :title => "Mostrar indicadores 2013-2014"%>
+              <label style="font-family:verdana;font-size:14px;">Indicadores Ciclo 2013-2014</label>
+            </div>
+
+           
+
+
+
+            <div class="grid-3-12">
+              <%=link_to image_tag('admin/indicadores_diagnostico.png', :size => "128x128", :mouseover => 'admin/indicadores_diagnostico.png') , {:action => "index", :controller => "indicadores", :ciclo => "2014-2015"}, :title => "Mostrar indicadores"%>
+              <label style="font-family:verdana;font-size:14px;">Indicadores Ciclo 2014-2015</label>
+            </div>
+
+            <!-- Niveles -->
                 <div class="grid-4-12">
-                    <%=link_to image_tag('admin/niveles.png', :size => "128x128", :mouseover => 'admin/niveles2.png') , {:action => "report_by_niveles", :controller => "admin"}, :title => "Reporte General por niveles educativos"%>
+                    <%=link_to image_tag('admin/niveles.png', :size => "128x128", :mouseover => 'admin/niveles2.png') , {:action => "report_by_niveles_libre", :controller => "public"}, :title => "Reporte General por niveles educativos"%>
                   <label style="font-family:verdana;font-size:14px;">Niveles&nbsp;Educativos</label>
                 </div>
+
+            
 
                 <div class="grid-4-12">
                     <%=link_to image_tag('admin/corte_ranking.png', :size => "128x128", :size => "128x128", :mouseover => 'admin/corte_ranking.png') , {:action => "cortes_ranking", :controller => "admin"}, :title => "Cortes de Ranking de escuelas"%>

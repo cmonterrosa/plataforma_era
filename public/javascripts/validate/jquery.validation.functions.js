@@ -1,3 +1,11 @@
+function ElementIsChecked(id){
+    var ReturnVal = false;
+    if(jQuery("#" + id).is(":checked")){
+        ReturnVal = true;
+    }
+    return ReturnVal;
+}
+
 function isChecked(id){
     var ReturnVal = false;
     jQuery("#" + id).find('input[type="radio"]').each(function(){
@@ -40,6 +48,32 @@ function skipSelect(id, opcion){
     var ReturnVal = false;
     
     if(document.getElementById(opcion + "_si").checked)
+        ReturnVal = true;
+    else
+        jQuery("#" + id).find('input[type="checkbox"]').each(function(){
+            if (jQuery(this).is(":checked"))
+                ReturnVal = true;
+        });
+    return ReturnVal;
+}
+
+function skipSelect2(id, opcion){
+    var ReturnVal = false;
+
+    if(parseInt(document.getElementById(opcion).value) == 0)
+        ReturnVal = true;
+    else
+        jQuery("#" + id).find('input[type="checkbox"]').each(function(){
+            if (jQuery(this).is(":checked"))
+                ReturnVal = true;
+        });
+    return ReturnVal;
+}
+
+function skipSelectEspacios(id, opcion){
+    var ReturnVal = false;
+
+    if(document.getElementById(opcion).checked)
         ReturnVal = true;
     else
         jQuery("#" + id).find('input[type="checkbox"]').each(function(){

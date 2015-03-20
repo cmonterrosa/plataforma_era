@@ -3,7 +3,11 @@
       <td align="center"><h3>CERTIFICACIÓN DE ESCUELAS SALUDABLES Y SUSTENTABLES (ESyS)</h3></td>
     </tr>
     <tr>
-      <td align="center"><p><%=@diagnostico.escuela.nombre%></p></td>
+      <td align="center"><h5>CICLO ESCOLAR: <%=CICLO_ESCOLAR%></h5></td>
+    </tr>
+
+    <tr>
+      <td align="center"><h4> <%=@diagnostico.escuela.nombre%></h4></td>
     </tr>
     <tr>
       <td align="center"><p> GRACIAS POR CONCLUIR LA ETAPA DE DIAGNÓSTICO.</p></td>
@@ -12,5 +16,11 @@
     <tr>
       <td align="center"><p>SU REGISTRO SE CONCLUYÓ CON EL FOLIO NÚMERO: <%=@diagnostico.folio%></p></td>
     </tr>
+
+    <%if @diagnostico.escuela%>
+    <tr>
+      <td align="center"><p>CÓDIGO DE AUTENTICIDAD: <%=(User.find(:first, :conditions => ["escuela_id = ?", @diagnostico.escuela.id])) ? User.find(:first, :conditions => ["escuela_id = ?", @diagnostico.escuela.id]).activation_code : "------------"  %></p></td>
+    </tr>
+    <%end%>
 
   </table>

@@ -1,0 +1,210 @@
+<% form_for :entorno, @entorno, :html => {:class => "formee", :name => "entorno"} do |f| -%>
+<table class="principal" width="100%" border="0" align="center" cellpadding="2" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
+  <tr bgcolor="#003366" style="opacity: 0.7;" >
+    <td align="center"><h4>EJE 2: ENTORNO SALUDABLE</h4></td>
+  </tr>
+  <tr align="center">
+    <td align="center">
+      <table class="subprincipal" width="100%" border="0" cellpadding="4" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
+        <tr align="center" >
+          <td><label class="uper" style="font-weight:bold;" >Pregunta</label></td>
+          <td>&nbsp;</td>
+          <td><label class="uper" style="font-weight:bold;" >Máximo Puntaje</label></td>
+          <td>&nbsp;</td>
+          <td><label class="uper" style="font-weight:bold;" >Puntaje Obtenido</label></td>
+        </tr>
+        <!-- Pregunta1 -->
+        <tr>
+          <td align="justify">
+            <label class="uper">1.- ¿Cuál es la superficie total del terreno de la escuela en metros cuadrados?</label>
+            <div class="grid-12-12">
+              <div class="grid-4-12"></div>
+              <div class="grid-3-12">
+                <%= f.text_field :superficie_terreno_escuela, :style => "text-align: right;" %>
+              </div>
+              <label class="uper" style="padding: 10px 0;" >M&sup2;</label>
+            </div>
+            <div id="areas_verdes" class="grid-12-12" style="display: none;">
+              <label class="uper">1.2.- ¿Qué superficie (mts. cuadrados) de la escuela se destina para áreas verdes? (Espacio cubierto por vegetación que brindan beneficios tanto al ambiente en el que se encuentran como a las personas localizadas cerca de ellos). <em class="formee-req"> *</em></label>
+              <div class="grid-12-12">
+                <div class="grid-4-12"></div>
+                <div class="grid-3-12">
+                  <%= f.text_field :superficie_terreno_escuela_av, :style => "text-align: right;", :disabled => "disabled" %>
+                </div>
+                <label class="uper" style="padding: 10px 0;" >M&sup2;</label>
+              </div>
+              <div id="eje2_p1" class="grid-12-12" style="text-align: center; display: none;" ></div>
+            </div>
+          </td>
+          <td>&nbsp;</td>
+          <td style="text-align:right;vertical-align:top;" ><label>0</label></td>
+          <td>&nbsp;</td>
+          <td style="text-align:right;vertical-align:top;" ><label>0</label></td>
+        </tr>
+        <!-- Pregunta2 -->
+        <tr>
+          <td width="80%" align="justify">
+            <label class="uper">2.- ¿Cuenta la escuela con algunos de los siguientes espacios?</label>
+            <fieldset style="padding: 5px 5px 5px 5px;">
+              <div id="espacios" class="grid-12-12">
+                <% Espacio.find(:all).each do |c| %>
+                  <% @valor = nil %>
+                  <%  @entorno.escuelas_espacios.each do |x| %>
+                    <% @valor = x.numero if x[:espacio_id] == c.id %>
+                  <% end %>
+                  <% if @s_espacios.include?(c.id) %>
+                    <%= check_box_tag "espacios[#{c.id}]", c.clave, @s_espacios.include?(c.id) ? true : false %>&nbsp;<%= c.descripcion %>&nbsp;CANTIDAD&nbsp;EN&nbsp;M&sup2;&nbsp;<input name="<%= c.clave %>" id="<%= c.clave %>" size="4px" type="others" style="text-align:center; display: inline;" class="rpt" value="<%=h @valor ? @valor : "" %>" disabled /><br /><br />
+                    <%=linea_horizontal%>
+                  <% end %>
+                <% end %>
+              </div>
+              <br />
+              <% if @s_espacios.size.to_i < 1 %>
+                <%= f.check_box :no_espacios, { :checked => @entorno.no_espacios == "NO" ? true : false }, "NO", "SI" %>&nbsp;NO CUENTA CON ESPACIOS
+              <% end %>
+            </fieldset>
+            <div id="eje2_p2" class="grid-12-12" style="display: none; text-align: center;"></div>
+          </td>
+          <td>&nbsp;</td>
+          <td style="text-align:right;vertical-align:top;" ><label><%= $entorno_p2.to_f * 100 %></label></td>
+          <td>&nbsp;</td>
+          <td style="text-align:right;vertical-align:top;" ><label><%= @ep2 %></label></td>
+        </tr>
+        <!-- Pregunta3 -->
+        <tr>
+          <td width="80%" align="">
+            <label class="uper">3.- ¿La escuela realiza o ha realizado acciones de reforestación dentro o fuera del plantel?</label>
+            <div class="grid-12-12" style="text-align:center" >
+                <span id="escuela_reforesta" class="InputGroup"  >
+                  <label class="uper">SI <%= f.radio_button :escuela_reforesta, "SI" %></label>&nbsp;&nbsp;
+                  <label class="uper">NO <%= f.radio_button :escuela_reforesta, "NO" %></label>
+                </span>
+              </div>
+              <div class="grid-12-12"></div>
+              <% if @entorno.escuela_reforesta == "SI"%>
+              <div id="reforesta" style="display:inline;">
+                <div class="grid-4-12">CANTIDAD DE ARBOLES SEMBRADOS:</div>
+                <div class="grid-2-12">
+                  <%= f.text_field :escuela_reforesta_num, :style => "text-align: center;", :class => "rpt" %>
+                </div>
+                <div id="eje3_p3" class="grid-12-12" style="text-align: center;"></div>
+              </div>
+              <% end %>
+          </td>
+          <td>&nbsp;</td>
+          <td style="text-align:right;vertical-align:top;" ><label><%= $entorno_p3.to_f * 100 %></label></td>
+          <td>&nbsp;</td>
+          <td style="text-align:right;vertical-align:top;" ><label><%= @ep3 %></label></td>
+        </tr>
+        <!-- Pregunta4 -->
+        <tr>
+          <td width="80%" align="">
+            <label class="uper">4.- ¿La escuela cuenta con árboles nativos y propios de la región? (Consultar listado de arboles nativos de más comunes de clic aquí.?</label>
+            <div class="grid-12-12">
+              <% if @entorno.arboles_nativos_num.to_i > 0 %>
+              <div id="arboles_nativos" style="">
+                <div class="grid-2-12">CANTIDAD:&nbsp;<%= f.text_field :arboles_nativos_num, :style => "text-align: center;", :class => "rpt" %></div>
+                <div class="grid-1-12"></div>
+                <div class="grid-9-12">NOMBRE&nbsp;COMÚN:&nbsp;<%= f.text_area :arboles_nativos_desc, :style => "text-align: justify;", :class => "rpt" %></div>
+              </div>
+              <% else %>
+              <div class="grid-12-12">
+                <%= f.check_box :arboles_nativos, { }, "NO", "SI" %>&nbsp;NO CUENTA CON ÁRBOLES NATIVOS
+              </div>
+              <% end %>
+              <%#*<div class="grid-12-12"><br /></div>%>
+              <div class="grid-12-12">
+                <label class="uper">4.1.- ¿Árboles no nativos e impropios de la región existentes en la escuela? (Consultar listado de arboles nativos de más comunes de clic <a href="/arboles_nativos_no_nativos.pdf" target="_blank" style="color: black;">Aquí</a>.)<em class="formee-req"> *</em></label>
+              </div>
+              <% if @entorno.arboles_no_nativos_num.to_i > 0 %>
+              <div id="arboles_no_nativos" style="">
+                <div class="grid-2-12">CANTIDAD:&nbsp;<%= f.text_field :arboles_no_nativos_num, :style => "text-align: center;", :class => "rpt" %></div>
+                <div class="grid-1-12"></div>
+                <div class="grid-9-12">NOMBRE&nbsp;COMÚN:&nbsp;<%= f.text_area :arboles_no_nativos_desc, :style => "text-align: justify;", :class => "rpt" %></div>
+              </div>
+              <% else %>
+              <div class="grid-12-12">
+                <%= f.check_box :arboles_no_nativos, { }, "NO", "SI" %>&nbsp;NO CUENTA CON ÁRBOLES NO NATIVOS E IMPROPIOS
+              </div>
+              <% end %>
+            </div>
+          </td>
+          <td>&nbsp;</td>
+          <td style="text-align:right;vertical-align:top;" ><label>0</label></td>
+          <td>&nbsp;</td>
+          <td style="text-align:right;vertical-align:top;" ><label>0</label></td>
+        </tr>
+        <!-- Pregunta5 -->
+        <tr>
+          <td width="80%" align="justify">
+            <label class="uper">5.- ¿Cuáles de las siguientes acciones del Manual de Salud realiza la institución educativa?</label>
+            <div class="grid-12-12">
+              <label class="formee-msg-info" style="text-transform:uppercase;font-size:1.1em;" >
+                Consultar manual de salud: Manual para el maestro del programa Escuela y Salud. Enfoque actual del programa: Determinantes de la salud, página 42 - 45. Puede consultarlo dando clic aquí
+              </label>
+            </div>
+            <!-- Línea campo -->
+            <fieldset style="padding: 5px 5px 5px 5px;">
+              <legend style="text-transform:uppercase;font-size:1.1em;">&nbsp;Acciones:&nbsp;</legend>
+                <div id="acciones" class="grid-12-12">
+                  <% i= 1 %>
+                  <% @acciones.each do |c| %>
+                    <% if @s_acciones.include?(c.id) %>
+                      <%= check_box_tag "acciones[#{i}]", c.clave, @s_acciones.include?(c.id) ? true : false %>&nbsp;<%= c.descripcion %><br /><br />
+                      <% i+=1 %>
+                      <%=linea_horizontal%>
+                    <% end %>
+                  <% end %>
+                </div>
+            </fieldset>
+            <div class="grid-4-12"></div>
+            <div id="eje2_p5" class="grid-8-12" style="display: none;"></div>
+          </td>
+          <td>&nbsp;</td>
+          <td style="text-align:right;vertical-align:top;" ><label><%= $entorno_p5.to_f * 100 %></label></td>
+          <td>&nbsp;</td>
+          <td style="text-align:right;vertical-align:top;" ><label><%= @ep5 %></label></td>
+        </tr>
+        <!-- Barra de Porcentaje -->
+        <tr align="center" >
+          <td><label class="uper" style="font-weight:bold;" >Porcentaje</label></td>
+          <td>&nbsp;</td>
+          <td><label class="uper" style="font-weight:bold;" >Total Máximo</label></td>
+          <td>&nbsp;</td>
+          <td><label class="uper" style="font-weight:bold;" >Total Obtenido</label></td>
+        </tr>
+        <tr>
+          <td style="text-align:center;" >
+            <div class="bar_mortice rounded_tiny mortice_tiny green_mortice">
+              <div id="bar_entornos" class="progress rounded_tiny progress_tiny green" style="width: <%= @e_porcentaje.to_i %>%;" ></div>
+            </div>
+            <label style="font-weight:bold;" ><%= @e_porcentaje %> %</label>
+          </td>
+          <td>&nbsp;</td>
+          <td style="text-align:right;" ><label style="font-weight:bold;" ><%= @e_maxptos %></label></td>
+          <td>&nbsp;</td>
+          <td style="text-align:right;" ><label style="font-weight:bold;" ><%= @e_totalptos %></label></td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="5">&nbsp;</td>
+  </tr>
+</table>
+<% end %>
+
+
+
+
+<script type="text/javascript">
+  enaTxtField('entorno_superficie_terreno_escuela', 'entorno_superficie_terreno_escuela_av', 'areas_verdes');
+  enaTxtField('entorno_superficie_terreno_escuela_av', '', 'eje2_p1');
+  checkBoxTotextField('espacios', 'eje2_p2', 'entorno_no_espacios');
+  edMultiSelect('entorno_no_espacios', 'espacios', 'eje2_p2');
+  radioButtonTotxtField('entorno_escuela_reforesta_si', 'entorno_escuela_reforesta_num', 'reforesta');
+  radioButtonTotxtField('entorno_escuela_reforesta_no', 'entorno_escuela_reforesta_num', 'reforesta');
+  ena_txtField('entorno_arboles_nativos', 'arboles_nativos');
+  ena_txtField('entorno_arboles_no_nativos', 'arboles_no_nativos');
+  verifyCheckboxs('', 'acciones', 'eje2_p5');
+</script>

@@ -3,14 +3,14 @@
 <!--<html lang="en"> -->
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <title>Educar con Responsabilidad Ambiental - Diagnóstico</title>
+  <title>Educar con Responsabilidad Ambiental - Diagnóstico Institucional</title>
 
   <style type="text/css">
   body {
           margin-top: 5px;
           /*background-color: #F0F0F0;*/
           background-color: white;
-          font-family: Arial Narrow,Helvetica,sans-serif;
+          font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   }
 
   </style>
@@ -167,6 +167,8 @@ a:active {
 </style>
 
 
+<!-- Validaciones nuevas -->
+<%=javascript_include_tag "validaciones_ciclo2015" %>
 
   <!-- Inicio de fancy -->
   <script type="text/javascript">
@@ -201,8 +203,14 @@ a:active {
         </tr>
         <tr style="text-shadow: black 0.1em 0.1em 0.2em">
           <td colspan="3">
-            <table width="800" border="0" cellspacing="0" cellpadding="0">
+            <table width="880" border="0" cellspacing="0" cellpadding="0">
               <tr>
+
+                <!-- home -->
+                <td width="32px">
+                  <%=link_to image_tag("admin/home.png", :size => "32x32", :mouseover => "admin/home.png",  :border => 0), {:controller => "home", :action => "index" }, :title => "INICIO"%>
+                </td>
+
                 <td width="60px" align="right"><img src="/images/era/iconos/ico_arbol.png" alt="2" width="34" height="17" /></td>
                 <!-- <td width="40" class="Txt_arbol"><a href="http://era.educacionchiapas.gob.mx" class="Txt_arbol">Inicio</a></td>-->
 
@@ -227,7 +235,7 @@ a:active {
                 <td width="34" align="center"><img src="/images/era/iconos/ico_arbol.png" alt="1" width="34" height="17" /></td>
 
                 <!-- Nombre de quien esta loggeado -->
-                <td width="180" class="Txt_arbol">
+                <td width="520" class="Txt_arbol">
                   <a href="/home" class="Txt_arbol">
                     <%if current_user.has_role?("directivo")%>
                       <%nombre= (@esc = Directivo.find_by_clave(current_user.login)) ? @esc.descripcion : nil%>
@@ -243,17 +251,17 @@ a:active {
                             <td width="350" class="Txt_arbol"><%=image_tag ("mensajes/mensajes_recibidos_small.png")%>&nbsp;<a href="/home" class="Txt_arbol"><%=link_to "(#{current_user.numero_mensaje_bandeja}) MENSAJES NUEVOS", {:action => "recibidos", :controller => "mensajes"}, :style => "text-decoration: none; color: #99ffbb;", :title => "BANDEJA DE ENTRADA"%></a></td>
                         <%else%>
                             <td width="34" align="center"><img src="/images/era/iconos/ico_arbol.png" alt="1" width="34" height="17" /></td>
-                            <td width="350" class="Txt_arbol"><%=image_tag ("mensajes/mensajes.png")%>&nbsp;<a href="/home" class="Txt_arbol"><%=link_to "PLATAFORMA DE MENSAJES", {:action => "list", :controller => "mensajes"}, :style => "text-decoration: none; color: #99ffbb;", :title => "NO HAY MENSAJES NUEVOS"%></a></td>
+                            <td width="350" class="Txt_arbol"><%=image_tag ("mensajes/mensajes.png")%>&nbsp;<a href="/home" class="Txt_arbol"><%=link_to "NOTIFICACIONES", {:action => "list", :controller => "mensajes"}, :style => "text-decoration: none; color: #99ffbb;", :title => "NO HAY MENSAJES NUEVOS"%></a></td>
                         <%end%>
 
 
 
                 </td>
                   <td width="34" align="center"><img src="/images/era/iconos/ico_arbol.png" alt="1" width="34" height="17" /></td>
-                  <td width="120" class="Txt_arbol"><a href="/home" class="Txt_arbol"><%=link_to "Cerrar Sesión", {:action => "destroy", :controller => "sessions"}, :style => "color:#FFBF00; text-decoration: none;", :title => "¿ESTÁ SEGURO(A) QUE DESEA SALIR DE LA PLATAFORMA"%></a></td>
+                  <td width="180" class="Txt_arbol"><a href="/home" class="Txt_arbol"><%=link_to "Cerrar Sesión", {:action => "destroy", :controller => "sessions"}, :style => "color:#FFBF00; text-decoration: none;", :title => "¿ESTÁ SEGURO(A) QUE DESEA SALIR DE LA PLATAFORMA"%></a></td>
                 <%else%>
                   <td width="34" align="center"><img src="/images/era/iconos/ico_arbol.png" alt="1" width="34" height="17" /></td>
-                  <td width="120" class="Txt_arbol"><a href="/home" class="Txt_arbol"><%=link_to "Iniciar Sesión", {:action => "new", :controller => "sessions"}, :style => "color:#088A08; text-decoration: none;", :title => "HAGA CLICK PARA INICIAR SESIÓN"%></a></td>
+                  <td width="180" class="Txt_arbol"><a href="/home" class="Txt_arbol"><%=link_to "Iniciar Sesión", {:action => "new", :controller => "sessions"}, :style => "color:#088A08; text-decoration: none;", :title => "HAGA CLICK PARA INICIAR SESIÓN"%></a></td>
                 <%end%>
 
                 <td>&nbsp;</td>
@@ -330,6 +338,15 @@ a:active {
                 <li><%=flash[:notice]%></li>
               </ul>
             </div>
+
+            <%elsif flash[:warning]%>
+            <div class="formee-msg-warning">
+              <h3>Atención:</h3>
+              <ul>
+                <li><%=flash[:warning]%></li>
+              </ul>
+            </div>
+
             <%elsif flash[:error]%>
             <div class="formee-msg-error">
               <h3>Error:</h3>
@@ -340,12 +357,12 @@ a:active {
             <%else%>
             <%#*<p></p>%>
             <%end%>
-
             <%=yield%>
-
           </td>
         </tr>
         <!-- termina contenido principal -->
+
+
 
         <tr>
           <td colspan="3"><img src="/images/era/space.png" width="10" height="30px" /></td>
@@ -383,7 +400,7 @@ a:active {
                     Calzada Mayor Julio Sabines S/N,
                     Col. 24 de Junio, Tuxtla Gutiérrez, Chiapas.<br />
                     Teléfono: (961) 61 70800 Ext. 41270<br />
-                    Correo Electrónico: <a href="mailto:era.chiapas@gmail.com" class="Txt_piepagina">era.chiapas@gmail.com</a>
+                    Correo Electrónico: <a href="mailto:era.chiapas@gmail.com" class="Txt_piepagina">certificacion.esys@gmail.com</a>
                   </span>
                 </td>
               </tr>

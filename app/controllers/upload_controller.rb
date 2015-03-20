@@ -91,8 +91,8 @@ class UploadController < ApplicationController
   def show_evidencias_por_usuario
     @diagnostico = Diagnostico.find(params[:diagnostico]) if params[:diagnostico]
     @user = (params[:id]) ? User.find(params[:id]): current_user
-    @observaciones_evidencias = (@diagnostico.observaciones_evidencias) ? @diagnostico.observaciones_evidencias : nil
-    @evidencias = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ?", @user, @diagnostico.id], :order => "eje_id, numero_pregunta")
+    @observaciones_evidencias = (@diagnostico.observaciones_evidencias) ? @diagnostico.observaciones_evidencias : nil if @diagnostico
+    @evidencias = (@diagnostico) ? Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ?", @user, @diagnostico.id], :order => "eje_id, numero_pregunta") : Array.new
     unless @evidencias.empty?
       return render(:partial => 'show_todas_evidencias', :layout => "only_jquery")
     else
@@ -133,14 +133,22 @@ class UploadController < ApplicationController
     @uploaded_file.eje_id = @eje
     @uploaded_file.numero_pregunta = @numero_pregunta
     @uploaded_file.user_id = current_user.id if current_user
-    if @uploaded_file.save
-        flash[:notice] = "Evidencia cargada correctamente"
-        redirect_to :action => "list_evidencias", :diagnostico => @diagnostico, :eje => @eje, :numero_pregunta => @numero_pregunta
-    else
-      @errores = @uploaded_file.errors.full_messages
-      return render(:partial => 'carga_evidencia_error', :layout => "only_jquery")
+    
+    begin
+      if @uploaded_file.valid?
+          if @uploaded_file.save
+            flash[:notice] = "Evidencia cargada correctamente"
+            redirect_to :action => "list_evidencias", :diagnostico => @diagnostico, :eje => @eje, :numero_pregunta => @numero_pregunta
+          end
+      else
+         @errores = @uploaded_file.errors
+         return render(:partial => 'carga_evidencia_error', :layout => "only_jquery")
+      end
+    rescue ActiveRecord::RecordInvalid => invalid
+        @errores = invalid.record.errors
+        return render(:partial => 'carga_evidencia_error', :layout => "only_jquery")
     end
-   end
+  end
  
 
   def destroy_evidencia
