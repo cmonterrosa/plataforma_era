@@ -22,9 +22,9 @@ private
 
   def indicadores_generales
     ### Todas las que poseen cuentas de usuario ##
-    #@escuelas = Escuela.find(:all, :select => "e.id", :joins => "e, users u", :conditions => ["e.id = u.escuela_id"])
+    @escuelas = Escuela.find(:all, :select => "e.id", :joins => "e, users u", :conditions => ["e.id = u.escuela_id"])
     ### Solo las registradas ##3
-    @escuelas = Escuela.find(:all, :select => "id", :conditions => ["registro_completo = 1"])
+    #@escuelas = Escuela.find(:all, :select => "id", :conditions => ["registro_completo = 1"])
     @turnos = Escuela.find(:all, :select => "turno, count(id) as numero", :conditions => ["id in (?)", @escuelas.map{|i|i.id}], :group => "turno")
     @alumnos = Escuela.sum(:alu_hom, :conditions => ["alu_hom IS NOT NULL AND id in (?)", @escuelas.map{|i|i.id}])
     @alumnas = Escuela.sum(:alu_muj, :conditions => ["alu_muj IS NOT NULL AND id in (?)", @escuelas.map{|i|i.id}])
