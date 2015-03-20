@@ -508,6 +508,7 @@ input[type="text"].ninguno{
 }
 
 
+<<<<<<< Updated upstream
 .btnConcluirDiagnostico {
   background: #3498db;
   background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
@@ -533,4 +534,16 @@ input[type="text"].ninguno{
   background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
   background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
   text-decoration: none;
+}
+
+input[type="submit"].comprobante{
+    background-color: #E6F8E0;
+    border-width: 0;
+    font-size: inherit;
+    font-family:inherit;
+    padding: 0;
+    color: black;
+    width: 200px;
+    height: 80px;
+    text-align: center;
 }
