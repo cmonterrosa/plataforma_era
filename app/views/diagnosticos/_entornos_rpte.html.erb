@@ -5,7 +5,7 @@
   </tr>
   <tr align="center">
     <td align="center">
-      <table class="subprincipal" width="100%" border="0" cellpadding="4" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
+      <table class="sample" width="100%" border="0" cellpadding="0" cellspacing="0" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
         <tr align="center" >
           <td><label class="uper" style="font-weight:bold;" >Pregunta</label></td>
           <td>&nbsp;</td>
@@ -13,23 +13,26 @@
           <td>&nbsp;</td>
           <td><label class="uper" style="font-weight:bold;" >Puntaje Obtenido</label></td>
         </tr>
+        <tr style="background-color:#cccccc;" >
+          <td colspan="5" style="height: 5px;"></td>
+        </tr>
         <!-- Pregunta1 -->
-        <tr>
+        <tr class="d0">
           <td align="justify">
             <label class="uper">1.- ¿Cuál es la superficie total del terreno de la escuela en metros cuadrados?</label>
             <div class="grid-12-12">
               <div class="grid-4-12"></div>
               <div class="grid-3-12">
-                <%= f.text_field :superficie_terreno_escuela, :style => "text-align: right;" %>
+                <%= f.text_field :superficie_terreno_escuela, :style => "text-align: right;", :class => "rpt" %>
               </div>
               <label class="uper" style="padding: 10px 0;" >M&sup2;</label>
             </div>
             <div id="areas_verdes" class="grid-12-12" style="display: none;">
-              <label class="uper">1.2.- ¿Qué superficie (mts. cuadrados) de la escuela se destina para áreas verdes? (Espacio cubierto por vegetación que brindan beneficios tanto al ambiente en el que se encuentran como a las personas localizadas cerca de ellos). <em class="formee-req"> *</em></label>
+              <label class="uper">1.2.- ¿Qué superficie (mts. cuadrados) de la escuela se destina para áreas verdes? (Espacio cubierto por vegetación que brindan beneficios tanto al ambiente en el que se encuentran como a las personas localizadas cerca de ellos).</label>
               <div class="grid-12-12">
                 <div class="grid-4-12"></div>
                 <div class="grid-3-12">
-                  <%= f.text_field :superficie_terreno_escuela_av, :style => "text-align: right;", :disabled => "disabled" %>
+                  <%= f.text_field :superficie_terreno_escuela_av, :style => "text-align: right;", :class => "rpt",  :disabled => "disabled" %>
                 </div>
                 <label class="uper" style="padding: 10px 0;" >M&sup2;</label>
               </div>
@@ -42,7 +45,7 @@
           <td style="text-align:right;vertical-align:top;" ><label>0</label></td>
         </tr>
         <!-- Pregunta2 -->
-        <tr>
+        <tr class="d1">
           <td width="80%" align="justify">
             <label class="uper">2.- ¿Cuenta la escuela con algunos de los siguientes espacios?</label>
             <fieldset style="padding: 5px 5px 5px 5px;">
@@ -71,7 +74,7 @@
           <td style="text-align:right;vertical-align:top;" ><label><%= @ep2 %></label></td>
         </tr>
         <!-- Pregunta3 -->
-        <tr>
+        <tr class="d0">
           <td width="80%" align="">
             <label class="uper">3.- ¿La escuela realiza o ha realizado acciones de reforestación dentro o fuera del plantel?</label>
             <div class="grid-12-12" style="text-align:center" >
@@ -87,7 +90,7 @@
                 <div class="grid-2-12">
                   <%= f.text_field :escuela_reforesta_num, :style => "text-align: center;", :class => "rpt" %>
                 </div>
-                <div id="eje3_p3" class="grid-12-12" style="text-align: center;"></div>
+                <div id="eje2_p3" class="grid-12-12" style="text-align: center;"></div>
               </div>
               <% end %>
           </td>
@@ -97,36 +100,36 @@
           <td style="text-align:right;vertical-align:top;" ><label><%= @ep3 %></label></td>
         </tr>
         <!-- Pregunta4 -->
-        <tr>
+        <tr class="d1">
           <td width="80%" align="">
-            <label class="uper">4.- ¿La escuela cuenta con árboles nativos y propios de la región? (Consultar listado de arboles nativos de más comunes de clic aquí.?</label>
+            <label class="uper">4.- ¿La escuela cuenta con árboles nativos y propios de la región? (Consultar listado de arboles nativos más comunes dando clic aquí.</label>
             <div class="grid-12-12">
-              <% if @entorno.arboles_nativos_num.to_i > 0 %>
+              <%# if @entorno.arboles_nativos_num.to_i > 0 %>
               <div id="arboles_nativos" style="">
                 <div class="grid-2-12">CANTIDAD:&nbsp;<%= f.text_field :arboles_nativos_num, :style => "text-align: center;", :class => "rpt" %></div>
                 <div class="grid-1-12"></div>
-                <div class="grid-9-12">NOMBRE&nbsp;COMÚN:&nbsp;<%= f.text_area :arboles_nativos_desc, :style => "text-align: justify;", :class => "rpt" %></div>
+                <div class="grid-9-12">NOMBRE&nbsp;COMÚN:&nbsp;<%= f.text_area :arboles_nativos_desc, :style => "text-align: justify;", :class => "rpt"%></div>
               </div>
-              <% else %>
+              <%# else %>
               <div class="grid-12-12">
                 <%= f.check_box :arboles_nativos, { }, "NO", "SI" %>&nbsp;NO CUENTA CON ÁRBOLES NATIVOS
               </div>
-              <% end %>
+              <%# end %>
               <%#*<div class="grid-12-12"><br /></div>%>
               <div class="grid-12-12">
-                <label class="uper">4.1.- ¿Árboles no nativos e impropios de la región existentes en la escuela? (Consultar listado de arboles nativos de más comunes de clic <a href="/arboles_nativos_no_nativos.pdf" target="_blank" style="color: black;">Aquí</a>.)<em class="formee-req"> *</em></label>
+                <label class="uper">4.1.- ¿Árboles no nativos e impropios de la región existentes en la escuela? (Consultar listado de arboles nativos más comunes dando clic Aquí.)</label>
               </div>
-              <% if @entorno.arboles_no_nativos_num.to_i > 0 %>
+              <%# if @entorno.arboles_no_nativos_num.to_i > 0 %>
               <div id="arboles_no_nativos" style="">
                 <div class="grid-2-12">CANTIDAD:&nbsp;<%= f.text_field :arboles_no_nativos_num, :style => "text-align: center;", :class => "rpt" %></div>
                 <div class="grid-1-12"></div>
                 <div class="grid-9-12">NOMBRE&nbsp;COMÚN:&nbsp;<%= f.text_area :arboles_no_nativos_desc, :style => "text-align: justify;", :class => "rpt" %></div>
               </div>
-              <% else %>
+              <%# else %>
               <div class="grid-12-12">
                 <%= f.check_box :arboles_no_nativos, { }, "NO", "SI" %>&nbsp;NO CUENTA CON ÁRBOLES NO NATIVOS E IMPROPIOS
               </div>
-              <% end %>
+              <%# end %>
             </div>
           </td>
           <td>&nbsp;</td>
@@ -135,7 +138,7 @@
           <td style="text-align:right;vertical-align:top;" ><label>0</label></td>
         </tr>
         <!-- Pregunta5 -->
-        <tr>
+        <tr class="d0">
           <td width="80%" align="justify">
             <label class="uper">5.- ¿Cuáles de las siguientes acciones del Manual de Salud realiza la institución educativa?</label>
             <div class="grid-12-12">
@@ -164,6 +167,9 @@
           <td style="text-align:right;vertical-align:top;" ><label><%= $entorno_p5.to_f * 100 %></label></td>
           <td>&nbsp;</td>
           <td style="text-align:right;vertical-align:top;" ><label><%= @ep5 %></label></td>
+        </tr>
+        <tr style="background-color:#cccccc;" >
+          <td colspan="5" style="height: 5px;"></td>
         </tr>
         <!-- Barra de Porcentaje -->
         <tr align="center" >
