@@ -999,6 +999,7 @@ function edMultiSelect2(cBox, objSelect, divQuestion){
     }
 }
 
+
 /* Si radiobutton si esta seleccionado muestra div */
 function enaDivRadioChecked(radioButton, Div1, Div2){
     var select1 = document.getElementById(Div1);
@@ -1021,4 +1022,18 @@ function enaDivRadioChecked(radioButton, Div1, Div2){
             
             
         }
+}
+
+//**** Mostrar Ocultar Ejes **//
+
+function showEje(img, obj){
+    var eje = document.getElementById(obj);
+    if(eje.style.display == 'none'){
+        eje.style.display = 'block';
+        img.src = "/images/acordeon/arrow_down.png"
+    }
+    else{
+        eje.style.display = 'none';
+        img.src = "/images/acordeon/arrow_up.png"
+    }
 }

@@ -16,8 +16,8 @@
             <div class="grid-3-12"></div>
             <div class="grid-5-12">
               <span id="ahorro_energia" class="InputGroup">
-                <label class="uper">SI <%= f.radio_button :capacitacion_ahorro_energia, "SI", :onclick => "showImageCheck(this, 'eje3_p1');" %></label>&nbsp;&nbsp;
-                <label class="uper">NO <%= f.radio_button :capacitacion_ahorro_energia, "NO", :onclick => "showImageCheck(this, 'eje3_p1');" %></label>
+                <label class="uper">SI <%= f.radio_button :capacitacion_ahorro_energia, "SI" %></label>&nbsp;&nbsp;
+                <label class="uper">NO <%= f.radio_button :capacitacion_ahorro_energia, "NO" %></label>
               </span>
             </div>
             <div class="grid-8-12"></div>
@@ -178,7 +178,7 @@
                 <div id="inorganicos" class="grid-12-12">
                   <% Inorganico.find(:all).each do |c| %>
                     <% if @s_inorganicos.include?(c.id) %>
-                      <%= check_box_tag "inorganicos[#{c.id}]", c.clave, @s_inorganicos.include?(c.id) ? true : false, :onclick => "verifyCheckboxs(this, 'inorganicos', 'eje3_p9');" %>&nbsp;<%= c.descripcion %><br /><br />
+                      <%= check_box_tag "inorganicos[#{c.id}]", c.clave, @s_inorganicos.include?(c.id) ? true : false %>&nbsp;<%= c.descripcion %><br /><br />
                       <%=linea_horizontal%>
                     <% end %>
                   <% end %>

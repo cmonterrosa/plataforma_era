@@ -1,0 +1,180 @@
+<% form_for :competencia, :html => {:class => "formee", :name => "competencia"} do |f| -%>
+<table class="principal" width="100%" border="0" align="center" cellpadding="2" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
+  <tr bgcolor="#003366" style="opacity: 0.7;">
+    <td align="center"><h4>EJE 1: DESARROLLO DE COMPETENCIAS</h4></td>
+  </tr>
+  <tr>
+    <td>
+      <table class="sample" width="100%" border="0" cellpadding="0" cellspacing="0" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
+        <tr align="center" >
+          <td><label class="uper" style="font-weight:bold;font-size:14px;" >Pregunta</label></td>
+          <td>&nbsp;</td>
+          <td><label class="uper" style="font-weight:bold;font-size:14px;" >Máximo Puntaje</label></td>
+          <td>&nbsp;</td>
+          <td><label class="uper" style="font-weight:bold;font-size:14px;" >Puntaje Obtenido</label></td>
+        </tr>
+        <tr style="background-color:#cccccc;" >
+          <td colspan="5" style="height: 5px;"></td>
+        </tr>
+        <!-- Pregunta1 -->
+        <tr class="d0">
+          <td width="80%" align="justify">
+            <div class="grid-12-12">
+              <label class="uper">1.- ¿Cuántos docentes se han capacitado en el último ciclo escolar? en materia de:<em class="formee-req"> *</em></label>
+            </div>
+            <div class="grid-1-12"></div>
+            <div class="grid-2-12">SALUD: <%= f.text_field :dctes_cap_salud, :style => "text-align: center;", :class => "rpt" %></div>
+            <div class="grid-2-12">AMBIENTE: <%= f.text_field :dctes_cap_ma, :style => "text-align: center;", :class => "rpt" %></div>
+            <div class="grid-2-12">AMBOS: <%= f.text_field :dctes_cap_ambos, :style => "text-align: center;", :class => "rpt" %></div>
+            <div class="grid-1-12"></div>
+            <div class="grid-3-12" style="text-align:center;">TOTAL&nbsp;CAPACITADOS:
+              <input id="total_docentes" name="total_docentes" type="text" style="border-width: 0; width: 55px; font-size: 15px; text-align: center; color: black; background-color: #e6f8e0;" />
+            </div>
+
+            <div class="grid-12-12" id="dcapacitadora" style="display: none;">
+              <label class="uper">¿QUE&nbsp;INSTITUCIONES&nbsp;O&nbsp;DEPENDENCIAS&nbsp;IMPARTIERON&nbsp;ESTAS&nbsp;CAPACITACIONES?</label>
+
+              <fieldset style="padding: 5px 5px 5px 5px;">
+                <div id="dcapacitadoras" class="grid-12-12">
+                  <% Dcapacitadora.find(:all).each do |c| %>
+                    <% @valor = nil %>
+                    <% @competencia.docentes_capacitados.each do |x| %>
+                      <% if x[:dcapacitadora_id] == c.id %>
+                        <% @valor = x.numero  %>
+                        <% @desc_dep = x.descripcion_dep %>
+                      <% end %>
+                    <% end %>
+                    <% if @s_dcapacitadoras.include?(c.id) %>
+                      <%= check_box_tag "dcapacitadoras[#{c.id}]", c.clave, @s_dcapacitadoras.include?(c.id) ? true : false %>&nbsp;<%= c.descripcion %>
+                      &nbsp;NÚM.&nbsp;DE&nbsp;CAPACITACIONES:&nbsp;<%= select "dcapacitadora", "#{c.clave}", (1..9), {:selected => @valor}, {:style => "display: inline; width:50px;", :class => "rpt"}%><br /><br />
+                      <% if c.clave == "OTRA" %>&nbsp;DESCRIPCIÓN:&nbsp;<input name="dcapacitadoras<%= c.clave %>" id="dcapacitadoras<%= c.clave %>" size="55px" style="text-align:justify; display: inline; text-transform: uppercase;" value="<%=h @desc_dep ? @desc_dep : "" %>" /><% end %>
+                      <%= linea_horizontal %>
+                    <% end %>
+                  <% end %>
+                </div>
+              </fieldset>
+            </div>
+            <div class="grid-12-12" id="eje1_p1" style="display: none; text-align: center;"></div>
+          </td>
+          <td>&nbsp;</td>
+          <td style="text-align:right;vertical-align:top;" ><label><%= $competencia_p1.to_f * 100 %></label></td>
+          <td>&nbsp;</td>
+          <td style="text-align:right;vertical-align:top;" ><label><%= @cp1 %></label></td>
+        </tr>
+        <!-- Pregunta2 -->
+        <tr class="d1">
+          <td width="80%" align="justify">
+            <div class="grid-12-12">
+              <label class="uper">2.- De los docentes capacitados, ¿cuántos aplican con sus alumnos los conocimientos adquiridos?<em class="formee-req"> *</em></label>
+            </div>
+            <div class="grid-2-12"><%= f.text_field :dctes_aplican_conocimto, :style => "text-align: center;", :class => "rpt" %></div>
+          </td>
+          <td>&nbsp;</td>
+          <td style="text-align:right;vertical-align:top;" ><label><%= $competencia_p2.to_f * 100 %></label></td>
+          <td>&nbsp;</td>
+          <td style="text-align:right;vertical-align:top;" ><label><%= @cp2 %></label></td>
+        </tr>
+        <!-- Pregunta3 -->
+        <tr class="d0">
+          <td width="80%" align="justify">
+            <label class="uper">3.- Del total de docentes, ¿cuántos se involucran en actividades extracurriculares en materia de salud y medio ambiente que promueve la escuela?<em class="formee-req"> *</em></label>
+            <div class="grid-2-12"><%= f.text_field :dctes_invol_act, :style => "text-align: center;", :class => "rpt" %></div>
+          </td>
+          <td>&nbsp;</td>
+          <td style="text-align:right;vertical-align:top;" ><label><%= $competencia_p3.to_f * 100 %></label></td>
+          <td>&nbsp;</td>
+          <td style="text-align:right;vertical-align:top;" ><label><%= @cp3 %></label></td>
+        </tr>
+        <!-- Pregunta4 -->
+        <tr class="d1">
+          <td width="80%" align="justify">
+            <label class="uper">4.- Del total de alumnos, ¿cuántos recibieron capacitación relacionada con temas salud y medio ambiente por parte de los docentes en el último ciclo escolar?<em class="formee-req"> *</em></label>
+            <div class="grid-2-12"><%= f.text_field :alumn_cap_dctes, :style => "text-align: center;", :class => "rpt" %></div>
+          </td>
+          <td>&nbsp;</td>
+          <td style="text-align:right;vertical-align:top;" ><label><%= $competencia_p4.to_f * 100 %></label></td>
+          <td>&nbsp;</td>
+          <td style="text-align:right;vertical-align:top;" ><label><%= @cp4 %></label></td>
+        </tr>
+        <!-- Pregunta5 -->
+        <tr class="d0">
+          <td width="80%" align="justify">
+            <label class="uper">5.- Del total de alumnos, ¿cuántos recibieron capacitación relacionada con temas de salud y medio ambiente por parte de otras <b>instituciones y/o dependencias</b> en el último ciclo escolar?<em class="formee-req"> *</em></label>
+            <div class="grid-1-12"></div>
+            <div class="grid-2-12">SALUD: <%= f.text_field :alumn_cap_salud, :style => "text-align: center;", :class => "rpt" %></div>
+            <div class="grid-2-12">AMBIENTE: <%= f.text_field :alumn_cap_ma, :style => "text-align: center;", :class => "rpt" %></div>
+            <div class="grid-2-12">AMBOS: <%= f.text_field :alumn_cap_ambos, :style => "text-align: center;", :class => "rpt" %></div>
+            <div class="grid-1-12"></div>
+            <div class="grid-3-12" style="text-align:center;">TOTAL&nbsp;CAPACITADOS:
+              <input id="total_alumn" name="total_alumn" type="text" style="border-width: 0; width: 55px; font-size: 15px; text-align: center; color: black; background-color: #e6f8e0;" />
+            </div>
+            <div class="grid-1-12"></div>
+            <!-- Línea pregunta -->
+            <div class="grid-12-12" id="acapacitadora" style="display: none;">
+              <label class="uper">¿QUE&nbsp;INSTICUCIONES&nbsp;O&nbsp;DEPENDENCIAS&nbsp;IMPARTIERON&nbsp;ESTAS CAPACITACIONES?</label>
+              <!-- Línea campo -->
+              <fieldset style="padding: 5px 5px 5px 5px;">
+                <div id="acapacitadoras" class="grid-12-12">
+                  <% Dcapacitadora.find(:all).each do |c| %>
+                  <% @valor = nil %>
+                    <% @competencia.alumnos_capacitados.each do |x| %>
+                      <% if x[:dcapacitadora_id] == c.id %>
+                        <% @valor = x.numero  %>
+                        <% @desc_dep = x.descripcion_dep %>
+                      <% end %>
+                    <% end %>
+                    <% if @s_acapacitadoras.include?(c.id) %>
+                      <%= check_box_tag "acapacitadoras[#{c.id}]", c.clave, @s_acapacitadoras.include?(c.id) ? true : false %>&nbsp;<%= c.descripcion %>
+                      &nbsp;NÚM.&nbsp;DE&nbsp;CAPACITACIONES:&nbsp;<%= select "acapacitadora", "#{c.clave}", (1..9), {:selected => @valor}, {:style => "display: inline; width: 50px;", :class => "rpt"}%><br /><br />
+                      <% if c.clave == "OTRA" %>&nbsp;DESCRIPCIÓN:&nbsp;<input name="acapacitadoras<%= c.clave %>" id="acapacitadoras<%= c.clave %>" size="50px" style="text-align: justify; display: inline; text-transform: uppercase;" value="<%=h @desc_dep ? @desc_dep : "" %>" /><% end %>
+                        <%=linea_horizontal%>
+                      <% end %>
+                   <% end %>
+                </div>
+              </fieldset>
+            </div>
+            <div class="grid-12-12" id="eje1_p5" style="display: none; text-align: center;"></div>
+          </td>
+          <td>&nbsp;</td>
+          <td style="text-align:right;vertical-align:top;" ><label><%= $competencia_p5.to_f * 100 %></label></td>
+          <td>&nbsp;</td>
+          <td style="text-align:right;vertical-align:top;" ><label><%= @cp5 %></label></td>
+        </tr>
+        <tr style="background-color:#cccccc;" >
+          <td colspan="5" style="height: 5px;"></td>
+        </tr>
+        <!-- Barra de Porcentaje -->
+        <tr align="center" >
+          <td><label class="uper" style="font-weight:bold;" >Porcentaje</label></td>
+          <td>&nbsp;</td>
+          <td><label class="uper" style="font-weight:bold;" >Total Máximo</label></td>
+          <td>&nbsp;</td>
+          <td><label class="uper" style="font-weight:bold;" >Total Obtenido</label></td>
+        </tr>
+        <tr>
+          <td style="text-align:center;" >
+            <div class="bar_mortice rounded_tiny mortice_tiny green_mortice">
+              <div id="bar_competencias" class="progress rounded_tiny progress_tiny green" style="width: <%= @c_porcentaje.to_i %>%;" ></div>
+            </div>
+            <label style="font-weight:bold"><%= @c_porcentaje %> %</label>
+          </td>
+          <td>&nbsp;</td>
+          <td style="text-align:right;" ><label style="font-weight:bold;" ><%= @c_maxptos %></label></td>
+          <td>&nbsp;</td>
+          <td style="text-align:right;" ><label style="font-weight:bold;" ><%= @c_totalptos %></label></td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="5">&nbsp;</td>
+  </tr>
+</table>
+<% end %>
+
+<img src="/images/era/space.png" alt="" width="10" height="50px" />
+
+<script type="text/javascript">
+  showImageDctesAlumn('docentes', 'dcapacitadora', 'eje1_p1');
+  showImageDctesAlumn('alumnos', 'acapacitadora', 'eje1_p5');
+</script>
