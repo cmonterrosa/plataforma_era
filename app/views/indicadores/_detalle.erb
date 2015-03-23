@@ -12,6 +12,34 @@
       <li class="active"><i class="fa fa-dashboard">Eje 1.- Desarrollo de Competencias</i></li>
     </ol>
 
+
+   <!-- Dependencias capacitadoras -->
+    <%if @dependencias_capacitadoras%>
+      <div class="col-lg-12">
+        <div class="table-responsive">
+          <table class="table table-bordered table-hover table-striped">
+              <thead>
+                <tr class="TituloTabla">
+                  <%@dependencias_capacitadoras.each do |e|%>
+                    <th><%=h e.descripcion%></th>
+                  <%end%>
+                </tr>
+              </thead>
+      <tbody>
+        <tr>
+           <%@dependencias_capacitadoras.each do |e|%>
+              <td><%=h separa_miles(e.numero)%></td>
+           <%end%>
+         </tr>
+      </tbody>
+    </table>
+  </div>
+   </div>
+   <%end%>
+
+
+
+
     <div class="col-lg-3 col-xs-6">
       <div class="small-box bg-aqua">
         <div class="inner">
@@ -83,7 +111,7 @@
       <tbody>
         <tr>
            <%@espacios.each do |e|%>
-              <td><%=h separa_miles(e.numero)%></td>
+              <td><%=h separa_miles(e.numero)%> m<sup>2</sup></td>
            <%end%>
          </tr>
       </tbody>
@@ -94,6 +122,16 @@
 
     <div class="col-lg-3 col-xs-6">
       <div class="small-box bg-aqua">
+                <div class="inner">
+                  <h5><%=h  separa_miles(@total_areas_verdes)%> m<sup>2</sup> </h5>
+                  <p>Total de áreas verdes</p>
+                </div>
+      </div>
+    </div>
+    
+
+    <div class="col-lg-3 col-xs-6">
+      <div class="small-box bg-green">
         <div class="inner">
            <h3><%=h  separa_miles(@escuelas_realizan_reforestacion)%> </h3>
            <p>Escuelas Realizan Labores Reforestación</p>
@@ -102,33 +140,32 @@
     </div>
 
     <div class="col-lg-3 col-xs-6">
-      <div class="small-box bg-green">
-                <div class="inner">
-                  <h3><%=h  separa_miles(@porcentaje_total_areas_verdes)%> %</h3>
-                  <p>Porcentaje Terreno Área Verde</p>
-                </div>
-      </div>
-    </div>
-
- 
-    <div class="col-lg-3 col-xs-6">
-        <div class="small-box bg-yellow">
-                  <div class="inner">
-                    <h3><%=h separa_miles(@porcentaje_focos_ahorradores)%> %</h3>
-                    <p>Porcentaje Focos Ahorradores</p>
-                  </div>
+      <div class="small-box bg-yellow">
+        <div class="inner">
+           <h3><%=h  separa_miles(@arboles_sembrados)%> </h3>
+           <p>Total de árboles sembrados</p>
         </div>
+      </div>
     </div>
 
     <div class="col-lg-3 col-xs-6">
       <div class="small-box bg-red">
         <div class="inner">
-          <h3><%=h separa_miles(@escuelas_separan_basura)%></h3>
-          <p>Escuelas separan la basura</p>
+           <h3><%=h  separa_miles(@arboles_nativos)%> </h3>
+           <p>Cantidad de árboles nativos</p>
         </div>
       </div>
     </div>
-  </div>
+
+    <div class="col-lg-3 col-xs-6">
+      <div class="small-box bg-aqua">
+        <div class="inner">
+           <h3><%=h  separa_miles(@arboles_no_nativos)%> </h3>
+           <p>Cantidad de árboles no nativos</p>
+        </div>
+      </div>
+    </div>
+ </div>
 
   <!-- eje 3 -->
 
@@ -167,7 +204,91 @@
    </div>
    <%end%>
 
+     <div class="col-lg-3 col-xs-6">
+        <div class="small-box bg-aqua">
+                  <div class="inner">
+                    <h3><%=h separa_miles(@capacitacion_ahorro_energia_fide)%> </h3>
+                    <p>Escuelas enfocadas al FIDE</p>
+                  </div>
+        </div>
+    </div>
 
+    <div class="col-lg-3 col-xs-6">
+        <div class="small-box bg-green">
+                  <div class="inner">
+                    <h5><%=h separa_miles(@consumo_anterior_kw)%> KW</h5>
+                    <p>Consumo Anterior</p>
+                  </div>
+        </div>
+    </div>
+
+       <div class="col-lg-3 col-xs-6">
+        <div class="small-box bg-yellow">
+                  <div class="inner">
+                    <h5><%=h separa_miles(@consumo_actual_kw)%> KW</h5>
+                    <p>Consumo Actual</p>
+                  </div>
+        </div>
+    </div>
+
+    
+
+
+     <div class="col-lg-3 col-xs-6">
+        <div class="small-box bg-red">
+                  <div class="inner">
+                    <h3><%=h separa_miles(@focos_incandescentes)%> </h3>
+                    <p>Focos Incandescentes</p>
+                  </div>
+        </div>
+    </div>
+
+    <div class="col-lg-3 col-xs-6">
+        <div class="small-box bg-aqua">
+                  <div class="inner">
+                    <h3><%=h separa_miles(@focos_ahorradores)%> </h3>
+                    <p>Focos Ahorradores</p>
+                  </div>
+        </div>
+    </div>
+
+
+      <div class="col-lg-3 col-xs-6">
+        <div class="small-box bg-green">
+                  <div class="inner">
+                    <h3><%=h separa_miles(@escuelas_mantenimiento_instalaciones)%> </h3>
+                    <p>Escuelas dan mantenimiento a sus instalaciones hidráulicas</p>
+                  </div>
+        </div>
+    </div>
+
+
+    <div class="col-lg-3 col-xs-6">
+      <div class="small-box bg-yellow">
+        <div class="inner">
+          <h3><%=h separa_miles(@escuelas_separan_basura)%></h3>
+          <p>Escuelas separan la basura</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-3 col-xs-6">
+      <div class="small-box bg-red">
+        <div class="inner">
+          <h3><%=h separa_miles(@escuelas_elaboran_compostas)%></h3>
+          <p>Escuelas elaboran compostas</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- Eje 4 -->
+  <div class="col-lg-12" id="eje4">
+    <ol class="breadcrumb">
+      <li class="active"><i class="fa fa-dashboard">Eje 4.- Consumo saludable / responsable</i></li>
+    </ol>
 
     <div class="col-lg-3 col-xs-6">
       <div class="small-box bg-aqua">
@@ -177,7 +298,45 @@
         </div>
       </div>
    </div>
+
+    <div class="col-lg-3 col-xs-6">
+      <div class="small-box bg-green">
+        <div class="inner">
+          <h3><%=h  separa_miles(@escuelas_conocen_lineamientos_generales)%> </h3>
+          <p>Escuelas con personal de cocina capacitado</p>
+        </div>
+      </div>
+   </div>
+
+     <div class="col-lg-4 col-xs-6">
+      <div class="small-box bg-yellow">
+        <div class="inner">
+          <h3><%=h  separa_miles(@escuelas_aplican_lineamientos_generales)%> </h3>
+          <p>Escuelas que aplican los lineamientos generales para el expendio de alimentos y bebidas del sistema educativo nacional</p>
+        </div>
+      </div>
+   </div>
+
+       <div class="col-lg-4 col-xs-6">
+      <div class="small-box bg-red">
+        <div class="inner">
+          <h3><%=h  separa_miles(@escuelas_realizan_activicion_fisica)%> </h3>
+          <p>Escuelas realizan activación física</p>
+        </div>
+      </div>
+   </div>
+
+
   </div>
+
+  
+  <!-- Eje 5 -->
+  <div class="col-lg-12" id="eje5">
+    <ol class="breadcrumb">
+      <li class="active"><i class="fa fa-dashboard">Eje 5.- Participación comunitaria</i></li>
+    </ol>
+  </div>
+
 
 </div>
 
