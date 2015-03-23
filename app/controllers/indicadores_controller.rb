@@ -86,7 +86,13 @@ private
   end
 
   def indicadores_ciclo2015eje5
-    
+    @padres_familia_capacitados = Participacion.sum(:capacitacion_salud_ma, :conditions => ["capacitacion_salud_ma IS NOT NULL"])
+    @dependencias_capacitadoras_padres = CapacitacionPadre.find(:all, :select => "sum(cp.numero_capacitaciones) as numero, cap.descripcion",
+                                                       :joins => "cp, dcapacitadoras cap, participacions part",
+                                                       :conditions => "part.id=cp.participacion_id AND cp.dcapacitadora_id=cap.id",
+                                                       :group => "cp.dcapacitadora_id")
+    @proyectos_medioambiente =  Pescolar.count("pe.participacion_id", :joins => "pe, participacions p", :conditions => ["p.id = pe.participacion_id AND pe.materia= ?",  'MEDIOAMBIENTE'])
+    @proyectos_salud =  Pescolar.count("pe.participacion_id", :joins => "pe, participacions p", :conditions => ["p.id = pe.participacion_id AND pe.materia= ?",  'SALUD'])
   end
 
   #### INDICADORES CICLO 2013-2014 ####
