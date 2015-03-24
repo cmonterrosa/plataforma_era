@@ -176,11 +176,23 @@
 
 <script type="text/javascript">
   enaTxtField('entorno_superficie_terreno_escuela', 'entorno_superficie_terreno_escuela_av', 'areas_verdes');
-  <%#*checkBoxTotextField('espacios', 'eje2_p2', 'entorno_no_espacios');%>
-  edMultiSelect('entorno_no_espacios', 'espacios', 'eje2_p2');
-  <%#*radioButtonTotxtField('entorno_escuela_reforesta_si', 'entorno_escuela_reforesta_num', 'reforesta');%>
-  <%#*radioButtonTotxtField('entorno_escuela_reforesta_no', 'entorno_escuela_reforesta_num', 'reforesta');%>
-  ena_txtField('entorno_arboles_nativos', 'arboles_nativos');
-  ena_txtField('entorno_arboles_no_nativos', 'arboles_no_nativos');
+  enaTxtField('entorno_superficie_terreno_escuela_av', '', 'eje2_p1');
+  checkBoxTotextField('espacios', 'eje2_p2', 'entorno_no_espacios');
+  <%#*edMultiSelect('entorno_no_espacios', 'espacios', 'eje2_p2');%>
+  radioButtonTotxtField('entorno_escuela_reforesta_si', 'entorno_escuela_reforesta_num', 'reforesta');
+  radioButtonTotxtField('entorno_escuela_reforesta_no', 'entorno_escuela_reforesta_num', 'reforesta');
   verifyCheckboxs('', 'acciones', 'eje2_p5');
 </script>
+
+<% if @s_espacios.size.to_i < 1 %>
+<script type="text/javascript">
+  edMultiSelect('entorno_no_espacios', 'espacios', 'eje2_p2');
+</script>
+<% end %>
+
+<% if @entorno.arboles_nativos_num.to_i < 1 %>
+<script type="text/javascript">
+  ena_txtField('entorno_arboles_nativos', 'arboles_nativos');
+  ena_txtField('entorno_arboles_no_nativos', 'arboles_no_nativos');
+</script>
+<% end %>

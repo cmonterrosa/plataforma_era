@@ -171,28 +171,36 @@ class DiagnosticosController < ApplicationController
     @co_totalptos = (@cop2.to_f + @cop3.to_f + @cop4.to_f + @cop5.to_f + @cop6.to_f + @cop7.to_f + @cop8.to_f).round(3)
     @co_porcentaje = @co_totalptos.to_f > 0 ? ((@co_totalptos.to_f * 100) / @co_maxptos.to_f).round(3) : 0
 
-#      # -- Participación --
-#      @participacion = @diagnostico.participacion if @diagnostico.participacion
-#      # -- Operaciones --
-#      @pp2 = @participacion.num_padres_familia.to_i > 0 ? (((@participacion.capacitacion_salud_ma.to_f / @participacion.num_padres_familia.to_f ) * 100) * $participacion_p2.to_f).round(3) : 0
-#      @pp3 = @participacion.proy_escolares_ma.to_i > 0 ? ptos_participacion(@participacion.proy_escolares_ma) : 0
-#      @pp4 = @participacion.proy_escolares_salud.to_i > 0 ? ptos_participacion(@participacion.proy_escolares_salud) : 0
-#      @pp5 = @participacion.act_salud_ma.to_i > 0 ? ptos_participacion(@participacion.act_salud_ma) : 0
-#
-#      @p_maxptos = (($participacion_p2.to_f + $participacion_p3.to_f + $participacion_p4.to_f + $participacion_p5.to_f)*100).round(3)
-#      @p_totalptos = (@pp2.to_f + @pp3.to_f + @pp4.to_f + @pp5.to_f).round(3)
-#      @p_porcentaje = @p_totalptos.to_f > 0 ? ((@p_totalptos.to_f * 100) / @p_maxptos.to_f).round(3) : 0
-#
-#    # -- Totales --
-#      @max_ptos = (@c_maxptos + @e_maxptos + @h_maxptos + @co_maxptos + @p_maxptos).to_f.round(3)
-#      @total_ptos = (@c_totalptos + @e_totalptos + @h_totalptos + @co_totalptos + @p_totalptos).to_f.round(3)
-#      @porcentaje = ((@total_ptos.to_f * 100) / @max_ptos.to_f).round(3)
+    # -- Participación --
+    @participacion = @diagnostico.participacion if @diagnostico.participacion
+    @s_pdcapacitadoras = multiple_selected_dcapacitadora(@participacion.capacitacion_padres) if  @participacion.capacitacion_padres
+    @s_proyectos_ma =  Pescolar.find(:all, :conditions => ["participacion_id = ? AND materia= ?", @participacion.id, 'MEDIOAMBIENTE'])
+    @proyectos_seleccionados_ambiente = ( @s_proyectos_ma.empty?)? 0: @s_proyectos_ma.size
+    @s_proyectos_salud =  Pescolar.find(:all, :conditions => ["participacion_id = ? AND materia= ?", @participacion.id, 'SALUD'])
+    @proyectos_seleccionados_salud = ( @s_proyectos_salud.empty?)? 0: @s_proyectos_salud.size
+    @s_proyectos_dependencias =  Pescolar.find(:all, :conditions => ["participacion_id = ? AND materia= ?", @participacion.id, 'DEPENDENCIAS'])
+    @proyectos_seleccionados_dependencias = ( @s_proyectos_dependencias.empty?)? 0: @s_proyectos_dependencias.size
+#    @pp1 = diagnostico.puntaje_eje5_p1
+    @pp2 = diagnostico.puntaje_eje5_p2
+    @pp3 = diagnostico.puntaje_eje5_p3
+    @pp4 = diagnostico.puntaje_eje5_p4
+    @pp5 = diagnostico.puntaje_eje5_p5
+    @pp6 = diagnostico.puntaje_eje5_p6
+    @pp7 = diagnostico.puntaje_eje5_p7
+    @p_maxptos = (($participacion_p1.to_f + $participacion_p2.to_f + $participacion_p3.to_f + $participacion_p4.to_f + $participacion_p5.to_f + $participacion_p6.to_f + $participacion_p7.to_f)*100).round(3)
+    @p_totalptos = (@pp1.to_f + @pp2.to_f + @pp3.to_f + @pp4.to_f + @pp5.to_f + @pp6.to_f + @pp7.to_f).round(3)
+    @p_porcentaje = @p_totalptos.to_f > 0 ? ((@p_totalptos.to_f * 100) / @p_maxptos.to_f).round(3) : 0
 
-    if current_user.roles.any? { |b| b[:name] == 'escuela' }
-      render :partial => 'resumen', :layout => 'reporte'
-    else
+    # -- Totales --
+    @max_ptos = (@c_maxptos + @e_maxptos + @h_maxptos + @co_maxptos + @p_maxptos).to_f.round(3)
+    @total_ptos = (@c_totalptos + @e_totalptos + @h_totalptos + @co_totalptos + @p_totalptos).to_f.round(3)
+    @porcentaje = ((@total_ptos.to_f * 100) / @max_ptos.to_f).round(3)
+
+#    if current_user.roles.any? { |b| b[:name] == 'escuela' }
+#      render :partial => 'resumen', :layout => 'reporte'
+#    else
       render :partial => 'completo', :layout => 'reporte'
-    end
+#    end
   end
 
   def eje1_to_pdf

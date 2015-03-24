@@ -1,0 +1,215 @@
+<% form_for :participacion, :html => {:class => "formee", :name => ":participacion"} do |f| -%>
+<table class="principal" width="100%" border="0" align="center" cellpadding="2" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
+  <tr bgcolor="#003366" style="opacity: 0.7;">
+    <td align="center"><h4>EJE 3: PARTICIPACIÓN COMUNITARIA</h4></td>
+  </tr>
+  <tr>
+    <td>
+      <table class="sample" width="100%" border="0" cellpadding="0" cellspacing="0" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
+        <tr align="center" >
+          <td><label class="uper" style="font-weight:bold;font-size:14px;" >Pregunta</label></td>
+          <td>&nbsp;</td>
+          <td><label class="uper" style="font-weight:bold;font-size:14px;" >Máximo Puntaje</label></td>
+          <td>&nbsp;</td>
+          <td><label class="uper" style="font-weight:bold;font-size:14px;" >Puntaje Obtenido</label></td>
+        </tr>
+        <tr style="background-color:#cccccc;" >
+          <td colspan="5" style="height: 5px;" ></td>
+        </tr>
+        <!-- Pregunta1 -->
+        <tr class="d0">
+          <td width="80%" align="justify">
+            <label class="uper">1.- ¿Cuál es el número de  padres de familia o tutores que tiene la escuela en su registro?.</label>
+            <div class="grid-12-12">
+              <div class="grid-3-12"></div>
+              <div class="grid-2-12">
+                <%= f.text_field :num_padres_familia, :style => "text-align: center;", :class => "rpt" %>
+              </div>
+            </div>
+            <div id="eje5_p1" class="grid-12-12" style="display: none; text-align: center;"></div>
+          </td>
+          <td>&nbsp;</td>
+          <td style="text-align:right;vertical-align:top;" ><label>0</label></td>
+          <td>&nbsp;</td>
+          <td style="text-align:right;vertical-align:top;" ><label>0</label></td>
+        </tr>
+        <!-- Pregunta2 -->
+        <tr class="d1">
+          <td width="80%" align="justify">
+            <label class="uper">2.- De su registro escolar ¿Cuántos  padres de familia o tutores participaron en la última capacitación, taller, curso o actividad relacionados en temas de salud y/o medio ambiente?.</label>
+            <div class="grid-12-12">
+              <div class="grid-3-12"></div>
+              <div class="grid-2-12">
+                <%= f.text_field :capacitacion_salud_ma, :style => "text-align: center;", :class => "rpt" %>
+              </div>
+            </div>
+            <div id="eje5_p2" class="grid-12-12" style="display: none; text-align: center;"></div>
+          </td>
+          <td>&nbsp;</td>
+          <td style="text-align:right;vertical-align:top;" ><label><%= $participacion_p2.to_f * 100 %></label></td>
+          <td>&nbsp;</td>
+          <td style="text-align:right;vertical-align:top;" ><label><%= @pp2 %></label></td>
+        </tr>
+        <!-- Pregunta3 -->
+        <tr class="d0">
+          <td width="80%" align="justify">
+            <label class="uper">3.- ¿Cuantas capacitaciones relacionadas con temas de salud y ambiente han impartido los docentes a los padres de familia?.</label><br />
+            <!-- Salud -->
+            <div class="grid-4-12" style="text-align:center;">
+              <p><b>Ambiente:</b></p> <%= f.select :capacitacion_salud, (0..10), {:selected => @participacion.capacitacion_salud}, {:style => "width: 100px;", :class => "rpt"} %>
+            </div>
+            <!-- Medio ambiente -->
+            <div class="grid-4-12" style="text-align:center;">
+                <p><b>Salud:</b></p> <%= f.select :capacitacion_medioambiente, (0..10), {:selected => @participacion.capacitacion_medioambiente}, {:style => "width: 100px;", :class => "rpt"} %>
+            </div>
+             <!-- Total -->
+            <div class="grid-4-12" style="text-align:center;">
+              <p><b>Total:</b></p> <label id="total_capacitaciones" style="width: 55px; font-size: 15px; text-align: center; color: black; background-color: #e6f8e0;"/>
+            </div>
+
+            <div class="grid-12-12 clear"></div>
+            <div id="eje5_p3" class="grid-12-12" style="display: none; text-align: center;"></div>
+          </td>
+          <td>&nbsp;</td>
+          <td style="text-align:right;vertical-align:top;" ><label><%= $participacion_p3.to_f * 100 %></label></td>
+          <td>&nbsp;</td>
+          <td style="text-align:right;vertical-align:top;" ><label><%= @pp3 %></label></td>
+        </tr>
+        <!-- Pregunta4 -->
+        <tr class="d1">
+          <td width="80%" align="justify">
+            <label class="uper">4.- ¿Qué Instituciones o Dependencias han impartido capacitaciones a los padres de familia? / ¿Cuántas?.</label><br />
+            <div class="grid-12-12">
+                <fieldset style="padding: 5px 5px 5px 5px;">
+                  <div id="pdcapacitadoras" class="grid-12-12">
+                    <% Dcapacitadora.find(:all).each do |c| %>
+                      <% @valor = nil %>
+                      <% @participacion.capacitacion_padres.each do |x| %>
+                        <% if x[:dcapacitadora_id] == c.id %>
+                          <% @valor = x.numero_capacitaciones  %>
+                          <% @desc_dep = x.descripcion_dep %>
+                        <% end %>
+                      <% end %>
+                        <% if @s_pdcapacitadoras.include?(c.id) %>
+                          <%= check_box_tag "pdcapacitadoras[#{c.id}]", c.clave, @s_pdcapacitadoras.include?(c.id) ? true : false %>&nbsp;<%= c.descripcion %>
+                          &nbsp;NÚM.&nbsp;DE&nbsp;CAPACITACIONES:&nbsp;<%= select "pdcapacitadora", "#{c.clave}", (1..9), {:selected => @valor}, {:style => "display: inline; width:50px;", :class => "rpt"}%><br /><br />
+                          <% if c.clave == "OTRA" %>&nbsp;DESCRIPCIÓN:&nbsp;<input name="pdcapacitadoras<%= c.clave %>" id="pdcapacitadoras<%= c.clave %>" size="55px" style="text-align:justify; display: inline; text-transform: uppercase;" value="<%=h @desc_dep ? @desc_dep : "" %>" /><% end %>
+                          <%= linea_horizontal %>
+                        <% end %>
+                      <% end %>
+                     </div>
+                  <br />
+                  <% if @s_dcapacitadoras.size.to_i < 1 %>
+                    <%= f.check_box :no_capacitacion, { :checked => @participacion.no_capacitacion == "NO" ? true : false }, "NO", "SI" %>&nbsp;NINGUNA
+                  <% end %>
+                </fieldset>
+              </div>
+              <div id="eje5_p4" class="grid-12-12" style="text-align: center; display: none"></div>
+          </td>
+          <td>&nbsp;</td>
+          <td style="text-align:right;vertical-align:top;" ><label><%= $participacion_p4.to_f * 100 %>0</label></td>
+          <td>&nbsp;</td>
+          <td style="text-align:right;vertical-align:top;" ><label><%= @pp4 %></label></td>
+        </tr>
+        <!-- Pregunta5 -->
+        <tr class="d0">
+          <td width="80%" align="justify">
+            <label class="uper">5.- ¿Cuántos proyectos escolares en materia del cuidado del ambiente realizó la escuela en vinculación con la comunidad?.</label><br />
+            <div class="grid-12-12" align="center"><%= select "proyectos", "ambiente", (0..12), {:selected => @proyectos_seleccionados_ambiente}, {:style => "width:50px;", :class => "rpt"} %></div>
+
+            <!-- detalle de proyectos -->
+            <div id="detalle_proyectos_ambiente" class="grid-12-12">
+              <%=render :partial => '/participacions/formularios_proyectos_ambientes'%>
+            </div>
+
+            <div id="eje5_p5" class="grid-12-12" style="text-align: center; display: none;"></div>
+          </td>
+          <td>&nbsp;</td>
+          <td style="text-align:right;vertical-align:top;" ><label><%= $participacion_p5.to_f * 100 %></label></td>
+          <td>&nbsp;</td>
+          <td style="text-align:right;vertical-align:top;" ><label><%= @pp5 %></label></td>
+        </tr>
+        <!-- Pregunta6 -->
+        <tr class="d1">
+          <td width="80%" align="justify">
+            <label class="uper">6.-¿ Cuántos proyectos escolares en materia del cuidado de la salud realizó la escuela en vinculación con la comunidad?.</label><br />
+            <div class="grid-12-12" align="center"><%= select "proyectos", "salud", (0..12), {:selected => @proyectos_seleccionados_salud}, {:style => "width:50px;", :class => "rpt"} %></div>
+            <!-- detalle de proyectos -->
+            <div id="detalle_proyectos_salud" class="grid-12-12">
+              <%= text_field "informacion", "participacion", :value => @participacion.id, :style => "display:none;"%>
+              <%= render :partial => '/participacions/formularios_proyectos_salud'%>
+            </div>
+            <div id="eje5_p6" class="grid-12-12" style="text-align: center; display: none;"></div>
+          </td>
+          <td>&nbsp;</td>
+          <td style="text-align:right;vertical-align:top;" ><label><%= $participacion_p6.to_f * 100 %></label></td>
+          <td>&nbsp;</td>
+          <td style="text-align:right;vertical-align:top;" ><label><%= @pp6 %></label></td>
+        </tr>
+        <!-- Pregunta7 -->
+        <tr class="d0">
+          <td width="80%" align="justify">
+            <label class="uper">7.- De los proyectos o actividades que realiza la Institución Escolar, ¿Cuáles se desarrollan con apoyos de organismos no gubernamentales o dependencias gubernamentales?.</label><br />
+            <div class="grid-12-12" align="center"><%= select "proyectos", "dependencias", (0..12), {:selected => @proyectos_seleccionados_dependencias}, {:style => "width:50px;", :class => "rpt"} %></div>
+            <!-- detalle de proyectos -->
+            <div id="detalle_proyectos_dependencias" class="grid-12-12">
+              <%=text_field "informacion", "participacion", :value => @participacion.id, :style => "display:none;"%>
+              <%=render :partial => '/participacions/formularios_proyectos_dependencias'%>
+            </div>
+            <div id="eje5_p7" class="grid-12-12" style="text-align: center; display: none;"></div>
+          </td>
+          <td>&nbsp;</td>
+          <td style="text-align:right;vertical-align:top;" ><label><%= $participacion_p7.to_f * 100 %></label></td>
+          <td>&nbsp;</td>
+          <td style="text-align:right;vertical-align:top;" ><label><%= @pp7 %></label></td>
+        </tr>
+        <tr style="background-color:#cccccc;" >
+          <td colspan="5" style="height: 5px;"></td>
+        </tr>
+        <!-- Barra de Porcentaje -->
+        <tr align="center" >
+          <td><label class="uper" style="font-weight:bold;" >Porcentaje</label></td>
+          <td>&nbsp;</td>
+          <td><label class="uper" style="font-weight:bold;" >Total Máximo</label></td>
+          <td>&nbsp;</td>
+          <td><label class="uper" style="font-weight:bold;" >Total Obtenido</label></td>
+        </tr>
+        <tr>
+          <td style="text-align:center;" >
+            <div class="bar_mortice rounded_tiny mortice_tiny green_mortice">
+              <div id="bar_competencias" class="progress rounded_tiny progress_tiny green" style="width: <%= @p_porcentaje.to_i %>%;" ></div>
+            </div>
+            <label style="font-weight:bold"><%= @p_porcentaje %> %</label>
+          </td>
+          <td>&nbsp;</td>
+          <td style="text-align:right;" ><label style="font-weight:bold;" ><%= @p_maxptos %></label></td>
+          <td>&nbsp;</td>
+          <td style="text-align:right;" ><label style="font-weight:bold;" ><%= @p_totalptos %></label></td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="5">&nbsp;</td>
+  </tr>
+</table>
+<% end %>
+
+<img src="/images/era/space.png" alt="" width="10" height="50px" />
+
+<script type="text/javascript">
+  showImageNum('participacion_num_padres_familia', 'eje5_p1');
+  showImageNum('participacion_capacitacion_salud_ma', 'eje5_p2');
+  sumatoria_dos_elementos('participacion_capacitacion_salud', 'participacion_capacitacion_medioambiente', 'total_capacitaciones'); //pregunta 3
+  showImageNum('total_capacitaciones', 'eje5_p3');
+  checkBoxToSelct('pdcapacitadora');
+  showImageNum('proyectos_ambiente', 'eje5_p5');
+  showImageNum('proyectos_salud', 'eje5_p6');
+  showImageNum('proyectos_dependencias', 'eje5_p7');
+</script>
+
+<% if @s_dcapacitadoras.size.to_i < 1 %>
+<script type="text/javascript">
+  edMultiSelect2('participacion_no_capacitacion', 'pdcapacitadoras', 'eje5_p4');
+</script>
+<% end %>
