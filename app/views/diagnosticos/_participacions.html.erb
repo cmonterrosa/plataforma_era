@@ -19,6 +19,7 @@
                 <%= f.text_field :num_padres_familia, :style => "text-align: center;", :class => "rpt" %>
               </div>
             </div>
+            <div id="eje5_p1" class="grid-12-12" style="display: none; text-align: center;"></div>
           </td>
           <td>&nbsp;</td>
           <td width="49%" align="justify" style=" vertical-align:top;">
@@ -33,6 +34,7 @@
                 <%= f.text_field :capacitacion_salud_ma, :style => "text-align: center;", :class => "rpt" %>
               </div>
             </div>
+            <div id="eje5_p2" class="grid-12-12" style="display: none; text-align: center;"></div>
           </td>
         </tr>
         <tr>
@@ -55,11 +57,10 @@
             </div>
             
             <div class="grid-12-12 clear"></div>
-            <div id="eje5_p3" class="grid-12-12" style="display: none; text-align: center;">
-            </div>
-            </td>
-            <td>&nbsp;</td>
-            <td width="49%" align="justify" style=" vertical-align:top;">
+            <div id="eje5_p3" class="grid-12-12" style="display: none; text-align: center;"></div>
+          </td>
+          <td>&nbsp;</td>
+          <td width="49%" align="left" style=" vertical-align:top;">
               <!-- Pregunta -->
               <div class="grid-12-12">
                 <label class="uper">4.- ¿Qué Instituciones o Dependencias han impartido capacitaciones a los padres de familia? / ¿Cuántas?.<em class="formee-req"> *</em></label>
@@ -191,9 +192,18 @@
 
 
 <script type="text/javascript">
+  showImageNum('participacion_num_padres_familia', 'eje5_p1');
+  showImageNum('participacion_capacitacion_salud_ma', 'eje5_p2');
   sumatoria_dos_elementos('participacion_capacitacion_salud', 'participacion_capacitacion_medioambiente', 'total_capacitaciones'); //pregunta 3
-  
-  edMultiSelect2('participacion_no_capacitacion', 'dcapacitadoras', 'eje5_p4');
+  showImageNum('total_capacitaciones', 'eje5_p3');
   checkBoxToSelct('dcapacitadora');
-
+  showImageNum('proyectos_ambiente', 'eje5_p5');
+  showImageNum('proyectos_salud', 'eje5_p6');
+  showImageNum('proyectos_dependencias', 'eje5_p7');
 </script>
+
+<% if @s_dcapacitadoras.size.to_i < 1 %>
+<script type="text/javascript">
+  edMultiSelect2('participacion_no_capacitacion', 'pdcapacitadoras', 'eje5_p4');
+</script>
+<% end %>

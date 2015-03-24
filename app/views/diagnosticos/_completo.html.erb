@@ -1,5 +1,11 @@
 <table width="80%" border="0" align="center" cellpadding="2" cellspacing="1">
   <tr>
+    <td><%= render :partial => "resumen_ptos" %></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
     <td><img alt="mostrar/ocultar" src="/images/acordeon/arrow_up.png" style="cursor: pointer;" onclick="showEje(this, 'eje1');" >&nbsp; EJE1.- DESARROLLO DE COMPETENCIAS </img></td>
   </tr>
   <tr id="eje1" style="display: none;" >
@@ -23,5 +29,10 @@
   <tr id="eje4" style="display: none;" >
     <td><%= render :partial => "consumos_rpte" %></td>
   </tr>
+  <tr>
+    <td><img alt="mostrar/ocultar" src="/images/acordeon/arrow_up.png" style="cursor: pointer;" onclick="showEje(this, 'eje5');" >&nbsp; EJE4.- PARTICIPACIÓN CIUDADANA </img></td>
+  </tr>
+  <tr id="eje5" style="display: none;" >
+    <td><%= render :partial => "participacions_rpte" %></td>
+  </tr>
 </table>
-<!-- EJE 1: DESARROLLO DE COMPETENCIAS -->
