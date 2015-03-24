@@ -5,16 +5,19 @@
   </tr>
   <tr>
     <td>
-      <table class="subprincipal" width="100%" border="0" cellpadding="4" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
+      <table class="sample" width="100%" border="0" cellpadding="0" cellspacing="0" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
         <tr align="center" >
-          <td><label class="uper" style="font-weight:bold;" >Pregunta</label></td>
+          <td><label class="uper" style="font-weight:bold;font-size:14px;" >Pregunta</label></td>
           <td>&nbsp;</td>
-          <td><label class="uper" style="font-weight:bold;" >Máximo Puntaje</label></td>
+          <td><label class="uper" style="font-weight:bold;font-size:14px;" >Máximo Puntaje</label></td>
           <td>&nbsp;</td>
-          <td><label class="uper" style="font-weight:bold;" >Puntaje Obtenido</label></td>
+          <td><label class="uper" style="font-weight:bold;font-size:14px;" >Puntaje Obtenido</label></td>
+        </tr>
+        <tr style="background-color:#cccccc;" >
+          <td colspan="5" style="height: 5px;"></td>
         </tr>
         <!-- Pregunta1 -->
-        <tr>
+        <tr class="d0">
           <td width="80%" align="justify">
             <div class="grid-12-12">
               <label class="uper">1.- ¿Cuántos docentes se han capacitado en el último ciclo escolar? en materia de:<em class="formee-req"> *</em></label>
@@ -59,9 +62,11 @@
           <td style="text-align:right;vertical-align:top;" ><label><%= @cp1 %></label></td>
         </tr>
         <!-- Pregunta2 -->
-        <tr>
+        <tr class="d1">
           <td width="80%" align="justify">
-            <label class="uper">2.- De los docentes capacitados, ¿cuántos aplican con sus alumnos los conocimientos adquiridos?<em class="formee-req"> *</em></label>
+            <div class="grid-12-12">
+              <label class="uper">2.- De los docentes capacitados, ¿cuántos aplican con sus alumnos los conocimientos adquiridos?<em class="formee-req"> *</em></label>
+            </div>
             <div class="grid-2-12"><%= f.text_field :dctes_aplican_conocimto, :style => "text-align: center;", :class => "rpt" %></div>
           </td>
           <td>&nbsp;</td>
@@ -70,7 +75,7 @@
           <td style="text-align:right;vertical-align:top;" ><label><%= @cp2 %></label></td>
         </tr>
         <!-- Pregunta3 -->
-        <tr>
+        <tr class="d0">
           <td width="80%" align="justify">
             <label class="uper">3.- Del total de docentes, ¿cuántos se involucran en actividades extracurriculares en materia de salud y medio ambiente que promueve la escuela?<em class="formee-req"> *</em></label>
             <div class="grid-2-12"><%= f.text_field :dctes_invol_act, :style => "text-align: center;", :class => "rpt" %></div>
@@ -81,7 +86,7 @@
           <td style="text-align:right;vertical-align:top;" ><label><%= @cp3 %></label></td>
         </tr>
         <!-- Pregunta4 -->
-        <tr>
+        <tr class="d1">
           <td width="80%" align="justify">
             <label class="uper">4.- Del total de alumnos, ¿cuántos recibieron capacitación relacionada con temas salud y medio ambiente por parte de los docentes en el último ciclo escolar?<em class="formee-req"> *</em></label>
             <div class="grid-2-12"><%= f.text_field :alumn_cap_dctes, :style => "text-align: center;", :class => "rpt" %></div>
@@ -92,7 +97,7 @@
           <td style="text-align:right;vertical-align:top;" ><label><%= @cp4 %></label></td>
         </tr>
         <!-- Pregunta5 -->
-        <tr>
+        <tr class="d0">
           <td width="80%" align="justify">
             <label class="uper">5.- Del total de alumnos, ¿cuántos recibieron capacitación relacionada con temas de salud y medio ambiente por parte de otras <b>instituciones y/o dependencias</b> en el último ciclo escolar?<em class="formee-req"> *</em></label>
             <div class="grid-1-12"></div>
@@ -134,6 +139,9 @@
           <td style="text-align:right;vertical-align:top;" ><label><%= $competencia_p5.to_f * 100 %></label></td>
           <td>&nbsp;</td>
           <td style="text-align:right;vertical-align:top;" ><label><%= @cp5 %></label></td>
+        </tr>
+        <tr style="background-color:#cccccc;" >
+          <td colspan="5" style="height: 5px;"></td>
         </tr>
         <!-- Barra de Porcentaje -->
         <tr align="center" >

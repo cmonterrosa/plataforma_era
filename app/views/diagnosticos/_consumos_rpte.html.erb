@@ -1,0 +1,337 @@
+<% form_for :consumo, :html => {:class => "formee", :name => "consumo"} do |f| -%>
+<table class="principal" width="100%" border="0" align="center" cellpadding="2" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
+  <tr bgcolor="#003366" style="opacity: 0.7;">
+    <td align="center"><h4>EJE 4: CONSUMO RESPONSABLE / SALUDABLE</h4></td>
+  </tr>
+  <tr>
+    <td>
+      <table class="sample" width="100%" border="0" cellpadding="0" cellspacing="0" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
+        <tr align="center" >
+          <td><label class="uper" style="font-weight:bold;font-size:14px;" >Pregunta</label></td>
+          <td>&nbsp;</td>
+          <td><label class="uper" style="font-weight:bold;font-size:14px;" >Máximo Puntaje</label></td>
+          <td>&nbsp;</td>
+          <td><label class="uper" style="font-weight:bold;font-size:14px;" >Puntaje Obtenido</label></td>
+        </tr>
+        <tr style="background-color:#cccccc;" >
+          <td colspan="5" style="height: 5px;" ></td>
+        </tr>
+        <!-- Pregunta1 -->
+        <tr class="d0">
+          <td width="80%" align="justify">
+            <label class="uper">1.- ¿Su centro escolar cuenta con establecimientos para el consumo de alimentos y bebidas?.</label>
+            <div class="grid-12-12" style="text-align: center;">
+              <span id="ct_escuela_establecimiento" class="InputGroup">
+                <label class="uper">SI <%= f.radio_button :escuela_establecimiento, "SI"%></label>&nbsp;&nbsp;
+                <label class="uper">NO <%= f.radio_button :escuela_establecimiento, "NO"%></label>
+              </span>
+            </div>
+            <div id="establecimientos" class="grid-12-12">
+              <fieldset style="padding: 5px 5px 5px 5px;" id="lista_establecimientos">
+              <% @establecimientos.each do |c| %>
+                <%if @consumo.escuela_establecimiento == 'NO'%>
+                  <%estilo = (c.clave.include?('CLAE') || c.clave.include?('CAEC')) ? 'inline' : 'none' %>
+                <div id="contenedor_<%=h c.clave%>" style="display: <%=h estilo%>">
+                  <% if @s_establecimientos.include?(c.clave) %>
+                    <%= check_box_tag "establecimientos[#{c.id}]", c.clave, @s_establecimientos.include?(c.clave) ? true : false %>&nbsp;<%= c.descripcion %><br />
+                    <%= linea_horizontal%>
+                  <% end %>
+                </div>
+                <%else%>
+                  <%estilo = (c.clave.include?('CLAE') || c.clave.include?('CAEC')) ? 'none' : 'inline' %>
+                <div id="contenedor_<%=h c.clave%>" style="display: <%=h estilo%>">
+                  <% if @s_establecimientos.include?(c.clave) %>
+                    <%= check_box_tag "establecimientos[#{c.id}]", c.clave, @s_establecimientos.include?(c.clave) ? true : false %>&nbsp;<%= c.descripcion %><br />
+                    <%= linea_horizontal%>
+                  <% end %>
+                </div>
+                <%end%>
+              <% end %>
+              </fieldset>
+            </div>
+          </td>
+          <td>&nbsp;</td>
+          <td style="text-align:right;vertical-align:top;" ><label>0</label></td>
+          <td>&nbsp;</td>
+          <td style="text-align:right;vertical-align:top;" ><label>0</label></td>
+        </tr>
+        <!-- Pregunta2 -->
+        <tr class="d1" id="pregunta2">
+          <td width="80%" align="justify">
+            <label class="uper">2.- Las personas encargadas del manejo y preparación de alimentos  dentro de la escuela, ¿han recibido capacitación(es)  para la preparación  e higiene de alimentos y bebidas en  los establecimientos de consumo escolar?</label>
+            <div class="grid-12-12" style="text-align: center;">
+              <span id="r_capacitacion_alim_bebidas" class="InputGroup">
+                <label class="uper">SI <%= f.radio_button :capacitacion_alim_bebidas, "SI" %></label>&nbsp;&nbsp;
+                <label class="uper">NO <%= f.radio_button :capacitacion_alim_bebidas, "NO"%></label>
+              </span>
+            </div>
+            <div id="eje4_p2" class="grid-12-12" style="display: none; text-align: center;"></div>
+          </td>
+          <td>&nbsp;</td>
+          <td style="text-align:right;vertical-align:top;" ><label><%= $consumo_p2.to_f * 100 %></label></td>
+          <td>&nbsp;</td>
+          <td style="text-align:right;vertical-align:top;" ><label><%= @cop2 %></label></td>
+        </tr>
+        <!-- Pregunta3 -->
+        <tr class="d0" id="pregunta3">
+          <td width="80%" align="justify">
+            <label class="uper">3.- Los responsables de la elaboración y venta de  alimentos en cooperativas, cafeterías o expendios escolares, ¿Aplican los  Lineamientos Generales para la distribución de alimentos y bebidas preparados y procesados en las escuelas del Sistema Educativo Nacional?.</label><br />
+            <div class="grid-12-12" style="text-align:center;">
+              <span id="responsables_conocen_lineamientos" class="InputGroup">
+                <label class="uper">SI <%= f.radio_button :conocen_lineamientos_grales, "SI" %></label>&nbsp;&nbsp;
+                <label class="uper">NO <%= f.radio_button :conocen_lineamientos_grales, "NO" %></label>
+              </span>
+            </div>
+            <div id="eje4_p3" class="grid-12-12" style="display: none; text-align: center;"></div>
+          </td>
+          <td>&nbsp;</td>
+          <td style="text-align:right;vertical-align:top;" ><label><%= $consumo_p3.to_f * 100 %></label></td>
+          <td>&nbsp;</td>
+          <td style="text-align:right;vertical-align:top;" ><label><%= @cop3 %></label></td>
+        </tr>
+        <!-- Pregunta4 -->
+        <tr class="d1" id="pregunta4">
+          <td width="80%" align="justify">
+            <label class="uper">4.- ¿Cúales de las siguientes recomendaciones del apéndice informativo C de la Norma Oficial Mexicana NOM-0043-SSA2-2012 Aplica la Institución Escolar?.</label><br />
+          </td>
+          <td>&nbsp;</td>
+          <td style="text-align:right;vertical-align:top;" ><label><%= $consumo_p4.to_f * 100 %></label></td>
+          <td>&nbsp;</td>
+          <td style="text-align:right;vertical-align:top;" ><label><%= @cop4 %></label></td>
+        </tr>
+        <tr id="preparacion_utensilios" class="d1">
+          <td width="80%" align="justify">
+            <div class="grid-6-12">
+              <label class="uper">Preparación:</label>
+              <fieldset style="padding: 5px 5px 5px 5px;">
+                <div id="preparacions" class="grid-12-12">
+                  <% Preparacion.find(:all).each do |c| %>
+                    <% if @s_preparacions.include?(c.clave) %>
+                      <%= check_box_tag "preparacions[#{c.id}]", c.clave, @s_preparacions.include?(c.clave) ? true : false %>&nbsp;<%= c.descripcion %><br />
+                      <%= linea_horizontal%>
+                    <% end %>
+                  <% end %>
+                </div>
+              </fieldset>
+            </div>
+            <div class="grid-6-12">
+              <label class="uper">Utensilios:</label>
+              <fieldset style="padding: 5px 5px 5px 5px;">
+                <div id="utensilios" class="grid-12-12">
+                  <% Utensilio.find(:all).each do |c| %>
+                    <% if @s_utensilios.include?(c.clave) %>
+                      <%= check_box_tag "utensilios[#{c.id}]", c.clave, @s_utensilios.include?(c.clave) ? true : false %>&nbsp;<%= c.descripcion %><br />
+                      <%= linea_horizontal%>
+                    <% end %>
+                  <% end %>
+                </div>
+              </fieldset>
+            </div>
+          </td>
+          <td colspan="4">&nbsp;</td>
+        </tr>
+        <tr id="higiene" class="d1">
+          <td width="80%" align="justify">
+            <div class="grid-6-12">
+              <label class="uper">Higiene:</label>
+              <fieldset style="padding: 5px 5px 5px 5px;">
+                <div id="higienes" class="grid-12-12">
+                  <% Higiene.find(:all).each do |c| %>
+                    <% if @s_higienes.include?(c.clave) %>
+                      <%= check_box_tag "higienes[#{c.id}]", c.clave, @s_higienes.include?(c.clave) ? true : false %>&nbsp;<%= c.descripcion %><br />
+                      <%= linea_horizontal%>
+                    <% end %>
+                  <% end %>
+                </div>
+              </fieldset>
+            </div>
+          </td>
+          <td colspan="4">&nbsp;</td>
+        </tr>
+        <!-- Pregunta5 -->
+        <tr id="productos" class="d0">
+          <td width="80%" align="justify">
+            <div class="grid-12-12">
+              <label class="uper">5.- Del siguiente listado marque los que se comercializan en su escuela.</label>
+            </div>
+            <div class="grid-12-12">
+              <label class="uper">Listado de productos:</label>
+            </div>
+          </td>
+          <td>&nbsp;</td>
+          <td style="text-align:right;vertical-align:top;" ><label><%= $consumo_p5.to_f * 100 %></label></td>
+          <td>&nbsp;</td>
+          <td style="text-align:right;vertical-align:top;" ><label><%= @cop5 %></label></td>
+        </tr>
+        <tr id="bebidas_alimentos" class="d0">
+          <td width="80%" align="justify">
+            <div class="grid-6-12">
+              <label class="uper">Bebidas (industrializadas y caseras):</label>
+              <fieldset style="padding: 5px 5px 5px 5px;">
+                <div id="bebidas" class="grid-12-12">
+                  <% Bebida.find(:all).each do |c| %>
+                    <% if @s_bebidas.include?(c.clave) %>
+                      <%= check_box_tag "bebidas[#{c.id}]", c.clave, @s_bebidas.include?(c.clave) ? true : false %>&nbsp;<%= c.descripcion %><br />
+                      <%= linea_horizontal%>
+                    <% end %>
+                  <% end %>
+                </div>
+              </fieldset>
+            </div>
+            <div class="grid-6-12">
+              <label class="uper">Alimentos:</label>
+              <fieldset style="padding: 5px 5px 5px 5px;">
+                <div id="alimentos" class="grid-12-12">
+                  <% Alimento.find(:all).each do |c| %>
+                    <% if @s_alimentos.include?(c.clave) %>
+                      <%= check_box_tag "alimentos[#{c.id}]", c.clave, @s_alimentos.include?(c.clave) ? true : false %>&nbsp;<%= c.descripcion %><br />
+                      <%= linea_horizontal%>
+                    <% end %>
+                  <% end %>
+                </div>
+              </fieldset>
+            </div>
+          </td>
+          <td colspan="4">&nbsp;</td>
+        </tr>
+        <tr id="botanas_reposterias" class="d0">
+          <td width="80%" align="justify">
+            <div class="grid-6-12">
+              <label class="uper">Botanas (Industriales y caseras):</label>
+              <fieldset style="padding: 5px 5px 5px 5px;">
+                <div id="botanas" class="grid-12-12">
+                  <% Botana.find(:all).each do |c| %>
+                    <% if @s_botanas.include?(c.clave) %>
+                      <%= check_box_tag "botanas[#{c.id}]", c.clave, @s_botanas.include?(c.clave) ? true : false %>&nbsp;<%= c.descripcion %><br />
+                      <%= linea_horizontal%>
+                    <% end %>
+                  <% end %>
+                </div>
+              </fieldset>
+            </div>
+            <div class="grid-6-12">
+              <label class="uper">Galletas, pastelillos y postres (Industriales y caseros):</label>
+              <fieldset style="padding: 5px 5px 5px 5px;">
+                <div id="reposterias" class="grid-12-12">
+                  <% Reposteria.find(:all).each do |c| %>
+                    <% if @s_reposterias.include?(c.clave) %>
+                      <%= check_box_tag "reposterias[#{c.id}]", c.clave, @s_reposterias.include?(c.clave) ? true : false %>&nbsp;<%= c.descripcion %><br />
+                      <%= linea_horizontal%>
+                    <% end %>
+                  <% end %>
+                </div>
+              </fieldset>
+            </div>
+          </td>
+          <td colspan="4">&nbsp;</td>
+        </tr>
+        <!-- Pregunta6 -->
+        <tr id="materiales" class="d1">
+          <td width="80%" align="justify">
+            <div class="grid-12-12">
+              <label class="uper">6.- ¿Cuál es el tipo de material de los recipientes y utensilios (platos, vasos, cucharas, cuchillos, tenedores, etc) que se utilizan para servir alimentos en los establecimientos de consumo escolar?.</label>
+            </div>
+            <div class="grid-6-12">
+              <fieldset style="padding: 5px 5px 5px 5px;">
+                <div id="materials" class="grid-12-12">
+                  <% Material.find(:all).each do |c| %>
+                    <% if @s_materials.include?(c.clave) %>
+                      <%= check_box_tag "materials[#{c.id}]", c.clave, @s_materials.include?(c.clave) ? true : false %>&nbsp;<%= c.descripcion %><br />
+                      <%= linea_horizontal%>
+                    <% end %>
+                  <% end %>
+                </div>
+              </fieldset>
+            </div>
+          </td>
+          <td>&nbsp;</td>
+          <td style="text-align:right;vertical-align:top;" ><label><%= $consumo_p6.to_f * 100 %></label></td>
+          <td>&nbsp;</td>
+          <td style="text-align:right;vertical-align:top;" ><label><%= @cop6 %></label></td>
+        </tr>
+        <!-- Pregunta7 -->
+        <tr class="d0">
+          <td width="80%" align="justify">
+            <label class="uper">7.- ¿Con qué frecuencia se realiza activación física en su escuela? Con base a la recomendación del acuerdo nacional para la salud alimentaria estrategia contra el sobrepeso y la obesidad (Programa de acción en el contexto escolar).</label><br />
+            <div class="grid-12-12">
+               <label class="formee-msg-info" style="text-transform:uppercase;font-size:1.1em;">
+                Nota: esta se realizará con independencia y de manera adicional a la clase de Educación Física (Educación Básica) o Actividad deportiva habitual (Media Superior).
+               </label>
+            </div>
+            <div class="grid-2-12"></div>
+            <div class="grid-3-12">
+              <%= f.select :frecuencia_afisica_id, FrecuenciaAfisica.all.collect {|p| [ p.descripcion, p.clave ]}, {:selected => @s_afisicas}, {:style => "width: 300px;", :class => "rpt"} %>
+            </div>
+            <%#*<div class="grid-12-12 clean"></div>%>
+            <div id="eje4_p7" class="grid-12-12" style="display: none; text-align: center;"></div>
+          </td>
+          <td>&nbsp;</td>
+          <td style="text-align:right;vertical-align:top;" ><label><%= $consumo_p7.to_f * 100 %></label></td>
+          <td>&nbsp;</td>
+          <td style="text-align:right;vertical-align:top;" ><label><%= @cop7 %></label></td>
+        </tr>
+        <!-- Pregunta8 -->
+        <tr class="d1" id="pregunta8">
+          <td width="80%" align="justify">
+            <label class="uper">8.- Por día, en qué tiempo realiza la activación física?.</label><br />
+            <div class="grid-2-12"></div>
+            <div class="grid-3-12">
+              <label class="uper">Minutos: </label>
+              <%= f.select :minutos_activacion_fisica, [10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60], {}, {:style => "width: 100px;", :class => "rpt"}%>
+           </div>
+           <div class="grid-3-12"></div>
+          </td>
+          <td>&nbsp;</td>
+          <td style="text-align:right;vertical-align:top;" ><label><%= $consumo_p8.to_f * 100 %></label></td>
+          <td>&nbsp;</td>
+          <td style="text-align:right;vertical-align:top;" ><label><%= @cop8 %></label></td>
+        </tr>
+        <tr style="background-color:#cccccc;" >
+          <td colspan="5" style="height: 5px;"></td>
+        </tr>
+        <!-- Barra de Porcentaje -->
+        <tr align="center" >
+          <td><label class="uper" style="font-weight:bold;" >Porcentaje</label></td>
+          <td>&nbsp;</td>
+          <td><label class="uper" style="font-weight:bold;" >Total Máximo</label></td>
+          <td>&nbsp;</td>
+          <td><label class="uper" style="font-weight:bold;" >Total Obtenido</label></td>
+        </tr>
+        <tr>
+          <td style="text-align:center;" >
+            <div class="bar_mortice rounded_tiny mortice_tiny green_mortice">
+              <div id="bar_competencias" class="progress rounded_tiny progress_tiny green" style="width: <%= @co_porcentaje.to_i %>%;" ></div>
+            </div>
+            <label style="font-weight:bold"><%= @h_porcentaje %> %</label>
+          </td>
+          <td>&nbsp;</td>
+          <td style="text-align:right;" ><label style="font-weight:bold;" ><%= @co_maxptos %></label></td>
+          <td>&nbsp;</td>
+          <td style="text-align:right;" ><label style="font-weight:bold;" ><%= @co_totalptos %></label></td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="5">&nbsp;</td>
+  </tr>
+</table>
+<% end %>
+
+<img src="/images/era/space.png" alt="" width="10" height="50px" />
+
+<script type="text/javascript">
+  <%#*enaSelectMultiple('consumo_escuela_establecimiento', 'establecimientos');%>
+  <%#*MuestraEstablecimientos_SI_NO('lista_establecimientos','establecimientos');%>
+  <%#*showPreguntasEstablecimientos('lista_establecimientos');%>
+  <%#*enable_frecuencias_actividades_fisicas("consumo_frecuencia_afisica_id", "consumo_minutos_activacion_fisica");%>
+  <%#*showImageValue('consumo_frecuencia_afisica_id', 'eje4_p7','NOSR');%>
+
+  enaSelectMultiple('consumo_escuela_establecimiento', 'establecimientos');
+  showImage('consumo_capacitacion_alim_bebidas_si', 'eje4_p2');
+  showImage('consumo_conocen_lineamientos_grales_si', 'eje4_p3');
+  MuestraEstablecimientos_SI_NO('lista_establecimientos','establecimientos');
+  showPreguntasEstablecimientos('lista_establecimientos');
+  enable_frecuencias_actividades_fisicas("consumo_frecuencia_afisica_id", "consumo_minutos_activacion_fisica");
+  showImageValue('consumo_frecuencia_afisica_id', 'eje4_p7','NOSR');
+</script>

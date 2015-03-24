@@ -59,6 +59,7 @@
                 <label class="uper">NO <%= f.radio_button :capacitacion_alim_bebidas, "NO"%></label>
               </span>
             </div>
+            <div id="eje4_p2" class="grid-12-12" style="display: none; text-align: center;"></div>
             </td> <!-- pregunta 2 -->
          </tr>
 
@@ -77,6 +78,7 @@
                     <label class="uper">NO <%= f.radio_button :conocen_lineamientos_grales, "NO" %></label>
                   </span>
                 </div>
+                <div id="eje4_p3" class="grid-12-12" style="display: none; text-align: center;"></div>
                 </td><!-- pregunta 3 -->
               </tr>
               
@@ -289,7 +291,7 @@
                 </td> <!-- frecuencia fisica -->
                 <td>&nbsp;</td>
               
-                <td id="pregunta8" width="49%" align="justify" style=" vertical-align:top;" >
+                <td id="pregunta8" width="49%" align="justify" style=" vertical-align:top; display: none;" >
                   <div class="grid-12-12">
                     <label class="uper">8.- Por día, en qué tiempo realiza la activación física?. <em class="formee-req"> *</em></label>
                   </div> <!-- pregunta 8 -->
@@ -312,9 +314,9 @@
 
 <script type="text/javascript">
   enaSelectMultiple('consumo_escuela_establecimiento', 'establecimientos');
-
+  showImage('consumo_capacitacion_alim_bebidas_si', 'eje4_p2');
+  showImage('consumo_conocen_lineamientos_grales_si', 'eje4_p3');
   MuestraEstablecimientos_SI_NO('lista_establecimientos','establecimientos');
-
   showPreguntasEstablecimientos('lista_establecimientos');
   enable_frecuencias_actividades_fisicas("consumo_frecuencia_afisica_id", "consumo_minutos_activacion_fisica");
   showImageValue('consumo_frecuencia_afisica_id', 'eje4_p7','NOSR');

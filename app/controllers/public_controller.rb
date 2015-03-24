@@ -1,7 +1,9 @@
 class PublicController < ApplicationController
 
   def report_by_niveles_libre
-    #@niveles = Escuela.find(:all, :group => "nivel_descripcion", :conditions => ["estatu_id IS NOT NULL"])
+    ## Especificamos DB conection ###
+    Nivel.establish_connection(RAILS_ENV)
+    Escuela.establish_connection(RAILS_ENV)
     @niveles = Nivel.find(:all, :conditions => ["descripcion <> ?", "OTRO"])
   end
 
