@@ -280,8 +280,8 @@ class AdminController < ApplicationController
               "CORREO_ESCUELA", "CORREO_RESPONSABLE", "TELEFONO_ESCUELA", "TELEFONO_DIRECTOR", "FECHA_HORA_CAPTURA", "ALU_HOMBRES",
               "ALU_MUJERES", "TOTAL_ALUMNOS", "GRUPOS", "TOTAL_ALUMNOS", "DOCENTES_H", "DOCENTES_M", "TOTAL_DOCENTE_APOYO", "TOTAL_PERSONAL_ADMVO",
               "TOTAL_PERSONAL_APOYO", "ESTATUS_ACTUAL", "DOCENTES_CAPACITADOS", "DOCENTES_INVOLUCRADOS", "ALUMNOS_CAPACITADOS", "SUPERFICIE_AREAS_VERDES",
-              "ARBOLES_ADULTOS", "ACCIONES_MANUAL_DE_SALUD", "CAPACITACION_AHORRO_DE_ENERGIA", "CONSUMO_ENERGIA_ELECTRICA", "FOCOS_AHORRADORES",
-              "RED_PUBLICA_AGUA", "RECIPIENTES_RESIDUOS_SOLIDOS", "SEPARA_RESIDUOS_ORGANICOS_INORGANICOS", "ELABORA_COMPOSTAS", "FRECUENCIA_ACTIVACION_FISICA",
+              "ARBOLES_NATIVOS", "ARBOLES_NO_NATIVOS", "ACCIONES_MANUAL_DE_SALUD", "CAPACITACION_AHORRO_DE_ENERGIA", "CONSUMO_ENERGIA_ELECTRICA", "FOCOS_AHORRADORES",
+              "ABASTECIMIENTOS_AGUA", "SEPARA_RESIDUOS_ORGANICOS_INORGANICOS", "ELABORA_COMPOSTAS", "FRECUENCIA_ACTIVACION_FISICA",
               "MINUTOS/MOMENTOS_ACTIVACION_FISICA", "NUM_PADRES_FAMILIA_TUTORES", "NUM_PADRES_FAMILIA_TUTORES_CAPACITADOS", "PROYECTO",
               "DIAGNOSTICO_EJE1", "DIAGNOSTICO_EJE2", "DIAGNOSTICO_EJE3", "DIAGNOSTICO_EJE4", "DIAGNOSTICO_EJE5",
               "AVANCE1_EJE1", "AVANCE1_EJE2", "AVANCE1_EJE3", "AVANCE1_EJE4", "AVANCE1_EJE5",
@@ -295,13 +295,14 @@ class AdminController < ApplicationController
         # campos diagnostico
         unless diagnostico.nil?
           # -- competencia
-            docentes_capacitados = diagnostico.competencia ? diagnostico.competencia.docentes_capacitados_sma : ""
-            docentes_involucrados = diagnostico.competencia ? diagnostico.competencia.docentes_involucran_actividades : ""
-            alumnos_capacitados = diagnostico.competencia ? diagnostico.competencia.alumnos_capacitados_docentes : ""
+            docentes_capacitados = diagnostico.competencia ? diagnostico.competencia.dctes_cap_ambos : ""
+            docentes_involucrados = diagnostico.competencia ? diagnostico.competencia.dctes_invol_act : ""
+            alumnos_capacitados = diagnostico.competencia ? diagnostico.competencia.alumn_cap_dctes : ""
 
           # -- entorno
             superficie_areas_verdes = diagnostico.entorno ? diagnostico.entorno.superficie_terreno_escuela_av : ""
-            arboles_adultos = diagnostico.entorno ? diagnostico.entorno.arboles_terreno_escuela : ""
+            arboles_nativos = diagnostico.entorno ? diagnostico.entorno.arboles_nativos : ""
+            arboles_no_nativos = diagnostico.entorno ? diagnostico.entorno.arboles_no_nativos : ""
 
             if diagnostico.entorno and diagnostico.entorno.acciones
               array_acciones = []
@@ -324,32 +325,21 @@ class AdminController < ApplicationController
               
               focos_ahorradores = diagnostico.huella.focos_ahorradores #if diagnostico.huella.focos_ahorradores
 
-              unless diagnostico.huella.servicio_agua.nil?
-                red_publica_agua = diagnostico.huella.servicio_agua.descripcion
-              else
-                red_publica_agua = diagnostico.huella.red_publica_agua
-              end 
+#              unless diagnostico.huella.servicio_agua.nil?
+#                red_publica_agua = diagnostico.huella.servicio_agua.descripcion
+#              else
+#                red_publica_agua = diagnostico.huella.red_publica_agua
+#              end
 
-              if diagnostico.huella.recip_residuos_solid == "SI"
-                recip_residuos_solidos = diagnostico.huella.recip_residuos_solid
-              else
-                unless diagnostico.huella.elimina_residuos.nil?
-                  array_recip = []
-                  diagnostico.huella.elimina_residuos.each do |r|
-                    array_recip << r.descripcion
-                  end
-                  recip_residuos_solidos = array_recip.join(";")
-                end
-              end
 
-              separa_residuos_org_inorg = diagnostico.huella.sep_residuos_org_inorg #if diagnostico.huella.sep_residuos_org_inorg
-              elabora_compostas = diagnostico.huella.elabora_compostas #if diagnostico.huella.elabora_compostas
+              abastecimientos_agua = diagnostico.huella.servicio_aguas.collect{|x|x.descripcion}.join("|")
+              separa_residuos_org_inorg = diagnostico.huella.sep_residuos_org_inorg if diagnostico.huella.sep_residuos_org_inorg
+              elabora_compostas = diagnostico.huella.elabora_compostas if diagnostico.huella.elabora_compostas
             end
               capacitacion_ahorro_energia ||= ""
               consumo_energia ||= ""
               focos_ahorradores ||= ""
-              red_publica_agua ||= ""
-              recip_residuos_solidos ||= ""
+              abastecimientos_agua ||= ""
               separa_residuos_org_inorg ||= ""
 
           # -- consumo            
@@ -452,8 +442,8 @@ class AdminController < ApplicationController
                  i.email, i.email_responsable_proyecto, i.telefono, i.telefono_director.to_s.gsub(',', ' -'), i.user_created_at, i.alu_hom,
                  i.alu_muj, i.total_alumnos, i.grupos, i.total_alumnos, i.doc_hom, i.doc_muj, i.total_personal_docente_apoyo, i.total_personal_admvo,
                  i.total_personal_apoyo, "#{estatus_actual}", docentes_capacitados, docentes_involucrados, alumnos_capacitados, superficie_areas_verdes,
-                 arboles_adultos, acciones, capacitacion_ahorro_energia, consumo_energia, focos_ahorradores,
-                 red_publica_agua, recip_residuos_solidos, separa_residuos_org_inorg, elabora_compostas, frecuencia_afisica,
+                 arboles_nativos, arboles_no_nativos, acciones, capacitacion_ahorro_energia, consumo_energia, focos_ahorradores,
+                 abastecimientos_agua, separa_residuos_org_inorg, elabora_compostas, frecuencia_afisica,
                  "#{minutos_afisica}  #{momentos_afisica}", num_padres_familia, capacitacion_salud_ma, proyecto_descripcion,
 #                 e_diagnostico.puntaje_eje1, e_diagnostico.puntaje_eje2, e_diagnostico.puntaje_eje3, e_diagnostico.puntaje_eje4, e_diagnostico.puntaje_eje5,
                  diag_ptaje_eje1, diag_ptaje_eje2, diag_ptaje_eje3, diag_ptaje_eje4, diag_ptaje_eje5,
@@ -464,8 +454,8 @@ class AdminController < ApplicationController
                  total_diagnostico, total_proyecto, (total_diagnostico + total_proyecto), nombre_director, proy_eje1, proy_eje2, proy_eje3, proy_eje4, proy_eje5, benef_2014]
       end
     end
-    send_data to_iso(csv_string), type => "application/csv",
-               :filename => "escuelas_ESyS_#{Time.now.strftime("%d-%m-%Y_%I%M_%p")}.csv",
+    send_data to_iso(csv_string), :type=>"application/excel",
+               :filename => "escuelas_ESyS_ciclo#{CICLO_ESCOLAR}_#{Time.now.strftime("%d-%m-%Y_%I%M_%p")}.xls",
                :disposition => "attachment"
   end
 
