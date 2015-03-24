@@ -3,6 +3,7 @@
   <div class="grid-3-12"></div>
   <div class="grid-6-12">
     <div class="titulos">Listado de Niveles Educativos</div>
+    <div class="titulos">Ciclo Escolar <%=CICLO_ESCOLAR%></div>
   </div>
 </div>
 
@@ -111,7 +112,7 @@
 
 
 <div id="divlista">
-  <table width="95%" border="0" cellspacing="0" cellpadding="5" class="sample" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid" align="center">
+  <table width="90%" border="0" cellspacing="0" cellpadding="5" class="sample" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid" align="center">
     <tr style="background-color:#2E6AB1;color:white;">
       <th style="vertical-align: middle;">R</th>
       <th style="vertical-align: middle;">IC</th>
@@ -142,7 +143,7 @@
 
    %>
 
-    <tr class="d<%=invert_class(clase)%>">
+    <tr class="d<%=invert_class(clase)%>" style="font-size: 11px;">
       <td align="center"> <%=h ("(#{"%0.2f" %((escuelas_registradas_en_plataforma / gran_total.to_f) * 100.0)})%")%><% total+=  escuelas_registradas_en_plataforma%></td>
       <td align="center"><%=h ("(#{"%0.2f" %((escuelas_datos_basicos_capturados / gran_total.to_f) * 100.0)})%")%><% total+=  escuelas_datos_basicos_capturados%></td>
       <td align="center"><%=h ("(#{"%0.2f" %((escuelas_diagnostico_iniciado / gran_total.to_f) * 100.0)})%")%><% total+= escuelas_diagnostico_iniciado%></td>

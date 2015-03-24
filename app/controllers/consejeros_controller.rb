@@ -1,5 +1,5 @@
 class ConsejerosController < ApplicationController
-  require_role [:coordinador, :consejero, :equipotecnico]
+  require_role [:coordinador, :consejero, :equipotecnico], :except => [:index, :signup, :new]
 
   def menu
     @user = current_user
