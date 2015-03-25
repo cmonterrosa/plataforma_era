@@ -99,6 +99,12 @@ class Escuela < ActiveRecord::Base
 #    (nivel) ? nivel : 0
 #  end
 
- 
+  def participo_generacion(ciclo_string)
+    valid=false
+    ciclo = Ciclo.find_by_descripcion(ciclo_string)
+    generacion = Generacion.find_by_ciclo_id(ciclo.id) if ciclo
+    valid = generacion.escuelas.include?(self)? true: false if generacion
+    return valid
+  end
 
 end

@@ -53,7 +53,7 @@ class User < ActiveRecord::Base
   # HACK HACK HACK -- how to do attr_accessible from here?
   # prevents a user from submitting a crafted form that bypasses activation
   # anything else you want your user to change should be added here.
-  attr_accessible :login, :email, :nombre, :password, :password_confirmation, :blocked, :reset_code, :nivel_id, :sostenimiento
+  attr_accessible :login, :email, :nombre, :password, :password_confirmation, :blocked, :reset_code, :nivel_id, :sostenimiento, :escuela_id
   attr_accessor :email_not_required
 
 
@@ -189,6 +189,15 @@ end
        password = ''
        length.times { password << chars[rand(chars.size)] }
        password
+  end
+
+  def participo_generacion(ciclo_string)
+    valid=false
+    escuela = Escuela.find_by_clave(self.login) if self.login
+    ciclo = Ciclo.find_by_descripcion(ciclo_string) if escuela
+    generacion = Generacion.find_by_ciclo_id(ciclo.id) if ciclo
+    valid = generacion.escuelas.include?(escuela)? true: false  if generacion && escuela
+    return valid
   end
 
 
