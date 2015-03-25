@@ -6,6 +6,8 @@ class CreateGeneracions < ActiveRecord::Migration
     end
 
    add_index :generacions, :ciclo_id, :name => 'ciclo', :unique => true
+   add_index :antecedentes, :clave, :name => 'antecedentes_clave'
+   add_index :ciclos, :descripcion, :name => 'ciclos_descripcion', :unique => true
 
     ## Creamos las generaciones por default ###
     Generacion.create(:ciclo_id => Ciclo.find_by_descripcion("2013-2014").id, :descripcion => "PRIMERA")
@@ -36,6 +38,8 @@ class CreateGeneracions < ActiveRecord::Migration
 
   def self.down
     drop_table :generacions
+    remove_index :antecedentes, 'antecedentes_clave'
+    remove_index :ciclos, 'ciclos_descripcion'
     drop_table :escuelas_generacions
   end
 end
