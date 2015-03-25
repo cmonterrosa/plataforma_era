@@ -6,7 +6,9 @@
 <!-- ##### Indicadores Generales #####  -->
 
 <div class="grid-12-12">
-  <h4 align="center">CICLO ESCOLAR <%=@ciclo%></h4>
+  <%generacion = (@ciclo == '2013-2014')? "Primera" : "Segunda"%>
+  <h4 align="center"> <%=generacion%> Generación</h4>
+  <h5 align="center">CICLO ESCOLAR <%=@ciclo%></h5>
 </div>
 
   <!-- Indicadores Alumnos -->
@@ -54,6 +56,42 @@
     </table>
   </div>
   </div>
+
+
+
+ <!-- Escuelas y Sostenimientos -->
+  <div class="col-lg-12">
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover table-striped">
+        <thead>
+          <tr class="TituloTabla">
+            <th style="text-align: center" colspan="<%=h @sostenimientos.size + 1%>">SOSTENIMIENTOS</th>
+          </tr>
+          <tr class="TituloTabla">
+            <%@sostenimientos.each do |s|%>
+              <%if s.numero.to_i > 0%>
+                  <th><%=h (s.sostenimiento) ? s.sostenimiento : "NE"%></th>
+              <%end%>
+            <%end%>
+            <th>TOTAL ESCUELAS REGISTRADAS</th>
+          </tr>
+        </thead>
+      <tbody>
+        <tr>
+           <%@sostenimientos.each do |s|%>
+            <%if s.numero.to_i > 0%>
+              <td><%=h separa_miles(s.numero)%></td>
+            <%end%>
+          <%end%>
+          <td><%=h separa_miles(@escuelas.size)%></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  </div>
+
+
+
 
   <!-- Escuelas y Turnos-->
   <div class="col-lg-12">
