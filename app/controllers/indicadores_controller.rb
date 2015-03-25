@@ -1,11 +1,11 @@
 class IndicadoresController < ApplicationController
   require_role [:coordinador, :consejero, :equipotecnico, :adminplat]
 
-  ##################################################
+  ##########################################################################################################################
   #                                                                                                                        #
-  #                                   INDICADORES                                                                #
+  #                                   INDICADORES                                                                          #
   #                                                                                                                        #
-  ##################################################
+  ##########################################################################################################################
 
   def index
     set_ciclo
@@ -21,10 +21,8 @@ class IndicadoresController < ApplicationController
 private
 
   def indicadores_generales
-    ### Todas las que poseen cuentas de usuario ##
-    @escuelas = Escuela.find(:all, :select => "e.id", :joins => "e, users u", :conditions => ["e.id = u.escuela_id"])
-    ### Solo las registradas ##3
-    #@escuelas = Escuela.find(:all, :select => "id", :conditions => ["registro_completo = 1"])
+    @sostenimientos = Escuela.find(:all, :select => "sostenimiento, count(id) as numero", :conditions => ["id in (?)", @escuelas.map{|i|i.id}], :group => "sostenimiento")
+
     @turnos = Escuela.find(:all, :select => "turno, count(id) as numero", :conditions => ["id in (?)", @escuelas.map{|i|i.id}], :group => "turno")
     @alumnos = Escuela.sum(:alu_hom, :conditions => ["alu_hom IS NOT NULL AND id in (?)", @escuelas.map{|i|i.id}])
     @alumnas = Escuela.sum(:alu_muj, :conditions => ["alu_muj IS NOT NULL AND id in (?)", @escuelas.map{|i|i.id}])
@@ -158,11 +156,16 @@ private
     case @ciclo
       when "2013-2014"
         set_database("era2014")
+        ### Todas las que poseen cuentas de usuario ##
+        @escuelas = Escuela.find(:all, :select => "e.id", :joins => "e, users u", :conditions => ["e.id = u.escuela_id AND e.beneficiada = ?", true])
         indicadores_generales
         render :partial => "generales", :layout => "era2014"
 
     when "2014-2015"
         set_database(RAILS_ENV)
+        ### Todas las que poseen cuentas de usuario ##
+        @escuelas = Escuela.find(:all, :select => "e.id", :joins => "e, users u", :conditions => ["e.id = u.escuela_id AND e.id NOT IN (select escuela_id as id from antecedentes)"])
+        ### Solo las registradas ##
         indicadores_generales
         indicadores_ciclo2015eje1
         indicadores_ciclo2015eje2
