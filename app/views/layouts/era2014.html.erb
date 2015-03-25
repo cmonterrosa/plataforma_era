@@ -379,7 +379,7 @@ a:active {
                 <!-- static information -->
                 <td><%=link_to image_tag("era/btns_cert/btn_que1.png", :size => "100x33", :mouseover => "era/btns_cert/btn_que2.png", :border => 0), {:controller => "home" }, :title => "DESCRIPCIÓN DEL PROGRAMA DE CERTIFICACIÓN"%></td>
                 <% unless  logged_in? %>
-                  <td><%=link_to image_tag("era/btns_cert/btn_ne1.png", :size => "100x33", :mouseover => "era/btns_cert/btn_ne2.png", :border => 0), {:action => "report_by_niveles_libre", :controller => "public"}, :title => "LISTADO DE ESCUELAS REGISTRADAS POR NIVEL"%></td>
+                  <td><%=link_to image_tag("era/btns_cert/btn_ne1.png", :size => "100x33", :mouseover => "era/btns_cert/btn_ne2.png", :border => 0), {:action => "index_report", :controller => "public"}, :title => "ESTADÍSTICAS POR GENERACION/NIVEL/SOSTENIMIENTO"%></td>
                 <% end %>
                 <td><%=link_to image_tag("era/btns_cert/btn_man1.png", :size => "100x33", :mouseover => "era/btns_cert/btn_man2.png", :border => 0), {:controller => "home", :action => "certificacion_manual" }, :title => "DESCARGUE EL MANUAL DE CERTIFICACION"%></td>
 

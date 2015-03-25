@@ -2,6 +2,8 @@
   <div class="grid-12-12 clear"></div>
   <div class="grid-12-12">
     <div class="titulos">Listado de Escuelas del Nivel <%= @nivel_descripcion %></div>
+    <div class="titulos"><%=h @generacion.descripcion%> GENERACIÓN </div>
+    <div class="titulos"><%= @descripcion_sostenimiento%></div>
   </div>
   <div class="grid-12-12 clear"></div>
 </div>
@@ -31,7 +33,7 @@
           <div class="page_info">
             <%= page_entries_info @escuelas %>
           </div>
-          <%= will_paginate @escuelas %>
+               <%= will_paginate @escuelas, :params => { :generacion => @generacion, :sostenimiento => @sostenimiento} %>
         </div>
       </td>
     </tr>
@@ -42,5 +44,5 @@
 
 <br/>
 <div class="titulos">
-  <%= link_to image_tag("botones/btn_regresar.png", :mouseover => "botones/btn_regresar1.png") , :controller => "public", :action => "report_by_niveles_libre" %><br />
+  <%= link_to image_tag("botones/btn_regresar.png", :mouseover => "botones/btn_regresar1.png") , :controller => "public", :action => "report_by_niveles_libre", :sostenimiento => @sostenimiento, :generacion => @generacion %><br />
 </div>

@@ -24,22 +24,18 @@
             </div>
 
            
-
-
-
             <div class="grid-3-12">
               <%=link_to image_tag('admin/indicadores_diagnostico.png', :size => "128x128", :mouseover => 'admin/indicadores_diagnostico.png') , {:action => "index", :controller => "indicadores", :ciclo => "2014-2015"}, :title => "Mostrar indicadores"%>
               <label style="font-family:verdana;font-size:14px;">Indicadores Ciclo 2014-2015</label>
             </div>
 
-            <!-- Niveles -->
+               <!-- Estadísticas -->
                 <div class="grid-4-12">
-                    <%=link_to image_tag('admin/niveles.png', :size => "128x128", :mouseover => 'admin/niveles2.png') , {:action => "report_by_niveles_libre", :controller => "public"}, :title => "Reporte General por niveles educativos"%>
-                  <label style="font-family:verdana;font-size:14px;">Niveles&nbsp;Educativos</label>
+                    <%=link_to image_tag('admin/niveles.png', :size => "128x128", :mouseover => 'admin/niveles2.png') , {:action => "index_report", :controller => "public"}, :title => "Reporte General por niveles educativos"%>
+                  <label style="font-family:verdana;font-size:14px;">Estadísticas&nbsp;por&nbsp;Generaciones</label>
                 </div>
 
             
-
                 <div class="grid-4-12">
                     <%=link_to image_tag('admin/corte_ranking.png', :size => "128x128", :size => "128x128", :mouseover => 'admin/corte_ranking.png') , {:action => "cortes_ranking", :controller => "admin"}, :title => "Cortes de Ranking de escuelas"%>
                     <label style="font-family:verdana;font-size:14px;">Ranking&nbsp;Histórico</label>

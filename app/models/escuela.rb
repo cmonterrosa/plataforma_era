@@ -7,6 +7,7 @@ class Escuela < ActiveRecord::Base
   has_and_belongs_to_many :programas, :join_table => 'escuelas_programas'
   belongs_to :nivel
   has_and_belongs_to_many :users, :join_table => 'escuelas_users'
+  has_and_belongs_to_many :generacions, :join_table => 'escuelas_generacions'
 
 #  def clave_escuela
 #    self.clave_escuela = "#{self.clave} #{self.nombre}" if self.clave
@@ -98,6 +99,12 @@ class Escuela < ActiveRecord::Base
 #    (nivel) ? nivel : 0
 #  end
 
- 
+  def participo_generacion(ciclo_string)
+    valid=false
+    ciclo = Ciclo.find_by_descripcion(ciclo_string)
+    generacion = Generacion.find_by_ciclo_id(ciclo.id) if ciclo
+    valid = generacion.escuelas.include?(self)? true: false if generacion
+    return valid
+  end
 
 end
