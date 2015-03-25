@@ -3,7 +3,9 @@
   <div class="grid-3-12"></div>
   <div class="grid-6-12">
     <div class="titulos">Listado de Niveles Educativos</div>
-    <div class="titulos">Ciclo Escolar <%=CICLO_ESCOLAR%></div>
+    <div class="titulos"><%=h GENERACION%> generación </div>
+    <div class="titulos"> Ciclo Escolar <%=CICLO_ESCOLAR%></div>
+    <div class="titulos"><%=@subsistema%></div>
   </div>
 </div>
 
@@ -56,6 +58,28 @@
       <th style="vertical-align: middle;">PE</th>
       <th style="vertical-align: middle;">TP</th>
     </tr>
+
+
+ <!-- sumatoria de totales -->
+ <%
+    total_escuelas_registradas_en_plataforma = 0
+    total_escuelas_datos_basicos_capturados =  0
+    total_escuelas_diagnostico_iniciado =      0
+    total_escuelas_diagnostico_terminado =      0
+    total_escuelas_proyecto_iniciado =      0
+    total_escuelas_proyecto_terminado =      0
+    total_escuelas_primer_avance = 0
+    total_escuelas_segundo_avance = 0
+    total_escuelas_diagnostico_revisado =      0
+    total_escuelas_diagnostico_evaluado =      0
+    total_escuelas_proyecto_evaluado =      0
+    
+  %>
+
+
+
+
+
 <%clase=0%>
 <%gran_total=0%>
 <%@niveles.each do |nivel|%>
@@ -77,26 +101,38 @@
 
       <tr class="d<%=invert_class(clase)%>">
       <td align="center"><%=h link_to nivel.descripcion, {:action => "list_esc_nivel", :nivel_descripcion => nivel.descripcion}, :style => "color:black; font-size: 12px; font-weight: normal; "%></td>
-      <td align="center"><%=h(escuelas_registradas_en_plataforma)%><% total+=  escuelas_registradas_en_plataforma%></td>
-      <td align="center"><%=h(escuelas_datos_basicos_capturados)%><% total+=  escuelas_datos_basicos_capturados%></td>
-      <td align="center"><%=h(escuelas_diagnostico_iniciado)%><% total+= escuelas_diagnostico_iniciado%></td>
-      <td align="center"><%=h(escuelas_diagnostico_terminado)%><% total+= escuelas_diagnostico_terminado%></td>
-      <td align="center"><%=h(escuelas_proyecto_iniciado) %><%total+= escuelas_proyecto_iniciado%></td>
-      <td align="center"><%=h(escuelas_proyecto_terminado)%><% total+= escuelas_proyecto_terminado%></td>
-      <td align="center"><%=h(escuelas_primer_avance)%><% total+= escuelas_primer_avance%></td>
-      <td align="center"><%=h(escuelas_segundo_avance)%><% total+= escuelas_segundo_avance%></td>
-      <td align="center"><%=h(escuelas_diagnostico_revisado)%><% total+= escuelas_diagnostico_revisado%></td>
-      <td align="center"><%=h(escuelas_diagnostico_evaluado)%><% total+= escuelas_diagnostico_evaluado%></td>
-      <td align="center"><%=h(escuelas_proyecto_evaluado)%><% total+= escuelas_proyecto_evaluado%></td>
+      <td align="center"><%=h(escuelas_registradas_en_plataforma)%><% total+=  escuelas_registradas_en_plataforma%><%total_escuelas_registradas_en_plataforma+=escuelas_registradas_en_plataforma%></td>
+      <td align="center"><%=h(escuelas_datos_basicos_capturados)%><% total+=  escuelas_datos_basicos_capturados%><% total_escuelas_datos_basicos_capturados+=  escuelas_datos_basicos_capturados%></td>
+      <td align="center"><%=h(escuelas_diagnostico_iniciado)%><% total+= escuelas_diagnostico_iniciado%><% total_escuelas_diagnostico_iniciado+= escuelas_diagnostico_iniciado%></td>
+      <td align="center"><%=h(escuelas_diagnostico_terminado)%><% total+= escuelas_diagnostico_terminado%><% total_escuelas_diagnostico_terminado+= escuelas_diagnostico_terminado%></td>
+      <td align="center"><%=h(escuelas_proyecto_iniciado) %><%total+= escuelas_proyecto_iniciado%><%total_escuelas_proyecto_iniciado+= escuelas_proyecto_iniciado%></td>
+      <td align="center"><%=h(escuelas_proyecto_terminado)%><% total+= escuelas_proyecto_terminado%><% total_escuelas_proyecto_terminado+= escuelas_proyecto_terminado%></td>
+      <td align="center"><%=h(escuelas_primer_avance)%><% total+= escuelas_primer_avance%><% total_escuelas_primer_avance+= escuelas_primer_avance%></td>
+      <td align="center"><%=h(escuelas_segundo_avance)%><% total+= escuelas_segundo_avance%><% total_escuelas_segundo_avance+= escuelas_segundo_avance%></td>
+      <td align="center"><%=h(escuelas_diagnostico_revisado)%><% total+= escuelas_diagnostico_revisado%><% total_escuelas_diagnostico_revisado+= escuelas_diagnostico_revisado%></td>
+      <td align="center"><%=h(escuelas_diagnostico_evaluado)%><% total+= escuelas_diagnostico_evaluado%><% total_escuelas_diagnostico_evaluado+= escuelas_diagnostico_evaluado%></td>
+      <td align="center"><%=h(escuelas_proyecto_evaluado)%><% total+= escuelas_proyecto_evaluado%><% total_escuelas_proyecto_evaluado+= escuelas_proyecto_evaluado%></td>
       <td align="center"><%=h total%></td>
       <%gran_total+=total%>
       <%clase = invert_class(clase)%>
     </tr>
 <%end%>
 
+    <!-- totales acumulados -->
      <tr style="background-color:#2E6AB1;color:white;">
-       <td colspan="9">&nbsp;</td>
-       <td colspan="4" style="color: white;" align="right">TOTAL GENERAL => <%=h gran_total%></td>
+       <td>&nbsp;</td>
+       <td style="color: white;" align="center"><%=h total_escuelas_registradas_en_plataforma%></td>
+       <td style="color: white;" align="center"><%=h total_escuelas_datos_basicos_capturados%></td>
+       <td style="color: white;" align="center"><%=h total_escuelas_diagnostico_iniciado%></td>
+       <td style="color: white;" align="center"><%=h total_escuelas_diagnostico_terminado%></td>
+       <td style="color: white;" align="center"><%=h total_escuelas_proyecto_iniciado%></td>
+       <td style="color: white;" align="center"><%=h total_escuelas_proyecto_terminado%></td>
+       <td style="color: white;" align="center"><%=h total_escuelas_primer_avance%></td>
+       <td style="color: white;" align="center"><%=h total_escuelas_segundo_avance%></td>
+       <td style="color: white;" align="center"><%=h total_escuelas_diagnostico_revisado%></td>
+       <td style="color: white;" align="center"><%=h total_escuelas_diagnostico_evaluado%></td>
+       <td style="color: white;" align="center"><%=h total_escuelas_proyecto_evaluado%></td>
+       <td style="font-size: 18px; color: yellow;" align="right">TOTAL GENERAL => <%=h gran_total%></td>
       </tr>
 
 
@@ -104,7 +140,7 @@
 </div>
 
 
-<div class="titulos">
+<div class="titulos" style="color: orange;">
   <p>Porcentajes globales</p>
 </div>
 
