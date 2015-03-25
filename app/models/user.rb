@@ -69,6 +69,9 @@ class User < ActiveRecord::Base
   def before_save
     if @escuela = Escuela.find_by_clave(self.login.upcase)
        self.escuela_id=@escuela.id
+       ## Establecemos que es parte de la segunda generacion ###
+       current_generacion = Generacion.find_by_descripcion(GENERACION)
+       current_generacion.escuelas << @escuela if current_generacion && !current_generacion.escuelas.include?(@escuela)
     end
   end
 
