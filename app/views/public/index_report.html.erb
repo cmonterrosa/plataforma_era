@@ -1,8 +1,9 @@
 <div class="container">
+  <div class="formee">
 
   <%for generacion in @generaciones%>
     <fieldset>
-        <legend>&nbsp;ESTADÍSTICAS&nbsp;<%=generacion.descripcion.upcase%>&nbsp;GENERACIÓN</legend>
+        <legend>&nbsp;ESCUELAS QUE SON PARTE DE LA &nbsp;<%=generacion.descripcion.upcase%>&nbsp;GENERACIÓN</legend>
             <%for sostenimiento in @sostenimientos%>
                 <div class="grid-form-login">
                     <div class="grid-8-12">
@@ -18,7 +19,7 @@
 
     </fieldset>
 <%end%>
-
+  </div>
 </div>
 
 
