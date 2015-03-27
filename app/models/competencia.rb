@@ -1,5 +1,6 @@
 class Competencia < ActiveRecord::Base
   belongs_to :diagnostico
+  belongs_to :proyecto
 
   has_many :alumnos_capacitados
   has_many :docentes_capacitados

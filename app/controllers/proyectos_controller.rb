@@ -20,7 +20,7 @@ class ProyectosController < ApplicationController
     @escuela_id = Escuela.find_by_clave(current_user.login.upcase).id if current_user
     @diagnostico = Diagnostico.find_by_escuela_id(@escuela_id) if @escuela_id
     @diagnostico_concluido = (@diagnostico.oficializado) ? @diagnostico.oficializado : false  if @diagnostico
-    @proyecto_habilitado = false
+    @proyecto_habilitado = true
     notice = (@proyecto_habilitado) ? "Bienvenido a la captura del proyecto" : "La fase de captura de proyecto aún no se encuentra disponible"
     if @diagnostico_concluido && @proyecto_habilitado
        @proyecto = Proyecto.find_by_diagnostico_id(@diagnostico)
@@ -36,9 +36,13 @@ class ProyectosController < ApplicationController
     @eje = Eje.new
     @catalogo_ejes = CatalogoEje.find_by_clave( params[:eje_catalogo_eje_id]) if params[:eje_catalogo_eje_id]
     @escuela_id = Escuela.find_by_clave(current_user.login.upcase).id
+    @diagnostico = Diagnostico.find_by_escuela_id(@escuela_id) if @escuela_id
     @proyecto = Proyecto.find_by_diagnostico_id(Diagnostico.find_by_escuela_id(@escuela_id).id)
     @lineas = LineasAccion.find(:all, :conditions => ["catalogo_eje_id = ?", @catalogo_ejes.id ])
     @indicadores = Indicadore.find(:all, :conditions => ["catalogo_eje_id = ?", @catalogo_ejes.id ] )
+    @competencia= Competencia.new
+    @s_dcapacitadoras = multiple_selected_dcapacitadora(@competencia.docentes_capacitados) if @competencia.docentes_capacitados
+    @s_acapacitadoras = multiple_selected_dcapacitadora(@competencia.alumnos_capacitados) if @competencia.alumnos_capacitados
     render :partial => "contenido_eje", :layout => "only_jquery"
   end
 
