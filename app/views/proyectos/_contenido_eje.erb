@@ -42,10 +42,15 @@
           <td align="center" style="vertical-align:top;"><label  class="uper" style=" font-size: 15px; font-weight: bold;" >Actividades:</label></td>
         </tr>
 
+        <tr>
+          <td align="center" style="vertical-align:top;">
+            <%= render :partial => "competencia"%>
+          </td>
+        </tr>
 
         <!-- Actividades -->
        
-
+          <!--
            <tr>
             <td align="justify" style="vertical-align:top;" >
               <div class="grid-1-12"></div>
@@ -57,7 +62,7 @@
               </div>
             </td>
           </tr>
-
+          
            <tr>
             <td align="justify" style="vertical-align:top;" >
               <div class="grid-1-12"></div>
@@ -92,20 +97,13 @@
                 <%= text_area "actividads", "actividad4"%>
               </div>
             </td>
-          </tr>       
+          </tr>-->
+
       </table>
     </td>
   </tr>
 
 <script type="text/javascript">
-  <%#*var lineas_accion_id = new LiveValidation( 'eje_lineas_accion_id' );%>
-  <%#*lineas_accion_id.add( Validate.Presence );%>
-  <%#*lineas_accion_id.add( Validate.Exclusion, { within: [ '' , ' ' ] } );%>
-
-  <%#*var indicadore_id = new LiveValidation( 'eje_indicadore_id' );%>
-  <%#*indicadore_id.add( Validate.Presence );%>
-  <%#*indicadore_id.add( Validate.Exclusion, { within: [ '' , ' ' ] } );%>
-
   var objetivo_especifico = new LiveValidation( 'eje_objetivo_especifico' );
   objetivo_especifico.add( Validate.Presence );
   objetivo_especifico.add( Validate.Length, { maximum: 350 } );
@@ -114,19 +112,4 @@
   meta.add( Validate.Presence );
   meta.add( Validate.Length, { maximum: 350 } );
 
-  var actividad1 = new LiveValidation( 'actividads_actividad1' );
-  actividad1.add( Validate.Presence );
-  actividad1.add( Validate.Length, { maximum: 350 } );
-
-  var actividad2 = new LiveValidation( 'actividads_actividad2' );
-  actividad2.add( Validate.Presence );
-  actividad2.add( Validate.Length, { maximum: 350 } );
-
-  var actividad3 = new LiveValidation( 'actividads_actividad3' );
-  actividad3.add( Validate.Presence );
-  actividad3.add( Validate.Length, { maximum: 350 } );
-
-  var actividad4 = new LiveValidation( 'actividads_actividad4' );
-  actividad4.add( Validate.Presence );
-  actividad4.add( Validate.Length, { maximum: 350 } );
 </script>

@@ -3,13 +3,15 @@
   <div class="formee-msg-info">
     <h3>Información importante</h3>
     <ul>
+      <li>Por favor complete los datos para tener la información actualizada.</li>
+      <li>&nbsp;</li>
       <li>Los campos marcados con <em class="formee-req">*</em> son obligatorios.</li>
     </ul>
   </div>
 
   <% form_for :escuela, @escuela, :url => { :action => "save", :id => @escuela, :clave => @escuela.clave }, :html => {:class => "formee", :name => "escuela"} do |f| -%>
   <fieldset>
-    <legend>Registro&nbsp;de&nbsp;Escuelas</legend>
+    <legend>Registro&nbsp;de&nbsp;Escuela</legend>
 
     <div id="prellenado" style="background: rgba(255, 255, 0, 0.2);">
       <div class="grid-3-12">
