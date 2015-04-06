@@ -2,7 +2,7 @@ require 'base64'
 class ProyectosController < ApplicationController
   layout :set_layout
 
-#  before_filter :check_is_available, :except => "proyect_to_pdf"
+  before_filter :check_is_available, :except => "proyect_to_pdf"
 
   require_role [:escuela]
 #  skip_before_filter :verify_authenticity_token, :only => [:save_first_section, :second_section_proyect]
