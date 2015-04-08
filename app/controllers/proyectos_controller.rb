@@ -10,13 +10,17 @@ class ProyectosController < ApplicationController
 
   def check_is_available
     unless Time.now < (Time.parse FECHA_FINAL_PROYECTO)
-      flash[:error] = "La etapa del proyecto no está disponible"
+      flash[:warning] = "La etapa del proyecto estará disponible hasta que su diagnóstico sea revisado"
       redirect_to :controller => "diagnosticos"
     end
   end
 
-
   def index
+     flash[:warning] = "La etapa del proyecto estará disponible hasta que su diagnóstico sea revisado"
+     redirect_to :controller => "diagnosticos"
+  end
+
+  def index_old
     @escuela_id = Escuela.find_by_clave(current_user.login.upcase).id if current_user
     @diagnostico = Diagnostico.find_by_escuela_id(@escuela_id) if @escuela_id
     @diagnostico_concluido = (@diagnostico.oficializado) ? @diagnostico.oficializado : false  if @diagnostico
@@ -29,7 +33,6 @@ class ProyectosController < ApplicationController
       flash[:warning] = notice
       redirect_to :action => "index", :controller => "diagnosticos"
     end
-    a=0
   end
 
   def get_contenido_ejes
