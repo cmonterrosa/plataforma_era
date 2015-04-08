@@ -276,9 +276,9 @@ class AdminController < ApplicationController
                                   INNER JOIN escuelas es ON us.login = es.clave
                                   AND (us.blocked is NULL OR us.blocked !=1)")
       csv_string = FasterCSV.generate(:col_sep => "\t") do |csv|
-      csv << ["CLAVE_ESCUELA", "NOMBRE", "ZONA_ESCOLAR", "SECTOR", "NIVEL_GENERAL", "NIVEL", "SOSTENIMIENTO", "DOMICILIO", "LOCALIDAD", "MUNICIPIO", "REGION", "MODALIDAD",
+      csv << ["CLAVE_ESCUELA",  "PRIMERA_GENERACION", "SEGUNDA_GENERACION", "NOMBRE", "ZONA_ESCOLAR", "SECTOR", "NIVEL_GENERAL", "NIVEL", "SOSTENIMIENTO", "DOMICILIO", "LOCALIDAD", "MUNICIPIO", "REGION", "MODALIDAD",
               "CORREO_ESCUELA", "CORREO_RESPONSABLE", "TELEFONO_ESCUELA", "TELEFONO_DIRECTOR", "FECHA_HORA_CAPTURA", "ALU_HOMBRES",
-              "ALU_MUJERES", "TOTAL_ALUMNOS", "GRUPOS", "TOTAL_ALUMNOS", "DOCENTES_H", "DOCENTES_M", "TOTAL_DOCENTE_APOYO", "TOTAL_PERSONAL_ADMVO",
+              "ALU_MUJERES", "TOTAL_ALUMNOS", "GRUPOS", "TOTAL_DOCENTES", "TOTAL_DOCENTE_APOYO", "TOTAL_PERSONAL_ADMVO",
               "TOTAL_PERSONAL_APOYO", "ESTATUS_ACTUAL", "DOCENTES_CAPACITADOS", "DOCENTES_INVOLUCRADOS", "ALUMNOS_CAPACITADOS", "SUPERFICIE_AREAS_VERDES",
               "ARBOLES_NATIVOS", "ARBOLES_NO_NATIVOS", "ACCIONES_MANUAL_DE_SALUD", "CAPACITACION_AHORRO_DE_ENERGIA", "CONSUMO_ENERGIA_ELECTRICA", "FOCOS_AHORRADORES",
               "ABASTECIMIENTOS_AGUA", "SEPARA_RESIDUOS_ORGANICOS_INORGANICOS", "ELABORA_COMPOSTAS", "FRECUENCIA_ACTIVACION_FISICA",
@@ -286,7 +286,7 @@ class AdminController < ApplicationController
               "DIAGNOSTICO_EJE1", "DIAGNOSTICO_EJE2", "DIAGNOSTICO_EJE3", "DIAGNOSTICO_EJE4", "DIAGNOSTICO_EJE5",
               "AVANCE1_EJE1", "AVANCE1_EJE2", "AVANCE1_EJE3", "AVANCE1_EJE4", "AVANCE1_EJE5",
               "AVANCE1_EJE2", "AVANCE2_EJE2", "AVANCE2_EJE3", "AVANCE2_EJE4", "AVANCE2_EJE5",
-              "TOTAL_DIAGNOSTICO", "TOTAL_PROYECTO", "TOTAL_GENERAL", "NOMBRE_DIRECTOR", "PROY_EJE1", "PROY_EJE2", "PROY_EJE3", "PROY_EJE4", "PROY_EJE5", "BENEFICIADA_2014", "PRIMERA_GENERACION", "SEGUNDA_GENERACION"]
+              "TOTAL_DIAGNOSTICO", "TOTAL_PROYECTO", "TOTAL_GENERAL", "NOMBRE_DIRECTOR", "PROY_EJE1", "PROY_EJE2", "PROY_EJE3", "PROY_EJE4", "PROY_EJE5"]
 
       @escuelas.each do |i|
         diagnostico = Diagnostico.find(:first, :conditions => ["user_id = ?", i.user_id]) if i.user_id
@@ -432,9 +432,9 @@ class AdminController < ApplicationController
         proy_eje5 ||= "NO"
 
         ## BENEFICIADA 2014
-        benef = Antecedente.find_by_clave(i.login.upcase)
-        benef_2014 = "SI" if benef.ciclo.descripcion == "2013-2014" unless benef.nil?
-        benef_2014 ||= "NO"
+#        benef = Antecedente.find_by_clave(i.login.upcase)
+#        benef_2014 = "SI" if benef.ciclo.descripcion == "2013-2014" unless benef.nil?
+#        benef_2014 ||= "NO"
         
         nivel_general = (i.nivel) ? i.nivel.descripcion : "NO EXISTE INFORMACION"
         
@@ -442,10 +442,19 @@ class AdminController < ApplicationController
         primera_generacion = (i.participo_generacion("2013-2014")) ? "X" : ""
         segunda_generacion = (i.participo_generacion("2014-2015")) ? "X" : ""
 
+        ## TOTALES DE SUMATORIAS ###
+        doc_hom = (i.doc_hom) ? i.doc_hom.to_i : 0
+        doc_muj = (i.doc_muj) ? i.doc_muj.to_i : 0
+        total_docentes = doc_hom + doc_muj
         
-        csv << [ i.clave, i.nombre, i.zona_escolar, sector, nivel_general, i.nivel_descripcion, i.sostenimiento, i.domicilio.to_s.gsub(',', ' '), i.localidad.to_s.gsub(',', ' '), i.municipio, i.region_descripcion, i.modalidad.to_s.gsub(',', ' -'),
+        alu_hom = (i.alu_hom) ? i.alu_hom.to_i : 0
+        alu_muj = (i.alu_muj) ? i.alu_muj.to_i : 0
+        total_alumnos = alu_hom + alu_muj
+
+
+        csv << [ i.clave, primera_generacion, segunda_generacion, i.nombre, i.zona_escolar, sector, nivel_general, i.nivel_descripcion, i.sostenimiento, i.domicilio.to_s.gsub(',', ' '), i.localidad.to_s.gsub(',', ' '), i.municipio, i.region_descripcion, i.modalidad.to_s.gsub(',', ' -'),
                  i.email, i.email_responsable_proyecto, i.telefono, i.telefono_director.to_s.gsub(',', ' -'), i.user_created_at, i.alu_hom,
-                 i.alu_muj, i.total_alumnos, i.grupos, i.total_alumnos, i.doc_hom, i.doc_muj, i.total_personal_docente_apoyo, i.total_personal_admvo,
+                 i.alu_muj, total_alumnos, i.grupos, i.total_personal_docente, i.total_personal_admvo,
                  i.total_personal_apoyo, "#{estatus_actual}", docentes_capacitados, docentes_involucrados, alumnos_capacitados, superficie_areas_verdes,
                  arboles_nativos, arboles_no_nativos, acciones, capacitacion_ahorro_energia, consumo_energia, focos_ahorradores,
                  abastecimientos_agua, separa_residuos_org_inorg, elabora_compostas, frecuencia_afisica,
@@ -456,7 +465,7 @@ class AdminController < ApplicationController
                  a2_proy_ptaje_eje1, a2_proy_ptaje_eje2, a2_proy_ptaje_eje3, a2_proy_ptaje_eje4, a2_proy_ptaje_eje5,
 #                 a1_proyecto.puntaje_eje1, a1_proyecto.puntaje_eje2, a1_proyecto.puntaje_eje3, a1_proyecto.puntaje_eje4, a1_proyecto.puntaje_eje5,
 #                 a2_proyecto.puntaje_eje1, a2_proyecto.puntaje_eje2, a2_proyecto.puntaje_eje3, a2_proyecto.puntaje_eje4, a2_proyecto.puntaje_eje5,
-                 total_diagnostico, total_proyecto, (total_diagnostico + total_proyecto), nombre_director, proy_eje1, proy_eje2, proy_eje3, proy_eje4, proy_eje5, benef_2014, primera_generacion, segunda_generacion]
+                 total_diagnostico, total_proyecto, (total_diagnostico + total_proyecto), nombre_director, proy_eje1, proy_eje2, proy_eje3, proy_eje4, proy_eje5]
       end
     end
     send_data to_iso(csv_string), :type=>"application/excel",
