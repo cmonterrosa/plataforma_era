@@ -19,8 +19,17 @@ module ApplicationHelper
     return "<hr style='#{style};' />"
   end
 
-  def separa_miles(number, delimiter = ',')
-      number.to_s.reverse.gsub(%r{([0-9]{3}(?=([0-9])))}, "\\1#{delimiter}").reverse
+  
+
+  def separa_miles(number)
+    number = (number.to_s =~ /\d{1,}\.[1-9]{1,}/) ? rounding(number.to_f,3) : number.to_i
+    whole, decimal = number.to_s.split(".")
+    whole_with_commas = whole.chars.to_a.reverse.each_slice(3).map(&:join).join(",").reverse
+    [whole_with_commas, decimal].compact.join(".")
+  end
+
+  def rounding(float,precision)
+    return ((float * 10**precision).round.to_f) / (10**precision)
   end
 
 
