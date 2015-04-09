@@ -85,7 +85,8 @@ class User < ActiveRecord::Base
        ## Establecemos que es parte de la segunda generacion ###
        current_generacion = Generacion.find_by_descripcion(GENERACION)
        no_tiene_antecedentes = (Antecedente.find_by_escuela_id(self.escuela_id))? false: true if self.escuela_id
-       current_generacion.escuelas << @escuela if current_generacion && no_tiene_antecedentes
+       no_existe_registro = (current_generacion.escuelas.include?(@escuela))? false : true
+       current_generacion.escuelas << @escuela if current_generacion && no_tiene_antecedentes && no_existe_registro
     end
   end
 
