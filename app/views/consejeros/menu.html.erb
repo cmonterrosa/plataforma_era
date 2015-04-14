@@ -18,15 +18,17 @@
         <%if current_user.has_role?("equipotecnico")%>
           <!-- Indicadores -->
 
+          <!--
           <div class="grid-3-12">
-              <%=link_to image_tag('admin/indicadores_diagnostico.png', :size => "128x128", :mouseover => 'admin/indicadores_diagnostico.png') , {:action => "index", :controller => "indicadores", :ciclo => "2013-2014"},   :title => "Mostrar indicadores 2013-2014"%>
+              <=link_to image_tag('admin/indicadores_diagnostico.png', :size => "128x128", :mouseover => 'admin/indicadores_diagnostico.png') , {:action => "index", :controller => "indicadores", :ciclo => "2013-2014"},   :title => "Mostrar indicadores 2013-2014"%>
               <label style="font-family:verdana;font-size:14px;">Indicadores Ciclo 2013-2014</label>
             </div>
+          -->
 
            
             <div class="grid-3-12">
               <%=link_to image_tag('admin/indicadores_diagnostico.png', :size => "128x128", :mouseover => 'admin/indicadores_diagnostico.png') , {:action => "index", :controller => "indicadores", :ciclo => "2014-2015"}, :title => "Mostrar indicadores"%>
-              <label style="font-family:verdana;font-size:14px;">Indicadores Ciclo 2014-2015</label>
+              <label style="font-family:verdana;font-size:14px;">Indicadores Segunda Generación</label>
             </div>
 
                <!-- Estadísticas -->
@@ -35,11 +37,14 @@
                   <label style="font-family:verdana;font-size:14px;">Estadísticas&nbsp;por&nbsp;Generaciones</label>
                 </div>
 
-            
+
+               <!--
                 <div class="grid-4-12">
-                    <%=link_to image_tag('admin/corte_ranking.png', :size => "128x128", :size => "128x128", :mouseover => 'admin/corte_ranking.png') , {:action => "cortes_ranking", :controller => "admin"}, :title => "Cortes de Ranking de escuelas"%>
+                    <=link_to image_tag('admin/corte_ranking.png', :size => "128x128", :size => "128x128", :mouseover => 'admin/corte_ranking.png') , {:action => "cortes_ranking", :controller => "admin"}, :title => "Cortes de Ranking de escuelas"%>
                     <label style="font-family:verdana;font-size:14px;">Ranking&nbsp;Histórico</label>
                 </div>
+               -->
+               
           <%end%>
       </td>
     </tr>
