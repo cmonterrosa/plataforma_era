@@ -11,7 +11,7 @@
   </div>
 
 
-<%form_for(@uploaded_file, :url => {:action => "create_evidencia", :diagnostico => @diagnostico, :eje => @eje, :numero_pregunta => @numero_pregunta}, :html => { :multipart => true, :class => "formee" }) do |f| -%>
+<%form_for(@uploaded_file, :url => {:action => "create_evidencia", :diagnostico => @diagnostico, :eje => @eje, :numero_pregunta => @numero_pregunta}, :html => {:multipart => true, :class => "formee" }) do |f| -%>
   <fieldset>
 
     <legend>Cargar&nbsp;Nueva&nbsp;Evidencia&nbsp;para&nbsp;el&nbsp;Eje:&nbsp;<%=@eje%></legend>
@@ -20,10 +20,7 @@
       <%#*<label>Tipo de archivo: <em class="formee-req">*</em></label>%>
       <%#= f.select :tipodoc_id, Tipodoc.all.collect{|a| [a.descripcion, a.id]}, :prompt => 'Seleccione una opción'%>
     <%#*</div>%>
-    <div class="grid-12-12 clear"></div>
-
-    <div class="grid-12-12 clear"></div>
-
+    
     <div class="grid-form">
       <label>Número de Pregunta: <%=h @numero_pregunta %></label>
     </div>
@@ -38,7 +35,7 @@
 
     <div class="grid-form">
        <label>Descripción detallada: <em class="formee-req">*</em></label>
-      <%= f.text_area :descripcion, :placeholder => "Escriba la descripción del archivo" %>
+      <%= f.text_area :descripcion, :placeholder => "Escriba la descripción del archivo", :style => "height: 11em;" %>
     </div>
 
     <div class="grid-12-12 clear"></div>
@@ -56,4 +53,5 @@
 
   var descripcion = new LiveValidation( 'adjunto_descripcion', {onlyOnSubmit: true} );
   descripcion.add( Validate.Presence );
+  descripcion.add( Validate.Length, { maximum: 300 } );
 </script>
