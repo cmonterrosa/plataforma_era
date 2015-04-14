@@ -21,12 +21,12 @@ class IndicadoresController < ApplicationController
 private
 
   def indicadores_generales
-    @sostenimientos = Escuela.find(:all, :select => "sostenimiento, count(id) as numero", :conditions => ["id in (?)", @escuelas.map{|i|i.id}], :group => "sostenimiento")
-
-    @turnos = Escuela.find(:all, :select => "turno, count(id) as numero", :conditions => ["id in (?)", @escuelas.map{|i|i.id}], :group => "turno")
+    @sostenimientos = Escuela.find(:all, :select => "sostenimiento, count(id) as numero", :conditions => ["sostenimiento IS NOT NULL AND id in (?)", @escuelas.map{|i|i.id}], :group => "sostenimiento having numero > 0")
+    @turnos = Escuela.find(:all, :select => "turno, count(id) as numero", :conditions => ["turno IS NOT NULL AND id in (?)", @escuelas.map{|i|i.id}], :group => "turno having numero > 0")
     @alumnos = Escuela.sum(:alu_hom, :conditions => ["alu_hom IS NOT NULL AND id in (?)", @escuelas.map{|i|i.id}])
     @alumnas = Escuela.sum(:alu_muj, :conditions => ["alu_muj IS NOT NULL AND id in (?)", @escuelas.map{|i|i.id}])
     @docentes = Escuela.sum(:total_personal_docente, :conditions => ["total_personal_docente IS NOT NULL AND id in (?)", @escuelas.map{|i|i.id}])
+    @docentes_apoyo = Escuela.sum(:total_personal_docente_apoyo, :conditions => ["total_personal_docente_apoyo IS NOT NULL AND id in (?)", @escuelas.map{|i|i.id}])
     @personal_admvo = Escuela.sum(:total_personal_admvo, :conditions => ["total_personal_admvo IS NOT NULL AND id in (?)", @escuelas.map{|i|i.id}])
     @personal_apoyo = Escuela.sum(:total_personal_apoyo, :conditions => ["total_personal_apoyo IS NOT NULL AND id in (?)", @escuelas.map{|i|i.id}])
   end
@@ -38,6 +38,7 @@ private
     @docentes_capacitados_medio_ambiente = Competencia.sum(:dctes_cap_ma, :conditions => [" dctes_cap_ma IS NOT NULL"])
     @alumnos_capacitados_salud = Competencia.sum(:alumn_cap_salud, :conditions => ["alumn_cap_salud IS NOT NULL"])
     @alumnos_capacitados_medio_ambiente = Competencia.sum(:alumn_cap_ma, :conditions => ["alumn_cap_ma IS NOT NULL"])
+    @alumnos_capacitados_docentes = Competencia.sum(:alumn_cap_dctes, :conditions => ["alumn_cap_dctes IS NOT NULL"])
     @docentes_aplican_conocimientos = Competencia.sum(:dctes_aplican_conocimto, :conditions => ["dctes_aplican_conocimto IS NOT NULL"])
     @dependencias_capacitadoras = DocentesCapacitado.find(:all, :select => "sum(dc.numero) as numero, cap.descripcion",
                                                        :joins => "dc, dcapacitadoras cap, competencias comp",
@@ -164,7 +165,8 @@ private
     when "2014-2015"
         set_database(RAILS_ENV)
         ### Todas las que poseen cuentas de usuario ##
-        @escuelas = Escuela.find(:all, :select => "e.id", :joins => "e, users u", :conditions => ["e.id = u.escuela_id AND e.id NOT IN (select escuela_id as id from antecedentes)"])
+        #@escuelas = Escuela.find(:all, :select => "e.id", :joins => "e, users u", :conditions => ["e.id = u.escuela_id AND e.id NOT IN (select escuela_id as id from antecedentes)"])
+        @escuelas = Generacion.find(2).escuelas
         ### Solo las registradas ##
         indicadores_generales
         indicadores_ciclo2015eje1
