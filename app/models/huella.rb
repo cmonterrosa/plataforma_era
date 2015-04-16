@@ -1,5 +1,6 @@
 class Huella < ActiveRecord::Base
   belongs_to :diagnostico
+  belongs_to :proyecto
   belongs_to :energia_electrica
   has_and_belongs_to_many :servicio_aguas, :join_table => 'huellas_servicio_aguas'
   has_and_belongs_to_many :inorganicos, :join_table => 'huellas_inorganicos'
@@ -13,6 +14,7 @@ class Huella < ActiveRecord::Base
   
 
   def evidencia_pregunta_1
+    return true if self.proyecto
     current_eje = 3
     contador = Adjunto.count(:id, :conditions => ["eje_id = ? AND diagnostico_id = ? AND numero_pregunta = ?", current_eje, self.diagnostico_id, 1])
     #self.errors.add(:pregunta_3, "=> Requiere evidencia") if contador < 1
@@ -20,6 +22,7 @@ class Huella < ActiveRecord::Base
   end
 
   def evidencia_pregunta_2
+    return true if self.proyecto
     current_eje = 3
     contador = Adjunto.count(:id, :conditions => ["eje_id = ? AND diagnostico_id = ? AND numero_pregunta = ?", current_eje, self.diagnostico_id, 2])
     #self.errors.add(:pregunta_3, "=> Requiere evidencia") if contador < 1
@@ -27,6 +30,7 @@ class Huella < ActiveRecord::Base
   end
 
   def evidencia_pregunta_7
+    return true if self.proyecto
     current_eje = 3
     contador = Adjunto.count(:id, :conditions => ["eje_id = ? AND diagnostico_id = ? AND numero_pregunta = ?", current_eje, self.diagnostico_id, 7])
     #self.errors.add(:pregunta_3, "=> Requiere evidencia") if contador < 1
@@ -34,6 +38,7 @@ class Huella < ActiveRecord::Base
   end
 
   def evidencia_pregunta_8
+    return true if self.proyecto
     current_eje = 3
     contador = Adjunto.count(:id, :conditions => ["eje_id = ? AND diagnostico_id = ? AND numero_pregunta = ?", current_eje, self.diagnostico_id, 8])
     #self.errors.add(:pregunta_3, "=> Requiere evidencia") if contador < 1
@@ -41,6 +46,7 @@ class Huella < ActiveRecord::Base
   end
 
   def evidencia_pregunta_9
+    return true if self.proyecto
     current_eje = 3
     contador = Adjunto.count(:id, :conditions => ["eje_id = ? AND diagnostico_id = ? AND numero_pregunta = ?", current_eje, self.diagnostico_id, 9])
     #self.errors.add(:pregunta_3, "=> Requiere evidencia") if contador < 1
@@ -48,6 +54,7 @@ class Huella < ActiveRecord::Base
   end
 
   def valida_inorganicos
+    return true if self.proyecto
     self.inorganicos.each do |i|
       return false if i.clave == "NING"
     end

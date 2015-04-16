@@ -1,19 +1,25 @@
-<%= render :partial => "datos_actividades"%>
+<%= render :partial => "informacion"%>
+
+<table width="100%" border="0" align="center" cellpadding="2" cellspacing="1">
+  <tr>
+    <td align="center"><h3>INFORME DE EVIDENCIAS No. <%= @num_avance %></h3></td>
+  </tr>
+  <tr align="center">
+    <td align="center">
+      <% if @catalogo_ejes.clave == "EJE1" %>
+        <%= render :partial => "competencia"%>
+      <% end %>
+      <% if @catalogo_ejes.clave == "EJE2" %>
+        <%= render :partial => "entorno"%>
+      <% end %>
+      <% if @catalogo_ejes.clave == "EJE3" %>
+        <%= render :partial => "huella"%>
+      <% end %>
+    </td>
+  </tr>
+</table>
+
 <%= render :partial => "diagnosticos/errores_evidencias"%>
 <script type="text/javascript">
 
-  var meta_lograda = new LiveValidation( "ejes_meta_lograda<%=@num_avance%>" );
-  meta_lograda.add( Validate.Presence );
-
-  var actividad1 = new LiveValidation( 'actividades_actividad1' );
-  actividad1.add( Validate.Presence );
-
-  var actividad2 = new LiveValidation( 'actividades_actividad2' );
-  actividad2.add( Validate.Presence );
-
-  var actividad3 = new LiveValidation( 'actividades_actividad3' );
-  actividad3.add( Validate.Presence );
-
-  var actividad4 = new LiveValidation( 'actividades_actividad4' );
-  actividad4.add( Validate.Presence );
 </script>

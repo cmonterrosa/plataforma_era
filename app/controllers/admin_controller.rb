@@ -442,10 +442,13 @@ class AdminController < ApplicationController
         primera_generacion = (i.participo_generacion("2013-2014")) ? "X" : ""
         segunda_generacion = (i.participo_generacion("2014-2015")) ? "X" : ""
 
+        alumnos_hombres = i.alu_hom ? i.alu_hom.to_i : 0
+        alumnos_mujeres = i.alu_muj ? i.alu_muj.to_i : 0
+        total_alumnos = alumnos_hombres + alumnos_mujeres
         
         csv << [ i.clave, i.nombre, i.zona_escolar, sector, nivel_general, i.nivel_descripcion, i.sostenimiento, i.domicilio.to_s.gsub(',', ' '), i.localidad.to_s.gsub(',', ' '), i.municipio, i.region_descripcion, i.modalidad.to_s.gsub(',', ' -'),
                  i.email, i.email_responsable_proyecto, i.telefono, i.telefono_director.to_s.gsub(',', ' -'), i.user_created_at, i.alu_hom,
-                 i.alu_muj, i.total_alumnos, i.grupos, i.total_alumnos, i.doc_hom, i.doc_muj, i.total_personal_docente_apoyo, i.total_personal_admvo,
+                 i.alu_muj, i.total_alumnos, i.grupos, total_alumnos, i.doc_hom, i.doc_muj, i.total_personal_docente_apoyo, i.total_personal_admvo,
                  i.total_personal_apoyo, "#{estatus_actual}", docentes_capacitados, docentes_involucrados, alumnos_capacitados, superficie_areas_verdes,
                  arboles_nativos, arboles_no_nativos, acciones, capacitacion_ahorro_energia, consumo_energia, focos_ahorradores,
                  abastecimientos_agua, separa_residuos_org_inorg, elabora_compostas, frecuencia_afisica,

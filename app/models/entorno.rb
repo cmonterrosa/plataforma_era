@@ -1,5 +1,6 @@
 class Entorno < ActiveRecord::Base
   belongs_to :diagnostico
+  belongs_to :proyecto
   has_and_belongs_to_many :acciones, :join_table => 'entornos_acciones'
   has_many :escuelas_espacios
 
@@ -16,6 +17,7 @@ class Entorno < ActiveRecord::Base
   end
 
   def evidencia_pregunta_2
+    return true if self.proyecto
     current_eje = 2
     contador = Adjunto.count(:id, :conditions => ["eje_id = ? AND diagnostico_id = ? AND numero_pregunta = ?", current_eje, self.diagnostico_id, 2])
     #self.errors.add(:pregunta_4, "=> Requiere evidencia") if contador < 1
@@ -23,6 +25,7 @@ class Entorno < ActiveRecord::Base
   end
 
   def evidencia_pregunta_3
+    return true if self.proyecto
     current_eje = 2
     contador = Adjunto.count(:id, :conditions => ["eje_id = ? AND diagnostico_id = ? AND numero_pregunta = ?", current_eje, self.diagnostico_id, 3])
     #self.errors.add(:pregunta_4, "=> Requiere evidencia") if contador < 1
@@ -30,6 +33,7 @@ class Entorno < ActiveRecord::Base
   end
 
   def evidencia_pregunta_5
+    return true if self.proyecto
     current_eje = 2
     contador = Adjunto.count(:id, :conditions => ["eje_id = ? AND diagnostico_id = ? AND numero_pregunta = ?", current_eje, self.diagnostico_id, 5])
     #self.errors.add(:pregunta_4, "=> Requiere evidencia") if contador < 1

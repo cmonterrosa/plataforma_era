@@ -1,25 +1,24 @@
- <%if flash[:notice]%>
-            <div class="formee-msg-success">
-              <h3>Operación realizada exitosamente:</h3>
-              <ul>
-                <li><%=flash[:notice]%></li>
-              </ul>
-            </div>
-            <%elsif flash[:error]%>
-            <div class="formee-msg-error">
-              <h3>Error:</h3>
-              <ul>
-                <li><%=flash[:error]%></li>
-              </ul>
-            </div>
-            <%else%>
-            <%#*<p></p>%>
-  <%end%>
-
+<%if flash[:notice]%>
+<div class="formee-msg-success">
+  <h3>Operación realizada exitosamente:</h3>
+  <ul>
+    <li><%=flash[:notice]%></li>
+  </ul>
+</div>
+<%elsif flash[:error]%>
+<div class="formee-msg-error">
+  <h3>Error:</h3>
+  <ul>
+    <li><%=flash[:error]%></li>
+  </ul>
+</div>
+<%else%>
+  <%#*<p></p>%>
+<%end%>
 
 <div class="container">
   <div class="formee">
-    <table align="center" class="subprincipal" width="80%" cellspacing="5" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
+    <table align="center" class="subprincipal" width="90%" cellspacing="5" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
       <tr class="tdiagnostico">
         <td align="center" ><label>INFORME DE AVANCES NÚMERO <%=@num_avance%></label></td>
       </tr>
@@ -31,14 +30,14 @@
           <tr class="d0">
             <td style="vertical-align: middle;">NP</td>
             <td style="vertical-align: middle;">Tipo</td>
-            <td style="vertical-align: middle;">Tamaño</td>
-            <td style="vertical-align: middle;">Actividad</td>
+            <td style="vertical-align: middle;">Descripción</td>
+            <%#*<td style="vertical-align: middle;">Actividad</td>%>
             <!--
             <td style="vertical-align: middle;">Extensión</td>
             -->
             <td style="vertical-align: middle;">Fecha/hora&nbsp;carga</td>
-            <td style="vertical-align: middle;">&nbsp;</td>
-            <td style="vertical-align: middle;">&nbsp;</td>
+            <td colspan="2" style="vertical-align: middle; text-align: center;">Acciones</td>
+            <%#*<td style="vertical-align: middle;">&nbsp;</td>%>
           </tr>
 
           <%contador=1%>
@@ -46,11 +45,11 @@
             <tr>
               <td style="vertical-align: middle;"><%=contador%></td>
               <td style="vertical-align: middle;"><%=h (evidencia.tipodoc) ? evidencia.tipodoc.descripcion : "---"%></td>
-              <td style="vertical-align: middle;"><%=h evidencia.file_size %> Kb</td>
-              <td style="vertical-align: middle;"><%=h (evidencia.numero_actividad) ? evidencia.numero_actividad : "---" %></td>
+              <td style="vertical-align: middle;"><%=h evidencia.descripcion %></td>
+              <%#*<td style="vertical-align: middle;"><%=h (evidencia.numero_actividad) ? evidencia.numero_actividad : "---" ></td>%>
               <td style="vertical-align: middle;"><%=h evidencia.created_at.strftime("%d/%m/%Y - %H:%M")%></td>
-              <td style="vertical-align: middle;"><%= button_to 'Visualizar', {:action => "download", :id => evidencia}, :method => :post, :class => 'boton' %></td>
-              <td style="vertical-align: middle;"><%= button_to 'Eliminar', {:action => "destroy_evidencia_avance", :id => evidencia, :proyecto => @proyecto, :eje => @eje, :num_avance => @num_avance}, :confirm => '¿Esta seguro que desea elimina la evidencia?', :method => :post, :class => 'boton' %></td>
+              <td style="vertical-align: middle; font-size: 8px;"><%= button_to 'Visualizar', {:action => "download", :id => evidencia}, :method => :post, :class => 'boton' %></td>
+              <td style="vertical-align: middle; font-size: 8px;"><%= button_to 'Eliminar', {:action => "destroy_evidencia_avance", :id => evidencia, :proyecto => @proyecto, :eje => @eje, :num_avance => @num_avance, :numero_pregunta => @numero_pregunta}, :confirm => '¿Esta seguro que desea elimina la evidencia?', :method => :post, :class => 'boton' %></td>
             </tr>
             <%contador+=1%>
           <%end%>
@@ -75,10 +74,10 @@
 
 
     <!-- Cargar otra evidencia -->
-    <% form_for :escuela, @escuela, :url => { :action => "new_evidencia_avance", :controller => "upload", :eje => @eje, :num_avance => @num_avance, :proyecto => @proyecto} do -%>
+    <% form_for :escuela, @escuela, :url => { :action => "new_evidencia_avance", :controller => "upload", :eje => @eje, :num_avance => @num_avance, :numero_pregunta => @numero_pregunta, :proyecto => @proyecto} do -%>
       <%# form_for :escuela, @escuela, :url => { :action => "formato_registro", :controller => "registro", :id => @escuela.clave }, :html => { :target => "_blank"} do -%>
       <div class="grid-center">
-        <p id="pdf_link"><input type="submit" title="CARGAR OTRA EVIDENCIA" value="AGREGAR MÁS EVIDENCIAS" /></p>
+        <p id="pdf_link"><input type="submit" style="vertical-align: middle; font-size: 11px;" title="CARGAR OTRA EVIDENCIA" value="AGREGAR MÁS EVIDENCIAS" /></p>
       </div>
     <%end%>
 

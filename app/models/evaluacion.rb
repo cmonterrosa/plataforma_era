@@ -279,7 +279,7 @@ def puntaje_eje3_p9
   @user = User.find_by_login(@escuela.clave) if @escuela
   @huella = @diagnostico.huella if @diagnostico.huella
   eje3 = CatalogoEje.find_by_clave("EJE3")
-  if @huella.capacitacion_ahorro_energia == "SI"
+#  if @huella.capacitacion_ahorro_energia == "SI"
     @eje3 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ?", @user, @diagnostico.id, eje3.id, 9], :order => "eje_id")
     @eje3.each do |ad|
       if ad.validado
@@ -293,7 +293,7 @@ def puntaje_eje3_p9
     else
       @eje3_p9 = ptos_inorganicos(@s_inorganicos.size.to_i)
     end
-  end
+#  end
   return valido ? @eje3_p9 : 0
 end
 

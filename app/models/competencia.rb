@@ -13,6 +13,7 @@ class Competencia < ActiveRecord::Base
 
 
   def evidencia_pregunta_1
+    return true if self.proyecto
     current_eje = 1
     contador = Adjunto.count(:id, :conditions => ["eje_id = ? AND diagnostico_id = ? AND numero_pregunta = ?", current_eje, self.diagnostico_id, 1])
     #self.errors.add(:pregunta_3, "=> Requiere evidencia") if contador < 1
@@ -20,6 +21,7 @@ class Competencia < ActiveRecord::Base
   end
 
   def evidencia_pregunta_2
+    return true if self.proyecto
     current_eje = 1
     contador = Adjunto.count(:id, :conditions => ["eje_id = ? AND diagnostico_id = ? AND numero_pregunta = ?", current_eje, self.diagnostico_id, 2])
     #self.errors.add(:pregunta_3, "=> Requiere evidencia") if contador < 1
@@ -27,6 +29,7 @@ class Competencia < ActiveRecord::Base
   end
 
   def evidencia_pregunta_3
+    return true if self.proyecto
     current_eje = 1
     contador = Adjunto.count(:id, :conditions => ["eje_id = ? AND diagnostico_id = ? AND numero_pregunta = ?", current_eje, self.diagnostico_id, 3])
     #self.errors.add(:pregunta_3, "=> Requiere evidencia") if contador < 1
@@ -34,6 +37,7 @@ class Competencia < ActiveRecord::Base
   end
 
   def evidencia_pregunta_4
+    return true if self.proyecto
     current_eje = 1
     contador = Adjunto.count(:id, :conditions => ["eje_id = ? AND diagnostico_id = ? AND numero_pregunta = ?", current_eje, self.diagnostico_id, 4])
     #self.errors.add(:pregunta_3, "=> Requiere evidencia") if contador < 1
@@ -41,6 +45,7 @@ class Competencia < ActiveRecord::Base
   end
 
   def evidencia_pregunta_5
+    return true if self.proyecto
     current_eje = 1
     contador = Adjunto.count(:id, :conditions => ["eje_id = ? AND diagnostico_id = ? AND numero_pregunta = ?", current_eje, self.diagnostico_id, 5])
     #self.errors.add(:pregunta_3, "=> Requiere evidencia") if contador < 1

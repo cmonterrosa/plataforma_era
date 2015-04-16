@@ -22,7 +22,11 @@
 %>
 <!-- fin -->
 <% form_for :competencia, @competencia, :url => { :action => "save_competencia", :id => @competencia, :proyecto => @proyecto.id, :eje_id => @eje}, :html => {:class => "formee", :name => "competencia", :id => "competencia"} do |f| -%>
-<table class="subprincipal" width="100%" border="0" cellpadding="4" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
+      <table class="subprincipal" width="100%" border="0" cellpadding="4" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
+        <tr bgcolor="#003366" style="opacity: 0.7; color: white;" >
+          <td align="left"><h2><%= @catalogo_ejes.clave %>: <%= @catalogo_ejes.descripcion %></h2></td>
+        </tr>
+        <!--
         <tr>
           <td align="justify" style="vertical-align:top;" >
             <div class="grid-6-12">
@@ -43,7 +47,7 @@
           <td align="justify" style="vertical-align:top;" >
             <div class="grid-12-12">
               <label class="uper">Objetivo especifico:</label>
-              <%= text_area :eje, :objetivo_especifico %>
+              <%= text_area :eje, :objetivo_especifico, :disabled => "disabled" %>
             </div>
           </td>
         </tr>
@@ -51,29 +55,29 @@
           <td align="justify" style="vertical-align:top;" >
             <div class="grid-12-12">
               <label class="uper">Meta:</label>
-              <%= text_area :eje, :meta %>
+              <%= text_area :eje, :meta, :disabled => "disabled" %>
             </div>
             <div class="grid-12-12">&nbsp;</div>
           </td>
         </tr>
+        -->
         <tr>
           <td align="center" style="vertical-align:top;"><label  class="uper" style=" font-size: 15px; font-weight: bold;" >ACCIONES: </label></td>
         </tr>
-
         <input id="val_max_doc" name="val_max_doc" type="hidden" value="<%= docentes_no_capacitados %>" />
         <input id="val_max_alu" name="val_max_alu" type="hidden" value="<%= alumnos_no_capacitados %>" />
         <% if @eva_diagnostico.puntaje_eje1_p1 < ($competencia_p1 * 100) %>
         <tr>
           <td align="justify">
-            <label class="uper">1.- Capacitación del 100% de los docentes en materia de: <em class="formee-req"> *</em></label>
+            <label class="uper">1.- Capacitación del 100% de los docentes en materia de: </label>
             <div class="grid-12-12">
               <div class="grid-12-12">
                 [ TOTAL DE DOCENTES: &nbsp; <%= docentes %> ] &nbsp; - &nbsp; [ TOTAL DE DOCENTES CAPACITADOS: &nbsp; <%= docentes_capacitados %> ] &nbsp; = &nbsp; <b>DOCENTES POR CAPACITAR: &nbsp; <%= docentes_no_capacitados %></b>
               </div>
               <div class="grid-1-12"></div>
-              <div class="grid-2-12">SALUD: <%= text_field :competencia, :dctes_cap_salud, :style => "text-align: center;", :onkeyup => "showImageDctesAlumn('docentes', 'dcapacitadora', 'eje1_p1');" %></div>
-              <div class="grid-2-12">AMBIENTE: <%= text_field :competencia, :dctes_cap_ma, :style => "text-align: center;", :onkeyup => "showImageDctesAlumn('docentes', 'dcapacitadora', 'eje1_p1');" %></div>
-              <div class="grid-2-12">AMBOS: <%= text_field :competencia, :dctes_cap_ambos, :style => "text-align: center;", :onkeyup => "showImageDctesAlumn('docentes', 'dcapacitadora', 'eje1_p1');" %></div>
+              <div class="grid-2-12">SALUD: <%= f.text_field :dctes_cap_salud, :style => "text-align: center;", :disabled => "disabled" %></div>
+              <div class="grid-2-12">AMBIENTE: <%= f.text_field :dctes_cap_ma, :style => "text-align: center;", :disabled => "disabled" %></div>
+              <div class="grid-2-12">AMBOS: <%= f.text_field :dctes_cap_ambos, :style => "text-align: center;", :disabled => "disabled" %></div>
               <div class="grid-1-12"></div>
               <div class="grid-3-12" style="text-align:center;">TOTAL&nbsp;A&nbsp;CAPACITAR:
                 <input id="total_docentes" name="total_docentes" type="text" style="border-width: 0; width: 55px; font-size: 15px; text-align: center; color: black; background-color: #e6f8e0;" onkeyup="showImageDctesAlumn('docentes', 'dcapacitadora', 'eje1_p1');" />
@@ -92,109 +96,77 @@
                         <% @desc_dep = x.descripcion_dep %>
                       <% end %>
                     <% end %>
-                    <%= check_box_tag "dcapacitadoras[#{c.id}]", c.clave, @s_dcapacitadoras.include?(c.id) ? true : false, :onclick => "checkBoxToSelct('dcapacitadora');" %>&nbsp;<%= c.descripcion %>
-                    &nbsp;NÚM.&nbsp;DE&nbsp;CAPACITACIONES:&nbsp;<%= select "dcapacitadora", "#{c.clave}", (1..9), {:selected => @valor}, {:style => "display: none; width:40px;"}%><br /><br />
-                    <% if c.clave == "OTRA" %>&nbsp;DESCRIPCIÓN:&nbsp;<input name="dcapacitadoras<%= c.clave %>" id="dcapacitadoras<%= c.clave %>" size="35px" style="text-align:justify; display: none; text-transform: uppercase;" value="<%=h @desc_dep ? @desc_dep : "" %>" /><% end %>
-                    <%= linea_horizontal %>
+                    <% if @s_dcapacitadoras.include?(c.id) %>
+                      <%= check_box_tag "dcapacitadoras[#{c.id}]", c.clave, @s_dcapacitadoras.include?(c.id) ? true : false, {:disabled => "disabled" }%>&nbsp;<%= c.descripcion %>
+                      &nbsp;NÚM.&nbsp;DE&nbsp;CAPACITACIONES:&nbsp;<%= select "dcapacitadora", "#{c.clave}", (1..9), {:selected => @valor}, {:style => "display: inline; width:40px; color: grey;", :disabled => "disabled"}%><br /><br />
+                      <% if c.clave == "OTRA" %>&nbsp;DESCRIPCIÓN:&nbsp;<input name="dcapacitadoras<%= c.clave %>" id="dcapacitadoras<%= c.clave %>" size="35px" style="text-align:justify; display: none; text-transform: uppercase;" value="<%=h @desc_dep ? @desc_dep : "" %>" /><% end %>
+                      <%= linea_horizontal %>
+                    <% end %>
                   <% end %>
                 </div>
               </fieldset>
             </div>
             <div class="grid-12-12" id="eje1_p1" style="display: none; text-align: center;">
-              <!--
+              
               <%=link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta1", :id => "pregunta1"),
-                                                              {:controller => "upload", :diagnostico => @diagnostico, :eje => 1, :numero_pregunta => 1, :action => "list_evidencias" },
+                                                              {:controller => "upload", :proyecto => @proyecto.id, :eje => 1, :numero_pregunta => 1, :action => "list_evidencias_avance", :num_avance => @num_avance },
                                                               :title => "EVIDENCIA DE LA PREGUNTA 1", :class => "fancybox fancybox.iframe"%>
-              -->
+              
             </div>
           </td>
         </tr>
         <script type="text/javascript">
           showImageDctesAlumn('docentes', 'dcapacitadora', 'eje1_p1');
-          checkBoxToSelct('dcapacitadora');
-          
-          var dctes_cap_salud = new LiveValidation('competencia_dctes_cap_salud');
-          dctes_cap_salud.add( Validate.Presence );
-          dctes_cap_salud.add( Validate.Numericality, { onlyInteger: true } );
-
-          var dctes_cap_ma = new LiveValidation('competencia_dctes_cap_ma');
-          dctes_cap_ma.add( Validate.Presence );
-          dctes_cap_ma.add( Validate.Numericality, { onlyInteger: true } );
-
-          var dctes_cap_ambos = new LiveValidation('competencia_dctes_cap_ambos');
-          dctes_cap_ambos.add( Validate.Presence );
-          dctes_cap_ambos.add( Validate.Numericality, { onlyInteger: true } );
-
-          var total_docentes = new LiveValidation('total_docentes');
-          total_docentes.add( Validate.Presence );
-          total_docentes.add( Validate.Numericality, { maximum: <%= docentes_no_capacitados %>, onlyInteger: true} );
-          
-          jQuery(function(){
-            jQuery("#dcapacitadoras").validate({ expression: "if (skipSelect2(SelfID, 'total_docentes')) return true; else return false;", message: "Seleccione una opción!" });
-          });
         </script>
         <% end %>
         <% if @eva_diagnostico.puntaje_eje1_p2 < ($competencia_p2 * 100) %>
         <tr>
           <td align="justify">
-            <label class="uper">2.- Que el 100% de los docentes incorporen a su practica docente los conocimientos adquiridos.<em class="formee-req"> *</em></label>
+            <label class="uper">2.- Que el 100% de los docentes incorporen a su practica docente los conocimientos adquiridos.</label>
             <div class="grid-12-12">
               <div class="grid-12-12">
                 [ TOTAL DE DOCENTES: &nbsp; <%= docentes %> ] &nbsp; - &nbsp; [ TOTAL DE DOCENTES QUE APLICAN CONOCIMIENTOS: &nbsp; <%= @competencia_diagnostico.dctes_aplican_conocimto %> ] &nbsp; = &nbsp; <b>DOCENTES QUE NO APLICAN CONOCIMIENTOS: &nbsp; <%= docentes_no_aplican %></b>
               </div>
               <div class="grid-3-12"></div>
               <div class="grid-2-12">
-                <%= text_field :competencia, :dctes_aplican_conocimto, :style => "text-align: center;", :onkeyup => "showImageNum('competencia_dctes_aplican_conocimto', 'eje1_p2');" %>
+                <%= f.text_field :dctes_aplican_conocimto, :style => "text-align: center;", :disabled => "disabled" %>
               </div>
               <div class="grid-1-12"></div>
             </div>
-            <div class="grid-12-12" id="eje1_p2" style="display: none;">
-              <!--
+            <div class="grid-12-12" id="eje1_p2" style="display: none; text-align: center;">
               <%=link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta2", :id => "pregunta2"),
-                                                              {:controller => "upload", :diagnostico => @diagnostico, :eje => 1, :numero_pregunta => 2, :action => "list_evidencias" },
+                                                              {:controller => "upload", :proyecto => @proyecto.id, :eje => 1, :numero_pregunta => 2, :action => "list_evidencias_avance", :num_avance => @num_avance },
                                                               :title => "EVIDENCIA DE LA PREGUNTA 2", :class => "fancybox fancybox.iframe"%>
-              -->
             </div>
           </td>
         </tr>
         <script type="text/javascript">
           showImageNum('competencia_dctes_aplican_conocimto', 'eje1_p2');
-          
-          var dctes_aplican_conocimto = new LiveValidation('competencia_dctes_aplican_conocimto');
-          dctes_aplican_conocimto.add( Validate.Presence );
-          dctes_aplican_conocimto.add( Validate.Numericality, { maximum: <%= docentes_no_aplican %>, onlyInteger: true } );
         </script>
         <% end %>
         <% if @eva_diagnostico.puntaje_eje1_p3 < ($competencia_p3 * 100) %>
         <tr>
           <td  align="justify">
-            <label class="uper">3.- Que el 100% de los docentes se involucre en actividades extracurriculares.<em class="formee-req"> *</em></label>
+            <label class="uper">3.- Que el 100% de los docentes se involucre en actividades extracurriculares.</label>
             <div class="grid-12-12">
               <div class="grid-12-12">
                 [ TOTAL DE DOCENTES: &nbsp; <%= docentes %> ] &nbsp; - &nbsp; [ TOTAL DE DOCENTES QUE SE INVOLUCRAN: &nbsp; <%= @competencia_diagnostico.dctes_invol_act %> ] &nbsp; = &nbsp; <b>DOCENTES QUE NO SE INVOLUCRAN: &nbsp; <%= docentes_no_involucran %></b>
               </div>
               <div class="grid-3-12"></div>
               <div class="grid-2-12">
-                <%= text_field :competencia, :dctes_invol_act, :style => "text-align: center;", :onkeyup => "showImageNum('competencia_dctes_invol_act', 'eje1_p3');" %>
+                <%= f.text_field :dctes_invol_act, :style => "text-align: center;", :disabled => "disabled"%>
               </div>
               <div class="grid-1-12"></div>
             </div>
-            <div class="grid-12-12" id="eje1_p3" style="display: none;">
-              <!--
+            <div class="grid-12-12" id="eje1_p3" style="display: none; text-align: center;">
               <%=link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta3", :id => "pregunta3"),
-                                                              {:controller => "upload", :diagnostico => @diagnostico, :eje => 1, :numero_pregunta => 3, :action => "list_evidencias" },
+                                                              {:controller => "upload", :proyecto => @proyecto.id, :eje => 1, :numero_pregunta => 3, :action => "list_evidencias_avance", :num_avance => @num_avance },
                                                               :title => "EVIDENCIA DE LA PREGUNTA 3", :class => "fancybox fancybox.iframe"%>
-              -->
             </div>
           </td>
         </tr>
         <script type="text/javascript">
           showImageNum('competencia_dctes_invol_act', 'eje1_p3');
-          
-          var dctes_invol_act = new LiveValidation( 'competencia_dctes_invol_act' );
-          dctes_invol_act.add( Validate.Presence );
-          dctes_invol_act.add( Validate.Numericality, { maximum: <%= docentes_no_involucran %> , onlyInteger: true} );
-          
         </script>
         <% end %>
         <% if @eva_diagnostico.puntaje_eje1_p4 < ($competencia_p4 * 100) %>
@@ -207,40 +179,33 @@
               </div>
               <div class="grid-3-12"></div>
               <div class="grid-2-12">
-                <%= text_field :competencia, :alumn_cap_dctes, :style => "text-align: center;", :onkeyup => "showImageNum('competencia_alumn_cap_dctes', 'eje1_p4');" %>
+                <%= f.text_field :alumn_cap_dctes, :style => "text-align: center;", :disabled => "disabled" %>
               </div>
               <div class="grid-1-12"></div>
             </div>
-            <div class="grid-12-12" id="eje1_p4" style="display: none;">
-              <!--
+            <div class="grid-12-12" id="eje1_p4" style="display: none; text-align: center;">
               <%=link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta4", :id => "pregunta4"),
-                                                              {:controller => "upload", :diagnostico => @diagnostico, :eje => 1, :numero_pregunta => 4, :action => "list_evidencias" },
+                                                              {:controller => "upload", :proyecto => @proyecto.id, :eje => 1, :numero_pregunta => 4, :action => "list_evidencias_avance", :num_avance => @num_avance },
                                                               :title => "EVIDENCIA DE LA PREGUNTA 4", :class => "fancybox fancybox.iframe"%>
-              -->
-              <!--<%= text_field :verifica, :pregunta4, :class => "ninguno", :style => "width:15px;", :disabled => "disabled", :value => :verifica_pregunta4? ? '0': :verifica_pregunta4 %> Archivo(s) cargado(s)-->
             </div>
           </td>
         </tr>
         <script type="text/javascript">
           showImageNum('competencia_alumn_cap_dctes', 'eje1_p4');
-          
-          var alumn_cap_dctes = new LiveValidation( 'competencia_alumn_cap_dctes' );
-          alumn_cap_dctes.add( Validate.Presence );
-          alumn_cap_dctes.add( Validate.Numericality, { maximum: <%= alumnos_no_capacitados %> , onlyInteger: true } );
         </script>
         <% end %>
         <% if @eva_diagnostico.puntaje_eje1_p5 < ($competencia_p5 * 100) %>
         <tr>
           <td align="justify">
-            <label class="uper">5.- Que el 100% de los alumnos sea capacitado por otras instituciones y/o dependencia en materia de:<em class="formee-req"> *</em></label>
+            <label class="uper">5.- Que el 100% de los alumnos sea capacitado por otras instituciones y/o dependencia en materia de:</label>
             <div class="grid-12-12">
               <div class="grid-12-12">
                 [ TOTAL DE ALUMNOS: &nbsp; <%= total_alumnos %> ] &nbsp; - &nbsp; [ TOTAL DE ALUMNOS CAPACITADOS: &nbsp; <%= alumnos_capacitados_dep %> ] &nbsp; = &nbsp; <b>ALUMNOS POR CAPACITAR: &nbsp; <%= alumnos_no_capacitados_dep %></b>
               </div>
               <div class="grid-1-12"></div>
-              <div class="grid-2-12">SALUD: <%= text_field :competencia, :alumn_cap_salud, :style => "text-align: center;", :onkeyup => "showImageDctesAlumn('alumnos', 'acapacitadora', 'eje1_p5');" %></div>
-              <div class="grid-2-12">AMBIENTE: <%= text_field :competencia, :alumn_cap_ma, :style => "text-align: center;", :onkeyup => "showImageDctesAlumn('alumnos', 'acapacitadora', 'eje1_p5');" %></div>
-              <div class="grid-2-12">AMBOS: <%= text_field :competencia, :alumn_cap_ambos, :style => "text-align: center;", :onkeyup => "showImageDctesAlumn('alumnos', 'acapacitadora', 'eje1_p5');" %></div>
+              <div class="grid-2-12">SALUD: <%= f.text_field :alumn_cap_salud, :style => "text-align: center;", :disabled => "disabled" %></div>
+              <div class="grid-2-12">AMBIENTE: <%= f.text_field :alumn_cap_ma, :style => "text-align: center;", :disabled => "disabled" %></div>
+              <div class="grid-2-12">AMBOS: <%= f.text_field :alumn_cap_ambos, :style => "text-align: center;", :disabled => "disabled" %></div>
               <div class="grid-1-12"></div>
               <div class="grid-3-12" style="text-align:center;">TOTAL&nbsp;A&nbsp;CAPACITAR:
                 <input id="total_alumn" name="total_alumn" type="text" style="border-width: 0; width: 55px; font-size: 15px; text-align: center; color: black; background-color: #e6f8e0;" />
@@ -261,78 +226,53 @@
                         <% @desc_dep = x.descripcion_dep %>
                       <% end %>
                     <% end %>
-                    <%= check_box_tag "acapacitadoras[#{c.id}]", c.clave, @s_acapacitadoras.include?(c.id) ? true : false, :onclick => "checkBoxToSelct('acapacitadora');" %>&nbsp;<%= c.descripcion %>
-                    &nbsp;NÚM.&nbsp;DE&nbsp;CAPACITACIONES:&nbsp;<%= select "acapacitadora", "#{c.clave}", (1..9), {:selected => @valor}, {:style => "display: none; width: 40px;"}%><br /><br />
-                    <% if c.clave == "OTRA" %>&nbsp;DESCRIPCIÓN:&nbsp;<input name="acapacitadoras<%= c.clave %>" id="acapacitadoras<%= c.clave %>" size="35px" style="text-align: justify; display: none; text-transform: uppercase;" value="<%=h @desc_dep ? @desc_dep : "" %>" /><% end %>
-                    <%=linea_horizontal%>
+                    <% if @s_acapacitadoras.include?(c.id) %>
+                      <%= check_box_tag "acapacitadoras[#{c.id}]", c.clave, @s_acapacitadoras.include?(c.id) ? true : false, :disabled => "disabled" %>&nbsp;<%= c.descripcion %>
+                      &nbsp;NÚM.&nbsp;DE&nbsp;CAPACITACIONES:&nbsp;<%= select "acapacitadora", "#{c.clave}", (1..9), {:selected => @valor}, {:style => "display: inline; width: 40px; color: grey", :disabled => "disabled"}%><br /><br />
+                      <% if c.clave == "OTRA" %>&nbsp;DESCRIPCIÓN:&nbsp;<input name="acapacitadoras<%= c.clave %>" id="acapacitadoras<%= c.clave %>" size="35px" style="text-align: justify; display: none; text-transform: uppercase;" value="<%=h @desc_dep ? @desc_dep : "" %>" /><% end %>
+                      <%=linea_horizontal%>
+                    <% end %>
                   <% end %>
                 </div>
               </fieldset>
             </div>
             <div class="grid-12-12" id="eje1_p5" style="display: none; text-align: center;">
-              <!--
               <%=link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta5", :id => "pregunta5"),
-                                                              {:controller => "upload", :diagnostico => @diagnostico, :eje => 1, :numero_pregunta => 5, :action => "list_evidencias" },
+                                                              {:controller => "upload", :proyecto => @proyecto.id, :eje => 1, :numero_pregunta => 5, :action => "list_evidencias_avance", :num_avance => @num_avance },
                                                               :title => "EVIDENCIA DE LA PREGUNTA 5", :class => "fancybox fancybox.iframe"%>
-              -->
             </div>
           </td>
-          <td>&nbsp;</td>
-          <td align="center">&nbsp;</td>
         </tr>
         <script type="text/javascript">
           showImageDctesAlumn('alumnos', 'acapacitadora', 'eje1_p5');
-          checkBoxToSelct('acapacitadora');
-
-          var alumn_cap_salud = new LiveValidation( 'competencia_alumn_cap_salud' );
-          alumn_cap_salud.add( Validate.Presence );
-          alumn_cap_salud.add( Validate.Numericality, { onlyInteger: true } );
-
-          var alumn_cap_ma = new LiveValidation( 'competencia_alumn_cap_ma' );
-          alumn_cap_ma.add( Validate.Presence );
-          alumn_cap_ma.add( Validate.Numericality, { onlyInteger: true } );
-
-          var alumn_cap_ambos = new LiveValidation( 'competencia_alumn_cap_ambos' );
-          alumn_cap_ambos.add( Validate.Presence );
-          alumn_cap_ambos.add( Validate.Numericality, { onlyInteger: true } );
-
-          var total_alumn = new LiveValidation( 'total_alumn' );
-          total_alumn.add( Validate.Presence );
-          total_alumn.add( Validate.Numericality, { maximum: <%= alumnos_no_capacitados_dep %> , onlyInteger: true } );
-
-          jQuery(function(){
-            jQuery("#acapacitadoras").validate({ expression: "if (skipSelect2(SelfID, 'total_alumn')) return true; else return false;", message: "Seleccione una opción!" });
-          });
         </script>
         <% end %>
-        <tr>
-    <td align="right">
-      <table>
-        <tr>
-          <td>
-            <input id="siguiente" onclick="to_uppercase();" class="buttonText" type="submit" title="Guardar" value="Guardar" />
+      </table>
+      <br />
+      <table align="right" >
+        <tr >
+          <td>&nbsp;
+            <%#*<input id="siguiente" onclick="to_uppercase();" class="buttonText" type="submit" title="Guardar" value="Guardar" />%>
           </td>
           <td>
-            <a href="/proyectos" id="cancelar_sig" class="buttonText">Regresar</a>
+            <%= link_to "Regresar", { :controller => "avances", :action => "index", :num_avance => Base64.encode64(@num_avance) }, {:id => "cancelar_sig", :class => "buttonText" } %>
           </td>
         </tr>
         <tr>
           <td colspan="2" >&nbsp;</td>
         </tr>
       </table>
-    </td>
-  </tr>
-      </table>
-  <%= render :partial => "diagnosticos/errores_evidencias"%>
+
 <% end %>
-<script type="text/javascript">
-  var objetivo_especifico = new LiveValidation( 'eje_objetivo_especifico' );
-  objetivo_especifico.add( Validate.Presence );
-  objetivo_especifico.add( Validate.Length, { maximum: 350 } );
+  <%= render :partial => "diagnosticos/errores_evidencias"%>
 
-  var meta = new LiveValidation( 'eje_meta' );
-  meta.add( Validate.Presence );
-  meta.add( Validate.Length, { maximum: 350 } );
+<%#*<script type="text/javascript">%>
+  <%#*var objetivo_especifico = new LiveValidation( 'eje_objetivo_especifico' );%>
+  <%#*objetivo_especifico.add( Validate.Presence );%>
+  <%#*objetivo_especifico.add( Validate.Length, { maximum: 350 } );%>
 
-</script>
+  <%#*var meta = new LiveValidation( 'eje_meta' );%>
+  <%#*meta.add( Validate.Presence );%>
+  <%#*meta.add( Validate.Length, { maximum: 350 } );%>
 
+<%#*</script>%>

@@ -89,7 +89,7 @@ class DiagnosticosController < ApplicationController
   def reporte_completo
     @diagnostico = Diagnostico.find(Base64.decode64(params[:id])) if params[:id]
     @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
-    diagnostico = Evaluacion.new(:diagnostico_id => @diagnostico)
+    diagnostico = Evaluacion.new(:diagnostico => @diagnostico)
 
     # ----- COMPETENCIA -----
     @competencia = @diagnostico.competencia if @diagnostico.competencia

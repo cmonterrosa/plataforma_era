@@ -1,0 +1,251 @@
+<% form_for :huella, @huella, :url => {  :action => "save_huella", :id => @entorno, :proyecto => @proyecto.id, :eje_id => @eje }, :html => {:class => "formee", :name => "huella", :id => "huella"} do |f| -%>
+<table class="subprincipal" width="100%" border="0" align="center" cellpadding="2" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
+  <tr>
+    <td align="justify" style="vertical-align:top;" >
+      <div class="grid-6-12">
+        <label class="uper">Líneas de Acción:</label>
+        <% @lineas.each do |linea| %>
+          <li style=" margin-left:13px;padding:1px;"><%= linea.descripcion %> </li>
+        <% end %>
+      </div>
+      <div class="grid-6-12">
+        <label class="uper">Indicadores:</label>
+        <% @indicadores.each do |indicador| %>
+          <li style=" margin-left:13px;padding:1px;" >&nbsp;<%= indicador.descripcion %></li>
+        <% end %>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td align="justify" style="vertical-align:top;" >
+      <div class="grid-12-12">
+        <label class="uper">Objetivo especifico:</label>
+        <%= text_area :eje, :objetivo_especifico %>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td align="justify" style="vertical-align:top;" >
+      <div class="grid-12-12">
+        <label class="uper">Meta:</label>
+        <%= text_area :eje, :meta %>
+      </div>
+      <div class="grid-12-12">&nbsp;</div>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" style="vertical-align:top;"><label  class="uper" style=" font-size: 15px; font-weight: bold;" >ACCIONES: </label></td>
+  </tr>
+  <% if @eva_diagnostico.puntaje_eje3_p1 < ($huella_p1 * 100) %>
+  <tr>
+    <td>
+      <div class="grid-12-12">
+        <label class="uper">1.- Implementar la capacitación diseñada por el Fideicomiso para el Ahorro de la Energía Eléctrica (FIDE), determinada para cada uno de los niveles de educación básica y media cuyo contenido y estrategia fue distribuida a nivel estatal.</label>
+      </div>
+      <div class="grid-12-12">RESPUESTA DEL DIAGNÓSTICO: &nbsp; <b><%= @huella_diagnostico.capacitacion_ahorro_energia %></b></div>
+      <!-- Línea campo -->
+      <div class="grid-3-12"></div>
+      <div class="grid-5-12">
+        <span id="ahorro_energia" class="InputGroup">
+          <label class="uper">SI <%= f.radio_button :capacitacion_ahorro_energia, "SI", :onclick => "showImageCheck(this, 'eje3_p1');" %></label>&nbsp;&nbsp;
+          <label class="uper">NO <%= f.radio_button :capacitacion_ahorro_energia, "NO", :onclick => "showImageCheck(this, 'eje3_p1');" %></label>
+        </span>
+      </div>
+      <div class="grid-8-12"></div>
+      <div id="eje3_p1" class="grid-12-12" style="text-align: center; display: none;">
+        <!--
+        <%= link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta1", :id => "pregunta1"),
+                                                              {:controller => "upload", :diagnostico => @diagnostico, :eje => 3, :numero_pregunta => 1, :action => "list_evidencias" },
+                                                              :title => "EVIDENCIA DE LA PREGUNTA 1", :class => "fancybox fancybox.iframe"%>
+        -->
+      </div>
+    </td>
+  </tr>
+  <script type="text/javascript">
+    showImageCheck('huella_capacitacion_ahorro_energia', 'eje3_p1');
+    jQuery(function(){
+      jQuery("#ahorro_energia").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
+    });
+  </script>
+  <% end %>
+  <% if @eva_diagnostico.puntaje_eje3_p3 < ($huella_p3 * 100) %>
+  <tr>
+    <td>
+      <!-- Línea Pregunta -->
+      <div class="grid-12-12">
+        <label class="uper">3.- Sustituir el 100% de las lamparas y focos incandescentes por ahorradores de energía.</label>
+      </div>
+      <div class="grid-12-12">RESPUESTA DEL DIAGNÓSTICO: &nbsp; FOCOS INCANDESCENTES: &nbsp; <b><%= @huella_diagnostico.focos_incandescentes %></b> &nbsp; &nbsp; FOCOS AHORRADORES: &nbsp; <b><%= @huella_diagnostico.focos_ahorradores %></b> &nbsp; &nbsp; TOTAL FOCOS: <b><%= @huella_diagnostico.total_focos %></b>&nbsp; </div>
+      <!-- Línea campo -->
+      <div class="grid-1-12"></div>
+      <div class="grid-3-12">
+        <label class="uper">Focos incandescentes:</label>
+        <%= f.select(:focos_incandescentes, @focos.map { |value| [ value, value ] }, {}, {:onchange => "nivelaFocos(this, 'huella_focos_ahorradores', '#{@huella_diagnostico.total_focos}');"})%>
+      </div>
+      <div class="grid-1-12"></div>
+      <div class="grid-3-12">
+        <label class="uper">Focos ahorradores:</label>
+        <%= f.select(:focos_ahorradores, @focos.map { |value| [ value, value ] }, {}, {:onchange => "nivelaFocos(this, 'huella_focos_incandescentes', '#{@huella_diagnostico.total_focos}');"})%>
+      </div>
+      <%#*<div class="grid-4-12" style="text-align: center;">%>
+        <%#*<label class="uper">Total focos:&nbsp; &nbsp;</label><label id="total_focos"/>%>
+      <%#*</div>%>
+    </td>
+  </tr>
+  <script type="text/javascript">
+    sumFocos('huella_focos_ahorradores', 'huella_focos_incandescentes', 'total_focos');
+    sumFocos('huella_focos_incandescentes', 'huella_focos_ahorradores', 'total_focos');
+  </script>
+  <% end %>
+  <% if @eva_diagnostico.puntaje_eje3_p5 < ($huella_p5 * 100) %>
+  <tr>
+    <td width="49%" align="justify" style=" vertical-align:top;" >
+      <!-- Línea pregunta -->
+      <div class="grid-12-12">
+        <label class="uper">5.- Prevenir el desperdicio del agua mediante el matenimiento y reparación de las instalaciones hidráulicas.</label>
+      </div>
+      <div class="grid-12-12">RESPUESTA DEL DIAGNÓSTICO: &nbsp; <b><%= @huella_diagnostico.mantto_inst %></b></div>
+      <!-- Línea campo -->
+      <div class="grid-5-12"></div>
+      <div class="grid-2-12">
+        <%= f.select :mantto_inst, (0..2) %>
+      </div>
+    </td>
+  </tr>
+  
+  <% end %>
+  <% if @eva_diagnostico.puntaje_eje3_p7 < ($huella_p7 * 100) %>
+  <tr>
+    <td width="49%" align="justify" style=" vertical-align:top;" >
+      <!-- Línea pregunta -->
+      <div class="grid-12-12">
+        <label class="uper">7.- Separar los residuos sólidos en orgánicos e inorgánicos.</label>
+      </div>
+      <div class="grid-12-12">RESPUESTA DEL DIAGNÓSTICO: &nbsp; <b><%= @huella_diagnostico.sep_residuos_org_inorg %></b></div>
+      <!-- Línea campo -->
+      <div class="grid-3-12"></div>
+      <div class="grid-5-12">
+        <span id="sep_residuos_org_inorg" class="InputGroup">
+          <label class="uper">SI <%= f.radio_button :sep_residuos_org_inorg, "SI", :onclick => "showImageCheck(this, 'eje3_p7');" %></label>&nbsp;&nbsp;
+          <label class="uper">NO <%= f.radio_button :sep_residuos_org_inorg, "NO", :onclick => "showImageCheck(this, 'eje3_p7');" %></label>
+        </span>
+      </div>
+      <div class="grid-8-12"></div>
+      <div id="eje3_p7" class="grid-12-12" style="text-align: center; display: none;">
+        <!--
+        <%= link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta7", :id => "pregunta7"),
+                                                              {:controller => "upload", :diagnostico => @diagnostico, :eje => 3, :numero_pregunta => 7, :action => "list_evidencias" },
+                                                              :title => "EVIDENCIA DE LA PREGUNTA 7", :class => "fancybox fancybox.iframe"%>
+        -->
+      </div>
+    </td>
+  </tr>
+  <script type="text/javascript">
+    showImageCheck('huella_sep_residuos_org_inorg', 'eje3_p7');
+    jQuery(function(){
+      jQuery("#sep_residuos_org_inorg").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
+    });
+  </script>
+  <% end %>
+  <% if @eva_diagnostico.puntaje_eje3_p8 < ($huella_p8 * 100) %>
+  <tr>
+    <td align="justify" style=" vertical-align:top;">
+      <!-- Línea Pregunta -->
+      <div class="grid-12-12">
+        <label class="uper">8.- Elaboración de compostas.</label>
+      </div>
+      <div class="grid-12-12">RESPUESTA DEL DIAGNÓSTICO: &nbsp; <b><%= @huella_diagnostico.elabora_compostas %></b></div>
+      <!-- Línea campo -->
+      <div class="grid-3-12"></div>
+      <div class="grid-5-12">
+        <span id="elabora_compostas" class="InputGroup">
+          <label class="uper">SI <%= f.radio_button :elabora_compostas, "SI", :onclick => "showImageCheck(this, 'eje3_p8');" %></label>&nbsp;&nbsp;
+          <label class="uper">NO <%= f.radio_button :elabora_compostas, "NO", :onclick => "showImageCheck(this, 'eje3_p8');" %></label>
+        </span>
+      </div>
+      <div class="grid-8-12"></div>
+      <div id="eje3_p8" class="grid-12-12" style="text-align: center; display: none;">
+        <!--
+        <%= link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta8", :id => "pregunta8"),
+                                                              {:controller => "upload", :diagnostico => @diagnostico, :eje => 3, :numero_pregunta => 8, :action => "list_evidencias" },
+                                                              :title => "EVIDENCIA DE LA PREGUNTA 8", :class => "fancybox fancybox.iframe"%>
+        -->
+      </div>
+    </td>
+  </tr>
+  <script type="text/javascript">
+    showImageCheck('huella_elabora_compostas', 'eje3_p8');
+    jQuery(function(){
+      jQuery("#elabora_compostas").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
+    });
+  </script>
+  <% end %>
+  <% if @eva_diagnostico.puntaje_eje3_p9 < ($huella_p9 * 100) %>
+  <tr>
+    <td width="49%" align="justify" style=" vertical-align:top;" >
+      <!-- Línea pregunta -->
+      <div class="grid-12-12">
+        <label class="uper">9.- Implementar el reciclado o reutilización de materiales inorgánicos sugeridos.</label>
+      </div>
+      <!-- Línea campo -->
+      <fieldset style="padding: 5px 5px 5px 5px;">
+        <div id="inorganicos" class="grid-12-12">
+          <% Inorganico.find(:all).each do |c| %>
+            <% unless @huella_diagnostico.inorganicos.include?(c)%>
+              <%= check_box_tag "inorganicos[#{c.id}]", c.clave, @s_inorganicos.include?(c.id) ? true : false, :onclick => "verifyCheckboxs(this, 'inorganicos', 'eje3_p9');" %>&nbsp;<%= c.descripcion %><br /><br />
+              <%=linea_horizontal%>
+            <% end %>
+            <% if c.clave == "NING" %>
+              <%= check_box_tag "inorganicos[#{c.id}]", c.clave, @s_inorganicos.include?(c.id) ? true : false, :onclick => "verifyCheckboxs(this, 'inorganicos', 'eje3_p9');" %>&nbsp;<%= c.descripcion %><br /><br />
+              <%=linea_horizontal%>
+            <% end %>
+          <% end %> 
+        </div>
+      </fieldset>
+      <div id="eje3_p9" class="grid-12-12" style="text-align: center; display: none;">
+        <!--
+        <%= link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta9", :id => "pregunta9"),
+                                                              {:controller => "upload", :diagnostico => @diagnostico, :eje => 3, :numero_pregunta => 9, :action => "list_evidencias" },
+                                                              :title => "EVIDENCIA DE LA PREGUNTA 9", :class => "fancybox fancybox.iframe"%>
+        -->
+      </div>
+    </td>
+  </tr>
+  <script type="text/javascript">
+    verifyCheckboxs('', 'inorganicos', 'eje3_p9');
+    jQuery(function(){
+      jQuery("#inorganicos").validate({ expression: "if (isCheckedC(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
+    });
+  </script>
+  <% end %>
+  <tr>
+    <td align="right">
+      <table>
+        <tr>
+          <td>
+            <input id="siguiente" onclick="to_uppercase();" class="buttonText" type="submit" title="Guardar" value="Guardar" />
+          </td>
+          <td>
+            <a href="/proyectos" id="cancelar_sig" class="buttonText">Regresar</a>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2" >&nbsp;</td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<%= render :partial => "diagnosticos/errores_evidencias"%>
+<% end %>
+
+<script type="text/javascript">
+  var objetivo_especifico = new LiveValidation( 'eje_objetivo_especifico' );
+  objetivo_especifico.add( Validate.Presence );
+  objetivo_especifico.add( Validate.Length, { maximum: 350 } );
+
+  var meta = new LiveValidation( 'eje_meta' );
+  meta.add( Validate.Presence );
+  meta.add( Validate.Length, { maximum: 350 } );
+
+</script>

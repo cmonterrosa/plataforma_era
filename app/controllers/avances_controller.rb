@@ -40,24 +40,45 @@ class AvancesController < ApplicationController
   end
 
   def add_avances
-    @escuela_id = Escuela.find_by_clave(current_user.login.upcase).id if current_user
-    @diagnostico = Diagnostico.find_by_escuela_id(@escuela_id) if @escuela_id
-    @proyecto = Proyecto.find_by_diagnostico_id(@diagnostico)
     @id, @num_avance = (Base64.decode64(params[:id])).split("-") if params[:id]
-    @ejes = Eje.find(@id) if @id
-    @avance = Array.new
-    @ejes.actividads.each do | actividad |
-      if @av = Avance.find(:first, :conditions => ["actividad_id = ? and numero = ?", actividad.id, @num_avance.to_i])
-      @avance << @av
+    @eje = Eje.find(@id.to_i) if @id
+    @catalogo_ejes = CatalogoEje.find(@eje.catalogo_eje) if @eje
+    @escuela_id = Escuela.find_by_clave(current_user.login.upcase).id
+    @diagnostico = Diagnostico.find_by_escuela_id(@escuela_id) if @escuela_id
+    @eva_diagnostico = Evaluacion.new(:diagnostico_id => @diagnostico.id.to_i)
+    @proyecto = Proyecto.find_by_diagnostico_id(Diagnostico.find_by_escuela_id(@escuela_id).id)
+    @lineas = LineasAccion.find(:all, :conditions => ["catalogo_eje_id = ?", @catalogo_ejes.id ])
+    @indicadores = Indicadore.find(:all, :conditions => ["catalogo_eje_id = ?", @catalogo_ejes.id ] )
+
+    if @eje.catalogo_eje.clave == "EJE1"
+      @competencia = Competencia.find_by_proyecto_id(@proyecto.id)
+      @competencia_diagnostico = Competencia.find_by_diagnostico_id(@diagnostico.id) if @diagnostico
+      @s_dcapacitadoras = multiple_selected_dcapacitadora(@competencia.docentes_capacitados) if @competencia.docentes_capacitados
+      @s_acapacitadoras = multiple_selected_dcapacitadora(@competencia.alumnos_capacitados) if @competencia.alumnos_capacitados
+    end
+
+    if @eje.catalogo_eje.clave == "EJE2"
+      @entorno = @proyecto.entorno
+      @entorno_diagnostico = Entorno.find_by_diagnostico_id(@diagnostico.id) if @diagnostico
+      @s_acciones = multiple_selected_id(@entorno.acciones) if @entorno.acciones
+      @s_espacios = multiple_selected_espacios(@entorno.escuelas_espacios) if @entorno.escuelas_espacios
+      @escuela = Escuela.find_by_clave(current_user.login)
+      if @escuela.nivel_descripcion == "BACHILLERATO"
+        @acciones = Accione.find(:all, :conditions => ["clave not in ('AC03')"])
+      else
+        @acciones = Accione.find(:all, :conditions => ["clave not in ('AC00', 'AC01')"])
       end
     end
 
-    @act = Hash.new
-    unless @avance.empty?
-    (1..@avance.size).each do |n|
-         @act["actividad#{n}"] = @avance[n-1][:descripcion] if @avance && @avance[n-1]
-     end
+    if @eje.catalogo_eje.clave == "EJE3"
+      @huella = @proyecto.huella
+      @huella_diagnostico = Huella.find_by_diagnostico_id(@diagnostico.id) if @diagnostico
+      @s_inorganicos = multiple_selected_id(@huella.inorganicos) if @huella.inorganicos
+      @focos = 0..@huella_diagnostico.total_focos.to_i
     end
+
+
+    
   end
 
   def save_avances

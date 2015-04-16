@@ -107,7 +107,8 @@ class UploadController < ApplicationController
     @diagnostico = Diagnostico.find(params[:diagnostico]) if params[:diagnostico]
     @proyecto = Proyecto.find(:first, :conditions => ["diagnostico_id = ?", @diagnostico.id]) if @diagnostico
     @user = (params[:id]) ? User.find(params[:id]): current_user
-    @avance = params[:avance] if params[:avance]
+    @avance = params[:num_avance] if params[:num_avance]
+    @numero_pregunta = params[:numero_pregunta] if params[:numero_pregunta]
     if @proyecto
       @observaciones_evidencias = (@proyecto["observaciones_evidencias_avance#{@avance}"]) ? @proyecto["observaciones_evidencias_avance#{@avance}"] : nil
     end
@@ -177,7 +178,8 @@ class UploadController < ApplicationController
       @proyecto = params[:proyecto] if params[:proyecto]
       @eje = params[:eje] if params[:eje]
       @num_avance = params[:num_avance] if params[:num_avance]
-      redirect_to :action => "list_evidencias_avance", :proyecto => @proyecto, :eje => @eje, :num_avance => @num_avance
+      @numero_pregunta = params[:numero_pregunta] if params[:numero_pregunta]
+      redirect_to :action => "list_evidencias_avance", :proyecto => @proyecto, :eje => @eje, :num_avance => @num_avance, :numero_pregunta => @numero_pregunta
     else
       return render(:partial => 'eliminar_evidencia_error', :layout => "only_jquery")
     end
@@ -190,6 +192,7 @@ class UploadController < ApplicationController
     @eje = params[:eje] if params[:eje]
     @proyecto = params[:proyecto] if params[:proyecto]
     @num_avance = params[:num_avance] if params[:num_avance]
+    @numero_pregunta = params[:numero_pregunta] if params[:numero_pregunta]
     return render(:partial => 'new_evidencia_avance', :layout => "only_jquery")
   end
 
@@ -198,13 +201,14 @@ class UploadController < ApplicationController
     @proyecto = params[:proyecto] if params[:proyecto]
     @eje = params[:eje] if params[:eje]
     @num_avance = params[:num_avance] if params[:num_avance]
-    @evidencias = Adjunto.find(:all, :conditions => ["user_id = ? AND eje_id = ? and avance = ? and proyecto_id = ?", @user, @eje, @num_avance, @proyecto])
+    @numero_pregunta = params[:numero_pregunta] if params[:numero_pregunta]
+    @evidencias = Adjunto.find(:all, :conditions => ["user_id = ? AND eje_id = ? and numero_pregunta = ? and avance = ? and proyecto_id = ?", @user.id, @eje, @numero_pregunta, @num_avance, @proyecto])
     unless @evidencias.empty?
-      return render(:partial => 'show_evidencia_avance', :layout => "only_jquery", :num_avance => @num_avance, :eje => @eje, :proyecto => @proyecto)
+      return render(:partial => 'show_evidencia_avance', :layout => "only_jquery", :num_avance => @num_avance, :numero_pregunta => @numero_pregunta, :eje => @eje, :proyecto => @proyecto)
     else
        @uploaded_file = Adjunto.new
        @user = current_user
-       return render(:partial => 'new_evidencia_avance', :layout => "only_jquery" , :num_avance => @num_avance, :eje => @eje, :proyecto => @proyecto)
+       return render(:partial => 'new_evidencia_avance', :layout => "only_jquery" , :num_avance => @num_avance, :numero_pregunta => @numero_pregunta, :eje => @eje, :proyecto => @proyecto)
     end
   end
 
@@ -216,39 +220,41 @@ class UploadController < ApplicationController
     @proyecto = params[:proyecto] if params[:proyecto]
     @eje = params[:eje] if params[:eje]
     @num_avance = params[:num_avance] if params[:num_avance]
+    @numero_pregunta = params[:numero_pregunta] if params[:numero_pregunta]
     @uploaded_file.proyecto = Proyecto.find(params[:proyecto]) if params[:proyecto]
     @uploaded_file.eje_id = @eje.to_i
     @uploaded_file.avance = @num_avance.to_i
+    @uploaded_file.numero_pregunta = @numero_pregunta.to_i
     @uploaded_file.user_id = current_user.id if current_user
     if @uploaded_file.save
         flash[:notice] = "Evidencia cargada correctamente"
-        redirect_to :action => "list_evidencias_avance", :proyecto => params[:proyecto], :eje => @eje, :num_avance => @num_avance
+        redirect_to :action => "list_evidencias_avance", :proyecto => @proyecto, :eje => @eje, :num_avance => @num_avance, :numero_pregunta => @numero_pregunta
     else
       @errores = @uploaded_file.errors.full_messages
       return render(:partial => 'carga_evidencia_error', :layout => "only_jquery")
     end
    end
 
-  def destroy_evidencia_avance
-    if @uploaded_file = Adjunto.find(params[:id])
-      @eje = @uploaded_file.eje_id
-      @num_avance, @avance = params[:num_avance] if params[:num_avance]
-      @proyecto = @uploaded_file.proyecto_id
-      @proyecto_obj = Proyecto.find(@proyecto)
-      @diagnostico = @proyecto_obj.diagnostico if @proyecto_obj
-      @user = User.find(params[:user]) if params[:user]
-      @avance ||= params[:avance] if params[:avance]
-    end
-    if @uploaded_file.destroy
-      #return render(:partial => 'eliminar_evidencia_exitosa', :layout => "only_jquery")
-      flash[:notice] = "Evidencia eliminada correctamente"
-      @url_regreso =  {:action => "show_evidencias_avance", :id => @user, :diagnostico => @diagnostico, :avance => @avance}
-      redirect_to @url_regreso
-      #redirect_to :action => "show_evidencias_avance", :proyecto => params[:proyecto], :eje => @eje, :num_avance => @num_avance
-    else
-      return render(:partial => 'eliminar_evidencia_error', :layout => "only_jquery")
-    end
-  end
+#  def destroy_evidencia_avance
+#    if @uploaded_file = Adjunto.find(params[:id])
+#      @eje = @uploaded_file.eje_id
+#      @num_avance, @avance = params[:num_avance] if params[:num_avance]
+#      @proyecto = @uploaded_file.proyecto_id
+#      @proyecto_obj = Proyecto.find(@proyecto)
+#      @diagnostico = @proyecto_obj.diagnostico if @proyecto_obj
+#      @user = User.find(params[:user]) if params[:user]
+#      @avance ||= params[:avance] if params[:avance]
+#    end
+#    if @uploaded_file.destroy
+#      #return render(:partial => 'eliminar_evidencia_exitosa', :layout => "only_jquery")
+#      flash[:notice] = "Evidencia eliminada correctamente"
+#      @url_regreso =  {:action => "show_evidencias_avance", :id => @user, :diagnostico => @diagnostico, :avance => @avance}
+#      redirect_to @url_regreso
+#      #redirect_to :action => "show_evidencias_avance", :proyecto => params[:proyecto], :eje => @eje, :num_avance => @num_avance
+#    else
+#      return render(:partial => 'eliminar_evidencia_error', :layout => "only_jquery")
+#    end
+#  end
 
   def validar
      @adjunto = Adjunto.find(params[:id])

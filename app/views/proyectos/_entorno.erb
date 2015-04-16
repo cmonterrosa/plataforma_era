@@ -1,0 +1,201 @@
+<% form_for :entorno, @entorno, :url => { :action => "save_entorno", :id => @entorno, :proyecto => @proyecto.id, :eje_id => @eje }, :html => {:class => "formee", :name => "entorno", :id => "entorno"} do |f| -%>
+    <table class="subprincipal" width="100%" border="0" cellpadding="4" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
+        <tr>
+          <td align="justify" style="vertical-align:top;" >
+            <div class="grid-6-12">
+              <label class="uper">Líneas de Acción:</label>
+              <% @lineas.each do |linea| %>
+              <li style=" margin-left:13px;padding:1px;"><%= linea.descripcion %> </li>
+              <% end %>
+            </div>
+            <div class="grid-6-12">
+              <label class="uper">Indicadores:</label>
+              <% @indicadores.each do |indicador| %>
+              <li style=" margin-left:13px;padding:1px;" >&nbsp;<%= indicador.descripcion %></li>
+              <% end %>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td align="justify" style="vertical-align:top;" >
+            <div class="grid-12-12">
+              <label class="uper">Objetivo especifico:</label>
+              <%= text_area :eje, :objetivo_especifico %>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td align="justify" style="vertical-align:top;" >
+            <div class="grid-12-12">
+              <label class="uper">Meta:</label>
+              <%= text_area :eje, :meta %>
+            </div>
+            <div class="grid-12-12">&nbsp;</div>
+          </td>
+        </tr>
+        <tr>
+          <td align="center" style="vertical-align:top;"><label  class="uper" style=" font-size: 15px; font-weight: bold;" >ACCIONES: </label></td>
+        </tr>
+        <% if @eva_diagnostico.puntaje_eje2_p2 < ($entorno_p2 * 100) %>
+        <tr>
+        <td align="justify" style="vertical-align:top;" >
+        <!-- Línea pregunta -->
+      <div class="grid-12-12">
+        <label class="uper">2.- Implementar la creación de algun(os) espacio(s) sugerido(s):</label>
+      </div>
+      <fieldset style="padding: 5px 5px 5px 5px;">
+        <div id="espacios" class="grid-12-12">
+          <% Espacio.find(:all).each do |c| %>
+            <% @valor = nil %>
+            <%  @entorno.escuelas_espacios.each do |x| %>
+              <% @valor = x.numero if x[:espacio_id] == c.id %>
+            <% end %>
+            <% unless @s_espacios_diagnostico.include?(c.id) %>
+              <%= check_box_tag "espacios[#{c.id}]", c.clave, @s_espacios.include?(c.id) ? true : false, :onclick => "checkBoxTotextField(this, 'eje2_p2', 'entorno_no_espacios');" %>&nbsp;<%= c.descripcion %>&nbsp;CANTIDAD&nbsp;EN&nbsp;M&sup2;&nbsp;<input name="<%= c.clave %>" id="<%= c.clave %>" size="4px" type="others" style="text-align:center; display: none;" value="<%=h @valor ? @valor : "" %>" disabled /><br /><br />
+              <%=linea_horizontal%>
+            <% end %>
+          <% end %>
+        </div>
+        <br />
+        <%= f.check_box :no_espacios, { :checked => @entorno.no_espacios == "NO" ? true : false,  :onclick => "edMultiSelect('entorno_no_espacios', 'espacios', 'eje2_p2');" }, "NO", "SI" %>&nbsp;NO CUENTA CON ESPACIOS
+      </fieldset>
+      <div id="eje2_p2" class="grid-12-12" style="display: none; text-align: center;">
+        <!--
+        <%= link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta2", :id => "pregunta2"),
+                                                              {:controller => "upload", :diagnostico => @diagnostico, :eje => 2, :numero_pregunta => 2, :action => "list_evidencias" },
+                                                              :title => "EVIDENCIA DE LA PREGUNTA 2", :class => "fancybox fancybox.iframe"%>
+        -->
+      </div>
+    </td>
+  </tr>
+  <script type="text/javascript">
+    checkBoxTotextField('espacios', 'eje2_p2', 'entorno_no_espacios'); //P2
+    edMultiSelect('entorno_no_espacios', 'espacios', 'eje2_p2'); //P2
+
+    jQuery(function(){
+      jQuery("#espacios").validate({ expression: "if (skipSelectEspacios(SelfID, 'entorno_no_espacios')) return true; else return false;", message: "Seleccione una opción!" }); //P2
+    });
+  </script>
+  <% end %>
+  <% if @eva_diagnostico.puntaje_eje2_p3 < ($entorno_p3 * 100) %>
+  <tr>
+    <td align="justify" style="vertical-align:top;">
+      <!-- Línea Pregunta -->
+      <div class="grid-12-12">
+        <label class="uper">3.- Implementar campaña(s) de reforestación.</label>
+      </div>
+      <!-- Línea campo -->
+      <div class="grid-12-12">
+        <div class="grid-3-12"></div>
+        <div class="grid-5-12">
+          <span id="escuela_reforesta" class="InputGroup">
+            <label class="uper">SI <%= f.radio_button :escuela_reforesta, "SI", :onclick => "radioButtonTotxtField(this, 'entorno_escuela_reforesta_num', 'reforesta');" %></label>&nbsp;&nbsp;
+            <label class="uper">NO <%= f.radio_button :escuela_reforesta, "NO", :onclick => "radioButtonTotxtField(this, 'entorno_escuela_reforesta_num', 'reforesta');" %></label>
+          </span>
+        </div>
+        <div class="grid-4-12"></div>
+      </div>
+      <div class="grid-12-12">
+        <div id="reforesta" style="display:none;">
+          <div class="grid-3-12">&nbsp;</div>
+          <div class="grid-3-12">CANTIDAD DE ARBOLES SEMBRADOS:</div>
+          <div class="grid-2-12">
+            <%= f.text_field :escuela_reforesta_num, :style => "text-align: center;", :disabled => "disabled" %>
+          </div>
+          <div class="grid-4-12"></div>
+          <div id="eje3_p3" class="grid-12-12" style="text-align: center;">
+            <!--
+            <%= link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta3", :id => "pregunta3"),
+                                                              {:controller => "upload", :diagnostico => @diagnostico, :eje => 2, :numero_pregunta => 3, :action => "list_evidencias" },
+                                                              :title => "EVIDENCIA DE LA PREGUNTA 3", :class => "fancybox fancybox.iframe"%>
+            -->
+          </div>
+        </div>
+      </div>
+    </td>
+  </tr>
+  <script type="text/javascript">
+    radioButtonTotxtField('entorno_escuela_reforesta_si', 'entorno_escuela_reforesta_num', 'reforesta'); //P3
+    radioButtonTotxtField('entorno_escuela_reforesta_no', 'entorno_escuela_reforesta_num', 'reforesta'); //P3
+
+    jQuery(function(){
+      jQuery("#escuela_reforesta").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" }); //P3
+    });
+  
+  </script>
+  <% end %>
+  <% if @eva_diagnostico.puntaje_eje2_p5 < ($entorno_p5 * 100) %>
+  <tr>
+    <td align="justify" style="vertical-align:top;">
+    <!-- Liíne pregunta -->
+      <div class="grid-12-12">
+        <label class="uper">5.- Realizar acciones acciones sugeridas del Manual de Salud.</label>
+      </div>
+      <div class="grid-12-12">
+        <label class="formee-msg-info" style="text-transform:uppercase;font-size:1.1em;" >
+          Consultar manual de salud: Manual para el maestro del programa Escuela y Salud. Enfoque actual del programa: Determinantes de la salud, página 42 - 45. Puede consultarlo dando clic <b>aquí</b>
+        </label>
+      </div>
+      <!-- Línea campo -->
+      <fieldset style="padding: 5px 5px 5px 5px;">
+        <legend style="text-transform:uppercase;font-size:1.1em;">&nbsp;Acciones:&nbsp;</legend>
+        <div id="acciones" class="grid-12-12">
+          <% i= 1 %>
+          <% @acciones.each do |c| %>
+            <% unless @entorno_diagnostico.acciones.include?(c) %>
+              <%= check_box_tag "acciones[#{i}]", c.clave, @s_acciones.include?(c.id) ? true : false, :onclick => "verifyCheckboxs(this, 'acciones', 'eje2_p5');" %>&nbsp;<%= c.descripcion %><br /><br />
+              <%=linea_horizontal%>
+            <% end %>
+            <% i+=1 %>
+          <% end %>
+        </div>
+      </fieldset>
+      <div class="grid-4-12"></div>
+      <div id="eje2_p5" class="grid-8-12" style="display: none;">
+        <!--
+        <%= link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta5", :id => "pregunta5"),
+                                                              {:controller => "upload", :diagnostico => @diagnostico, :eje => 2, :numero_pregunta => 5, :action => "list_evidencias" },
+                                                              :title => "EVIDENCIA DE LA PREGUNTA 5", :class => "fancybox fancybox.iframe"%>
+        -->
+      </div>
+    </td>
+  </tr>
+  <script type="text/javascript">
+    verifyCheckboxs('', 'acciones', 'eje2_p5'); //P5
+
+    jQuery(function(){
+      jQuery("#acciones").validate({ expression: "if (isCheckedC(SelfID)) return true; else return false;", message: "Seleccione una opción!" }); //P5
+    });
+  </script>
+  <% end %>
+  <tr>
+    <td align="right">
+      <table>
+        <tr>
+          <td>
+            <input id="siguiente" onclick="to_uppercase();" class="buttonText" type="submit" title="Guardar" value="Guardar" />
+          </td>
+          <td>
+            <a href="/proyectos" id="cancelar_sig" class="buttonText">Regresar</a>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2" >&nbsp;</td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+  <%= render :partial => "diagnosticos/errores_evidencias"%>
+<% end %>
+
+<script type="text/javascript">
+  var objetivo_especifico = new LiveValidation( 'eje_objetivo_especifico' );
+  objetivo_especifico.add( Validate.Presence );
+  objetivo_especifico.add( Validate.Length, { maximum: 350 } );
+
+  var meta = new LiveValidation( 'eje_meta' );
+  meta.add( Validate.Presence );
+  meta.add( Validate.Length, { maximum: 350 } );
+
+</script>

@@ -1,6 +1,5 @@
 <%= render :partial => "informacion_proyectos"%>
 
-<% form_for :eje, @eje, :url => { :controller => "ejes", :action => "save_eje", :proyecto => @proyecto, :id => @eje }, :html => {:class => "formee", :id => "eje"} do |f| -%>
 <table class="principal" width="100%" border="0" align="center" cellpadding="2" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
   <tr bgcolor="#003366" style="opacity: 0.7;" >
     <td align="center"><h4>P R O Y E C T O</h4></td>
@@ -13,7 +12,7 @@
             <div class="grid-3-12">&nbsp;</div>
             <div class="grid-6-12">
               <label class="uper">Eje a desarrollar:</label>
-              <%= f.select :catalogo_eje_id, @catalogo_ejes.collect {|p| [ p.completo, p.clave ] }, { :prompt => "SELECCIONE UNA ACCIÓN" } %>
+              <%= select :catalogo, :catalogo_eje_id, @catalogo_ejes.collect {|p| [ p.completo, p.clave ] }, { :prompt => "SELECCIONE UNA ACCIÓN" , :style => "font-size: 12px;"} %>
             </div>
           </td>
         </tr>
@@ -32,34 +31,18 @@
 
 
   <%#= render :partial => "diagnosticos/errores_evidencias"%>
-  <tr>
-    <td align="right">
-      <table>
-        <tr>
-          <td>
-            <input id="siguiente" onclick="to_uppercase();" class="buttonText" type="submit" title="Guardar" value="Guardar" />
-          </td>
-          <td>
-            <a href="/proyectos" id="cancelar_sig" class="buttonText">Regresar</a>
-          </td>
-        </tr>
-        <tr>
-          <td colspan="2" >&nbsp;</td>
-        </tr>
-      </table>
-    </td>
-  </tr>
+  
 </table>
-<% end %>
+<%# end %>
 
-<%= observe_field :eje_catalogo_eje_id,
+<%= observe_field :catalogo_catalogo_eje_id,
                   :frecuency => 0.2,
                   :update => :contenido_eje,
                   :url => { :controller => 'proyectos', :action => 'get_contenido_ejes' },
-                  :with => :eje_catalogo_eje_id %>
+                  :with => :catalogo_catalogo_eje_id %>
 
 <script type="text/javascript">
-  var catalogo_eje_id = new LiveValidation( 'eje_catalogo_eje_id' );
+  var catalogo_eje_id = new LiveValidation( 'catalogo_catalogo_eje_id' );
   catalogo_eje_id.add( Validate.Presence );
   catalogo_eje_id.add( Validate.Exclusion, { within: [ '' , ' ' ] } );
 

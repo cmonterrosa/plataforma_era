@@ -11,6 +11,7 @@
 .LV_validation_message{
     font-weight:bold;
     margin:0 0 0 5px;
+    font-size: 10px;
 }
     
 .LV_valid_field,

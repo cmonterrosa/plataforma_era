@@ -856,6 +856,16 @@ function verifyCheckboxs(checkSelect, objCheckox, objPreg){
     }
 }
 
+function disableInputs(listInput){
+    var i, inputField, elemCount;
+
+    inputField = document.getElementById(listInput);
+    elemCount = inputField.getElementsByTagName("input");
+
+    for(i=0; i < elemCount.length; i++)
+        elemCount[i].disabled = true;
+}
+
 //*** fin funciones Eje 2 Entornos ***//
 
 //*** Funciones Eje 3 Huellas ***//
@@ -897,6 +907,16 @@ function sumFocos(select, select2, label){
     labelVal.value = parseInt(selectVal.value) + parseInt(selectVal2.value);
 }
 
+function nivelaFocos(obj1, obj2, valor){
+    var select1, select2;
+    select1 = obj1;
+    select2 = document.getElementById(obj2);
+
+    if(typeof obj1 == "object")
+        select2.value = parseInt(valor) - parseInt(select1.value);
+    else
+        select1.value = parseInt(valor) - parseInt(select2.value);
+}
 //*** fin funciones Eje 3 Huellas ***//
 
 // Limpia multiselect
