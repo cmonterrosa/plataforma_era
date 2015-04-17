@@ -5,7 +5,7 @@ class AdminController < ApplicationController
   #protect_from_forgery
   require_role [:directivo], :only => [:show_escuelas]
   require_role [:admin], :for => ["show_respaldos"]
-  require_role [:admin, :adminplat, :revisor, :enlaceevaluador]
+  require_role [:admin, :adminplat, :revisor, :enlaceevaluador, :consejero, :equipotecnico]
   #require_role [:equipotecnico], :only => [:report_by_niveles, :cortes_ranking]
   
   
