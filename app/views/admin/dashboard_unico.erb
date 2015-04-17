@@ -1,14 +1,13 @@
-<!-- Notificaciones por defecto -->
 <%=render :partial => "layouts/notificaciones_acciones"%>
 
 <div class="container">
   <div class="formee">
     <table align="center" class="subprincipal" width="95%" cellspacing="5" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
       <tr class="tdiagnostico">
-        <td align="center" ><label style=" font-weight: bold; " >MONITOR DE EVALUACIÓN DE EVIDENCIAS DE DIAGNÓSTICO</label></td>
+        <td align="center" ><label style=" font-weight: bold; font-size: 16px; " >MONITOR UNICO DE EVALUACION</label></td>
       </tr>
       <tr class="tdiagnostico">
-        <td align="center" ><label>ESCUELA: &nbsp; &nbsp;<b><%= @escuela.nombre %></b>, &nbsp; CLAVE: &nbsp; &nbsp;<b><%= @escuela.clave %></b>  </label></td>
+        <td align="center" ><label>ESCUELA: &nbsp; &nbsp;<b><%= @escuela.nombre %></b>, &nbsp; CLAVE: &nbsp; &nbsp;<b><%= @escuela.clave %></b>  &nbsp;&nbsp; SOSTENIMIENTO: <%=@escuela.sostenimiento%></label></td>
       </tr>
 
       <tr class="tdiagnostico">
@@ -18,22 +17,21 @@
     </table>
     <br />
     <fieldset>
-     <!-- EJE 1 -->
+
+      <!-- EJE 1 -->
      <div class="grid-12-12 clear">
         <% total_eje1 = 0.0 %>
         <% total_obtenido_eje1 = 0.0 %>
         <table width="98%" border="0" cellspacing="0" cellpadding="0" class="sample" >
             <tr class="tdiagnostico">
-              <td colspan="9" align="center" ><label>EJE: 1 &nbsp; <b>DESARROLLO DE COMPETENCIAS</b></label></td>
+              <td colspan="4" align="center" ><label>EJE: 1 &nbsp; <b>DESARROLLO DE COMPETENCIAS</b></label></td>
             </tr>
         <% unless @preguntas_eje1.empty?  %>
             <tr class="d0" style=" font-weight: bold; " >
               <td width=" 7%" style="vertical-align: middle;" align="center">PREGUNTA</td>
               <td width="10%" style="vertical-align: middle;"align="center">PUNTAJE PREGUNTA</td>
               <td width="10%" style="vertical-align: middle;" align="center">PUNTAJE OBTENIDO</td>
-              <td width=" 3%" style="vertical-align: middle;" align="center">&nbsp;</td>
-              <td width="30%" style="vertical-align: middle;" align="center">DESCRIPCIÓN EVIDENCIA</td>
-              <td width="20%" style="vertical-align: middle;" align="center" colspan="4">ACCIONES</td>
+              <td width=" 70%" style="vertical-align: middle;" align="center">&nbsp;</td>
             </tr>
             
             <%@preguntas_eje1.sort{|p1,p2| p1.numero_pregunta <=> p2.numero_pregunta}.each do |p|%>
@@ -47,27 +45,61 @@
             </tr>
 
             <%detalle_preguntas_eje1.each do |eje|%>
+            <!-- Accordeon -->
+
             <tr class="d1">
-              <!-- icono de validado -->
-              <%if eje.validado%>
-                  <td style="vertical-align: middle;"><%= image_tag 'admin/disponible.png'%></td>
-              <%else%>
-                <%if eje.validado == false%>
-                  <td style="vertical-align: middle;"><%= image_tag 'admin/bloqueado.png'%></td>
-                <%else%>
-                  <td style="vertical-align: middle;">-</td>
-                <%end%>
-              <%end%>
-              <td><%= eje.descripcion %></td>
-              <td><%=link_to image_tag('admin/view.png', :size => "30x30", :mouseover => 'admin/view.png') , {:controller => "upload", :action => "download", :id => eje.id}, :class => 'fancybox fancybox.iframe', :title => "Ver Evidencia" %></td>
-              <%if current_user.has_role?("adminplat") || current_user.has_role?("enlaceevaluador")%>
-              <td><%=link_to image_tag('admin/valid.png', :size => "30x30", :mouseover => 'admin/valid.png') , {:controller => "upload", :action => "validar", :id => eje.id, :diagnostico => @diagnostico, :user => @user, :dashboard => 1 }, :html => { :target => "_blank"}, :title => "Evidencia Válida" %></td>
-              <td><%=link_to image_tag('admin/invalid.png', :size => "30x30", :mouseover => 'admin/invalid.png') , {:controller => "upload", :action => "invalidar", :id => eje.id, :diagnostico => @diagnostico, :user => @user, :dashboard => 1 }, :html => { :target => "_blank"}, :title => "Evidencia Inválida" %></td>
-              <td><%=link_to image_tag('admin/delete.png', :size => "30x30", :mouseover => 'admin/delete.png') , {:controller => "upload", :action => "destroy_evidencia", :id => eje.id, :dashboard => 1, :user_id => @user.id, :diagnostico_id => @diagnostico}, :confirm => '¿Esta seguro que desea elimina la evidencia?', :title => "Eliminar Evidencia" %></td>
-              <% else %>
-              <td colspan="3">&nbsp;</td>
-              <% end %>
+              <td>
+                <div id="mySlider" class="evoslider default"> <!-- start evo slider -->
+                    <dl>
+                        <dt>Diagnóstico</dt>
+                          <dd>
+                                  <table align="center" class="subprincipal" width="100%" cellspacing="5" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
+                                      <tr class="d0" style=" font-weight: bold; " >
+                                        <td width=" 5%" style="vertical-align: middle;" align="center">&nbsp;</td>
+                                          <td width="80%" style="vertical-align: middle;" align="center">DESCRIPCIÓN EVIDENCIA</td>
+                                          <td width="15%" style="vertical-align: middle;" align="center" colspan="4">ACCIONES</td>
+                                      </tr>
+
+                                       <tr class="d1">
+                                        <!-- icono de validado -->
+                                        <%if eje.validado%>
+                                            <td style="vertical-align: middle;"><%= image_tag 'admin/disponible.png'%></td>
+                                        <%else%>
+                                          <%if eje.validado == false%>
+                                                <td style="vertical-align: middle;"><%= image_tag 'admin/bloqueado.png'%></td>
+                                          <%else%>
+                                                <td style="vertical-align: middle;">-</td>
+                                          <%end%>
+                                        <%end%>
+                                        <td><%= eje.descripcion %></td>
+                                        <td><%=link_to image_tag('admin/view.png', :size => "30x30", :mouseover => 'admin/view.png') , {:controller => "upload", :action => "download", :id => eje.id}, :class => 'fancybox fancybox.iframe', :title => "Ver Evidencia" %></td>
+                                        <%if current_user.has_role?("adminplat") || current_user.has_role?("enlaceevaluador")%>
+                                              <td><%=link_to image_tag('admin/valid.png', :size => "30x30", :mouseover => 'admin/valid.png') , {:controller => "upload", :action => "validar", :id => eje.id, :diagnostico => @diagnostico, :user => @user, :dashboard => 1 }, :html => { :target => "_blank"}, :title => "Evidencia Válida" %></td>
+                                        <td><%=link_to image_tag('admin/invalid.png', :size => "30x30", :mouseover => 'admin/invalid.png') , {:controller => "upload", :action => "invalidar", :id => eje.id, :diagnostico => @diagnostico, :user => @user, :dashboard => 1 }, :html => { :target => "_blank"}, :title => "Evidencia Inválida" %></td>
+                                        <td><%=link_to image_tag('admin/delete.png', :size => "30x30", :mouseover => 'admin/delete.png') , {:controller => "upload", :action => "destroy_evidencia", :id => eje.id, :dashboard => 1, :user_id => @user.id, :diagnostico_id => @diagnostico}, :confirm => '¿Esta seguro que desea elimina la evidencia?', :title => "Eliminar Evidencia" %></td>
+                                        <% else %>
+                                        <td colspan="3">&nbsp;</td>
+                                        <% end %>
+                                    </tr>
+                                </table>
+                          </dd>
+
+                        <dt>Proyecto Avance 1</dt>
+                            <dd>
+                              Contenido evidencias avance 1
+                            </dd>
+
+                        <dt>Proyecto Avance 2</dt>
+                            <dd>
+                              Contenido evidencias avance 2
+                            </dd>
+                    </dl>
+                  </div> <!-- end evo slider -->
+              </td>
             </tr>
+
+
+   
             <%end%>
             <tr>
               <td colspan="9">&nbsp;</td>
@@ -87,7 +119,7 @@
             <td align="right" ><b>TOTALES: &nbsp; </b></td>
             <td align="center"><b><%= @total_puntos_eje1 %></b></td>
             <td align="center"><b><%= @ptos_obtenidos_eje1 %></b></td>
-            <td colspan="6"></td>
+            <td></td>
           </tr>
        <% else %>
           <tr class="d0" style=" font-weight: bold; " >
@@ -114,11 +146,12 @@
             <td align="right" ><b>TOTALES: &nbsp; </b></td>
             <td align="center"><b><%= @total_puntos_eje1 %></b></td>
             <td align="center"><b><%= @ptos_obtenidos_eje1 %></b></td>
-            <td colspan="6"></td>
+            <td></td>
           </tr>
        <%end%>
         </table>
      </div>
+      
 
      <!-- EJE 2 -->
      <div class="grid-12-12 clear">
@@ -574,6 +607,62 @@
      </fieldset>
   </div>
 </div>
+
+
+
+<div id="mySlider" class="evoslider default"> <!-- start evo slider -->
+      <dl>
+            <dt>Descripción</dt>
+	    <dd>
+	       slide one content
+	    </dd>
+
+	    <dt>Diagnóstico</dt>
+	    <dd>
+	       slide one content
+	    </dd>
+
+	    <dt>Proyecto Avance 1</dt>
+	    <dd>
+	       slide two content
+	    </dd>
+
+	    <dt>Proyecto Avance 2</dt>
+	    <dd>
+	       slide three content
+	    </dd>
+    </dl>
+
+</div> <!-- end evo slider -->
+
+
+<script type="text/javascript">
+  jQuery(".evoslider").evoSlider({
+        mode: "accordion",                  // Sets slider mode ("accordion", "slider", or "scroller")
+        width: 960,                         // The width of slider
+        height: 360,                        // The height of slider
+        slideSpace: 5,                      // The space between slides
+
+        mouse: true,                        // Enables mousewheel scroll navigation
+        keyboard: true,                     // Enables keyboard navigation (left and right arrows)
+        speed: 500,                         // Slide transition speed in ms. (1s = 1000ms)
+        easing: "swing",                    // Defines the easing effect mode
+        loop: true,                         // Rotate slideshow
+
+        autoplay: false,                     // Sets EvoSlider to play slideshow when initialized
+        interval: 5000,                     // Slideshow interval time in ms
+        pauseOnHover: true,                 // Pause slideshow if mouse over the slide
+        pauseOnClick: true,                 // Stop slideshow if playing
+
+        directionNav: true,                 // Shows directional navigation when initialized
+        directionNavAutoHide: false,        // Shows directional navigation on hover and hide it when mouseout
+
+        controlNav: true,                   // Enables control navigation
+        controlNavAutoHide: false           // Shows control navigation on mouseover and hide it when mouseout
+    });
+
+</script>
+
 
 
 <script type="text/javascript">

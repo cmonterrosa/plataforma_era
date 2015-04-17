@@ -1,14 +1,25 @@
 <!-- Carga de Evidencias -->
-<div class="container" style="width: 89%">
-  <div class="formee-msg-info">
+<div class="container" style="width: 92%">
+  <div class="formee-msg-warning">
     <h3>Información importante:</h3>
     <ul>
       <li>Los campos marcados con <em class="formee-req">*</em> son obligatorios.</li>
     </ul>
+
     <ul>
-      <li>Los archivos no pueden repetirse ni excederse de 5 MB.</li>
+      <li>Puede adjuntar cualquiera de los siguientes tipos de archivos sin repetirse ni excederse de 5 Megabytes (MB):</li>
     </ul>
-  </div>
+    <ul>
+      <li>&nbsp;- Imágenes (jpg, gif, png):</li>
+    </ul>
+    <ul>
+      <li>&nbsp;- Documentos (pdf, word, excel, powerpoint):</li>
+    </ul>
+    <ul>
+      <li>&nbsp;- Videos o animaciones (3gp, mp4, mov, mpeg):</li>
+    </ul>
+    
+ </div>
 
 
 <%form_for(@uploaded_file, :url => {:action => "create_evidencia", :diagnostico => @diagnostico, :eje => @eje, :numero_pregunta => @numero_pregunta}, :html => {:multipart => true, :class => "formee" }) do |f| -%>

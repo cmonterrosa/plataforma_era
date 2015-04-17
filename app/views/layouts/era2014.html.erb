@@ -415,40 +415,8 @@ a:active {
         <!-- Contenido principal -->
         <tr>
           <td colspan="3">
-            <%if flash[:notice]%>
-            <div class="formee-msg-success">
-              <h3>Operación realizada exitosamente:</h3>
-              <ul>
-                <li><%=flash[:notice]%></li>
-              </ul>
-            </div>
-
-            <%elsif flash[:warning]%>
-            <div class="formee-msg-warning">
-              <h3>Atención:</h3>
-              <ul>
-                <li><%=flash[:warning]%></li>
-              </ul>
-            </div>
-
-            <%elsif flash[:error]%>
-            <div class="formee-msg-error">
-              <h3>Error:</h3>
-              <ul>
-                <li><%=flash[:error]%></li>
-              </ul>
-            </div>
-            <%else%>
-            <%#*<p></p>%>
-            <%end%>
-
-             
-
-            
-              <%=yield%>
-            
-            
-
+             <%=render :partial => "layouts/notificaciones_acciones"%>
+             <%=yield%>
           </td>
         </tr>
         <!-- termina contenido principal -->
