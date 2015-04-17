@@ -1,4 +1,4 @@
-<!-- Menú de consejeros y equipo ERA -->
+<!-- Menú de consejeros externos y equipo ERA -->
 <div class="titulos">
   <p>
     Bienvenido: <%=h @user.nombre.upcase%>
@@ -8,16 +8,32 @@
 <table width="90%" border="0" cellspacing="0" cellpadding="0" align="center">
     <tr align="center">
       <td>
+
+        <div class="grid-3-12">
+          <!-- Búsqueda de Escuela -->
+          <%=link_to image_tag('admin/escuela.png', :size => "128x128", :mouseover => 'admin/escuela2.png') , {:action => "show_users", :controller => "admin"}, :title => "Mostrar escuelas"%>
+          <label style="font-family:verdana;font-size:14px;">Escuelas</label>
+        </div>
         
        <!-- Comentarios -->
        <div class="grid-4-12">
-       <%=link_to image_tag('admin/comentarios.png', :size => "128x128", :size => "128x128", :mouseover => 'admin/comentarios2.png') , {:action => "list", :controller => "mensajes"}, :title => "Plataforma de Mensajes"%>
-         <label style="font-family:verdana;font-size:14px;">Plataforma&nbsp;de&nbsp;mensajes</label>
+          <%=link_to image_tag('admin/comentarios.png', :size => "128x128", :size => "128x128", :mouseover => 'admin/comentarios2.png') , {:action => "list", :controller => "mensajes"}, :title => "Plataforma de Mensajes"%>
+          <label style="font-family:verdana;font-size:14px;">Plataforma&nbsp;de&nbsp;mensajes</label>
        </div>
+
+       <!-- Estadísticas -->
+       <div class="grid-4-12">
+          <%=link_to image_tag('admin/niveles.png', :size => "128x128", :mouseover => 'admin/niveles2.png') , {:action => "index_report", :controller => "public"}, :title => "Reporte General por niveles educativos"%>
+          <label style="font-family:verdana;font-size:14px;">Estadísticas&nbsp;por&nbsp;Generaciones</label>
+        </div>
+
+
+
 
         <%if current_user.has_role?("equipotecnico")%>
           <!-- Indicadores -->
 
+          <!-- INDICADORES PRIMERA GENERACION -->
           <!--
           <div class="grid-3-12">
               <=link_to image_tag('admin/indicadores_diagnostico.png', :size => "128x128", :mouseover => 'admin/indicadores_diagnostico.png') , {:action => "index", :controller => "indicadores", :ciclo => "2013-2014"},   :title => "Mostrar indicadores 2013-2014"%>
@@ -31,13 +47,8 @@
               <label style="font-family:verdana;font-size:14px;">Indicadores Segunda Generación</label>
             </div>
 
-               <!-- Estadísticas -->
-                <div class="grid-4-12">
-                    <%=link_to image_tag('admin/niveles.png', :size => "128x128", :mouseover => 'admin/niveles2.png') , {:action => "index_report", :controller => "public"}, :title => "Reporte General por niveles educativos"%>
-                  <label style="font-family:verdana;font-size:14px;">Estadísticas&nbsp;por&nbsp;Generaciones</label>
-                </div>
 
-
+                <!-- RANKING -->
                <!--
                 <div class="grid-4-12">
                     <=link_to image_tag('admin/corte_ranking.png', :size => "128x128", :size => "128x128", :mouseover => 'admin/corte_ranking.png') , {:action => "cortes_ranking", :controller => "admin"}, :title => "Cortes de Ranking de escuelas"%>
