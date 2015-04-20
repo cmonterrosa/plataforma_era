@@ -522,11 +522,13 @@ class AdminController < ApplicationController
     @escuela = Escuela.find(params[:escuela])
     @diagnostico.oficializado = false
     if @diagnostico.save
-      flash[:notice] = "Diagnóstico habilitado"
+      #flash[:notice] = "Diagnóstico habilitado"
+      render :text => "<h3 class='formee-msg-success'>Diagnóstico habilitado correctamente</h3>", :layout => "only_jquery"
     else
-      flash[:error] = "DIagnóstico no se pudo habilitar"
+       render :text => "<h3 class='formee-msg-error'>Diagnóstico no se pudo habilitar</h3>", :layout => "only_jquery"
+      #flash[:error] = "DIagnóstico no se pudo habilitar"
     end
-    redirect_to :action => "menu_diagnostico", :id => @escuela, :layout => false
+    #redirect_to :action => "menu_diagnostico", :id => @escuela, :layout => false
   end
 
   def habilitar_proyecto
