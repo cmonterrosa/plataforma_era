@@ -1019,6 +1019,23 @@ function edMultiSelect2(cBox, objSelect, divQuestion){
     }
 }
 
+function edMultiSelectCheck(cBox, objSelect, divQuestion){
+    var i, checkBox, SelectM, divPreg;
+
+    checkBox = document.getElementById(cBox);
+    SelectM = document.getElementById(objSelect);
+    divPreg = document.getElementById(divQuestion);
+
+    if(checkBox.checked){
+        SelectM.style.display = "none";
+        divPreg.style.display = "none";
+    }
+    else{
+        SelectM.style.display = "block";
+        divPreg.style.display = "block";
+    }
+}
+
 
 /* Si radiobutton si esta seleccionado muestra div */
 function enaDivRadioChecked(radioButton, Div1, Div2){

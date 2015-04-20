@@ -75,6 +75,7 @@ class ProyectosController < ApplicationController
 
       if params[:catalogo_catalogo_eje_id] == "EJE4"
         @consumo = Consumo.new
+        @consumo_diagnostico = Consumo.find_by_diagnostico_id(@diagnostico.id) if @diagnostico
         @escuela = Escuela.find_by_clave(current_user.login.upcase)
         if @escuela.nivel_descripcion == "BACHILLERATO"
           @establecimientos = Establecimiento.find(:all, :conditions => ["nivel not in ('BASICA')"])
@@ -92,8 +93,16 @@ class ProyectosController < ApplicationController
         @s_materials = multiple_selected(@consumo.materials) if @consumo.materials
         @s_afisicas = selected(@consumo.frecuencia_afisica) if @consumo.frecuencia_afisica
       end
+
+      if params[:catalogo_catalogo_eje_id] == "EJE5"
+        @participacion = Participacion.new
+        @participacion_diagnostico = Participacion.find_by_diagnostico_id(@diagnostico.id) if @diagnostico
+        @s_dcapacitadoras = multiple_selected_dcapacitadora(@participacion.capacitacion_padres) if  @participacion.capacitacion_padres
+        cargar_proyectos_actuales
+      end
       
     end
+
     render :partial => "contenido_eje", :layout => "only_jquery"
   end
 
@@ -189,21 +198,71 @@ class ProyectosController < ApplicationController
       @focos = 0..@huella_diagnostico.total_focos.to_i
     end
 
+    if @eje.catalogo_eje.clave == "EJE4"
+      @consumo = @proyecto.consumo
+      @consumo_diagnostico = Consumo.find_by_diagnostico_id(@diagnostico.id) if @diagnostico
+
+      @escuela = Escuela.find_by_clave(current_user.login.upcase)
+      if @escuela.nivel_descripcion == "BACHILLERATO"
+        @establecimientos = Establecimiento.find(:all, :conditions => ["nivel not in ('BASICA')"])
+      else
+        @establecimientos = Establecimiento.find(:all)
+      end
+
+      @s_preparacions = multiple_selected(@consumo.preparacions) if @consumo.preparacions
+      @s_utensilios = multiple_selected(@consumo.utensilios) if @consumo.utensilios
+      @s_higienes = multiple_selected(@consumo.higienes) if @consumo.higienes
+      @s_bebidas = multiple_selected(@consumo.bebidas) if @consumo.bebidas
+      @s_alimentos = multiple_selected(@consumo.alimentos) if @consumo.alimentos
+      @s_botanas = multiple_selected(@consumo.botanas) if @consumo.botanas
+      @s_reposterias = multiple_selected(@consumo.reposterias) if @consumo.reposterias
+      @s_materials = multiple_selected(@consumo.materials) if @consumo.materials
+      @s_afisicas = selected(@consumo.frecuencia_afisica) if @consumo.frecuencia_afisica
+    end
+
+    if @eje.catalogo_eje.clave == "EJE5"
+      @participacion = @proyecto.participacion
+      @participacion_diagnostico = Participacion.find_by_diagnostico_id(@diagnostico.id) if @diagnostico
+      @s_dcapacitadoras = multiple_selected_dcapacitadora(@participacion.capacitacion_padres) if  @participacion.capacitacion_padres
+      cargar_proyectos_actuales
+    end
+
   end
 
   def delete_eje
     @eje = Eje.find(params[:id])
     @eje_nombre = @eje.catalogo_eje.descripcion
+
     if @eje.catalogo_eje.clave == "EJE1"
       AlumnosCapacitado.delete_all("competencia_id = #{@eje.proyecto.competencia.id}")
       DocentesCapacitado.delete_all("competencia_id = #{@eje.proyecto.competencia.id}")
       @eje.proyecto.competencia.destroy
     end
+
     if @eje.catalogo_eje.clave == "EJE2"
       EscuelasEspacio.delete_all("entorno_id = #{@eje.proyecto.entorno.id}")
       @eje.proyecto.entorno.acciones.destroy
-      @eje.proyecto.entorno.destroy
     end
+
+    if @eje.catalogo_eje.clave == "EJE3"
+      @eje.proyecto.huella.inorganicos.destroy
+    end
+
+    if @eje.catalogo_eje.clave == "EJE4"
+      @eje.proyecto.consumo.preparacions.delete_all if @eje.proyecto.consumo.preparacions
+      @eje.proyecto.consumo.utensilios.delete_all if @eje.proyecto.consumo.utensilios
+      @eje.proyecto.consumo.higienes.delete_all if @eje.proyecto.consumo.higienes
+      @eje.proyecto.consumo.alimentos.delete_all if @eje.proyecto.consumo.alimentos
+      @eje.proyecto.consumo.botanas.delete_all if @eje.proyecto.consumo.botanas
+      @eje.proyecto.consumo.reposterias.delete_all if @eje.proyecto.consumo.reposterias
+      @eje.proyecto.consumo.materials.delete_all if @eje.proyecto.consumo.materials
+    end
+
+    if @eje.catalogo_eje.clave == "EJE5"
+      CapacitacionPadre.delete_all("participacion_id = #{@eje.proyecto.participacion.id}")
+      @eje.proyecto.participacion.pescolars.destroy
+    end
+
     if @eje.destroy
       flash[:notice] = "Eje: #{@eje_nombre} has sido eliminado."
     else
@@ -392,6 +451,160 @@ class ProyectosController < ApplicationController
     end
  end
 
+ def save_consumo
+    @consumo = Consumo.find(params[:id]) if params[:id]
+    @consumo ||= Consumo.new
+    @proyecto = @consumo.proyecto = Proyecto.find(params[:proyecto].to_i)
+    @consumo.update_attributes(params[:consumo])
+
+    if params[:preparacions]
+      @preparacions = []
+      params[:preparacions].each { |op| @preparacions << Preparacion.find_by_clave(op)  }
+      @consumo.preparacions = Preparacion.find(@preparacions)
+    else
+      @consumo.preparacions.delete_all
+    end
+
+    if params[:utensilios]
+      @utensilios = []
+      params[:utensilios].each { |op| @utensilios << Utensilio.find_by_clave(op)  }
+      @consumo.utensilios = Utensilio.find(@utensilios)
+    else
+      @consumo.utensilios.delete_all
+    end
+
+    if params[:higienes]
+      @higienes = []
+      params[:higienes].each { |op| @higienes << Higiene.find_by_clave(op)  }
+      @consumo.higienes = Higiene.find(@higienes)
+    else
+      @consumo.higienes.delete_all
+    end
+
+    if params[:bebidas]
+      @bebidas = []
+      params[:bebidas].each { |op| @bebidas << Bebida.find_by_clave(op)  }
+      @consumo.bebidas = Bebida.find(@bebidas)
+    else
+      @consumo.bebidas.delete_all
+    end
+
+    if params[:alimentos]
+      @alimentos = []
+      params[:alimentos].each { |op| @alimentos << Alimento.find_by_clave(op)  }
+      @consumo.alimentos = Alimento.find(@alimentos)
+    else
+      @consumo.alimentos.delete_all
+    end
+
+    if params[:botanas]
+      @botanas = []
+      params[:botanas].each { |op| @botanas << Botana.find_by_clave(op)  }
+      @consumo.botanas = Botana.find(@botanas)
+    else
+      @consumo.botanas.delete_all
+    end
+
+    if params[:reposterias]
+      @reposterias = []
+      params[:reposterias].each { |op| @reposterias << Reposteria.find_by_clave(op)  }
+      @consumo.reposterias = Reposteria.find(@reposterias)
+    else
+      @consumo.reposterias.delete_all
+    end
+
+    if params[:materials]
+      @materials = []
+      params[:materials].each { |op| @materials << Material.find_by_clave(op)  }
+      @consumo.materials = Material.find(@materials)
+    end
+
+    @consumo.frecuencia_afisica_id = FrecuenciaAfisica.find_by_clave(params[:consumo][:frecuencia_afisica_id]).id if params[:consumo][:frecuencia_afisica_id]
+    @consumo.minutos_activacion_fisica = nil unless @consumo.frecuencia_afisica
+
+    @eje = Eje.find(params[:eje_id]) if params[:eje_id]
+    @eje ||= Eje.new
+
+    @eje.catalogo_eje_id = CatalogoEje.find_by_clave("EJE4").id
+    @eje.objetivo_especifico = params[:eje][:objetivo_especifico] if params[:eje][:objetivo_especifico]
+    @eje.meta = params[:eje][:meta] if params[:eje][:meta]
+    @eje.proyecto_id = @proyecto.id
+
+    if @consumo.save and @eje.save
+      flash[:notice] = "Registro guardado correctamente"
+      redirect_to :controller => "proyectos"
+    else
+      flash[:error] = "No se pudo guardar, verifique los datos"
+      flash[:evidencias] = @consumo.errors.full_messages.join(", ")
+
+      @escuela = Escuela.find_by_clave(current_user.login.upcase)
+      if @escuela.nivel_descripcion == "BACHILLERATO"
+        @establecimientos = Establecimiento.find(:all, :conditions => ["nivel not in ('BASICA')"])
+      else
+        @establecimientos = Establecimiento.find(:all)
+      end
+
+      @s_preparacions = multiple_selected(@consumo.preparacions) if @consumo.preparacions
+      @s_utensilios = multiple_selected(@consumo.utensilios) if @consumo.utensilios
+      @s_higienes = multiple_selected(@consumo.higienes) if @consumo.higienes
+      @s_bebidas = multiple_selected(@consumo.bebidas) if @consumo.bebidas
+      @s_alimentos = multiple_selected(@consumo.alimentos) if @consumo.alimentos
+      @s_botanas = multiple_selected(@consumo.botanas) if @consumo.botanas
+      @s_reposterias = multiple_selected(@consumo.reposterias) if @consumo.reposterias
+      @s_materials = multiple_selected(@consumo.materials) if @consumo.materials
+      @s_afisicas = selected(@consumo.frecuencia_afisica) if @consumo.frecuencia_afisica
+      render :action => "get_contenido_ejes", :catalogo_catalogo_eje_id => params[:catalogo][:catalogo_eje_id], :layout => "era2014"
+    end
+ end
+
+ def save_participacion
+    @participacion = Participacion.find(params[:id]) if params[:id]
+    @participacion ||= Participacion.new
+    @proyecto = @participacion.proyecto = Proyecto.find(params[:proyecto].to_i)
+    @participacion.update_attributes(params[:participacion])
+
+    guardar_proyectos(params[:pescolaresambiente], "MEDIOAMBIENTE", @participacion)
+    guardar_proyectos(params[:pescolaressalud], "SALUD", @participacion)
+    guardar_proyectos(params[:pescolaresdependencias], "DEPENDENCIAS", @participacion)
+    if params[:dcapacitadoras]
+      @s_padres = []
+      params[:dcapacitadoras].each_key { |id| @s_padres << id }
+      @participacion.capacitacion_padres.each { |padre| padre.delete if @s_padres.include?("#{padre.dcapacitadora_id.to_s}") == false }
+      params[:dcapacitadoras].each_key do |dcap|
+        dcapacitadora = Dcapacitadora.find(dcap)
+        padre_capacitado = CapacitacionPadre.find_by_dcapacitadora_id_and_participacion_id(dcapacitadora.id, @participacion.id)
+        padre_capacitado ||= CapacitacionPadre.new
+        padre_capacitado.participacion_id = @participacion
+        padre_capacitado.dcapacitadora_id = dcapacitadora.id
+        padre_capacitado.descripcion_dep = params[:dcapacitadorasOTRA] if params[:dcapacitadorasOTRA] and dcapacitadora.clave == "OTRA"
+        padre_capacitado.numero_capacitaciones = params[:dcapacitadora][:"#{dcapacitadora.clave}"].to_i
+        @participacion.capacitacion_padres << padre_capacitado
+      end
+    else
+      @participacion.capacitacion_padres.each { |i| i.delete } if @participacion.capacitacion_padres
+    end
+
+    @eje = Eje.find(params[:eje_id]) if params[:eje_id]
+    @eje ||= Eje.new
+
+    @eje.catalogo_eje_id = CatalogoEje.find_by_clave("EJE5").id
+    @eje.objetivo_especifico = params[:eje][:objetivo_especifico] if params[:eje][:objetivo_especifico]
+    @eje.meta = params[:eje][:meta] if params[:eje][:meta]
+    @eje.proyecto_id = @proyecto.id
+
+    if @participacion.save and @eje.save
+      flash[:notice] = "Registro guardado correctamente"
+      redirect_to :controller => "proyectos"
+    else
+      flash[:error] = "No se pudo guardar, verifique los datos"
+      flash[:evidencias] = @participacion.errors.full_messages.join(", ")
+
+      @s_dcapacitadoras = multiple_selected_dcapacitadora(@participacion.capacitacion_padres) if  @participacion.capacitacion_padres
+      cargar_proyectos_actuales
+      render :action => "get_contenido_ejes", :catalogo_catalogo_eje_id => params[:catalogo][:catalogo_eje_id], :layout => "era2014"
+    end
+ end
+
   private
 
   def convertir_array(array,field)
@@ -407,5 +620,31 @@ class ProyectosController < ApplicationController
   def set_layout
     (action_name == 'proyect_to_pdf')? 'reporte' : 'era2014'
   end
+
+  #### Funcion que guarda los proyectos escolares por tipo #####
+  def guardar_proyectos(parametros, tipo, participacion)
+      ids_olds =  Pescolar.find(:all, :conditions => ["participacion_id = ? AND materia= ?", @participacion.id, tipo]).map{|i|i.id} if @participacion
+      Pescolar.find(ids_olds).each do |p| p.destroy end unless ids_olds.empty?
+      if @projects = parametros
+          ids_olds =  Pescolar.find(:all, :conditions => ["participacion_id = ? AND materia= ?", @participacion.id, tipo]).map{|i|i.id}
+            (1..12).each do |numero|
+              @participacion.pescolars << Pescolar.new(:participacion_id => participacion.id, :materia => tipo, :descripcion => @projects["descripcion_#{numero}"], :nombre => @projects["nombre_#{numero}"], :dependencia_secretaria_apoya => @projects["dependencia_secretaria_apoya_#{numero}"]  ) if @projects.has_key?("nombre_#{numero}")
+           end
+      end
+  end
+
+  ### Funcion que recupera los datos de los proyectos actuales #####
+  def cargar_proyectos_actuales
+      ### Proyectos medio ambiente ###
+        @s_proyectos_ma =  Pescolar.find(:all, :conditions => ["participacion_id = ? AND materia= ?", @participacion.id, 'MEDIOAMBIENTE'])
+        @proyectos_seleccionados_ambiente = ( @s_proyectos_ma.empty?)? 0: @s_proyectos_ma.size
+      ### Proyectos salud ###
+        @s_proyectos_salud =  Pescolar.find(:all, :conditions => ["participacion_id = ? AND materia= ?", @participacion.id, 'SALUD'])
+        @proyectos_seleccionados_salud = ( @s_proyectos_salud.empty?)? 0: @s_proyectos_salud.size
+      ### Proyectos dependencias ###
+        @s_proyectos_dependencias =  Pescolar.find(:all, :conditions => ["participacion_id = ? AND materia= ?", @participacion.id, 'DEPENDENCIAS'])
+        @proyectos_seleccionados_dependencias = ( @s_proyectos_dependencias.empty?)? 0: @s_proyectos_dependencias.size
+  end
+
 
 end

@@ -24,7 +24,7 @@
             </div>
           </td>
         </tr>
-        <tr>
+        <tr align="center" >
           <td>
             <% @ejes.sort_by { |hsh| hsh[:catalogo_eje_id] }.each do |eje|%>
               <% case eje.catalogo_eje.clave
@@ -43,6 +43,7 @@
                      <label style=" text-align:center; display:block;">EJE 3</label>
                      <a href="/avances/add_avances/<%= Base64.encode64(eje.id.to_s + '-'+ @num_avance.to_s) %>" type="image" id="button5" class="buttonText" style="font-weight: bold;"><img src="/images/era/iconos/2.png" alt="Huella Ecologica" onmouseover="this.src='/images/era/iconos/2a.png'" onmouseout="this.src='/images/era/iconos/2.png'"/>&nbsp;&nbsp;Huella&nbsp;Ecológica&nbsp;&nbsp;</a>
                   </div>
+                  <div class="grid-12-12 clear"></div>
                 <% when 'EJE4' %>
                   <div class="grid-4-12">
                      <label style=" text-align:center; display:block;">EJE 4</label>

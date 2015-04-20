@@ -21,22 +21,22 @@ class ParticipacionsController < ApplicationController
     validador = valida_evidencias_proyectos(@participacion)
     if validador["valido"]
         if params[:dcapacitadoras]
-        @s_padres = []
-        params[:dcapacitadoras].each_key { |id| @s_padres << id }
-        @participacion.capacitacion_padres.each { |padre| padre.delete if @s_padres.include?("#{padre.dcapacitadora_id.to_s}") == false }
-        params[:dcapacitadoras].each_key do |dcap|
-          dcapacitadora = Dcapacitadora.find(dcap)
-          padre_capacitado = CapacitacionPadre.find_by_dcapacitadora_id_and_participacion_id(dcapacitadora.id, @participacion.id)
-          padre_capacitado ||= CapacitacionPadre.new
-          padre_capacitado.participacion_id = @participacion
-          padre_capacitado.dcapacitadora_id = dcapacitadora.id
-          padre_capacitado.descripcion_dep = params[:dcapacitadorasOTRA] if params[:dcapacitadorasOTRA] and dcapacitadora.clave == "OTRA"
-          padre_capacitado.numero_capacitaciones = params[:dcapacitadora][:"#{dcapacitadora.clave}"].to_i
-          @participacion.capacitacion_padres << padre_capacitado
+          @s_padres = []
+          params[:dcapacitadoras].each_key { |id| @s_padres << id }
+          @participacion.capacitacion_padres.each { |padre| padre.delete if @s_padres.include?("#{padre.dcapacitadora_id.to_s}") == false }
+          params[:dcapacitadoras].each_key do |dcap|
+            dcapacitadora = Dcapacitadora.find(dcap)
+            padre_capacitado = CapacitacionPadre.find_by_dcapacitadora_id_and_participacion_id(dcapacitadora.id, @participacion.id)
+            padre_capacitado ||= CapacitacionPadre.new
+            padre_capacitado.participacion_id = @participacion
+            padre_capacitado.dcapacitadora_id = dcapacitadora.id
+            padre_capacitado.descripcion_dep = params[:dcapacitadorasOTRA] if params[:dcapacitadorasOTRA] and dcapacitadora.clave == "OTRA"
+            padre_capacitado.numero_capacitaciones = params[:dcapacitadora][:"#{dcapacitadora.clave}"].to_i
+            @participacion.capacitacion_padres << padre_capacitado
+          end
+        else
+          @participacion.capacitacion_padres.each { |i| i.delete } if @participacion.capacitacion_padres
         end
-      else
-        @participacion.capacitacion_padres.each { |i| i.delete } if @participacion.capacitacion_padres
-      end
 
         ## Dependencias Capacitadoras ##
 #        @capacitadoras = ( params[:capacitacion]) ?  params[:capacitacion] : Array.new

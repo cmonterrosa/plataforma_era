@@ -14,6 +14,12 @@
       <% if @eje.catalogo_eje.clave == "EJE3" %>
         <%= render :partial => "huella"%>
       <% end %>
+      <% if @eje.catalogo_eje.clave == "EJE4" %>
+        <%= render :partial => "consumo"%>
+      <% end %>
+      <% if @eje.catalogo_eje.clave == "EJE5" %>
+        <%= render :partial => "participacion"%>
+      <% end %>
     </td>
   </tr>
 </table>

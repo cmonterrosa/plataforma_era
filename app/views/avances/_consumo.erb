@@ -1,5 +1,6 @@
 <% form_for :consumo, @consumo, :url => { :action => "save_consumo", :id => @consumo, :proyecto => @proyecto.id, :eje_id => @eje }, :html => {:class => "formee", :name => "consumo", :id => "consumo"} do |f| -%>
 <table class="subprincipal" width="100%" border="0" cellpadding="4" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
+  <!--
   <tr>
     <td align="justify" style="vertical-align:top;" >
       <div class="grid-6-12">
@@ -33,6 +34,7 @@
       <div class="grid-12-12">&nbsp;</div>
     </td>
   </tr>
+  -->
   <tr>
     <td align="center" style="vertical-align:top;"><label  class="uper" style=" font-size: 15px; font-weight: bold;" >ACCIONES: </label></td>
   </tr>
@@ -49,24 +51,21 @@
         <div class="grid-3-12"></div>
         <div class="grid-5-12">
           <span id="r_capacitacion_alim_bebidas" class="InputGroup">
-            <label class="uper">SI <%= f.radio_button :capacitacion_alim_bebidas, "SI", {:onclick => "showImage('consumo_capacitacion_alim_bebidas_si', 'eje4_p2');"}%></label>&nbsp;&nbsp;
-            <label class="uper">NO <%= f.radio_button :capacitacion_alim_bebidas, "NO", {:onclick => "showImage('consumo_capacitacion_alim_bebidas_no', 'eje4_p2');"}%></label>
+            <label class="uper">SI <%= f.radio_button :capacitacion_alim_bebidas, "SI", {:disabled => "disabled"}%></label>&nbsp;&nbsp;
+            <label class="uper">NO <%= f.radio_button :capacitacion_alim_bebidas, "NO", {:disabled => "disabled"}%></label>
           </span>
         </div>
         <div class="grid-12-12"></div>
         <div id="eje4_p2" class="grid-12-12" style="display: none; text-align: center;">
-        <!--
         <%= link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "evidencia_pregunta2", :id => "evidencia_pregunta2"),
-                                                              {:controller => "upload", :diagnostico => @diagnostico, :eje => 4, :numero_pregunta => 2, :action => "list_evidencias" },
+                                                              {:controller => "upload", :proyecto => @proyecto.id, :eje => 4, :numero_pregunta => 2, :action => "list_evidencias_avance", :num_avance => @num_avance },
                                                               :title => "EVIDENCIA DE LA PREGUNTA 2", :class => "fancybox fancybox.iframe"%>
-        -->
         </div>
       </div>
     </td>
   </tr>
   <script type="text/javascript">
     showImage('consumo_capacitacion_alim_bebidas_si', 'eje4_p2');
-    jQuery("#r_capacitacion_alim_bebidas").validate({ expression: "if   ( isChecked(SelfID) || ElementIsChecked('consumo_escuela_establecimiento_no')) return true; else return false;", message: "Seleccione una opción!" });
   </script>
   <% end %>
   <% if @eva_diagnostico.puntaje_eje4_p3 < ($consumo_p3 * 100) %>
@@ -81,23 +80,20 @@
       <div class="grid-3-12"></div>
       <div class="grid-5-12">
         <span id="responsables_conocen_lineamientos" class="InputGroup">
-          <label class="uper">SI <%= f.radio_button :conocen_lineamientos_grales, "SI", {:onclick => "showImage('consumo_conocen_lineamientos_grales_si', 'eje4_p3');"} %></label>&nbsp;&nbsp;
-          <label class="uper">NO <%= f.radio_button :conocen_lineamientos_grales, "NO", {:onclick => "showImage('consumo_conocen_lineamientos_grales_no', 'eje4_p3');"} %></label>
+          <label class="uper">SI <%= f.radio_button :conocen_lineamientos_grales, "SI", {:disabled => "disabled"} %></label>&nbsp;&nbsp;
+          <label class="uper">NO <%= f.radio_button :conocen_lineamientos_grales, "NO", {:disabled => "disabled"} %></label>
         </span>
       </div>
       <div class="grid-12-12 clean"></div>
       <div id="eje4_p3" class="grid-12-12" style="display: none; text-align: center;">
-        <!--
         <%= link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "evidencia_pregunta3", :id => "evidencia_pregunta3"),
-                                                              {:controller => "upload", :diagnostico => @diagnostico, :eje => 4, :numero_pregunta => 3, :action => "list_evidencias" },
+                                                              {:controller => "upload", :proyecto => @proyecto.id, :eje => 4, :numero_pregunta => 3, :action => "list_evidencias_avance", :num_avance => @num_avance },
                                                               :title => "EVIDENCIA DE LA PREGUNTA 3", :class => "fancybox fancybox.iframe"%>
-        -->
       </div>
     </td>
   </tr>
   <script type="text/javascript">
     showImage('consumo_conocen_lineamientos_grales_si', 'eje4_p3');
-    jQuery("#responsables_conocen_lineamientos").validate({ expression: "if ( isChecked(SelfID) || ElementIsChecked('consumo_escuela_establecimiento_no')) return true; else return false;", message: "Seleccione una opción!" }); // P2
   </script>
   <% end %>
   <% if @eva_diagnostico.puntaje_eje4_p4 < ($consumo_p4 * 100) %>
@@ -116,8 +112,8 @@
         <fieldset style="padding: 5px 5px 5px 5px;">
           <div id="preparacions" class="grid-12-12">
             <% Preparacion.find(:all).each do |c| %>
-              <% unless @consumo_diagnostico.preparacions.include?(c) %>
-                <%= check_box_tag "preparacions[#{c.id}]", c.clave, @s_preparacions.include?(c.clave) ? true : false %>&nbsp;<%= c.descripcion %><br />
+              <% if @s_preparacions.include?(c.clave) %>
+                <%= check_box_tag "preparacions[#{c.id}]", c.clave, @s_preparacions.include?(c.clave) ? true : false, :disabled => "disabled" %>&nbsp;<%= c.descripcion %><br />
                 <%= linea_horizontal%>
               <% end %>
             <% end %>
@@ -133,8 +129,8 @@
         <fieldset style="padding: 5px 5px 5px 5px;">
           <div id="utensilios" class="grid-12-12">
             <% Utensilio.find(:all).each do |c| %>
-              <% unless @consumo_diagnostico.utensilios.include?(c) %>
-                <%= check_box_tag "utensilios[#{c.id}]", c.clave, @s_utensilios.include?(c.clave) ? true : false %>&nbsp;<%= c.descripcion %><br />
+              <% if @s_utensilios.include?(c.clave) %>
+                <%= check_box_tag "utensilios[#{c.id}]", c.clave, @s_utensilios.include?(c.clave) ? true : false, :disabled => "disabled" %>&nbsp;<%= c.descripcion %><br />
                 <%= linea_horizontal%>
               <% end %>
             <% end %>
@@ -153,8 +149,8 @@
         <fieldset style="padding: 5px 5px 5px 5px;">
           <div id="higienes" class="grid-12-12">
             <% Higiene.find(:all).each do |c| %>
-              <% unless @consumo_diagnostico.higienes.include?(c) %>
-                <%= check_box_tag "higienes[#{c.id}]", c.clave, @s_higienes.include?(c.clave) ? true : false %>&nbsp;<%= c.descripcion %><br />
+              <% if @s_higienes.include?(c.clave) %>
+                <%= check_box_tag "higienes[#{c.id}]", c.clave, @s_higienes.include?(c.clave) ? true : false, :disabled => "disabled" %>&nbsp;<%= c.descripcion %><br />
                 <%= linea_horizontal%>
               <% end %>
             <% end %>
@@ -185,8 +181,8 @@
         <fieldset style="padding: 5px 5px 5px 5px;">
           <div id="bebidas" class="grid-12-12">
             <% Bebida.find(:all).each do |c| %>
-              <% unless @consumo_diagnostico.bebidas.include?(c) %>
-                <%= check_box_tag "bebidas[#{c.id}]", c.clave, @s_bebidas.include?(c.clave) ? true : false %>&nbsp;<%= c.descripcion %><br />
+              <% if @s_bebidas.include?(c.clave) %>
+                <%= check_box_tag "bebidas[#{c.id}]", c.clave, @s_bebidas.include?(c.clave) ? true : false, :disabled => "disabled" %>&nbsp;<%= c.descripcion %><br />
                 <%= linea_horizontal%>
               <% end %>
             <% end %>
@@ -203,8 +199,8 @@
           <div id="alimentos" class="grid-12-12">
             <div style="overflow:auto; width:auto; height: 250px;">
               <% Alimento.find(:all).each do |c| %>
-                <% unless @consumo_diagnostico.alimentos.include?(c) %>
-                  <%= check_box_tag "alimentos[#{c.id}]", c.clave, @s_alimentos.include?(c.clave) ? true : false %>&nbsp;<%= c.descripcion %><br />
+                <% if @s_alimentos.include?(c.clave) %>
+                  <%= check_box_tag "alimentos[#{c.id}]", c.clave, @s_alimentos.include?(c.clave) ? true : false, :disabled => "disabled" %>&nbsp;<%= c.descripcion %><br />
                   <%= linea_horizontal%>
                 <% end %>
               <% end %>
@@ -224,8 +220,8 @@
         <fieldset style="padding: 5px 5px 5px 5px;">
           <div id="botanas" class="grid-12-12">
             <% Botana.find(:all).each do |c| %>
-              <% unless @consumo_diagnostico.botanas.include?(c) %>
-                <%= check_box_tag "botanas[#{c.id}]", c.clave, @s_botanas.include?(c.clave) ? true : false %>&nbsp;<%= c.descripcion %><br />
+              <% if @s_botanas.include?(c.clave) %>
+                <%= check_box_tag "botanas[#{c.id}]", c.clave, @s_botanas.include?(c.clave) ? true : false, :disabled => "disabled" %>&nbsp;<%= c.descripcion %><br />
                 <%= linea_horizontal%>
               <% end %>
             <% end %>
@@ -242,8 +238,8 @@
           <div id="reposterias" class="grid-12-12">
             <div style="overflow:auto; width:auto; height: 250px;">
               <% Reposteria.find(:all).each do |c| %>
-                <% unless @consumo_diagnostico.reposterias.include?(c) %>
-                  <%= check_box_tag "reposterias[#{c.id}]", c.clave, @s_reposterias.include?(c.clave) ? true : false %>&nbsp;<%= c.descripcion %><br />
+                <% if @s_reposterias.include?(c.clave) %>
+                  <%= check_box_tag "reposterias[#{c.id}]", c.clave, @s_reposterias.include?(c.clave) ? true : false, :disabled => "disabled" %>&nbsp;<%= c.descripcion %><br />
                   <%= linea_horizontal%>
                 <% end %>
               <% end %>
@@ -263,8 +259,8 @@
       <fieldset style="padding: 5px 5px 5px 5px;">
         <div id="materials" class="grid-12-12">
           <% Material.find(:all).each do |c| %>
-            <% unless @consumo_diagnostico.materials.include?(c) %>
-              <%= check_box_tag "materials[#{c.id}]", c.clave, @s_materials.include?(c.clave) ? true : false %>&nbsp;<%= c.descripcion %><br />
+            <% if @s_materials.include?(c.clave) %>
+              <%= check_box_tag "materials[#{c.id}]", c.clave, @s_materials.include?(c.clave) ? true : false, :disabled => "disabled" %>&nbsp;<%= c.descripcion %><br />
               <%= linea_horizontal%>
             <% end %>
           <% end %>
@@ -272,9 +268,7 @@
       </fieldset>
     </td> <!-- materiales -->
   </tr>
-  <script type="text/javascript">
-    jQuery("#materials").validate({ expression: "if (isCheckedC(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
-  </script>
+  
   <% end %>
   <% if @eva_diagnostico.puntaje_eje4_p7 < ($consumo_p7 * 100) %>
   <tr>
@@ -292,59 +286,46 @@
       <div class="grid-6-12">
         <!-- Línea campo -->
         <div class="grid-12-12">
-          <%= f.select :frecuencia_afisica_id, FrecuenciaAfisica.all.collect {|p| [ p.descripcion, p.clave ]}, {:selected => @s_afisicas}, {:onchange => "showImageValue('consumo_frecuencia_afisica_id', 'eje4_p7','NOSR'); enable_frecuencias_actividades_fisicas('consumo_frecuencia_afisica_id', 'consumo_minutos_activacion_fisica');"} %>
+          <%= f.select :frecuencia_afisica_id, FrecuenciaAfisica.all.collect {|p| [ p.descripcion, p.clave ]}, {:selected => @s_afisicas}, {:disabled => "disabled", :style => "color: gray;"} %>
         </div>
         <!-- Evidencia --->
         <div id="eje4_p7" class="grid-12-12" style="display: none; text-align: center;">
-          <!--
           <%= link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "evidencia_pregunta7", :id => "evidencia_pregunta7"),
-                                                              {:controller => "upload", :diagnostico => @diagnostico, :eje => 4, :numero_pregunta => 7, :action => "list_evidencias" },
+                                                              {:controller => "upload", :proyecto => @proyecto.id, :eje => 4, :numero_pregunta => 7, :action => "list_evidencias_avance", :num_avance => @num_avance },
                                                               :title => "EVIDENCIA DE LA PREGUNTA 7", :class => "fancybox fancybox.iframe"%>
-          -->
         </div>
       </div>
       <div id="pregunta8" class="grid-6-12" style=" vertical-align:top;" >
         <!-- Línea campo -->
         <div class="grid-2-12"></div>
         <div class="grid-2-12"><label class="uper">Minutos: </label></div>
-        <div class="grid-3-12"><%= f.select :minutos_activacion_fisica, [10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60]%></div>
+        <div class="grid-3-12"><%= f.select :minutos_activacion_fisica, [10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60], {}, {:style => "color: gray;"} %></div>
       </div>
     </td> 
   </tr>
   <script type="text/javascript">
     enable_frecuencias_actividades_fisicas("consumo_frecuencia_afisica_id", "consumo_minutos_activacion_fisica");
     showImageValue('consumo_frecuencia_afisica_id', 'eje4_p7','NOSR');
+    document.getElementById("consumo_minutos_activacion_fisica").disabled = true;
   </script>
   <% end %>
-  <tr>
-    <td align="right">
-      <table>
-        <tr>
-          <td>
-            <input id="siguiente" onclick="to_uppercase();" class="buttonText" type="submit" title="Guardar" value="Guardar" />
-          </td>
-          <td>
-            <a href="/proyectos" id="cancelar_sig" class="buttonText">Regresar</a>
-          </td>
-        </tr>
-        <tr>
-          <td colspan="2" >&nbsp;</td>
-        </tr>
-      </table>
+</table>
+<br />
+<table align="right" >
+  <tr >
+    <td>&nbsp;
+      <%#*<input id="siguiente" onclick="to_uppercase();" class="buttonText" type="submit" title="Guardar" value="Guardar" />%>
     </td>
+    <td>
+      <%= link_to "Regresar", { :controller => "avances", :action => "index", :num_avance => Base64.encode64(@num_avance) }, {:id => "cancelar_sig", :class => "buttonText" } %>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" >&nbsp;</td>
   </tr>
 </table>
 <%= render :partial => "diagnosticos/errores_evidencias"%>
 <% end %>
 
-<script type="text/javascript">
-  var objetivo_especifico = new LiveValidation( 'eje_objetivo_especifico' );
-  objetivo_especifico.add( Validate.Presence );
-  objetivo_especifico.add( Validate.Length, { maximum: 350 } );
-
-  var meta = new LiveValidation( 'eje_meta' );
-  meta.add( Validate.Presence );
-  meta.add( Validate.Length, { maximum: 350 } );
-</script>
 
 

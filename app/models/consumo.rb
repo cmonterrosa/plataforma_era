@@ -1,5 +1,6 @@
 class Consumo < ActiveRecord::Base
   belongs_to :diagnostico
+  belongs_to :proyecto
   belongs_to :frecuencia_afisica
   has_and_belongs_to_many :establecimientos, :join_table => 'consumos_establecimientos'
   has_and_belongs_to_many :preparacions, :join_table => 'consumos_preparacions'
@@ -25,18 +26,21 @@ class Consumo < ActiveRecord::Base
   end
 
   def evidencia_pregunta_2
+    return true if self.proyecto
     current_eje = 4
     contador = Adjunto.count(:id, :conditions => ["eje_id = ? AND diagnostico_id = ? AND numero_pregunta = ?", current_eje, self.diagnostico_id, 2])
     (contador > 0)?  true : false
   end
 
   def evidencia_pregunta_3
+    return true if self.proyecto
     current_eje = 4
     contador = Adjunto.count(:id, :conditions => ["eje_id = ? AND diagnostico_id = ? AND numero_pregunta = ?", current_eje, self.diagnostico_id, 3])
     (contador > 0)?  true : false
   end
 
   def evidencia_pregunta_7
+    return true if self.proyecto
     current_eje = 4
     contador = Adjunto.count(:id, :conditions => ["eje_id = ? AND diagnostico_id = ? AND numero_pregunta = ?", current_eje, self.diagnostico_id, 7])
     (contador > 0)?  true : false

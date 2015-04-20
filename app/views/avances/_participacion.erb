@@ -1,0 +1,255 @@
+<% form_for :participacion, @participacion, :url => { :action => "save_participacion", :id => @participacion, :proyecto => @proyecto.id, :eje_id => @eje }, :html => {:class => "formee", :name => "participacion", :id => "participacion"} do |f| -%>
+<table class="subprincipal" width="100%" border="0" cellpadding="4" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
+  <!--
+  <tr>
+          <td align="justify" style="vertical-align:top;" >
+            <div class="grid-6-12">
+              <label class="uper">Líneas de Acción:</label>
+              <% @lineas.each do |linea| %>
+              <li style=" margin-left:13px;padding:1px;"><%= linea.descripcion %> </li>
+              <% end %>
+            </div>
+            <div class="grid-6-12">
+              <label class="uper">Indicadores:</label>
+              <% @indicadores.each do |indicador| %>
+              <li style=" margin-left:13px;padding:1px;" >&nbsp;<%= indicador.descripcion %></li>
+              <% end %>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td align="justify" style="vertical-align:top;" >
+            <div class="grid-12-12">
+              <label class="uper">Objetivo especifico:</label>
+              <%= text_area :eje, :objetivo_especifico %>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td align="justify" style="vertical-align:top;" >
+            <div class="grid-12-12">
+              <label class="uper">Meta:</label>
+              <%= text_area :eje, :meta %>
+            </div>
+            <div class="grid-12-12">&nbsp;</div>
+          </td>
+        </tr>
+  -->
+        <tr>
+          <td align="center" style="vertical-align:top;"><label  class="uper" style=" font-size: 15px; font-weight: bold;" >ACCIONES: </label></td>
+        </tr>
+        <input id="val_max_padres" name="val_max_padres" type="hidden" value="<%= @participacion_diagnostico.num_padres_familia.to_i - @participacion_diagnostico.capacitacion_salud_ma.to_i %>" />
+        <% if @eva_diagnostico.puntaje_eje5_p2 < ($participacion_p2 * 100) %>
+        <tr>
+          <td align="justify" style=" vertical-align:top;">
+            <!-- Línea Pregunta -->
+            <div class="grid-12-12">
+              <label class="uper">2.- Involucrar al 100% de los padres de familia en capacitaciones, talleres, cursos o actividades relacionadas en temas de salud y medio ambiente.</label>
+            </div>
+            <div class="grid-12-12">TOTAL PADRES DE FAMILIA EN REGISTRO ESCOLAR: &nbsp; <b><%= @participacion_diagnostico.num_padres_familia %></b> &nbsp; &nbsp; &nbsp; RESPUESTA DEL DIAGNÓSTICO: &nbsp; <b><%= @participacion_diagnostico.capacitacion_salud_ma %></b> &nbsp; &nbsp; &nbsp; PADRES DE FAMILIA POR INVOLUCRAR: &nbsp; <b><%= @participacion_diagnostico.num_padres_familia.to_i - @participacion_diagnostico.capacitacion_salud_ma.to_i %></b></div>
+            <!-- Línea campo -->
+            <div class="grid-12-12" style="text-align:center;" >
+              <div class="grid-5-12"></div>
+              <div class="grid-2-12">
+                <%= f.text_field :capacitacion_salud_ma, :style => "text-align: center;", :disabled => "disabled" %>
+              </div>
+              <div class="grid-12-12 clear"></div>
+              <div id="eje5_p2" class="grid-12-12" style="display: none; text-align: center;">
+                <%= link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta2", :id => "pregunta2"),
+                                                              {:controller => "upload", :proyecto => @proyecto.id, :eje => 5, :numero_pregunta => 2, :action => "list_evidencias_avance", :num_avance => @num_avance },
+                                                              :title => "EVIDENCIA DE LA PREGUNTA 2", :class => "fancybox fancybox.iframe"%>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <script type="text/javascript">
+          var capacitacion_salud_ma = new LiveValidation( 'participacion_capacitacion_salud_ma' );
+          capacitacion_salud_ma.add( Validate.Presence );
+          capacitacion_salud_ma.add( Validate.Numericality, { maximum: parseInt(document.getElementById("val_max_padres").value)}, { onlyInteger: true } );
+          showImageNum('participacion_capacitacion_salud_ma', 'eje5_p2');
+        </script>
+        <% end %>
+        <% if @eva_diagnostico.puntaje_eje5_p3 < ($participacion_p3 * 100) %>
+        <tr>
+          <td width="49%" align="justify" style=" vertical-align:top;" >
+            <!-- Línea pregunta -->
+            <div class="grid-12-12">
+              <label class="uper">3.- Capacitar al 100% los padres por parte de los docentes.</label>
+            </div>
+            <div class="grid-12-12">RESPUESTA DEL DIAGNÓSTICO: &nbsp; SALUD <b><%= @participacion_diagnostico.capacitacion_salud %></b> &nbsp; &nbsp; MEDIO AMBIENTE <b><%= @participacion_diagnostico.capacitacion_medioambiente %></b></div>
+            <!-- Salud -->
+            <div class="grid-2-12"></div>
+            <div class="grid-2-12" style="text-align:center;">
+              <p><b>Ambiente:</b></p> <%= f.select :capacitacion_salud, (0..10), {:selected => @participacion.capacitacion_salud}, {:disabled => "disabled", :style => "color: grey;"} %>
+            </div>
+            <!-- Medio ambiente -->
+            <div class="grid-1-12"></div>
+            <div class="grid-2-12" style="text-align:center;">
+                <p><b>Salud:</b></p> <%= f.select :capacitacion_medioambiente, (0..10), {:selected => @participacion.capacitacion_medioambiente}, {:disabled => "disabled", :style => "color: grey;"}%>
+            </div>
+             <!-- Total -->
+            <div class="grid-4-12" style="text-align:center;">
+              <p><b>Total:</b></p> <label id="total_capacitaciones" style="font-size: 14px;"/>
+            </div>
+
+            <div class="grid-12-12 clear"></div>
+            <div id="eje5_p3" class="grid-12-12" style="display: none; text-align: center;">
+              <%= link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta3", :id => "pregunta3"),
+                                                              {:controller => "upload", :proyecto => @proyecto.id, :eje => 5, :numero_pregunta => 3, :action => "list_evidencias_avance", :num_avance => @num_avance },
+                                                              :title => "EVIDENCIA DE LA PREGUNTA 3", :class => "fancybox fancybox.iframe"%>
+            </div>
+            </td>
+        </tr>
+        <script type="text/javascript">
+          sumatoria_dos_elementos('participacion_capacitacion_salud', 'participacion_capacitacion_medioambiente', 'total_capacitaciones'); //pregunta 3
+          showImageNum('total_capacitaciones', 'eje5_p3');
+        </script>
+        <% end %>
+        <% if @eva_diagnostico.puntaje_eje5_p4 < ($participacion_p4 * 100) %>
+        <tr>
+          <td align="justify" style=" vertical-align:top;">
+            <!-- Pregunta -->
+            <div class="grid-12-12">
+              <label class="uper">4.- Capacitación del 100% de los padres de familia en materia de salud, medio ambiente, o ambos:</label>
+            </div>
+            <!-- Respuestas -->
+            <div class="grid-12-12">
+              <fieldset style="padding: 5px 5px 5px 5px;">
+                <div id="dcapacitadoras" class="grid-12-12">
+                  <% Dcapacitadora.find(:all).each do |c| %>
+                    <% @valor = nil %>
+                    <% @participacion.capacitacion_padres.each do |x| %>
+                      <% if x[:dcapacitadora_id] == c.id %>
+                        <% @valor = x.numero_capacitaciones  %>
+                        <% @desc_dep = x.descripcion_dep %>
+                      <% end %>
+                    <% end %>
+                    <% if @s_dcapacitadoras.include?(c.id) %>
+                      <%= check_box_tag "dcapacitadoras[#{c.id}]", c.clave, @s_dcapacitadoras.include?(c.id) ? true : false, {:disabled => "disabled" } %>&nbsp;<%= c.descripcion %>
+                      &nbsp;NÚM.&nbsp;DE&nbsp;CAPACITACIONES:&nbsp;<%= select "dcapacitadora", "#{c.clave}", (1..9), {:selected => @valor}, {:style => "display: inline; width:40px; color: grey;", :disabled => "disabled"}%><br /><br />
+                      <% if c.clave == "OTRA" %>&nbsp;DESCRIPCIÓN:&nbsp;<input name="dcapacitadoras<%= c.clave %>" id="dcapacitadoras<%= c.clave %>" size="35px" style="text-align:justify; display: none; text-transform: uppercase;" value="<%=h @desc_dep ? @desc_dep : "" %>" disabled /><% end %>
+                      <%= linea_horizontal %>
+                    <% end %>
+                  <% end %>
+                </div>
+                <br />
+                <%= f.check_box :no_capacitacion, { :checked => @participacion.no_capacitacion == "NO" ? true : false,  :disabled => "disabled" }, "NO", "SI" %>&nbsp;NINGUNA
+              </fieldset>
+            </div>
+            <div class="grid-12-12 clear"></div>
+            <div id="eje5_p4" class="grid-12-12" style="text-align: center; display: none">
+            <%= link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta4", :id => "pregunta4"),
+                                                              {:controller => "upload", :proyecto => @proyecto.id, :eje => 5, :numero_pregunta => 4, :action => "list_evidencias_avance", :num_avance => @num_avance },
+                                                              :title => "EVIDENCIA DE LA PREGUNTA 4", :class => "fancybox fancybox.iframe"%>
+            </div>
+           </td>
+        </tr>
+        <script type="text/javascript">
+          edMultiSelectCheck('participacion_no_capacitacion', 'dcapacitadoras', 'eje5_p4');
+        </script>
+        <% end %>
+        <% if @eva_diagnostico.puntaje_eje5_p5 < ($participacion_p5 * 100) %>
+        <tr>
+          <td colspan="3"><%= text_field "informacion", "participacion", :value => @participacion.id, :style => "display:none;"%></td>
+        </tr>
+
+        <tr>
+          <td align="justify" style=" vertical-align:top;" >
+            <!-- Línea pregunta -->
+            <div class="grid-12-12">
+              <label class="uper">5.- Realizar proyectos con los padres de familia y la comunidad, definidos en materia del cuidado del medio ambiente.</label>
+            </div>
+            <div class="grid-5-12"></div>
+            <div class="grid-2-12"><%= select "proyectos", "ambiente", (0..12), {:selected => @proyectos_seleccionados_ambiente}, {:disabled => "disabled", :style => "color: grey;"}%></div>
+            <div class="grid-5-12"></div>
+
+            <!-- detalle de proyectos -->
+            <div id="detalle_proyectos_ambiente" class="grid-12-12">
+              <%=render :partial => 'formularios_proyectos_ambientes'%>
+            </div>
+            <div id="eje5_p5" class="grid-12-12" style="text-align: center; display: none;">
+              <%= link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta5", :id => "pregunta5"),
+                                                              {:controller => "upload", :proyecto => @proyecto.id, :eje => 5, :numero_pregunta => 5, :action => "list_evidencias_avance", :num_avance => @num_avance },
+                                                              :title => "EVIDENCIA DE LA PREGUNTA 5", :class => "fancybox fancybox.iframe"%>
+            </div>
+          </td>
+        </tr>
+        <script type="text/javascript">
+          showImageNum('proyectos_ambiente', 'eje5_p5');
+        </script>
+        <% end %>
+        <% if @eva_diagnostico.puntaje_eje5_p6 < ($participacion_p6 * 100) %>
+        <tr>
+          <td align="justify" style=" vertical-align:top;">
+            <!-- Línea Pregunta -->
+            <div class="grid-12-12">
+              <label class="uper">6.- Realizar proyectos con los padres de familia y la comunidad, definidos en materia del cuidado de la salud.</label>
+            </div>
+            <div class="grid-5-12"></div>
+            <div class="grid-2-12"><%= select "proyectos", "salud", (0..12), {:selected => @proyectos_seleccionados_salud}, {:disabled => "disabled", :style => "color: grey;"}%></div>
+            <div class="grid-5-12"></div>
+
+            <!-- detalle de proyectos -->
+            <div id="detalle_proyectos_salud" class="grid-12-12">
+              <%=text_field "informacion", "participacion", :value => @participacion.id, :style => "display:none;"%>
+              <%=render :partial => 'formularios_proyectos_salud'%>
+            </div>
+
+            <div id="eje5_p6" class="grid-12-12" style="text-align: center; display: none;">
+              <%= link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta6", :id => "pregunta6"),
+                                                              {:controller => "upload", :proyecto => @proyecto.id, :eje => 5, :numero_pregunta => 6, :action => "list_evidencias_avance", :num_avance => @num_avance },
+                                                              :title => "EVIDENCIA DE LA PREGUNTA 6", :class => "fancybox fancybox.iframe"%>
+            </div>
+          </td>
+        </tr>
+        <script type="text/javascript">
+          showImageNum('proyectos_salud', 'eje5_p6');
+        </script>
+        <% end %>
+        <!-- Nueva pregunta 7 -->
+        <% if @eva_diagnostico.puntaje_eje5_p7 < ($participacion_p7 * 100) %>
+        <tr>
+          <td align="justify" style=" vertical-align:top;" >
+            <!-- Línea pregunta -->
+            <div class="grid-12-12">
+              <label class="uper">7.- Lograr el apoyo de alguna secretaria o dependencia sugerida:</label>
+            </div>
+            <div class="grid-5-12"></div>
+            <div class="grid-2-12"><%= select "proyectos", "dependencias", (0..12), {:selected => @proyectos_seleccionados_dependencias}, {:disabled => "disabled", :style => "color: grey;"}%></div>
+            <div class="grid-5-12"></div>
+
+            <!-- detalle de proyectos -->
+            <div id="detalle_proyectos_dependencias" class="grid-12-12">
+              <%=text_field "informacion", "participacion", :value => @participacion.id, :style => "display:none;"%>
+              <%=render :partial => 'formularios_proyectos_dependencias'%>
+            </div>
+
+            <div id="eje5_p7" class="grid-12-12" style="text-align: center; display: none;">
+              <%= link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta7", :id => "pregunta7"),
+                                                              {:controller => "upload", :proyecto => @proyecto.id, :eje => 5, :numero_pregunta => 7, :action => "list_evidencias_avance", :num_avance => @num_avance },
+                                                              :title => "EVIDENCIA DE LA PREGUNTA 7", :class => "fancybox fancybox.iframe"%>
+            </div>
+          </td>
+         </tr>
+         <script type="text/javascript">
+           showImageNum('proyectos_dependencias', 'eje5_p7');
+         </script>
+         <% end %>
+      </table>
+  <%= render :partial => "diagnosticos/errores_evidencias"%>
+      <br />
+      <table align="right" >
+        <tr >
+          <td>&nbsp;
+            <%#*<input id="siguiente" onclick="to_uppercase();" class="buttonText" type="submit" title="Guardar" value="Guardar" />%>
+          </td>
+          <td>
+            <%= link_to "Regresar", { :controller => "avances", :action => "index", :num_avance => Base64.encode64(@num_avance) }, {:id => "cancelar_sig", :class => "buttonText" } %>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2" >&nbsp;</td>
+        </tr>
+      </table>
+
+<% end %>

@@ -77,8 +77,34 @@ class AvancesController < ApplicationController
       @focos = 0..@huella_diagnostico.total_focos.to_i
     end
 
+    if @eje.catalogo_eje.clave == "EJE4"
+      @consumo = @proyecto.consumo
+      @consumo_diagnostico = Consumo.find_by_diagnostico_id(@diagnostico.id) if @diagnostico
+      @escuela = Escuela.find_by_clave(current_user.login.upcase)
+      if @escuela.nivel_descripcion == "BACHILLERATO"
+        @establecimientos = Establecimiento.find(:all, :conditions => ["nivel not in ('BASICA')"])
+      else
+        @establecimientos = Establecimiento.find(:all)
+      end
 
-    
+      @s_preparacions = multiple_selected(@consumo.preparacions) if @consumo.preparacions
+      @s_utensilios = multiple_selected(@consumo.utensilios) if @consumo.utensilios
+      @s_higienes = multiple_selected(@consumo.higienes) if @consumo.higienes
+      @s_bebidas = multiple_selected(@consumo.bebidas) if @consumo.bebidas
+      @s_alimentos = multiple_selected(@consumo.alimentos) if @consumo.alimentos
+      @s_botanas = multiple_selected(@consumo.botanas) if @consumo.botanas
+      @s_reposterias = multiple_selected(@consumo.reposterias) if @consumo.reposterias
+      @s_materials = multiple_selected(@consumo.materials) if @consumo.materials
+      @s_afisicas = selected(@consumo.frecuencia_afisica) if @consumo.frecuencia_afisica
+    end
+
+    if @eje.catalogo_eje.clave == "EJE5"
+      @participacion = @proyecto.participacion
+      @participacion_diagnostico = Participacion.find_by_diagnostico_id(@diagnostico.id) if @diagnostico
+      @s_dcapacitadoras = multiple_selected_dcapacitadora(@participacion.capacitacion_padres) if  @participacion.capacitacion_padres
+      cargar_proyectos_actuales
+    end
+
   end
 
   def save_avances
@@ -211,4 +237,31 @@ class AvancesController < ApplicationController
   def set_layout
     (action_name == 'avance_to_pdf' or action_name == 'ver_avance')? 'reporte_avance' : 'era2014'
   end
+
+  #### Funcion que guarda los proyectos escolares por tipo #####
+  def guardar_proyectos(parametros, tipo, participacion)
+      ids_olds =  Pescolar.find(:all, :conditions => ["participacion_id = ? AND materia= ?", @participacion.id, tipo]).map{|i|i.id} if @participacion
+      Pescolar.find(ids_olds).each do |p| p.destroy end unless ids_olds.empty?
+      if @projects = parametros
+          ids_olds =  Pescolar.find(:all, :conditions => ["participacion_id = ? AND materia= ?", @participacion.id, tipo]).map{|i|i.id}
+            (1..12).each do |numero|
+              @participacion.pescolars << Pescolar.new(:participacion_id => participacion.id, :materia => tipo, :descripcion => @projects["descripcion_#{numero}"], :nombre => @projects["nombre_#{numero}"], :dependencia_secretaria_apoya => @projects["dependencia_secretaria_apoya_#{numero}"]  ) if @projects.has_key?("nombre_#{numero}")
+           end
+      end
+  end
+
+  ### Funcion que recupera los datos de los proyectos actuales #####
+  def cargar_proyectos_actuales
+#       @s_dcapacitadoras = multiple_selected(@participacion.dcapacitadoras)
+      ### Proyectos medio ambiente ###
+        @s_proyectos_ma =  Pescolar.find(:all, :conditions => ["participacion_id = ? AND materia= ?", @participacion.id, 'MEDIOAMBIENTE'])
+        @proyectos_seleccionados_ambiente = ( @s_proyectos_ma.empty?)? 0: @s_proyectos_ma.size
+      ### Proyectos salud ###
+        @s_proyectos_salud =  Pescolar.find(:all, :conditions => ["participacion_id = ? AND materia= ?", @participacion.id, 'SALUD'])
+        @proyectos_seleccionados_salud = ( @s_proyectos_salud.empty?)? 0: @s_proyectos_salud.size
+      ### Proyectos dependencias ###
+        @s_proyectos_dependencias =  Pescolar.find(:all, :conditions => ["participacion_id = ? AND materia= ?", @participacion.id, 'DEPENDENCIAS'])
+        @proyectos_seleccionados_dependencias = ( @s_proyectos_dependencias.empty?)? 0: @s_proyectos_dependencias.size
+  end
+  
 end
