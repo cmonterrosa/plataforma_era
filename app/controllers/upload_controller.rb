@@ -1,5 +1,5 @@
 class UploadController < ApplicationController
-  require_role [:escuela, :admin, :adminplat, :revisor, :enlaceevaluador]
+  require_role [:escuela, :admin, :adminplat, :revisor, :enlaceevaluador, :consejero, :equipotecnico]
   
   def index
     @user = current_user

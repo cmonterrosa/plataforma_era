@@ -218,7 +218,7 @@ form .formee-txt:focus, .formee input[type="text"]:focus, .formee input[type="pa
   /* font-weight:bolder; */
   text-transform: uppercase;
   letter-spacing: -.015em;
-  color:#fff;
+  color:#ffffff;
   border-color:#4d90fe;
   background:#4d90fe;
   /* gradient anterior
@@ -228,9 +228,17 @@ form .formee-txt:focus, .formee input[type="text"]:focus, .formee input[type="pa
   */
   
   /* gradient */
-  background: -moz-linear-gradient(top, #5393c2 40%, #3a77a4);
+
+  /*background: -moz-linear-gradient(top, #5393c2 40%, #3a77a4);
   background: webkit-linear-gradient(top, #3a77a4 40%, #3a77a4);
   filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#5393c2', endColorstr='#3a77a4');
+  */
+
+
+  background-color: #4173c9;
+  background-image: -moz-linear-gradient(top,#5e8ee4,#4173c9);
+  background-image: -webkit-linear-gradient(top,#5e8ee4,#4173c9);
+  background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0,#5e8ee4),color-stop(1,#4173c9));
 
 
   /* corner */

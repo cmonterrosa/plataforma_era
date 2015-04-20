@@ -534,3 +534,15 @@ input[type="text"].ninguno{
   background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
   text-decoration: none;
 }
+
+input[type="submit"].comprobante{
+    background-color: #E6F8E0;
+    border-width: 0;
+    font-size: inherit;
+    font-family:inherit;
+    padding: 0;
+    color: black;
+    width: 200px;
+    height: 80px;
+    text-align: center;
+}

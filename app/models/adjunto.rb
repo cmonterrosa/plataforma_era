@@ -11,9 +11,11 @@ class Adjunto < ActiveRecord::Base
                                                              'image/png', 'image/gif',
                                                              'application/msword',
                                                              'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-                                                             'application/pdf', 'video/3gpp', 'video/mp4', 'video/quicktime',
+                                                             'application/pdf', 'video/3gpp', 'video/mp4', 'video/quicktime', 'video/mpeg',
                                                              'application/vnd.ms-excel',
                                                              'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                                                             'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+                                                             'application/vnd.ms-powerpoint',
                                                              'application/vnd.openxmlformats-officedoc'],
     :message => "No es un formato válido"
 
@@ -118,8 +120,8 @@ class Adjunto < ActiveRecord::Base
 
   def set_file_type
     fotografia = ['image/jpeg', 'image/jpg','image/png', 'image/gif']
-    video = ['video/3gpp', 'video/mp4', 'video/quicktime']
-    documento = ['application/pdf', 'application/msword', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/vnd.openxmlformats-officedoc'    ]
+    video = ['video/3gpp', 'video/mp4', 'video/quicktime','video/mpeg']
+    documento = ['application/pdf', 'application/msword', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/vnd.openxmlformats-officedoc', 'application/vnd.openxmlformats-officedocument.presentationml.presentation', 'application/vnd.ms-powerpoint']
     self.tipodoc_id = Tipodoc.find_by_descripcion("FOTOGRAFIA").id if fotografia.include?(self.file_type) && Tipodoc.find_by_descripcion("FOTOGRAFIA")
     self.tipodoc_id = Tipodoc.find_by_descripcion("VIDEO").id if video.include?(self.file_type) && Tipodoc.find_by_descripcion("VIDEO")
     self.tipodoc_id = Tipodoc.find_by_descripcion("DOCUMENTO").id if documento.include?(self.file_type) && Tipodoc.find_by_descripcion("DOCUMENTO")

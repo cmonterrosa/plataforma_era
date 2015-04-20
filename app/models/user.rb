@@ -53,7 +53,7 @@ class User < ActiveRecord::Base
   # HACK HACK HACK -- how to do attr_accessible from here?
   # prevents a user from submitting a crafted form that bypasses activation
   # anything else you want your user to change should be added here.
-  attr_accessible :login, :email, :nombre, :password, :password_confirmation, :blocked, :reset_code, :nivel_id, :sostenimiento, :escuela_id
+  attr_accessible :login, :email, :nombre, :password, :password_confirmation, :blocked, :reset_code, :nivel_id, :sostenimiento, :escuela_id, :clean_segunda_generacion
   attr_accessor :email_not_required
 
 
@@ -65,13 +65,28 @@ class User < ActiveRecord::Base
     Mensaje.count(:id, :conditions => ["recibe_id = ? AND leido_at IS NULL", self.id])
   end
 
+  def clean_segunda_generacion
+    segunda = Generacion.find(2)
+    contador=0
+    segunda.escuelas.each do |e|
+      if Antecedente.find_by_escuela_id(e.id)
+          segunda.escuelas.delete(e)
+          contador+=1
+          puts("=> #{e.clave} Eliminada")
+      end
+    end
+    puts("=> Total procesadas #{contador}")
+  end
+
 
   def before_save
     if @escuela = Escuela.find_by_clave(self.login.upcase)
        self.escuela_id=@escuela.id
        ## Establecemos que es parte de la segunda generacion ###
        current_generacion = Generacion.find_by_descripcion(GENERACION)
-       current_generacion.escuelas << @escuela if current_generacion && !current_generacion.escuelas.include?(@escuela)
+       no_tiene_antecedentes = (Antecedente.find_by_escuela_id(self.escuela_id))? false: true if self.escuela_id
+       no_existe_registro = (current_generacion.escuelas.include?(@escuela))? false : true
+       current_generacion.escuelas << @escuela if current_generacion && no_tiene_antecedentes && no_existe_registro
     end
   end
 

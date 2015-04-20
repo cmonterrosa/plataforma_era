@@ -1,0 +1,199 @@
+<!-- <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+-->
+<!doctype html>
+<html lang="en">
+
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Educar con Responsabilidad Ambiental</title>
+
+<style type="text/css">
+body {
+	margin-top: 5px;
+	/*background-color: #F0F0F0;*/
+        background-color: white;
+}
+
+</style>
+
+
+<link rel="stylesheet" type="text/css" href="/stylesheets/era/estilo.css" />
+
+<!--
+ <=javascript_include_tag "green/style.css"%>
+-->
+
+<!-- TOOLTIPS -->
+<%= javascript_include_tag 'prototype'%>
+<%= javascript_include_tag 'BubbleTooltips' %>
+
+<!-- formee -->
+
+<%=javascript_include_tag "evoslider/jquery-1.7.1.min.js" %>
+
+<%#=javascript_include_tag "formee/jquery-1.6.4.min.js" %>
+<%#=javascript_include_tag "formee/jquery-1.10.1.min.js" %>
+<%=javascript_include_tag "formee/formee.js" %>
+<%=javascript_include_tag "livevalidation/livevalidation_standalone.js" %>
+<%=javascript_include_tag "fancybox/jquery.fancybox.js" %>
+<%=javascript_include_tag "validate/jquery.validate.js" %>
+<%=javascript_include_tag "validate/jquery.validation.functions.js" %>
+<%#=javascript_include_tag "validate/jquery-1.3.2.js" %>
+<%=javascript_include_tag :defaults %>
+
+<%= stylesheet_link_tag "formee/formee-structure.css" %>
+<%= stylesheet_link_tag "formee/formee-style.css" %>
+<%= stylesheet_link_tag "era/diagnostico.css" %>
+<%= stylesheet_link_tag "livevalidation/validation.css" %>
+<%= stylesheet_link_tag "fancybox/jquery.fancybox.css" %>
+<%= stylesheet_link_tag "validate/jquery.validate.css" %>
+
+
+<!-- evoslider accordeon -->
+<%= stylesheet_link_tag "evoslider/default/reset.css" %>
+<%= stylesheet_link_tag "evoslider/evoslider.css" %>
+<%= stylesheet_link_tag "evoslider/default/default.css" %>
+
+
+<%=javascript_include_tag "evoslider/jquery.evoslider.lite-1.1.0.js" %>
+<%=javascript_include_tag "evoslider/jquery.easing.1.3.js" %>
+
+
+
+<script type="text/javascript">jQuery.noConflict();</script>
+
+<style type="text/css">
+/* fix  ff bugs */
+form:after, div:after, ol:after, ul:after, li:after, dl:after {
+	content:".";
+	display:block;
+	clear:both;
+	visibility:hidden;
+	height:0;
+	overflow:hidden;
+}
+form {clear:both;}
+/*.container {margin:0 auto; height:100%; padding:0 40px;}*/
+.container {margin:5px auto 0 auto; width: 90%;  height:100%; padding:15px 0 15px 0; }
+.footer, .footer a {color:#fff;}
+.left {float:left;}
+.right {float:right;}
+.topbar {
+	background: #fafafa;
+	padding: 10px 30px;
+  border-bottom:1px solid #e9e9e9;
+}
+.topbar a{
+	color:#777;
+	font-size:1.4em;
+	text-decoration: none;
+}
+.topbar a:hover{
+	color:#69a4d0;
+	text-decoration: underline;
+}
+.formeebar {
+	background: #f5f5f5;
+	padding:30px;
+  border-bottom:1px solid #e9e9e9;
+  margin-bottom:40px;
+}
+.formeebar a {color:#fff;font-size:1.4em;text-decoration: none;}
+.formeebar h1 {
+  clear:both;
+  float:left;
+}
+.formeebar h1 a{
+  /*background: transparent url(img/formee-logo.png) no-repeat left top;*/
+  text-indent:-9999px;
+  overflow: hidden;
+  width:147px;
+  height: 50px;
+  display: block;
+}
+.formeebar h2 {
+	color:#520026;
+	font-size:2.0em;
+	font-weight:normal;
+	float:right;
+	display:inline;
+	margin-top:20px;
+}
+
+.link-to {
+	font-size:2.4em;
+	letter-spacing:-.02em;
+	line-height:1em;
+	color:#EA0076;
+	float:right;
+	margin-bottom:2em;
+}
+/* footer */
+.footer {background: #520026;padding:30px 0;margin-top:40px;color:#fff;}
+.footer p {line-height:1.1em; font-size:1.2em; margin-bottom:.3%;}
+.footer a {color:#F0CF73;font-size:1.4em;text-decoration: none;}
+</style>
+
+<script type="text/javascript">
+<!--
+function MM_swapImgRestore() { //v3.0
+  var i,x,a=document.MM_sr; for(i=0;a&&i<a.length&&(x=a[i])&&x.oSrc;i++) x.src=x.oSrc;
+}
+function MM_preloadImages() { //v3.0
+  var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
+    var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
+    if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
+}
+
+function MM_findObj(n, d) { //v4.01
+  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
+    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
+  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
+  if(!x && d.getElementById) x=d.getElementById(n); return x;
+}
+
+function MM_swapImage() { //v3.0
+  var i,j=0,x,a=MM_swapImage.arguments; document.MM_sr=new Array; for(i=0;i<(a.length-2);i+=3)
+   if ((x=MM_findObj(a[i]))!=null){document.MM_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
+}
+//-->
+</script>
+<style type="text/css">
+<!--
+a:link {
+	text-decoration: none;
+}
+a:visited {
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: underline;
+}
+a:active {
+	text-decoration: none;
+}
+-->
+</style>
+
+
+
+<!-- Inicio de fancy -->
+<script type="text/javascript">
+		jQuery(document).ready(function() {
+			/*
+			 *  Simple image gallery. Uses default settings
+			 */
+
+			jQuery('.fancybox').fancybox();
+               });
+</script>
+
+
+</head>
+
+<body>
+  <%=yield%>
+</body>
+</html>
