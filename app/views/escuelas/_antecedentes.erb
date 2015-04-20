@@ -13,10 +13,12 @@
          <td colspan="2">&nbsp;</td>
        </tr>
 
+       <%if a.estatu_id %>
        <tr class="d0">
          <td style="vertical-align: middle;"><b>Estatus</b></td>
          <td style="vertical-align: middle;"><%=h (a.estatu_id.size > 0)? a.estatu.descripcion : "---"%></td>
        </tr>
+       <%end%>
 
        <tr class="d1">
          <td style="vertical-align: middle;"><b>Nombre del proyecto</b></td>
