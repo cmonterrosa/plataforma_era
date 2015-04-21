@@ -305,7 +305,7 @@ def puntaje_eje4_p2
   @user = User.find_by_login(@escuela.clave) if @escuela
   @consumo = @diagnostico.consumo if @diagnostico.consumo
   eje4 = CatalogoEje.find_by_clave("EJE4")
-  if @consumo.conocen_lineamientos_grales == "SI"
+  if @consumo && @consumo.conocen_lineamientos_grales == "SI"
     @eje4 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ?", @user, @diagnostico.id, eje4.id, 2], :order => "eje_id")
     @eje4.each do |ad|
       if ad.validado
@@ -327,7 +327,7 @@ def puntaje_eje4_p3
   @user = User.find_by_login(@escuela.clave) if @escuela
   @consumo = @diagnostico.consumo if @diagnostico.consumo
   eje4 = CatalogoEje.find_by_clave("EJE4")
-  if @consumo.capacitacion_alim_bebidas == "SI"
+  if @consumo && @consumo.capacitacion_alim_bebidas == "SI"
     @eje4 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ?", @user, @diagnostico.id, eje4.id, 3], :order => "eje_id")
     @eje4.each do |ad|
       if ad.validado
@@ -346,22 +346,24 @@ def puntaje_eje4_p4
   @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
   @user = User.find_by_login(@escuela.clave) if @escuela
   @consumo = @diagnostico.consumo if @diagnostico.consumo
-  
-  @s_preparacions = multiple_selected(@consumo.preparacions) if @consumo.preparacions
-  @s_utensilios = multiple_selected(@consumo.utensilios) if @consumo.utensilios
-  @s_higienes = multiple_selected(@consumo.higienes) if @consumo.higienes
-  @t_preparacions = Preparacion.all
-  @t_utensilios = Utensilio.all
-  @t_higiene = Higiene.all
+  @eje4_p4 = 0
+  if @consumo
+    @s_preparacions = multiple_selected(@consumo.preparacions) if @consumo.preparacions
+    @s_utensilios = multiple_selected(@consumo.utensilios) if @consumo.utensilios
+    @s_higienes = multiple_selected(@consumo.higienes) if @consumo.higienes
+    @t_preparacions = Preparacion.all
+    @t_utensilios = Utensilio.all
+    @t_higiene = Higiene.all
 
-  @preparacions = @s_preparacions.size > 0 ? (((@s_preparacions.size.to_f / @t_preparacions.size.to_f) * 100) * $consumo_p4) : 0
-  @utensilios = @s_utensilios.size > 0 ? (((@s_utensilios.size.to_f / @t_utensilios.size.to_f) * 100) * $consumo_p4) : 0
-  @higienes = @s_higienes.size > 0 ? (((@s_higienes.size.to_f / @t_higiene.size.to_f) * 100) * $consumo_p4) : 0
+    @preparacions = @s_preparacions.size > 0 ? (((@s_preparacions.size.to_f / @t_preparacions.size.to_f) * 100) * $consumo_p4) : 0
+    @utensilios = @s_utensilios.size > 0 ? (((@s_utensilios.size.to_f / @t_utensilios.size.to_f) * 100) * $consumo_p4) : 0
+    @higienes = @s_higienes.size > 0 ? (((@s_higienes.size.to_f / @t_higiene.size.to_f) * 100) * $consumo_p4) : 0
 
-  if (@s_preparacions.size + @s_utensilios.size + @s_higienes.size).to_f > 0
-    @eje4_p4 = (@preparacions + @utensilios + @higienes).round(3).to_f
-  else
-    @eje4_p4 = 0
+    if (@s_preparacions.size + @s_utensilios.size + @s_higienes.size).to_f > 0
+      @eje4_p4 = (@preparacions + @utensilios + @higienes).round(3).to_f
+    else
+      @eje4_p4 = 0
+    end
   end
 
   return @eje4_p4
@@ -372,7 +374,8 @@ def puntaje_eje4_p5
   @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
   @user = User.find_by_login(@escuela.clave) if @escuela
   @consumo = @diagnostico.consumo if @diagnostico.consumo
-  
+  @eje4_p5=0
+  if @consumo
   @s_bebidas = multiple_selected(@consumo.bebidas) if @consumo.bebidas
   @s_alimentos = multiple_selected(@consumo.alimentos) if @consumo.alimentos
   @s_botanas = multiple_selected(@consumo.botanas) if @consumo.botanas
@@ -411,6 +414,7 @@ def puntaje_eje4_p5
   else
     @eje4_p5 = 0
   end
+  end
 
   return @eje4_p5
 end
@@ -420,7 +424,7 @@ def puntaje_eje4_p6
   @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
   @user = User.find_by_login(@escuela.clave) if @escuela
   @consumo = @diagnostico.consumo if @diagnostico.consumo
-  
+  if @consumo
   @s_materials = multiple_selected(@consumo.materials) if @consumo.materials
   if @s_materials.size.to_i > 0
     @m_recomendables = Material.find_all_by_tipo("RECOMENDABLES")
@@ -429,6 +433,7 @@ def puntaje_eje4_p6
       @select_materials+=1 if @m_recomendables.any? { |b| b[:clave] == material }
     end
     @eje4_p6 = (((@select_materials.to_f / @s_materials.size.to_f)* 100)* $consumo_p6).round(3).to_f
+  end
   end
 
   return @eje4_p6 ? @eje4_p6 : 0
@@ -441,7 +446,7 @@ def puntaje_eje4_p7
   @user = User.find_by_login(@escuela.clave) if @escuela
   @consumo = @diagnostico.consumo if @diagnostico.consumo
   eje4 = CatalogoEje.find_by_clave("EJE4")
-  
+  if @consumo
   @s_afisicas = selected(@consumo.frecuencia_afisica) if @consumo.frecuencia_afisica
   @eje4_p7 = ptos_afisica(@s_afisicas).to_f
   @eje4 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ?", @user, @diagnostico.id, eje4.id, 7], :order => "eje_id")
@@ -451,6 +456,7 @@ def puntaje_eje4_p7
         break
       end
     end
+  end
     return valido ? @eje4_p7 : 0
 end
 
@@ -459,12 +465,14 @@ def puntaje_eje4_p8
   @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
   @user = User.find_by_login(@escuela.clave) if @escuela
   @consumo = @diagnostico.consumo if @diagnostico.consumo
-  
+  @eje4_p7=0
+  if @consumo
   minutos_activacion_fisica = (@consumo.minutos_activacion_fisica) ? @consumo.minutos_activacion_fisica : 0
   if minutos_activacion_fisica > 30
     @eje4_p7 = ptos_minutos(30).to_f
   else
     @eje4_p7 = ptos_minutos(@consumo.minutos_activacion_fisica).to_f
+  end
   end
 
   return @eje4_p7
@@ -500,7 +508,7 @@ def puntaje_eje5_p3
   @user = User.find_by_login(@escuela.clave) if @escuela
   @participacion = @diagnostico.participacion if @diagnostico.participacion
   eje5 = CatalogoEje.find_by_clave("EJE5")
-  if @participacion.capacitacion_salud.to_i > 0 && @participacion.capacitacion_medioambiente.to_i > 0
+  if (@participacion.capacitacion_salud.to_i + @participacion.capacitacion_medioambiente.to_i) > 0
     @eje5 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ?", @user, @diagnostico.id, eje5.id, 3], :order => "eje_id")
     @eje5.each do |ad|
       if ad.validado
@@ -552,6 +560,8 @@ def puntaje_eje5_p5
       end
     end
     @eje5_p5 = ptos_proyectos(proyectos.to_i)
+  else
+    clean_adjuntos(5,@diagnostico.id, 5)
   end
  return valido ? @eje5_p5 : 0
 end
@@ -714,6 +724,17 @@ end
 def puntaje_total_novidencias
 #### Aqui hacemos una consulta para obtener el ppuntaje de las no evidencias
 end
+
+def clean_adjuntos(eje,diagnostico, numero_pregunta)
+       puts("=> BUSCANDO ARCHIVOS")
+       contador_archivos=0
+       @adjuntos = Adjunto.find(:all, :conditions =>["eje_id =? AND diagnostico_id = ? AND numero_pregunta = ?", eje,diagnostico,numero_pregunta]).each do |a|
+#       file_exists = File.exists?(a.full_path)
+       deleted =  a.destroy 
+       (deleted) ?  contador_archivos+=1 : nil
+       end
+      puts("=> ADJUNTOS BORRADOS: #{contador_archivos}")
+   end
 
 end
 
