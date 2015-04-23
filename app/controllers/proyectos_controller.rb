@@ -10,13 +10,13 @@ class ProyectosController < ApplicationController
 
   def check_is_available
     unless Time.now < (Time.parse FECHA_FINAL_PROYECTO)
-      flash[:warning] = "La etapa del proyecto estará disponible hasta que su diagnóstico haya concluido y sea revisado"
+      flash[:warning] = "La etapa del proyecto estará disponible hasta que su diagnóstico haya sido revisado por el Equipo de Certificación."
       redirect_to :controller => "diagnosticos"
     end
   end
 
   def index
-     flash[:warning] = "La etapa del proyecto estará disponible hasta que su diagnóstico haya concluido y sea revisado"
+     flash[:warning] = "La etapa del proyecto estará disponible hasta que su diagnóstico haya sido revisado por el Equipo de Certificación."
      redirect_to :controller => "diagnosticos"
   end
 
