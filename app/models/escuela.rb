@@ -13,7 +13,7 @@ class Escuela < ActiveRecord::Base
 #    self.clave_escuela = "#{self.clave} #{self.nombre}" if self.clave
 #  end
   
-  def update_bitacora!(clave_estatus, usuario)
+  def update_bitacora_old!(clave_estatus, usuario)
     @estatus = Estatu.find_by_clave(clave_estatus) if (!clave_estatus.nil? && !usuario.nil?)
     @estatus_actual = Estatu.find(self.estatu_id) if self.estatu_id
     @bitacora = Bitacora.new(:user_id => usuario.id, :estatu_id => @estatus.id) if @estatus
@@ -29,6 +29,21 @@ class Escuela < ActiveRecord::Base
       return false
     end
   end
+  
+    def update_bitacora!(clave_estatus, usuario)
+      @estatus_nuevo = Estatu.find_by_clave(clave_estatus) if clave_estatus
+      @estatus_actual = Estatu.find(self.estatu_id) if self.estatu_id
+      if @estatus_nuevo && @estatus_actual
+      if @estatus_nuevo.jerarquia > @estatus_actual.jerarquia
+        self.update_attributes!(:estatu_id => @estatus_nuevo.id)
+        @bitacora = Bitacora.create(:user_id => usuario.id, :estatu_id => @estatus_nuevo.id)if usuario && @estatus_nuevo
+      end
+      end
+    end
+
+
+
+
 
   def descripcion_completa
     "#{self.clave} | #{self.nombre}"
