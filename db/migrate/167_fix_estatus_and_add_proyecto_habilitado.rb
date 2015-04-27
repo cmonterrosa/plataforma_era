@@ -1,7 +1,7 @@
 class FixEstatusAndAddProyectoHabilitado < ActiveRecord::Migration
   def self.up
-#    add_column :estatus, :jerarquia, :integer
-#    add_column :estatus, :activo, :boolean
+    add_column :estatus, :jerarquia, :integer
+    add_column :estatus, :activo, :boolean
 
     #### Reorganizacion de Estatus ####
     esc_regis	= Estatu.find_by_clave("esc-regis")
@@ -28,7 +28,7 @@ class FixEstatusAndAddProyectoHabilitado < ActiveRecord::Migration
       diag_rev.update_attributes!(:jerarquia => 10, :activo => true)
     diag_eva= Estatu.find_by_clave("diag-eva")
       diag_eva.update_attributes!(:jerarquia => 11, :activo => true)
-      proy_hab= Estatu.create(:clave => "proy-hab", :descripcion => "Proyecto Habilitado", :jerarquia => "12", :activo => true)
+      proy_hab= Estatu.create(:clave => "proy-hab", :descripcion => "Proyecto Habilitado", :jerarquia => 12, :activo => true)
     proy_inic= Estatu.find_by_clave("proy-inic")
       proy_inic.update_attributes!(:jerarquia => 13, :activo => true)
     proy_fin= Estatu.find_by_clave("proy-fin")
@@ -41,10 +41,13 @@ class FixEstatusAndAddProyectoHabilitado < ActiveRecord::Migration
       proy_rev.update_attributes!(:jerarquia => 17, :activo => true)
     proy_eva= Estatu.find_by_clave("proy-eva")
       proy_eva.update_attributes!(:jerarquia => 18, :activo => true)
-      cert_fin= Estatu.create(:clave => "cert-fin", :descripcion => "Certificación concluida", :jerarquia => "19", :activo => true)
+      cert_fin= Estatu.create(:clave => "cert-fin", :descripcion => "Certificación concluida", :jerarquia => 19, :activo => true)
   end
+
+
 
   def self.down
     remove_column :estatus, :jerarquia
+    remove_column :estatus, :activo
   end
 end
