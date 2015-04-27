@@ -54,6 +54,11 @@
        <td style="vertical-align: middle;"><b>Correo electrónico:</b></td>
        <td style="vertical-align: middle;"><%=h(@escuela.email ? @escuela.email : "---")%></td>
     </tr>
+
+     <tr class="d0">
+       <td style="vertical-align: middle;"><b>Estatus actual en la plataforma:</b></td>
+       <td style="vertical-align: middle;"><%=h(@escuela.estatu_id ? Estatu.find(@escuela.estatu_id).descripcion : "---")%></td>
+    </tr>
    
 
 
