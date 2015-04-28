@@ -27,9 +27,15 @@ class RegistroController < ApplicationController
     unless params[:escuela][:clave].size > 4 && @escuela = Escuela.find_by_clave(params[:escuela][:clave])
       flash[:error] = "No existe escuela"
       redirect_to :controller => "home"
+    else
+      @select_ce = selected(@escuela.categoria_escuela) if @escuela.categoria_escuela
+      @s_programas = multiple_selected_id(@escuela.programas) if @escuela.programas
+      if @escuela.registro_completo || @escuela.estatu.jerarquia > Estatu.find_by_clave("esc-datos").jerarquia
+          flash[:warning] = "La escuela ha completado el registro con anterioridad"
+          redirect_to :action => "menu_reportes", :id => @escuela
+      end
     end
-    @select_ce = selected(@escuela.categoria_escuela) if @escuela.categoria_escuela
-    @s_programas = multiple_selected_id(@escuela.programas) if @escuela.programas
+   
   end
 
   def menu_reportes
