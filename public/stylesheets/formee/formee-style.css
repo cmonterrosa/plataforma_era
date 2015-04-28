@@ -19,7 +19,8 @@ Style
 	border-radius: 12px;
         line-height: 2em;
         background:#7f7f7f;
-        background:rgba(255,255,255,0.8);
+/*        background:rgba(255,255,255,0.8);*/
+        background: rgba(243,243,243,.85);
 }
 
 /* hover effect */
@@ -33,16 +34,17 @@ Style
     /*font: normal 10px/1.1em Arial,Sans-Serif;*/
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 0.6em;
-    
 }
 .formee legend, .formee h3 {
-	font-size:2.6em;
-	line-height:1.2em;
-	letter-spacing: -.025em;
-	color: black;
-	font-weight: bold;
-/*        text-shadow: 1px 1px 1px #00313D;*/
+	font-family: 'Open Sans', arial;
+        -webkit-font-smoothing: antialiased;
+        color: #555;
+        font-size: 22px;
+        font-weight: 300;
+        margin-top: 0;
+        margin-bottom: 20px;
 }
+
 .formee h4 {
 	font-size:1.5em;
 	line-height:1.2em;
@@ -219,26 +221,11 @@ form .formee-txt:focus, .formee input[type="text"]:focus, .formee input[type="pa
   text-transform: uppercase;
   letter-spacing: -.015em;
   color:#ffffff;
-  border-color:#4d90fe;
-  background:#4d90fe;
-  /* gradient anterior
-  background: -moz-linear-gradient(top, #5393c2 40%, #3a77a4);
-  background: -webkit-linear-gradient(top, #5393c2 40%, #3a77a4);
-  filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#5393c2', endColorstr='#3a77a4');
-  */
-  
-  /* gradient */
 
-  /*background: -moz-linear-gradient(top, #5393c2 40%, #3a77a4);
-  background: webkit-linear-gradient(top, #3a77a4 40%, #3a77a4);
-  filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#5393c2', endColorstr='#3a77a4');
-  */
-
-
-  background-color: #4173c9;
-  background-image: -moz-linear-gradient(top,#5e8ee4,#4173c9);
-  background-image: -webkit-linear-gradient(top,#5e8ee4,#4173c9);
-  background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0,#5e8ee4),color-stop(1,#4173c9));
+  background: #4d90fe;
+  border-color: #3079ed;
+  font-weight: bold;
+  margin: 10px 0 0 0;
 
 
   /* corner */
