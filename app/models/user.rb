@@ -16,6 +16,7 @@ class User < ActiveRecord::Base
   belongs_to :nivel
   belongs_to :catalogo_institucion
   has_many :evaluacions
+  has_many :bitacoras
   
   # has_role? simply needs to return true or false whether a user has a role or not.  
   # It may be a good idea to have "admin" roles return true always
