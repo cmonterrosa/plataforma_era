@@ -19,8 +19,8 @@ Style
 	border-radius: 12px;
         line-height: 2em;
         background:#7f7f7f;
-/*        background:rgba(255,255,255,0.8);*/
-        background: rgba(243,243,243,.85);
+        background:rgba(255,255,255,0.8);
+       
 }
 
 /* hover effect */
@@ -150,7 +150,13 @@ form .formee-txt:focus, .formee input[type="text"]:focus, .formee input[type="pa
 	-moz-border-radius: 16px 4px 16px 4px;
 	-webkit-border-radius: 16px 4px 16px 4px;
 	border-radius: 16px 4px 16px 4px;
-        font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-family: 'Open Sans', arial;
+        -webkit-font-smoothing: antialiased;
+        font-weight: 300;
+        margin-top: 12px;
+        margin-bottom: 12px;
+	color: #444;
+        font-size: 15px;
 
 
 }

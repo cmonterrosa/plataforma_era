@@ -12,10 +12,35 @@
 	height: 150px;
 	width: 900px;
 }
+
+.Txt_prof {
+   font-family: 'Open Sans', arial;
+        -webkit-font-smoothing: antialiased;
+        font-weight: 300;
+        margin-top: 0;
+        margin-bottom: 20px;
+	font-size: 22px;
+        text-align: center;
+}
+
+.CuadroDescripcionCert {
+        font-family: 'Open Sans', arial;
+        -webkit-font-smoothing: antialiased;
+        font-weight: 300;
+        margin-top: 0;
+        margin-bottom: 20px;
+	font-size: 16px;
+	color: #444;
+        
+}
+
 .Txt_piepagina {
-	/*font-family: Arial, Helvetica, sans-serif;*/
-        /*font-family: Arial Narrow,Helvetica,sans-serif;*/
-	font-size: 11px;
+	font-family: 'Open Sans', arial;
+        -webkit-font-smoothing: antialiased;
+        font-weight: 300;
+        margin-top: 0;
+        margin-bottom: 20px;
+	font-size: 12px;
 	color: #002C41;
 	text-align: center;
 }
@@ -35,6 +60,15 @@
      text-align: center;
      color: #404040;
      text-transform: uppercase;
+     font-family: 'Open Sans', arial;
+     -webkit-font-smoothing: antialiased;
+     font-weight: 300;
+     margin-top: 0;
+     margin-bottom: 20px;
+     font-size: 10px;
+     color: #002C41;
+     text-align: center;
+
 }
 
 
