@@ -40,7 +40,8 @@ class Adjunto < ActiveRecord::Base
     eje = Eje.find(:first, :conditions => ["id = ?", self.eje_id]) if self.eje_id
     catalogo_eje_id = eje.catalogo_eje_id if eje
     catalogo = CatalogoEje.find(catalogo_eje_id) if catalogo_eje_id
-    caption = "#{catalogo.clave}-#{catalogo.descripcion}" if catalogo
+#    caption = "#{catalogo.clave}-#{catalogo.descripcion}" if catalogo
+    caption = "#{catalogo.clave}" if catalogo
     caption = (caption) ? caption : "--"
     return caption
   end

@@ -8,6 +8,7 @@ class AvancesController < ApplicationController
     @escuela_id = Escuela.find_by_clave(current_user.login.upcase).id if current_user
     @diagnostico = Diagnostico.find_by_escuela_id(@escuela_id) if @escuela_id
     @proyecto = Proyecto.find_by_diagnostico_id(@diagnostico) if @diagnostico
+    @ejes = Eje.find(:all, :conditions => ["proyecto_id = ?", @proyecto.id ]) if @proyecto
     
     unless @proyecto && @proyecto.oficializado
       flash[:notice] = "Para ingresar a la sección de avances es necesario concluir la etapa del proyecto"
@@ -26,7 +27,7 @@ class AvancesController < ApplicationController
       if @diagnostico_concluido
         @proyecto = Proyecto.find_by_diagnostico_id(@diagnostico)
         @ejes = Eje.find(:all, :conditions => ["proyecto_id = ?", @proyecto.id ]) if @proyecto
-        @finish = concluido(@ejes, @num_avance)
+        @finish = concluido(@proyecto.id, @ejes, @num_avance)
 #       @@eje = @ejes
 #       @@proyectos = @proyecto
       else
@@ -177,26 +178,13 @@ class AvancesController < ApplicationController
     redirect_to :controller => "avances", :action => "list"
   end
 
-  def concluido(ejes, avance)
-    @fin = true
+  def concluido(proyecto, ejes, avance)
+    @fin = false
     ejes.each do |e|
-      case avance.to_i
-        when 1
-          if e.avance1 == false
-            @fin = false
-          end
-          break;
-        when 2
-          if e.avance2 == false
-            @fin = false
-          end
-          break;
-        when 3
-          if e.avance3 == false
-            @fin = false
-          end
-          break;
-      end
+      @adjuntos = Adjunto.find(:all, :conditions => ["proyecto_id = ? AND eje_id = ? AND avance = ?", proyecto, e.id, avance])
+      if @adjuntos.size.to_i > 0
+        @fin = true
+      end if @adjuntos
     end
     return @fin
   end
@@ -221,11 +209,22 @@ class AvancesController < ApplicationController
     @escuela_id = Escuela.find_by_clave(current_user.login.upcase).id if current_user
     @escuela = Escuela.find(@escuela_id) if @escuela_id
     @diagnostico = Diagnostico.find_by_escuela_id(@escuela_id) if @escuela_id
-    @proyecto = Proyecto.find_by_diagnostico_id(@diagnostico)
+    @eva_diagnostico = Evaluacion.new(:diagnostico_id => @diagnostico.id.to_i)
+    @proyecto = Proyecto.find_by_diagnostico_id(Diagnostico.find_by_escuela_id(@escuela_id).id)
 
     if @proyecto.oficializado
 #       @proyecto = Proyecto.find_by_diagnostico_id(@diagnostico)
-       @ejes = Eje.find(:all, :conditions => ["proyecto_id = ?", @proyecto.id ]) if @proyecto
+       @ejes = Eje.find(:all, :conditions => ["proyecto_id = ?", @proyecto.id ]).each do |eje|
+         if eje.catalogo_eje.clave == "EJE1"
+          @competencia = Competencia.find_by_proyecto_id(@proyecto.id)
+          @competencia_diagnostico = Competencia.find_by_diagnostico_id(@diagnostico.id) if @diagnostico
+          @s_dcapacitadoras = multiple_selected_dcapacitadora(@competencia.docentes_capacitados) if @competencia.docentes_capacitados
+          @s_acapacitadoras = multiple_selected_dcapacitadora(@competencia.alumnos_capacitados) if @competencia.alumnos_capacitados
+          @catalogo_ejes = CatalogoEje.find(eje)
+          @lineas = LineasAccion.find(:all, :conditions => ["catalogo_eje_id = ?", @catalogo_ejes.id ])
+          @indicadores = Indicadore.find(:all, :conditions => ["catalogo_eje_id = ?", @catalogo_ejes.id ] )
+         end
+       end
     else
       flash[:notice] = "Es necesario concluir la etapa de Proyecto"
       redirect_to :action => "index", :controller => "Proyecto"

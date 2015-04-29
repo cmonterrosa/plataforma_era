@@ -17,7 +17,7 @@ class Ajuste2015Eje5 < ActiveRecord::Migration
 end
 
   def self.down
-    #remove_column :participacions, :no_capacitacion
+    remove_column :participacions, :no_capacitacion
     remove_column :participacions, :capacitacion_salud
     remove_column :participacions, :capacitacion_medioambiente
    end

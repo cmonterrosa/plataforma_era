@@ -57,15 +57,15 @@
 
     <!-- Acciones -->
     <td style="vertical-align: middle;">
-      <%=link_to "Resumen", {:action => 'show_fancy', :controller => 'escuelas', :id => user},  :title => "Resumen de la escuela", :class => "fancybox fancybox.iframe"%>
+      <%=link_to "Resumen", {:action => 'show_fancy', :controller => 'escuelas', :id => user.login},  :title => "Resumen de la escuela", :class => "fancybox fancybox.iframe"%>
     </td>
-    <td style="vertical-align: middle;"><%=button_to "Detalles", {:action => "show_fancy", :controller => "escuelas", :id => user}, :class => 'fancybox fancybox.iframe'%></td>
-    <td style="vertical-align: middle;"><%=button_to "Editar", {:action => "edit_user", :controller => "admin", :id => user}, :class => 'boton'%></td>
+    <td style="vertical-align: middle;"><%=button_to "Detalles", {:action => "show_fancy", :controller => "escuelas", :id => user.login}, :class => 'fancybox fancybox.iframe'%></td>
+    <td style="vertical-align: middle;"><%=button_to "Editar", {:action => "edit_user", :controller => "admin", :id => user.login}, :class => 'boton'%></td>
 
     <%if user.is_blocked?%>
-    <td style="vertical-align: middle;"><%=button_to "Desbloquear", {:action => "block_user", :id => user}, :confirm => "¿Esta seguro que desea bloquearlo?", :method => :delete, :class => 'boton'%></td>
+    <td style="vertical-align: middle;"><%=button_to "Desbloquear", {:action => "block_user", :id => user.login}, :confirm => "¿Esta seguro que desea bloquearlo?", :method => :delete, :class => 'boton'%></td>
     <%else%>
-    <td style="vertical-align: middle;"><%=button_to "Bloquear", {:action => "block_user", :id => user}, :confirm => "¿Esta seguro que desea bloquearlo?", :method => :delete, :class => 'boton'%></td>
+    <td style="vertical-align: middle;"><%=button_to "Bloquear", {:action => "block_user", :id => user.login}, :confirm => "¿Esta seguro que desea bloquearlo?", :method => :delete, :class => 'boton'%></td>
     <%end%>
   <%else%>
     <td style="vertical-align: middle;" colspan="5"><b>Sin registro</b></td>

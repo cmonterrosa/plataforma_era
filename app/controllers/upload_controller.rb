@@ -112,7 +112,7 @@ class UploadController < ApplicationController
     if @proyecto
       @observaciones_evidencias = (@proyecto["observaciones_evidencias_avance#{@avance}"]) ? @proyecto["observaciones_evidencias_avance#{@avance}"] : nil
     end
-    @evidencias = Adjunto.find(:all, :conditions => ["user_id = ? and avance = ?", @user, @avance], :order => "numero_actividad")
+    @evidencias = Adjunto.find(:all, :conditions => ["user_id = ? and avance = ? and proyecto_id = ?", @user.id.to_i , @avance.to_i, @proyecto.id.to_i])
     unless @evidencias.empty?
       return render(:partial => 'show_todas_evidencias_avances', :layout => "only_jquery")
     else

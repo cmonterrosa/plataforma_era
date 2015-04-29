@@ -23,6 +23,14 @@
       <% end %>
     </td>
   </tr>
+  <tr>
+    <td align="right" style="padding-right: 20px;" >
+      <%= link_to "Regresar", { :controller => "avances", :action => "index", :num_avance => Base64.encode64(@num_avance) }, {:id => "cancelar_sig", :class => "buttonText" } %>
+    </td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
 </table>
 
 <%= render :partial => "diagnosticos/errores_evidencias"%>

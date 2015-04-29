@@ -200,6 +200,7 @@
   </script>
   <% end %>
 </table>
+<!--
 <br />
 <table align="right" >
   <tr >
@@ -214,6 +215,17 @@
     <td colspan="2" >&nbsp;</td>
   </tr>
 </table>
-<%= render :partial => "diagnosticos/errores_evidencias"%>
+-->
 <% end %>
+<%= render :partial => "diagnosticos/errores_evidencias"%>
 
+<%#*<script type="text/javascript">%>
+  <%#*var objetivo_especifico = new LiveValidation( 'eje_objetivo_especifico' );%>
+  <%#*objetivo_especifico.add( Validate.Presence );%>
+  <%#*objetivo_especifico.add( Validate.Length, { maximum: 350 } );%>
+
+  <%#*var meta = new LiveValidation( 'eje_meta' );%>
+  <%#*meta.add( Validate.Presence );%>
+  <%#*meta.add( Validate.Length, { maximum: 350 } );%>
+
+<%#*</script>%>

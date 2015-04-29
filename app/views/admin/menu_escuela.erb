@@ -143,12 +143,12 @@
        </div>
 
       <div class="grid-2-12">
-       <%=link_to image_tag('admin/menu_escuela/evidencias.png', :size => "100x100", :size => "100x100", :mouseover => 'admin/menu_escuela/evidencias2.png') , {:action => "show_evidencias_avance", :controller => "upload", :id => @user, :diagnostico => @diagnostico, :avance => 1}, :html => { :target => "_blank"}, :title => "Mostrar evidencias del 1er Avance" %>
-         <label style="font-family:verdana;font-size:14px;">Evidencias del 1er Avance</label>
+       <%=link_to image_tag('admin/menu_escuela/evidencias.png', :size => "100x100", :size => "100x100", :mouseover => 'admin/menu_escuela/evidencias2.png') , {:action => "show_evidencias_avance", :controller => "upload", :id => @user, :diagnostico => @diagnostico, :num_avance => 1}, :html => { :target => "_blank"}, :title => "Mostrar evidencias del 1er Avance" %>
+         <label style="font-family:verdana;font-size:14px;">Evidencias del 1er Avancee</label>
        </div>
 
        <div class="grid-2-12">
-       <%=link_to image_tag('admin/menu_escuela/evidencias.png', :size => "100x100", :size => "100x100", :mouseover => 'admin/menu_escuela/evidencias2.png') , {:action => "show_evidencias_avance", :controller => "upload", :id => @user, :diagnostico => @diagnostico, :avance => 2}, :html => { :target => "_blank"}, :title => "Mostrar evidencias del 1er Avance" %>
+       <%=link_to image_tag('admin/menu_escuela/evidencias.png', :size => "100x100", :size => "100x100", :mouseover => 'admin/menu_escuela/evidencias2.png') , {:action => "show_evidencias_avance", :controller => "upload", :id => @user, :diagnostico => @diagnostico, :num_avance => 2}, :html => { :target => "_blank"}, :title => "Mostrar evidencias del 1er Avance" %>
          <label style="font-family:verdana;font-size:14px;">Evidencias del 2do Avance</label>
        </div>
     </fieldset>

@@ -206,11 +206,20 @@ class DiagnosticosController < ApplicationController
   def eje1_to_pdf
     @diagnostico = Diagnostico.find(Base64.decode64(params[:id])) if params[:id]
     @diagnostico ||= Diagnostico.new
-    @competencia = @diagnostico.competencia || Competencia.new
+
+    if params[:proyecto]
+      @proyecto = Proyecto.find(params[:proyecto])
+      @competencia = @proyecto.competencia
+      layout = "reporte_avances"
+    else
+      @competencia = @diagnostico.competencia
+      layout = "reporte_diagnostico"
+    end
+    @competencia ||= Competencia.new
 
     @s_dcapacitadoras = multiple_selected_dcapacitadora(@competencia.docentes_capacitados) if @competencia.docentes_capacitados
     @s_acapacitadoras = multiple_selected_dcapacitadora(@competencia.alumnos_capacitados) if @competencia.alumnos_capacitados
-    render :partial => "competencias", :layout => "reporte_diagnostico"
+    render :partial => "competencias", :layout => "#{layout}"
   end
   
   def eje2_to_pdf

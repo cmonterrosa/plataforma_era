@@ -98,7 +98,7 @@
                     <% end %>
                     <% if @s_dcapacitadoras.include?(c.id) %>
                       <%= check_box_tag "dcapacitadoras[#{c.id}]", c.clave, @s_dcapacitadoras.include?(c.id) ? true : false, {:disabled => "disabled" }%>&nbsp;<%= c.descripcion %>
-                      &nbsp;NÚM.&nbsp;DE&nbsp;CAPACITACIONES:&nbsp;<%= select "dcapacitadora", "#{c.clave}", (1..9), {:selected => @valor}, {:style => "display: inline; width:40px; color: grey;", :disabled => "disabled"}%><br /><br />
+                      &nbsp;NÚM.&nbsp;DE&nbsp;CAPACITACIONES:&nbsp;<%= select "dcapacitadora", "#{c.clave}", (1..9), {:selected => @valor}, {:style => "display: inline; width:50px; color: grey;", :disabled => "disabled"}%><br /><br />
 <% if c.clave == "OTRA" %>&nbsp;DESCRIPCIÓN:&nbsp;<input name="dcapacitadoras<%= c.clave %>" id="dcapacitadoras<%= c.clave %>" size="35px" style="text-align:justify; display: none; text-transform: uppercase;" value="<%=h @desc_dep ? @desc_dep : "" %>" disabled /><% end %>
                       <%= linea_horizontal %>
                     <% end %>
@@ -228,7 +228,7 @@
                     <% end %>
                     <% if @s_acapacitadoras.include?(c.id) %>
                       <%= check_box_tag "acapacitadoras[#{c.id}]", c.clave, @s_acapacitadoras.include?(c.id) ? true : false, :disabled => "disabled" %>&nbsp;<%= c.descripcion %>
-                      &nbsp;NÚM.&nbsp;DE&nbsp;CAPACITACIONES:&nbsp;<%= select "acapacitadora", "#{c.clave}", (1..9), {:selected => @valor}, {:style => "display: inline; width: 40px; color: grey", :disabled => "disabled"}%><br /><br />
+                      &nbsp;NÚM.&nbsp;DE&nbsp;CAPACITACIONES:&nbsp;<%= select "acapacitadora", "#{c.clave}", (1..9), {:selected => @valor}, {:style => "display: inline; width: 50px; color: grey", :disabled => "disabled"}%><br /><br />
                       <% if c.clave == "OTRA" %>&nbsp;DESCRIPCIÓN:&nbsp;<input name="acapacitadoras<%= c.clave %>" id="acapacitadoras<%= c.clave %>" size="35px" style="text-align: justify; display: none; text-transform: uppercase;" value="<%=h @desc_dep ? @desc_dep : "" %>" /><% end %>
                       <%=linea_horizontal%>
                     <% end %>
@@ -248,6 +248,7 @@
         </script>
         <% end %>
       </table>
+      <!--
       <br />
       <table align="right" >
         <tr >
@@ -262,7 +263,7 @@
           <td colspan="2" >&nbsp;</td>
         </tr>
       </table>
-
+      -->
 <% end %>
   <%= render :partial => "diagnosticos/errores_evidencias"%>
 

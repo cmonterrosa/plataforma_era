@@ -4,7 +4,7 @@ class AddColumnToEjes < ActiveRecord::Migration
     add_column :entornos, :proyecto_id, :integer
     add_column :huellas, :proyecto_id, :integer
     add_column :consumos, :proyecto_id, :integer
-    add_column :participacion, :proyecto_id, :integer
+    add_column :participacions, :proyecto_id, :integer
   end
 
   def self.down
@@ -12,6 +12,6 @@ class AddColumnToEjes < ActiveRecord::Migration
     remove_column :entornos, :proyecto_id
     remove_column :huellas, :proyecto_id
     remove_column :consumos, :proyecto_id
-    remove_column :participacion, :proyecto_id
+    remove_column :participacions, :proyecto_id
   end
 end

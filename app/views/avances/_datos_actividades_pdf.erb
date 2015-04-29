@@ -1,21 +1,7 @@
 <%desc= (@num_avance && @num_avance == 2)? "DO" : "ER"%>
 <p style="font-family: verdana; font-size: 16px; font-weight: normal;" >REPORTE DEL <%= @num_avance %><%=desc%> AVANCE DE ACTIVIDADES</p>
 <p style="font-family: verdana; font-size: 14px; font-weight: normal; color: navy;"><%=h (@escuela) ? @escuela.descripcion_completa : ""%></p>
-<% @ejes.sort_by { |hsh| hsh[:catalogo_eje_id] }.each do |eje| %>
-    <% @avance = Array.new %>
-      <% eje.actividads.each do | actividad | %>
-        <% if @av = Avance.find(:first, :conditions => ["actividad_id = ? and numero = ?", actividad.id, @num_avance.to_i]) %>
-        <% @avance << @av %>
-      <% end %>
-    <% end %>
-
-    <% @act = Hash.new %>
-    <% unless @avance.empty? %>
-      <% (1..@avance.size).each do |n| %>
-        <% @act["actividad#{n}"] = @avance[n-1][:descripcion] if @avance && @avance[n-1] %>
-      <% end %>
-    <% end %>
-    
+<% @ejes.sort_by { |hsh| hsh[:catalogo_eje_id] }.each do |eje| %>    
 <% form_for :ejes, @ejes, :url => { }, :html => {:class => "formee"} do |f| -%>
 
 <table class="principal" width="100%" border="0" cellpadding="4" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
@@ -47,7 +33,8 @@
               <li><%= eje.meta %></li>
             </div>
             <% num=1 %>
-            
+
+            <!--
             <div class="grid-12-12">
               <label class="art-label">META LOGRADA: </label>
                 <%= text_area "", "meta", :value => eje.meta_lograda1, :class => "rpt" if @num_avance.to_i == 1 %>
@@ -67,10 +54,17 @@
               <% end %>
               </ol>
             </div>
-            
+            -->
           </article>
         </div>
       </section>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <% if eje.catalogo_eje.clave == "EJE1" %>
+        <%= render :partial => "competencia"%>
+      <% end %>
     </td>
   </tr>
 </table>

@@ -562,12 +562,12 @@ class AdminController < ApplicationController
     @respaldos = Dir.glob("#{BACKUPS_DIR}/*.tar.gz")
   end
 
-   def download_respaldo
+  def download_respaldo
     path="#{BACKUPS_DIR}/" + params[:archivo]
     send_file path , :disposition => 'inline'
   end
 
-   def report_by_niveles
+  def report_by_niveles
      #@niveles = Nivel.find(:all, :order => "descripcion")
      @niveles = Escuela.find(:all, :group => "nivel_descripcion", :conditions => ["estatu_id IS NOT NULL"])
    end
@@ -577,7 +577,7 @@ class AdminController < ApplicationController
    #
    ################################################################################################
 
-   def menu_escuela
+  def menu_escuela
      @user = User.find(params[:id])
      @escuela = @user.escuela if @user
      @diagnostico = Diagnostico.find_by_user_id(@user.id) if @user
@@ -585,12 +585,12 @@ class AdminController < ApplicationController
      
    end
 
-   def show_bitacora
+  def show_bitacora
       @user = User.find(params[:id]) 
       render :partial => "escuelas/bitacora", :layout => "only_jquery"
    end
 
-   def show_diagnostico
+  def show_diagnostico
       @escuela = Escuela.find(params[:id])
       @diagnostico = Diagnostico.find_by_escuela_id(@escuela.id) if @escuela
       if @diagnostico
@@ -600,12 +600,12 @@ class AdminController < ApplicationController
       end
    end
 
-   def menu_documentos_registro
+  def menu_documentos_registro
      @escuela = Escuela.find(params[:id])
      render :partial => "menu_documentos_registro", :layout => "only_jquery"
    end
 
-   def show_galeria
+  def show_galeria
      @user = User.find(params[:id])
      @adjuntos = Adjunto.find(:all, :conditions => ["user_id = ? AND file_type = ?", @user.id, "image/jpeg"], :limit => 20) if @user
      unless @adjuntos.empty?
@@ -615,7 +615,7 @@ class AdminController < ApplicationController
      end
    end
 
-   def menu_proyecto
+  def menu_proyecto
      @escuela = Escuela.find(params[:id])
      @diagnostico = Diagnostico.find(params[:diagnostico])
      @proyecto = @diagnostico.proyecto
@@ -627,46 +627,79 @@ class AdminController < ApplicationController
    #
    #################################################
 
-   def dashboard_proyecto
-     @diagnostico = Diagnostico.find(params[:diagnostico]) if params[:diagnostico]
-     @proyecto = Proyecto.find(:first, :conditions => ["diagnostico_id = ?", @diagnostico.id]) if @diagnostico
-     @user = (params[:id]) ? User.find(params[:id]): current_user
-     @escuela = @user.escuela if @user
-     @s_catalogo_accions = multiple_selected_id(current_user.catalogo_accions) if current_user.catalogo_accions and @evaluacion
-     @evidencias_avance1 = Hash.new
-     @evidencias_avance2 = Hash.new
-     @puntaje_avance1 = Hash.new{|hash, key| hash[key] = Hash.new}
-     @puntaje_avance2 = Hash.new{|hash, key| hash[key] = Hash.new}
-#     if current_user.has_role?('revisor') or current_user.has_role?('adminplat')
-       @evaluacion = Evaluacion.find(:first, :conditions => ["proyecto_id = ? AND user_id = ?", @proyecto.id, current_user.id])
-       
-#       @s_catalogo_accions = multiple_selected_id(current_user.catalogo_accions) if current_user.catalogo_accions and @evaluacion
-#       @s_catalogo_accions ||= []
+  def dashboard_proyecto
+    @diagnostico = Diagnostico.find(params[:diagnostico]) if params[:diagnostico]
+    @proyecto = Proyecto.find_by_diagnostico_id(@diagnostico.id) if @diagnostico
+    @user = (params[:id]) ? User.find(params[:id]): current_user
+    @escuela = @user.escuela if @user
 
-#     else
-#       @evaluacion = Evaluacion.find(:first, :conditions => ["proyecto_id = ? AND user_id = ?", @proyecto.id, @user.id])
+#     @evaluacion = Evaluacion.find(:first, :conditions => ["diagnostico_id = ? AND user_id = ? AND activa = true", @diagnostico.id, @user.id])
+    @evaluacion = Evaluacion.find(:first, :conditions => ["diagnostico_id = ? AND user_id = ?", @diagnostico.id, current_user.id])
+    @evaluacion ||= Evaluacion.new(:diagnostico_id => @diagnostico.id)
+
+    diagnostico = Evaluacion.new(:diagnostico_id => Diagnostico.find(params[:diagnostico]).id)
+    proyecto = Evaluacion.new(:proyecto_id => @proyecto.id)
+#     Puntajes eje1
+    @competencia_p1 = diagnostico.puntaje_eje1_p1
+    @competencia_p2 = diagnostico.puntaje_eje1_p2
+    @competencia_p3 = diagnostico.puntaje_eje1_p3
+    @competencia_p4 = diagnostico.puntaje_eje1_p4
+    @competencia_p5 = diagnostico.puntaje_eje1_p5
+
+    @ptos_obtenidos_eje1 = (@competencia_p1 + @competencia_p2 + @competencia_p3 + @competencia_p4 + @competencia_p5)#.to_f.round(3)
+    @total_puntos_eje1 = diagnostico.puntaje_total_eje1
+    @puntaje_total_eje1 = diagnostico.puntaje_total_obtenido_eje1
+
+    @competencia_ap1 = proyecto.puntaje_avance_eje1_p1
+    @competencia_ap2 = proyecto.puntaje_avance_eje1_p2
+    @competencia_ap3 = proyecto.puntaje_avance_eje1_p3
+    @competencia_ap4 = proyecto.puntaje_avance_eje1_p4
+    @competencia_ap5 = proyecto.puntaje_avance_eje1_p5
+
+    @ptos_obtenidos_aeje1 = (@competencia_ap1 + @competencia_ap2 + @competencia_ap3 + @competencia_ap4 + @competencia_ap5)#.to_f.round(3)
+    @total_puntos_aeje1 = proyecto.puntaje_total_eje1
+    @puntaje_total_aeje1 = proyecto.puntaje_total_obtenido_eje1
+
+
+#    @diagnostico = Diagnostico.find(params[:diagnostico]) if params[:diagnostico]
+#     @proyecto = Proyecto.find(:first, :conditions => ["diagnostico_id = ?", @diagnostico.id]) if @diagnostico
+#     @user = (params[:id]) ? User.find(params[:id]): current_user
+#     @escuela = @user.escuela if @user
+#     @s_catalogo_accions = multiple_selected_id(current_user.catalogo_accions) if current_user.catalogo_accions and @evaluacion
+#     @evidencias_avance1 = Hash.new
+#     @evidencias_avance2 = Hash.new
+#     @puntaje_avance1 = Hash.new{|hash, key| hash[key] = Hash.new}
+#     @puntaje_avance2 = Hash.new{|hash, key| hash[key] = Hash.new}
+##     if current_user.has_role?('revisor') or current_user.has_role?('adminplat')
+#       @evaluacion = Evaluacion.find(:first, :conditions => ["proyecto_id = ? AND user_id = ?", @proyecto.id, current_user.id])
+#
+##       @s_catalogo_accions = multiple_selected_id(current_user.catalogo_accions) if current_user.catalogo_accions and @evaluacion
+##       @s_catalogo_accions ||= []
+#
+##     else
+##       @evaluacion = Evaluacion.find(:first, :conditions => ["proyecto_id = ? AND user_id = ?", @proyecto.id, @user.id])
+##     end
+#     @evaluacion ||= Evaluacion.new(:proyecto_id => @proyecto.id)
+#
+#     diagnostico = Evaluacion.new(:diagnostico_id => Diagnostico.find(params[:diagnostico]).id)
+#     (1..5).each do |eje|
+#       a1 = Adjunto.find(:all, :select => "adjuntos.numero_actividad",  :joins => "adjuntos, ejes e, catalogo_ejes ce", :conditions => ["adjuntos.proyecto_id = ? AND adjuntos.eje_id=e.id AND e.catalogo_eje_id=ce.id AND adjuntos.avance = 1 AND ce.clave= ?", @proyecto.id, "EJE#{eje}"], :group => "adjuntos.numero_actividad")
+#       a2 = Adjunto.find(:all, :select => "adjuntos.numero_actividad",  :joins => "adjuntos, ejes e, catalogo_ejes ce", :conditions => ["adjuntos.proyecto_id = ? AND adjuntos.eje_id=e.id AND e.catalogo_eje_id=ce.id AND adjuntos.avance = 2 AND ce.clave= ?", @proyecto.id, "EJE#{eje}"], :group => "adjuntos.numero_actividad")
+#       @evidencias_avance1["EJE#{eje}"] =  a1.map { |a| a.numero_actividad  } unless a1.empty?
+#       @evidencias_avance2["EJE#{eje}"] =  a2.map { |b|b.numero_actividad  }  unless a2.empty?
+#       (1..4).each do |actividad|
+#         @puntaje_avance1["EJE#{eje}"]["#{actividad}"]=   diagnostico.puntaje_avance_eje(1, eje, actividad)
+#         @puntaje_avance2["EJE#{eje}"]["#{actividad}"]=   diagnostico.puntaje_avance_eje(2, eje, actividad)
+#        end
 #     end
-     @evaluacion ||= Evaluacion.new(:proyecto_id => @proyecto.id)
-
-     diagnostico = Evaluacion.new(:diagnostico_id => Diagnostico.find(params[:diagnostico]).id)
-     (1..5).each do |eje|
-       a1 = Adjunto.find(:all, :select => "adjuntos.numero_actividad",  :joins => "adjuntos, ejes e, catalogo_ejes ce", :conditions => ["adjuntos.proyecto_id = ? AND adjuntos.eje_id=e.id AND e.catalogo_eje_id=ce.id AND adjuntos.avance = 1 AND ce.clave= ?", @proyecto.id, "EJE#{eje}"], :group => "adjuntos.numero_actividad")
-       a2 = Adjunto.find(:all, :select => "adjuntos.numero_actividad",  :joins => "adjuntos, ejes e, catalogo_ejes ce", :conditions => ["adjuntos.proyecto_id = ? AND adjuntos.eje_id=e.id AND e.catalogo_eje_id=ce.id AND adjuntos.avance = 2 AND ce.clave= ?", @proyecto.id, "EJE#{eje}"], :group => "adjuntos.numero_actividad")
-       @evidencias_avance1["EJE#{eje}"] =  a1.map { |a| a.numero_actividad  } unless a1.empty?
-       @evidencias_avance2["EJE#{eje}"] =  a2.map { |b|b.numero_actividad  }  unless a2.empty?
-       (1..4).each do |actividad|
-         @puntaje_avance1["EJE#{eje}"]["#{actividad}"]=   diagnostico.puntaje_avance_eje(1, eje, actividad)
-         @puntaje_avance2["EJE#{eje}"]["#{actividad}"]=   diagnostico.puntaje_avance_eje(2, eje, actividad)
-        end
-     end
-
-     @historico = Evaluacion.find(:all, :conditions => ["proyecto_id = ?", @proyecto.id], :group => "user_id", :order => "updated_at DESC")
-     @husuario = Evaluacion.find(:all, :conditions => ["proyecto_id = ?", @proyecto.id], :group => "user_id", :order => "updated_at DESC")
+#
+#     @historico = Evaluacion.find(:all, :conditions => ["proyecto_id = ?", @proyecto.id], :group => "user_id", :order => "updated_at DESC")
+#     @husuario = Evaluacion.find(:all, :conditions => ["proyecto_id = ?", @proyecto.id], :group => "user_id", :order => "updated_at DESC")
 
      render :layout => "only_jquery"
   end
 
-   def dashboard
+  def dashboard
      @diagnostico = Diagnostico.find(params[:diagnostico]) if params[:diagnostico]
      @user = (params[:id]) ? User.find(params[:id]): current_user
      @escuela = @user.escuela if @user

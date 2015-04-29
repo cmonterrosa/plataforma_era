@@ -73,7 +73,7 @@
 
 
       <%if current_user.has_role?("adminplat")%>
-        <td style="vertical-align: middle;"><%=button_to "Editar", {:action => "edit_user", :controller => "admin", :id => user.login}, :class => 'boton', :style => "cursor:pointer" %></td>
+        <td style="vertical-align: middle;"><%=button_to "Editar", {:action => "edit_user", :controller => "admin", :id => user.login, :us => user}, :class => 'boton', :style => "cursor:pointer" %></td>
           <%if user.is_blocked?%>
               <td style="vertical-align: middle;"><%=button_to "Desbloquear", {:action => "block_user", :id => user.login}, :confirm => "¿Esta seguro que desea bloquearlo?", :method => :delete, :class => 'boton', :style => "cursor:pointer" %></td>
           <%else%>

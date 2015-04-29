@@ -291,7 +291,7 @@
                 </td> <!-- frecuencia fisica -->
                 <td>&nbsp;</td>
               
-                <td id="pregunta8" width="49%" align="justify" style=" vertical-align:top; display: none;" >
+                <td id="pregunta8" width="49%" align="justify" style=" vertical-align:top;" >
                   <div class="grid-12-12">
                     <label class="uper">8.- Por día, en qué tiempo realiza la activación física?. <em class="formee-req"> *</em></label>
                   </div> <!-- pregunta 8 -->
@@ -321,4 +321,9 @@
   enable_frecuencias_actividades_fisicas("consumo_frecuencia_afisica_id", "consumo_minutos_activacion_fisica");
   showImageValue('consumo_frecuencia_afisica_id', 'eje4_p7','NOSR');
 </script>
+<% if @consumo.frecuencia_afisica.clave == 'NOSR' %>
+  <script type="text/javascript">
+    document.getElementById("pregunta8").style.display = 'none';
+  </script>
+<% end  if @consumo.frecuencia_afisica %>
 

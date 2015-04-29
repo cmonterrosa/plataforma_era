@@ -1,6 +1,5 @@
 class FixEstatusAndAddProyectoHabilitado < ActiveRecord::Migration
   def self.up
-   
    begin
       add_column :estatus, :jerarquia, :integer
       add_column :estatus, :activo, :boolean

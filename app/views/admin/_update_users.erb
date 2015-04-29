@@ -71,12 +71,12 @@
   <%nombre ||= "#{user.nombre} (Usuario)"%>
       <td style="vertical-align: middle;"><%=h nombre%></td>
       <!-- Acciones -->
-      <td style="vertical-align: middle;"><%=button_to "Detalles", {:action => "show", :controller => "escuelas", :id => user}, :class => 'boton'%></td>
-      <td style="vertical-align: middle;"><%=button_to "Editar", {:action => "edit_user", :controller => "admin", :id => user}, :class => 'boton'%></td>
+      <td style="vertical-align: middle;"><%=button_to "Detalles", {:action => "show", :controller => "escuelas", :id => user.login}, :class => 'boton'%></td>
+      <td style="vertical-align: middle;"><%=button_to "Editar", {:action => "edit_user", :controller => "admin", :id => user.login}, :class => 'boton'%></td>
   <%if user.is_blocked?%>
-      <td style="vertical-align: middle;"><%=button_to "Desbloquear", {:action => "block_user", :id => user}, :confirm => "¿Esta seguro que desea bloquearlo?", :method => :delete, :class => 'boton'%></td>
+      <td style="vertical-align: middle;"><%=button_to "Desbloquear", {:action => "block_user", :id => user.login}, :confirm => "¿Esta seguro que desea bloquearlo?", :method => :delete, :class => 'boton'%></td>
   <%else%>
-      <td style="vertical-align: middle;"><%=button_to "Bloquear", {:action => "block_user", :id => user}, :confirm => "¿Esta seguro que desea bloquearlo?", :method => :delete, :class => 'boton'%></td>
+      <td style="vertical-align: middle;"><%=button_to "Bloquear", {:action => "block_user", :id => user.login}, :confirm => "¿Esta seguro que desea bloquearlo?", :method => :delete, :class => 'boton'%></td>
   <%end%>
   <!-- Diagnostico -->
   <%if escuela%>
