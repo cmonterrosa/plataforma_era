@@ -4,7 +4,7 @@ class ReorganizacionEstatusEHistorial < ActiveRecord::Migration
     begin
      puts("=> Reseteando cache")
      Estatu.reset_column_information
-     ph=Estatu.new(:clave => "proy-hab", :descripcion => "Proyecto Habilitado", :jerarquia => 12, :activo => true)
+     ph=Estatu.new(:clave => "proy-aut", :descripcion => "Proyecto Autorizado", :jerarquia => 12, :activo => true)
      cf= Estatu.new(:clave => "cert-fin", :descripcion => "Certificación concluida", :jerarquia => 19, :activo => true)
      ph.save && cf.save
      puts("=> Listando escuelas..")
