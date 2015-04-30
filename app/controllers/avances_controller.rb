@@ -19,7 +19,8 @@ class AvancesController < ApplicationController
   def index
     @num_avance = Base64.decode64(params[:num_avance]) if params[:num_avance]
     if @num_avance.to_i > 0
-      @escuela_id = Escuela.find_by_clave(current_user.login.upcase).id if current_user
+      @escuela = Escuela.find_by_clave(current_user.login.upcase) if current_user
+      @escuela_id = @escuela.id if @escuela
       @diagnostico = Diagnostico.find_by_escuela_id(@escuela_id) if @escuela_id
       @proyecto = Proyecto.find_by_diagnostico_id(@diagnostico) if @diagnostico
 
@@ -30,6 +31,7 @@ class AvancesController < ApplicationController
         @finish = concluido(@proyecto.id, @ejes, @num_avance)
 #       @@eje = @ejes
 #       @@proyectos = @proyecto
+          
       else
         flash[:notice] = "Para iniciar la captura del proyecto, es necesario concluir la etapa de diagnóstico"
         redirect_to :action => "index", :controller => "diagnosticos"
@@ -168,8 +170,11 @@ class AvancesController < ApplicationController
     @proyecto = Proyecto.find(params[:id]) if params[:id]
     @proyecto.avance = (params[:avance].to_i + 1) if params[:avance]
     @escuela = Escuela.find(@proyecto.diagnostico.escuela_id)
-    @escuela.update_bitacora!("avance1", current_user) if params[:avance].to_i == 1
-    @escuela.update_bitacora!("avance2", current_user) if params[:avance].to_i == 2
+    avance = (params[:avance].to_i == 1)? "avance1" : nil
+    avance ||= (params[:avance].to_i == 2)? "avance2" : nil
+    unless @escuela.estatu == Estatu.find_by_clave(avance) && @escuela.bitacoras.include?(Estatu.find_by_clave(avance))
+      @escuela.update_bitacora!(avance, current_user)
+    end
     if @proyecto.save
       flash[:notice] = "El avance núm. #{params[:avance]} del proyecto fue finalizado correctamente"
     else
