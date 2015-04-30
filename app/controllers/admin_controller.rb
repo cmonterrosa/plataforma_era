@@ -531,6 +531,19 @@ class AdminController < ApplicationController
     #redirect_to :action => "menu_diagnostico", :id => @escuela, :layout => false
   end
 
+
+  def autorizar_proyecto
+    @escuela = Escuela.find(params[:escuela])
+    @diagnostico_id = Diagnostico.find_by_escuela_id(@escuela.id).id if @escuela
+    if @escuela && @escuela.update_bitacora!("proy-aut", current_user)
+      flash[:notice] = "Proyecto autorizado"
+    else
+      flash[:error] = "Proyecto no se pudo autorizar"
+    end
+    render :partial => "menu_proyecto", :layout => "only_jquery"
+  end
+
+
   def habilitar_proyecto
     @proyecto = Proyecto.find(params[:id])
     @escuela = Escuela.find(params[:escuela])
