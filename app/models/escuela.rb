@@ -8,6 +8,7 @@ class Escuela < ActiveRecord::Base
   belongs_to :nivel
   has_and_belongs_to_many :users, :join_table => 'escuelas_users'
   has_and_belongs_to_many :generacions, :join_table => 'escuelas_generacions'
+  has_many :bitacoras
 
 #  def clave_escuela
 #    self.clave_escuela = "#{self.clave} #{self.nombre}" if self.clave
@@ -34,9 +35,9 @@ class Escuela < ActiveRecord::Base
       @estatus_nuevo = Estatu.find_by_clave(clave_estatus) if clave_estatus
       @estatus_actual = Estatu.find(self.estatu_id) if self.estatu_id
       if @estatus_nuevo && @estatus_actual
-      if @estatus_nuevo.jerarquia > @estatus_actual.jerarquia
+      if @estatus_nuevo.jerarquia >= @estatus_actual.jerarquia
         self.update_attributes!(:estatu_id => @estatus_nuevo.id)
-        @bitacora = Bitacora.create(:user_id => usuario.id, :estatu_id => @estatus_nuevo.id)if usuario && @estatus_nuevo
+        @bitacora = Bitacora.create(:user_id => usuario.id, :estatu_id => @estatus_nuevo.id, :escuela_id => self.id) if usuario && @estatus_nuevo
       end
       end
     end
