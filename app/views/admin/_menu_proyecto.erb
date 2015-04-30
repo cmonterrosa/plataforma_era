@@ -118,30 +118,35 @@
           <%diagnostico = Diagnostico.find(:first, :conditions => ["escuela_id = ?", @escuela]) if @escuela%>
           <%diagnostico_oficializado = (diagnostico.oficializado)? true : false if diagnostico%>
           <%diagnostico_evaluado = (@escuela.estatu == Estatu.find_by_clave("diag-eva") || @escuela.bitacoras.include?(Estatu.find_by_clave("diag-eva")))? true : false if diagnostico%>
-          <%if diagnostico && diagnostico_oficializado && diagnostico_evaluado%>
-              <% form_for :escuela, @escuela, :url => { :action => "autorizar_proyecto", :controller => "admin", :escuela => @escuela, :layout => "only_jquery"} do |f| -%>
-                <div class="grid-center">
-                  <input type="submit" title="AUTORIZAR PROYECTO" value="AUTORIZAR PROYECTO" />
-                </div>
-              <%end%>
-          <%else%>
+          <%if diagnostico%>
+              <%if diagnostico && diagnostico_oficializado && diagnostico_evaluado%>
+                  <% form_for :escuela, @escuela, :url => { :action => "autorizar_proyecto", :controller => "admin", :escuela => @escuela, :layout => "only_jquery"} do |f| -%>
+                      <div class="grid-center">
+                        <input type="submit" title="AUTORIZAR PROYECTO" value="AUTORIZAR PROYECTO" />
+                      </div>
+                  <%end%>
+              <%else%>
 
-             <%proyecto_autorizado = (@escuela.estatu == Estatu.find_by_clave("proy-aut") || @escuela.bitacoras.include?(Estatu.find_by_clave("proy-aut")))? true : false if diagnostico%>
-             <%if proyecto_autorizado%>
-                <div class="formee-msg-info">
-                    <p>Proyecto ya se encuentra autorizado.</p>
-                </div>
+                <%proyecto_autorizado = (@escuela.estatu == Estatu.find_by_clave("proy-aut") || @escuela.bitacoras.include?(Estatu.find_by_clave("proy-aut")))? true : false if diagnostico%>
+                  <%if proyecto_autorizado%>
+                      <div class="formee-msg-info">
+                        <p>Proyecto ya se encuentra autorizado.</p>
+                      </div>
+                  <%else%>
+                      <div class="formee-msg-error">
+                        <p>Proyecto no se encuentra registrado.</p>
+                      </div>
+                  <%end%>
   
-             <%else%>
-                <div class="formee-msg-error">
-                    <p>Proyecto no se encuentra registrado.</p>
-                </div>
-             <%end%>
+              <%end%>
 
-          
+         <%else%>
+             <div class="formee-msg-error">
+                        <p>Verifique que el diagnóstico se haya capturado.</p>
+             </div>
 
-              
-          <%end%>
+
+         <%end%>
   </div>
 </div>
 <%end%>
