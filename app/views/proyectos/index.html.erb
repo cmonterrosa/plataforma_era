@@ -113,6 +113,8 @@
 <%else%>
 
 <%= render :partial => "informacion_proyectos"%>
+
+<%if @escuela.estatu == Estatu.find_by_clave("proy-aut") || @escuela.bitacoras.include?(Estatu.find_by_clave("proy-aut")) %>
 <table width="100%" >
   <tr>
     <td><img src="/images/era/space.png" width="10" height="20px" /></td>
@@ -128,6 +130,26 @@
     <td colspan="3"><img src="/images/era/space.png" width="10" height="50px" /></td>
   </tr>
 </table>
+<%else%>
+
+    <table width="100%" >
+      <tr>
+        <td><img src="/images/era/space.png" width="10" height="20px" /></td>
+      </tr>
+      <tr align="center" >
+      <td>
+         <div class="formee-msg-warning">
+          <label>Proyecto no disponible, es necesario que sea autorizado por el Equipo de Certificación, puede envíar sus dudas o comentarios al correo: <%=SITE_EMAIL%></label>
+        </div>
+      </td>
+      </tr>
+      <tr>
+        <td colspan="3"><img src="/images/era/space.png" width="10" height="50px" /></td>
+      </tr>
+</table>
+    
+
+<%end%>
 
 <%end%>
 
