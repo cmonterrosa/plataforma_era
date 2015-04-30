@@ -2,7 +2,7 @@ require 'base64'
 class ProyectosController < ApplicationController
   layout :set_layout
 
-  before_filter :check_is_available, :except => "proyect_to_pdf"
+#  before_filter :check_is_available, :except => "proyect_to_pdf"
 
   require_role [:escuela]
 #  skip_before_filter :verify_authenticity_token, :only => [:save_first_section, :second_section_proyect]
@@ -15,13 +15,15 @@ class ProyectosController < ApplicationController
     end
   end
 
-  def index
-     flash[:warning] = "La etapa del proyecto estará disponible hasta que su diagnóstico haya sido revisado por el Equipo de Certificación."
-     redirect_to :controller => "diagnosticos"
-  end
+#  def index
+#     flash[:warning] = "La etapa del proyecto estará disponible hasta que su diagnóstico haya sido revisado por el Equipo de Certificación."
+#     redirect_to :controller => "diagnosticos"
+#  end
 
-  def index_old
-    @escuela_id = Escuela.find_by_clave(current_user.login.upcase).id if current_user
+  def index
+    @escuela = Escuela.find_by_clave(current_user.login.upcase) if current_user
+    @escuela_id = @escuela.id if @escuela 
+    @usuario = User.find(:first, :conditions => ["escuela_id = ?", @escuela_id])
     @diagnostico = Diagnostico.find_by_escuela_id(@escuela_id) if @escuela_id
     @diagnostico_concluido = (@diagnostico.oficializado) ? @diagnostico.oficializado : false  if @diagnostico
     @proyecto_habilitado = true
