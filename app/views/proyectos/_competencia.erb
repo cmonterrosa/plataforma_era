@@ -26,7 +26,7 @@
         <tr>
           <td align="justify" style="vertical-align:top;" >
             <div class="grid-6-12">
-              <label class="uper">Líneas de Acción:</label>
+              <label class="uper">Líneas de Acción: </label>
               <% @lineas.each do |linea| %>
               <li style=" margin-left:13px;padding:1px;"><%= linea.descripcion %> </li>
               <% end %>
@@ -42,7 +42,7 @@
         <tr>
           <td align="justify" style="vertical-align:top;" >
             <div class="grid-12-12">
-              <label class="uper">Objetivo especifico:</label>
+              <label class="uper">Objetivo especifico: <em class="formee-req"> *</em></label>
               <%= text_area :eje, :objetivo_especifico %>
             </div>
           </td>
@@ -50,7 +50,7 @@
         <tr>
           <td align="justify" style="vertical-align:top;" >
             <div class="grid-12-12">
-              <label class="uper">Meta:</label>
+              <label class="uper">Meta: <em class="formee-req"> *</em></label>
               <%= text_area :eje, :meta %>
             </div>
             <div class="grid-12-12">&nbsp;</div>
