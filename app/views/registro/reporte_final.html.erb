@@ -15,9 +15,8 @@
     <tr>
       <td align="center"><p>&nbsp; </p></td>
     </tr>
-    
     <tr>
-      <td align="center"><p style="font-size: 10px;">CÓDIGO DE AUTENTICIDAD: <%=@user.activation_code%></p></td>
+      <td><%= qrcode("#{@escuela.clave}", 2, 4, 'ESyS') %></td>
     </tr>
 
   </table>

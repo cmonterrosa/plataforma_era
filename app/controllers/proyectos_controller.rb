@@ -620,7 +620,7 @@ class ProyectosController < ApplicationController
   end
 
   def set_layout
-    (action_name == 'proyect_to_pdf')? 'reporte' : 'era2014'
+    (action_name == 'proyect_to_pdf')? 'reporte_proyecto' : 'era2014'
   end
 
   #### Funcion que guarda los proyectos escolares por tipo #####

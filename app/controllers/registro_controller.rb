@@ -98,7 +98,9 @@ class RegistroController < ApplicationController
   private
 
   def set_layout
-    (action_name == 'formato_registro' || action_name == 'reporte_final')? 'reporte' : 'era2014'
+    layout = (action_name == 'reporte_final')? 'reporte_final' : nil
+    layout ||= (action_name == 'formato_registro')? 'reporte' : 'era2014'
+    return layout
   end
 
 end

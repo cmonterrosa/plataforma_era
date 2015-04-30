@@ -1,10 +1,18 @@
 <% form_for :proyecto, @proyecto, :html => {:class => "reporte", :id => "proyecto"} do |f| -%>
-<table class="principal" width="100%" border="0" align="center" cellpadding="2" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
-  <tr bgcolor="#003366" style="opacity: 0.7;" >
+<table width="100%" border="0" align="center" cellpadding="2" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
+  <tr align="center">
     <td align="center">
-      <h1>TABLA  DE  PROYECTO  ESyS</h1><br />
-      <h3 style="color: yellow;"><%=h (@proyecto.diagnostico.escuela) ? @proyecto.diagnostico.escuela.descripcion_completa : ""%></h3>
-
+      <table width="100%" border="0" align="center" cellpadding="2" cellspacing="1">
+        <tr align="center" >
+          <td>
+            <%= qrcode("#{@proyecto.diagnostico.escuela.clave}", 2, 4, 'ESyS') %>
+          </td>
+          <td>&nbsp;</td>
+          <td>
+            <h2><%=h (@proyecto.diagnostico.escuela) ? @proyecto.diagnostico.escuela.descripcion_completa : ""%></h2>
+          </td>
+        </tr>
+      </table>
     </td>
   </tr>
   <tr align="center">
