@@ -629,9 +629,9 @@ class AdminController < ApplicationController
    end
 
   def menu_proyecto
-     @escuela = Escuela.find(params[:id])
-     @diagnostico = Diagnostico.find(params[:diagnostico])
-     @proyecto = @diagnostico.proyecto
+     @escuela = Escuela.find(params[:id]) if params[:id]
+     @diagnostico = Diagnostico.find(params[:diagnostico]) if params[:diagnostico]
+     @proyecto = @diagnostico.proyecto if @diagnostico
      render :partial => "menu_proyecto", :layout => "only_jquery"
    end
 
