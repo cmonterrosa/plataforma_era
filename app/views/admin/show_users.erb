@@ -38,12 +38,12 @@
 </div>
 
 <div id="divlista">
-  <table width="90%" border="0" cellspacing="0" cellpadding="0" class="sample" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid" align="center">
+  <table width="85%" border="0" cellspacing="0" cellpadding="0" class="sample" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid" align="center">
     <tr style="background-color:#2E6AB1;color:white;">
       <th style="vertical-align: middle;">&nbsp;</th>
       <th style="vertical-align: middle;">Login</th>
       <th style="vertical-align: middle;">Nombre de Escuela/Usuario</th>
-      <th style="vertical-align: middle;" colspan="8">Acciones</th>
+      <th style="vertical-align: middle;" colspan="7">Acciones</th>
     </tr>
 <%clase=0%>
 <%@usuarios.each do |user|%>
@@ -58,7 +58,8 @@
       h(image_tag("admin/disponible.png", :border =>0))
   end%>
       </td>
-      <td style="vertical-align: middle;"><%=h(user.login.upcase)%></td>
+      <td style="vertical-align: middle;"><%=link_to user.login.upcase, {:action => "show", :controller => "escuelas", :id => user.login}, :class => 'boton detalleEscuela', :title => "Detalle de Información" %></td>
+      
   <!-- Nombre de la escuela o usuario -->
   <%escuela = Escuela.find_by_clave(user.login)? Escuela.find_by_clave(user.login) : nil %>
   <%nombre= (escuela)? escuela.nombre : nil%>
@@ -67,13 +68,11 @@
     <%nombre ||= (directivo) ? "#{directivo} (Directivo)" : nil%>
   <%end%>
   <%nombre ||= "#{user.nombre} (Usuario)"%>
-      <td style="vertical-align: middle;"><%=h nombre%></td>
+      <td style="vertical-align: middle;"><%=link_to nombre, {:action => "show", :controller => "escuelas", :id => user.login}, :class => 'boton detalleEscuela', :title => "detalle de información" %></td>
+
       <!-- Acciones -->
-      <td style="vertical-align: middle;"><%=button_to "Detalles", {:action => "show", :controller => "escuelas", :id => user.login}, :class => 'boton', :style => "cursor:pointer" %></td>
-
-
       <%if current_user.has_role?("adminplat")%>
-        <td style="vertical-align: middle;"><%=button_to "Editar", {:action => "edit_user", :controller => "admin", :id => user.login, :us => user}, :class => 'boton', :style => "cursor:pointer" %></td>
+        <td style="vertical-align: middle;"><%=button_to "Editar", {:action => "edit_user", :controller => "admin", :id => user.login, :us => user}, :class => 'boton', :title => "Editar", :style => "cursor:pointer" %></td>
           <%if user.is_blocked?%>
               <td style="vertical-align: middle;"><%=button_to "Desbloquear", {:action => "block_user", :id => user.login}, :confirm => "¿Esta seguro que desea bloquearlo?", :method => :delete, :class => 'boton', :style => "cursor:pointer" %></td>
           <%else%>

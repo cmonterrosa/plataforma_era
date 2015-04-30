@@ -546,3 +546,13 @@ input[type="submit"].comprobante{
     height: 80px;
     text-align: center;
 }
+
+.detalleEscuela {
+        font-family: 'Open Sans', arial;
+        -webkit-font-smoothing: antialiased;
+        color: navy;
+        font-size: 12px;
+        font-weight: 300;
+        margin-top: 0;
+        margin-bottom: 20px;
+}
