@@ -64,11 +64,11 @@
          <%@evaluaciones_diagnostico = Evaluacion.find(:all, :conditions => ["diagnostico_id = ?", @escuela.diagnostico.id], :order => "updated_at DESC")%>
          <%@evaluaciones_diagnostico.each do |ed|%>
           <div class="grid-12-12">
-              <label style=" font-weight: bold;">Evaluador de diagnostico:</label>
+              <label style=" font-weight: bold; color: teal">Evaluador de diagnostico:</label>
               <label style=" font-style: italic;"><%= User.find(ed.user_id).nombre %></label>
               <br />
-              <label style=" font-weight: bold;">Observaciones de diagnostico:</label>
-              <label style=" font-style: italic;"><%= ed.observaciones %>&nbsp;Actualizacion: <%=ed.updated_at.strftime("%d-%m-%Y %H:%M")%></label>
+              <label style=" font-weight: bold; color: teal;">Observaciones de diagnostico:</label>
+              <label style=" font-style: italic;"><%= ed.observaciones %>&nbsp;<br /><span style="color: maroon;">Actualizacion: <%=ed.updated_at.strftime("%d-%m-%Y %H:%M")%></span></label>
           </div>
          <%end%>
 
