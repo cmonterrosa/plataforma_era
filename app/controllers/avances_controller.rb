@@ -43,6 +43,7 @@ class AvancesController < ApplicationController
   end
 
   def add_avances
+    @evidencia = true
     @id, @num_avance = (Base64.decode64(params[:id])).split("-") if params[:id]
     @eje = Eje.find(@id.to_i) if @id
     @catalogo_ejes = CatalogoEje.find(@eje.catalogo_eje) if @eje
@@ -186,7 +187,7 @@ class AvancesController < ApplicationController
   def concluido(proyecto, ejes, avance)
     @fin = false
     ejes.each do |e|
-      @adjuntos = Adjunto.find(:all, :conditions => ["proyecto_id = ? AND eje_id = ? AND avance = ?", proyecto, e.id, avance])
+      @adjuntos = Adjunto.find(:all, :conditions => ["proyecto_id = ? AND avance = ?", proyecto, avance])
       if @adjuntos.size.to_i > 0
         @fin = true
       end if @adjuntos
@@ -210,7 +211,8 @@ class AvancesController < ApplicationController
   end
 
   def avance_to_pdf
-    @num_avance = Base64.decode64(params[:num_avance]) if params[:num_avance]
+#    @num_avance = Base64.decode64(params[:num_avance]) if params[:num_avance]
+    @evidencia = params[:evidencia] if params[:evidencia]
     @escuela_id = Escuela.find_by_clave(current_user.login.upcase).id if current_user
     @escuela = Escuela.find(@escuela_id) if @escuela_id
     @diagnostico = Diagnostico.find_by_escuela_id(@escuela_id) if @escuela_id
@@ -218,18 +220,64 @@ class AvancesController < ApplicationController
     @proyecto = Proyecto.find_by_diagnostico_id(Diagnostico.find_by_escuela_id(@escuela_id).id)
 
     if @proyecto.oficializado
-#       @proyecto = Proyecto.find_by_diagnostico_id(@diagnostico)
-       @ejes = Eje.find(:all, :conditions => ["proyecto_id = ?", @proyecto.id ]).each do |eje|
-         if eje.catalogo_eje.clave == "EJE1"
+      @catalogo_ejes = CatalogoEje.find_by_clave(params[:eje])
+      @eje = Eje.find_by_catalogo_eje_id_and_proyecto_id(@catalogo_ejes.id, @proyecto.id)
+      @lineas = LineasAccion.find(:all, :conditions => ["catalogo_eje_id = ?", @catalogo_ejes.id ])
+      @indicadores = Indicadore.find(:all, :conditions => ["catalogo_eje_id = ?", @catalogo_ejes.id ] )
+        if params[:eje] == "EJE1"
           @competencia = Competencia.find_by_proyecto_id(@proyecto.id)
           @competencia_diagnostico = Competencia.find_by_diagnostico_id(@diagnostico.id) if @diagnostico
           @s_dcapacitadoras = multiple_selected_dcapacitadora(@competencia.docentes_capacitados) if @competencia.docentes_capacitados
           @s_acapacitadoras = multiple_selected_dcapacitadora(@competencia.alumnos_capacitados) if @competencia.alumnos_capacitados
-          @catalogo_ejes = CatalogoEje.find(eje)
-          @lineas = LineasAccion.find(:all, :conditions => ["catalogo_eje_id = ?", @catalogo_ejes.id ])
-          @indicadores = Indicadore.find(:all, :conditions => ["catalogo_eje_id = ?", @catalogo_ejes.id ] )
-         end
-       end
+        end
+
+        if params[:eje] == "EJE2"
+          @entorno = Entorno.find_by_proyecto_id(@proyecto.id)
+          @entorno_diagnostico = Entorno.find_by_diagnostico_id(@diagnostico.id) if @diagnostico
+          @s_acciones = multiple_selected_id(@entorno.acciones) if @entorno.acciones
+          @s_espacios = multiple_selected_espacios(@entorno.escuelas_espacios) if @entorno.escuelas_espacios
+          @escuela = Escuela.find_by_clave(current_user.login)
+          if @escuela.nivel_descripcion == "BACHILLERATO"
+            @acciones = Accione.find(:all, :conditions => ["clave not in ('AC03')"])
+          else
+            @acciones = Accione.find(:all, :conditions => ["clave not in ('AC00', 'AC01')"])
+          end
+        end
+
+        if params[:eje] == "EJE3"
+          @huella = Huella.find_by_proyecto_id(@proyecto.id)
+          @huella_diagnostico = Huella.find_by_diagnostico_id(@diagnostico.id) if @diagnostico
+          @s_inorganicos = multiple_selected_id(@huella.inorganicos) if @huella.inorganicos
+          @focos = 0..@huella_diagnostico.total_focos.to_i
+        end
+
+        if params[:eje] == "EJE4"
+          @consumo = Consumo.find_by_proyecto_id(@proyecto.id)
+          @consumo_diagnostico = Consumo.find_by_diagnostico_id(@diagnostico.id) if @diagnostico
+          @escuela = Escuela.find_by_clave(current_user.login.upcase)
+          if @escuela.nivel_descripcion == "BACHILLERATO"
+            @establecimientos = Establecimiento.find(:all, :conditions => ["nivel not in ('BASICA')"])
+          else
+            @establecimientos = Establecimiento.find(:all)
+          end
+
+          @s_preparacions = multiple_selected(@consumo.preparacions) if @consumo.preparacions
+          @s_utensilios = multiple_selected(@consumo.utensilios) if @consumo.utensilios
+          @s_higienes = multiple_selected(@consumo.higienes) if @consumo.higienes
+          @s_bebidas = multiple_selected(@consumo.bebidas) if @consumo.bebidas
+          @s_alimentos = multiple_selected(@consumo.alimentos) if @consumo.alimentos
+          @s_botanas = multiple_selected(@consumo.botanas) if @consumo.botanas
+          @s_reposterias = multiple_selected(@consumo.reposterias) if @consumo.reposterias
+          @s_materials = multiple_selected(@consumo.materials) if @consumo.materials
+          @s_afisicas = selected(@consumo.frecuencia_afisica) if @consumo.frecuencia_afisica
+        end
+
+        if params[:eje] == "EJE5"
+          @participacion = Participacion.find_by_proyecto_id(@proyecto.id)
+          @participacion_diagnostico = Participacion.find_by_diagnostico_id(@diagnostico.id) if @diagnostico
+          @s_dcapacitadoras = multiple_selected_dcapacitadora(@participacion.capacitacion_padres) if  @participacion.capacitacion_padres
+          cargar_proyectos_actuales
+        end
     else
       flash[:notice] = "Es necesario concluir la etapa de Proyecto"
       redirect_to :action => "index", :controller => "Proyecto"

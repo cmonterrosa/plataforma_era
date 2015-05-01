@@ -1,8 +1,15 @@
-<%desc= (@num_avance && @num_avance == 2)? "DO" : "ER"%>
-<p style="font-family: verdana; font-size: 16px; font-weight: normal;" >REPORTE DEL <%= @num_avance %><%=desc%> AVANCE DE ACTIVIDADES</p>
-<p style="font-family: verdana; font-size: 14px; font-weight: normal; color: navy;"><%=h (@escuela) ? @escuela.descripcion_completa : ""%></p>
-<% @ejes.sort_by { |hsh| hsh[:catalogo_eje_id] }.each do |eje| %>    
-<% form_for :ejes, @ejes, :url => { }, :html => {:class => "formee"} do |f| -%>
+<%#desc= (@num_avance && @num_avance == 2)? "DO" : "ER"%>
+<table border="0" width="100%">
+  <tr align="center">
+    <td rowspan="2" ><%= qrcode("#{@proyecto.diagnostico.escuela.clave}", 2, 4, 'ESyS') %></td>
+    <td><p style="font-family: verdana; font-size: 16px; font-weight: normal;" >REPORTE DE ACCIONES DEL PROYECTO</p></td>
+  </tr>
+  <tr align="center">
+    <td><p style="font-family: verdana; font-size: 14px; font-weight: normal; color: navy;"><%=h (@escuela) ? @escuela.descripcion_completa : ""%></p></td>
+  </tr>
+</table>
+<%# @ejes.sort_by { |hsh| hsh[:catalogo_eje_id] }.each do |eje| %>
+<% form_for :eje, @eje, :url => { }, :html => {:class => "formee"} do |f| -%>
 
 <table class="principal" width="100%" border="0" cellpadding="4" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
   <tr>
@@ -10,64 +17,69 @@
       <section class="ac-container">
         <div>
           <input id="ac-1" name="accordion-1" type="checkbox" checked />
-          <label class="acc-label" for="ac-1">AVANCE <%= @num_avance %>  >> <%= eje.catalogo_eje.completo %></label>
           <article class="ac-auto" >
             <div class="grid-6-12">
               <label class="art-label">LÍNEAS DE ACCIÓN: </label>
-              <% eje.catalogo_eje.lineas_accions.each do |linea| %>
+              <% @eje.catalogo_eje.lineas_accions.each do |linea| %>
                 <li><%= linea.descripcion %></li>
               <% end %>
             </div>
             <div class="grid-6-12">
               <label class="art-label">INDICADORES: </label>
-              <% eje.catalogo_eje.indicadores.each do |indicador| %>
+              <% @eje.catalogo_eje.indicadores.each do |indicador| %>
                 <li><%= indicador.descripcion %></li>
               <% end %>
             </div>
             <div class="grid-6-12">
               <label class="art-label">OBJETIVO ESPECÍFICO: </label>
-              <li><%= eje.objetivo_especifico %></li>
+              <li><%= @eje.objetivo_especifico %></li>
             </div>
             <div class="grid-6-12">
               <label class="art-label">META: </label>
-              <li><%= eje.meta %></li>
+              <li><%= @eje.meta %></li>
             </div>
-            <% num=1 %>
-
-            <!--
-            <div class="grid-12-12">
-              <label class="art-label">META LOGRADA: </label>
-                <%= text_area "", "meta", :value => eje.meta_lograda1, :class => "rpt" if @num_avance.to_i == 1 %>
-                <%= text_area "", "meta", :value => eje.meta_lograda2, :class => "rpt" if @num_avance.to_i == 2 %>
-            </div>
-            <div class="grid-12-12">
-              <label class="art-label">ACTIVIDADES: </label>
-              <ol style="list-style-type: decimal-leading-zero; padding-left: 2em;">
-              <% eje.actividads.each do |actividad| %>
-                <li><%= actividad.descripcion %> <em class="formee-req">*</em></li>
-                <% if @act %>
-                <%= text_area "actividades", "actividad#{num}", :value => @act["actividad#{num}"], :class => "rpt" %>
-                <% else %>
-                <%= text_area "actividades", "actividad#{num}", :class => "rpt" %>
-                <% end %>
-                <% num+=1 %>
-              <% end %>
-              </ol>
-            </div>
-            -->
+            <%# num=1 %>
           </article>
         </div>
       </section>
     </td>
   </tr>
+  <% if @eje.catalogo_eje.clave == "EJE1" %>
   <tr>
     <td>
-      <% if eje.catalogo_eje.clave == "EJE1" %>
         <%= render :partial => "competencia"%>
-      <% end %>
     </td>
   </tr>
+  <% end %>
+  <% if @eje.catalogo_eje.clave == "EJE2" %>
+  <tr>
+    <td>
+        <%= render :partial => "entorno"%>
+    </td>
+  </tr>
+  <% end %>
+  <% if @eje.catalogo_eje.clave == "EJE3" %>
+  <tr>
+    <td>
+        <%= render :partial => "huella"%>
+    </td>
+  </tr>
+  <% end %>
+  <% if @eje.catalogo_eje.clave == "EJE4" %>
+  <tr>
+    <td>
+        <%= render :partial => "consumo"%>
+    </td>
+  </tr>
+  <% end %>
+  <% if @eje.catalogo_eje.clave == "EJE5" %>
+  <tr>
+    <td>
+        <%= render :partial => "participacion"%>
+    </td>
+  </tr>
+  <% end %>
 </table>
 <% end %>
 <br />
-<% end %>
+<%# end %>

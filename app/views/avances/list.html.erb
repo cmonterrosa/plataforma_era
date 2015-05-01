@@ -22,15 +22,15 @@
                 <% @ejes.each do |eje| %>
                   <% case eje.catalogo_eje.clave
                   when "EJE1" %>
-                    <label><%= link_to "   EJE 1.- DESARROLLO DE COMPETENCIAS.", {:controller => "diagnosticos", :action => "eje1_to_pdf", :proyecto => @proyecto, :id => "#{Base64.encode64(@diagnostico.id.to_s)}.pdf" }, :style => "color:#dd4b39; text-decoration: none;", :title => "IMPRIMIR EJE1", :target => "_blank" %></label><br />
+                    <label><%= link_to "   EJE 1.- DESARROLLO DE COMPETENCIAS.", {:action => "avance_to_pdf", :id => "#{Base64.encode64(@diagnostico.id.to_s)}.pdf", :evidencia => false, :eje => "EJE1"}, :style => "color:#dd4b39; text-decoration: none;", :title => "IMPRIMIR EJE1", :target => "_blank" %></label><br />
                   <% when "EJE2" %>
-                    <label><%= link_to "   EJE 2.- ENTORNO SALUDABLE.", {:controller => "diagnosticos", :action => "eje2_to_pdf", :id => "#{Base64.encode64(@diagnostico.id.to_s)}.pdf" }, :style => "color:#dd4b39; text-decoration: none;", :title => "IMPRIMIR EJE2", :target => "_blank" %></label><br />
+                    <label><%= link_to "   EJE 2.- ENTORNO SALUDABLE.", {:action => "avance_to_pdf", :id => "#{Base64.encode64(@diagnostico.id.to_s)}.pdf", :evidencia => false, :eje => "EJE2" }, :style => "color:#dd4b39; text-decoration: none;", :title => "IMPRIMIR EJE2", :target => "_blank" %></label><br />
                   <% when "EJE3" %>
-                    <label><%= link_to "   EJE 3.- HUELLA ECOLÓGICA.", {:controller => "diagnosticos", :action => "eje3_to_pdf", :id => "#{Base64.encode64(@diagnostico.id.to_s)}.pdf" }, :style => "color:#dd4b39; text-decoration: none;", :title => "IMPRIMIR EJE3", :target => "_blank" %></label><br />
+                    <label><%= link_to "   EJE 3.- HUELLA ECOLÓGICA.", {:action => "avance_to_pdf", :id => "#{Base64.encode64(@diagnostico.id.to_s)}.pdf", :evidencia => false, :eje => "EJE3"}, :style => "color:#dd4b39; text-decoration: none;", :title => "IMPRIMIR EJE3", :target => "_blank" %></label><br />
                   <% when "EJE4" %>
-                    <label><%= link_to "   EJE 4.- CONSUMO RESPONSABLE / SALUDABLE.", {:controller => "diagnosticos", :action => "eje4_to_pdf", :id => "#{Base64.encode64(@diagnostico.id.to_s)}.pdf"}, :style => "color:#dd4b39; text-decoration: none;", :title => "IMPRIMIR EJE4", :target => "_blank" %></label><br />
+                    <label><%= link_to "   EJE 4.- CONSUMO RESPONSABLE / SALUDABLE.", {:action => "avance_to_pdf", :id => "#{Base64.encode64(@diagnostico.id.to_s)}.pdf", :evidencia => false, :eje => "EJE4"}, :style => "color:#dd4b39; text-decoration: none;", :title => "IMPRIMIR EJE4", :target => "_blank" %></label><br />
                   <% when "EJE5" %>
-                    <label><%= link_to "   EJE 5.- PARTICIPACIÓN COMUNITARIA.", {:controller => "diagnosticos", :action => "eje5_to_pdf", :id => "#{Base64.encode64(@diagnostico.id.to_s)}.pdf"}, :style => "color:#dd4b39; text-decoration: none;", :title => "IMPRIMIR EJE5", :target => "_blank" %></label><br />
+                    <label><%= link_to "   EJE 5.- PARTICIPACIÓN COMUNITARIA.", {:action => "avance_to_pdf", :id => "#{Base64.encode64(@diagnostico.id.to_s)}.pdf", :evidencia => false, :eje => "EJE5"}, :style => "color:#dd4b39; text-decoration: none;", :title => "IMPRIMIR EJE5", :target => "_blank" %></label><br />
                   <% else %>
                   <% end %>
                 <% end %>

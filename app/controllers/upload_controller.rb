@@ -226,11 +226,16 @@ class UploadController < ApplicationController
     @uploaded_file.avance = @num_avance.to_i
     @uploaded_file.numero_pregunta = @numero_pregunta.to_i
     @uploaded_file.user_id = current_user.id if current_user
-    if @uploaded_file.save
+    begin
+      if @uploaded_file.save
         flash[:notice] = "Evidencia cargada correctamente"
         redirect_to :action => "list_evidencias_avance", :proyecto => @proyecto, :eje => @eje, :num_avance => @num_avance, :numero_pregunta => @numero_pregunta
-    else
-      @errores = @uploaded_file.errors.full_messages
+      else
+        @errores = @uploaded_file.errors.full_messages
+        return render(:partial => 'carga_evidencia_error', :layout => "only_jquery")
+      end
+    rescue ActiveRecord::RecordInvalid => invalid
+      @errores = invalid.record.errors
       return render(:partial => 'carga_evidencia_error', :layout => "only_jquery")
     end
    end

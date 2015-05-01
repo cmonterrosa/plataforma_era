@@ -56,7 +56,7 @@
               <% @valor = x.numero if x[:espacio_id] == c.id %>
             <% end %>
             <% if @s_espacios.include?(c.id) %>
-              <%= check_box_tag "espacios[#{c.id}]", c.clave, @s_espacios.include?(c.id) ? true : false, :disabled => "disabled" %>&nbsp;<%= c.descripcion %>&nbsp;CANTIDAD&nbsp;EN&nbsp;M&sup2;&nbsp;<input name="<%= c.clave %>" id="<%= c.clave %>" size="4px" type="others" style="text-align:center; display: none;" value="<%=h @valor ? @valor : "" %>" disabled /><br /><br />
+              <%= check_box_tag "espacios[#{c.id}]", c.clave, @s_espacios.include?(c.id) ? true : false, :disabled => "disabled" %>&nbsp;<%= c.descripcion %>&nbsp;CANTIDAD&nbsp;EN&nbsp;M&sup2;&nbsp;<input name="<%= c.clave %>" id="<%= c.clave %>" size="4px" type="others" style="text-align:center; display: inline;" value="<%=h @valor ? @valor : "" %>" disabled /><br /><br />
               <%=linea_horizontal%>
             <% end %>
           <% end %>
@@ -65,9 +65,11 @@
         <%= f.check_box :no_espacios, { :checked => @entorno.no_espacios == "NO" ? true : false, :disabled => "disabled" }, "NO", "SI" %>&nbsp;NO CUENTA CON ESPACIOS
       </fieldset>
       <div id="eje2_p2" class="grid-12-12" style="text-align: center;">
+        <% if @evidencia %>
         <%= link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta2", :id => "pregunta2"),
                                                               {:controller => "upload", :proyecto => @proyecto.id, :eje => 2, :numero_pregunta => 2, :action => "list_evidencias_avance", :num_avance => @num_avance },
                                                               :title => "EVIDENCIA DE LA PREGUNTA 2", :class => "fancybox fancybox.iframe"%>
+        <% end %>
       </div>
     </td>
   </tr>
@@ -103,10 +105,12 @@
             <%= f.text_field :escuela_reforesta_num, :style => "text-align: center;", :disabled => "disabled" %>
           </div>
           <div class="grid-4-12"></div>
-          <div id="eje3_p3" class="grid-12-12" style="text-align: center;">
+          <div id="eje2_p3" class="grid-12-12" style="text-align: center;">
+            <% if @evidencia %>
             <%= link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta3", :id => "pregunta3"),
                                                               {:controller => "upload", :proyecto => @proyecto.id, :eje => 2, :numero_pregunta => 3, :action => "list_evidencias_avance", :num_avance => @num_avance },
                                                               :title => "EVIDENCIA DE LA PREGUNTA 3", :class => "fancybox fancybox.iframe"%>
+            <% end %>
           </div>
         </div>
       </div>
@@ -147,9 +151,11 @@
         </div>
       </fieldset>
       <div id="eje2_p5" class="grid-12-12" style="display: none; text-align: center;">
+        <% if @evidencia %>
         <%= link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta5", :id => "pregunta5"),
                                                               {:controller => "upload", :proyecto => @proyecto.id, :eje => 2, :numero_pregunta => 5, :action => "list_evidencias_avance", :num_avance => @num_avance },
                                                               :title => "EVIDENCIA DE LA PREGUNTA 5", :class => "fancybox fancybox.iframe"%>
+        <% end %>
       </div>
     </td>
   </tr>
@@ -166,7 +172,7 @@
       <%#*<input id="siguiente" onclick="to_uppercase();" class="buttonText" type="submit" title="Guardar" value="Guardar" />%>
     </td>
     <td>
-      <%= link_to "Regresar", { :controller => "avances", :action => "index", :num_avance => Base64.encode64(@num_avance) }, {:id => "cancelar_sig", :class => "buttonText" } %>
+      <%= link_to "Guardar y Regresar", { :controller => "avances", :action => "index", :num_avance => Base64.encode64(@num_avance.to_s) }, {:id => "cancelar_sig", :class => "buttonText" } %>
     </td>
   </tr>
   <tr>

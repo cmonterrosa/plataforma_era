@@ -1,5 +1,8 @@
 <% form_for :huella, @huella, :url => {  :action => "save_huella", :id => @entorno, :proyecto => @proyecto.id, :eje_id => @eje }, :html => {:class => "formee", :name => "huella", :id => "huella"} do |f| -%>
 <table class="subprincipal" width="100%" border="0" align="center" cellpadding="2" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
+  <tr bgcolor="#003366" style="opacity: 0.7; color: white;" >
+    <td align="left"><h2><%= @catalogo_ejes.clave %>: <%= @catalogo_ejes.descripcion %></h2></td>
+  </tr>
   <!--
   <tr>
     <td align="justify" style="vertical-align:top;" >
@@ -55,9 +58,11 @@
       </div>
       <div class="grid-8-12"></div>
       <div id="eje3_p1" class="grid-12-12" style="text-align: center; display: none;">
+        <% if @evidencia %>
         <%= link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta1", :id => "pregunta1"),
                                                               {:controller => "upload", :proyecto => @proyecto.id, :eje => 3, :numero_pregunta => 1, :action => "list_evidencias_avance", :num_avance => @num_avance },
                                                               :title => "EVIDENCIA DE LA PREGUNTA 1", :class => "fancybox fancybox.iframe"%>
+        <% end %>
       </div>
     </td>
   </tr>
@@ -129,9 +134,11 @@
       </div>
       <div class="grid-8-12"></div>
       <div id="eje3_p7" class="grid-12-12" style="text-align: center; display: none;">
+        <% if @evidencia %>
         <%= link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta7", :id => "pregunta7"),
                                                               {:controller => "upload", :proyecto => @proyecto.id, :eje => 3, :numero_pregunta => 7, :action => "list_evidencias_avance", :num_avance => @num_avance },
                                                               :title => "EVIDENCIA DE LA PREGUNTA 7", :class => "fancybox fancybox.iframe"%>
+        <% end %>
       </div>
     </td>
   </tr>
@@ -157,9 +164,11 @@
       </div>
       <div class="grid-8-12"></div>
       <div id="eje3_p8" class="grid-12-12" style="text-align: center; display: none;">
+        <% if @evidencia %>
         <%= link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta8", :id => "pregunta8"),
                                                               {:controller => "upload", :proyecto => @proyecto.id, :eje => 3, :numero_pregunta => 8, :action => "list_evidencias_avance", :num_avance => @num_avance },
                                                               :title => "EVIDENCIA DE LA PREGUNTA 8", :class => "fancybox fancybox.iframe"%>
+        <% end %>
       </div>
     </td>
   </tr>
@@ -186,9 +195,11 @@
         </div>
       </fieldset>
       <div id="eje3_p9" class="grid-12-12" style="text-align: center; display: none;">
+        <% if @evidencia %>
         <%= link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta9", :id => "pregunta9"),
                                                               {:controller => "upload", :proyecto => @proyecto.id, :eje => 3, :numero_pregunta => 9, :action => "list_evidencias_avance", :num_avance => @num_avance },
                                                               :title => "EVIDENCIA DE LA PREGUNTA 9", :class => "fancybox fancybox.iframe"%>
+        <% end %>
       </div>
     </td>
   </tr>
@@ -200,22 +211,7 @@
   </script>
   <% end %>
 </table>
-<!--
-<br />
-<table align="right" >
-  <tr >
-    <td>&nbsp;
-      <%#*<input id="siguiente" onclick="to_uppercase();" class="buttonText" type="submit" title="Guardar" value="Guardar" />%>
-    </td>
-    <td>
-      <%= link_to "Regresar", { :controller => "avances", :action => "index", :num_avance => Base64.encode64(@num_avance) }, {:id => "cancelar_sig", :class => "buttonText" } %>
-    </td>
-  </tr>
-  <tr>
-    <td colspan="2" >&nbsp;</td>
-  </tr>
-</table>
--->
+
 <% end %>
 <%= render :partial => "diagnosticos/errores_evidencias"%>
 

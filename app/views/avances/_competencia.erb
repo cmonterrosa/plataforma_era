@@ -80,7 +80,7 @@
               <div class="grid-2-12">AMBOS: <%= f.text_field :dctes_cap_ambos, :style => "text-align: center;", :disabled => "disabled" %></div>
               <div class="grid-1-12"></div>
               <div class="grid-3-12" style="text-align:center;">TOTAL&nbsp;A&nbsp;CAPACITAR:
-                <input id="total_docentes" name="total_docentes" type="text" style="border-width: 0; width: 55px; font-size: 15px; text-align: center; color: black; background-color: #e6f8e0;" onkeyup="showImageDctesAlumn('docentes', 'dcapacitadora', 'eje1_p1');" />
+                <input id="total_docentes" name="total_docentes" type="text" style="border-width: 0; width: 55px; font-size: 15px; text-align: center; color: black; background-color: #e6f8e0;" />
               </div>
             </div>
             <div class="grid-12-12" id="dcapacitadora" style="display: none;">
@@ -107,11 +107,11 @@
               </fieldset>
             </div>
             <div class="grid-12-12" id="eje1_p1" style="display: none; text-align: center;">
-              
+              <% if @evidencia %>
               <%=link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta1", :id => "pregunta1"),
                                                               {:controller => "upload", :proyecto => @proyecto.id, :eje => 1, :numero_pregunta => 1, :action => "list_evidencias_avance", :num_avance => @num_avance },
                                                               :title => "EVIDENCIA DE LA PREGUNTA 1", :class => "fancybox fancybox.iframe"%>
-              
+              <% end %>
             </div>
           </td>
         </tr>
@@ -134,9 +134,11 @@
               <div class="grid-1-12"></div>
             </div>
             <div class="grid-12-12" id="eje1_p2" style="display: none; text-align: center;">
+              <% if @evidencia %>
               <%=link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta2", :id => "pregunta2"),
                                                               {:controller => "upload", :proyecto => @proyecto.id, :eje => 1, :numero_pregunta => 2, :action => "list_evidencias_avance", :num_avance => @num_avance },
                                                               :title => "EVIDENCIA DE LA PREGUNTA 2", :class => "fancybox fancybox.iframe"%>
+              <% end %>
             </div>
           </td>
         </tr>
@@ -159,9 +161,11 @@
               <div class="grid-1-12"></div>
             </div>
             <div class="grid-12-12" id="eje1_p3" style="display: none; text-align: center;">
+              <% if @evidencia %>
               <%=link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta3", :id => "pregunta3"),
                                                               {:controller => "upload", :proyecto => @proyecto.id, :eje => 1, :numero_pregunta => 3, :action => "list_evidencias_avance", :num_avance => @num_avance },
                                                               :title => "EVIDENCIA DE LA PREGUNTA 3", :class => "fancybox fancybox.iframe"%>
+              <% end %>
             </div>
           </td>
         </tr>
@@ -184,9 +188,11 @@
               <div class="grid-1-12"></div>
             </div>
             <div class="grid-12-12" id="eje1_p4" style="display: none; text-align: center;">
+              <% if @evidencia %>
               <%=link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta4", :id => "pregunta4"),
                                                               {:controller => "upload", :proyecto => @proyecto.id, :eje => 1, :numero_pregunta => 4, :action => "list_evidencias_avance", :num_avance => @num_avance },
                                                               :title => "EVIDENCIA DE LA PREGUNTA 4", :class => "fancybox fancybox.iframe"%>
+              <% end %>
             </div>
           </td>
         </tr>
@@ -237,9 +243,11 @@
               </fieldset>
             </div>
             <div class="grid-12-12" id="eje1_p5" style="display: none; text-align: center;">
+              <% if @evidencia %>
               <%=link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta5", :id => "pregunta5"),
                                                               {:controller => "upload", :proyecto => @proyecto.id, :eje => 1, :numero_pregunta => 5, :action => "list_evidencias_avance", :num_avance => @num_avance },
                                                               :title => "EVIDENCIA DE LA PREGUNTA 5", :class => "fancybox fancybox.iframe"%>
+              <% end %>
             </div>
           </td>
         </tr>
@@ -248,22 +256,6 @@
         </script>
         <% end %>
       </table>
-      <!--
-      <br />
-      <table align="right" >
-        <tr >
-          <td>&nbsp;
-            <%#*<input id="siguiente" onclick="to_uppercase();" class="buttonText" type="submit" title="Guardar" value="Guardar" />%>
-          </td>
-          <td>
-            <%= link_to "Regresar", { :controller => "avances", :action => "index", :num_avance => Base64.encode64(@num_avance) }, {:id => "cancelar_sig", :class => "buttonText" } %>
-          </td>
-        </tr>
-        <tr>
-          <td colspan="2" >&nbsp;</td>
-        </tr>
-      </table>
-      -->
 <% end %>
   <%= render :partial => "diagnosticos/errores_evidencias"%>
 
