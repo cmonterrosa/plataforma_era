@@ -641,73 +641,112 @@ class AdminController < ApplicationController
    #################################################
 
   def dashboard_proyecto
-    @diagnostico = Diagnostico.find(params[:diagnostico]) if params[:diagnostico]
-    @proyecto = Proyecto.find_by_diagnostico_id(@diagnostico.id) if @diagnostico
-    @user = (params[:id]) ? User.find(params[:id]): current_user
-    @escuela = @user.escuela if @user
+     @avance = params[:avance] ? params[:avance] : 0
+     @proyecto = Proyecto.find(params[:proyecto]) if params[:proyecto]
+     @diagnostico = @proyecto.diagnostico if @proyecto
+     @user = (params[:id]) ? User.find(params[:id]): current_user
+     @escuela = @user.escuela if @user
 
 #     @evaluacion = Evaluacion.find(:first, :conditions => ["diagnostico_id = ? AND user_id = ? AND activa = true", @diagnostico.id, @user.id])
-    @evaluacion = Evaluacion.find(:first, :conditions => ["diagnostico_id = ? AND user_id = ?", @diagnostico.id, current_user.id])
-    @evaluacion ||= Evaluacion.new(:diagnostico_id => @diagnostico.id)
+     @evaluacion = Evaluacion.find(:first, :conditions => ["proyecto_id = ? AND user_id = ?", @proyecto.id, current_user.id])
+     @evaluacion ||= Evaluacion.new(:proyecto_id => @proyecto.id)
 
-    diagnostico = Evaluacion.new(:diagnostico_id => Diagnostico.find(params[:diagnostico]).id)
-    proyecto = Evaluacion.new(:proyecto_id => @proyecto.id)
+     proyecto = Evaluacion.new(:proyecto_id => Proyecto.find(params[:proyecto]).id)
+     @p_diagnostico = Evaluacion.new(:diagnostico_id => @diagnostico.id)
 #     Puntajes eje1
-    @competencia_p1 = diagnostico.puntaje_eje1_p1
-    @competencia_p2 = diagnostico.puntaje_eje1_p2
-    @competencia_p3 = diagnostico.puntaje_eje1_p3
-    @competencia_p4 = diagnostico.puntaje_eje1_p4
-    @competencia_p5 = diagnostico.puntaje_eje1_p5
+     if @proyecto.competencia
+      @competencia_p1 = proyecto.puntaje_eje1_p1("proyecto", @avance)
+      @competencia_p2 = proyecto.puntaje_eje1_p2("proyecto", @avance)
+      @competencia_p3 = proyecto.puntaje_eje1_p3("proyecto", @avance)
+      @competencia_p4 = proyecto.puntaje_eje1_p4("proyecto", @avance)
+      @competencia_p5 = proyecto.puntaje_eje1_p5("proyecto", @avance)
 
-    @ptos_obtenidos_eje1 = (@competencia_p1 + @competencia_p2 + @competencia_p3 + @competencia_p4 + @competencia_p5)#.to_f.round(3)
-    @total_puntos_eje1 = diagnostico.puntaje_total_eje1
-    @puntaje_total_eje1 = diagnostico.puntaje_total_obtenido_eje1
+      @ptos_obtenidos_eje1 = (@competencia_p1 + @competencia_p2 + @competencia_p3 + @competencia_p4 + @competencia_p5)#.to_f.round(3)
+      @total_puntos_eje1 = proyecto.puntaje_total_eje1
+      @puntaje_total_eje1 = proyecto.puntaje_total_obtenido_eje1("proyecto", @avance)
 
-    @competencia_ap1 = proyecto.puntaje_avance_eje1_p1
-    @competencia_ap2 = proyecto.puntaje_avance_eje1_p2
-    @competencia_ap3 = proyecto.puntaje_avance_eje1_p3
-    @competencia_ap4 = proyecto.puntaje_avance_eje1_p4
-    @competencia_ap5 = proyecto.puntaje_avance_eje1_p5
+      @eje1 = CatalogoEje.find_by_clave("EJE1")
+      @preguntas_eje1 = Adjunto.find(:all, :conditions => ["user_id = ? and proyecto_id = ? and eje_id = ? and numero_pregunta = ? and avance = ?", @user, @proyecto.id, @eje1.id, 1, 1], :group => "numero_pregunta")
+      a=0
+     end
 
-    @ptos_obtenidos_aeje1 = (@competencia_ap1 + @competencia_ap2 + @competencia_ap3 + @competencia_ap4 + @competencia_ap5)#.to_f.round(3)
-    @total_puntos_aeje1 = proyecto.puntaje_total_eje1
-    @puntaje_total_aeje1 = proyecto.puntaje_total_obtenido_eje1
+#     Puntajes eje2
+    if @proyecto.entorno
+     @entorno_p2 = proyecto.puntaje_eje2_p2
+     @entorno_p3 = proyecto.puntaje_eje2_p3
+     @entorno_p5 = proyecto.puntaje_eje2_p5
 
+     @ptos_obtenidos_eje2 = (@entorno_p2 + @entorno_p3 + @entorno_p5)#.to_f.round(3)
+     @total_puntos_eje2 = proyecto.puntaje_total_eje2
+     @puntaje_total_eje2 = proyecto.puntaje_total_obtenido_eje2
 
-#    @diagnostico = Diagnostico.find(params[:diagnostico]) if params[:diagnostico]
-#     @proyecto = Proyecto.find(:first, :conditions => ["diagnostico_id = ?", @diagnostico.id]) if @diagnostico
-#     @user = (params[:id]) ? User.find(params[:id]): current_user
-#     @escuela = @user.escuela if @user
-#     @s_catalogo_accions = multiple_selected_id(current_user.catalogo_accions) if current_user.catalogo_accions and @evaluacion
-#     @evidencias_avance1 = Hash.new
-#     @evidencias_avance2 = Hash.new
-#     @puntaje_avance1 = Hash.new{|hash, key| hash[key] = Hash.new}
-#     @puntaje_avance2 = Hash.new{|hash, key| hash[key] = Hash.new}
-##     if current_user.has_role?('revisor') or current_user.has_role?('adminplat')
-#       @evaluacion = Evaluacion.find(:first, :conditions => ["proyecto_id = ? AND user_id = ?", @proyecto.id, current_user.id])
-#
-##       @s_catalogo_accions = multiple_selected_id(current_user.catalogo_accions) if current_user.catalogo_accions and @evaluacion
-##       @s_catalogo_accions ||= []
-#
-##     else
-##       @evaluacion = Evaluacion.find(:first, :conditions => ["proyecto_id = ? AND user_id = ?", @proyecto.id, @user.id])
-##     end
-#     @evaluacion ||= Evaluacion.new(:proyecto_id => @proyecto.id)
-#
-#     diagnostico = Evaluacion.new(:diagnostico_id => Diagnostico.find(params[:diagnostico]).id)
-#     (1..5).each do |eje|
-#       a1 = Adjunto.find(:all, :select => "adjuntos.numero_actividad",  :joins => "adjuntos, ejes e, catalogo_ejes ce", :conditions => ["adjuntos.proyecto_id = ? AND adjuntos.eje_id=e.id AND e.catalogo_eje_id=ce.id AND adjuntos.avance = 1 AND ce.clave= ?", @proyecto.id, "EJE#{eje}"], :group => "adjuntos.numero_actividad")
-#       a2 = Adjunto.find(:all, :select => "adjuntos.numero_actividad",  :joins => "adjuntos, ejes e, catalogo_ejes ce", :conditions => ["adjuntos.proyecto_id = ? AND adjuntos.eje_id=e.id AND e.catalogo_eje_id=ce.id AND adjuntos.avance = 2 AND ce.clave= ?", @proyecto.id, "EJE#{eje}"], :group => "adjuntos.numero_actividad")
-#       @evidencias_avance1["EJE#{eje}"] =  a1.map { |a| a.numero_actividad  } unless a1.empty?
-#       @evidencias_avance2["EJE#{eje}"] =  a2.map { |b|b.numero_actividad  }  unless a2.empty?
-#       (1..4).each do |actividad|
-#         @puntaje_avance1["EJE#{eje}"]["#{actividad}"]=   diagnostico.puntaje_avance_eje(1, eje, actividad)
-#         @puntaje_avance2["EJE#{eje}"]["#{actividad}"]=   diagnostico.puntaje_avance_eje(2, eje, actividad)
-#        end
-#     end
-#
-#     @historico = Evaluacion.find(:all, :conditions => ["proyecto_id = ?", @proyecto.id], :group => "user_id", :order => "updated_at DESC")
-#     @husuario = Evaluacion.find(:all, :conditions => ["proyecto_id = ?", @proyecto.id], :group => "user_id", :order => "updated_at DESC")
+     @eje2 = CatalogoEje.find_by_clave("EJE2")
+     @preguntas_eje2 = Adjunto.find(:all, :conditions => ["user_id = ? and proyecto_id = ? and eje_id = ? and numero_pregunta = ? and avance = ?", @user, @proyecto.id, @eje2.id, 1, 1], :group => "numero_pregunta")
+    end
+
+#     Puntajes eje3
+    if @proyecto.huella
+     @huella_p1 = proyecto.puntaje_eje3_p1
+     @huella_p3 = proyecto.puntaje_eje3_p3
+     @huella_p5 = proyecto.puntaje_eje3_p5
+     @huella_p7 = proyecto.puntaje_eje3_p7
+     @huella_p8 = proyecto.puntaje_eje3_p8
+     @huella_p9 = proyecto.puntaje_eje3_p9
+
+     ## Puntajes default ####
+     @huella_p1 ||= 0
+     @huella_p3 ||= 0
+     @huella_p5 ||= 0
+     @huella_p7 ||= 0
+     @huella_p8 ||= 0
+     @huella_p9 ||= 0
+
+     @ptos_obtenidos_eje3 = (@huella_p1 + @huella_p3 + @huella_p5 + @huella_p7 + @huella_p8 + @huella_p9)#.to_f.round(3)
+     @total_puntos_eje3 = proyecto.puntaje_total_eje3
+     @puntaje_total_eje3 = proyecto.puntaje_total_obtenido_eje3
+
+     @eje3 = CatalogoEje.find_by_clave("EJE3")
+     @preguntas_eje3 = Adjunto.find(:all, :conditions => ["user_id = ? and proyecto_id = ? and eje_id = ? and numero_pregunta = ? and avance = ?", @user, @proyecto.id, @eje3.id, 1, 1], :group => "numero_pregunta")
+    end
+
+#     Puntaje eje4
+    if @proyecto.consumo
+     @consumo_p2 = proyecto.puntaje_eje4_p2
+     @consumo_p3 = proyecto.puntaje_eje4_p3
+     @consumo_p4 = proyecto.puntaje_eje4_p4
+     @consumo_p5 = proyecto.puntaje_eje4_p5
+     @consumo_p6 = proyecto.puntaje_eje4_p6
+     @consumo_p7 = proyecto.puntaje_eje4_p7
+     @consumo_p8 = proyecto.puntaje_eje4_p8
+
+     @ptos_obtenidos_eje4 = (@consumo_p2 + @consumo_p3 + @consumo_p4 + @consumo_p5 + @consumo_p6 + @consumo_p7 + @consumo_p8)#.to_f.round(3)
+     @total_puntos_eje4 = proyecto.puntaje_total_eje4
+     @puntaje_total_eje4 = proyecto.puntaje_total_obtenido_eje4
+
+     @eje4 = CatalogoEje.find_by_clave("EJE4")
+     @preguntas_eje4 = Adjunto.find(:all, :conditions => ["user_id = ? and proyecto_id = ? and eje_id = ? and numero_pregunta = ? and avance = ?", @user, @proyecto.id, @eje4.id, 1, 1], :group => "numero_pregunta")
+    end
+
+#     Puntaje eje5
+#     @participacion_p1 = diagnostico.puntaje_eje5_p1
+    if @proyecto.participacion
+     @participacion_p2 = proyecto.puntaje_eje5_p2
+     @participacion_p3 = proyecto.puntaje_eje5_p3
+     @participacion_p4 = proyecto.puntaje_eje5_p4
+     @participacion_p5 = proyecto.puntaje_eje5_p5
+     @participacion_p6 = proyecto.puntaje_eje5_p6
+     @participacion_p7 = proyecto.puntaje_eje5_p7
+
+     @ptos_obtenidos_eje5 = (@participacion_p2 + @participacion_p3 +  @participacion_p4 + @participacion_p5 + @participacion_p6 + @participacion_p7)#.to_f.round(3)
+     @total_puntos_eje5 = proyecto.puntaje_total_eje5
+     @puntaje_total_eje5 = proyecto.puntaje_total_obtenido_eje5
+
+      @eje5 = CatalogoEje.find_by_clave("EJE5")
+      @preguntas_eje5 = Adjunto.find(:all, :conditions => ["user_id = ? and proyecto_id = ? and eje_id = ? and numero_pregunta = ? and avance = ?", @user, @proyecto.id, @eje5.id, 1, 1], :group => "numero_pregunta")
+    end
+
+     @historico = Evaluacion.find(:all, :conditions => ["proyecto_id = ?", @proyecto.id], :group => "user_id", :order => "updated_at DESC")
+     @husuario = Evaluacion.find(:all, :conditions => ["proyecto_id = ?", @proyecto.id], :group => "user_id", :order => "updated_at DESC")
 
      render :layout => "only_jquery"
   end
@@ -987,16 +1026,6 @@ class AdminController < ApplicationController
      
      redirect_to :action => "dashboard_proyecto", :diagnostico => @diagnostico.id, :id => params[:id] #@evaluacion.user_id#, :proyecto => @proyecto.id
    end
-  
-   ####### ASIGNACION DE EVALUADOR #######
-
-#   def asignar_evaluador2
-#     @escuela = Escuela.find(params[:id])
-#     @evaluadores = Role.find_by_name("revisor").users.sort{|p1,p2| p1.nombre <=> p2.nombre}
-#     @evaluador = (@escuela.evaluador_id) ? User.find(@escuela.evaluador_id) : nil
-#     render :layout => "only_jquery"
-#   end
-
 
    def asignar_evaluador
      @escuela = Escuela.find(params[:id])
@@ -1004,8 +1033,6 @@ class AdminController < ApplicationController
      @s_evaluadores = multiple_selected_id(@escuela.users) if @escuela.users
      render :layout => "only_jquery"
    end
-
-
 
    def save_asignar_evaluador
      @escuela = Escuela.find(params[:id])
