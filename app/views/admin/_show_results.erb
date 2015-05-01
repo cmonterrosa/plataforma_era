@@ -25,7 +25,7 @@
         </span>
       </div>
     <div class="grid-6-12"><%= text_field_tag :clave_nombre, {}, :disabled => 'disabled', :style => "display: none;"  %></div>
-    <div class="grid-5-12"><%= select_tag :estatus_escuela, options_from_collection_for_select(Estatu.find(:all), "id", "descripcion"), :prompt => "Select something", :disabled => 'disabled', :style => "display: none;" %></div>
+    <div class="grid-5-12"><%= select_tag :estatus_escuela, options_from_collection_for_select(Estatu.find(:all, :conditions => ["activo = ?", true], :order => "jerarquia"), "id", "descripcion"), :prompt => "Select something", :disabled => 'disabled', :style => "display: none;" %></div>
     <div class="grid-1-12">
     <%= image_submit_tag "admin/find.png", :onmouseover => "this.src='/images/admin/find1.png'", :onmouseout => "this.src='/images/admin/find.png'", :style => "border: 0px;" %>
     </div>
@@ -93,6 +93,17 @@
           <%else%>
               <td style="vertical-align: middle;"><%=button_to "Bloquear", {:action => "block_user", :id => user.login}, :confirm => "¿Esta seguro que desea bloquearlo?", :method => :delete, :class => 'boton', :style => "cursor:pointer" %></td>
           <%end%>
+
+
+          <%#*<!-- Habilitar proyecto -->%>
+          <%#diagnostico = Diagnostico.find(:first, :conditions => ["escuela_id = ?", escuela]) if escuela%>
+          <%#diagnostico_oficializado = (diagnostico.oficializado)? true : false if diagnostico%>
+          <%#diagnostico_evaluado = (escuela.estatu == Estatu.find_by_clave("diag-eva") || escuela.bitacoras.include?(Estatu.find_by_clave("diag-eva")))? true : false if diagnostico%>
+          <%#if diagnostico && diagnostico_oficializado && diagnostico_evaluado%>
+            <%#*<td style="vertical-align: middle;"><%=button_to "Autorizar proyecto", {:action => "autorizar_proyecto", :escuela => escuela}, :confirm => "¿Esta seguro que desea autorizar la captura del proyecto?", :method => :delete, :class => 'boton', :style => "cursor:pointer" %>
+          <%#end%>
+
+
       <%end%>
       <!-- Menu -->
       <%if escuela%>
