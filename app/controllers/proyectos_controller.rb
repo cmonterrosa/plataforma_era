@@ -52,6 +52,11 @@ class ProyectosController < ApplicationController
         @competencia_diagnostico = Competencia.find_by_diagnostico_id(@diagnostico.id) if @diagnostico
         @s_dcapacitadoras = multiple_selected_dcapacitadora(@competencia.docentes_capacitados) if @competencia.docentes_capacitados
         @s_acapacitadoras = multiple_selected_dcapacitadora(@competencia.alumnos_capacitados) if @competencia.alumnos_capacitados
+        @evidencia_diagnostico_p1 = evidencia_valida?(@eje.catalogo_eje.id, 1, @diagnostico)
+        @evidencia_diagnostico_p2 = evidencia_valida?(@eje.catalogo_eje.id, 2, @diagnostico)
+        @evidencia_diagnostico_p3 = evidencia_valida?(@eje.catalogo_eje.id, 3, @diagnostico)
+        @evidencia_diagnostico_p4 = evidencia_valida?(@eje.catalogo_eje.id, 4, @diagnostico)
+        @evidencia_diagnostico_p5 = evidencia_valida?(@eje.catalogo_eje.id, 5, @diagnostico)
       end
 
       if params[:catalogo_catalogo_eje_id] == "EJE2"
@@ -177,6 +182,12 @@ class ProyectosController < ApplicationController
       @competencia_diagnostico = Competencia.find_by_diagnostico_id(@diagnostico.id) if @diagnostico
       @s_dcapacitadoras = multiple_selected_dcapacitadora(@competencia.docentes_capacitados) if @competencia.docentes_capacitados
       @s_acapacitadoras = multiple_selected_dcapacitadora(@competencia.alumnos_capacitados) if @competencia.alumnos_capacitados
+
+      @evidencia_diagnostico_p1 = evidencia_valida?(@eje.catalogo_eje.id, 1, @diagnostico)
+      @evidencia_diagnostico_p2 = evidencia_valida?(@eje.catalogo_eje.id, 2, @diagnostico)
+      @evidencia_diagnostico_p3 = evidencia_valida?(@eje.catalogo_eje.id, 3, @diagnostico)
+      @evidencia_diagnostico_p4 = evidencia_valida?(@eje.catalogo_eje.id, 4, @diagnostico)
+      @evidencia_diagnostico_p5 = evidencia_valida?(@eje.catalogo_eje.id, 5, @diagnostico)
     end
 
     if @eje.catalogo_eje.clave == "EJE2"

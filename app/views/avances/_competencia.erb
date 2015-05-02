@@ -1,7 +1,7 @@
 
 <!-- Variables  -->
 <% totales = Escuela.find_by_clave(current_user.login.upcase)
-    docentes_capacitados = (@competencia_diagnostico.dctes_cap_salud + @competencia_diagnostico.dctes_cap_ma + @competencia_diagnostico.dctes_cap_ambos).to_i
+    docentes_capacitados = @evidencia_diagnostico_p1 ? (@competencia_diagnostico.dctes_cap_salud + @competencia_diagnostico.dctes_cap_ma + @competencia_diagnostico.dctes_cap_ambos).to_i : 0
     if totales.nivel_descripcion == "BACHILLERATO"
       docentes = totales.perfil_ciencias_naturales
     else
@@ -10,14 +10,17 @@
     docentes_no_capacitados = docentes - docentes_capacitados
 
     total_alumnos = (totales.alu_hom + totales.alu_muj).to_i
-    alumnos_capacitados_dep = (@competencia_diagnostico.alumn_cap_salud + @competencia_diagnostico.alumn_cap_ma + @competencia_diagnostico.alumn_cap_ambos).to_i
+    alumnos_capacitados_dep = @evidencia_diagnostico_p5 ? (@competencia_diagnostico.alumn_cap_salud + @competencia_diagnostico.alumn_cap_ma + @competencia_diagnostico.alumn_cap_ambos).to_i : 0
     alumnos_no_capacitados_dep = total_alumnos - alumnos_capacitados_dep
 
-    docentes_no_aplican = docentes - @competencia_diagnostico.dctes_aplican_conocimto
+    docentes_aplican = @evidencia_diagnostico_p2 ? @competencia_diagnostico.dctes_aplican_conocimto : 0
+    docentes_no_aplican = docentes - docentes_aplican
 
-    docentes_no_involucran = docentes - @competencia_diagnostico.dctes_invol_act
+    docentes_involucran = @evidencia_diagnostico_p3 ? @competencia_diagnostico.dctes_invol_act : 0
+    docentes_no_involucran = docentes - docentes_involucran
 
-    alumnos_no_capacitados = total_alumnos - @competencia_diagnostico.alumn_cap_dctes
+    alumnos_capacitados = @evidencia_diagnostico_p4 ? @competencia_diagnostico.alumn_cap_dctes : 0
+    alumnos_no_capacitados = total_alumnos - alumnos_capacitados
 
 %>
 <!-- fin -->
@@ -125,7 +128,7 @@
             <label class="uper">2.- Que el 100% de los docentes incorporen a su practica docente los conocimientos adquiridos.</label>
             <div class="grid-12-12">
               <div class="grid-12-12">
-                [ TOTAL DE DOCENTES: &nbsp; <%= docentes %> ] &nbsp; - &nbsp; [ TOTAL DE DOCENTES QUE APLICAN CONOCIMIENTOS: &nbsp; <%= @competencia_diagnostico.dctes_aplican_conocimto %> ] &nbsp; = &nbsp; <b>DOCENTES QUE NO APLICAN CONOCIMIENTOS: &nbsp; <%= docentes_no_aplican %></b>
+                [ TOTAL DE DOCENTES: &nbsp; <%= docentes %> ] &nbsp; - &nbsp; [ TOTAL DE DOCENTES QUE APLICAN CONOCIMIENTOS: &nbsp; <%= docentes_aplican %> ] &nbsp; = &nbsp; <b>DOCENTES QUE NO APLICAN CONOCIMIENTOS: &nbsp; <%= docentes_no_aplican %></b>
               </div>
               <div class="grid-3-12"></div>
               <div class="grid-2-12">
@@ -152,7 +155,7 @@
             <label class="uper">3.- Que el 100% de los docentes se involucre en actividades extracurriculares.</label>
             <div class="grid-12-12">
               <div class="grid-12-12">
-                [ TOTAL DE DOCENTES: &nbsp; <%= docentes %> ] &nbsp; - &nbsp; [ TOTAL DE DOCENTES QUE SE INVOLUCRAN: &nbsp; <%= @competencia_diagnostico.dctes_invol_act %> ] &nbsp; = &nbsp; <b>DOCENTES QUE NO SE INVOLUCRAN: &nbsp; <%= docentes_no_involucran %></b>
+                [ TOTAL DE DOCENTES: &nbsp; <%= docentes %> ] &nbsp; - &nbsp; [ TOTAL DE DOCENTES QUE SE INVOLUCRAN: &nbsp; <%= docentes_involucran %> ] &nbsp; = &nbsp; <b>DOCENTES QUE NO SE INVOLUCRAN: &nbsp; <%= docentes_no_involucran %></b>
               </div>
               <div class="grid-3-12"></div>
               <div class="grid-2-12">
@@ -179,7 +182,7 @@
             <label class="uper">4.- Que el 100% de los alumnos sean capacitados por los docentes<em class="formee-req"> *</em></label>
             <div class="grid-12-12">
               <div class="grid-12-12">
-                [ TOTAL DE ALUMNOS: &nbsp; <%= total_alumnos %> ] &nbsp; - &nbsp; [ TOTAL DE ALUMNOS CAPACITADOS: &nbsp; <%= @competencia_diagnostico.alumn_cap_dctes %> ] &nbsp; = &nbsp; <b>ALUMNOS POR CAPACITAR: &nbsp; <%= alumnos_no_capacitados %></b>
+                [ TOTAL DE ALUMNOS: &nbsp; <%= total_alumnos %> ] &nbsp; - &nbsp; [ TOTAL DE ALUMNOS CAPACITADOS: &nbsp; <%= alumnos_capacitados %> ] &nbsp; = &nbsp; <b>ALUMNOS POR CAPACITAR: &nbsp; <%= alumnos_no_capacitados %></b>
               </div>
               <div class="grid-3-12"></div>
               <div class="grid-2-12">
