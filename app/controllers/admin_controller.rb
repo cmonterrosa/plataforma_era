@@ -666,9 +666,9 @@ class AdminController < ApplicationController
       @puntaje_total_eje1 = proyecto.puntaje_total_obtenido_eje1("proyecto", @avance)
 
       @eje1 = CatalogoEje.find_by_clave("EJE1")
-      @preguntas_eje1 = Adjunto.find(:all, :conditions => ["user_id = ? and proyecto_id = ? and eje_id = ? and numero_pregunta = ? and avance = ?", @user, @proyecto.id, @eje1.id, 1, 1], :group => "numero_pregunta")
-      a=0
-     end
+     @preguntas_eje1 = Adjunto.find(:all, :conditions => ["user_id = ? and proyecto_id = ? and eje_id = ? and numero_pregunta = ? and avance = ?", @user, @proyecto.id, @eje1.id, 1, 1], :group => "numero_pregunta")
+     @puntaje_diagnostico = (Evaluacion.find_by_diagnostico_id(@diagnostico.id)).puntaje_eje1
+    end
 
 #     Puntajes eje2
     if @proyecto.entorno
