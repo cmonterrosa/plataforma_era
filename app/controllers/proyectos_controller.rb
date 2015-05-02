@@ -375,9 +375,9 @@ class ProyectosController < ApplicationController
 
  def save_entorno
     @entorno = Entorno.find(params[:id]) if params[:id]
-    @entorno ||= Entorno.new
+    @entorno ||= Entorno.new(params[:entorno])
     @proyecto = @entorno.proyecto = Proyecto.find(params[:proyecto].to_i)
-    @entorno.update_attributes(params[:entorno])
+#    @entorno.update_attributes(params[:entorno])
 
     if params[:acciones]
         @acciones = []
