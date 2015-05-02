@@ -296,6 +296,38 @@ class AvancesController < ApplicationController
     end
   end
 
+  def check_entorno
+    @entorno = Entorno.find(params[:id])
+    @proyecto = @entorno.proyecto
+    @diagnostico = @proyecto.diagnostico
+    @catalogo_ejes = CatalogoEje.find_by_clave("EJE2")
+    @eje = Eje.find_by_catalogo_eje_id_and_proyecto_id(@catalogo_ejes.id, @proyecto.id)
+
+    @lineas = LineasAccion.find(:all, :conditions => ["catalogo_eje_id = ?", @catalogo_ejes.id ])
+    @indicadores = Indicadore.find(:all, :conditions => ["catalogo_eje_id = ?", @catalogo_ejes.id ] )
+
+    @entorno_diagnostico = Entorno.find_by_diagnostico_id(@diagnostico.id) if @diagnostico
+    @eva_diagnostico = Evaluacion.new(:diagnostico_id => @diagnostico.id.to_i)
+    
+    @s_acciones = multiple_selected_id(@entorno.acciones) if @entorno.acciones
+    @s_espacios = multiple_selected_espacios(@entorno.escuelas_espacios) if @entorno.escuelas_espacios
+    @escuela = Escuela.find_by_clave(current_user.login)
+    if @escuela.nivel_descripcion == "BACHILLERATO"
+      @acciones = Accione.find(:all, :conditions => ["clave not in ('AC03')"])
+    else
+      @acciones = Accione.find(:all, :conditions => ["clave not in ('AC00', 'AC01')"])
+    end
+
+    @id, @num_avance = (Base64.decode64(params[:eje_avance])).split("-")
+    if @entorno.valid?
+      flash[:notice] = "Correcto"
+      redirect_to :action => "index", :num_avance => Base64.encode64(@id.to_s)
+    else
+       flash[:evidencias] = @entorno.errors.full_messages.join(", ")
+       render :action => "add_avances", :id => params[:eje_avance]
+    end
+    
+  end
   private
 
   def set_layout
