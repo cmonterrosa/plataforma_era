@@ -361,15 +361,27 @@ end
 
 ##-- CONSUMO RESPONSABLE / SALUDABLE
 
-def puntaje_eje4_p2
-  @diagnostico = Diagnostico.find(self.diagnostico_id)
+def puntaje_eje4_p2(tipo=nil, avance=nil)
   valido = false
-  @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
-  @user = User.find_by_login(@escuela.clave) if @escuela
-  @consumo = @diagnostico.consumo if @diagnostico.consumo
   eje4 = CatalogoEje.find_by_clave("EJE4")
-  if @consumo && @consumo.conocen_lineamientos_grales == "SI"
-    @eje4 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ?", @user, @diagnostico.id, eje4.id, 2], :order => "eje_id")
+  conocen_lineamientos_grales=""
+  if tipo == "proyecto"
+     @proyecto = Proyecto.find(self.proyecto_id)
+     @consumo = @proyecto.consumo if @proyecto.consumo
+     @escuela = Escuela.find_by_clave(@proyecto.diagnostico.escuela.clave) if @proyecto
+     @user = User.find_by_login(@escuela.clave) if @escuela
+     conocen_lineamientos_grales =  (@consumo.conocen_lineamientos_grales == "SI")? true : false
+  else
+    @diagnostico = Diagnostico.find(self.diagnostico_id)
+    @consumo = @diagnostico.consumo if @diagnostico.consumo
+    @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
+    @user = User.find_by_login(@escuela.clave) if @escuela
+    conocen_lineamientos_grales =  (@consumo.conocen_lineamientos_grales == "SI")? true : false
+  end
+
+  if @consumo && conocen_lineamientos_grales == "SI"
+    @eje4 = Adjunto.find(:all, :conditions => ["user_id = ? and proyecto_id = ? and eje_id = ? and numero_pregunta = ? and avance = ?", @user, @proyecto.id, eje4.id, 2, avance], :order => "eje_id") if tipo=="proyecto" && avance
+    @eje4 ||= Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ?", @user, @diagnostico.id, eje4.id, 2], :order => "eje_id")
     @eje4.each do |ad|
       if ad.validado
         valido = true
@@ -383,15 +395,27 @@ end
 
 
 
-def puntaje_eje4_p3
-  @diagnostico = Diagnostico.find(self.diagnostico_id)
-  valido = false
-  @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
-  @user = User.find_by_login(@escuela.clave) if @escuela
-  @consumo = @diagnostico.consumo if @diagnostico.consumo
-  eje4 = CatalogoEje.find_by_clave("EJE4")
-  if @consumo && @consumo.capacitacion_alim_bebidas == "SI"
-    @eje4 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ?", @user, @diagnostico.id, eje4.id, 3], :order => "eje_id")
+def puntaje_eje4_p3(tipo=nil, avance=nil)
+    valido = false
+    eje4 = CatalogoEje.find_by_clave("EJE4")
+    capacitacion_alim_bebidas=""
+    if tipo == "proyecto"
+      @proyecto = Proyecto.find(self.proyecto_id)
+      @consumo = @proyecto.consumo if @proyecto.consumo
+      @escuela = Escuela.find_by_clave(@proyecto.diagnostico.escuela.clave) if @proyecto
+      @user = User.find_by_login(@escuela.clave) if @escuela
+      capacitacion_alim_bebidas =  (@consumo.capacitacion_alim_bebidas == "SI")? true : false
+    else
+      @diagnostico = Diagnostico.find(self.diagnostico_id)
+      @consumo = @diagnostico.consumo if @diagnostico.consumo
+      @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
+      @user = User.find_by_login(@escuela.clave) if @escuela
+      capacitacion_alim_bebidas =  (@consumo.capacitacion_alim_bebidas == "SI")? true : false
+    end
+
+  if @consumo && capacitacion_alim_bebidas
+    @eje4 = Adjunto.find(:all, :conditions => ["user_id = ? and proyecto_id = ? and eje_id = ? and numero_pregunta = ? and avance = ?", @user, @proyecto.id, eje4.id, 3, avance], :order => "eje_id") if tipo=="proyecto" && avance
+    @eje4 ||= Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ?", @user, @diagnostico.id, eje4.id, 3], :order => "eje_id")
     @eje4.each do |ad|
       if ad.validado
         valido = true
@@ -404,25 +428,42 @@ def puntaje_eje4_p3
   return valido ? @eje4_p3 : 0
 end
 
-def puntaje_eje4_p4
-  @diagnostico = Diagnostico.find(self.diagnostico_id)
-  @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
-  @user = User.find_by_login(@escuela.clave) if @escuela
-  @consumo = @diagnostico.consumo if @diagnostico.consumo
-  @eje4_p4 = 0
-  if @consumo
-    @s_preparacions = multiple_selected(@consumo.preparacions) if @consumo.preparacions
-    @s_utensilios = multiple_selected(@consumo.utensilios) if @consumo.utensilios
-    @s_higienes = multiple_selected(@consumo.higienes) if @consumo.higienes
+def puntaje_eje4_p4(tipo=nil, avance=nil)
+    @eje4_p4 = @s_preparacions = @s_utensilios = @s_higienes = 0
+    if tipo == "proyecto"
+        @proyecto = Proyecto.find(self.proyecto_id)
+        @consumo_proyecto = @proyecto.consumo if @proyecto.consumo
+        @consumo_diagnostico = @proyecto.diagnostico.consumo if @proyecto.diagnostico.consumo
+        @escuela = Escuela.find_by_clave(@proyecto.diagnostico.escuela.clave) if @proyecto
+        @user = User.find_by_login(@escuela.clave) if @escuela
+        #### Proyecto ###
+        @s_preparacions += multiple_selected(@consumo_proyecto.preparacions).size if @consumo_proyecto && @consumo_proyecto.preparacions
+        @s_utensilios += multiple_selected(@consumo_proyecto.utensilios).size if @consumo_proyecto && @consumo_proyecto.utensilios
+        @s_higienes += multiple_selected(@consumo_proyecto.higienes).size if @consumo_proyecto && @consumo_proyectos.higienes
+        #### Diagnostico #
+        @s_preparacions += multiple_selected(@consumo_diagnostico.preparacions).size if @consumo_diagnostico && @consumo_diagnostico.preparacions
+        @s_utensilios += multiple_selected(@consumo_diagnostico.utensilios).size if @consumo_diagnostico && @consumo_diagnostico.utensilios
+        @s_higienes += multiple_selected(@consumo_diagnostico.higienes).size if @consumo_diagnostico && @consumo_diagnostico.higienes
+    else
+        @diagnostico = Diagnostico.find(self.diagnostico_id)
+        @consumo_diagnostico = @diagnostico.consumo if @diagnostico.consumo
+        @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
+        @user = User.find_by_login(@escuela.clave) if @escuela
+        #### Diagnostico #
+        @s_preparacions += multiple_selected(@consumo_diagnostico.preparacions).size if @consumo_diagnostico && @consumo_diagnostico.preparacions
+        @s_utensilios += multiple_selected(@consumo_diagnostico.utensilios).size if @consumo_diagnostico && @consumo_diagnostico.utensilios
+        @s_higienes += multiple_selected(@consumo_diagnostico.higienes).size if @consumo_diagnostico && @consumo_diagnostico.higienes
+    end
+
+  if @consumo_diagnostico || @consumo_proyecto
     @t_preparacions = Preparacion.all
     @t_utensilios = Utensilio.all
     @t_higiene = Higiene.all
 
-    @preparacions = @s_preparacions.size > 0 ? (((@s_preparacions.size.to_f / @t_preparacions.size.to_f) * 100) * $consumo_p4) : 0
-    @utensilios = @s_utensilios.size > 0 ? (((@s_utensilios.size.to_f / @t_utensilios.size.to_f) * 100) * $consumo_p4) : 0
-    @higienes = @s_higienes.size > 0 ? (((@s_higienes.size.to_f / @t_higiene.size.to_f) * 100) * $consumo_p4) : 0
-
-    if (@s_preparacions.size + @s_utensilios.size + @s_higienes.size).to_f > 0
+    @preparacions = @s_preparacions. > 0 ? (((@s_preparacions.to_f / @t_preparacions.to_f) * 100) * $consumo_p4) : 0
+    @utensilios = @s_utensilios > 0 ? (((@s_utensilios.to_f / @t_utensilios.to_f) * 100) * $consumo_p4) : 0
+    @higienes = @s_higienes > 0 ? (((@s_higienes.to_f / @t_higiene.to_f) * 100) * $consumo_p4) : 0
+    if (@s_preparacions + @s_utensilios + @s_higienes).to_f > 0
       @eje4_p4 = (@preparacions + @utensilios + @higienes).round(3).to_f
     else
       @eje4_p4 = 0
@@ -432,18 +473,38 @@ def puntaje_eje4_p4
   return @eje4_p4
 end
 
-def puntaje_eje4_p5
-  @diagnostico = Diagnostico.find(self.diagnostico_id)
-  @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
-  @user = User.find_by_login(@escuela.clave) if @escuela
-  @consumo = @diagnostico.consumo if @diagnostico.consumo
-  @eje4_p5=0
-  if @consumo
-  @s_bebidas = multiple_selected(@consumo.bebidas) if @consumo.bebidas
-  @s_alimentos = multiple_selected(@consumo.alimentos) if @consumo.alimentos
-  @s_botanas = multiple_selected(@consumo.botanas) if @consumo.botanas
-  @s_reposterias = multiple_selected(@consumo.reposterias) if @consumo.reposterias
+def puntaje_eje4_p5(tipo=nil, avance=nil)
+     @eje4_p5=0
+     @s_bebidas = @s_bebidas = @s_alimentos = @s_botanas = @s_reposterias = Array.new
+    if tipo == "proyecto"
+      @proyecto = Proyecto.find(self.proyecto_id)
+      @consumo_proyecto = @proyecto.consumo if @proyecto.consumo
+      @consumo_diagnostico = @proyecto.diagnostico.consumo if @proyecto.diagnostico.consumo
+      @escuela = Escuela.find_by_clave(@proyecto.diagnostico.escuela.clave) if @proyecto
+      @user = User.find_by_login(@escuela.clave) if @escuela
+      ### Proyecto ###
+      @s_bebidas << multiple_selected(@consumo_proyecto.bebidas) if @consumo_proyecto.bebidas
+      @s_alimentos << multiple_selected(@consumo_proyecto.alimentos) if @consumo_proyecto.alimentos
+      @s_botanas << multiple_selected(@consumo_proyecto.botanas) if @consumo_proyecto.botanas
+      @s_reposterias << multiple_selected(@consumo_proyecto.reposterias) if @consumo_proyecto.reposterias
+      ## Diagnostico ###
+      @s_bebidas << multiple_selected(@consumo_proyecto.bebidas) if @consumo_diagnostico && @consumo_diagnostico.bebidas
+      @s_alimentos << multiple_selected(@consumo_proyecto.alimentos) if @consumo_diagnostico && @consumo_diagnostico.alimentos
+      @s_botanas << multiple_selected(@consumo_proyecto.botanas) if @consumo_diagnostico && @consumo_diagnostico.botanas
+      @s_reposterias << multiple_selected(@consumo_proyecto.reposterias) if @consumo_diagnostico && @consumo_diagnostico.reposterias
+    else
+      @diagnostico = Diagnostico.find(self.diagnostico_id)
+      @consumo_diagnostico = @diagnostico.consumo if @diagnostico.consumo
+      @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
+      @user = User.find_by_login(@escuela.clave) if @escuela
+      ## Diagnostico ###
+      @s_bebidas << multiple_selected(@consumo_proyecto.bebidas) if @consumo_diagnostico && @consumo_diagnostico.bebidas
+      @s_alimentos << multiple_selected(@consumo_proyecto.alimentos) if @consumo_diagnostico && @consumo_diagnostico.alimentos
+      @s_botanas << multiple_selected(@consumo_proyecto.botanas) if @consumo_diagnostico && @consumo_diagnostico.botanas
+      @s_reposterias << multiple_selected(@consumo_proyecto.reposterias) if @consumo_diagnostico && @consumo_diagnostico.reposterias
+    end
 
+  if @consumo_diagnostico || @consumo_proyecto
   @b_saludables = Bebida.find_all_by_tipo("SALUDABLE")
   @select_bebidas = 0
   @s_bebidas.each do |bebida|
@@ -482,43 +543,65 @@ def puntaje_eje4_p5
   return @eje4_p5
 end
 
-def puntaje_eje4_p6
-  @diagnostico = Diagnostico.find(self.diagnostico_id)
-  @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
-  @user = User.find_by_login(@escuela.clave) if @escuela
-  @consumo = @diagnostico.consumo if @diagnostico.consumo
-  if @consumo
-  @s_materials = multiple_selected(@consumo.materials) if @consumo.materials
-  if @s_materials.size.to_i > 0
-    @m_recomendables = Material.find_all_by_tipo("RECOMENDABLES")
-    @select_materials = 0
-    @s_materials.each do |material|
-      @select_materials+=1 if @m_recomendables.any? { |b| b[:clave] == material }
+def puntaje_eje4_p6(tipo=nil, avance=nil)
+      @eje4_p6=0
+     @s_materials = Array.new
+    if tipo == "proyecto"
+      @proyecto = Proyecto.find(self.proyecto_id)
+      @consumo_proyecto = @proyecto.consumo if @proyecto.consumo
+      @consumo_diagnostico = @proyecto.diagnostico.consumo if @proyecto.diagnostico.consumo
+      @escuela = Escuela.find_by_clave(@proyecto.diagnostico.escuela.clave) if @proyecto
+      @user = User.find_by_login(@escuela.clave) if @escuela
+      ### Proyecto ###
+      @s_materials << multiple_selected(@consumo_proyecto.materials) if @consumo_proyecto.materials
+      ## Diagnostico ###
+      @s_materials << multiple_selected(@consumo_diagnostico.materials) if @consumo_diagnostico && @consumo_diagnostico.materials
+    else
+      @diagnostico = Diagnostico.find(self.diagnostico_id)
+      @consumo_diagnostico = @diagnostico.consumo if @diagnostico.consumo
+      @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
+      @user = User.find_by_login(@escuela.clave) if @escuela
+      ## Diagnostico ###
+      @s_materials << multiple_selected(@consumo_diagnostico.materials) if @consumo_diagnostico && @consumo_diagnostico.materials
     end
-    @eje4_p6 = (((@select_materials.to_f / @s_materials.size.to_f)* 100)* $consumo_p6).round(3).to_f
-  end
+
+  if @consumo_diagnostico || @consumo_proyecto
+    if @s_materials.size.to_i > 0
+      @m_recomendables = Material.find_all_by_tipo("RECOMENDABLES")
+      @select_materials = 0
+      @s_materials.each do |material|
+        @select_materials+=1 if @m_recomendables.any? { |b| b[:clave] == material }
+      end
+      @eje4_p6 = (((@select_materials.to_f / @s_materials.size.to_f)* 100)* $consumo_p6).round(3).to_f
+    end
   end
 
   return @eje4_p6 ? @eje4_p6 : 0
 end
 
-def puntaje_eje4_p7
-  @diagnostico = Diagnostico.find(self.diagnostico_id)
+def puntaje_eje4_p7(tipo=nil, avance=nil)
   valido = false
-  @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
-  @user = User.find_by_login(@escuela.clave) if @escuela
-  @consumo = @diagnostico.consumo if @diagnostico.consumo
   eje4 = CatalogoEje.find_by_clave("EJE4")
-  if @consumo
-  @s_afisicas = selected(@consumo.frecuencia_afisica) if @consumo.frecuencia_afisica
-  @eje4_p7 = ptos_afisica(@s_afisicas).to_f
-  @eje4 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ?", @user, @diagnostico.id, eje4.id, 7], :order => "eje_id")
-    @eje4.each do |ad|
-      if ad.validado
-        valido = true
-        break
-      end
-    end
+  @s_afisicas= Array.new
+  if tipo == "proyecto"
+      @proyecto = Proyecto.find(self.proyecto_id)
+      @consumo_proyecto = @proyecto.consumo if @proyecto.consumo
+      @consumo_diagnostico = @proyecto.diagnostico.consumo if @proyecto.diagnostico.consumo
+      @escuela = Escuela.find_by_clave(@proyecto.diagnostico.escuela.clave) if @proyecto
+      @user = User.find_by_login(@escuela.clave) if @escuela
+      @s_afisicas << selected(@consumo_proyecto.frecuencia_afisica) if @consumo_proyecto.frecuencia_afisica
+      @s_afisicas << selected(@consumo_diagnostico.frecuencia_afisica) if @consumo_diagnostico && @consumo_diagnostico.frecuencia_afisica
+  else
+     @diagnostico = Diagnostico.find(self.diagnostico_id)
+      @consumo_diagnostico = @diagnostico.consumo if @diagnostico.consumo
+      @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
+      @user = User.find_by_login(@escuela.clave) if @escuela
+      @s_afisicas << selected(@consumo_diagnostico.frecuencia_afisica) if @consumo_diagnostico && @consumo_diagnostico.frecuencia_afisica
+  end
+
+  if @consumo_diagnostico || @consumo_proyecto
+    @eje4_p7 = ptos_afisica(@s_afisicas).to_f
+    valido = evidencia_valida?(4, 8, @diagnostico, @proyecto, avance )
   end
     return valido ? @eje4_p7 : 0
 end
@@ -810,6 +893,16 @@ def clean_adjuntos(eje,diagnostico, numero_pregunta)
        end
       puts("=> ADJUNTOS BORRADOS: #{contador_archivos}")
    end
+
+
+##### FUNCION QUE DETERMINA SI TIENE AL MENOS UNA EVIDENCIA VALIDA ######
+def evidencia_valida?(eje=nil, num_pregunta=nil, diagnostico=nil, proyecto=nil, avance=nil )
+  contador=0
+  contador = Adjunto.count(:id, :conditions => ["diagnostico_id = ? AND eje_id = ? AND numero_pregunta = ? AND validado = ?",  diagnostico.id, eje, num_pregunta, true], :order => "eje_id") if diagnostico.exists?
+  contador = Adjunto.count(:id, :conditions => ["proyecto_id = ? AND eje_id = ? AND numero_pregunta = ? AND avance= ? and validado = ?",  proyecto.id, eje, num_pregunta, avance, true], :order => "eje_id") if proyecto.exists? && avance
+  (contador > 0)? true : false
+end
+
 
 end
 
