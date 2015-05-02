@@ -660,21 +660,19 @@ end
 def puntaje_eje4_p7(tipo=nil, avance=nil)
   valido = false
   eje4 = CatalogoEje.find_by_clave("EJE4")
-  @s_afisicas= Array.new
   if tipo == "proyecto"
       @proyecto = Proyecto.find(self.proyecto_id)
       @consumo_proyecto = @proyecto.consumo if @proyecto.consumo
       @consumo_diagnostico = @proyecto.diagnostico.consumo if @proyecto.diagnostico.consumo
       @escuela = Escuela.find_by_clave(@proyecto.diagnostico.escuela.clave) if @proyecto
       @user = User.find_by_login(@escuela.clave) if @escuela
-      @s_afisicas << selected(@consumo_proyecto.frecuencia_afisica) if @consumo_proyecto.frecuencia_afisica
-      @s_afisicas << selected(@consumo_diagnostico.frecuencia_afisica) if @consumo_diagnostico && @consumo_diagnostico.frecuencia_afisica
+      @s_afisicas = selected(@consumo_proyecto.frecuencia_afisica) if @consumo_proyecto.frecuencia_afisica
   else
      @diagnostico = Diagnostico.find(self.diagnostico_id)
       @consumo_diagnostico = @diagnostico.consumo if @diagnostico.consumo
       @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
       @user = User.find_by_login(@escuela.clave) if @escuela
-      @s_afisicas << selected(@consumo_diagnostico.frecuencia_afisica) if @consumo_diagnostico && @consumo_diagnostico.frecuencia_afisica
+      @s_afisicas = selected(@consumo_diagnostico.frecuencia_afisica) if @consumo_diagnostico && @consumo_diagnostico.frecuencia_afisica
   end
 
   if @consumo_diagnostico || @consumo_proyecto
