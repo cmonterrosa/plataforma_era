@@ -1,7 +1,29 @@
 <table width="80%" border="0" align="center" cellpadding="2" cellspacing="1">
+  
+  <!-- Verificamos si ya fue evaluado -->
+ <%if @diagnostico%>
+  <%if Evaluacion.count(:id, :conditions => ["diagnostico_id = ?", @diagnostico.id]) < 1 %>
+    <tr>
+      <td>
+        <div class="formee-msg-warning">
+          <h3>Importante:</h3>
+                <ul><li>&nbsp;</li></ul>
+                <ul>
+                  <li>El diagnóstico aún no ha sido evaluado, por lo que los puntajes pueden no ser exactos al carecer de algunas validaciones de evidencias.</li>
+                </ul>
+                <ul><li>&nbsp;</li></ul>
+        </div>
+      </td>
+    </tr>
+    <%end%>
+  <%end%>
+
+
   <tr>
     <td><%= render :partial => "resumen_ptos" %></td>
   </tr>
+
+
   <tr>
     <td>&nbsp;</td>
   </tr>
