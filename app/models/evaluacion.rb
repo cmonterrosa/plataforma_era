@@ -13,7 +13,7 @@ class Evaluacion < ActiveRecord::Base
 def puntaje_eje1_p1(tipo=nil,avance=nil)
   valido = false
   docentes_capacitados=0
-  
+
   eje1 = CatalogoEje.find_by_clave("EJE1")
   if tipo == "proyecto"
     @proyecto = Proyecto.find(self.proyecto_id)
@@ -34,18 +34,10 @@ def puntaje_eje1_p1(tipo=nil,avance=nil)
       docentes_capacitados += (@competencia_diagnostico.dctes_cap_salud.to_i + @competencia_diagnostico.dctes_cap_ma.to_i + @competencia_diagnostico.dctes_cap_ambos.to_i) if @competencia_diagnostico
     end
   end
-  
-  
+
   if docentes_capacitados > 0
-    @eje1 = Adjunto.find(:all, :conditions => ["user_id = ? and proyecto_id = ? and eje_id = ? and numero_pregunta = ? and avance = ?", @user, @proyecto.id, eje1.id, 1, avance.to_i], :order => "eje_id") if @competencia_proyecto && avance
-    @eje1 ||= Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ?", @user, @diagnostico.id, eje1.id, 1], :order => "eje_id") if @competencia_diagnostico
-    @eje1.each do |ad|
-      if ad.validado
-        valido = true
-        break
-      end
-    end
-    
+    valido = evidencia_valida?(eje1.id, 1, @diagnostico) if @diagnostico
+    valido ||= evidencia_valida?(eje1.id, 1, nil, @proyecto, avance) if @proyecto && avance
     @eje1_p1 = (((docentes_capacitados / @escuela.total_personal_docente.to_f ) * 100) * $competencia_p1).round(3)
   end
 
@@ -76,16 +68,9 @@ def puntaje_eje1_p2(tipo=nil,avance=nil)
     end
   end
 
-
   if docentes_aplican_conocimiento.to_i > 0
-    @eje1 = Adjunto.find(:all, :conditions => ["user_id = ? and proyecto_id = ? and eje_id = ? and numero_pregunta = ? and avance = ?", @user, @proyecto.id, eje1.id, 2, avance], :order => "eje_id") if tipo=="proyecto" && avance
-    @eje1 ||= Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ?", @user, @diagnostico.id, eje1.id, 2], :order => "eje_id")
-    @eje1.each do |ad|
-      if ad.validado
-        valido = true
-        break
-      end
-    end
+    valido = evidencia_valida?(eje1.id, 1, @diagnostico) if @diagnostico
+    valido ||= evidencia_valida?(eje1.id, 1, nil, @proyecto, avance) if @proyecto && avance
     @eje1_p2 = (((docentes_aplican_conocimiento.to_f / @escuela.total_personal_docente.to_f ) * 100) * $competencia_p2).round(3)
   end
 
@@ -94,27 +79,32 @@ end
 
 def puntaje_eje1_p3(tipo=nil,avance=nil)
   valido = false
+  docentes_involucran_actividades = 0
+  eje1 = CatalogoEje.find_by_clave("EJE1")
   if tipo == "proyecto"
     @proyecto = Proyecto.find(self.proyecto_id)
-     @competencia = @proyecto.competencia if @proyecto.competencia
+     @competencia_proyecto = @proyecto.competencia if @proyecto.competencia
+     @competencia_diagnostico = @proyecto.diagnostico.competencia if @proyecto.diagnostico.competencia
      @escuela = Escuela.find_by_clave(@proyecto.diagnostico.escuela.clave) if @proyecto
+     @user = User.find_by_login(@escuela.clave) if @escuela
+     docentes_involucran_actividades += (@competencia_proyecto.dctes_invol_act.to_i) if @competencia_proyecto
+     if Adjunto.count(:id, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ? and validado = ?", @user, @proyecto.diagnostico.id, eje1.id, 3, true]).to_i > 0
+       docentes_involucran_actividades += (@competencia_diagnostico.dctes_invol_act.to_i) if @competencia_diagnostico
+     end
   else
     @diagnostico = Diagnostico.find(self.diagnostico_id)
-    @competencia = @diagnostico.competencia if @diagnostico.competencia
+    @competencia_diagnostico = @diagnostico.competencia if @diagnostico.competencia
     @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
-  end
-  @user = User.find_by_login(@escuela.clave) if @escuela
-  eje1 = CatalogoEje.find_by_clave("EJE1")
-  if @competencia.dctes_invol_act.to_i > 0
-    @eje1 = Adjunto.find(:all, :conditions => ["user_id = ? and proyecto_id = ? and eje_id = ? and numero_pregunta = ? and avance = ?", @user, @proyecto.id, eje1.id, 3, avance], :order => "eje_id") if tipo=="proyecto" && avance
-    @eje1 ||= Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ?", @user, @diagnostico.id, eje1.id, 1], :order => "eje_id")
-    @eje1.each do |ad|
-      if ad.validado
-        valido = true
-        break
-      end
+    @user = User.find_by_login(@escuela.clave) if @escuela
+    if Adjunto.count(:id, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ? and validado = ?", @user, @diagnostico.id, eje1.id, 3, true]).to_i > 0
+      docentes_involucran_actividades += (@competencia_diagnostico.dctes_invol_act.to_i) if @competencia_diagnostico
     end
-    @eje1_p3 = (((@competencia.dctes_invol_act.to_f / @escuela.total_personal_docente.to_f ) * 100) * $competencia_p3).round(3)
+  end
+
+  if docentes_involucran_actividades.to_i > 0
+    valido = evidencia_valida?(eje1.id, 3, @diagnostico) if @diagnostico
+    valido ||= evidencia_valida?(eje1.id, 3, nil, @proyecto, avance) if @proyecto && avance
+    @eje1_p3 = (((docentes_involucran_actividades.to_f / @escuela.total_personal_docente.to_f ) * 100) * $competencia_p3).round(3)
   end
 
   return valido ? @eje1_p3 : 0
@@ -122,27 +112,33 @@ end
 
 def puntaje_eje1_p4(tipo=nil,avance=nil)
   valido = false
+  alumnos_capacitacion_docente = 0
+  eje1 = CatalogoEje.find_by_clave("EJE1")
   if tipo == "proyecto"
-    @proyecto = Proyecto.find(self.proyecto_id)
-     @competencia = @proyecto.competencia if @proyecto.competencia
+     @proyecto = Proyecto.find(self.proyecto_id)
+     @competencia_proyecto = @proyecto.competencia if @proyecto.competencia
+     @competencia_diagnostico = @proyecto.diagnostico.competencia if @proyecto.diagnostico.competencia
      @escuela = Escuela.find_by_clave(@proyecto.diagnostico.escuela.clave) if @proyecto
+     @user = User.find_by_login(@escuela.clave) if @escuela
+     alumnos_capacitacion_docente += (@competencia_proyecto.alumn_cap_dctes.to_i) if @competencia_proyecto
+     if Adjunto.count(:id, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ? and validado = ?", @user, @proyecto.diagnostico.id, eje1.id, 4, true]).to_i > 0
+       alumnos_capacitacion_docente += (@competencia_diagnostico.alumn_cap_dctes.to_i) if @competencia_diagnostico
+     end
   else
     @diagnostico = Diagnostico.find(self.diagnostico_id)
-    @competencia = @diagnostico.competencia if @diagnostico.competencia
+    @competencia_diagnostico = @diagnostico.competencia if @diagnostico.competencia
     @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
+    @user = User.find_by_login(@escuela.clave) if @escuela
+    if Adjunto.count(:id, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ? and validado = ?", @user, @diagnostico.id, eje1.id, 4, true]).to_i > 0
+      alumnos_capacitacion_docente += (@competencia_diagnostico.alumn_cap_dctes.to_i) if @competencia_diagnostico
+    end
   end
   @user = User.find_by_login(@escuela.clave) if @escuela
-  eje1 = CatalogoEje.find_by_clave("EJE1")
-  if @competencia.alumn_cap_dctes.to_i > 0
-    @eje1 = Adjunto.find(:all, :conditions => ["user_id = ? and proyecto_id = ? and eje_id = ? and numero_pregunta = ? and avance = ?", @user, @proyecto.id, eje1.id, 4, avance], :order => "eje_id") if tipo=="proyecto" && avance
-    @eje1 ||= Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ?", @user, @diagnostico.id, eje1.id, 1], :order => "eje_id")
-    @eje1.each do |ad|
-      if ad.validado
-        valido = true
-        break
-      end
-    end
-    @eje1_p4 = (((@competencia.alumn_cap_dctes.to_f / (@escuela.alu_hom.to_i + @escuela.alu_muj.to_i) ).to_f * 100) * $competencia_p4).round(3)
+
+  if alumnos_capacitacion_docente.to_i > 0
+    valido = evidencia_valida?(eje1.id, 4, @diagnostico) if @diagnostico
+    valido ||= evidencia_valida?(eje1.id, 4, nil, @proyecto, avance) if @proyecto && avance
+    @eje1_p4 = (((alumnos_capacitacion_docente.to_f / (@escuela.alu_hom.to_i + @escuela.alu_muj.to_i) ).to_f * 100) * $competencia_p4).round(3)
   end
 
   return valido ? @eje1_p4 : 0
@@ -150,214 +146,296 @@ end
 
 def puntaje_eje1_p5(tipo=nil,avance=nil)
   valido = false
+  alumnos_capacitacion_dep = 0
+  eje1 = CatalogoEje.find_by_clave("EJE1")
   if tipo == "proyecto"
     @proyecto = Proyecto.find(self.proyecto_id)
-     @competencia = @proyecto.competencia if @proyecto.competencia
+     @competencia_proyecto = @proyecto.competencia if @proyecto.competencia
+     @competencia_diagnostico = @proyecto.diagnostico.competencia if @proyecto.diagnostico.competencia
      @escuela = Escuela.find_by_clave(@proyecto.diagnostico.escuela.clave) if @proyecto
+     @user = User.find_by_login(@escuela.clave) if @escuela
+     alumnos_capacitacion_dep += (@competencia_proyecto.alumn_cap_salud.to_i + @competencia_proyecto.alumn_cap_ma.to_i + @competencia_proyecto.alumn_cap_ambos.to_i) if @competencia_proyecto
+     if Adjunto.count(:id, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ? and validado = ?", @user, @proyecto.diagnostico.id, eje1.id, 5, true]).to_i > 0
+       alumnos_capacitacion_dep += (@competencia_diagnostico.alumn_cap_salud.to_i + @competencia_diagnostico.alumn_cap_ma.to_i + @competencia_diagnostico.alumn_cap_ambos.to_i) if @competencia_diagnostico
+     end
   else
     @diagnostico = Diagnostico.find(self.diagnostico_id)
-    @competencia = @diagnostico.competencia if @diagnostico.competencia
+    @competencia_diagnostico = @diagnostico.competencia if @diagnostico.competencia
     @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
-  end
-  @user = User.find_by_login(@escuela.clave) if @escuela
-  if @diagnostico
-    alumnos_capacitados = @competencia.alumn_cap_salud.to_i + @competencia.alumn_cap_ma.to_i + @competencia.alumn_cap_ambos.to_i
-  else
-
-  end
-  eje1 = CatalogoEje.find_by_clave("EJE1")
-  if alumnos_capacitados.to_i > 0
-    @eje1 = Adjunto.find(:all, :conditions => ["user_id = ? and proyecto_id = ? and eje_id = ? and numero_pregunta = ? and avance = ?", @user, @proyecto.id, eje1.id, 5, avance], :order => "eje_id") if tipo=="proyecto" && avance
-    @eje1 ||= Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ?", @user, @diagnostico.id, eje1.id, 1], :order => "eje_id")
-    @eje1.each do |ad|
-      if ad.validado
-        valido = true
-        break
-      end
+    @user = User.find_by_login(@escuela.clave) if @escuela
+    if Adjunto.count(:id, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ? and validado = ?", @user, @diagnostico.id, eje1.id, 5, true]).to_i > 0
+      alumnos_capacitacion_dep += (@competencia_diagnostico.alumn_cap_salud.to_i + @competencia_diagnostico.alumn_cap_ma.to_i + @competencia_diagnostico.alumn_cap_ambos.to_i) if @competencia_diagnostico
     end
-    @eje1_p5 = (((alumnos_capacitados.to_f / (@escuela.alu_hom.to_f + @escuela.alu_muj.to_f) ).to_f * 100) * $competencia_p5).round(3)
+  end
+
+  if alumnos_capacitacion_dep.to_i > 0
+    valido = evidencia_valida?(eje1.id, 5, @diagnostico) if @diagnostico
+    valido ||= evidencia_valida?(eje1.id, 5, nil, @proyecto, avance) if @proyecto && avance
+    @eje1_p5 = (((alumnos_capacitacion_dep.to_f / (@escuela.alu_hom.to_f + @escuela.alu_muj.to_f) ).to_f * 100) * $competencia_p5).round(3)
   end
 
   return valido ? @eje1_p5 : 0
 end
 
 ###--- ENTORNO SALUDABLE
-def puntaje_eje2_p2
-  @diagnostico = Diagnostico.find(self.diagnostico_id)
+def puntaje_eje2_p2(tipo=nil,avance=nil)
   valido = false
-  @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
-  @user = User.find_by_login(@escuela.clave) if @escuela
-  @entorno = @diagnostico.entorno if @diagnostico.entorno
+  numero_espacios = 0
   eje2 = CatalogoEje.find_by_clave("EJE2")
-  @escuelas_espacios = EscuelasEspacio.find(:all, :conditions => ["entorno_id = ?", @entorno.id])
-  if @escuelas_espacios.size.to_i > 0
-    @eje2 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ?", @user, @diagnostico.id, eje2.id, 2], :order => "eje_id")
-    @eje2.each do |ad|
-      if ad.validado
-        valido = true
-        break
-      end
+  if tipo == "proyecto"
+    @proyecto = Proyecto.find(self.proyecto_id)
+     @entorno_proyecto = @proyecto.entorno if @proyecto.entorno
+     @entorno_diagnostico = @proyecto.diagnostico.entorno if @proyecto.diagnostico.entorno
+     @escuela = Escuela.find_by_clave(@proyecto.diagnostico.escuela.clave) if @proyecto
+     @user = User.find_by_login(@escuela.clave) if @escuela
+     numero_espacios += (EscuelasEspacio.count(:id, :conditions => ["entorno_id = ?", @entorno_proyecto.id])).to_i if @entorno_proyecto
+     if Adjunto.count(:id, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ? and validado = ?", @user, @proyecto.diagnostico.id, eje2.id, 2, true]).to_i > 0
+       numero_espacios += (EscuelasEspacio.count(:id, :conditions => ["entorno_id = ?", @entorno_diagnostico.id])).to_i if @entorno_diagnostico
+     end
+  else
+    @diagnostico = Diagnostico.find(self.diagnostico_id)
+    @entorno_diagnostico = @diagnostico.entorno if @diagnostico.entorno
+    @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
+    @user = User.find_by_login(@escuela.clave) if @escuela
+    if Adjunto.count(:id, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ? and validado = ?", @user, @diagnostico.id, eje2.id, 2, true]).to_i > 0
+      numero_espacios += (EscuelasEspacio.count(:id, :conditions => ["entorno_id = ?", @entorno_diagnostico.id])).to_i if @entorno_diagnostico
     end
-    @eje2_p2 = (((@escuelas_espacios.size.to_f / Espacio.all.size.to_f) * 100) * $entorno_p2).round(3) unless @escuelas_espacios.empty?
+  end
+
+  if numero_espacios.to_i > 0
+    valido = evidencia_valida?(eje2.id, 2, @diagnostico) if @diagnostico
+    valido ||= evidencia_valida?(eje2.id, 2, nil, @proyecto, avance) if @proyecto && avance
+    @eje2_p2 = (((numero_espacios.to_f / Espacio.all.size.to_f) * 100) * $entorno_p2).round(3)
   end
   return valido ? @eje2_p2 : 0
 end
 
-def puntaje_eje2_p3
-  @diagnostico = Diagnostico.find(self.diagnostico_id)
+def puntaje_eje2_p3(tipo=nil,avance=nil)
   valido = false
-  @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
-  @user = User.find_by_login(@escuela.clave) if @escuela
-  @entorno = @diagnostico.entorno if @diagnostico.entorno
+  reforesta = ""
   eje2 = CatalogoEje.find_by_clave("EJE2")
-  if @entorno.escuela_reforesta == "SI"
-    @eje2 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ?", @user, @diagnostico.id, eje2.id, 3], :order => "eje_id")
-    @eje2.each do |ad|
-      if ad.validado
-        valido = true
-        break
-      end
-    end
+  if tipo == "proyecto"
+     @proyecto = Proyecto.find(self.proyecto_id)
+     @entorno_proyecto = @proyecto.entorno if @proyecto.entorno
+     @entorno_diagnostico = @proyecto.diagnostico.entorno if @proyecto.diagnostico.entorno
+     @escuela = Escuela.find_by_clave(@proyecto.diagnostico.escuela.clave) if @proyecto
+     @user = User.find_by_login(@escuela.clave) if @escuela
+     reforesta = @entorno_proyecto.escuela_reforesta
+  else
+    @diagnostico = Diagnostico.find(self.diagnostico_id)
+    @entorno_diagnostico = @diagnostico.entorno if @diagnostico.entorno
+    @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
+    @user = User.find_by_login(@escuela.clave) if @escuela
+    reforesta = @entorno_diagnostico.escuela_reforesta
+  end
+
+  if reforesta == "SI"
+    valido = evidencia_valida?(eje2.id, 3, @diagnostico) if @diagnostico
+    valido ||= evidencia_valida?(eje2.id, 3, nil, @proyecto, avance) if @proyecto && avance
     @eje2_p3 = $entorno_p3 * 100
   end
   return valido ? @eje2_p3 : 0
 end
 
-def puntaje_eje2_p5
-  @diagnostico = Diagnostico.find(self.diagnostico_id)
+def puntaje_eje2_p5(tipo=nil,avance=nil)
   valido = false
-  @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
-  @user = User.find_by_login(@escuela.clave) if @escuela
-  @entorno = @diagnostico.entorno if @diagnostico.entorno
-  @s_acciones = multiple_selected(@entorno.acciones) if @entorno.acciones
+  @s_acciones = []
   eje2 = CatalogoEje.find_by_clave("EJE2")
-  unless @s_acciones.include?("NING")
-    @eje2 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ?", @user, @diagnostico.id, eje2.id, 5], :order => "eje_id")
-    @eje2.each do |ad|
-      if ad.validado
-        valido = true
-        break
-      end
-    end
+  if tipo == "proyecto"
+     @proyecto = Proyecto.find(self.proyecto_id)
+     @entorno_proyecto = @proyecto.entorno if @proyecto.entorno
+     @entorno_diagnostico = @proyecto.diagnostico.entorno if @proyecto.diagnostico.entorno
+     @escuela = Escuela.find_by_clave(@proyecto.diagnostico.escuela.clave) if @proyecto
+     @user = User.find_by_login(@escuela.clave) if @escuela
 
-    if @diagnostico.escuela.nivel_descripcion == "BACHILLERATO"
-      @acciones = Accione.find(:all, :conditions => ["clave not in ('AC03')"])
-      @eje2_p5 = (((@s_acciones.size.to_f / 4)* 100) * $entorno_p5).round(3)
-    else
-      @acciones = Accione.find(:all, :conditions => ["clave not in ('AC00', 'AC01')"])
-      @eje2_p5 = (((@s_acciones.size.to_f / 4)* 100) * $entorno_p5).round(3)
+     @s_acciones << multiple_selected(@entorno_proyecto.acciones) if @entorno_proyecto
+     if Adjunto.count(:id, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ? and validado = ?", @user, @proyecto.diagnostico.id, eje2.id, 5, true]).to_i > 0
+       @s_acciones << multiple_selected(@entorno_diagnostico.acciones) if @entorno_diagnostico
+     end
+  else
+    @diagnostico = Diagnostico.find(self.diagnostico_id)
+    @entorno_diagnostico = @diagnostico.entorno if @diagnostico.entorno
+    @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
+    @user = User.find_by_login(@escuela.clave) if @escuela
+
+    if Adjunto.count(:id, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ? and validado = ?", @user, @diagnostico.id, eje2.id, 5, true]).to_i > 0
+      @s_acciones << multiple_selected(@entorno_diagnostico.acciones) if @entorno_diagnostico
     end
   end
-  
+
+  unless @s_acciones.include?("NING")
+    valido = evidencia_valida?(eje2.id, 5, @diagnostico) if @diagnostico
+    valido ||= evidencia_valida?(eje2.id, 5, nil, @proyecto, avance) if @proyecto && avance
+
+    if @escuela.nivel_descripcion == "BACHILLERATO"
+      num_acciones = Accione.count(:id, :conditions => ["clave not in ('AC02', 'NING')"])
+      @eje2_p5 = (((@s_acciones.size.to_f / num_acciones.to_i)* 100) * $entorno_p5).round(3)
+    else
+      num_acciones = Accione.count(:id, :conditions => ["clave not in ('AC00', 'AC01', 'NING')"])
+      @eje2_p5 = (((@s_acciones.size.to_f / num_acciones.to_i)* 100) * $entorno_p5).round(3)
+    end
+  end
+
   return valido ? @eje2_p5 : 0
 end
 
 ##-- HUELLA ECOLOGICA
-def puntaje_eje3_p1
-  @diagnostico = Diagnostico.find(self.diagnostico_id)
+def puntaje_eje3_p1(tipo=nil,avance=nil)
   valido = false
-  @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
-  @user = User.find_by_login(@escuela.clave) if @escuela
-  @huella = @diagnostico.huella if @diagnostico.huella
+  ahorra_energia = ""
   eje3 = CatalogoEje.find_by_clave("EJE3")
-  if @huella.capacitacion_ahorro_energia == "SI"
-    @eje3 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ?", @user, @diagnostico.id, eje3.id, 1], :order => "eje_id")
-    @eje3.each do |ad|
-      if ad.validado
-        valido = true
-        break
-      end
-    end
+  if tipo == "proyecto"
+    @proyecto = Proyecto.find(self.proyecto_id)
+    @huella_proyecto = @proyecto.huella if @proyecto.huella
+    @huella_diagnostico = @proyecto.diagnostico.huella if @proyecto.diagnostico.huella
+    @escuela = Escuela.find_by_clave(@proyecto.diagnostico.escuela.clave) if @proyecto
+    @user = User.find_by_login(@escuela.clave) if @escuela
+    ahorra_energia = @huella_proyecto.capacitacion_ahorro_energia
+  else
+    @diagnostico = Diagnostico.find(self.diagnostico_id)
+    @huella_diagnostico = @diagnostico.huella if @diagnostico.huella
+    @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
+    @user = User.find_by_login(@escuela.clave) if @escuela
+    ahorra_energia = @huella_diagnostico.capacitacion_ahorro_energia
+  end
+
+  if ahorra_energia == "SI"
+    valido = evidencia_valida?(eje3.id, 1, @diagnostico) if @diagnostico
+    valido ||= evidencia_valida?(eje3.id, 1, nil, @proyecto, avance) if @proyecto && avance
     @eje3_p1 = ($huella_p1 * 100).to_f
   end
 
   return valido ? @eje3_p1 : 0
 end
 
-def puntaje_eje3_p3
-  @diagnostico = Diagnostico.find(self.diagnostico_id)
-  @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
-  @user = User.find_by_login(@escuela.clave) if @escuela
-  @huella = @diagnostico.huella if @diagnostico.huella
-  @eje3_p3 = (((@huella.focos_ahorradores.to_f / @huella.total_focos.to_f ) * 100) * $huella_p3).round(3) if @huella.focos_ahorradores.to_f > 0
-  
+def puntaje_eje3_p3(tipo=nil,avance=nil)
+  if tipo == "proyecto"
+    @proyecto = Proyecto.find(self.proyecto_id)
+    @huella_proyecto = @proyecto.huella if @proyecto.huella
+    @huella_diagnostico = @proyecto.diagnostico.huella if @proyecto.diagnostico.huella
+    @escuela = Escuela.find_by_clave(@proyecto.diagnostico.escuela.clave) if @proyecto
+    @user = User.find_by_login(@escuela.clave) if @escuela
+    @eje3_p3 = (((@huella_proyecto.focos_ahorradores.to_f / @huella_proyecto.total_focos.to_f ) * 100) * $huella_p3).round(3) if @huella_proyecto.focos_ahorradores.to_f > 0
+  else
+    @diagnostico = Diagnostico.find(self.diagnostico_id)
+    @huella_diagnostico = @diagnostico.huella if @diagnostico.huella
+    @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
+    @user = User.find_by_login(@escuela.clave) if @escuela
+    @eje3_p3 = (((@huella_diagnostico.focos_ahorradores.to_f / @huella_diagnostico.total_focos.to_f ) * 100) * $huella_p3).round(3) if @huella_diagnostico.focos_ahorradores.to_f > 0
+  end
+
   return @eje3_p3 ? @eje3_p3 : 0
 end
 
-def puntaje_eje3_p5
-  @diagnostico = Diagnostico.find(self.diagnostico_id)
-  @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
-  @user = User.find_by_login(@escuela.clave) if @escuela
-  @huella = @diagnostico.huella if @diagnostico.huella
-  @eje3_p5 = (((@huella.mantto_inst.to_f / 2 ) * 100) * $huella_p5).round(3)
-  
+def puntaje_eje3_p5(tipo=nil,avance=nil)
+  if tipo == "proyecto"
+    @proyecto = Proyecto.find(self.proyecto_id)
+    @huella_proyecto = @proyecto.huella if @proyecto.huella
+    @huella_diagnostico = @proyecto.diagnostico.huella if @proyecto.diagnostico.huella
+    @escuela = Escuela.find_by_clave(@proyecto.diagnostico.escuela.clave) if @proyecto
+    @user = User.find_by_login(@escuela.clave) if @escuela
+    @eje3_p5 = (((@huella_proyecto.mantto_inst.to_f / 2 ) * 100) * $huella_p5).round(3)
+  else
+    @diagnostico = Diagnostico.find(self.diagnostico_id)
+    @huella_diagnostico = @diagnostico.huella if @diagnostico.huella
+    @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
+    @user = User.find_by_login(@escuela.clave) if @escuela
+    @eje3_p5 = (((@huella_diagnostico.mantto_inst.to_f / 2 ) * 100) * $huella_p5).round(3)
+  end
+
   return @eje3_p5 ? @eje3_p5 : 0
 end
 
-def puntaje_eje3_p7
-  @diagnostico = Diagnostico.find(self.diagnostico_id)
+def puntaje_eje3_p7(tipo=nil,avance=nil)
   valido = false
-  @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
-  @user = User.find_by_login(@escuela.clave) if @escuela
-  @huella = @diagnostico.huella if @diagnostico.huella
+  separa_residuos = ""
   eje3 = CatalogoEje.find_by_clave("EJE3")
-  if @huella.sep_residuos_org_inorg == "SI"
-    @eje3 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ?", @user, @diagnostico.id, eje3.id, 7], :order => "eje_id")
-    @eje3.each do |ad|
-      if ad.validado
-        valido = true
-        break
-      end
-    end
+  if tipo == "proyecto"
+    @proyecto = Proyecto.find(self.proyecto_id)
+    @huella_proyecto = @proyecto.huella if @proyecto.huella
+    @huella_diagnostico = @proyecto.diagnostico.huella if @proyecto.diagnostico.huella
+    @escuela = Escuela.find_by_clave(@proyecto.diagnostico.escuela.clave) if @proyecto
+    @user = User.find_by_login(@escuela.clave) if @escuela
+    separa_residuos = @huella_proyecto.sep_residuos_org_inorg
+  else
+    @diagnostico = Diagnostico.find(self.diagnostico_id)
+    @huella_diagnostico = @diagnostico.huella if @diagnostico.huella
+    @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
+    @user = User.find_by_login(@escuela.clave) if @escuela
+    separa_residuos = @huella_diagnostico.sep_residuos_org_inorg
+  end
+
+  if separa_residuos == "SI"
+    valido = evidencia_valida?(eje3.id, 7, @diagnostico) if @diagnostico
+    valido ||= evidencia_valida?(eje3.id, 7, nil, @proyecto, avance) if @proyecto && avance
     @eje3_p7 = ($huella_p7 * 100).to_f
   end
   return valido ? @eje3_p7 : 0
 end
 
-def puntaje_eje3_p8
-  @diagnostico = Diagnostico.find(self.diagnostico_id)
+def puntaje_eje3_p8(tipo=nil,avance=nil)
   valido = false
-  @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
-  @user = User.find_by_login(@escuela.clave) if @escuela
-  @huella = @diagnostico.huella if @diagnostico.huella
+  elabora_compostas = ""
   eje3 = CatalogoEje.find_by_clave("EJE3")
-  if @huella.elabora_compostas == "SI"
-    @eje3 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ?", @user, @diagnostico.id, eje3.id, 8], :order => "eje_id")
-    @eje3.each do |ad|
-      if ad.validado
-        valido = true
-        break
-      end
-    end
+  if tipo == "proyecto"
+    @proyecto = Proyecto.find(self.proyecto_id)
+    @huella_proyecto = @proyecto.huella if @proyecto.huella
+    @huella_diagnostico = @proyecto.diagnostico.huella if @proyecto.diagnostico.huella
+    @escuela = Escuela.find_by_clave(@proyecto.diagnostico.escuela.clave) if @proyecto
+    @user = User.find_by_login(@escuela.clave) if @escuela
+    elabora_compostas = @huella_proyecto.elabora_compostas
+  else
+    @diagnostico = Diagnostico.find(self.diagnostico_id)
+    @huella_diagnostico = @diagnostico.huella if @diagnostico.huella
+    @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
+    @user = User.find_by_login(@escuela.clave) if @escuela
+    elabora_compostas = @huella_diagnostico.elabora_compostas
+  end
+
+  if elabora_compostas == "SI"
+    valido = evidencia_valida?(eje3.id, 8, @diagnostico) if @diagnostico
+    valido ||= evidencia_valida?(eje3.id, 8, nil, @proyecto, avance) if @proyecto && avance
     @eje3_p8 = ($huella_p8 * 100).to_f
   end
-  
+
   return valido ? @eje3_p8 : 0
 end
 
-def puntaje_eje3_p9
-  @diagnostico = Diagnostico.find(self.diagnostico_id)
+def puntaje_eje3_p9(tipo=nil,avance=nil)
   valido = false
-  @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
-  @user = User.find_by_login(@escuela.clave) if @escuela
-  @huella = @diagnostico.huella if @diagnostico.huella
+  @s_inorganicos = []
   eje3 = CatalogoEje.find_by_clave("EJE3")
-  @eje3 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ?", @user, @diagnostico.id, eje3.id, 9], :order => "eje_id")
-  @eje3.each do |ad|
-    if ad.validado
-      valido = true
-      break
+  if tipo == "proyecto"
+     @proyecto = Proyecto.find(self.proyecto_id)
+     @huella_proyecto = @proyecto.huella if @proyecto.huella
+     @huella_diagnostico = @proyecto.diagnostico.huella if @proyecto.diagnostico.huella
+     @escuela = Escuela.find_by_clave(@proyecto.diagnostico.escuela.clave) if @proyecto
+     @user = User.find_by_login(@escuela.clave) if @escuela
+
+     @s_inorganicos << multiple_selected(@huella_proyecto.inorganicos) if @huella_proyecto.inorganicos
+     if Adjunto.count(:id, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ? and validado = ?", @user, @proyecto.diagnostico.id, eje3.id, 9, true]).to_i > 0
+       @s_inorganicos << multiple_selected(@huella_diagnostico.inorganicos) if @huella_diagnostico.inorganicos
+     end
+  else
+    @diagnostico = Diagnostico.find(self.diagnostico_id)
+    @huella_diagnostico = @diagnostico.huella if @diagnostico.huella
+    @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
+    @user = User.find_by_login(@escuela.clave) if @escuela
+
+    if Adjunto.count(:id, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ? and validado = ?", @user, @diagnostico.id, eje3.id, 9, true]).to_i > 0
+      @s_inorganicos << multiple_selected(@huella_diagnostico.inorganicos) if @huella_diagnostico.inorganicos
     end
   end
-  @s_inorganicos = multiple_selected_id(@huella.inorganicos) if @huella.inorganicos
-  if @s_inorganicos.size.to_i == 1 and @huella.inorganicos[0]['clave'] == "NING"
-    @eje3_p9 = 0
-  else
+
+  unless @s_inorganicos.include?("NING")
+    valido = evidencia_valida?(eje3.id, 9, @diagnostico) if @diagnostico
+    valido ||= evidencia_valida?(eje3.id, 9, nil, @proyecto, avance) if @proyecto && avance
     @eje3_p9 = ptos_inorganicos(@s_inorganicos.size.to_i)
   end
 
   return valido ? @eje3_p9 : 0
 end
+
 
 ##-- CONSUMO RESPONSABLE / SALUDABLE
 
