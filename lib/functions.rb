@@ -221,4 +221,12 @@ module Functions
 
   $avance_actividad = 0.390625
 
+  def evidencia_valida?(eje=nil, num_pregunta=nil, diagnostico=nil, proyecto=nil, avance=nil)
+    @proyecto = Proyecto.find(proyecto) if proyecto
+    @diagnostico = Diagnostico.find(diagnostico) if diagnostico
+    contador=0
+    contador = Adjunto.count(:id, :conditions => ["diagnostico_id = ? AND eje_id = ? AND numero_pregunta = ? AND validado = ?",  diagnostico.id, eje, num_pregunta, true], :order => "eje_id") if @diagnostico
+    contador = Adjunto.count(:id, :conditions => ["proyecto_id = ? AND eje_id = ? AND numero_pregunta = ? AND avance= ? and validado = ?",  proyecto.id, eje, num_pregunta, avance, true], :order => "eje_id") if @proyecto && avance
+    (contador > 0)? true : false
+  end
 end
