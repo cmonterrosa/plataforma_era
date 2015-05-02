@@ -460,11 +460,11 @@ def puntaje_eje4_p4(tipo=nil, avance=nil)
     @t_utensilios = Utensilio.all
     @t_higiene = Higiene.all
 
-    @preparacions = @s_preparacions. > 0 ? (((@s_preparacions.to_f / @t_preparacions.to_f) * 100) * $consumo_p4) : 0
-    @utensilios = @s_utensilios > 0 ? (((@s_utensilios.to_f / @t_utensilios.to_f) * 100) * $consumo_p4) : 0
-    @higienes = @s_higienes > 0 ? (((@s_higienes.to_f / @t_higiene.to_f) * 100) * $consumo_p4) : 0
-    if (@s_preparacions + @s_utensilios + @s_higienes).to_f > 0
-      @eje4_p4 = (@preparacions + @utensilios + @higienes).round(3).to_f
+    @preparacions = @s_preparacions > 0 ? (((@s_preparacions.to_f / @t_preparacions.size.to_f) * 100) * $consumo_p4) : 0
+    @utensilios = @s_utensilios > 0 ? (((@s_utensilios.to_f / @t_utensilios.size.to_f) * 100) * $consumo_p4) : 0
+    @higienes = @s_higienes > 0 ? (((@s_higienes.to_f / @t_higiene.size.to_f) * 100) * $consumo_p4) : 0
+    if (@s_preparacions.size + @s_utensilios.size + @s_higienes.size).to_f > 0
+      @eje4_p4 = (@preparacions.to_f + @utensilios.to_f + @higienes.to_f).round(3)
     else
       @eje4_p4 = 0
     end
@@ -475,7 +475,7 @@ end
 
 def puntaje_eje4_p5(tipo=nil, avance=nil)
      @eje4_p5=0
-     @s_bebidas = @s_bebidas = @s_alimentos = @s_botanas = @s_reposterias = Array.new
+     @s_bebidas = @s_alimentos = @s_botanas = @s_reposterias = Array.new
     if tipo == "proyecto"
       @proyecto = Proyecto.find(self.proyecto_id)
       @consumo_proyecto = @proyecto.consumo if @proyecto.consumo
@@ -498,10 +498,10 @@ def puntaje_eje4_p5(tipo=nil, avance=nil)
       @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
       @user = User.find_by_login(@escuela.clave) if @escuela
       ## Diagnostico ###
-      @s_bebidas << multiple_selected(@consumo_proyecto.bebidas) if @consumo_diagnostico && @consumo_diagnostico.bebidas
-      @s_alimentos << multiple_selected(@consumo_proyecto.alimentos) if @consumo_diagnostico && @consumo_diagnostico.alimentos
-      @s_botanas << multiple_selected(@consumo_proyecto.botanas) if @consumo_diagnostico && @consumo_diagnostico.botanas
-      @s_reposterias << multiple_selected(@consumo_proyecto.reposterias) if @consumo_diagnostico && @consumo_diagnostico.reposterias
+      @s_bebidas << multiple_selected(@consumo_diagnostico.bebidas) if @consumo_diagnostico && @consumo_diagnostico.bebidas
+      @s_alimentos << multiple_selected(@consumo_diagnostico.alimentos) if @consumo_diagnostico && @consumo_diagnostico.alimentos
+      @s_botanas << multiple_selected(@consumo_diagnostico.botanas) if @consumo_diagnostico && @consumo_diagnostico.botanas
+      @s_reposterias << multiple_selected(@consumo_diagnostico.reposterias) if @consumo_diagnostico && @consumo_diagnostico.reposterias
     end
 
   if @consumo_diagnostico || @consumo_proyecto
@@ -601,161 +601,216 @@ def puntaje_eje4_p7(tipo=nil, avance=nil)
 
   if @consumo_diagnostico || @consumo_proyecto
     @eje4_p7 = ptos_afisica(@s_afisicas).to_f
-    valido = evidencia_valida?(4, 8, @diagnostico, @proyecto, avance )
+    valido = evidencia_valida?(4, 7, @diagnostico, @proyecto, avance )
   end
     return valido ? @eje4_p7 : 0
 end
 
-def puntaje_eje4_p8
-  @diagnostico = Diagnostico.find(self.diagnostico_id)
-  @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
-  @user = User.find_by_login(@escuela.clave) if @escuela
-  @consumo = @diagnostico.consumo if @diagnostico.consumo
-  @eje4_p7=0
-  if @consumo
-  minutos_activacion_fisica = (@consumo.minutos_activacion_fisica) ? @consumo.minutos_activacion_fisica : 0
-  if minutos_activacion_fisica > 30
-    @eje4_p7 = ptos_minutos(30).to_f
+def puntaje_eje4_p8(tipo=nil, avance=nil)
+  @eje4_p8 = minutos_activacion_fisica =0
+  if tipo == "proyecto"
+      @proyecto = Proyecto.find(self.proyecto_id)
+      @consumo_proyecto = @proyecto.consumo if @proyecto.consumo
+      @consumo_diagnostico = @proyecto.diagnostico.consumo if @proyecto.diagnostico.consumo
+      @escuela = Escuela.find_by_clave(@proyecto.diagnostico.escuela.clave) if @proyecto
+      @user = User.find_by_login(@escuela.clave) if @escuela
+      minutos_activacion_fisica = (@consumo_proyecto.minutos_activacion_fisica) ? @consumo_proyecto.minutos_activacion_fisica : 0
   else
-    @eje4_p7 = ptos_minutos(@consumo.minutos_activacion_fisica).to_f
-  end
+      @diagnostico = Diagnostico.find(self.diagnostico_id)
+      @consumo_diagnostico = @diagnostico.consumo if @diagnostico.consumo
+      @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
+      @user = User.find_by_login(@escuela.clave) if @escuela
+      minutos_activacion_fisica = (@consumo_diagnostico.minutos_activacion_fisica) ? @consumo_diagnostico.minutos_activacion_fisica : 0
   end
 
-  return @eje4_p7
+  if @consumo_diagnostico || @consumo_proyecto
+    if minutos_activacion_fisica > 30
+      @eje4_p8 = ptos_minutos(30).to_f
+    else
+      @eje4_p8 = ptos_minutos(minutos_activacion_fisica).to_f
+    end
+  end
+
+  return @eje4_p8
 end
 
 ##-- PARTICIPACION COMUNITARIA
 
-def puntaje_eje5_p2
-  @diagnostico = Diagnostico.find(self.diagnostico_id)
+def puntaje_eje5_p2(tipo=nil, avance=nil)
   valido = false
-  @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
-  @user = User.find_by_login(@escuela.clave) if @escuela
-  @participacion = @diagnostico.participacion if @diagnostico.participacion
   eje5 = CatalogoEje.find_by_clave("EJE5")
-  if @participacion.num_padres_familia.to_i > 0
-    @eje5 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ?", @user, @diagnostico.id, eje5.id, 2], :order => "eje_id")
-    @eje5.each do |ad|
-      if ad.validado
-        valido = true
-        break
-      end
-    end
-    @eje5_p2 = (((@participacion.capacitacion_salud_ma.to_f / @participacion.num_padres_familia.to_f ) * 100) * $participacion_p2.to_f).round(3)
+  num_padres_familia= capacitacion_salud_ma = 0
+    if tipo == "proyecto"
+      @proyecto = Proyecto.find(self.proyecto_id)
+      @participacion_proyecto = @proyecto.participacion if @proyecto.participacion
+      @participacion_diagnostico = @proyecto.diagnostico.participacion if @proyecto.diagnostico.participacion
+      @escuela = Escuela.find_by_clave(@proyecto.diagnostico.escuela.clave) if @proyecto
+      @user = User.find_by_login(@escuela.clave) if @escuela
+      num_padres_familia+=@participacion_proyecto.num_padres_familia.to_i if @participacion_proyecto && @participacion_proyecto.num_padres_familia
+      num_padres_familia+=@participacion_diagnostico.num_padres_familia.to_i if @participacion_diagnostico && @participacion_diagnostico.num_padres_familia
+      capacitacion_salud_ma+=@participacion_proyecto.capacitacion_salud_ma.to_f if @participacion_proyecto && @participacion_proyecto.capacitacion_salud_ma
+      capacitacion_salud_ma+=@participacion_diagnostico.capacitacion_salud_ma.to_f if @participacion_diagnostico && @participacion_diagnostico.capacitacion_salud_ma
+  else
+      @diagnostico = Diagnostico.find(self.diagnostico_id)
+      @participacion_diagnostico = @diagnostico.participacion if @diagnostico.participacion
+      @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
+      @user = User.find_by_login(@escuela.clave) if @escuela
+      num_padres_familia+=@participacion_diagnostico.num_padres_familia.to_i if @participacion_diagnostico && @participacion_diagnostico.num_padres_familia
+      capacitacion_salud_ma+=@participacion_diagnostico.capacitacion_salud_ma.to_f if @participacion_diagnostico && @participacion_diagnostico.capacitacion_salud_ma
+  end
+
+ if num_padres_familia > 0
+    valido = evidencia_valida?(eje5.id, 2, @diagnostico, @proyecto, avance)
+    @eje5_p2 = (((capacitacion_salud_ma.to_f / num_padres_familia.to_f ) * 100) * $participacion_p2.to_f).round(3)
   end
 
   return valido ? @eje5_p2 : 0
 end
 
-def puntaje_eje5_p3
-  @diagnostico = Diagnostico.find(self.diagnostico_id)
+def puntaje_eje5_p3(tipo=nil, avance=nil)
   valido = false
-  @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
-  @user = User.find_by_login(@escuela.clave) if @escuela
-  @participacion = @diagnostico.participacion if @diagnostico.participacion
   eje5 = CatalogoEje.find_by_clave("EJE5")
-  if (@participacion.capacitacion_salud.to_i + @participacion.capacitacion_medioambiente.to_i) > 0
-    @eje5 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ?", @user, @diagnostico.id, eje5.id, 3], :order => "eje_id")
-    @eje5.each do |ad|
-      if ad.validado
-        valido = true
-        break
-      end
-    end
-    @eje5_p3 = ptos_capacitaciones(@participacion.capacitacion_salud) +  ptos_capacitaciones(@participacion.capacitacion_medioambiente)
+   @eje5_p3 = capacitacion_salud = capacitacion_medioambiente =  0
+    if tipo == "proyecto"
+      @proyecto = Proyecto.find(self.proyecto_id)
+      @participacion_proyecto = @proyecto.participacion if @proyecto.participacion
+      @participacion_diagnostico = @proyecto.diagnostico.participacion if @proyecto.diagnostico.participacion
+      @escuela = Escuela.find_by_clave(@proyecto.diagnostico.escuela.clave) if @proyecto
+      @user = User.find_by_login(@escuela.clave) if @escuela
+      capacitacion_salud+=@participacion_proyecto.capacitacion_salud.to_f if @participacion_proyecto && @participacion_proyecto.capacitacion_salud
+      capacitacion_salud+=@participacion_diagnostico.capacitacion_salud.to_f if @participacion_diagnostico && @participacion_diagnostico.capacitacion_salud
+      capacitacion_medioambiente+=@participacion_proyecto.capacitacion_medioambiente.to_f if @participacion_proyecto && @participacion_proyecto.capacitacion_medioambiente
+      capacitacion_medioambiente+=@participacion_diagnostico.capacitacion_medioambiente.to_f if @participacion_diagnostico && @participacion_diagnostico.capacitacion_medioambiente
+  else
+      @diagnostico = Diagnostico.find(self.diagnostico_id)
+      @participacion_diagnostico = @diagnostico.participacion if @diagnostico.participacion
+      @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
+      @user = User.find_by_login(@escuela.clave) if @escuela
+      capacitacion_salud+=@participacion_diagnostico.capacitacion_salud.to_f if @participacion_diagnostico && @participacion_diagnostico.capacitacion_salud
+      capacitacion_medioambiente+=@participacion_diagnostico.capacitacion_medioambiente.to_f if @participacion_diagnostico && @participacion_diagnostico.capacitacion_medioambiente
+  end
+
+ if (capacitacion_salud.to_i + capacitacion_medioambiente.to_i) > 0
+    valido = evidencia_valida?(eje5.id, 3, @diagnostico, @proyecto, avance)
+    @eje5_p3 = ptos_capacitaciones(capacitacion_salud) +  ptos_capacitaciones(capacitacion_medioambiente)
   end
 
   return valido ? @eje5_p3 : 0
 end
 
-def puntaje_eje5_p4
-  @diagnostico = Diagnostico.find(self.diagnostico_id)
+def puntaje_eje5_p4(tipo=nil, avance=nil)
   valido = false
-  @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
-  @user = User.find_by_login(@escuela.clave) if @escuela
-  @participacion = @diagnostico.participacion if @diagnostico.participacion
   eje5 = CatalogoEje.find_by_clave("EJE5")
-  capacitaciones_padres = CapacitacionPadre.sum(:numero_capacitaciones, :conditions => ["participacion_id = ?", @participacion.id ])
+   @eje5_p4 = capacitaciones_padres =  0
+    if tipo == "proyecto"
+      @proyecto = Proyecto.find(self.proyecto_id)
+      @participacion_proyecto = @proyecto.participacion if @proyecto.participacion
+      @participacion_diagnostico = @proyecto.diagnostico.participacion if @proyecto.diagnostico.participacion
+      @escuela = Escuela.find_by_clave(@proyecto.diagnostico.escuela.clave) if @proyecto
+      @user = User.find_by_login(@escuela.clave) if @escuela
+      capacitaciones_padres += CapacitacionPadre.sum(:numero_capacitaciones, :conditions => ["participacion_id = ?", @participacion_proyecto.id ]) if @participacion_proyecto
+      capacitaciones_padres += CapacitacionPadre.sum(:numero_capacitaciones, :conditions => ["participacion_id = ?", @participacion_diagnostico.id ]) if @participacion_diagnostico
+  else
+      @diagnostico = Diagnostico.find(self.diagnostico_id)
+      @participacion_diagnostico = @diagnostico.participacion if @diagnostico.participacion
+      @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
+      @user = User.find_by_login(@escuela.clave) if @escuela
+      capacitaciones_padres += CapacitacionPadre.sum(:numero_capacitaciones, :conditions => ["participacion_id = ?", @participacion_diagnostico.id ]) if @participacion_diagnostico
+  end
+
   if capacitaciones_padres.to_i > 0
-    @eje5 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ?", @user, @diagnostico.id, eje5.id, 4], :order => "eje_id")
-    @eje5.each do |ad|
-      if ad.validado
-        valido = true
-        break
-      end
-    end
+    valido = evidencia_valida?(eje5.id, 4, @diagnostico, @proyecto, avance)
     @eje5_p4 = ptos_proyectos(capacitaciones_padres.to_i)
   end
   return valido ? @eje5_p4 : 0
 end
 
-def puntaje_eje5_p5
-  @diagnostico = Diagnostico.find(self.diagnostico_id)
-  valido = false
-  @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
-  @user = User.find_by_login(@escuela.clave) if @escuela
-  @participacion = @diagnostico.participacion if @diagnostico.participacion
-  eje5 = CatalogoEje.find_by_clave("EJE5")
-  proyectos = Pescolar.count(:id, :conditions => ["participacion_id = ? AND materia = ?", @participacion.id, 'MEDIOAMBIENTE'])
-  if proyectos.to_i > 0
-    @eje5 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ?", @user, @diagnostico.id, eje5.id, 5], :order => "eje_id")
-    @eje5.each do |ad|
-      if ad.validado
-        valido = true
-        break
-      end
+def puntaje_eje5_p5(tipo=nil, avance=nil)
+    valido = false
+    eje5 = CatalogoEje.find_by_clave("EJE5")
+    @eje5_p5 = proyectos =  0
+    if tipo == "proyecto"
+      @proyecto = Proyecto.find(self.proyecto_id)
+      @participacion_proyecto = @proyecto.participacion if @proyecto.participacion
+      @participacion_diagnostico = @proyecto.diagnostico.participacion if @proyecto.diagnostico.participacion
+      @escuela = Escuela.find_by_clave(@proyecto.diagnostico.escuela.clave) if @proyecto
+      @user = User.find_by_login(@escuela.clave) if @escuela
+      proyectos += Pescolar.count(:id, :conditions => ["participacion_id = ? AND materia = ?", @participacion_proyecto.id, 'MEDIOAMBIENTE']) if @participacion_proyecto
+      proyectos += Pescolar.count(:id, :conditions => ["participacion_id = ? AND materia = ?", @participacion_diagnostico.id, 'MEDIOAMBIENTE']) if @participacion_diagnostico
+    else
+      @diagnostico = Diagnostico.find(self.diagnostico_id)
+      @participacion_diagnostico = @diagnostico.participacion if @diagnostico.participacion
+      @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
+      @user = User.find_by_login(@escuela.clave) if @escuela
+      proyectos += Pescolar.count(:id, :conditions => ["participacion_id = ? AND materia = ?", @participacion_diagnostico.id, 'MEDIOAMBIENTE']) if @participacion_diagnostico
     end
-    @eje5_p5 = ptos_proyectos(proyectos.to_i)
-  else
-    clean_adjuntos(5,@diagnostico.id, 5)
-  end
- return valido ? @eje5_p5 : 0
+
+    if proyectos.to_i > 0
+      valido = evidencia_valida?(eje5.id, 5, @diagnostico, @proyecto, avance)
+      @eje5_p5 = ptos_proyectos(proyectos.to_i)
+    else
+      clean_adjuntos(5,@diagnostico.id, 5) if @diagnostico
+    end
+    return valido ? @eje5_p5 : 0
 end
 
-def puntaje_eje5_p6
-  @diagnostico = Diagnostico.find(self.diagnostico_id)
-  valido = false
-  @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
-  @user = User.find_by_login(@escuela.clave) if @escuela
-  @participacion = @diagnostico.participacion if @diagnostico.participacion
-  eje5 = CatalogoEje.find_by_clave("EJE5")
-  proyectos = Pescolar.count(:id, :conditions => ["participacion_id = ? AND materia = ?", @participacion.id, 'SALUD'])
-  if proyectos.to_i > 0
-    @eje6 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ?", @user, @diagnostico.id, eje5.id, 6], :order => "eje_id")
-    @eje6.each do |ad|
-      if ad.validado
-        valido = true
-        break
-      end
+def puntaje_eje5_p6(tipo=nil, avance=nil)
+    valido = false
+    eje5 = CatalogoEje.find_by_clave("EJE5")
+    @eje5_p6 = proyectos =  0
+    if tipo == "proyecto"
+      @proyecto = Proyecto.find(self.proyecto_id)
+      @participacion_proyecto = @proyecto.participacion if @proyecto.participacion
+      @participacion_diagnostico = @proyecto.diagnostico.participacion if @proyecto.diagnostico.participacion
+      @escuela = Escuela.find_by_clave(@proyecto.diagnostico.escuela.clave) if @proyecto
+      @user = User.find_by_login(@escuela.clave) if @escuela
+      proyectos += Pescolar.count(:id, :conditions => ["participacion_id = ? AND materia = ?", @participacion_proyecto.id, 'SALUD']) if @participacion_proyecto
+      proyectos += Pescolar.count(:id, :conditions => ["participacion_id = ? AND materia = ?", @participacion_diagnostico.id, 'SALUD']) if @participacion_diagnostico
+    else
+      @diagnostico = Diagnostico.find(self.diagnostico_id)
+      @participacion_diagnostico = @diagnostico.participacion if @diagnostico.participacion
+      @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
+      @user = User.find_by_login(@escuela.clave) if @escuela
+      proyectos += Pescolar.count(:id, :conditions => ["participacion_id = ? AND materia = ?", @participacion_diagnostico.id, 'SALUD']) if @participacion_diagnostico
     end
-    @eje5_p6 = ptos_proyectos(proyectos.to_i)
-  end
 
-  return valido ? @eje5_p6 : 0
+    if proyectos.to_i > 0
+      valido = evidencia_valida?(eje5.id, 6, @diagnostico, @proyecto, avance)
+      @eje5_p6 = ptos_proyectos(proyectos.to_i)
+    else
+      clean_adjuntos(5,@diagnostico.id, 6) if @diagnostico
+    end
+    return valido ? @eje5_p6 : 0
 end
 
-def puntaje_eje5_p7
-  @diagnostico = Diagnostico.find(self.diagnostico_id)
-  valido = false
-  @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
-  @user = User.find_by_login(@escuela.clave) if @escuela
-  @participacion = @diagnostico.participacion if @diagnostico.participacion
-  eje5 = CatalogoEje.find_by_clave("EJE5")
-  proyectos = Pescolar.count(:id, :conditions => ["participacion_id = ? AND materia = ?", @participacion.id, 'DEPENDENCIAS'])
-  if proyectos.to_i > 0
-    @eje7 = Adjunto.find(:all, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ?", @user, @diagnostico.id, eje5.id, 7], :order => "eje_id")
-    @eje7.each do |ad|
-      if ad.validado
-        valido = true
-        break
-      end
+def puntaje_eje5_p7(tipo=nil, avance=nil)
+    valido = false
+    eje5 = CatalogoEje.find_by_clave("EJE5")
+    @eje5_p7 = proyectos =  0
+    if tipo == "proyecto"
+      @proyecto = Proyecto.find(self.proyecto_id)
+      @participacion_proyecto = @proyecto.participacion if @proyecto.participacion
+      @participacion_diagnostico = @proyecto.diagnostico.participacion if @proyecto.diagnostico.participacion
+      @escuela = Escuela.find_by_clave(@proyecto.diagnostico.escuela.clave) if @proyecto
+      @user = User.find_by_login(@escuela.clave) if @escuela
+      proyectos += Pescolar.count(:id, :conditions => ["participacion_id = ? AND materia = ?", @participacion_proyecto.id, 'DEPENDENCIAS']) if @participacion_proyecto
+      proyectos += Pescolar.count(:id, :conditions => ["participacion_id = ? AND materia = ?", @participacion_diagnostico.id, 'DEPENDENCIAS']) if @participacion_diagnostico
+    else
+      @diagnostico = Diagnostico.find(self.diagnostico_id)
+      @participacion_diagnostico = @diagnostico.participacion if @diagnostico.participacion
+      @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
+      @user = User.find_by_login(@escuela.clave) if @escuela
+      proyectos += Pescolar.count(:id, :conditions => ["participacion_id = ? AND materia = ?", @participacion_diagnostico.id, 'DEPENDENCIAS']) if @participacion_diagnostico
     end
-    @eje5_p7 = ptos_proyectos(proyectos.to_i)
-  end
 
-  return valido ? @eje5_p7 : 0
+    if proyectos.to_i > 0
+      valido = evidencia_valida?(eje5.id, 7, @diagnostico, @proyecto, avance)
+      @eje5_p7 = ptos_proyectos(proyectos.to_i)
+    else
+      clean_adjuntos(5,@diagnostico.id, 7) if @diagnostico
+    end
+    return valido ? @eje5_p7 : 0
 end
-
 
 ###--- OBTENIDOS AVANCE ---
 def puntaje_avance_eje(avance, num_eje, num_actividad)
@@ -895,13 +950,7 @@ def clean_adjuntos(eje,diagnostico, numero_pregunta)
    end
 
 
-##### FUNCION QUE DETERMINA SI TIENE AL MENOS UNA EVIDENCIA VALIDA ######
-def evidencia_valida?(eje=nil, num_pregunta=nil, diagnostico=nil, proyecto=nil, avance=nil )
-  contador=0
-  contador = Adjunto.count(:id, :conditions => ["diagnostico_id = ? AND eje_id = ? AND numero_pregunta = ? AND validado = ?",  diagnostico.id, eje, num_pregunta, true], :order => "eje_id") if diagnostico.exists?
-  contador = Adjunto.count(:id, :conditions => ["proyecto_id = ? AND eje_id = ? AND numero_pregunta = ? AND avance= ? and validado = ?",  proyecto.id, eje, num_pregunta, avance, true], :order => "eje_id") if proyecto.exists? && avance
-  (contador > 0)? true : false
-end
+
 
 
 end
