@@ -16,6 +16,11 @@ class Participacion < ActiveRecord::Base
     validates_presence_of :evidencia_pregunta_6, :if =>  :tiene_proyectos_salud?
     validates_presence_of :evidencia_pregunta_7, :if =>  :tiene_proyectos_dependencias?
 
+   attr_accessible :num_avance
+
+   def num_avance=(value)
+      write_attribute(:num_avance, value)
+   end
 
    def instituciones_capacitado?
      (self.capacitacion_padres.empty?)? nil : true
@@ -45,56 +50,93 @@ class Participacion < ActiveRecord::Base
     end
 
     def evidencia_pregunta_1
-      return true if self.proyecto
       current_eje = 5
-      contador = Adjunto.count(:id, :conditions => ["eje_id = ? AND diagnostico_id = ? AND numero_pregunta = ?", current_eje, self.diagnostico_id, 1])
-      #self.errors.add(:pregunta_3, "=> Requiere evidencia") if contador < 1
+      numero_pregunta=1
+      if self.proyecto
+        contador = 1 unless Participacion.find_by_proyecto_id(self.proyecto.id)
+        contador ||= Adjunto.count(:id, :conditions => ["eje_id = ? AND proyecto_id = ? AND numero_pregunta = ? AND avance=?", current_eje, self.proyecto_id, numero_pregunta, self.num_avance]) if self.num_avance
+        contador ||=0
+      else
+        contador = Adjunto.count(:id, :conditions => ["eje_id = ? AND diagnostico_id = ? AND numero_pregunta = ?", current_eje, self.diagnostico_id, numero_pregunta])
+      end
       (contador > 0)?  true : false
     end
 
     def evidencia_pregunta_2
-      return true if self.proyecto
-      current_eje = 5
-      contador = Adjunto.count(:id, :conditions => ["eje_id = ? AND diagnostico_id = ? AND numero_pregunta = ?", current_eje, self.diagnostico_id, 2])
-      #self.errors.add(:pregunta_4, "=> Requiere evidencia") if contador < 1
+       current_eje = 5
+      numero_pregunta=2
+      if self.proyecto
+        contador = 1 unless Participacion.find_by_proyecto_id(self.proyecto.id)
+        contador ||= Adjunto.count(:id, :conditions => ["eje_id = ? AND proyecto_id = ? AND numero_pregunta = ? AND avance=?", current_eje, self.proyecto_id, numero_pregunta, self.num_avance]) if self.num_avance
+        contador ||=0
+      else
+        contador = Adjunto.count(:id, :conditions => ["eje_id = ? AND diagnostico_id = ? AND numero_pregunta = ?", current_eje, self.diagnostico_id, numero_pregunta])
+      end
       (contador > 0)?  true : false
     end
 
     def evidencia_pregunta_3
-      return true if self.proyecto
-      current_eje = 5
-      contador = Adjunto.count(:id, :conditions => ["eje_id = ? AND diagnostico_id = ? AND numero_pregunta = ?", current_eje, self.diagnostico_id, 3])
+       current_eje = 5
+      numero_pregunta=3
+      if self.proyecto
+        contador = 1 unless Participacion.find_by_proyecto_id(self.proyecto.id)
+        contador ||= Adjunto.count(:id, :conditions => ["eje_id = ? AND proyecto_id = ? AND numero_pregunta = ? AND avance=?", current_eje, self.proyecto_id, numero_pregunta, self.num_avance]) if self.num_avance
+        contador ||=0
+      else
+        contador = Adjunto.count(:id, :conditions => ["eje_id = ? AND diagnostico_id = ? AND numero_pregunta = ?", current_eje, self.diagnostico_id, numero_pregunta])
+      end
       (contador > 0)?  true : false
     end
 
     def evidencia_pregunta_4
-      return true if self.proyecto
       current_eje = 5
-      contador = Adjunto.count(:id, :conditions => ["eje_id = ? AND diagnostico_id = ? AND numero_pregunta = ?", current_eje, self.diagnostico_id, 4])
-      #self.errors.add(:pregunta_4, "=> Requiere evidencia") if contador < 1
+      numero_pregunta=4
+      if self.proyecto
+        contador = 1 unless Participacion.find_by_proyecto_id(self.proyecto.id)
+        contador ||= Adjunto.count(:id, :conditions => ["eje_id = ? AND proyecto_id = ? AND numero_pregunta = ? AND avance=?", current_eje, self.proyecto_id, numero_pregunta, self.num_avance]) if self.num_avance
+        contador ||=0
+      else
+        contador = Adjunto.count(:id, :conditions => ["eje_id = ? AND diagnostico_id = ? AND numero_pregunta = ?", current_eje, self.diagnostico_id, numero_pregunta])
+      end
       (contador > 0)?  true : false
     end
 
     def evidencia_pregunta_5
-      return true if self.proyecto
       current_eje = 5
-      contador = Adjunto.count(:id, :conditions => ["eje_id = ? AND diagnostico_id = ? AND numero_pregunta = ?", current_eje, self.diagnostico_id, 5])
-      #self.errors.add(:pregunta_4, "=> Requiere evidencia") if contador < 1
+      numero_pregunta=5
+      if self.proyecto
+        contador = 1 unless Participacion.find_by_proyecto_id(self.proyecto.id)
+        contador ||= Adjunto.count(:id, :conditions => ["eje_id = ? AND proyecto_id = ? AND numero_pregunta = ? AND avance=?", current_eje, self.proyecto_id, numero_pregunta, self.num_avance]) if self.num_avance
+        contador ||=0
+      else
+        contador = Adjunto.count(:id, :conditions => ["eje_id = ? AND diagnostico_id = ? AND numero_pregunta = ?", current_eje, self.diagnostico_id, numero_pregunta])
+      end
       (contador > 0)?  true : false
     end
     
     def evidencia_pregunta_6
-      return true if self.proyecto
       current_eje = 5
-      contador = Adjunto.count(:id, :conditions => ["eje_id = ? AND diagnostico_id = ? AND numero_pregunta = ?", current_eje, self.diagnostico_id, 6])
-      #self.errors.add(:pregunta_4, "=> Requiere evidencia") if contador < 1
+      numero_pregunta=6
+      if self.proyecto
+        contador = 1 unless Participacion.find_by_proyecto_id(self.proyecto.id)
+        contador ||= Adjunto.count(:id, :conditions => ["eje_id = ? AND proyecto_id = ? AND numero_pregunta = ? AND avance=?", current_eje, self.proyecto_id, numero_pregunta, self.num_avance]) if self.num_avance
+        contador ||=0
+      else
+        contador = Adjunto.count(:id, :conditions => ["eje_id = ? AND diagnostico_id = ? AND numero_pregunta = ?", current_eje, self.diagnostico_id, numero_pregunta])
+      end
       (contador > 0)?  true : false
     end
 
     def evidencia_pregunta_7
-      return true if self.proyecto
       current_eje = 5
-      contador = Adjunto.count(:id, :conditions => ["eje_id = ? AND diagnostico_id = ? AND numero_pregunta = ?", current_eje, self.diagnostico_id, 7])
+      numero_pregunta=7
+      if self.proyecto
+        contador = 1 unless Participacion.find_by_proyecto_id(self.proyecto.id)
+        contador ||= Adjunto.count(:id, :conditions => ["eje_id = ? AND proyecto_id = ? AND numero_pregunta = ? AND avance=?", current_eje, self.proyecto_id, numero_pregunta, self.num_avance]) if self.num_avance
+        contador ||=0
+      else
+        contador = Adjunto.count(:id, :conditions => ["eje_id = ? AND diagnostico_id = ? AND numero_pregunta = ?", current_eje, self.diagnostico_id, numero_pregunta])
+      end
       (contador > 0)?  true : false
     end
 end

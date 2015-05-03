@@ -11,6 +11,12 @@ class Huella < ActiveRecord::Base
   validates_presence_of :evidencia_pregunta_7, :if => "self.sep_residuos_org_inorg == 'SI'"
   validates_presence_of :evidencia_pregunta_8, :if => "self.elabora_compostas == 'SI'"
   validates_presence_of :evidencia_pregunta_9, :if => :valida_inorganicos
+
+  attr_accessible :num_avance
+
+   def num_avance=(value)
+      write_attribute(:num_avance, value)
+   end
   
 
   def evidencia_pregunta_1
