@@ -300,6 +300,7 @@ class AvancesController < ApplicationController
     @entorno = Entorno.find(params[:id])
     @proyecto = @entorno.proyecto
     @diagnostico = @proyecto.diagnostico
+    @evidencia = true
     @catalogo_ejes = CatalogoEje.find_by_clave("EJE2")
     @eje = Eje.find_by_catalogo_eje_id_and_proyecto_id(@catalogo_ejes.id, @proyecto.id)
 
@@ -319,15 +320,57 @@ class AvancesController < ApplicationController
     end
 
     @id, @num_avance = (Base64.decode64(params[:eje_avance])).split("-")
+    @entorno.num_avance = @num_avance
     if @entorno.valid?
       flash[:notice] = "Correcto"
-      redirect_to :action => "index", :num_avance => Base64.encode64(@id.to_s)
+      redirect_to :action => "index", :num_avance => Base64.encode64(@num_avance)
     else
        flash[:evidencias] = @entorno.errors.full_messages.join(", ")
        render :action => "add_avances", :id => params[:eje_avance]
     end
     
   end
+
+
+  def check_consumo
+      @consumo = Consumo.find(params[:id])
+      @proyecto = @consumo.proyecto
+      @evidencia = true
+      @diagnostico = @proyecto.diagnostico
+      @catalogo_ejes = CatalogoEje.find_by_clave("EJE4")
+      @eje = Eje.find_by_catalogo_eje_id_and_proyecto_id(@catalogo_ejes.id, @proyecto.id)
+      @lineas = LineasAccion.find(:all, :conditions => ["catalogo_eje_id = ?", @catalogo_ejes.id ])
+      @indicadores = Indicadore.find(:all, :conditions => ["catalogo_eje_id = ?", @catalogo_ejes.id ] )
+      @consumo_diagnostico = Consumo.find_by_diagnostico_id(@diagnostico.id) if @diagnostico
+      @eva_diagnostico = Evaluacion.new(:diagnostico_id => @diagnostico.id.to_i)
+      @escuela = Escuela.find_by_clave(current_user.login.upcase)
+      if @escuela.nivel_descripcion == "BACHILLERATO"
+        @establecimientos = Establecimiento.find(:all, :conditions => ["nivel not in ('BASICA')"])
+      else
+        @establecimientos = Establecimiento.find(:all)
+      end
+
+      @s_preparacions = multiple_selected(@consumo.preparacions) if @consumo.preparacions
+      @s_utensilios = multiple_selected(@consumo.utensilios) if @consumo.utensilios
+      @s_higienes = multiple_selected(@consumo.higienes) if @consumo.higienes
+      @s_bebidas = multiple_selected(@consumo.bebidas) if @consumo.bebidas
+      @s_alimentos = multiple_selected(@consumo.alimentos) if @consumo.alimentos
+      @s_botanas = multiple_selected(@consumo.botanas) if @consumo.botanas
+      @s_reposterias = multiple_selected(@consumo.reposterias) if @consumo.reposterias
+      @s_materials = multiple_selected(@consumo.materials) if @consumo.materials
+      @s_afisicas = selected(@consumo.frecuencia_afisica) if @consumo.frecuencia_afisica
+      @id, @num_avance = (Base64.decode64(params[:eje_avance])).split("-")
+      if @consumo.valid?
+        flash[:notice] = "Avance de Eje 4 se realizó correctamente"
+        redirect_to :action => "index", :num_avance => Base64.encode64(@num_avance)
+      else
+        flash[:evidencias] = @consumo.errors.full_messages.join(", ")
+        render :action => "add_avances", :id => params[:eje_avance]
+      end
+  end
+
+
+
   private
 
   def set_layout
