@@ -9,12 +9,16 @@ class Entorno < ActiveRecord::Base
   validates_presence_of :evidencia_pregunta_3, :if => "self.escuela_reforesta == 'SI'"
   validates_presence_of :evidencia_pregunta_5, :if => :valida_acciones
 
-  attr_accessible :num_avance
+#  attr_accessible :num_avance
 
-   def num_avance=(value)
-      write_attribute(:num_avance, value)
-   end
+   def num_avance_attribute(value=nil)
+#    write_attribute(:num_avance, value)
+    self.write_attribute(:num_avance, value)
+  end
 
+  def num_avance=(value)
+    raise "es privado"
+  end
 
   def evidencia_pregunta_1
     current_eje = 2

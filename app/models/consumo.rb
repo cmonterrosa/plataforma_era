@@ -17,11 +17,16 @@ class Consumo < ActiveRecord::Base
   validates_presence_of :evidencia_pregunta_7, :if => :realiza_actividad_fisica!
 #  validates_presence_of :evidencia_pregunta_8, :if => :tiempo_actividad_fisica!
 
-  attr_accessible :num_avance
+#  attr_accessible :num_avance
 
-   def num_avance=(value)
-      write_attribute(:num_avance, value)
-   end
+   def num_avance_attribute(value=nil)
+#    write_attribute(:num_avance, value)
+    self.write_attribute(:num_avance, value)
+  end
+
+  def num_avance=(value)
+    raise "es privado"
+  end
 
   def tiempo_actividad_fisica!
     (realiza_actividad_fisica! && self.minutos_activacion_fisica) ?   self.minutos_activacion_fisica > 0 : nil

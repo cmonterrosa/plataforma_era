@@ -16,11 +16,16 @@ class Participacion < ActiveRecord::Base
     validates_presence_of :evidencia_pregunta_6, :if =>  :tiene_proyectos_salud?
     validates_presence_of :evidencia_pregunta_7, :if =>  :tiene_proyectos_dependencias?
 
-   attr_accessible :num_avance
+#   attr_accessible :num_avance
 
-   def num_avance=(value)
-      write_attribute(:num_avance, value)
-   end
+   def num_avance_attribute(value=nil)
+#    write_attribute(:num_avance, value)
+    self.write_attribute(:num_avance, value)
+  end
+
+  def num_avance=(value)
+    raise "es privado"
+  end
 
    def instituciones_capacitado?
      (self.capacitacion_padres.empty?)? nil : true
@@ -53,7 +58,7 @@ class Participacion < ActiveRecord::Base
       current_eje = 5
       numero_pregunta=1
       if self.proyecto
-        contador = 1 unless Participacion.find_by_proyecto_id(self.proyecto.id)
+        contador = 1 unless Consumo.find_by_proyecto_id(self.proyecto.id)
         contador ||= Adjunto.count(:id, :conditions => ["eje_id = ? AND proyecto_id = ? AND numero_pregunta = ? AND avance=?", current_eje, self.proyecto_id, numero_pregunta, self.num_avance]) if self.num_avance
         contador ||=0
       else
@@ -63,10 +68,10 @@ class Participacion < ActiveRecord::Base
     end
 
     def evidencia_pregunta_2
-       current_eje = 5
+      current_eje = 5
       numero_pregunta=2
       if self.proyecto
-        contador = 1 unless Participacion.find_by_proyecto_id(self.proyecto.id)
+        contador = 1 unless Consumo.find_by_proyecto_id(self.proyecto.id)
         contador ||= Adjunto.count(:id, :conditions => ["eje_id = ? AND proyecto_id = ? AND numero_pregunta = ? AND avance=?", current_eje, self.proyecto_id, numero_pregunta, self.num_avance]) if self.num_avance
         contador ||=0
       else
@@ -76,10 +81,10 @@ class Participacion < ActiveRecord::Base
     end
 
     def evidencia_pregunta_3
-       current_eje = 5
+      current_eje = 5
       numero_pregunta=3
       if self.proyecto
-        contador = 1 unless Participacion.find_by_proyecto_id(self.proyecto.id)
+        contador = 1 unless Consumo.find_by_proyecto_id(self.proyecto.id)
         contador ||= Adjunto.count(:id, :conditions => ["eje_id = ? AND proyecto_id = ? AND numero_pregunta = ? AND avance=?", current_eje, self.proyecto_id, numero_pregunta, self.num_avance]) if self.num_avance
         contador ||=0
       else

@@ -34,21 +34,21 @@
                     <a href="/avances/add_avances/<%= Base64.encode64(eje.id.to_s + '-'+ @num_avance.to_s) %>" type="image" id="button5" class="buttonText" style="font-weight: bold;"><img src="/images/era/iconos/4.png" alt="Desarrollo de Competencias" onmouseover="this.src='/images/era/iconos/4a.png'" onmouseout="this.src='/images/era/iconos/4.png'"/>Desarrollo&nbsp;de&nbsp;Competencias</a>
                   </div>
                    <%@competencia = Competencia.find_by_proyecto_id(@proyecto.id)%>
-                   <%@competencia.num_avance = @num_avance%>
+                   <%@competencia.num_avance_attribute(@num_avance)%>
                 <% when 'EJE2' %>
                   <div class="grid-4-12">
                     <label style=" text-align:center; display:block;">EJE 2</label>
                     <a href="/avances/add_avances/<%= Base64.encode64(eje.id.to_s + '-'+ @num_avance.to_s) %>" type="image" id="button5" class="buttonText" style="font-weight: bold;" ><img src="/images/era/iconos/1.png" alt="Entorno Saludable" onmouseover="this.src='/images/era/iconos/1a.png'" onmouseout="this.src='/images/era/iconos/1.png'"/>&nbsp;Entorno&nbsp;Saludable&nbsp;</a>
                   </div>
                   <%@entorno = Entorno.find_by_proyecto_id(@proyecto.id)%>
-                  <%@entorno.num_avance = @num_avance%>
+                  <%@entorno.num_avance_attribute(@num_avance)%>
                 <% when 'EJE3' %>
                   <div class="grid-4-12">
                      <label style=" text-align:center; display:block;">EJE 3</label>
                      <a href="/avances/add_avances/<%= Base64.encode64(eje.id.to_s + '-'+ @num_avance.to_s) %>" type="image" id="button5" class="buttonText" style="font-weight: bold;"><img src="/images/era/iconos/2.png" alt="Huella Ecologica" onmouseover="this.src='/images/era/iconos/2a.png'" onmouseout="this.src='/images/era/iconos/2.png'"/>&nbsp;&nbsp;Huella&nbsp;Ecológica&nbsp;&nbsp;</a>
                   </div>
                    <%@huella = Huella.find_by_proyecto_id(@proyecto.id)%>
-                   <%@huella.num_avance = @num_avance%>
+                   <%@huella.num_avance_attribute(@num_avance)%>
                   <div class="grid-12-12 clear"></div>
                 <% when 'EJE4' %>
                   <div class="grid-4-12">
@@ -56,14 +56,14 @@
                      <a href="/avances/add_avances/<%= Base64.encode64(eje.id.to_s + '-'+ @num_avance.to_s) %>" type="image" id="button5" class="buttonText" style="font-weight: bold;"><img src="/images/era/iconos/3.png" alt="Consumo Saludable" onmouseover="this.src='/images/era/iconos/3a.png'" onmouseout="this.src='/images/era/iconos/3.png'"/>Consumo&nbsp;Responsable&nbsp;y&nbsp;Saludable</a>
                   </div>
                   <%@consumo = Consumo.find_by_proyecto_id(@proyecto.id)%>
-                  <%@consumo.num_avance = @num_avance%>
+                  <%@consumo.num_avance_attribute(@num_avance)%>
                 <% when 'EJE5' %>
                   <div class="grid-4-12">
                      <label style=" text-align:center; display:block;">EJE 5</label>
                      <a href="/avances/add_avances/<%= Base64.encode64(eje.id.to_s + '-'+ @num_avance.to_s) %>" type="image" id="button5" class="buttonText" style="font-weight: bold;"><img src="/images/era/iconos/5.png" alt="Participación Ciudadana" onmouseover="this.src='/images/era/iconos/5a.png'" onmouseout="this.src='/images/era/iconos/5.png'"/>Participación&nbsp;Comunitaria</a>
                   </div>
                   <%@participacion = Participacion.find_by_proyecto_id(@proyecto.id)%>
-                  <%@participacion.num_avance = @num_avance%>
+                  <%@participacion.num_avance_attribute(@num_avance)%>
               <% end %>
             <% end %>
           </td>

@@ -557,7 +557,7 @@ function enable_frecuencias_actividades_fisicas(comboSelect1, comboSelect2){
 
     if(select1.value != "NOSR"){
       select2.disabled=false;
-      pregunta8.style="";
+      pregunta8.style.display="";
     }
     else{
      if(select2 != null){select2.disabled=true;pregunta8.style.display="none";}

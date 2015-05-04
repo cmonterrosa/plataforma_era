@@ -80,12 +80,12 @@
       <div class="grid-1-12"></div>
       <div class="grid-3-12">
         <label class="uper">Focos incandescentes:</label>
-        <%= f.select(:focos_incandescentes, @focos.map { |value| [ value, value ] }, {}, {:onchange => "nivelaFocos(this, 'huella_focos_ahorradores', '#{@huella_diagnostico.total_focos}');"})%>
+        <%= f.select(:focos_incandescentes, @focos.map { |value| [ value, value ] }, {}, {:onchange => "nivelaFocos(this, 'huella_focos_ahorradores', '#{@huella_diagnostico.total_focos}'); sumFocos('huella_focos_incandescentes', 'huella_focos_ahorradores', 'total_focos');"})%>
       </div>
       <div class="grid-1-12"></div>
       <div class="grid-3-12">
         <label class="uper">Focos ahorradores:</label>
-        <%= f.select(:focos_ahorradores, @focos.map { |value| [ value, value ] }, {}, {:onchange => "nivelaFocos(this, 'huella_focos_incandescentes', '#{@huella_diagnostico.total_focos}');"})%>
+        <%= f.select(:focos_ahorradores, @focos.map { |value| [ value, value ] }, {}, {:onchange => "nivelaFocos(this, 'huella_focos_incandescentes', '#{@huella_diagnostico.total_focos}'); sumFocos('huella_focos_ahorradores', 'huella_focos_incandescentes', 'total_focos');"})%>
       </div>
       <div class="grid-4-12" style="text-align: center;">
         <label class="uper">Total focos:&nbsp; &nbsp;</label><label id="total_focos"/>

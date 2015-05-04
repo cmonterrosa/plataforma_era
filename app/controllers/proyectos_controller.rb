@@ -106,6 +106,7 @@ class ProyectosController < ApplicationController
         @participacion_diagnostico = Participacion.find_by_diagnostico_id(@diagnostico.id) if @diagnostico
         @s_dcapacitadoras = multiple_selected_dcapacitadora(@participacion.capacitacion_padres) if  @participacion.capacitacion_padres
         cargar_proyectos_actuales
+        @evidencia_diagnostico_p1 = evidencia_valida?(5, 1, @diagnostico)
       end
       
     end
@@ -312,9 +313,9 @@ class ProyectosController < ApplicationController
  #---- competencia proyecto ----
  def save_competencia
     @competencia = Competencia.find(params[:id]) if params[:id]
-    @competencia ||= Competencia.new
+    @competencia ||= Competencia.new(params[:competencia])
+#    @competencia.update_attributes(params[:competencia])
     @proyecto = @competencia.proyecto = Proyecto.find(params[:proyecto].to_i)
-    @competencia.update_attributes(params[:competencia])
 
     if params[:dcapacitadoras]
       @s_docentes = []
@@ -351,7 +352,7 @@ class ProyectosController < ApplicationController
     else
       @competencia.alumnos_capacitados.each { |i| i.delete } if @competencia.alumnos_capacitados
     end
-
+    
     @eje = Eje.find(params[:eje_id]) if params[:eje_id]
     @eje ||= Eje.new
 
@@ -359,6 +360,8 @@ class ProyectosController < ApplicationController
     @eje.objetivo_especifico = params[:eje][:objetivo_especifico] if params[:eje][:objetivo_especifico]
     @eje.meta = params[:eje][:meta] if params[:eje][:meta]
     @eje.proyecto_id = @proyecto.id
+
+    @competencia.num_avance_attribute
 
     if @competencia.save and @eje.save
       flash[:notice] = "Registro guardado correctamente"
@@ -369,7 +372,7 @@ class ProyectosController < ApplicationController
 
       @s_dcapacitadoras = multiple_selected_dcapacitadora(@competencia.docentes_capacitados) if @competencia.docentes_capacitados
       @s_acapacitadoras = multiple_selected_dcapacitadora(@competencia.alumnos_capacitados) if @competencia.alumnos_capacitados
-      render :action => "get_contenido_ejes", :catalogo_catalogo_eje_id => params[:catalogo][:catalogo_eje_id], :layout => "era2014"
+      render :action => "get_contenido_ejes", :catalogo_catalogo_eje_id => @eje.catalogo_eje_id, :layout => "era2014"
     end
   end
 
@@ -412,6 +415,8 @@ class ProyectosController < ApplicationController
     @eje.meta = params[:eje][:meta] if params[:eje][:meta]
     @eje.proyecto_id = @proyecto.id
 
+    @entorno.num_avance_attribute
+    
     if @entorno.save and @eje.save
       flash[:notice] = "Registro guardado correctamente"
       redirect_to :controller => "proyectos"
@@ -432,9 +437,9 @@ class ProyectosController < ApplicationController
 
  def save_huella
     @huella = Huella.find(params[:id]) if params[:id]
-    @huella ||= Huella.new
+    @huella ||= Huella.new(params[:huella])
     @proyecto = @huella.proyecto = Proyecto.find(params[:proyecto].to_i)
-    @huella.update_attributes(params[:huella])
+#    @huella.update_attributes(params[:huella])
 
     if params[:inorganicos]
       @inorganicos = []
@@ -452,6 +457,8 @@ class ProyectosController < ApplicationController
     @eje.meta = params[:eje][:meta] if params[:eje][:meta]
     @eje.proyecto_id = @proyecto.id
 
+    @huella.num_avance_attribute
+
     if @huella.save and @eje.save
       flash[:notice] = "Registro guardado correctamente"
       redirect_to :controller => "proyectos"
@@ -466,9 +473,9 @@ class ProyectosController < ApplicationController
 
  def save_consumo
     @consumo = Consumo.find(params[:id]) if params[:id]
-    @consumo ||= Consumo.new
+    @consumo ||= Consumo.new(params[:consumo])
     @proyecto = @consumo.proyecto = Proyecto.find(params[:proyecto].to_i)
-    @consumo.update_attributes(params[:consumo])
+#    @consumo.update_attributes(params[:consumo])
 
     if params[:preparacions]
       @preparacions = []
@@ -543,6 +550,8 @@ class ProyectosController < ApplicationController
     @eje.meta = params[:eje][:meta] if params[:eje][:meta]
     @eje.proyecto_id = @proyecto.id
 
+    @consumo.num_avance_attribute
+
     if @consumo.save and @eje.save
       flash[:notice] = "Registro guardado correctamente"
       redirect_to :controller => "proyectos"
@@ -605,6 +614,8 @@ class ProyectosController < ApplicationController
     @eje.meta = params[:eje][:meta] if params[:eje][:meta]
     @eje.proyecto_id = @proyecto.id
 
+    @participacion.num_avance_attribute
+    
     if @participacion.save and @eje.save
       flash[:notice] = "Registro guardado correctamente"
       redirect_to :controller => "proyectos"

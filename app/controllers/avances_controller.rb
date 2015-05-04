@@ -113,6 +113,7 @@ class AvancesController < ApplicationController
       @participacion_diagnostico = Participacion.find_by_diagnostico_id(@diagnostico.id) if @diagnostico
       @s_dcapacitadoras = multiple_selected_dcapacitadora(@participacion.capacitacion_padres) if  @participacion.capacitacion_padres
       cargar_proyectos_actuales
+      @evidencia_diagnostico_p1 = evidencia_valida?(5, 1, @diagnostico)
     end
 
   end
@@ -289,11 +290,41 @@ class AvancesController < ApplicationController
           @participacion_diagnostico = Participacion.find_by_diagnostico_id(@diagnostico.id) if @diagnostico
           @s_dcapacitadoras = multiple_selected_dcapacitadora(@participacion.capacitacion_padres) if  @participacion.capacitacion_padres
           cargar_proyectos_actuales
+          @evidencia_diagnostico_p1 = evidencia_valida?(5, 1, @diagnostico)
         end
     else
       flash[:notice] = "Es necesario concluir la etapa de Proyecto"
       redirect_to :action => "index", :controller => "Proyecto"
     end
+  end
+
+  def check_competencia
+    @competencia = Competencia.find(params[:id])
+    @proyecto = @competencia.proyecto
+    @diagnostico = @proyecto.diagnostico
+    @evidencia = true
+    @catalogo_ejes = CatalogoEje.find_by_clave("EJE1")
+    @eje = Eje.find_by_catalogo_eje_id_and_proyecto_id(@catalogo_ejes.id, @proyecto.id)
+
+    @lineas = LineasAccion.find(:all, :conditions => ["catalogo_eje_id = ?", @catalogo_ejes.id ])
+    @indicadores = Indicadore.find(:all, :conditions => ["catalogo_eje_id = ?", @catalogo_ejes.id ] )
+
+    @competencia_diagnostico = Competencia.find_by_diagnostico_id(@diagnostico.id) if @diagnostico
+    @eva_diagnostico = Evaluacion.new(:diagnostico_id => @diagnostico.id.to_i)
+
+    @s_dcapacitadoras = multiple_selected_dcapacitadora(@competencia.docentes_capacitados) if @competencia.docentes_capacitados
+    @s_acapacitadoras = multiple_selected_dcapacitadora(@competencia.alumnos_capacitados) if @competencia.alumnos_capacitados
+
+    @id, @num_avance = (Base64.decode64(params[:eje_avance])).split("-")
+    @competencia.num_avance_attribute(@num_avance)
+    if @competencia.valid?
+      flash[:notice] = "Avance de Eje 1 se realizó correctamente"
+      redirect_to :action => "index", :num_avance => Base64.encode64(@num_avance)
+    else
+      flash[:evidencias] = @competencia.errors.full_messages.join(", ")
+      render :action => "add_avances", :id => params[:eje_avance]
+    end
+
   end
 
   def check_entorno
@@ -309,7 +340,7 @@ class AvancesController < ApplicationController
 
     @entorno_diagnostico = Entorno.find_by_diagnostico_id(@diagnostico.id) if @diagnostico
     @eva_diagnostico = Evaluacion.new(:diagnostico_id => @diagnostico.id.to_i)
-    
+
     @s_acciones = multiple_selected_id(@entorno.acciones) if @entorno.acciones
     @s_espacios = multiple_selected_espacios(@entorno.escuelas_espacios) if @entorno.escuelas_espacios
     @escuela = Escuela.find_by_clave(current_user.login)
@@ -320,17 +351,46 @@ class AvancesController < ApplicationController
     end
 
     @id, @num_avance = (Base64.decode64(params[:eje_avance])).split("-")
-    @entorno.num_avance = @num_avance
+    @entorno.num_avance_attribute(@num_avance)
     if @entorno.valid?
-      flash[:notice] = "Correcto"
+      flash[:notice] = "Avance de Eje 2 se realizó correctamente"
       redirect_to :action => "index", :num_avance => Base64.encode64(@num_avance)
     else
        flash[:evidencias] = @entorno.errors.full_messages.join(", ")
        render :action => "add_avances", :id => params[:eje_avance]
     end
-    
+
   end
 
+  def check_huella
+    @huella = Huella.find(params[:id])
+    @proyecto = @huella.proyecto
+    @diagnostico = @proyecto.diagnostico
+    @evidencia = true
+    @catalogo_ejes = CatalogoEje.find_by_clave("EJE3")
+    @eje = Eje.find_by_catalogo_eje_id_and_proyecto_id(@catalogo_ejes.id, @proyecto.id)
+
+    @lineas = LineasAccion.find(:all, :conditions => ["catalogo_eje_id = ?", @catalogo_ejes.id ])
+    @indicadores = Indicadore.find(:all, :conditions => ["catalogo_eje_id = ?", @catalogo_ejes.id ] )
+
+    @huella_diagnostico = Huella.find_by_diagnostico_id(@diagnostico.id) if @diagnostico
+    @eva_diagnostico = Evaluacion.new(:diagnostico_id => @diagnostico.id.to_i)
+
+    @s_inorganicos = multiple_selected_id(@huella.inorganicos) if @huella.inorganicos
+    @focos = 0..@huella_diagnostico.total_focos.to_i
+
+    @id, @num_avance = (Base64.decode64(params[:eje_avance])).split("-")
+    @huella.num_avance_attribute(@num_avance)
+    
+    if @huella.valid?
+      flash[:notice] = "Avance de Eje 3 se realizó correctamente"
+      redirect_to :action => "index", :num_avance => Base64.encode64(@num_avance)
+    else
+      flash[:evidencias] = @huella.errors.full_messages.join(", ")
+      render :action => "add_avances", :id => params[:eje_avance]
+    end
+
+  end
 
   def check_consumo
       @consumo = Consumo.find(params[:id])
@@ -360,6 +420,7 @@ class AvancesController < ApplicationController
       @s_materials = multiple_selected(@consumo.materials) if @consumo.materials
       @s_afisicas = selected(@consumo.frecuencia_afisica) if @consumo.frecuencia_afisica
       @id, @num_avance = (Base64.decode64(params[:eje_avance])).split("-")
+      @consumo.num_avance_attribute(@num_avance)
       if @consumo.valid?
         flash[:notice] = "Avance de Eje 4 se realizó correctamente"
         redirect_to :action => "index", :num_avance => Base64.encode64(@num_avance)
@@ -367,6 +428,35 @@ class AvancesController < ApplicationController
         flash[:evidencias] = @consumo.errors.full_messages.join(", ")
         render :action => "add_avances", :id => params[:eje_avance]
       end
+  end
+
+  def check_participacion
+    @participacion = Participacion.find(params[:id])
+    @proyecto = @huella.proyecto
+    @diagnostico = @proyecto.diagnostico
+    @evidencia = true
+    @catalogo_ejes = CatalogoEje.find_by_clave("EJE5")
+    @eje = Eje.find_by_catalogo_eje_id_and_proyecto_id(@catalogo_ejes.id, @proyecto.id)
+
+    @lineas = LineasAccion.find(:all, :conditions => ["catalogo_eje_id = ?", @catalogo_ejes.id ])
+    @indicadores = Indicadore.find(:all, :conditions => ["catalogo_eje_id = ?", @catalogo_ejes.id ] )
+
+    @participacion_diagnostico = Participacion.find_by_diagnostico_id(@diagnostico.id) if @diagnostico
+    @eva_diagnostico = Evaluacion.new(:diagnostico_id => @diagnostico.id.to_i)
+
+    @s_dcapacitadoras = multiple_selected_dcapacitadora(@participacion.capacitacion_padres) if  @participacion.capacitacion_padres
+    cargar_proyectos_actuales
+
+    @id, @num_avance = (Base64.decode64(params[:eje_avance])).split("-")
+    @participacion.num_avance_attribute(@num_avance)
+    if @participacion.valid?
+      flash[:notice] = "Avance de Eje 5 se realizó correctamente"
+      redirect_to :action => "index", :num_avance => Base64.encode64(@num_avance)
+    else
+      flash[:evidencias] = @participacion.errors.full_messages.join(", ")
+      render :action => "add_avances", :id => params[:eje_avance]
+    end
+
   end
 
 

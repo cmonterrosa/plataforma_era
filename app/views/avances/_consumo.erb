@@ -319,8 +319,8 @@
   </script>
   <% end %>
 </table>
+<% if @evidencia %>
 <br/>
-
 <table align="right" >
   <tr >
     <td>
@@ -334,9 +334,7 @@
     <td colspan="2" >&nbsp;</td>
   </tr>
 </table>
-
-
-
+<% end %>
 <% end %>
 <%= render :partial => "diagnosticos/errores_evidencias"%>
 
