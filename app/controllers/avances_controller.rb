@@ -113,7 +113,8 @@ class AvancesController < ApplicationController
       @participacion_diagnostico = Participacion.find_by_diagnostico_id(@diagnostico.id) if @diagnostico
       @s_dcapacitadoras = multiple_selected_dcapacitadora(@participacion.capacitacion_padres) if  @participacion.capacitacion_padres
       cargar_proyectos_actuales
-      @evidencia_diagnostico_p1 = evidencia_valida?(5, 1, @diagnostico)
+      @evidencia_diagnostico_p2 = evidencia_valida?(@eje.catalogo_eje.id, 2, @diagnostico)
+      @evidencia_diagnostico_p3 = evidencia_valida?(@eje.catalogo_eje.id, 3, @diagnostico)
     end
 
   end
@@ -290,7 +291,8 @@ class AvancesController < ApplicationController
           @participacion_diagnostico = Participacion.find_by_diagnostico_id(@diagnostico.id) if @diagnostico
           @s_dcapacitadoras = multiple_selected_dcapacitadora(@participacion.capacitacion_padres) if  @participacion.capacitacion_padres
           cargar_proyectos_actuales
-          @evidencia_diagnostico_p1 = evidencia_valida?(5, 1, @diagnostico)
+          @evidencia_diagnostico_p2 = evidencia_valida?(5, 2, @diagnostico)
+          @evidencia_diagnostico_p3 = evidencia_valida?(5, 3, @diagnostico)
         end
     else
       flash[:notice] = "Es necesario concluir la etapa de Proyecto"
@@ -432,7 +434,7 @@ class AvancesController < ApplicationController
 
   def check_participacion
     @participacion = Participacion.find(params[:id])
-    @proyecto = @huella.proyecto
+    @proyecto = @participacion.proyecto
     @diagnostico = @proyecto.diagnostico
     @evidencia = true
     @catalogo_ejes = CatalogoEje.find_by_clave("EJE5")

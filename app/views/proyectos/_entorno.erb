@@ -142,7 +142,7 @@
         <div id="acciones" class="grid-12-12">
           <% i= 1 %>
           <% @acciones.each do |c| %>
-            <% unless @entorno_diagnostico.acciones.include?(c) %>
+            <% unless @s_acciones_diagnostico.include?(c.id)%>
               <%= check_box_tag "acciones[#{i}]", c.clave, @s_acciones.include?(c.id) ? true : false, :onclick => "verifyCheckboxs(this, 'acciones', 'eje2_p5');" %>&nbsp;<%= c.descripcion %><br /><br />
               <%=linea_horizontal%>
             <% end %>

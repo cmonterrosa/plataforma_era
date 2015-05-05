@@ -1,3 +1,10 @@
+<%
+capacitacion_salud_ma = @evidencia_diagnostico_p2 ? @participacion_diagnostico.capacitacion_salud_ma : 0
+max_padres_familia = @evidencia_diagnostico_p2 ? (@participacion_diagnostico.num_padres_familia.to_i - @participacion_diagnostico.capacitacion_salud_ma.to_i) : @participacion_diagnostico.num_padres_familia
+
+capacitacion_salud = @evidencia_diagnostico_p3 ? @participacion_diagnostico.capacitacion_salud : 0
+capacitacion_medioambiente = @evidencia_diagnostico_p3 ? @participacion_diagnostico.capacitacion_medioambiente : 0
+%>
 <% form_for :participacion, @participacion, :url => { :action => "check_participacion", :id => @participacion, :proyecto => @proyecto.id, :eje_id => @eje, :eje_avance => Base64.encode64("#{@eje.id}-#{@num_avance}") }, :html => {:class => "formee", :name => "participacion", :id => "participacion"} do |f| -%>
 <table class="subprincipal" width="100%" border="0" cellpadding="4" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
   <tr bgcolor="#003366" style="opacity: 0.7; color: white;" >
@@ -41,7 +48,7 @@
         <tr>
           <td align="center" style="vertical-align:top;"><label  class="uper" style=" font-size: 15px; font-weight: bold;" >ACCIONES: </label></td>
         </tr>
-        <input id="val_max_padres" name="val_max_padres" type="hidden" value="<%= @participacion_diagnostico.num_padres_familia.to_i - @participacion_diagnostico.capacitacion_salud_ma.to_i %>" />
+        <input id="val_max_padres" name="val_max_padres" type="hidden" value="<%= max_padres_familia %>" />
         <% if @eva_diagnostico.puntaje_eje5_p2 < ($participacion_p2 * 100) %>
         <tr>
           <td align="justify" style=" vertical-align:top;">
@@ -49,7 +56,7 @@
             <div class="grid-12-12">
               <label class="uper">2.- Involucrar al 100% de los padres de familia en capacitaciones, talleres, cursos o actividades relacionadas en temas de salud y medio ambiente.</label>
             </div>
-            <div class="grid-12-12">TOTAL PADRES DE FAMILIA EN REGISTRO ESCOLAR: &nbsp; <b><%= @participacion_diagnostico.num_padres_familia %></b> &nbsp; &nbsp; &nbsp; RESPUESTA DEL DIAGNÓSTICO: &nbsp; <b><%= @participacion_diagnostico.capacitacion_salud_ma %></b> &nbsp; &nbsp; &nbsp; PADRES DE FAMILIA POR INVOLUCRAR: &nbsp; <b><%= @participacion_diagnostico.num_padres_familia.to_i - @participacion_diagnostico.capacitacion_salud_ma.to_i %></b></div>
+            <div class="grid-12-12">TOTAL PADRES DE FAMILIA EN REGISTRO ESCOLAR: &nbsp; <b><%= @participacion_diagnostico.num_padres_familia %></b> &nbsp; &nbsp; &nbsp; RESPUESTA DEL DIAGNÓSTICO: &nbsp; <b><%= capacitacion_salud_ma %></b> &nbsp; &nbsp; &nbsp; PADRES DE FAMILIA POR INVOLUCRAR: &nbsp; <b><%= max_padres_familia %></b></div>
             <!-- Línea campo -->
             <div class="grid-12-12" style="text-align:center;" >
               <div class="grid-5-12"></div>
@@ -81,7 +88,7 @@
             <div class="grid-12-12">
               <label class="uper">3.- Capacitar al 100% los padres por parte de los docentes.</label>
             </div>
-            <div class="grid-12-12">RESPUESTA DEL DIAGNÓSTICO: &nbsp; SALUD <b><%= @participacion_diagnostico.capacitacion_salud %></b> &nbsp; &nbsp; MEDIO AMBIENTE <b><%= @participacion_diagnostico.capacitacion_medioambiente %></b></div>
+            <div class="grid-12-12">RESPUESTA DEL DIAGNÓSTICO: &nbsp; SALUD <b><%= capacitacion_salud %></b> &nbsp; &nbsp; MEDIO AMBIENTE <b><%= capacitacion_medioambiente %></b></div>
             <!-- Salud -->
             <div class="grid-2-12"></div>
             <div class="grid-2-12" style="text-align:center;">
