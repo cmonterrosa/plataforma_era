@@ -464,7 +464,6 @@ def puntaje_eje4_p2(tipo=nil, avance=nil)
   return valido ? @eje4_p3 : 0
 end
 
-
 def puntaje_eje4_p3(tipo=nil, avance=nil)
   valido = false
   eje4 = CatalogoEje.find_by_clave("EJE4")
@@ -490,7 +489,6 @@ def puntaje_eje4_p3(tipo=nil, avance=nil)
   return valido ? @eje4_p2 : 0
 end
 
-
 def puntaje_eje4_p4(tipo=nil, avance=nil)
     @eje4_p4 = @s_preparacions = @s_utensilios = @s_higienes = 0
     if tipo == "proyecto"
@@ -502,7 +500,7 @@ def puntaje_eje4_p4(tipo=nil, avance=nil)
         #### Proyecto ###
         @s_preparacions += multiple_selected(@consumo_proyecto.preparacions).size if @consumo_proyecto && @consumo_proyecto.preparacions
         @s_utensilios += multiple_selected(@consumo_proyecto.utensilios).size if @consumo_proyecto && @consumo_proyecto.utensilios
-        @s_higienes += multiple_selected(@consumo_proyecto.higienes).size if @consumo_proyecto && @consumo_proyectos.higienes
+        @s_higienes += multiple_selected(@consumo_proyecto.higienes).size if @consumo_proyecto && @consumo_proyecto.higienes
         #### Diagnostico #
         @s_preparacions += multiple_selected(@consumo_diagnostico.preparacions).size if @consumo_diagnostico && @consumo_diagnostico.preparacions
         @s_utensilios += multiple_selected(@consumo_diagnostico.utensilios).size if @consumo_diagnostico && @consumo_diagnostico.utensilios
@@ -707,6 +705,7 @@ def puntaje_eje4_p8(tipo=nil, avance=nil)
   return @eje4_p8
 end
 
+
 ##-- PARTICIPACION COMUNITARIA
 
 def puntaje_eje5_p2(tipo=nil, avance=nil)
@@ -885,6 +884,7 @@ def puntaje_eje5_p7(tipo=nil, avance=nil)
     return valido ? @eje5_p7 : 0
 end
 
+
 ###--- OBTENIDOS AVANCE ---
 def puntaje_avance_eje(avance, num_eje, num_actividad)
   valido = false
@@ -947,46 +947,82 @@ def puntaje_total_obtenido_eje1(tipo=nil, avance=nil)
     @vpuntaje_eje1_p5 = puntaje_eje1_p5 ? puntaje_eje1_p5 : 0
   end
 
-
-
   return (@vpuntaje_eje1_p1.to_f + @vpuntaje_eje1_p2.to_f + @vpuntaje_eje1_p3.to_f + @vpuntaje_eje1_p4.to_f + @vpuntaje_eje1_p5.to_f).to_f.round(3)
 end
 
-def puntaje_total_obtenido_eje2
-  @vpuntaje_eje2_p2 = puntaje_eje2_p2 ? puntaje_eje2_p2 : 0
-  @vpuntaje_eje2_p3 = puntaje_eje2_p3 ? puntaje_eje2_p3 : 0
-  @vpuntaje_eje2_p5 = puntaje_eje2_p5 ? puntaje_eje2_p5 : 0
+def puntaje_total_obtenido_eje2(tipo=nil, avance=nil)
+  if tipo=="proyecto"
+    @vpuntaje_eje2_p2 = puntaje_eje2_p2("proyecto", avance) ? puntaje_eje2_p2("proyecto", avance) : 0
+    @vpuntaje_eje2_p3 = puntaje_eje2_p3("proyecto", avance) ? puntaje_eje2_p3("proyecto", avance) : 0
+    @vpuntaje_eje2_p5 = puntaje_eje2_p5("proyecto", avance) ? puntaje_eje2_p5("proyecto", avance) : 0
+  else
+    @vpuntaje_eje2_p2 = puntaje_eje2_p2 ? puntaje_eje2_p2 : 0
+    @vpuntaje_eje2_p3 = puntaje_eje2_p3 ? puntaje_eje2_p3 : 0
+    @vpuntaje_eje2_p5 = puntaje_eje2_p5 ? puntaje_eje2_p5 : 0
+  end
+
   return (@vpuntaje_eje2_p2.to_f + @vpuntaje_eje2_p3.to_f + @vpuntaje_eje2_p5.to_f).to_f.round(3)
 end
 
-def puntaje_total_obtenido_eje3
-  @vpuntaje_eje3_p1 = puntaje_eje3_p1 ? puntaje_eje3_p1 : 0
-  @vpuntaje_eje3_p3 = puntaje_eje3_p3 ? puntaje_eje3_p3 : 0
-  @vpuntaje_eje3_p5 = puntaje_eje3_p5 ? puntaje_eje3_p5 : 0
-  @vpuntaje_eje3_p7 = puntaje_eje3_p7 ? puntaje_eje3_p7 : 0
-  @vpuntaje_eje3_p8 = puntaje_eje3_p8 ? puntaje_eje3_p8 : 0
-  @vpuntaje_eje3_p9 = puntaje_eje3_p9 ? puntaje_eje3_p9 : 0
+def puntaje_total_obtenido_eje3(tipo=nil, avance=nil)
+  if tipo=="proyecto"
+    @vpuntaje_eje3_p1 = puntaje_eje3_p1("proyecto", avance) ? puntaje_eje3_p1("proyecto", avance) : 0
+    @vpuntaje_eje3_p3 = puntaje_eje3_p3("proyecto", avance) ? puntaje_eje3_p3("proyecto", avance) : 0
+    @vpuntaje_eje3_p5 = puntaje_eje3_p5("proyecto", avance) ? puntaje_eje3_p5("proyecto", avance) : 0
+    @vpuntaje_eje3_p7 = puntaje_eje3_p7("proyecto", avance) ? puntaje_eje3_p7("proyecto", avance) : 0
+    @vpuntaje_eje3_p8 = puntaje_eje3_p8("proyecto", avance) ? puntaje_eje3_p8("proyecto", avance) : 0
+    @vpuntaje_eje3_p9 = puntaje_eje3_p9("proyecto", avance) ? puntaje_eje3_p9("proyecto", avance) : 0
+  else
+    @vpuntaje_eje3_p1 = puntaje_eje3_p1 ? puntaje_eje3_p1 : 0
+    @vpuntaje_eje3_p3 = puntaje_eje3_p3 ? puntaje_eje3_p3 : 0
+    @vpuntaje_eje3_p5 = puntaje_eje3_p5 ? puntaje_eje3_p5 : 0
+    @vpuntaje_eje3_p7 = puntaje_eje3_p7 ? puntaje_eje3_p7 : 0
+    @vpuntaje_eje3_p8 = puntaje_eje3_p8 ? puntaje_eje3_p8 : 0
+    @vpuntaje_eje3_p9 = puntaje_eje3_p9 ? puntaje_eje3_p9 : 0
+  end
+
  return (@vpuntaje_eje3_p1.to_f + @vpuntaje_eje3_p3.to_f + @vpuntaje_eje3_p5.to_f + @vpuntaje_eje3_p7.to_f + @vpuntaje_eje3_p8.to_f + @vpuntaje_eje3_p9.to_f).to_f.round(3)
 end
 
-def puntaje_total_obtenido_eje4
-  @vpuntaje_eje4_p2 = (puntaje_eje4_p2) ? (puntaje_eje4_p2) : 0
-  @vpuntaje_eje4_p3 = (puntaje_eje4_p3) ? (puntaje_eje4_p3) : 0
-  @vpuntaje_eje4_p4 = (puntaje_eje4_p4) ? (puntaje_eje4_p4) : 0
-  @vpuntaje_eje4_p5 = (puntaje_eje4_p5) ? (puntaje_eje4_p5) : 0
-  @vpuntaje_eje4_p6 = (puntaje_eje4_p6) ? (puntaje_eje4_p6) : 0
-  @vpuntaje_eje4_p7 = (puntaje_eje4_p7) ? (puntaje_eje4_p7) : 0
-  @vpuntaje_eje4_p8 = (puntaje_eje4_p8) ? (puntaje_eje4_p8) : 0
+def puntaje_total_obtenido_eje4(tipo=nil, avance=nil)
+  if tipo=="proyecto"
+    @vpuntaje_eje4_p2 = puntaje_eje4_p2("proyecto", avance) ? puntaje_eje4_p2("proyecto", avance) : 0
+    @vpuntaje_eje4_p3 = puntaje_eje4_p3("proyecto", avance) ? puntaje_eje4_p3("proyecto", avance) : 0
+    @vpuntaje_eje4_p4 = puntaje_eje4_p4("proyecto", avance) ? puntaje_eje4_p4("proyecto", avance) : 0
+    @vpuntaje_eje4_p5 = puntaje_eje4_p5("proyecto", avance) ? puntaje_eje4_p5("proyecto", avance) : 0
+    @vpuntaje_eje4_p6 = puntaje_eje4_p6("proyecto", avance) ? puntaje_eje4_p6("proyecto", avance) : 0
+    @vpuntaje_eje4_p7 = puntaje_eje4_p7("proyecto", avance) ? puntaje_eje4_p7("proyecto", avance) : 0
+    @vpuntaje_eje4_p8 = puntaje_eje4_p8("proyecto", avance) ? puntaje_eje4_p8("proyecto", avance) : 0
+  else
+    @vpuntaje_eje4_p2 = puntaje_eje4_p2 ? puntaje_eje4_p2 : 0
+    @vpuntaje_eje4_p3 = puntaje_eje4_p3 ? puntaje_eje4_p3 : 0
+    @vpuntaje_eje4_p4 = puntaje_eje4_p4 ? puntaje_eje4_p4 : 0
+    @vpuntaje_eje4_p5 = puntaje_eje4_p5 ? puntaje_eje4_p5 : 0
+    @vpuntaje_eje4_p6 = puntaje_eje4_p6 ? puntaje_eje4_p6 : 0
+    @vpuntaje_eje4_p7 = puntaje_eje4_p7 ? puntaje_eje4_p7 : 0
+    @vpuntaje_eje4_p8 = puntaje_eje4_p8 ? puntaje_eje4_p8 : 0
+  end
+
   return (@vpuntaje_eje4_p2 + @vpuntaje_eje4_p3 + @vpuntaje_eje4_p4 + @vpuntaje_eje4_p5 + @vpuntaje_eje4_p6 + @vpuntaje_eje4_p7 + @vpuntaje_eje4_p8).to_f.round(3)
 end
 
-def puntaje_total_obtenido_eje5
-  @vpuntaje_eje5_p2 = (puntaje_eje5_p2) ? (puntaje_eje5_p2) : 0
-  @vpuntaje_eje5_p3 = (puntaje_eje5_p3) ? (puntaje_eje5_p3) : 0
-  @vpuntaje_eje5_p4 = (puntaje_eje5_p4) ? (puntaje_eje5_p4) : 0
-  @vpuntaje_eje5_p5 = (puntaje_eje5_p5) ? (puntaje_eje5_p5) : 0
-  @vpuntaje_eje5_p6 = (puntaje_eje5_p6) ? (puntaje_eje5_p6) : 0
-  @vpuntaje_eje5_p7 = (puntaje_eje5_p7) ? (puntaje_eje5_p7) : 0
+def puntaje_total_obtenido_eje5(tipo=nil, avance=nil)
+  if tipo=="proyecto"
+    @vpuntaje_eje5_p2 = puntaje_eje5_p2("proyecto", avance) ? puntaje_eje5_p2("proyecto", avance) : 0
+    @vpuntaje_eje5_p3 = puntaje_eje5_p3("proyecto", avance) ? puntaje_eje5_p3("proyecto", avance) : 0
+    @vpuntaje_eje5_p4 = puntaje_eje5_p4("proyecto", avance) ? puntaje_eje5_p4("proyecto", avance) : 0
+    @vpuntaje_eje5_p5 = puntaje_eje5_p5("proyecto", avance) ? puntaje_eje5_p5("proyecto", avance) : 0
+    @vpuntaje_eje5_p6 = puntaje_eje5_p6("proyecto", avance) ? puntaje_eje5_p6("proyecto", avance) : 0
+    @vpuntaje_eje5_p7 = puntaje_eje5_p7("proyecto", avance) ? puntaje_eje5_p7("proyecto", avance) : 0
+  else
+    @vpuntaje_eje5_p2 = puntaje_eje5_p2 ? puntaje_eje5_p2 : 0
+    @vpuntaje_eje5_p3 = puntaje_eje5_p3 ? puntaje_eje5_p3 : 0
+    @vpuntaje_eje5_p4 = puntaje_eje5_p4 ? puntaje_eje5_p4 : 0
+    @vpuntaje_eje5_p5 = puntaje_eje5_p5 ? puntaje_eje5_p5 : 0
+    @vpuntaje_eje5_p6 = puntaje_eje5_p6 ? puntaje_eje5_p6 : 0
+    @vpuntaje_eje5_p7 = puntaje_eje5_p7 ? puntaje_eje5_p7 : 0
+  end
+
   return (@vpuntaje_eje5_p2 + @vpuntaje_eje5_p3 + @vpuntaje_eje5_p4 + @vpuntaje_eje5_p5 + @vpuntaje_eje5_p6 + @vpuntaje_eje5_p7 ).to_f.round(3)
 end
 

@@ -488,6 +488,8 @@ class ProyectosController < ApplicationController
     @proyecto = @huella.proyecto = Proyecto.find(params[:proyecto].to_i)
 #    @huella.update_attributes(params[:huella])
 
+    @huella.total_focos = @huella.focos_ahorradores.to_i + @huella.focos_incandescentes.to_i
+    
     if params[:inorganicos]
       @inorganicos = []
       params[:inorganicos].each { |op| @inorganicos << Inorganico.find_by_clave(op)  }

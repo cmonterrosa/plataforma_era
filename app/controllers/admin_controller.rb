@@ -666,83 +666,87 @@ class AdminController < ApplicationController
       @puntaje_total_eje1 = proyecto.puntaje_total_obtenido_eje1("proyecto", @avance)
 
       @eje1 = CatalogoEje.find_by_clave("EJE1")
-     @preguntas_eje1 = Adjunto.find(:all, :conditions => ["user_id = ? and proyecto_id = ? and eje_id = ? and numero_pregunta = ? and avance = ?", @user, @proyecto.id, @eje1.id, 1, 1], :group => "numero_pregunta")
-     @puntaje_diagnostico = (Evaluacion.find_by_diagnostico_id(@diagnostico.id)).puntaje_eje1
+      @preguntas_eje1 = Adjunto.find(:all, :conditions => ["user_id = ? and proyecto_id = ? and eje_id = ? and avance = ?", @user, @proyecto.id, @eje1.id, 1], :group => "numero_pregunta")
+      @puntaje_diagnostico_eje1 = (Evaluacion.find_by_diagnostico_id(@diagnostico.id)).puntaje_eje1
     end
 
 #     Puntajes eje2
+
     if @proyecto.entorno
-     @entorno_p2 = proyecto.puntaje_eje2_p2
-     @entorno_p3 = proyecto.puntaje_eje2_p3
-     @entorno_p5 = proyecto.puntaje_eje2_p5
+     @entorno_p2 = proyecto.puntaje_eje2_p2("proyecto", @avance)
+     @entorno_p3 = proyecto.puntaje_eje2_p3("proyecto", @avance)
+     @entorno_p5 = proyecto.puntaje_eje2_p5("proyecto", @avance)
 
      @ptos_obtenidos_eje2 = (@entorno_p2 + @entorno_p3 + @entorno_p5)#.to_f.round(3)
      @total_puntos_eje2 = proyecto.puntaje_total_eje2
-     @puntaje_total_eje2 = proyecto.puntaje_total_obtenido_eje2
+     @puntaje_total_eje2 = proyecto.puntaje_total_obtenido_eje2("proyecto", @avance)
 
      @eje2 = CatalogoEje.find_by_clave("EJE2")
-     @preguntas_eje2 = Adjunto.find(:all, :conditions => ["user_id = ? and proyecto_id = ? and eje_id = ? and numero_pregunta = ? and avance = ?", @user, @proyecto.id, @eje2.id, 1, 1], :group => "numero_pregunta")
+     @preguntas_eje2 = Adjunto.find(:all, :conditions => ["user_id = ? and proyecto_id = ? and eje_id = ? and avance = ?", @user, @proyecto.id, @eje2.id, 1], :group => "numero_pregunta")
+     @puntaje_diagnostico_eje2 = (Evaluacion.find_by_diagnostico_id(@diagnostico.id)).puntaje_eje2
     end
 
 #     Puntajes eje3
     if @proyecto.huella
-     @huella_p1 = proyecto.puntaje_eje3_p1
-     @huella_p3 = proyecto.puntaje_eje3_p3
-     @huella_p5 = proyecto.puntaje_eje3_p5
-     @huella_p7 = proyecto.puntaje_eje3_p7
-     @huella_p8 = proyecto.puntaje_eje3_p8
-     @huella_p9 = proyecto.puntaje_eje3_p9
+     @huella_p1 = proyecto.puntaje_eje3_p1("proyecto", @avance)
+     @huella_p3 = proyecto.puntaje_eje3_p3("proyecto", @avance)
+     @huella_p5 = proyecto.puntaje_eje3_p5("proyecto", @avance)
+     @huella_p7 = proyecto.puntaje_eje3_p7("proyecto", @avance)
+     @huella_p8 = proyecto.puntaje_eje3_p8("proyecto", @avance)
+     @huella_p9 = proyecto.puntaje_eje3_p9("proyecto", @avance)
 
      ## Puntajes default ####
-     @huella_p1 ||= 0
-     @huella_p3 ||= 0
-     @huella_p5 ||= 0
-     @huella_p7 ||= 0
-     @huella_p8 ||= 0
-     @huella_p9 ||= 0
+#     @huella_p1 ||= 0
+#     @huella_p3 ||= 0
+#     @huella_p5 ||= 0
+#     @huella_p7 ||= 0
+#     @huella_p8 ||= 0
+#     @huella_p9 ||= 0
 
      @ptos_obtenidos_eje3 = (@huella_p1 + @huella_p3 + @huella_p5 + @huella_p7 + @huella_p8 + @huella_p9)#.to_f.round(3)
      @total_puntos_eje3 = proyecto.puntaje_total_eje3
-     @puntaje_total_eje3 = proyecto.puntaje_total_obtenido_eje3
+     @puntaje_total_eje3 = proyecto.puntaje_total_obtenido_eje3("proyecto", @avance)
 
      @eje3 = CatalogoEje.find_by_clave("EJE3")
-     @preguntas_eje3 = Adjunto.find(:all, :conditions => ["user_id = ? and proyecto_id = ? and eje_id = ? and numero_pregunta = ? and avance = ?", @user, @proyecto.id, @eje3.id, 1, 1], :group => "numero_pregunta")
+     @preguntas_eje3 = Adjunto.find(:all, :conditions => ["user_id = ? and proyecto_id = ? and eje_id = ? and avance = ?", @user, @proyecto.id, @eje3.id, 1], :group => "numero_pregunta")
+     @puntaje_diagnostico_eje3 = (Evaluacion.find_by_diagnostico_id(@diagnostico.id)).puntaje_eje3
     end
 
 #     Puntaje eje4
     if @proyecto.consumo
-     @consumo_p2 = proyecto.puntaje_eje4_p2
-     @consumo_p3 = proyecto.puntaje_eje4_p3
-     @consumo_p4 = proyecto.puntaje_eje4_p4
-     @consumo_p5 = proyecto.puntaje_eje4_p5
-     @consumo_p6 = proyecto.puntaje_eje4_p6
-     @consumo_p7 = proyecto.puntaje_eje4_p7
-     @consumo_p8 = proyecto.puntaje_eje4_p8
+     @consumo_p2 = proyecto.puntaje_eje4_p2("proyecto", @avance)
+     @consumo_p3 = proyecto.puntaje_eje4_p3("proyecto", @avance)
+     @consumo_p4 = proyecto.puntaje_eje4_p4("proyecto", @avance)
+     @consumo_p5 = proyecto.puntaje_eje4_p5("proyecto", @avance)
+     @consumo_p6 = proyecto.puntaje_eje4_p6("proyecto", @avance)
+     @consumo_p7 = proyecto.puntaje_eje4_p7("proyecto", @avance)
+     @consumo_p8 = proyecto.puntaje_eje4_p8("proyecto", @avance)
 
      @ptos_obtenidos_eje4 = (@consumo_p2 + @consumo_p3 + @consumo_p4 + @consumo_p5 + @consumo_p6 + @consumo_p7 + @consumo_p8)#.to_f.round(3)
      @total_puntos_eje4 = proyecto.puntaje_total_eje4
-     @puntaje_total_eje4 = proyecto.puntaje_total_obtenido_eje4
+     @puntaje_total_eje4 = proyecto.puntaje_total_obtenido_eje4("proyecto", @avance)
 
      @eje4 = CatalogoEje.find_by_clave("EJE4")
-     @preguntas_eje4 = Adjunto.find(:all, :conditions => ["user_id = ? and proyecto_id = ? and eje_id = ? and numero_pregunta = ? and avance = ?", @user, @proyecto.id, @eje4.id, 1, 1], :group => "numero_pregunta")
+     @preguntas_eje4 = Adjunto.find(:all, :conditions => ["user_id = ? and proyecto_id = ? and eje_id = ? and avance = ?", @user, @proyecto.id, @eje4.id, 1], :group => "numero_pregunta")
+     @puntaje_diagnostico_eje4 = (Evaluacion.find_by_diagnostico_id(@diagnostico.id)).puntaje_eje4
     end
 
 #     Puntaje eje5
-#     @participacion_p1 = diagnostico.puntaje_eje5_p1
     if @proyecto.participacion
-     @participacion_p2 = proyecto.puntaje_eje5_p2
-     @participacion_p3 = proyecto.puntaje_eje5_p3
-     @participacion_p4 = proyecto.puntaje_eje5_p4
-     @participacion_p5 = proyecto.puntaje_eje5_p5
-     @participacion_p6 = proyecto.puntaje_eje5_p6
-     @participacion_p7 = proyecto.puntaje_eje5_p7
+     @participacion_p2 = proyecto.puntaje_eje5_p2("proyecto", @avance)
+     @participacion_p3 = proyecto.puntaje_eje5_p3("proyecto", @avance)
+     @participacion_p4 = proyecto.puntaje_eje5_p4("proyecto", @avance)
+     @participacion_p5 = proyecto.puntaje_eje5_p5("proyecto", @avance)
+     @participacion_p6 = proyecto.puntaje_eje5_p6("proyecto", @avance)
+     @participacion_p7 = proyecto.puntaje_eje5_p7("proyecto", @avance)
 
      @ptos_obtenidos_eje5 = (@participacion_p2 + @participacion_p3 +  @participacion_p4 + @participacion_p5 + @participacion_p6 + @participacion_p7)#.to_f.round(3)
      @total_puntos_eje5 = proyecto.puntaje_total_eje5
-     @puntaje_total_eje5 = proyecto.puntaje_total_obtenido_eje5
+     @puntaje_total_eje5 = proyecto.puntaje_total_obtenido_eje5("proyecto", @avance)
 
-      @eje5 = CatalogoEje.find_by_clave("EJE5")
-      @preguntas_eje5 = Adjunto.find(:all, :conditions => ["user_id = ? and proyecto_id = ? and eje_id = ? and numero_pregunta = ? and avance = ?", @user, @proyecto.id, @eje5.id, 1, 1], :group => "numero_pregunta")
+     @eje5 = CatalogoEje.find_by_clave("EJE5")
+     @preguntas_eje5 = Adjunto.find(:all, :conditions => ["user_id = ? and proyecto_id = ? and eje_id = ? and avance = ?", @user, @proyecto.id, @eje5.id, 1], :group => "numero_pregunta")
+     @puntaje_diagnostico_eje5 = (Evaluacion.find_by_diagnostico_id(@diagnostico.id)).puntaje_eje5
     end
 
      @historico = Evaluacion.find(:all, :conditions => ["proyecto_id = ?", @proyecto.id], :group => "user_id", :order => "updated_at DESC")
