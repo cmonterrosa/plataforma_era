@@ -99,7 +99,7 @@
                       <% end %>
                      </div>
                   <br />
-                  <% if @s_dcapacitadoras.size.to_i < 1 %>
+                  <% if @s_pdcapacitadoras.size.to_i < 1 %>
                     <%= f.check_box :no_capacitacion, { :checked => @participacion.no_capacitacion == "NO" ? true : false }, "NO", "SI" %>&nbsp;NINGUNA
                   <% end %>
                 </fieldset>

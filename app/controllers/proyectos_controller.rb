@@ -62,9 +62,21 @@ class ProyectosController < ApplicationController
       if params[:catalogo_catalogo_eje_id] == "EJE2"
         @entorno = Entorno.new
         @entorno_diagnostico = Entorno.find_by_diagnostico_id(@diagnostico.id) if @diagnostico
-        @s_espacios_diagnostico = multiple_selected_espacios(@entorno_diagnostico.escuelas_espacios) if @entorno_diagnostico.escuelas_espacios
-        @s_acciones = multiple_selected_id(@entorno.acciones) if @entorno.acciones
+
+        if evidencia_valida?(2, 2, @diagnostico)
+          @s_espacios_diagnostico = multiple_selected_espacios(@entorno_diagnostico.escuelas_espacios) if @entorno_diagnostico.escuelas_espacios
+        else
+          @s_espacios_diagnostico = []
+        end
         @s_espacios = multiple_selected_espacios(@entorno.escuelas_espacios) if @entorno.escuelas_espacios
+
+        if evidencia_valida?(2, 5, @diagnostico)
+          @s_acciones_diagnostico = multiple_selected_id(@entorno_diagnostico.acciones) if @entorno_diagnostico.acciones
+          @s_acciones_diagnostico = [] if @s_acciones_diagnostico.include?(Accione.find_by_clave("NING").id)
+        else
+          @s_acciones_diagnostico = []
+        end
+        @s_acciones = multiple_selected_id(@entorno.acciones) if @entorno.acciones
         @escuela = Escuela.find_by_clave(current_user.login)
         if @escuela.nivel_descripcion == "BACHILLERATO"
           @acciones = Accione.find(:all, :conditions => ["clave not in ('AC03')"])
@@ -204,9 +216,21 @@ class ProyectosController < ApplicationController
     if @eje.catalogo_eje.clave == "EJE2"
       @entorno = @proyecto.entorno
       @entorno_diagnostico = Entorno.find_by_diagnostico_id(@diagnostico.id) if @diagnostico
-      @s_espacios_diagnostico = multiple_selected_espacios(@entorno_diagnostico.escuelas_espacios) if @entorno_diagnostico.escuelas_espacios
-      @s_acciones = multiple_selected_id(@entorno.acciones) if @entorno.acciones
+      if evidencia_valida?(@eje.catalogo_eje.id, 2, @diagnostico)
+        @s_espacios_diagnostico = multiple_selected_espacios(@entorno_diagnostico.escuelas_espacios) if @entorno_diagnostico.escuelas_espacios
+      else
+        @s_espacios_diagnostico = []
+      end
       @s_espacios = multiple_selected_espacios(@entorno.escuelas_espacios) if @entorno.escuelas_espacios
+
+      if evidencia_valida?(@eje.catalogo_eje.id, 5, @diagnostico)
+        @s_acciones_diagnostico = multiple_selected_id(@entorno_diagnostico.acciones) if @entorno_diagnostico.acciones
+        ninguna = Accione.where("clave = ?", "NING")
+        @s_acciones_diagnostico = [] if @s_acciones_diagnostico.include?(ninguna.id)
+      else
+        @s_acciones_diagnostico = []
+      end
+      @s_acciones = multiple_selected_id(@entorno.acciones) if @entorno.acciones
       @escuela = Escuela.find_by_clave(current_user.login)
       if @escuela.nivel_descripcion == "BACHILLERATO"
         @acciones = Accione.find(:all, :conditions => ["clave not in ('AC03')"])
@@ -260,6 +284,7 @@ class ProyectosController < ApplicationController
       @participacion_diagnostico = Participacion.find_by_diagnostico_id(@diagnostico.id) if @diagnostico
       @s_dcapacitadoras = multiple_selected_dcapacitadora(@participacion.capacitacion_padres) if  @participacion.capacitacion_padres
       cargar_proyectos_actuales
+      @evidencia_diagnostico_p1 = evidencia_valida?(@eje.catalogo_eje.id, 1, @diagnostico)
     end
 
   end
@@ -602,9 +627,8 @@ class ProyectosController < ApplicationController
 
  def save_participacion
     @participacion = Participacion.find(params[:id]) if params[:id]
-    @participacion ||= Participacion.new
+    @participacion ||= Participacion.new(params[:participacion])
     @proyecto = @participacion.proyecto = Proyecto.find(params[:proyecto].to_i)
-    @participacion.update_attributes(params[:participacion])
 
     guardar_proyectos(params[:pescolaresambiente], "MEDIOAMBIENTE", @participacion)
     guardar_proyectos(params[:pescolaressalud], "SALUD", @participacion)
