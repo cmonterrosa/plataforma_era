@@ -546,25 +546,25 @@ def puntaje_eje4_p5(tipo=nil, avance=nil)
       @escuela = Escuela.find_by_clave(@proyecto.diagnostico.escuela.clave) if @proyecto
       @user = User.find_by_login(@escuela.clave) if @escuela
       ### Proyecto ###
-      @s_bebidas << multiple_selected(@consumo_proyecto.bebidas) if @consumo_proyecto.bebidas
-      @s_alimentos << multiple_selected(@consumo_proyecto.alimentos) if @consumo_proyecto.alimentos
-      @s_botanas << multiple_selected(@consumo_proyecto.botanas) if @consumo_proyecto.botanas
-      @s_reposterias << multiple_selected(@consumo_proyecto.reposterias) if @consumo_proyecto.reposterias
+      @s_bebidas = multiple_selected(@consumo_proyecto.bebidas) if @consumo_proyecto.bebidas
+      @s_alimentos = multiple_selected(@consumo_proyecto.alimentos) if @consumo_proyecto.alimentos
+      @s_botanas = multiple_selected(@consumo_proyecto.botanas) if @consumo_proyecto.botanas
+      @s_reposterias = multiple_selected(@consumo_proyecto.reposterias) if @consumo_proyecto.reposterias
       ## Diagnostico ###
-      @s_bebidas << multiple_selected(@consumo_proyecto.bebidas) if @consumo_diagnostico && @consumo_diagnostico.bebidas
-      @s_alimentos << multiple_selected(@consumo_proyecto.alimentos) if @consumo_diagnostico && @consumo_diagnostico.alimentos
-      @s_botanas << multiple_selected(@consumo_proyecto.botanas) if @consumo_diagnostico && @consumo_diagnostico.botanas
-      @s_reposterias << multiple_selected(@consumo_proyecto.reposterias) if @consumo_diagnostico && @consumo_diagnostico.reposterias
+      @s_bebidas += multiple_selected(@consumo_proyecto.bebidas) if @consumo_diagnostico && @consumo_diagnostico.bebidas
+      @s_alimentos += multiple_selected(@consumo_proyecto.alimentos) if @consumo_diagnostico && @consumo_diagnostico.alimentos
+      @s_botanas += multiple_selected(@consumo_proyecto.botanas) if @consumo_diagnostico && @consumo_diagnostico.botanas
+      @s_reposterias += multiple_selected(@consumo_proyecto.reposterias) if @consumo_diagnostico && @consumo_diagnostico.reposterias
     else
       @diagnostico = Diagnostico.find(self.diagnostico_id)
       @consumo_diagnostico = @diagnostico.consumo if @diagnostico.consumo
       @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
       @user = User.find_by_login(@escuela.clave) if @escuela
       ## Diagnostico ###
-      @s_bebidas << multiple_selected(@consumo_diagnostico.bebidas) if @consumo_diagnostico && @consumo_diagnostico.bebidas
-      @s_alimentos << multiple_selected(@consumo_diagnostico.alimentos) if @consumo_diagnostico && @consumo_diagnostico.alimentos
-      @s_botanas << multiple_selected(@consumo_diagnostico.botanas) if @consumo_diagnostico && @consumo_diagnostico.botanas
-      @s_reposterias << multiple_selected(@consumo_diagnostico.reposterias) if @consumo_diagnostico && @consumo_diagnostico.reposterias
+      @s_bebidas = multiple_selected(@consumo_diagnostico.bebidas) if @consumo_diagnostico && @consumo_diagnostico.bebidas
+      @s_alimentos = multiple_selected(@consumo_diagnostico.alimentos) if @consumo_diagnostico && @consumo_diagnostico.alimentos
+      @s_botanas = multiple_selected(@consumo_diagnostico.botanas) if @consumo_diagnostico && @consumo_diagnostico.botanas
+      @s_reposterias = multiple_selected(@consumo_diagnostico.reposterias) if @consumo_diagnostico && @consumo_diagnostico.reposterias
     end
 
   if @consumo_diagnostico || @consumo_proyecto
