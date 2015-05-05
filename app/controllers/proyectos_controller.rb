@@ -76,7 +76,17 @@ class ProyectosController < ApplicationController
       if params[:catalogo_catalogo_eje_id] == "EJE3"
         @huella = Huella.new
         @huella_diagnostico = Huella.find_by_diagnostico_id(@diagnostico.id) if @diagnostico
-        @s_inorganicos = multiple_selected_id(@huella.inorganicos) if @huella.inorganicos
+
+        if @evidencia_diagnostico_eje3_p9 = evidencia_valida?(3, 9, @diagnostico)
+          if @huella_diagnostico.inorganicos.include?(Inorganico.find_by_clave("NING"))
+            @s_inorganicos = []
+          else
+              @s_inorganicos = multiple_selected_id(@huella_diagnostico.inorganicos) if @huella_diagnostico.inorganicos
+          end
+        else
+          @s_inorganicos = []
+        end
+
         @focos = 0..@huella_diagnostico.total_focos.to_i
       end
 
@@ -208,7 +218,18 @@ class ProyectosController < ApplicationController
     if @eje.catalogo_eje.clave == "EJE3"
       @huella = @proyecto.huella
       @huella_diagnostico = Huella.find_by_diagnostico_id(@diagnostico.id) if @diagnostico
-      @s_inorganicos = multiple_selected_id(@huella.inorganicos) if @huella.inorganicos
+       if @evidencia_diagnostico_eje3_p9 = evidencia_valida?(3, 9, @diagnostico)
+          if @huella_diagnostico.inorganicos.include?(Inorganico.find_by_clave("NING"))
+            @s_inorganicos = []
+          else
+            @s_inorganicos = multiple_selected_id(@huella_diagnostico.inorganicos) if @huella_diagnostico.inorganicos
+          end
+        else
+          @s_inorganicos = []
+       end
+
+
+
       @focos = 0..@huella_diagnostico.total_focos.to_i
     end
 

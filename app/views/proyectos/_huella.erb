@@ -191,11 +191,7 @@
       <fieldset style="padding: 5px 5px 5px 5px;">
         <div id="inorganicos" class="grid-12-12">
           <% Inorganico.find(:all).each do |c| %>
-            <% unless @huella_diagnostico.inorganicos.include?(c) || c.clave == "NING" %>
-              <%= check_box_tag "inorganicos[#{c.id}]", c.clave, @s_inorganicos.include?(c.id) ? true : false, :onclick => "verifyCheckboxs(this, 'inorganicos', 'eje3_p9');" %>&nbsp;<%= c.descripcion %><br /><br />
-              <%=linea_horizontal%>
-            <% end %>
-            <% if c.clave == "NING" %>
+            <% unless @s_inorganicos.include?(c.id) %>
               <%= check_box_tag "inorganicos[#{c.id}]", c.clave, @s_inorganicos.include?(c.id) ? true : false, :onclick => "verifyCheckboxs(this, 'inorganicos', 'eje3_p9');" %>&nbsp;<%= c.descripcion %><br /><br />
               <%=linea_horizontal%>
             <% end %>
