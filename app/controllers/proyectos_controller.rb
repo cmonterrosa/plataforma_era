@@ -242,7 +242,7 @@ class ProyectosController < ApplicationController
     if @eje.catalogo_eje.clave == "EJE3"
       @huella = @proyecto.huella
       @huella_diagnostico = Huella.find_by_diagnostico_id(@diagnostico.id) if @diagnostico
-       if @evidencia_diagnostico_eje3_p9 = evidencia_valida?(3, 9, @diagnostico)
+       if evidencia_valida?(3, 9, @diagnostico)
           if @huella_diagnostico.inorganicos.include?(Inorganico.find_by_clave("NING"))
             @s_inorganicos = []
           else
@@ -251,9 +251,6 @@ class ProyectosController < ApplicationController
         else
           @s_inorganicos = []
        end
-
-
-
       @focos = 0..@huella_diagnostico.total_focos.to_i
     end
 
@@ -275,7 +272,11 @@ class ProyectosController < ApplicationController
       @s_alimentos = multiple_selected(@consumo.alimentos) if @consumo.alimentos
       @s_botanas = multiple_selected(@consumo.botanas) if @consumo.botanas
       @s_reposterias = multiple_selected(@consumo.reposterias) if @consumo.reposterias
-      @s_materials = multiple_selected(@consumo.materials) if @consumo.materials
+      if evidencia_valida?(4, 6, @diagnostico)
+        @s_materials = multiple_selected(@consumo.materials) if @consumo.materials
+      else
+        @s_materials = []
+      end
       @s_afisicas = selected(@consumo.frecuencia_afisica) if @consumo.frecuencia_afisica
     end
 
