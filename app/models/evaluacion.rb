@@ -69,8 +69,8 @@ def puntaje_eje1_p2(tipo=nil,avance=nil)
   end
 
   if docentes_aplican_conocimiento.to_i > 0
-    valido = evidencia_valida?(eje1.id, 1, @diagnostico) if @diagnostico
-    valido ||= evidencia_valida?(eje1.id, 1, nil, @proyecto, avance) if @proyecto && avance
+    valido = evidencia_valida?(eje1.id, 2, @diagnostico) if @diagnostico
+    valido ||= evidencia_valida?(eje1.id, 2, nil, @proyecto, avance) if @proyecto && avance
     @eje1_p2 = (((docentes_aplican_conocimiento.to_f / @escuela.total_personal_docente.to_f ) * 100) * $competencia_p2).round(3)
   end
 
