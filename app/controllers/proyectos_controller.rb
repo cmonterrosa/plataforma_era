@@ -365,9 +365,10 @@ class ProyectosController < ApplicationController
  #---- competencia proyecto ----
  def save_competencia
     @competencia = Competencia.find(params[:id]) if params[:id]
-    @competencia ||= Competencia.new(params[:competencia])
-#    @competencia.update_attributes(params[:competencia])
+    @competencia ||= Competencia.new
     @proyecto = @competencia.proyecto = Proyecto.find(params[:proyecto].to_i)
+    @competencia.num_avance_attribute(0)
+    @competencia.update_attributes(params[:competencia])
 
     if params[:dcapacitadoras]
       @s_docentes = []
@@ -413,7 +414,7 @@ class ProyectosController < ApplicationController
     @eje.meta = params[:eje][:meta] if params[:eje][:meta]
     @eje.proyecto_id = @proyecto.id
 
-    @competencia.num_avance_attribute
+#    @competencia.num_avance_attribute
 
     if @competencia.save and @eje.save
       flash[:notice] = "Registro guardado correctamente"
@@ -431,9 +432,10 @@ class ProyectosController < ApplicationController
 
  def save_entorno
     @entorno = Entorno.find(params[:id]) if params[:id]
-    @entorno ||= Entorno.new(params[:entorno])
+    @entorno ||= Entorno.new
     @proyecto = @entorno.proyecto = Proyecto.find(params[:proyecto].to_i)
-#    @entorno.update_attributes(params[:entorno])
+    @entorno.num_avance_attribute(0)
+    @entorno.update_attributes(params[:entorno])
 
     if params[:acciones]
         @acciones = []
@@ -468,7 +470,7 @@ class ProyectosController < ApplicationController
     @eje.meta = params[:eje][:meta] if params[:eje][:meta]
     @eje.proyecto_id = @proyecto.id
 
-    @entorno.num_avance_attribute
+#    @entorno.num_avance_attribute
     
     if @entorno.save and @eje.save
       flash[:notice] = "Registro guardado correctamente"
@@ -491,9 +493,10 @@ class ProyectosController < ApplicationController
 
  def save_huella
     @huella = Huella.find(params[:id]) if params[:id]
-    @huella ||= Huella.new(params[:huella])
+    @huella ||= Huella.new
     @proyecto = @huella.proyecto = Proyecto.find(params[:proyecto].to_i)
-#    @huella.update_attributes(params[:huella])
+    @huella.num_avance_attribute(0)
+    @huella.update_attributes(params[:huella])
 
     @huella.total_focos = @huella.focos_ahorradores.to_i + @huella.focos_incandescentes.to_i
     
@@ -513,7 +516,7 @@ class ProyectosController < ApplicationController
     @eje.meta = params[:eje][:meta] if params[:eje][:meta]
     @eje.proyecto_id = @proyecto.id
 
-    @huella.num_avance_attribute
+#    @huella.num_avance_attribute(0)
 
     if @huella.save and @eje.save
       flash[:notice] = "Registro guardado correctamente"
@@ -528,9 +531,10 @@ class ProyectosController < ApplicationController
 
  def save_consumo
     @consumo = Consumo.find(params[:id]) if params[:id]
-    @consumo ||= Consumo.new(params[:consumo])
+    @consumo ||= Consumo.new
     @proyecto = @consumo.proyecto = Proyecto.find(params[:proyecto].to_i)
-#    @consumo.update_attributes(params[:consumo])
+    @consumo.num_avance_attribute(0)
+    @consumo.update_attributes(params[:consumo])
 
     if params[:preparacions]
       @preparacions = []
@@ -605,7 +609,7 @@ class ProyectosController < ApplicationController
     @eje.meta = params[:eje][:meta] if params[:eje][:meta]
     @eje.proyecto_id = @proyecto.id
 
-    @consumo.num_avance_attribute
+#    @consumo.num_avance_attribute
 
     if @consumo.save and @eje.save
       flash[:notice] = "Registro guardado correctamente"
@@ -637,8 +641,10 @@ class ProyectosController < ApplicationController
 
  def save_participacion
     @participacion = Participacion.find(params[:id]) if params[:id]
-    @participacion ||= Participacion.new(params[:participacion])
+    @participacion ||= Participacion.new
     @proyecto = @participacion.proyecto = Proyecto.find(params[:proyecto].to_i)
+    @participacion.num_avance_attribute(0)
+    @participacion.update_attributes(params[:participacion])
 
     guardar_proyectos(params[:pescolaresambiente], "MEDIOAMBIENTE", @participacion)
     guardar_proyectos(params[:pescolaressalud], "SALUD", @participacion)
@@ -669,7 +675,7 @@ class ProyectosController < ApplicationController
     @eje.meta = params[:eje][:meta] if params[:eje][:meta]
     @eje.proyecto_id = @proyecto.id
 
-    @participacion.num_avance_attribute
+#    @participacion.num_avance_attribute
     
     if @participacion.save and @eje.save
       flash[:notice] = "Registro guardado correctamente"

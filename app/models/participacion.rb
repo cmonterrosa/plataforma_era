@@ -59,6 +59,7 @@ class Participacion < ActiveRecord::Base
       numero_pregunta=1
       if self.proyecto
         contador = 1 unless Participacion.find_by_proyecto_id(self.proyecto.id)
+        contador ||= 1 if self.num_avance == 0
         contador ||= Adjunto.count(:id, :conditions => ["eje_id = ? AND proyecto_id = ? AND numero_pregunta = ? AND avance=?", current_eje, self.proyecto_id, numero_pregunta, self.num_avance]) if self.num_avance
         contador ||=0
       else
@@ -72,6 +73,7 @@ class Participacion < ActiveRecord::Base
       numero_pregunta=2
       if self.proyecto
         contador = 1 unless Participacion.find_by_proyecto_id(self.proyecto.id)
+        contador ||= 1 if self.num_avance == 0
         contador ||= Adjunto.count(:id, :conditions => ["eje_id = ? AND proyecto_id = ? AND numero_pregunta = ? AND avance=?", current_eje, self.proyecto_id, numero_pregunta, self.num_avance]) if self.num_avance
         contador ||=0
       else
@@ -85,6 +87,7 @@ class Participacion < ActiveRecord::Base
       numero_pregunta=3
       if self.proyecto
         contador = 1 unless Participacion.find_by_proyecto_id(self.proyecto.id)
+        contador ||= 1 if self.num_avance == 0
         contador ||= Adjunto.count(:id, :conditions => ["eje_id = ? AND proyecto_id = ? AND numero_pregunta = ? AND avance=?", current_eje, self.proyecto_id, numero_pregunta, self.num_avance]) if self.num_avance
         contador ||=0
       else
@@ -98,6 +101,7 @@ class Participacion < ActiveRecord::Base
       numero_pregunta=4
       if self.proyecto
         contador = 1 unless Participacion.find_by_proyecto_id(self.proyecto.id)
+        contador ||= 1 if self.num_avance == 0
         contador ||= Adjunto.count(:id, :conditions => ["eje_id = ? AND proyecto_id = ? AND numero_pregunta = ? AND avance=?", current_eje, self.proyecto_id, numero_pregunta, self.num_avance]) if self.num_avance
         contador ||=0
       else
@@ -111,6 +115,7 @@ class Participacion < ActiveRecord::Base
       numero_pregunta=5
       if self.proyecto
         contador = 1 unless Participacion.find_by_proyecto_id(self.proyecto.id)
+        contador ||= 1 if self.num_avance == 0
         contador ||= Adjunto.count(:id, :conditions => ["eje_id = ? AND proyecto_id = ? AND numero_pregunta = ? AND avance=?", current_eje, self.proyecto_id, numero_pregunta, self.num_avance]) if self.num_avance
         contador ||=0
       else
@@ -124,6 +129,7 @@ class Participacion < ActiveRecord::Base
       numero_pregunta=6
       if self.proyecto
         contador = 1 unless Participacion.find_by_proyecto_id(self.proyecto.id)
+        contador ||= 1 if self.num_avance == 0
         contador ||= Adjunto.count(:id, :conditions => ["eje_id = ? AND proyecto_id = ? AND numero_pregunta = ? AND avance=?", current_eje, self.proyecto_id, numero_pregunta, self.num_avance]) if self.num_avance
         contador ||=0
       else
@@ -137,6 +143,7 @@ class Participacion < ActiveRecord::Base
       numero_pregunta=7
       if self.proyecto
         contador = 1 unless Participacion.find_by_proyecto_id(self.proyecto.id)
+        contador ||= 1 if self.num_avance == 0
         contador ||= Adjunto.count(:id, :conditions => ["eje_id = ? AND proyecto_id = ? AND numero_pregunta = ? AND avance=?", current_eje, self.proyecto_id, numero_pregunta, self.num_avance]) if self.num_avance
         contador ||=0
       else

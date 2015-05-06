@@ -28,6 +28,7 @@ class Huella < ActiveRecord::Base
     numero_pregunta=1
     if self.proyecto
       contador = 1 unless Huella.find_by_proyecto_id(self.proyecto.id)
+      contador ||= 1 if self.num_avance == 0
       contador ||= Adjunto.count(:id, :conditions => ["eje_id = ? AND proyecto_id = ? AND numero_pregunta = ? AND avance=?", current_eje, self.proyecto_id, numero_pregunta, self.num_avance]) if self.num_avance
       contador ||=0
     else
@@ -41,6 +42,7 @@ class Huella < ActiveRecord::Base
     numero_pregunta=2
     if self.proyecto
       contador = 1 unless Huella.find_by_proyecto_id(self.proyecto.id)
+      contador ||= 1 if self.num_avance == 0
       contador ||= Adjunto.count(:id, :conditions => ["eje_id = ? AND proyecto_id = ? AND numero_pregunta = ? AND avance=?", current_eje, self.proyecto_id, numero_pregunta, self.num_avance]) if self.num_avance
       contador ||=0
     else
@@ -54,6 +56,7 @@ class Huella < ActiveRecord::Base
     numero_pregunta=7
     if self.proyecto
       contador = 1 unless Huella.find_by_proyecto_id(self.proyecto.id)
+      contador ||= 1 if self.num_avance == 0
       contador ||= Adjunto.count(:id, :conditions => ["eje_id = ? AND proyecto_id = ? AND numero_pregunta = ? AND avance=?", current_eje, self.proyecto_id, numero_pregunta, self.num_avance]) if self.num_avance
       contador ||=0
     else
@@ -67,6 +70,7 @@ class Huella < ActiveRecord::Base
     numero_pregunta=8
     if self.proyecto
       contador = 1 unless Huella.find_by_proyecto_id(self.proyecto.id)
+      contador ||= 1 if self.num_avance == 0
       contador ||= Adjunto.count(:id, :conditions => ["eje_id = ? AND proyecto_id = ? AND numero_pregunta = ? AND avance=?", current_eje, self.proyecto_id, numero_pregunta, self.num_avance]) if self.num_avance
       contador ||=0
     else
@@ -80,6 +84,7 @@ class Huella < ActiveRecord::Base
     numero_pregunta=9
     if self.proyecto
       contador = 1 unless Huella.find_by_proyecto_id(self.proyecto.id)
+      contador ||= 1 if self.num_avance == 0
       contador ||= Adjunto.count(:id, :conditions => ["eje_id = ? AND proyecto_id = ? AND numero_pregunta = ? AND avance=?", current_eje, self.proyecto_id, numero_pregunta, self.num_avance]) if self.num_avance
       contador ||=0
     else
