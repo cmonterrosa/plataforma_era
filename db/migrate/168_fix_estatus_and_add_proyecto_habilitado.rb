@@ -48,7 +48,13 @@ class FixEstatusAndAddProyectoHabilitado < ActiveRecord::Migration
       proy_rev.update_attributes!(:jerarquia => 17, :activo => true) && puts("=> Creado 17")
     proy_eva= Estatu.find_by_clave("proy-eva")
       proy_eva.update_attributes!(:jerarquia => 18, :activo => true) && puts("=> Creado 18")
-      #Estatu.new(:clave => "cert-fin", :descripcion => "Certificación concluida", :jerarquia => 19, :activo => true)
+    proy_eva.update_attributes!(:clave => "proy-eva1", :descripcion => "Avance 1 del Proyecto Evaluado")
+
+    ## Creamos avance 2 evaluado ###
+    Estatu.create(:clave => "proy-eva2", :descripcion => "Avance 2 del Proyecto Evaluado", :jerarquia => 19, :activo => true)
+
+
+
   rescue ActiveRecord::RecordInvalid => invalid
       puts invalid.record.errors
   end
