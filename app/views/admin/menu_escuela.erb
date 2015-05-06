@@ -75,14 +75,19 @@
 
           <!-- proyecto -->
         <%if @escuela.diagnostico.proyecto%>
-         <%@evaluaciones_proyecto = Evaluacion.find(:all, :conditions => ["proyecto_id = ?", @escuela.diagnostico.proyecto.id], :group => "user_id", :order => "updated_at DESC")%>
+         <%@evaluaciones_proyecto = Evaluacion.find(:all, :conditions => ["proyecto_id = ?", @escuela.diagnostico.proyecto.id], :order => "updated_at DESC")%>
          <%@evaluaciones_proyecto.each do |ed|%>
           <div class="grid-12-12">
-              <label style=" font-weight: bold;">Evaluador de proyecto:</label>
+              <label style=" font-weight: bold; color: teal">Evaluador de proyecto:</label>
               <label style=" font-style: italic;"><%= User.find(ed.user_id).nombre %></label>
               <br />
-              <label style=" font-weight: bold;">Observaciones de proyecto:</label>
-              <label style=" font-style: italic;"><%= ed.observaciones %>&nbsp;Actualizacion: <%=ed.updated_at.strftime("%d-%m-%Y %H:%M")%></label>
+              <%if ed.avance%>
+                <label style=" font-weight: bold; color: teal">Avance:</label>
+                <label style=" font-style: italic;"><%= ed.avance%></label>
+                <br />
+              <%end%>
+              <label style=" font-weight: bold; color: teal;">Observaciones de proyecto:</label>
+              <label style=" font-style: italic;"><%= ed.observaciones %>&nbsp;<br /><span style="color: maroon;">Actualizacion: <%=ed.updated_at.strftime("%d-%m-%Y %H:%M")%></span></label>
           </div>
          <%end%>
        <%end%>

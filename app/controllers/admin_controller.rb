@@ -648,7 +648,7 @@ class AdminController < ApplicationController
      @escuela = @user.escuela if @user
 
 #     @evaluacion = Evaluacion.find(:first, :conditions => ["diagnostico_id = ? AND user_id = ? AND activa = true", @diagnostico.id, @user.id])
-     @evaluacion = Evaluacion.find(:first, :conditions => ["proyecto_id = ? AND user_id = ?", @proyecto.id, current_user.id])
+     @evaluacion = Evaluacion.find(:first, :conditions => ["proyecto_id = ? AND user_id = ? AND avance = ?", @proyecto.id, current_user.id, @avance])
      @evaluacion ||= Evaluacion.new(:proyecto_id => @proyecto.id)
 
      proyecto = Evaluacion.new(:proyecto_id => Proyecto.find(params[:proyecto]).id)
@@ -761,7 +761,7 @@ class AdminController < ApplicationController
      @escuela = @user.escuela if @user
      
 #     @evaluacion = Evaluacion.find(:first, :conditions => ["diagnostico_id = ? AND user_id = ? AND activa = true", @diagnostico.id, @user.id])
-     @evaluacion = Evaluacion.find(:first, :conditions => ["diagnostico_id = ? AND user_id = ?", @diagnostico.id, current_user.id])
+     @evaluacion = Evaluacion.find(:first, :conditions => ["diagnostico_id = ? AND user_id = ?", @diagnostico.id, current_user.id], :order => "created_at")
      @evaluacion ||= Evaluacion.new(:diagnostico_id => @diagnostico.id)
 
      diagnostico = Evaluacion.new(:diagnostico_id => Diagnostico.find(params[:diagnostico]).id)
@@ -970,65 +970,47 @@ class AdminController < ApplicationController
    end
 
    def save_dashboard_proyecto
-     (1..2).each do |avance|
        @user = User.find(current_user) if current_user
-
-#       @acciones = []
-#       if params[:catalogo_accions]
-#        params[:catalogo_accions].each { |op| @acciones << CatalogoAccion.find_by_clave(op)  }
-#        @user.catalogo_accions = CatalogoAccion.find(@acciones)
-#        @user.save!
-#        CatalogoAccion.find(@acciones).each do |ac|
-#          @accion = Institucione.find(:all, :conditions => ["user_id = ? and catalogo_accion_id = ?", current_user.id, ac.id])
-#          @accion.each do |a|
-#            a.update_attribute(:tipo => "mientras")
-#            a=0
-#          end
-#          a=0
-#        end
-#       end
-
-#       if current_user.has_role?('revisor') or current_user.has_role?('adminplat')
-         @evaluacion = Evaluacion.find(:first, :conditions => ["proyecto_id = ? AND avance = ? AND user_id = ?", params[:proyecto], avance.to_i, current_user.id])
-#       else
-#         @evaluacion = Evaluacion.find(:first, :conditions => ["proyecto_id = ? AND avance = ? AND user_id = ?", params[:proyecto], avance.to_i, params[:id]])
-#       end
-#       @existe = true if @evaluacion
-       @evaluacion ||= Evaluacion.new(params[:evaluacion]) if params[:evaluacion]
-#       @evaluacion.user_id ||= User.find(params[:id]).id if params[:id]
+       @user_escuela = User.find(params[:id]) if params[:id]
+       @escuela = @user_escuela.escuela if @user_escuela
+       @avance = params[:avance]
+       @evaluacion = Evaluacion.find(:first, :conditions => ["proyecto_id = ? AND avance = ? AND user_id = ?", params[:proyecto], @avance.to_i, current_user.id])
+       @evaluacion ||= Evaluacion.new
+       @evaluacion.update_attributes(params[:evaluacion]) if params[:evaluacion]
        @evaluacion.user_id ||= User.find(current_user.id).id if current_user.id
-       @diagnostico = Diagnostico.find(params[:diagnostico]) if params[:diagnostico]
-       @evaluacion.proyecto_id ||= Proyecto.find(:first, :conditions => ["diagnostico_id = ?", @diagnostico.id]).id if @diagnostico
-       diagnostico = Evaluacion.new(:diagnostico_id => @diagnostico.id)
-#       @evaluacion.observaciones = params[:evaluacion][:observaciones] if params[:evaluacion][:observaciones]
+       @evaluacion.proyecto_id ||= Proyecto.find(:first, :conditions => ["id = ?", params[:proyecto]]).id if params[:proyecto]
+#       @evaluacion.diagnostico = @evaluacion.proyecto.diagnostico if @evaluacion.proyecto
+       @evaluacion.observaciones = params[:evaluacion][:observaciones] if params[:evaluacion][:observaciones]
        (1..5).each do |eje|
-         @evaluacion.puntaje_eje1 = diagnostico.puntaje_obtenido_avance(avance, eje) if eje == 1
-         @evaluacion.puntaje_eje2 = diagnostico.puntaje_obtenido_avance(avance, eje) if eje == 2
-         @evaluacion.puntaje_eje3 = diagnostico.puntaje_obtenido_avance(avance, eje) if eje == 3
-         @evaluacion.puntaje_eje4 = diagnostico.puntaje_obtenido_avance(avance, eje) if eje == 4
-         @evaluacion.puntaje_eje5 = diagnostico.puntaje_obtenido_avance(avance, eje) if eje == 5
+         @evaluacion.puntaje_eje1 = @evaluacion.puntaje_obtenido_avance(@avance, eje) if eje == 1
+         @evaluacion.puntaje_eje2 = @evaluacion.puntaje_obtenido_avance(@avance, eje) if eje == 2
+         @evaluacion.puntaje_eje3 = @evaluacion.puntaje_obtenido_avance(@avance, eje) if eje == 3
+         @evaluacion.puntaje_eje4 = @evaluacion.puntaje_obtenido_avance(@avance, eje) if eje == 4
+         @evaluacion.puntaje_eje5 = @evaluacion.puntaje_obtenido_avance(@avance, eje) if eje == 5
        end
-       @evaluacion.avance = avance.to_i
+       @evaluacion.avance = @avance.to_i
        @evaluacion.activa = true
-       @evidencias_sin_evaluar = Adjunto.count(:id, :conditions => ["proyecto_id = ? AND avance in (1,2) AND validado IS NULL", @evaluacion.proyecto_id]) if @evaluacion.proyecto_id
+       @evidencias_sin_evaluar = Adjunto.count(:id, :conditions => ["proyecto_id = ? AND avance = ? AND validado IS NULL", @evaluacion.proyecto_id, @avance]) if @evaluacion.proyecto_id
        @concluido = (@evidencias_sin_evaluar.to_i > 0 )? false : true
        if (@concluido)
-           desactivar_registro_proyecto(@evaluacion.proyecto_id, avance)
-#           if @existe
-           if (Evaluacion.find(:first, :conditions => ["proyecto_id = ? AND avance = ? AND user_id = ?", params[:proyecto], avance.to_i, current_user.id]))
+           desactivar_registro_proyecto(@evaluacion.proyecto_id, @avance)
+           if (Evaluacion.find(:first, :conditions => ["proyecto_id = ? AND avance = ? AND user_id = ?", params[:proyecto], @avance.to_i, current_user.id]))
              @evaluacion.update_attributes(:observaciones => params[:evaluacion][:observaciones])
              activar_evaluacion(@evaluacion.id)
            else
              @evaluacion.save
            end
-           @diagnostico.escuela.update_bitacora!("proy-eva", User.find(@evaluacion.user_id)) if @diagnostico.escuela && @evaluacion.user_id
+           nuevo_estatus = (@avance == "1")? "proy-eva1" : nil
+           nuevo_estatus ||= (@avance == "2")? "proy-eva2": nil
+           if nuevo_estatus
+             @escuela.update_bitacora!(nuevo_estatus, User.find(@evaluacion.user_id)) if @evaluacion.proyecto.diagnostico.escuela && @evaluacion.user_id
+           end
          flash[:notice] = "Registro de evaluacion guardado correctamente"
        else
          flash[:error] = "Necesita evaluar todas las evidencias para concluir"
        end
-     end
      
-     redirect_to :action => "dashboard_proyecto", :diagnostico => @diagnostico.id, :id => params[:id] #@evaluacion.user_id#, :proyecto => @proyecto.id
+     redirect_to :action => "dashboard_proyecto",  :id => @user_escuela.id, :proyecto => @evaluacion.proyecto.id, :avance => @avance
    end
 
    def asignar_evaluador

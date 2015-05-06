@@ -888,9 +888,11 @@ end
 ###--- OBTENIDOS AVANCE ---
 def puntaje_avance_eje(avance, num_eje, num_actividad)
   valido = false
-  @diagnostico = Diagnostico.find(self.diagnostico_id)
-  @proyecto = Proyecto.find(:first, :conditions => ["diagnostico_id = ?", @diagnostico.id]) if @diagnostico
+  @diagnostico = Diagnostico.find(self.diagnostico_id) if self.diagnostico_id
+  @proyecto = Proyecto.find(self.proyecto_id) if self.proyecto_id
+  @proyecto ||= Proyecto.find(:first, :conditions => ["diagnostico_id = ?", @diagnostico.id]) if @diagnostico
   @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
+  @escuela ||= Escuela.find_by_clave(@proyecto.diagnostico.escuela.clave) if @proyecto && @proyecto.diagnostico
   @user = User.find_by_login(@escuela.clave) if @escuela
   eje = CatalogoEje.find_by_clave("EJE#{num_eje}")
 #  @adjunto = Adjunto.find(:all, :conditions => ["user_id = ? AND diagnostico_id = ? AND eje_id = ? AND avance = ? AND numero_actividad = ?", @user, @diagnostico.id, eje.id, avance, num_actividad], :order => "eje_id")
