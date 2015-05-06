@@ -12,10 +12,12 @@ jQuery(document).ready(function() {
           <td colspan="4">
             <%if flash[:evidencias]%>
             <div id="evidencias" class="formee-msg-error">
-              <h2>No se encontraron evidencias:</h2>
-              <ul>
-                <li style="font-size: 14px;"><%=flash[:evidencias]%>.</li>
-              </ul>
+              <h2 style="text-align: center;">No se encontraron evidencias:</h2>
+              <%flash[:evidencias].split(",").each do |e|%>
+                <ul>
+                  <li style="font-size: 14px;">&times; <%=e%>.</li>
+                </ul>
+              <%end%>
             </div>
             <%end%>
           </td>
