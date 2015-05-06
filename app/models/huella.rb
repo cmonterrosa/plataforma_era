@@ -89,7 +89,6 @@ class Huella < ActiveRecord::Base
   end
 
   def valida_inorganicos
-    return true if self.proyecto
     self.inorganicos.each do |i|
       return false if i.clave == "NING"
     end

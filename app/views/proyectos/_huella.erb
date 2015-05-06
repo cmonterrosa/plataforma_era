@@ -191,7 +191,7 @@
       <fieldset style="padding: 5px 5px 5px 5px;">
         <div id="inorganicos" class="grid-12-12">
           <% Inorganico.find(:all).each do |c| %>
-            <% unless @s_inorganicos.include?(c.id) %>
+            <% unless @s_inorganicos_diagnostico.include?(c.id) %>
               <%= check_box_tag "inorganicos[#{c.id}]", c.clave, @s_inorganicos.include?(c.id) ? true : false, :onclick => "verifyCheckboxs(this, 'inorganicos', 'eje3_p9');" %>&nbsp;<%= c.descripcion %><br /><br />
               <%=linea_horizontal%>
             <% end %>
@@ -233,6 +233,7 @@
   </tr>
 </table>
 <%= render :partial => "diagnosticos/errores_evidencias"%>
+<%= render :partial => "errores"%>
 <% end %>
 
 <script type="text/javascript">

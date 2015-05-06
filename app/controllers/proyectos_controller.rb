@@ -89,17 +89,19 @@ class ProyectosController < ApplicationController
         @huella = Huella.new
         @huella_diagnostico = Huella.find_by_diagnostico_id(@diagnostico.id) if @diagnostico
 
-        if @evidencia_diagnostico_eje3_p9 = evidencia_valida?(3, 9, @diagnostico)
-          if @huella_diagnostico.inorganicos.include?(Inorganico.find_by_clave("NING"))
-            @s_inorganicos = []
-          else
-              @s_inorganicos = multiple_selected_id(@huella_diagnostico.inorganicos) if @huella_diagnostico.inorganicos
-          end
+        if evidencia_valida?(3, 9, @diagnostico)
+          @s_inorganicos_diagnostico = multiple_selected_id(@huella_diagnostico.inorganicos) if @huella_diagnostico.inorganicos
+          @s_inorganicos_diagnostico = [] if @s_inorganicos_diagnostico.inorganicos.include?(Inorganico.find_by_clave("NING"))
         else
-          @s_inorganicos = []
+          @s_inorganicos_diagnostico = []
         end
+        @s_inorganicos =  multiple_selected_id(@huella.inorganicos) if @huella.inorganicos
 
-        @focos = 0..@huella_diagnostico.total_focos.to_i
+        if @huella_diagnostico.total_focos.to_i > 0
+          @focos = 0..@huella_diagnostico.total_focos.to_i
+        else
+          @focos = 0..499
+        end
       end
 
       if params[:catalogo_catalogo_eje_id] == "EJE4"
@@ -242,15 +244,13 @@ class ProyectosController < ApplicationController
     if @eje.catalogo_eje.clave == "EJE3"
       @huella = @proyecto.huella
       @huella_diagnostico = Huella.find_by_diagnostico_id(@diagnostico.id) if @diagnostico
-       if evidencia_valida?(3, 9, @diagnostico)
-          if @huella_diagnostico.inorganicos.include?(Inorganico.find_by_clave("NING"))
-            @s_inorganicos = []
-          else
-            @s_inorganicos = multiple_selected_id(@huella_diagnostico.inorganicos) if @huella_diagnostico.inorganicos
-          end
-        else
-          @s_inorganicos = []
+       if evidencia_valida?(@eje.catalogo_eje.id, 9, @diagnostico)
+          @s_inorganicos_diagnostico = multiple_selected_id(@huella_diagnostico.inorganicos) if @huella_diagnostico.inorganicos
+          @s_inorganicos_diagnostico = [] if @s_inorganicos_diagnostico.inorganicos.include?(Inorganico.find_by_clave("NING"))
+       else
+          @s_inorganicos_diagnostico = []
        end
+       @s_inorganicos =  multiple_selected_id(@huella.inorganicos) if @huella.inorganicos
       @focos = 0..@huella_diagnostico.total_focos.to_i
     end
 
@@ -293,42 +293,47 @@ class ProyectosController < ApplicationController
   def delete_eje
     @eje = Eje.find(params[:id])
     @eje_nombre = @eje.catalogo_eje.descripcion
+    
+      if @eje.catalogo_eje.clave == "EJE1"
+        AlumnosCapacitado.delete_all("competencia_id = #{@eje.proyecto.competencia.id}")
+        DocentesCapacitado.delete_all("competencia_id = #{@eje.proyecto.competencia.id}")
+        @eje.proyecto.competencia.destroy
+      end
 
-    if @eje.catalogo_eje.clave == "EJE1"
-      AlumnosCapacitado.delete_all("competencia_id = #{@eje.proyecto.competencia.id}")
-      DocentesCapacitado.delete_all("competencia_id = #{@eje.proyecto.competencia.id}")
-      @eje.proyecto.competencia.destroy
-    end
+      if @eje.catalogo_eje.clave == "EJE2"
+        EscuelasEspacio.delete_all("entorno_id = #{@eje.proyecto.entorno.id}")
+        @eje.proyecto.entorno.acciones.destroy
+        @eje.proyecto.entorno.destroy
+      end
 
-    if @eje.catalogo_eje.clave == "EJE2"
-      EscuelasEspacio.delete_all("entorno_id = #{@eje.proyecto.entorno.id}")
-      @eje.proyecto.entorno.acciones.destroy
-    end
+      if @eje.catalogo_eje.clave == "EJE3"
+        @eje.proyecto.huella.inorganicos.destroy
+        @eje.proyecto.huella.destroy
+      end
 
-    if @eje.catalogo_eje.clave == "EJE3"
-      @eje.proyecto.huella.inorganicos.destroy
-    end
+      if @eje.catalogo_eje.clave == "EJE4"
+        @eje.proyecto.consumo.preparacions.delete_all if @eje.proyecto.consumo.preparacions
+        @eje.proyecto.consumo.utensilios.delete_all if @eje.proyecto.consumo.utensilios
+        @eje.proyecto.consumo.higienes.delete_all if @eje.proyecto.consumo.higienes
+        @eje.proyecto.consumo.alimentos.delete_all if @eje.proyecto.consumo.alimentos
+        @eje.proyecto.consumo.botanas.delete_all if @eje.proyecto.consumo.botanas
+        @eje.proyecto.consumo.reposterias.delete_all if @eje.proyecto.consumo.reposterias
+        @eje.proyecto.consumo.materials.delete_all if @eje.proyecto.consumo.materials
+        @eje.proyecto.consumo.destroy
+      end
 
-    if @eje.catalogo_eje.clave == "EJE4"
-      @eje.proyecto.consumo.preparacions.delete_all if @eje.proyecto.consumo.preparacions
-      @eje.proyecto.consumo.utensilios.delete_all if @eje.proyecto.consumo.utensilios
-      @eje.proyecto.consumo.higienes.delete_all if @eje.proyecto.consumo.higienes
-      @eje.proyecto.consumo.alimentos.delete_all if @eje.proyecto.consumo.alimentos
-      @eje.proyecto.consumo.botanas.delete_all if @eje.proyecto.consumo.botanas
-      @eje.proyecto.consumo.reposterias.delete_all if @eje.proyecto.consumo.reposterias
-      @eje.proyecto.consumo.materials.delete_all if @eje.proyecto.consumo.materials
-    end
+      if @eje.catalogo_eje.clave == "EJE5"
+        CapacitacionPadre.delete_all("participacion_id = #{@eje.proyecto.participacion.id}")
+        @eje.proyecto.participacion.pescolars.destroy
+        @eje.proyecto.participacion.destroy
+      end
 
-    if @eje.catalogo_eje.clave == "EJE5"
-      CapacitacionPadre.delete_all("participacion_id = #{@eje.proyecto.participacion.id}")
-      @eje.proyecto.participacion.pescolars.destroy
-    end
-
-    if @eje.destroy
-      flash[:notice] = "Eje: #{@eje_nombre} has sido eliminado."
-    else
-      flash[:error] = "Error al eliminar el eje: #{@eje_nombre}."
-    end
+      if @eje.destroy
+        flash[:notice] = "Eje: #{@eje_nombre} has sido eliminado."
+      else
+        flash[:error] = "Error al eliminar el eje: #{@eje_nombre}."
+      end
+    
     redirect_to :action => "index"
   end
 
@@ -412,15 +417,16 @@ class ProyectosController < ApplicationController
 
     if @competencia.save and @eje.save
       flash[:notice] = "Registro guardado correctamente"
-      redirect_to :controller => "proyectos"
+#      redirect_to :controller => "proyectos"
     else
       flash[:error] = "No se pudo guardar, verifique los datos"
       flash[:evidencias] = @competencia.errors.full_messages.join(", ")
 
-      @s_dcapacitadoras = multiple_selected_dcapacitadora(@competencia.docentes_capacitados) if @competencia.docentes_capacitados
-      @s_acapacitadoras = multiple_selected_dcapacitadora(@competencia.alumnos_capacitados) if @competencia.alumnos_capacitados
-      render :action => "get_contenido_ejes", :catalogo_catalogo_eje_id => @eje.catalogo_eje_id, :layout => "era2014"
+#      @s_dcapacitadoras = multiple_selected_dcapacitadora(@competencia.docentes_capacitados) if @competencia.docentes_capacitados
+#      @s_acapacitadoras = multiple_selected_dcapacitadora(@competencia.alumnos_capacitados) if @competencia.alumnos_capacitados
+#      render :action => "get_contenido_ejes", :catalogo_catalogo_eje_id => @eje.catalogo_eje_id, :layout => "era2014"
     end
+    redirect_to :controller => "proyectos"
   end
 
  def save_entorno
@@ -466,20 +472,21 @@ class ProyectosController < ApplicationController
     
     if @entorno.save and @eje.save
       flash[:notice] = "Registro guardado correctamente"
-      redirect_to :controller => "proyectos"
+#      redirect_to :controller => "proyectos"
     else
       flash[:error] = "No se pudo guardar, verifique los datos"
       flash[:evidencias] = @entorno.errors.full_messages.join(", ")
 
-      @s_acciones = multiple_selected_id(@entorno.acciones) if @entorno.acciones
-      @escuela = Escuela.find_by_clave(current_user.login)
-      if @escuela.nivel_descripcion == "BACHILLERATO"
-        @acciones = Accione.find(:all, :conditions => ["clave not in ('AC03')"])
-      else
-        @acciones = Accione.find(:all, :conditions => ["clave not in ('AC00', 'AC01')"])
-      end
-      render :action => "get_contenido_ejes", :catalogo_catalogo_eje_id => params[:catalogo][:catalogo_eje_id], :layout => "era2014"
+#      @s_acciones = multiple_selected_id(@entorno.acciones) if @entorno.acciones
+#      @escuela = Escuela.find_by_clave(current_user.login)
+#      if @escuela.nivel_descripcion == "BACHILLERATO"
+#        @acciones = Accione.find(:all, :conditions => ["clave not in ('AC03')"])
+#      else
+#        @acciones = Accione.find(:all, :conditions => ["clave not in ('AC00', 'AC01')"])
+#      end
+#      render :action => "get_contenido_ejes", :catalogo_catalogo_eje_id => params[:catalogo][:catalogo_eje_id], :layout => "era2014"
     end
+    redirect_to :controller => "proyectos"
  end
 
  def save_huella
@@ -510,14 +517,13 @@ class ProyectosController < ApplicationController
 
     if @huella.save and @eje.save
       flash[:notice] = "Registro guardado correctamente"
-      redirect_to :controller => "proyectos"
+#      redirect_to :controller => "proyectos"
     else
       flash[:error] = "No se pudo guardar, verifique los datos"
       flash[:evidencias] = @huella.errors.full_messages.join(", ")
-
-      @s_inorganicos = multiple_selected_id(@huella.inorganicos) if @huella.inorganicos
-      render :action => "get_contenido_ejes", :catalogo_catalogo_eje_id => params[:catalogo][:catalogo_eje_id], :layout => "era2014"
+      #      render :action => "get_contenido_ejes", :catalogo_catalogo_eje_id => params[:catalogo][:catalogo_eje_id], :layout => "era2014"
     end
+    redirect_to :controller => "proyectos"
  end
 
  def save_consumo
@@ -603,29 +609,30 @@ class ProyectosController < ApplicationController
 
     if @consumo.save and @eje.save
       flash[:notice] = "Registro guardado correctamente"
-      redirect_to :controller => "proyectos"
+#      redirect_to :controller => "proyectos"
     else
       flash[:error] = "No se pudo guardar, verifique los datos"
       flash[:evidencias] = @consumo.errors.full_messages.join(", ")
 
-      @escuela = Escuela.find_by_clave(current_user.login.upcase)
-      if @escuela.nivel_descripcion == "BACHILLERATO"
-        @establecimientos = Establecimiento.find(:all, :conditions => ["nivel not in ('BASICA')"])
-      else
-        @establecimientos = Establecimiento.find(:all)
-      end
-
-      @s_preparacions = multiple_selected(@consumo.preparacions) if @consumo.preparacions
-      @s_utensilios = multiple_selected(@consumo.utensilios) if @consumo.utensilios
-      @s_higienes = multiple_selected(@consumo.higienes) if @consumo.higienes
-      @s_bebidas = multiple_selected(@consumo.bebidas) if @consumo.bebidas
-      @s_alimentos = multiple_selected(@consumo.alimentos) if @consumo.alimentos
-      @s_botanas = multiple_selected(@consumo.botanas) if @consumo.botanas
-      @s_reposterias = multiple_selected(@consumo.reposterias) if @consumo.reposterias
-      @s_materials = multiple_selected(@consumo.materials) if @consumo.materials
-      @s_afisicas = selected(@consumo.frecuencia_afisica) if @consumo.frecuencia_afisica
-      render :action => "get_contenido_ejes", :catalogo_catalogo_eje_id => params[:catalogo][:catalogo_eje_id], :layout => "era2014"
+#      @escuela = Escuela.find_by_clave(current_user.login.upcase)
+#      if @escuela.nivel_descripcion == "BACHILLERATO"
+#        @establecimientos = Establecimiento.find(:all, :conditions => ["nivel not in ('BASICA')"])
+#      else
+#        @establecimientos = Establecimiento.find(:all)
+#      end
+#
+#      @s_preparacions = multiple_selected(@consumo.preparacions) if @consumo.preparacions
+#      @s_utensilios = multiple_selected(@consumo.utensilios) if @consumo.utensilios
+#      @s_higienes = multiple_selected(@consumo.higienes) if @consumo.higienes
+#      @s_bebidas = multiple_selected(@consumo.bebidas) if @consumo.bebidas
+#      @s_alimentos = multiple_selected(@consumo.alimentos) if @consumo.alimentos
+#      @s_botanas = multiple_selected(@consumo.botanas) if @consumo.botanas
+#      @s_reposterias = multiple_selected(@consumo.reposterias) if @consumo.reposterias
+#      @s_materials = multiple_selected(@consumo.materials) if @consumo.materials
+#      @s_afisicas = selected(@consumo.frecuencia_afisica) if @consumo.frecuencia_afisica
+#      render :action => "get_contenido_ejes", :catalogo_catalogo_eje_id => params[:catalogo][:catalogo_eje_id], :layout => "era2014"
     end
+    redirect_to :controller => "proyectos"
  end
 
  def save_participacion
@@ -666,15 +673,16 @@ class ProyectosController < ApplicationController
     
     if @participacion.save and @eje.save
       flash[:notice] = "Registro guardado correctamente"
-      redirect_to :controller => "proyectos"
+#      redirect_to :controller => "proyectos"
     else
       flash[:error] = "No se pudo guardar, verifique los datos"
       flash[:evidencias] = @participacion.errors.full_messages.join(", ")
 
-      @s_dcapacitadoras = multiple_selected_dcapacitadora(@participacion.capacitacion_padres) if  @participacion.capacitacion_padres
-      cargar_proyectos_actuales
-      render :action => "get_contenido_ejes", :catalogo_catalogo_eje_id => params[:catalogo][:catalogo_eje_id], :layout => "era2014"
+#      @s_dcapacitadoras = multiple_selected_dcapacitadora(@participacion.capacitacion_padres) if  @participacion.capacitacion_padres
+#      cargar_proyectos_actuales
+#      render :action => "get_contenido_ejes", :catalogo_catalogo_eje_id => params[:catalogo][:catalogo_eje_id], :layout => "era2014"
     end
+    redirect_to :controller => "proyectos"
  end
 
   private
