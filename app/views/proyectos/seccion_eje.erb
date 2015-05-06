@@ -9,9 +9,9 @@
       <table class="subprincipal" width="100%" border="0" cellpadding="4" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
         <tr>
           <td align="justify" style="vertical-align:top;" >
-            <div class="grid-3-12">&nbsp;</div>
-            <div class="grid-6-12">
-              <label class="uper">Eje a desarrollar:</label>
+            <div class="grid-12-12" style="text-align:center;"><label class="uper">Eje a desarrollar:</label></div>
+            <div class="grid-2-12">&nbsp;</div>
+            <div class="grid-8-12" style="text-align:center;">
               <%= select :catalogo, :catalogo_eje_id, @catalogo_ejes.collect {|p| [ p.completo, p.clave ] }, { :prompt => "SELECCIONE UNA ACCIÓN" , :style => "font-size: 12px;"} %>
             </div>
           </td>
