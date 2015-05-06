@@ -91,7 +91,8 @@ class ProyectosController < ApplicationController
 
         if evidencia_valida?(3, 9, @diagnostico)
           @s_inorganicos_diagnostico = multiple_selected_id(@huella_diagnostico.inorganicos) if @huella_diagnostico.inorganicos
-          @s_inorganicos_diagnostico = [] if @s_inorganicos_diagnostico.inorganicos.include?(Inorganico.find_by_clave("NING"))
+          ids_inorganicos = Inorganico.find( @s_inorganicos_diagnostico.map{|i|i}) unless @s_inorganicos_diagnostico.empty?
+          @s_inorganicos_diagnostico = [] if ids_inorganicos.include?(Inorganico.find_by_clave("NING"))
         else
           @s_inorganicos_diagnostico = []
         end
@@ -246,7 +247,8 @@ class ProyectosController < ApplicationController
       @huella_diagnostico = Huella.find_by_diagnostico_id(@diagnostico.id) if @diagnostico
        if evidencia_valida?(@eje.catalogo_eje.id, 9, @diagnostico)
           @s_inorganicos_diagnostico = multiple_selected_id(@huella_diagnostico.inorganicos) if @huella_diagnostico.inorganicos
-          @s_inorganicos_diagnostico = [] if @s_inorganicos_diagnostico.inorganicos.include?(Inorganico.find_by_clave("NING"))
+         ids_inorganicos = Inorganico.find( @s_inorganicos_diagnostico.map{|i|i}) unless @s_inorganicos_diagnostico.empty?
+        @s_inorganicos_diagnostico = [] if ids_inorganicos.include?(Inorganico.find_by_clave("NING"))
        else
           @s_inorganicos_diagnostico = []
        end
