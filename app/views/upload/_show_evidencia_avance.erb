@@ -26,7 +26,7 @@
     <br />
     <fieldset>
       <div class="grid-12-12 clear">
-        <table width="95%" border="0" cellspacing="0" cellpadding="0" class="sample" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" class="sample" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid">
           <tr class="d0">
             <td style="vertical-align: middle;">NP</td>
             <td style="vertical-align: middle;">Tipo</td>
@@ -48,8 +48,8 @@
               <td style="vertical-align: middle;"><%=h evidencia.descripcion %></td>
               <%#*<td style="vertical-align: middle;"><%=h (evidencia.numero_actividad) ? evidencia.numero_actividad : "---" ></td>%>
               <td style="vertical-align: middle;"><%=h evidencia.created_at.strftime("%d/%m/%Y - %H:%M")%></td>
-              <td style="vertical-align: middle; font-size: 8px;"><%= button_to 'Visualizar', {:action => "download", :id => evidencia}, :method => :post, :class => 'boton' %></td>
-              <td style="vertical-align: middle; font-size: 8px;"><%= button_to 'Eliminar', {:action => "destroy_evidencia_avance", :id => evidencia, :proyecto => @proyecto, :eje => @eje, :num_avance => @num_avance, :numero_pregunta => @numero_pregunta}, :confirm => '¿Esta seguro que desea elimina la evidencia?', :method => :post, :class => 'boton' %></td>
+              <td style="vertical-align: middle; font-size: 8px;"><%= button_to 'Visualizar', {:action => "download", :id => evidencia}, :method => :post, :class => 'boton', :style => "background: green; font-size: 11px;" %></td>
+              <td style="vertical-align: middle; font-size: 8px;"><%= button_to 'Eliminar', {:action => "destroy_evidencia_avance", :id => evidencia, :proyecto => @proyecto, :eje => @eje, :num_avance => @num_avance, :numero_pregunta => @numero_pregunta}, :confirm => '¿Esta seguro que desea elimina la evidencia?', :method => :post, :class => 'boton', :style => "background: red; font-size: 11px;" %></td>
             </tr>
             <%contador+=1%>
           <%end%>
@@ -77,7 +77,7 @@
     <% form_for :escuela, @escuela, :url => { :action => "new_evidencia_avance", :controller => "upload", :eje => @eje, :num_avance => @num_avance, :numero_pregunta => @numero_pregunta, :proyecto => @proyecto} do -%>
       <%# form_for :escuela, @escuela, :url => { :action => "formato_registro", :controller => "registro", :id => @escuela.clave }, :html => { :target => "_blank"} do -%>
       <div class="grid-center">
-        <p id="pdf_link"><input type="submit" style="vertical-align: middle; font-size: 11px;" title="CARGAR OTRA EVIDENCIA" value="AGREGAR MÁS EVIDENCIAS" /></p>
+        <p id="pdf_link"><input type="submit" style="vertical-align: middle; font-size: 11px;" title="CARGAR OTRA EVIDENCIA" value="+ AGREGAR MÁS EVIDENCIAS" /></p>
       </div>
     <%end%>
 
