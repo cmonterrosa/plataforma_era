@@ -142,11 +142,11 @@ class UploadController < ApplicationController
             redirect_to :action => "list_evidencias", :diagnostico => @diagnostico, :eje => @eje, :numero_pregunta => @numero_pregunta
           end
       else
-         @errores = @uploaded_file.errors
+         @errores = @uploaded_file.errors.full_messages
          return render(:partial => 'carga_evidencia_error', :layout => "only_jquery")
       end
     rescue ActiveRecord::RecordInvalid => invalid
-        @errores = invalid.record.errors
+        @errores = invalid.record.errors.full_messages
         return render(:partial => 'carga_evidencia_error', :layout => "only_jquery")
     end
   end
@@ -235,7 +235,7 @@ class UploadController < ApplicationController
         return render(:partial => 'carga_evidencia_error', :layout => "only_jquery")
       end
     rescue ActiveRecord::RecordInvalid => invalid
-      @errores = invalid.record.errors
+      @errores = invalid.record.errors.full_messages
       return render(:partial => 'carga_evidencia_error', :layout => "only_jquery")
     end
    end

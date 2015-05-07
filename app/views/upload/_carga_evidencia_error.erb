@@ -1,10 +1,17 @@
 <div class="titulos">
-  <p align="center">
-    Error en la carga de la evidencia, verifique y vuelva a intentarlo.
-  </p>
-  <p align="center">
-    <%if @errores%>
-      <%=h @errores.map{|e|e.last} %>
-    <%end%>
-  </p>
+ <div id="error_carga_evidencias" class="formee-msg-error">
+              <h2 style="text-align: center;">El archivo no se cargó correctamente:</h2>
+              <%if @errores%>
+                <%@errores.each do |e|%>
+                    <ul>
+                       <li style="font-size: 16px;">
+                        <%campo, mensaje = e.split(":")%>
+                          <%=h mensaje%>
+                       </li>
+                       <li>&nbsp;</li>
+                    </ul>
+                <%end%>
+              <%end%>
+
+  </div>
 </div>

@@ -17,10 +17,10 @@ class Adjunto < ActiveRecord::Base
                                                              'application/vnd.openxmlformats-officedocument.presentationml.presentation',
                                                              'application/vnd.ms-powerpoint',
                                                              'application/vnd.openxmlformats-officedoc'],
-    :message => "No es un formato válido"
+    :message => ": El tipo de archivo no es válido "
 
-   validates_numericality_of :file_size, :less_than => 5120, :message => "El archivo no puede excederse de 5 MB. "
-   validates_uniqueness_of :md5, :message => "El archivo ya fue cargado anteriormente"
+   validates_numericality_of :file_size, :less_than => 5120, :message => ": El archivo no puede excederse de 5 MB. "
+   validates_uniqueness_of :md5, :message => ": El archivo ya fue cargado anteriormente"
 
 
 
