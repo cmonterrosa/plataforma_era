@@ -13,5 +13,17 @@
                 <%end%>
               <%end%>
 
+
+              <%case params[:action]
+                    when 'create_evidencia'
+                      url = {:controller => "upload", :action => "new_evidencia",  :diagnostico => @diagnostico, :eje => @eje, :numero_pregunta => @numero_pregunta}
+                    when 'create_evidencia_avance'
+                      url = {:controller => "upload", :action => 'new_evidencia_avance',  :proyecto => @proyecto, :num_avance =>@num_avance,  :eje => @eje, :numero_pregunta => @numero_pregunta}
+                    end
+               %>
+
+
+              <ul><li><%=link_to "VOLVER A INTENTAR", url%></li></ul>
+
   </div>
 </div>
