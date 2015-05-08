@@ -140,7 +140,7 @@
         <div id="acciones" class="grid-12-12">
           <% i= 1 %>
           <% @acciones.each do |c| %>
-            <% unless @entorno_diagnostico.acciones.include?(c) %>
+            <% unless @entorno_diagnostico.acciones.include?(c.id) %>
               <% if @s_acciones.include?(c.id) %>
                 <%= check_box_tag "acciones[#{i}]", c.clave, @s_acciones.include?(c.id) ? true : false, :disabled => "disabled" %>&nbsp;<%= c.descripcion %><br /><br />
                 <%=linea_horizontal%>

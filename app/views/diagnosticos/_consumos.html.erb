@@ -49,6 +49,7 @@
           <td>&nbsp;</td>
             <td width="49%" align="justify" style=" vertical-align:top;" id="pregunta2">
             <!-- Línea pregunta -->
+            <% if @consumo.escuela_establecimiento == "SI" %>
             <div class="grid-12-12">
               <label class="uper">2.- Las personas encargadas del manejo y preparación de alimentos  dentro de la escuela, ¿han recibido capacitación(es)  para la preparación  e higiene de alimentos y bebidas en  los establecimientos de consumo escolar?<em class="formee-req"> *</em></label>
             </div>
@@ -60,11 +61,11 @@
               </span>
             </div>
             <div id="eje4_p2" class="grid-12-12" style="display: none; text-align: center;"></div>
+            <% end %>
             </td> <!-- pregunta 2 -->
          </tr>
 
-
-             
+         <% if @consumo.escuela_establecimiento == "SI" %>
               <tr id="pregunta3">
                 <td width="98%" align="justify" style=" vertical-align:top;" colspan="3">
                 <!-- Línea Pregunta -->
@@ -266,7 +267,7 @@
                   </fieldset>
                   </td> <!-- materiales -->
                 </tr>
-              
+              <% end %>
 
               <tr>
                 <td width="49%" align="justify" style=" vertical-align:top;">

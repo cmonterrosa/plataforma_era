@@ -1,6 +1,7 @@
 <% form_for :consumo, @consumo, :url => { :action => "save_consumo", :id => @consumo, :proyecto => @proyecto.id, :eje_id => @eje }, :html => {:class => "formee", :name => "consumo", :id => "consumo"} do |f| -%>
 <% if @consumo_diagnostico.escuela_establecimiento == "SI" %>
 <table class="subprincipal" width="100%" border="0" cellpadding="4" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
+  <% if @eva_diagnostico.puntaje_eje4_p7 < ($consumo_p7 * 100) || @consumo_diagnostico.escuela_establecimiento == "SI" %>
   <tr>
     <td align="justify" style="vertical-align:top;" >
       <div class="grid-6-12">
@@ -34,9 +35,11 @@
       <div class="grid-12-12">&nbsp;</div>
     </td>
   </tr>
+  <% end %>
   <tr>
     <td align="center" style="vertical-align:top;"><label  class="uper" style=" font-size: 15px; font-weight: bold;" >ACCIONES: </label></td>
   </tr>
+  <% if @consumo_diagnostico.escuela_establecimiento == "SI" %>
   <% if @eva_diagnostico.puntaje_eje4_p2 < ($consumo_p2 * 100) %>
   <tr>
     <td align="justify" style=" vertical-align:top;" id="pregunta2">

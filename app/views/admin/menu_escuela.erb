@@ -169,13 +169,13 @@
       <div class="grid-1-12"></div>
        
        <div class="grid-2-12">
-       <%=link_to image_tag('admin/dashboard.png', :size => "100x100", :mouseover => 'admin/dashboard2.png') , {:action => "dashboard", :controller => "admin", :id => @user, :diagnostico => @diagnostico}, :html => { :target => "_blank"}, :title => "Monitor de Evaluación del Diagnóstico"%>
+       <%=link_to image_tag('admin/dashboard.png', :size => "100x100", :mouseover => 'admin/dashboard2.png') , {:action => "dashboard", :controller => "admin", :id => @user, :diagnostico => @diagnostico}, { :target => "_blank" }, :title => "Monitor de Evaluación del Diagnóstico"%>
          <label style="font-family:verdana;font-size:14px;">Diagnóstico</label>
        </div>
        
        <% if @proyecto.oficializado %>
        <div class="grid-2-12">
-       <%=link_to image_tag('admin/dashboard.png', :size => "100x100", :mouseover => 'admin/dashboard2.png') , {:action => "dashboard_proyecto", :controller => "admin", :id => @user, :proyecto => @proyecto, :avance => 1}, :html => { :target => "_blank"}, :title => "Monitor de Evaluación del Proyecto"%>
+       <%=link_to image_tag('admin/dashboard.png', :size => "100x100", :mouseover => 'admin/dashboard2.png') , {:action => "dashboard_proyecto", :controller => "admin", :id => @user, :proyecto => @proyecto, :avance => 1}, { :target => "_blank" }, :title => "Monitor de Evaluación del Proyecto"%>
          <label style="font-family:verdana;font-size:14px;">Proyecto</label>
        </div>
        <% end if @proyecto %>
