@@ -1,4 +1,5 @@
 <% form_for :consumo, @consumo, :url => { :action => "save_consumo", :id => @consumo, :proyecto => @proyecto.id, :eje_id => @eje }, :html => {:class => "formee", :name => "consumo", :id => "consumo"} do |f| -%>
+<% if @consumo_diagnostico.escuela_establecimiento == "SI" %>
 <table class="subprincipal" width="100%" border="0" cellpadding="4" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
   <tr>
     <td align="justify" style="vertical-align:top;" >
@@ -162,7 +163,7 @@
         </fieldset>
       </div>
       <div class="grid-6-12" style=" vertical-align:top;"></div>
-    </td> 
+    </td>
   </tr>
   <% end %>
   <% if @eva_diagnostico.puntaje_eje4_p5 < ($consumo_p5 * 100) %>
@@ -251,7 +252,7 @@
           </div>
         </fieldset>
       </div>
-    </td> 
+    </td>
   </tr>
   <% end %>
   <% if @eva_diagnostico.puntaje_eje4_p6 < ($consumo_p6 * 100) %>
@@ -276,6 +277,30 @@
     jQuery("#materials").validate({ expression: "if (isCheckedC(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
   </script>
   <% end %>
+
+  <script type="text/javascript">
+  var objetivo_especifico = new LiveValidation( 'eje_objetivo_especifico' );
+  objetivo_especifico.add( Validate.Presence );
+  objetivo_especifico.add( Validate.Length, { maximum: 350 } );
+
+  var meta = new LiveValidation( 'eje_meta' );
+  meta.add( Validate.Presence );
+  meta.add( Validate.Length, { maximum: 350 } );
+  </script>
+  <% else %>
+    <% unless @eva_diagnostico.puntaje_eje4_p7 < ($consumo_p7 * 100) %>
+  <tr>
+    <td>
+      <div class="grid-12-12">
+        <label class="formee-msg-info" style="text-transform:uppercase;font-size:1.1em;">
+          Nota: No se muestran acciones que realizar debido a las respuestas de la etapa del diagnostico.
+        </label>
+      </div>
+    </td>
+  </tr>
+    <% end %>
+  <% end %>
+
   <% if @eva_diagnostico.puntaje_eje4_p7 < ($consumo_p7 * 100) %>
   <tr>
     <td align="justify" style=" vertical-align:top;">
@@ -309,7 +334,7 @@
         <div class="grid-2-12"><label class="uper">Minutos: </label></div>
         <div class="grid-3-12"><%= f.select :minutos_activacion_fisica, [10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60]%></div>
       </div>
-    </td> 
+    </td>
   </tr>
   <script type="text/javascript">
     enable_frecuencias_actividades_fisicas("consumo_frecuencia_afisica_id", "consumo_minutos_activacion_fisica");
@@ -321,7 +346,9 @@
       <table>
         <tr>
           <td>
+            <% if @eva_diagnostico.puntaje_eje4_p7 < ($consumo_p7 * 100) || @consumo_diagnostico.escuela_establecimiento == "SI" %>
             <input id="siguiente" onclick="to_uppercase();" class="buttonText" type="submit" title="Guardar" value="Guardar" />
+            <% end %>
           </td>
           <td>
             <a href="/proyectos" id="cancelar_sig" class="buttonText">Regresar</a>
@@ -336,15 +363,3 @@
 </table>
 <%= render :partial => "diagnosticos/errores_evidencias"%>
 <% end %>
-
-<script type="text/javascript">
-  var objetivo_especifico = new LiveValidation( 'eje_objetivo_especifico' );
-  objetivo_especifico.add( Validate.Presence );
-  objetivo_especifico.add( Validate.Length, { maximum: 350 } );
-
-  var meta = new LiveValidation( 'eje_meta' );
-  meta.add( Validate.Presence );
-  meta.add( Validate.Length, { maximum: 350 } );
-</script>
-
-
