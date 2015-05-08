@@ -1,5 +1,6 @@
 <% form_for :consumo, @consumo, :url => { :action => "save_consumo", :id => @consumo, :proyecto => @proyecto.id, :eje_id => @eje }, :html => {:class => "formee", :name => "consumo", :id => "consumo"} do |f| -%>
 <table class="subprincipal" width="100%" border="0" cellpadding="4" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
+  <% if @consumo_diagnostico.escuela_establecimiento == "SI" %>
   <tr>
     <td align="justify" style="vertical-align:top;" >
       <div class="grid-6-12">
@@ -276,6 +277,9 @@
     jQuery("#materials").validate({ expression: "if (isCheckedC(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
   </script>
   <% end %>
+
+  <% end %> <!-- Fin de validacion de tiene establecimieto -->
+  
   <% if @eva_diagnostico.puntaje_eje4_p7 < ($consumo_p7 * 100) %>
   <tr>
     <td align="justify" style=" vertical-align:top;">

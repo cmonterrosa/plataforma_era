@@ -41,6 +41,7 @@
   <tr>
     <td align="center" style="vertical-align:top;"><label  class="uper" style=" font-size: 15px; font-weight: bold;" >ACCIONES: </label></td>
   </tr>
+  <% if @consumo_diagnostico.escuela_establecimiento == "SI" %>
   <% if @eva_diagnostico.puntaje_eje4_p2 < ($consumo_p2 * 100) %>
   <tr>
     <td align="justify" style=" vertical-align:top;" id="pregunta2">
@@ -277,6 +278,8 @@
   </tr>
   
   <% end %>
+  <% end %>
+
   <% if @eva_diagnostico.puntaje_eje4_p7 < ($consumo_p7 * 100) %>
   <tr>
     <td align="justify" style=" vertical-align:top;">
