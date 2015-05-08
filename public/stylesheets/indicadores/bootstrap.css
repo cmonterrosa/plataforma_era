@@ -2075,7 +2075,8 @@ pre code {
     float: left;
   }
   .col-lg-12 {
-    width: 100%;
+    width: 98%;
+    text-align: center;
   }
   .col-lg-11 {
     width: 91.66666667%;

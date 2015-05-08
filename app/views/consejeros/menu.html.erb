@@ -27,9 +27,6 @@
           <label style="font-family:verdana;font-size:14px;">Estadísticas&nbsp;por&nbsp;Generaciones</label>
         </div>
 
-
-
-
         <%if current_user.has_role?("equipotecnico")%>
           <!-- Indicadores -->
 
@@ -43,12 +40,17 @@
 
            
             <div class="grid-3-12">
-              <%=link_to image_tag('admin/indicadores_diagnostico.png', :size => "128x128", :mouseover => 'admin/indicadores_diagnostico.png') , {:action => "index", :controller => "indicadores", :ciclo => "2014-2015"}, :title => "Mostrar indicadores"%>
-              <label style="font-family:verdana;font-size:14px;">Indicadores Segunda Generación</label>
+              <%=link_to image_tag('admin/indicadores_diagnostico.png', :size => "128x128", :mouseover => 'admin/indicadores_diagnostico.png') , {:action => "index", :controller => "indicadores", :ciclo => "2014-2015", :token => "d"}, :title => "Mostrar indicadores"%>
+              <label style="font-family:verdana;font-size:14px;">Indicadores del Diagnóstico Segunda Generación</label>
+            </div>
+
+            <div class="grid-3-12">
+              <%=link_to image_tag('admin/indicadores_diagnostico.png', :size => "128x128", :mouseover => 'admin/indicadores_diagnostico.png') , {:action => "index", :controller => "indicadores", :ciclo => "2014-2015", :token => "p"}, :title => "Mostrar indicadores"%>
+              <label style="font-family:verdana;font-size:14px;">Indicadores del Proyecto Segunda Generación</label>
             </div>
 
 
-                <!-- RANKING -->
+              <!-- RANKING -->
                <!--
                 <div class="grid-4-12">
                     <=link_to image_tag('admin/corte_ranking.png', :size => "128x128", :size => "128x128", :mouseover => 'admin/corte_ranking.png') , {:action => "cortes_ranking", :controller => "admin"}, :title => "Cortes de Ranking de escuelas"%>

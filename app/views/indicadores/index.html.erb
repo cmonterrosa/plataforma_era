@@ -1,8 +1,8 @@
 <div class="grid-12-12">
-  <h2 align="center">INDICADORES EN TIEMPO REAL</h2>
+  <h2 align="center">INDICADORES DEL <%=@tipo.upcase%> EN TIEMPO REAL</h2>
   
   <p align="center"><%= link_to_remote (image_tag("admin/actualizar.png", :mouseover => "admin/actualizar1.png", :title => "Actualizar")),
-                        :url => {:action => "update_indicadores", :actualizar => 1},
+                        :url => {:action => "update_indicadores", :actualizar => 1, :token => @token},
                         :update => "contenido_indicadores",
                         :loading => "Element.show('indicador');Element.hide('contenido_indicadores');",
                         :complete =>"Element.hide('indicador');Element.show('contenido_indicadores');"%>
