@@ -274,11 +274,7 @@ class ProyectosController < ApplicationController
       @s_alimentos = multiple_selected(@consumo.alimentos) if @consumo.alimentos
       @s_botanas = multiple_selected(@consumo.botanas) if @consumo.botanas
       @s_reposterias = multiple_selected(@consumo.reposterias) if @consumo.reposterias
-      if evidencia_valida?(4, 6, @diagnostico)
-        @s_materials = multiple_selected(@consumo.materials) if @consumo.materials
-      else
-        @s_materials = []
-      end
+      @s_materials = multiple_selected(@consumo.materials) if @consumo.materials
       @s_afisicas = selected(@consumo.frecuencia_afisica) if @consumo.frecuencia_afisica
     end
 
