@@ -327,7 +327,7 @@ class ProyectosController < ApplicationController
       end
 
       if @eje.destroy
-        flash[:notice] = "Eje: #{@eje_nombre} has sido eliminado."
+        flash[:notice] = "Eje: #{@eje_nombre} se elimino correctamente."
       else
         flash[:error] = "Error al eliminar el eje: #{@eje_nombre}."
       end
