@@ -1,50 +1,30 @@
 <%if @proyecto%>
     <%if @proyecto.oficializado %>
-      <div class="titulos" style="text-align: center;" ><p>Gracias por haber concluido su proyecto</p></div>
-      <div class ="grid-4-12">&nbsp;</div>
+        <div class="titulos" style="text-align: center;" ><p>Gracias por haber concluido su proyecto</p></div>
+        <div class ="grid-4-12">&nbsp;</div>
         <div class ="grid-3-12">
-        <p id="pdf_link"><%= link_to image_tag("/images/botones/print_proyect.png", :mouseover => "/images/botones/print_proyect2.png" ), { :action => "proyect_to_pdf.pdf" }, :target => "_blank" %></p>
-      </div>
-      <!--
-      <% case @proyecto.avance
-        when 1 %>
-          
-          <div class ="grid-3-12">
-            <p><%= link_to image_tag("/images/botones/primer_avance.png", :mouseover => "/images/botones/primer_avance2.png" ), { :controller => "avances", :num_avance => Base64.encode64("1") } %></p>
-          </div
-          
-        <% when 2 %>
-          <div class ="grid-4-12" style=" vertical-align: middle;">
-            <p>Proximamente... segundo avance</p>
-          </div
-      <% end %>
-      -->
-          <div class ="grid-4-12 clear"></div>
-         
-    <%else%>
+            <p id="pdf_link"><%= link_to image_tag("/images/botones/print_proyect.png", :mouseover => "/images/botones/print_proyect2.png" ), { :action => "proyect_to_pdf.pdf" }, :target => "_blank" %></p>
+        </div>
+        <div class ="grid-4-12 clear"></div>
+      <%else%>
 
-    <%= render :partial => "informacion_proyectos"%>
-    <!-- capturamos toda la info -->
-    <table class="principal" width="100%" border="0" align="center" cellpadding="2" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
-    <tr bgcolor="#003366" style="opacity: 0.7;" >
-      <td align="center"><h4>DATOS DEL PROYECTO</h4></td>
-    </tr>
+      <%= render :partial => "informacion_proyectos"%>
+      <!-- capturamos toda la info -->
+      <table class="principal" width="98%" border="0" align="center" cellpadding="2" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
+      <tr bgcolor="#003366" style="opacity: 0.7;" >
+       <td align="center"><h4>DATOS DEL PROYECTO</h4></td>
+      </tr>
     <tr align="center">
       <td align="center">
         <table class="subprincipal" width="100%" border="0" cellpadding="4" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
           <tr>
             <td>
               <div class="grid-9-12">
-                <label style="font-size: 15px; font-weight: bold;" >NOMBRE DEL PROYECTO: &nbsp;</label><br />
+                <label style="font-size: 15px; font-weight: bold;" >NOMBRE DEL PROYECTO: &nbsp;</label>
                 <label style="font-size: 13px;"><%= @proyecto.descripcion %></label>
               </div>
               <div class="grid-3-12">
-                <label style="font-size: 10px;">&nbsp;<%= link_to image_tag("/images/botones/edit_proyect.png", :mouseover => "/images/botones/edit_proyect2.png"), {:action => "edit", :escuela_id => @escuela_id} %>&nbsp;&nbsp;<%= link_to "EDITAR PROYECTO", {:action => "edit", :escuela_id => @escuela_id}, :style => "color: #FF8000; font-size: 11px; text-decoration: none;" %></label>
-              </div>
-              <div class="grid-9-12">
-              </div>
-              <div class="grid-3-12">
-                <label style="font-size: 10px;">&nbsp;<%= link_to image_tag("/images/botones/add_eje.png", :mouseover => "/images/botones/add_eje2.png"), { :action => "seccion_eje", :escuela_id => @escuela_id} %>&nbsp;&nbsp;<%= link_to "AGREGAR EJE", { :action => "seccion_eje", :escuela_id => @escuela_id}, :style => "color: #31B404; font-size: 11px; text-decoration: none;" %></label>
+                <label><%= link_to image_tag("/images/botones/edit_proyect.png", :mouseover => "/images/botones/edit_proyect2.png"), {:action => "edit", :escuela_id => @escuela_id}, :title => "EDITAR PROYECTO" %>&nbsp;<%=link_to 'EDITAR PROYECTO', {:action => "edit", :escuela_id => @escuela_id}, :style => "font-size: 13px; color: #11689e; font-weight: bold;"%></label>
               </div>
             </td>
           </tr>
@@ -54,7 +34,7 @@
                 <label style="font-size: 15px; font-weight: bold;" >EJES A DESARROLLAR: </label>
               </div>
               <div class="grid-3-12">
-                
+                  <label><%= link_to image_tag("/images/botones/add_eje.png", :mouseover => "/images/botones/add_eje2.png"), { :action => "seccion_eje", :escuela_id => @escuela_id}, :title => "AGREGAR EJE" %>&nbsp; <%=link_to 'AGREGAR EJE', { :action => "seccion_eje", :escuela_id => @escuela_id}, :style=>"font-size: 13px; color: #11689e; font-weight: bold;"%></label>
               </div>
             </td>
           </tr>
@@ -81,8 +61,8 @@
                   <%end%>
                 </div>
                 <div class="grid-2-12">
-                  <label style="font-size: 10px;display:block;"><%= link_to image_tag("/images/botones/edit_proyect.png", :mouseover => "/images/botones/edit_proyect2.png"), { :action => "edit_eje", :id => eje.id } %>&nbsp; <%= link_to "EDITAR EJE", { :action => "edit_eje", :id => eje.id }, :style => "color: #FF8000; font-size: 11px; text-decoration: none;" %></label><br />
-                  <label style="font-size: 10px;display:block;"><%= link_to image_tag("/images/botones/del_eje.png", :mouseover => "/images/botones/del_eje2.png"), { :action => "delete_eje", :id => eje.id }, {:confirm => 'Estas seguro de eliminar este eje?'}, :style => "color: #B40404; font-size: 11px; text-decoration: none;" %>&nbsp; <%= link_to "ELIMINAR EJE", { :action => "delete_eje", :id => eje.id }, :confirm => 'Estas seguro de eliminar este eje?', :style => "color: #B40404; font-size: 11px; text-decoration: none;" %></label>
+                  <label style="font-size: 13px;display:block;"><%= link_to image_tag("/images/botones/edit_proyect.png", :mouseover => "/images/botones/edit_proyect2.png"), { :action => "edit_eje", :id => eje.id } %>&nbsp; <%=link_to 'EDITAR EJE', { :action => "edit_eje", :id => eje.id }, :style => "color: #088A08; font-size: 12px; font-weight: bold;"-%></label><br />
+                  <label style="font-size: 13px;display:block;"><%= link_to image_tag("/images/botones/del_eje.png", :mouseover => "/images/botones/del_eje2.png"), { :action => "delete_eje", :id => eje.id }, :confirm => 'Estas seguro de eliminar este eje?' %>&nbsp; <%=link_to 'ELIMINAR EJE', { :action => "delete_eje", :id => eje.id }, :confirm => 'Estas seguro de eliminar este eje?', :style => "color: #088A08; font-size: 12px; font-weight: bold;" -%></label>
                 </div>
               </fieldset>
             </div>
