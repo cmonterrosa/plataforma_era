@@ -228,7 +228,7 @@ class ProyectosController < ApplicationController
 
       if evidencia_valida?(@eje.catalogo_eje.id, 5, @diagnostico)
         @s_acciones_diagnostico = multiple_selected_id(@entorno_diagnostico.acciones) if @entorno_diagnostico.acciones
-        ninguna = Accione.where("clave = ?", "NING")
+        ninguna = Accione.find(:first, :conditions => ["clave = ?", "NING"])
         @s_acciones_diagnostico = [] if @s_acciones_diagnostico.include?(ninguna.id)
       else
         @s_acciones_diagnostico = []
