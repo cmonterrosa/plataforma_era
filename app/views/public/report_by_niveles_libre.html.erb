@@ -24,13 +24,15 @@
       <strong>IC = Registro  de Datos Básicos e Impresión de Constancias</strong><br/>
       <strong>DI = Diagnostico Iniciado</strong><br/>
       <strong>DC = Diagnostico Concluido</strong><br/>
+      <strong>DE = Diagnostico Evaluado</strong><br/>
+      <strong>PAT = Proyecto Autorizado</strong><br/>
       <strong>PI = Proyecto Iniciado</strong><br/>
       <strong>PC = Proyecto Concluido</strong><br/>
       <strong>PA = Primer Avance</strong><br/>
       <strong>SA = Segundo Avance</strong><br/>
       <strong>DR = Diagnostico Revisado</strong><br/>
-      <strong>DE = Diagnostico Evaluado</strong><br/>
-      <strong>PE = Proyecto Evaluado</strong><br/>
+      <strong>PEA1 = Proyecto Evaluado Avance 1</strong><br/>
+      <strong>PEA2 = Proyecto Evaluado Avance 2</strong><br/>
       <strong>TP = Total que participan</strong><br/>
       <strong>TG = Total General</strong><br/>
      </li>
@@ -48,13 +50,15 @@
       <th style="vertical-align: middle;">IC</th>
       <th style="vertical-align: middle;">DI</th>
       <th style="vertical-align: middle;">DC</th>
+      <th style="vertical-align: middle;">DE</th>
+      <th style="vertical-align: middle;">PAT</th>
       <th style="vertical-align: middle;">PI</th>
       <th style="vertical-align: middle;">PC</th>
       <th style="vertical-align: middle;">PA</th>
       <th style="vertical-align: middle;">SA</th>
       <th style="vertical-align: middle;">DR</th>
-      <th style="vertical-align: middle;">DE</th>
-      <th style="vertical-align: middle;">PE</th>
+      <th style="vertical-align: middle;">PEA1</th>
+      <th style="vertical-align: middle;">PEA2</th>
       <th style="vertical-align: middle;">TP</th>
     </tr>
 
@@ -65,13 +69,15 @@
     total_escuelas_datos_basicos_capturados =  0
     total_escuelas_diagnostico_iniciado =      0
     total_escuelas_diagnostico_terminado =      0
+    total_escuelas_diagnostico_evaluado =      0
+    total_escuelas_proyecto_autorizado =      0
     total_escuelas_proyecto_iniciado =      0
     total_escuelas_proyecto_terminado =      0
     total_escuelas_primer_avance = 0
     total_escuelas_segundo_avance = 0
     total_escuelas_diagnostico_revisado =      0
-    total_escuelas_diagnostico_evaluado =      0
-    total_escuelas_proyecto_evaluado =      0
+    total_escuelas_proyecto_evaluado_a1 =      0
+    total_escuelas_proyecto_evaluado_a2 =      0
     
   %>
 
@@ -87,41 +93,47 @@
         escuelas_datos_basicos_capturados =  Escuela.count(:id, :joins => "escuelas, users users, escuelas_generacions eg, generacions g", :conditions => ["users.login=escuelas.clave AND escuelas.id=eg.escuela_id AND eg.generacion_id=g.id AND g.id = ? AND escuelas.nivel_id = ? AND escuelas.estatu_id = ?  AND (users.blocked is NULL OR  users.blocked !=1)", @generacion, nivel.id, Estatu.find_by_clave("esc-datos").id ])
         escuelas_diagnostico_iniciado =      Escuela.count(:id, :joins => "escuelas, users users, escuelas_generacions eg, generacions g", :conditions => ["users.login=escuelas.clave AND escuelas.id=eg.escuela_id AND eg.generacion_id=g.id AND g.id = ? AND escuelas.nivel_id = ? AND escuelas.estatu_id = ?   AND (users.blocked is NULL OR  users.blocked !=1)", @generacion, nivel.id,  Estatu.find_by_clave("diag-inic").id ])
         escuelas_diagnostico_terminado =      Escuela.count(:id, :joins => "escuelas, users users, escuelas_generacions eg, generacions g", :conditions => ["users.login=escuelas.clave AND escuelas.id=eg.escuela_id AND eg.generacion_id=g.id AND g.id = ? AND escuelas.nivel_id = ? AND escuelas.estatu_id = ?   AND (users.blocked is NULL OR  users.blocked !=1)", @generacion, nivel.id, Estatu.find_by_clave("diag-conc").id])
+        escuelas_diagnostico_evaluado =      Escuela.count(:id, :joins => "escuelas, users users, escuelas_generacions eg, generacions g", :conditions => ["users.login=escuelas.clave AND escuelas.id=eg.escuela_id AND eg.generacion_id=g.id AND g.id = ? AND escuelas.nivel_id = ? AND escuelas.estatu_id = ?  AND  (users.blocked is NULL OR  users.blocked !=1)",@generacion, nivel.id, Estatu.find_by_clave("diag-eva").id ])
+        escuelas_proyecto_autorizado =      Escuela.count(:id, :joins => "escuelas, users users, escuelas_generacions eg, generacions g", :conditions => ["users.login=escuelas.clave AND escuelas.id=eg.escuela_id AND eg.generacion_id=g.id AND g.id = ? AND escuelas.nivel_id = ? AND escuelas.estatu_id = ?  AND  (users.blocked is NULL OR  users.blocked !=1)",@generacion, nivel.id, Estatu.find_by_clave("proy-aut").id ])
         escuelas_proyecto_iniciado =      Escuela.count(:id, :joins => "escuelas, users users, escuelas_generacions eg, generacions g", :conditions => ["users.login=escuelas.clave AND escuelas.id=eg.escuela_id AND eg.generacion_id=g.id AND g.id = ? AND escuelas.nivel_id = ? AND escuelas.estatu_id = ?  AND (users.blocked is NULL OR  users.blocked !=1)", @generacion, nivel.id, Estatu.find_by_clave("proy-inic").id ])
         escuelas_proyecto_terminado =      Escuela.count(:id, :joins => "escuelas, users users, escuelas_generacions eg, generacions g", :conditions => ["users.login=escuelas.clave AND escuelas.id=eg.escuela_id AND eg.generacion_id=g.id AND g.id = ? AND escuelas.nivel_id = ? AND escuelas.estatu_id = ?  AND (users.blocked is NULL OR  users.blocked !=1)", @generacion, nivel.id, Estatu.find_by_clave("proy-fin").id ])
         escuelas_primer_avance = Escuela.count(:id, :joins => "escuelas, users users, escuelas_generacions eg, generacions g", :conditions => ["users.login=escuelas.clave AND escuelas.id=eg.escuela_id AND eg.generacion_id=g.id AND g.id = ? AND escuelas.nivel_id = ? AND escuelas.estatu_id = ?  AND  (users.blocked is NULL OR  users.blocked !=1)", @generacion,  nivel.id, Estatu.find_by_clave("avance1").id ])
         escuelas_segundo_avance = Escuela.count(:id, :joins => "escuelas, users users, escuelas_generacions eg, generacions g", :conditions => ["users.login=escuelas.clave AND escuelas.id=eg.escuela_id AND eg.generacion_id=g.id AND g.id = ? AND escuelas.nivel_id = ? AND escuelas.estatu_id = ?  AND  (users.blocked is NULL OR  users.blocked !=1)", @generacion, nivel.id, Estatu.find_by_clave("avance2").id ])
         escuelas_diagnostico_revisado =      Escuela.count(:id, :joins => "escuelas, users users, escuelas_generacions eg, generacions g", :conditions => ["users.login=escuelas.clave AND escuelas.id=eg.escuela_id AND eg.generacion_id=g.id AND g.id = ? AND escuelas.nivel_id = ? AND escuelas.estatu_id = ?   AND (users.blocked is NULL OR  users.blocked !=1)", @generacion,  nivel.id, Estatu.find_by_clave("diag-rev").id ])
-        escuelas_diagnostico_evaluado =      Escuela.count(:id, :joins => "escuelas, users users, escuelas_generacions eg, generacions g", :conditions => ["users.login=escuelas.clave AND escuelas.id=eg.escuela_id AND eg.generacion_id=g.id AND g.id = ? AND escuelas.nivel_id = ? AND escuelas.estatu_id = ?  AND  (users.blocked is NULL OR  users.blocked !=1)",@generacion, nivel.id, Estatu.find_by_clave("diag-eva").id ])
-        escuelas_proyecto_evaluado =      Escuela.count(:id, :joins => "escuelas, users users, escuelas_generacions eg, generacions g", :conditions => ["users.login=escuelas.clave AND escuelas.id=eg.escuela_id AND eg.generacion_id=g.id AND g.id = ? AND escuelas.nivel_id = ? AND escuelas.estatu_id = ?  AND  (users.blocked is NULL OR  users.blocked !=1)", @generacion, nivel.id, Estatu.find_by_clave("proy-eva").id ])
+        escuelas_proyecto_evaluado_a1 =      Escuela.count(:id, :joins => "escuelas, users users, escuelas_generacions eg, generacions g", :conditions => ["users.login=escuelas.clave AND escuelas.id=eg.escuela_id AND eg.generacion_id=g.id AND g.id = ? AND escuelas.nivel_id = ? AND escuelas.estatu_id = ?  AND  (users.blocked is NULL OR  users.blocked !=1)", @generacion, nivel.id, Estatu.find_by_clave("proy-eva1").id ])
+        escuelas_proyecto_evaluado_a2 =      Escuela.count(:id, :joins => "escuelas, users users, escuelas_generacions eg, generacions g", :conditions => ["users.login=escuelas.clave AND escuelas.id=eg.escuela_id AND eg.generacion_id=g.id AND g.id = ? AND escuelas.nivel_id = ? AND escuelas.estatu_id = ?  AND  (users.blocked is NULL OR  users.blocked !=1)", @generacion, nivel.id, Estatu.find_by_clave("proy-eva2").id ])
     else
         escuelas_registradas_en_plataforma = Escuela.count(:id, :joins => "escuelas, users users, escuelas_generacions eg, generacions g", :conditions => ["users.login=escuelas.clave AND escuelas.id=eg.escuela_id AND eg.generacion_id=g.id AND g.id = ? AND escuelas.nivel_id = ? AND escuelas.estatu_id = ? AND escuelas.sostenimiento = ? AND (users.blocked is NULL OR  users.blocked !=1)", @generacion, nivel.id, Estatu.find_by_clave("esc-regis").id, @sostenimiento ])
         escuelas_datos_basicos_capturados =  Escuela.count(:id, :joins => "escuelas, users users, escuelas_generacions eg, generacions g", :conditions => ["users.login=escuelas.clave AND escuelas.id=eg.escuela_id AND eg.generacion_id=g.id AND g.id = ? AND escuelas.nivel_id = ? AND escuelas.estatu_id = ?  AND escuelas.sostenimiento = ? AND (users.blocked is NULL OR  users.blocked !=1)", @generacion, nivel.id, Estatu.find_by_clave("esc-datos").id, @sostenimiento ])
         escuelas_diagnostico_iniciado =      Escuela.count(:id, :joins => "escuelas, users users, escuelas_generacions eg, generacions g", :conditions => ["users.login=escuelas.clave AND escuelas.id=eg.escuela_id AND eg.generacion_id=g.id AND g.id = ? AND escuelas.nivel_id = ? AND escuelas.estatu_id = ?  AND escuelas.sostenimiento = ? AND (users.blocked is NULL OR  users.blocked !=1)", @generacion, nivel.id,  Estatu.find_by_clave("diag-inic").id, @sostenimiento ])
         escuelas_diagnostico_terminado =      Escuela.count(:id, :joins => "escuelas, users users, escuelas_generacions eg, generacions g", :conditions => ["users.login=escuelas.clave AND escuelas.id=eg.escuela_id AND eg.generacion_id=g.id AND g.id = ? AND escuelas.nivel_id = ? AND escuelas.estatu_id = ?  AND escuelas.sostenimiento = ? AND (users.blocked is NULL OR  users.blocked !=1)", @generacion, nivel.id, Estatu.find_by_clave("diag-conc").id, @sostenimiento ])
+        escuelas_diagnostico_evaluado =      Escuela.count(:id, :joins => "escuelas, users users, escuelas_generacions eg, generacions g", :conditions => ["users.login=escuelas.clave AND escuelas.id=eg.escuela_id AND eg.generacion_id=g.id AND g.id = ? AND escuelas.nivel_id = ? AND escuelas.estatu_id = ?  AND escuelas.sostenimiento = ? AND (users.blocked is NULL OR  users.blocked !=1)",@generacion, nivel.id, Estatu.find_by_clave("diag-eva").id, @sostenimiento ])
+        escuelas_proyecto_autorizado =      Escuela.count(:id, :joins => "escuelas, users users, escuelas_generacions eg, generacions g", :conditions => ["users.login=escuelas.clave AND escuelas.id=eg.escuela_id AND eg.generacion_id=g.id AND g.id = ? AND escuelas.nivel_id = ? AND escuelas.estatu_id = ?  AND escuelas.sostenimiento = ? AND (users.blocked is NULL OR  users.blocked !=1)",@generacion, nivel.id, Estatu.find_by_clave("proy-aut").id, @sostenimiento ])
         escuelas_proyecto_iniciado =      Escuela.count(:id, :joins => "escuelas, users users, escuelas_generacions eg, generacions g", :conditions => ["users.login=escuelas.clave AND escuelas.id=eg.escuela_id AND eg.generacion_id=g.id AND g.id = ? AND escuelas.nivel_id = ? AND escuelas.estatu_id = ?  AND escuelas.sostenimiento = ? AND (users.blocked is NULL OR  users.blocked !=1)", @generacion, nivel.id, Estatu.find_by_clave("proy-inic").id, @sostenimiento ])
         escuelas_proyecto_terminado =      Escuela.count(:id, :joins => "escuelas, users users, escuelas_generacions eg, generacions g", :conditions => ["users.login=escuelas.clave AND escuelas.id=eg.escuela_id AND eg.generacion_id=g.id AND g.id = ? AND escuelas.nivel_id = ? AND escuelas.estatu_id = ?  AND escuelas.sostenimiento = ? AND (users.blocked is NULL OR  users.blocked !=1)", @generacion, nivel.id, Estatu.find_by_clave("proy-fin").id, @sostenimiento ])
         escuelas_primer_avance = Escuela.count(:id, :joins => "escuelas, users users, escuelas_generacions eg, generacions g", :conditions => ["users.login=escuelas.clave AND escuelas.id=eg.escuela_id AND eg.generacion_id=g.id AND g.id = ? AND escuelas.nivel_id = ? AND escuelas.estatu_id = ?  AND escuelas.sostenimiento = ? AND (users.blocked is NULL OR  users.blocked !=1)", @generacion,  nivel.id, Estatu.find_by_clave("avance1").id, @sostenimiento ])
         escuelas_segundo_avance = Escuela.count(:id, :joins => "escuelas, users users, escuelas_generacions eg, generacions g", :conditions => ["users.login=escuelas.clave AND escuelas.id=eg.escuela_id AND eg.generacion_id=g.id AND g.id = ? AND escuelas.nivel_id = ? AND escuelas.estatu_id = ?  AND escuelas.sostenimiento = ? AND (users.blocked is NULL OR  users.blocked !=1)", @generacion, nivel.id, Estatu.find_by_clave("avance2").id, @sostenimiento ])
         escuelas_diagnostico_revisado =      Escuela.count(:id, :joins => "escuelas, users users, escuelas_generacions eg, generacions g", :conditions => ["users.login=escuelas.clave AND escuelas.id=eg.escuela_id AND eg.generacion_id=g.id AND g.id = ? AND escuelas.nivel_id = ? AND escuelas.estatu_id = ?  AND escuelas.sostenimiento = ? AND (users.blocked is NULL OR  users.blocked !=1)", @generacion,  nivel.id, Estatu.find_by_clave("diag-rev").id, @sostenimiento ])
-        escuelas_diagnostico_evaluado =      Escuela.count(:id, :joins => "escuelas, users users, escuelas_generacions eg, generacions g", :conditions => ["users.login=escuelas.clave AND escuelas.id=eg.escuela_id AND eg.generacion_id=g.id AND g.id = ? AND escuelas.nivel_id = ? AND escuelas.estatu_id = ?  AND escuelas.sostenimiento = ? AND (users.blocked is NULL OR  users.blocked !=1)",@generacion, nivel.id, Estatu.find_by_clave("diag-eva").id, @sostenimiento ])
-        escuelas_proyecto_evaluado =      Escuela.count(:id, :joins => "escuelas, users users, escuelas_generacions eg, generacions g", :conditions => ["users.login=escuelas.clave AND escuelas.id=eg.escuela_id AND eg.generacion_id=g.id AND g.id = ? AND escuelas.nivel_id = ? AND escuelas.estatu_id = ?  AND escuelas.sostenimiento = ? AND (users.blocked is NULL OR  users.blocked !=1)", @generacion, nivel.id, Estatu.find_by_clave("proy-eva").id, @sostenimiento ])
+        escuelas_proyecto_evaluado_a1 =      Escuela.count(:id, :joins => "escuelas, users users, escuelas_generacions eg, generacions g", :conditions => ["users.login=escuelas.clave AND escuelas.id=eg.escuela_id AND eg.generacion_id=g.id AND g.id = ? AND escuelas.nivel_id = ? AND escuelas.estatu_id = ?  AND escuelas.sostenimiento = ? AND (users.blocked is NULL OR  users.blocked !=1)", @generacion, nivel.id, Estatu.find_by_clave("proy-eva1").id, @sostenimiento ])
+        escuelas_proyecto_evaluado_a2 =      Escuela.count(:id, :joins => "escuelas, users users, escuelas_generacions eg, generacions g", :conditions => ["users.login=escuelas.clave AND escuelas.id=eg.escuela_id AND eg.generacion_id=g.id AND g.id = ? AND escuelas.nivel_id = ? AND escuelas.estatu_id = ?  AND escuelas.sostenimiento = ? AND (users.blocked is NULL OR  users.blocked !=1)", @generacion, nivel.id, Estatu.find_by_clave("proy-eva2").id, @sostenimiento ])
     end
     %>
 
-      <tr class="d<%=invert_class(clase)%>">
+    <tr class="d<%=invert_class(clase)%>">
       <td align="center"><%=h link_to nivel.descripcion, {:action => "list_esc_nivel", :nivel_descripcion => nivel.descripcion, :sostenimiento => @sostenimiento, :generacion => @generacion}, :style => "color:black; font-size: 12px; font-weight: normal; "%></td>
       <td align="center"><%=h(escuelas_registradas_en_plataforma)%><% total+=  escuelas_registradas_en_plataforma%><%total_escuelas_registradas_en_plataforma+=escuelas_registradas_en_plataforma%></td>
       <td align="center"><%=h(escuelas_datos_basicos_capturados)%><% total+=  escuelas_datos_basicos_capturados%><% total_escuelas_datos_basicos_capturados+=  escuelas_datos_basicos_capturados%></td>
       <td align="center"><%=h(escuelas_diagnostico_iniciado)%><% total+= escuelas_diagnostico_iniciado%><% total_escuelas_diagnostico_iniciado+= escuelas_diagnostico_iniciado%></td>
       <td align="center"><%=h(escuelas_diagnostico_terminado)%><% total+= escuelas_diagnostico_terminado%><% total_escuelas_diagnostico_terminado+= escuelas_diagnostico_terminado%></td>
+      <td align="center"><%=h(escuelas_diagnostico_evaluado)%><% total+= escuelas_diagnostico_evaluado%><% total_escuelas_diagnostico_evaluado+= escuelas_diagnostico_evaluado%></td>
+      <td align="center"><%=h(escuelas_proyecto_autorizado)%><% total+= escuelas_proyecto_autorizado%><% total_escuelas_proyecto_autorizado+= escuelas_proyecto_autorizado%></td>
       <td align="center"><%=h(escuelas_proyecto_iniciado) %><%total+= escuelas_proyecto_iniciado%><%total_escuelas_proyecto_iniciado+= escuelas_proyecto_iniciado%></td>
       <td align="center"><%=h(escuelas_proyecto_terminado)%><% total+= escuelas_proyecto_terminado%><% total_escuelas_proyecto_terminado+= escuelas_proyecto_terminado%></td>
       <td align="center"><%=h(escuelas_primer_avance)%><% total+= escuelas_primer_avance%><% total_escuelas_primer_avance+= escuelas_primer_avance%></td>
       <td align="center"><%=h(escuelas_segundo_avance)%><% total+= escuelas_segundo_avance%><% total_escuelas_segundo_avance+= escuelas_segundo_avance%></td>
       <td align="center"><%=h(escuelas_diagnostico_revisado)%><% total+= escuelas_diagnostico_revisado%><% total_escuelas_diagnostico_revisado+= escuelas_diagnostico_revisado%></td>
-      <td align="center"><%=h(escuelas_diagnostico_evaluado)%><% total+= escuelas_diagnostico_evaluado%><% total_escuelas_diagnostico_evaluado+= escuelas_diagnostico_evaluado%></td>
-      <td align="center"><%=h(escuelas_proyecto_evaluado)%><% total+= escuelas_proyecto_evaluado%><% total_escuelas_proyecto_evaluado+= escuelas_proyecto_evaluado%></td>
+      <td align="center"><%=h(escuelas_proyecto_evaluado_a1)%><% total+= escuelas_proyecto_evaluado_a1%><% total_escuelas_proyecto_evaluado_a1+= escuelas_proyecto_evaluado_a1%></td>
+      <td align="center"><%=h(escuelas_proyecto_evaluado_a2)%><% total+= escuelas_proyecto_evaluado_a2%><% total_escuelas_proyecto_evaluado_a2+= escuelas_proyecto_evaluado_a2%></td>
       <td align="center"><%=h total%></td>
       <%gran_total+=total%>
       <%clase = invert_class(clase)%>
@@ -135,13 +147,15 @@
        <td style="color: white;" align="center"><%=h total_escuelas_datos_basicos_capturados%></td>
        <td style="color: white;" align="center"><%=h total_escuelas_diagnostico_iniciado%></td>
        <td style="color: white;" align="center"><%=h total_escuelas_diagnostico_terminado%></td>
+       <td style="color: white;" align="center"><%=h total_escuelas_diagnostico_evaluado%></td>
+       <td style="color: white;" align="center"><%=h total_escuelas_proyecto_autorizado%></td>
        <td style="color: white;" align="center"><%=h total_escuelas_proyecto_iniciado%></td>
        <td style="color: white;" align="center"><%=h total_escuelas_proyecto_terminado%></td>
        <td style="color: white;" align="center"><%=h total_escuelas_primer_avance%></td>
        <td style="color: white;" align="center"><%=h total_escuelas_segundo_avance%></td>
        <td style="color: white;" align="center"><%=h total_escuelas_diagnostico_revisado%></td>
-       <td style="color: white;" align="center"><%=h total_escuelas_diagnostico_evaluado%></td>
-       <td style="color: white;" align="center"><%=h total_escuelas_proyecto_evaluado%></td>
+       <td style="color: white;" align="center"><%=h total_escuelas_proyecto_evaluado_a1%></td>
+       <td style="color: white;" align="center"><%=h total_escuelas_proyecto_evaluado_a2%></td>
        <td style="font-size: 14px; color: yellow;" align="right">GRAN TOTAL : <%=h gran_total%></td>
       </tr>
     </table>
