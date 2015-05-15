@@ -1,0 +1,220 @@
+<!-- Contenido primera generacion -->
+
+<div style="background-image: url(/images/era/bar_sub.png);">
+
+  <%=render :partial => "generales"%>
+
+
+  <!-- Eje 1 -->
+
+  <div class="col-lg-12" id="eje1">
+    <ol class="breadcrumb">
+      <li class="active"><i class="fa fa-dashboard">Eje 1.- Desarrollo de Competencias</i></li>
+    </ol>
+
+
+  
+
+    <div class="col-lg-3 col-xs-6">
+      <div class="small-box bg-aqua">
+        <div class="inner">
+        <h3><%=h separa_miles(@docentes_capacitados)%></h3>
+        <p>Docentes capacitados</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-3 col-xs-6" style="text-align: center;">
+      <div class="small-box bg-green">
+        <div class="inner">
+          <h3><%=h separa_miles(@docentes_involucrados)%></h3>
+          <p>Docentes involucrados</p>
+        </div>
+      </div>
+    </div>
+ </div>
+
+  <!-- eje 2 -->
+  <div class="col-lg-12" id="eje2">
+
+    <ol class="breadcrumb">
+      <li class="active"><i class="fa fa-dashboard">Eje 2.- Entorno Saludable</i></li>
+    </ol>
+
+    <div class="col-lg-3 col-xs-6">
+      <div class="small-box bg-aqua">
+                <div class="inner">
+                  <h5><%=h  separa_miles(@superficie_areas_verdes)%> m<sup>2</sup> </h5>
+                  <p>Superficie áreas verdes</p>
+                </div>
+      </div>
+    </div>
+
+
+    <div class="col-lg-3 col-xs-6">
+      <div class="small-box bg-green">
+        <div class="inner">
+           <h3><%=h  separa_miles(@aboles_adultos)%> </h3>
+           <p>Árboles adultos</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-3 col-xs-6">
+      <div class="small-box bg-yellow">
+        <div class="inner">
+           <h3><%=h  separa_miles(@acciones_manual_salud)%> </h3>
+           <p>Acciones del manual de salud</p>
+        </div>
+      </div>
+    </div>
+
+  <!-- eje 3 -->
+
+  <div class="col-lg-12" id="eje3">
+
+    <ol class="breadcrumb">
+      <li class="active"><i class="fa fa-dashboard">Eje 3.- Huella ecológica</i></li>
+    </ol>
+
+
+   <div class="col-lg-3 col-xs-6">
+        <div class="small-box bg-aqua">
+                  <div class="inner">
+                    <h3><%=h separa_miles(@capacitacion_ahorro_energia)%> </h3>
+                    <p>Escuelas capacitadas en ahorro de energía</p>
+                  </div>
+        </div>
+    </div>
+
+    <div class="col-lg-3 col-xs-6">
+        <div class="small-box bg-green">
+                  <div class="inner">
+                    <h5><%=h separa_miles(@consumo_energia_electrica)%> KW</h5>
+                    <p>Consumo de Energía Eléctrica</p>
+                  </div>
+        </div>
+    </div>
+
+       <div class="col-lg-3 col-xs-6">
+        <div class="small-box bg-yellow">
+                  <div class="inner">
+                    <h5><%=h separa_miles(@consumo_actual_kw)%> KW</h5>
+                    <p>Consumo Actual</p>
+                  </div>
+        </div>
+    </div>
+
+
+
+
+     <div class="col-lg-3 col-xs-6">
+        <div class="small-box bg-red">
+                  <div class="inner">
+                    <h3><%=h separa_miles(@focos_ahorradores)%> </h3>
+                    <p>Focos Ahorradores</p>
+                  </div>
+        </div>
+    </div>
+
+    <div class="col-lg-3 col-xs-6">
+        <div class="small-box bg-aqua">
+                  <div class="inner">
+                    <h3><%=h separa_miles(@red_publica_agua)%> </h3>
+                    <p>Escuelas forman parte de la red pública de agua</p>
+                  </div>
+        </div>
+    </div>
+
+
+      <div class="col-lg-3 col-xs-6">
+        <div class="small-box bg-green">
+                  <div class="inner">
+                    <h3><%=h separa_miles(@recipientes_residuos_solidos)%> </h3>
+                    <p>Escuelas cuentan con recipientes para residuos sólidos</p>
+                  </div>
+        </div>
+    </div>
+
+
+    <div class="col-lg-3 col-xs-6">
+      <div class="small-box bg-yellow">
+        <div class="inner">
+          <h3><%=h separa_miles(@separa_residuos_organicos_inorganicos)%></h3>
+          <p>Escuelas separan la basura</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-3 col-xs-6">
+      <div class="small-box bg-red">
+        <div class="inner">
+          <h3><%=h separa_miles(@elabora_compostas)%></h3>
+          <p>Escuelas elaboran compostas</p>
+        </div>
+      </div>
+    </div>
+ </div>
+
+
+
+
+
+  <!-- Eje 4 -->
+  <div class="col-lg-12" id="eje4">
+    <ol class="breadcrumb">
+      <li class="active"><i class="fa fa-dashboard">Eje 4.- Consumo saludable / responsable</i></li>
+    </ol>
+
+    
+       <div class="col-lg-4 col-xs-6">
+      <div class="small-box bg-aqua">
+        <div class="inner">
+          <h3><%=h  separa_miles(@frecuencia_actividad_fisica)%> </h3>
+          <p>Escuelas realizan activación física</p>
+        </div>
+      </div>
+   </div>
+
+    <div class="col-lg-4 col-xs-6">
+      <div class="small-box bg-green">
+        <div class="inner">
+          <h3><%=h  separa_miles(@momentos_activacion_fisica)%> </h3>
+          <p>Momentos de activacion fisica</p>
+        </div>
+      </div>
+   </div>
+  </div>
+
+
+  <!-- Eje 5 -->
+  <div class="col-lg-12" id="eje5">
+    <ol class="breadcrumb">
+      <li class="active"><i class="fa fa-dashboard">Eje 5.- Participación comunitaria</i></li>
+    </ol>
+
+  <div class="col-lg-3 col-xs-6">
+      <div class="small-box bg-aqua">
+        <div class="inner">
+          <h3><%=h  separa_miles(@num_padres_familia_tutores)%> </h3>
+          <p>Padres de familia</p>
+        </div>
+      </div>
+   </div>
+
+    <div class="col-lg-3 col-xs-6">
+      <div class="small-box bg-green">
+        <div class="inner">
+          <h3><%=h  separa_miles(@num_padres_familia_tutores_capacitados)%> </h3>
+          <p>Padre de familia capacitados por los docentes</p>
+        </div>
+      </div>
+   </div>
+  </div>
+
+
+</div>
+</div>
+
+
+

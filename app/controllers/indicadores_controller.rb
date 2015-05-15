@@ -20,13 +20,18 @@ class IndicadoresController < ApplicationController
     render :partial => "detalle", :layout => "only_jquery"
   end
 
-  ## Consulta de indicadores ###
-
+  
+## Consulta de indicadores ###
 private
 
   def indicadores_generales
-    @sostenimientos = Escuela.find(:all, :select => "sostenimiento, count(id) as numero", :conditions => ["sostenimiento IS NOT NULL AND id in (?)", @escuelas.map{|i|i.id}], :group => "sostenimiento having numero > 0")
-    @turnos = Escuela.find(:all, :select => "turno, count(id) as numero", :conditions => ["turno IS NOT NULL AND id in (?)", @escuelas.map{|i|i.id}], :group => "turno having numero > 0")
+    @sostenimientos = Escuela.find(:all, :select => "sostenimiento, count(id) as numero", :conditions => ["sostenimiento IS NOT NULL AND id in (?)", @escuelas.map{|i|i.id}], :group => "sostenimiento having numero > 0", :order => "numero")
+    @turnos = Escuela.find(:all, :select => "turno, count(id) as numero", :conditions => ["turno IS NOT NULL AND turno != '' AND id in (?)", @escuelas.map{|i|i.id}], :group => "turno having numero > 0")
+    @zonas_escolares = Escuela.find(:all, :select => "zona_escolar, nivel_id, count(id) as numero", :conditions => ["zona_escolar IS NOT NULL AND id in (?)", @escuelas.map{|i|i.id}], :group => "nivel_id, zona_escolar having numero > 0", :order => "numero")
+    @sectores = Escuela.find(:all, :select => "sector, nivel_id, count(nivel_id) as numero", :conditions => ["sector IS NOT NULL AND id in (?)", @escuelas.map{|i|i.id}], :group => "nivel_id, sector having numero > 0", :order => "numero")
+    @municipios = Escuela.find(:all, :select => "municipio, count(id) as numero", :conditions => ["municipio IS NOT NULL AND id in (?)", @escuelas.map{|i|i.id}], :group => "municipio having numero > 0", :order => "numero")
+    @regiones = Escuela.find(:all, :select => "region, count(id) as numero", :conditions => ["region IS NOT NULL AND id in (?)", @escuelas.map{|i|i.id}], :group => "region having numero > 0", :order => "numero")
+    @categorias_escuelas = Escuela.find(:all, :select => "ce.descripcion, count(e.id) as numero", :joins => "e, categoria_escuelas ce", :conditions => ["e.categoria_escuela_id=ce.id AND e.id in (?) AND e.categoria_escuela_id IS NOT NULL AND e.categoria_escuela_id != ''", @escuelas.map{|i|i.id}], :group => "e.categoria_escuela_id having numero > 0", :order => "numero")
     @alumnos = Escuela.sum(:alu_hom, :conditions => ["alu_hom IS NOT NULL AND id in (?)", @escuelas.map{|i|i.id}])
     @alumnas = Escuela.sum(:alu_muj, :conditions => ["alu_muj IS NOT NULL AND id in (?)", @escuelas.map{|i|i.id}])
     @docentes = Escuela.sum(:total_personal_docente, :conditions => ["total_personal_docente IS NOT NULL AND id in (?)", @escuelas.map{|i|i.id}])
@@ -101,50 +106,59 @@ private
                                                        :group => "cp.dcapacitadora_id")
     @proyectos_medioambiente =  Pescolar.count("pe.participacion_id", :joins => "pe, participacions p", :conditions => ["p.id = pe.participacion_id AND p.#{tipo} IS NOT NULL AND pe.materia= ?",  'MEDIOAMBIENTE'])
     @proyectos_salud =  Pescolar.count("pe.participacion_id", :joins => "pe, participacions p", :conditions => ["p.id = pe.participacion_id AND p.#{tipo} IS NOT NULL AND pe.materia= ?",  'SALUD'])
+    @proyectos_dependencias =  Pescolar.count("pe.participacion_id", :joins => "pe, participacions p", :conditions => ["p.id = pe.participacion_id AND p.#{tipo} IS NOT NULL AND pe.materia= ?",  'DEPENDENCIAS'])
   end
 
   #### INDICADORES CICLO 2013-2014 ####
 
   def indicadores_ciclo2014eje1
-    @docentes_capacitados_salud = Competencia.sum(:dctes_cap_salud, :conditions => ["dctes_cap_salud IS NOT NULL"])
-    @docentes_capacitados_medio_ambiente = Competencia.sum(:dctes_cap_ma, :conditions => [" dctes_cap_ma IS NOT NULL"])
-    @alumnos_capacitados_salud = Competencia.sum(:alumn_cap_salud, :conditions => ["alumn_cap_salud IS NOT NULL"])
-    @alumnos_capacitados_medio_ambiente = Competencia.sum(:alumn_cap_ma, :conditions => ["alumn_cap_ma IS NOT NULL"])
-    @docentes_aplican_conocimientos = Competencia.sum(:dctes_aplican_conocimto, :conditions => ["dctes_aplican_conocimto IS NOT NULL"])
+    @docentes_capacitados=0
+    @docentes_involucrados=0
+    @alumnos_capacitados=0
+#    @docentes_capacitados_salud = Competencia.sum(:dctes_cap_salud, :conditions => ["dctes_cap_salud IS NOT NULL"])
+#    @docentes_capacitados_medio_ambiente = Competencia.sum(:dctes_cap_ma, :conditions => [" dctes_cap_ma IS NOT NULL"])
+#    @alumnos_capacitados_salud = Competencia.sum(:alumn_cap_salud, :conditions => ["alumn_cap_salud IS NOT NULL"])
+#    @alumnos_capacitados_medio_ambiente = Competencia.sum(:alumn_cap_ma, :conditions => ["alumn_cap_ma IS NOT NULL"])
+#    @docentes_aplican_conocimientos = Competencia.sum(:dctes_aplican_conocimto, :conditions => ["dctes_aplican_conocimto IS NOT NULL"])
   end
 
   def indicadores_ciclo2014eje2
-    @total_terreno = Entorno.sum(:superficie_terreno_escuela, :conditions => ["superficie_terreno_escuela IS NOT NULL"])
-    @total_areas_verdes = Entorno.sum(:superficie_terreno_escuela_av, :conditions => ["superficie_terreno_escuela_av IS NOT NULL"])
-    @porcentaje_total_areas_verdes = (@total_terreno > 0 )? ((@total_areas_verdes.to_f/@total_terreno.to_f) * 100.0).round(3) : 0
-#    @escuelas_realizan_reforestacion = Entorno.count(:id, :conditions => ["escuela_reforesta = ?", 'SI'])
-    @espacios = EscuelasEspacio.find(:all, :select => "sum(escesp.numero) as numero, e.descripcion",
-                                                       :joins => "escesp, espacios e, entornos en",
-                                                       :conditions => "en.id=escesp.entorno_id AND escesp.espacio_id=e.id",
-                                                       :group => "escesp.espacio_id")
+    @superficie_areas_verdes=0
+    @arboles_adultos = 0
+    @acciones_manual_salud=0
+
+#    @total_terreno = Entorno.sum(:superficie_terreno_escuela, :conditions => ["superficie_terreno_escuela IS NOT NULL"])
+#    @total_areas_verdes = Entorno.sum(:superficie_terreno_escuela_av, :conditions => ["superficie_terreno_escuela_av IS NOT NULL"])
+#    @porcentaje_total_areas_verdes = (@total_terreno > 0 )? ((@total_areas_verdes.to_f/@total_terreno.to_f) * 100.0).round(3) : 0
+#    @espacios = EscuelasEspacio.find(:all, :select => "sum(escesp.numero) as numero, e.descripcion",
+#                                                       :joins => "escesp, espacios e, entornos en",
+#                                                       :conditions => "en.id=escesp.entorno_id AND escesp.espacio_id=e.id",
+#                                                       :group => "escesp.espacio_id")
   end
 
-  def indicadores_ciclo2014eje3
-    @total_focos = Huella.sum(:total_focos, :conditions => ["total_focos IS NOT NULL"])
-    @focos_ahorradores = Huella.sum(:focos_ahorradores, :conditions => ["focos_ahorradores IS NOT NULL"])
-    @porcentaje_focos_ahorradores = (@total_focos > 0 )? ((@focos_ahorradores.to_f/@total_focos.to_f) * 100.0).round(3) : 0
-    #@escuelas_abastecimiento_agua = ServicioAgua.find(:all, :select => "count(hsa.servicio_agua_id) as numero, sa.descripcion",
-    #                                                        :joins => "sa, huellas_servicio_aguas hsa, huellas h",
-    #                                                        :conditions => "sa.id=hsa.servicio_agua_id AND hsa.huella_id=h.id",
-     #                                                       :group => "sa.descripcion")
-    @escuelas_separan_basura = Huella.count(:id, :conditions => ["sep_residuos_org_inorg = ?", 'SI'])
-
-
-
-
-  end
+def indicadores_ciclo2014eje3
+  @capacitacion_ahorro_energia=0
+  @consumo_energia_electrica=0
+  @focos_ahorradores=0
+  @red_publica_agua=0
+  @recipientes_residuos_solidos=0
+  @separa_residuos_organicos_inorganicos=0
+  @elabora_compostas=0
+  #    @total_focos = Huella.sum(:total_focos, :conditions => ["total_focos IS NOT NULL"])
+  #    @focos_ahorradores = Huella.sum(:focos_ahorradores, :conditions => ["focos_ahorradores IS NOT NULL"])
+  #    @porcentaje_focos_ahorradores = (@total_focos > 0 )? ((@focos_ahorradores.to_f/@total_focos.to_f) * 100.0).round(3) : 0
+  #    @escuelas_separan_basura = Huella.count(:id, :conditions => ["sep_residuos_org_inorg = ?", 'SI'])
+end
 
   def indicadores_ciclo2014eje4
-    @escuelas_establecimientos_alimentos_bebidas = Consumo.count(:id, :conditions => ["escuela_establecimiento = ?", 'SI'])
+    @frecuencia_actividad_fisica=0
+    @momentos_activacion_fisica=0
+#    @escuelas_establecimientos_alimentos_bebidas = Consumo.count(:id, :conditions => ["escuela_establecimiento = ?", 'SI'])
   end
 
   def indicadores_ciclo2014eje5
-    
+    @num_padres_familia_tutores=0
+    @num_padres_familia_tutores_capacitados=0
   end
 
 
@@ -164,11 +178,17 @@ private
     @ciclo = (params[:ciclo])? "#{params[:ciclo]}" : "#{CICLO_ESCOLAR}"
     case @ciclo
       when "2013-2014"
-        set_database("era2014")
+        #set_database("era2014")
         ### Todas las que poseen cuentas de usuario ##
-        @escuelas = Escuela.find(:all, :select => "e.id", :joins => "e, users u", :conditions => ["e.id = u.escuela_id AND e.beneficiada = ?", true])
+        #@escuelas = Escuela.find(:all, :select => "e.id", :joins => "e, users u", :conditions => ["e.id = u.escuela_id AND e.beneficiada = ?", true])
+        set_database(RAILS_ENV)
+        @escuelas = Generacion.find(1).escuelas
+        @fecha_datos ="05/05/2012".to_time
+        @claves = @escuelas.map{|e|e.escuela_id}
+        set_database("era2014")
+        @escuelas = Escuela.find(:all, :conditions => ["id in (?)", @claves])
         indicadores_generales
-        render :partial => "generales", :layout => "era2014"
+        render :partial => "generales_ciclo_anterior", :layout => "era2014"
 
     when "2014-2015"
         set_database(RAILS_ENV)
