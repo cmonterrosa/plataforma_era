@@ -465,7 +465,7 @@ class AdminController < ApplicationController
       end
     end
     send_data to_iso(csv_string), type => "application/xls",
-               :filename => "escuelas_ESyS_#{Time.now.strftime("%d-%m-%Y_%I%M_%p")}.csv",
+               :filename => "escuelas_ESyS_#{Time.now.strftime("%d-%m-%Y_%I%M_%p")}.xls",
                :disposition => "attachment"
   end
 
