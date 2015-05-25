@@ -279,7 +279,7 @@ class AdminController < ApplicationController
       csv_string = FasterCSV.generate(:col_sep => "\t") do |csv|
       csv << ["CLAVE_ESCUELA", "NOMBRE", "ZONA_ESCOLAR", "SECTOR", "NIVEL", "SOSTENIMIENTO", "DOMICILIO", "LOCALIDAD", "MUNICIPIO", "REGION", "MODALIDAD",
               "CORREO_ESCUELA", "CORREO_RESPONSABLE", "TELEFONO_ESCUELA", "TELEFONO_DIRECTOR", "FECHA_HORA_CAPTURA", "ALU_HOMBRES",
-              "ALU_MUJERES", "TOTAL_ALUMNOS", "GRUPOS", "TOTAL_ALUMNOS", "DOCENTES_H", "DOCENTES_M", "TOTAL_DOCENTE_APOYO", "TOTAL_PERSONAL_ADMVO",
+              "ALU_MUJERES", "GRUPOS", "TOTAL_ALUMNOS", "DOCENTES_H", "DOCENTES_M", "TOTAL_DOCENTE_APOYO", "TOTAL_PERSONAL_ADMVO",
               "TOTAL_PERSONAL_APOYO", "ESTATUS_ACTUAL", "DOCENTES_CAPACITADOS", "DOCENTES_INVOLUCRADOS", "ALUMNOS_CAPACITADOS", "SUPERFICIE_AREAS_VERDES",
               "ARBOLES_ADULTOS", "ACCIONES_MANUAL_DE_SALUD", "CAPACITACION_AHORRO_DE_ENERGIA", "CONSUMO_ENERGIA_ELECTRICA", "FOCOS_AHORRADORES",
               "RED_PUBLICA_AGUA", "RECIPIENTES_RESIDUOS_SOLIDOS", "SEPARA_RESIDUOS_ORGANICOS_INORGANICOS", "ELABORA_COMPOSTAS", "FRECUENCIA_ACTIVACION_FISICA",
@@ -443,11 +443,14 @@ class AdminController < ApplicationController
         proy_eje5 ||= "NO"
 
 
+        alu_hom = (i.alu_hom) ? i.alu_hom.to_i : 0
+        alu_muj = (i.alu_muj) ? i.alu_muj.to_i : 0
+        total_alumnos = alu_hom + alu_muj
 
 
-        csv << [ i.clave, i.nombre, i.zona_escolar,  sector, i.nivel_descripcion, i.sostenimiento, i.domicilio, i.localidad, i.municipio, i.region_descripcion, i.modalidad,
-                 i.email, i.email_responsable_proyecto, i.telefono, i.telefono_director, i.user_created_at, i.alu_hom,
-                 i.alu_muj, i.total_alumnos, i.grupos, i.total_alumnos, i.doc_hom, i.doc_muj, i.total_personal_docente_apoyo, i.total_personal_admvo,
+        csv << [ quitar_comas(i.clave), quitar_comas(i.nombre), i.zona_escolar,  sector, quitar_comas(i.nivel_descripcion), quitar_comas(i.sostenimiento), quitar_comas(i.domicilio), quitar_comas(i.localidad), quitar_comas(i.municipio), quitar_comas(i.region_descripcion), quitar_comas(i.modalidad),
+                 quitar_comas(i.email), quitar_comas(i.email_responsable_proyecto), quitar_comas(i.telefono), quitar_comas(i.telefono_director), i.user_created_at, i.alu_hom,
+                 i.alu_muj, i.grupos, total_alumnos, i.doc_hom, i.doc_muj, i.total_personal_docente_apoyo, i.total_personal_admvo,
                  i.total_personal_apoyo, "#{estatus_actual}", docentes_capacitados, docentes_involucrados, alumnos_capacitados, superficie_areas_verdes,
                  arboles_adultos, acciones, capacitacion_ahorro_energia, consumo_energia, focos_ahorradores,
                  red_publica_agua, recip_residuos_solidos, separa_residuos_org_inorg, elabora_compostas, frecuencia_afisica,
@@ -987,6 +990,10 @@ class AdminController < ApplicationController
    return @escuelas
  end
 
+
+ def quitar_comas(string)
+   string.gsub(/,/, '') if string
+ end
 
 
 end
