@@ -464,7 +464,7 @@ class AdminController < ApplicationController
                  total_diagnostico, total_proyecto, (total_diagnostico + total_proyecto), nombre_director, proy_eje1, proy_eje2, proy_eje3, proy_eje4, proy_eje5]
       end
     end
-    send_data to_iso(csv_string), type => "application/csv",
+    send_data to_iso(csv_string), type => "application/xls",
                :filename => "escuelas_ESyS_#{Time.now.strftime("%d-%m-%Y_%I%M_%p")}.csv",
                :disposition => "attachment"
   end
