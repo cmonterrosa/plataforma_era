@@ -221,7 +221,11 @@ class AvancesController < ApplicationController
   def avance_to_pdf
 #    @num_avance = Base64.decode64(params[:num_avance]) if params[:num_avance]
     @evidencia = params[:evidencia] if params[:evidencia]
-    @escuela_id = Escuela.find_by_clave(current_user.login.upcase).id if current_user
+    if current_user.has_role?("adminplat")
+      @escuela_id = Escuela.find(params[:escuela]).id if params[:escuela]
+    else
+      @escuela_id = Escuela.find_by_clave(current_user.login.upcase).id if current_user
+    end
     @escuela = Escuela.find(@escuela_id) if @escuela_id
     @diagnostico = Diagnostico.find_by_escuela_id(@escuela_id) if @escuela_id
     @eva_diagnostico = Evaluacion.new(:diagnostico_id => @diagnostico.id.to_i)
@@ -250,7 +254,8 @@ class AvancesController < ApplicationController
           @entorno_diagnostico = Entorno.find_by_diagnostico_id(@diagnostico.id) if @diagnostico
           @s_acciones = multiple_selected_id(@entorno.acciones) if @entorno.acciones
           @s_espacios = multiple_selected_espacios(@entorno.escuelas_espacios) if @entorno.escuelas_espacios
-          @escuela = Escuela.find_by_clave(current_user.login)
+#          @escuela = Escuela.find_by_clave(current_user.login)
+          @escuela = Escuela.find(@escuela_id)
           if @escuela.nivel_descripcion == "BACHILLERATO"
             @acciones = Accione.find(:all, :conditions => ["clave not in ('AC03')"])
           else
@@ -268,7 +273,8 @@ class AvancesController < ApplicationController
         if params[:eje] == "EJE4"
           @consumo = Consumo.find_by_proyecto_id(@proyecto.id)
           @consumo_diagnostico = Consumo.find_by_diagnostico_id(@diagnostico.id) if @diagnostico
-          @escuela = Escuela.find_by_clave(current_user.login.upcase)
+#          @escuela = Escuela.find_by_clave(current_user.login.upcase)
+          @escuela = Escuela.find(@escuela_id)
           if @escuela.nivel_descripcion == "BACHILLERATO"
             @establecimientos = Establecimiento.find(:all, :conditions => ["nivel not in ('BASICA')"])
           else

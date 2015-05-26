@@ -651,15 +651,16 @@ class AdminController < ApplicationController
      @evaluacion = Evaluacion.find(:first, :conditions => ["proyecto_id = ? AND user_id = ? AND avance = ?", @proyecto.id, current_user.id, @avance])
      @evaluacion ||= Evaluacion.new(:proyecto_id => @proyecto.id)
 
-     proyecto = Evaluacion.new(:proyecto_id => @proyecto.id, :avance => @avance)
      @p_diagnostico = Evaluacion.new(:diagnostico_id => @diagnostico.id)
+     proyecto = Evaluacion.new(:proyecto_id => @proyecto.id, :avance => @avance)
 #     Puntajes eje1
      if @proyecto.competencia
-      @competencia_p1 = proyecto.puntaje_eje1_p1("proyecto", @avance)
-      @competencia_p2 = proyecto.puntaje_eje1_p2("proyecto", @avance)
-      @competencia_p3 = proyecto.puntaje_eje1_p3("proyecto", @avance)
-      @competencia_p4 = proyecto.puntaje_eje1_p4("proyecto", @avance)
-      @competencia_p5 = proyecto.puntaje_eje1_p5("proyecto", @avance)
+        @competencia_p1 = proyecto.puntaje_eje1_p1("proyecto", @avance)
+        @competencia_p2 = proyecto.puntaje_eje1_p2("proyecto", @avance)
+        @competencia_p3 = proyecto.puntaje_eje1_p3("proyecto", @avance)
+        @competencia_p4 = proyecto.puntaje_eje1_p4("proyecto", @avance)
+        @competencia_p5 = proyecto.puntaje_eje1_p5("proyecto", @avance)
+#       end
 
       @ptos_obtenidos_eje1 = (@competencia_p1 + @competencia_p2 + @competencia_p3 + @competencia_p4 + @competencia_p5)#.to_f.round(3)
       @total_puntos_eje1 = proyecto.puntaje_total_eje1
@@ -694,14 +695,6 @@ class AdminController < ApplicationController
      @huella_p7 = proyecto.puntaje_eje3_p7("proyecto", @avance)
      @huella_p8 = proyecto.puntaje_eje3_p8("proyecto", @avance)
      @huella_p9 = proyecto.puntaje_eje3_p9("proyecto", @avance)
-
-     ## Puntajes default ####
-#     @huella_p1 ||= 0
-#     @huella_p3 ||= 0
-#     @huella_p5 ||= 0
-#     @huella_p7 ||= 0
-#     @huella_p8 ||= 0
-#     @huella_p9 ||= 0
 
      @ptos_obtenidos_eje3 = (@huella_p1 + @huella_p3 + @huella_p5 + @huella_p7 + @huella_p8 + @huella_p9)#.to_f.round(3)
      @total_puntos_eje3 = proyecto.puntaje_total_eje3
@@ -1143,6 +1136,12 @@ class AdminController < ApplicationController
    return @escuelas
  end
 
-
+ def ver_avance
+  @escuela_id = Escuela.find(params[:escuela]).id if params[:escuela]
+  @diagnostico = Diagnostico.find_by_escuela_id(@escuela_id) if @escuela_id
+  @proyecto = Proyecto.find_by_diagnostico_id(@diagnostico) if @diagnostico
+  @ejes = Eje.find(:all, :conditions => ["proyecto_id = ?", @proyecto.id ]) if @proyecto
+  render :partial => "ver_avance", :layout => "only_jquery"
+ end
 
 end
