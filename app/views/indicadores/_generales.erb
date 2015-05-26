@@ -96,32 +96,182 @@
 
 
   <!-- Escuelas y Turnos-->
-  <div class="col-lg-10">
+  <!--
+  <div class="col-lg-12">
     <div class="table-responsive">
       <table class="table table-bordered table-hover table-striped">
         <thead>
           <tr class="TituloTabla">
-            <th style="text-align: center" colspan="<%=h @turnos.size + 1%>">TURNOS</th>
+            <th style="text-align: center" colspan="<=h @turnos.size + 2%>">TURNOS</th>
           </tr>
           <tr class="TituloTabla">
-            <%@turnos.each do |turno|%>
-              <%if turno.numero.to_i > 0%>
-                  <th><%=h (turno.turno) ? turno.turno : "NE"%></th>
-              <%end%>
-            <%end%>
+            <@turnos.each do |turno|%>
+              <if turno.numero.to_i > 0%>
+                  <th><=h (turno.turno) ? turno.turno : "NE"%></th>
+              <end%>
+            <end%>
+             <th>SIN ESPECIFICAR</th>
             <th>TOTAL DE ESCUELAS</th>
           </tr>
         </thead>
       <tbody>
         <tr>
-           <%@turnos.each do |turno|%>
-            <%if turno.numero.to_i > 0%>
-              <td><%=h separa_miles(turno.numero)%></td>
-            <%end%>
-          <%end%>
-          <td><%=h separa_miles(@escuelas.size)%></td>
+          <contador_turnos=0%>
+           <@turnos.each do |turno|%>
+            <if turno.numero.to_i > 0%>
+              <td><=h separa_miles(turno.numero)%></td>
+              <contador_turnos+=turno.numero.to_i%>
+            <end%>
+          <end%>
+          <td><=h @escuelas.size - contador_turnos%></td>
+          <td><=h separa_miles(@escuelas.size)%></td>
         </tr>
       </tbody>
     </table>
+  </div>
+  </div>
+  -->
+
+
+  <!-- Por zona escolar -->
+  <div class="col-lg-4">
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover table-striped">
+        <thead>
+          <tr class="TituloTabla">
+            <th style="text-align: center" colspan="2">ZONAS ESCOLARES</th>
+          </tr>
+          </thead>
+          <tbody>
+          <%contador_zonas_escolares=0%>
+          <%@zonas_escolares.each do |ze|%>
+                <%if ze.numero.to_i > 0 && ze.zona_escolar != ""%>
+                  <tr class="TituloTabla">
+                      <%nivel = (ze.nivel_id)? Nivel.find_by_id(ze.nivel_id) : "NE"%>
+                      <td><%=h (ze.zona_escolar) ? "#{ze.zona_escolar} / #{(nivel)? nivel.descripcion : 'NE'}" : "NE"%></td>
+                      <td><%=h separa_miles(ze.numero)%></td>
+                      <%contador_zonas_escolares+=ze.numero.to_i%>
+                  </tr>
+              <%end%>
+            <%end%>
+
+           <tr>
+             <th>SIN ESPECIFICAR</th>
+             <th><%= @escuelas.size - contador_zonas_escolares %></th>
+            </tr>
+            
+          <tr>
+            <th>TOTAL DE ESCUELAS</th>
+            <th><%=h @escuelas.size%></th>
+          </tr>
+          </tbody>
+      </table>
+  </div>
+  </div>
+
+   <!-- Por sector -->
+  <div class="col-lg-4">
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover table-striped">
+        <thead>
+          <tr class="TituloTabla">
+            <th style="text-align: center" colspan="2">SECTORES</th>
+          </tr>
+          </thead>
+          <tbody>
+          <%contador_sector=0%>
+          <%@sectores.each do |s|%>
+                <%if s.numero.to_i > 0 && s.sector != ""%>
+                  <tr class="TituloTabla">
+                     <%nivel = (s.nivel_id)? Nivel.find_by_id(s.nivel_id) : "NE"%>
+                      <td><%=h (s.sector) ? "#{s.sector} / #{(nivel)? nivel.descripcion : 'NE'}" : "NE"%></td>
+                      <td><%=h separa_miles(s.numero)%></td>
+                      <%contador_sector+=s.numero.to_i%>
+                  </tr>
+              <%end%>
+            <%end%>
+
+          <tr>
+             <th>SIN ESPECIFICAR</th>
+             <th><%= @escuelas.size - contador_sector %></th>
+           </tr>
+
+          <tr>
+            <th>TOTAL DE ESCUELAS</th>
+            <th><%=h @escuelas.size%></th>
+          </tr>
+          </tbody>
+      </table>
+  </div>
+  </div>
+
+   <!-- Por municipio -->
+  <div class="col-lg-4">
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover table-striped">
+        <thead>
+          <tr class="TituloTabla">
+            <th style="text-align: center" colspan="2">MUNICIPIOS</th>
+          </tr>
+          </thead>
+          <tbody>
+          <%contador_municipios=0%>
+          <%@municipios.each do |m|%>
+                <%if m.numero.to_i > 0%>
+                  <tr class="TituloTabla">
+                      <td><%=h (m.municipio) ? "#{m.municipio}" : "NE"%></td>
+                      <td><%=h separa_miles(m.numero)%></td>
+                      <%contador_municipios+=m.numero.to_i%>
+                  </tr>
+              <%end%>
+            <%end%>
+
+           <tr>
+             <th>SIN ESPECIFICAR</th>
+             <th><%= @escuelas.size - contador_municipios %></th>
+           </tr>
+
+          <tr>
+            <th>TOTAL DE ESCUELAS</th>
+            <th><%=h @escuelas.size%></th>
+          </tr>
+          </tbody>
+      </table>
+  </div>
+  </div>
+
+
+  <!-- categorias -->
+  <div class="col-lg-4">
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover table-striped">
+        <thead>
+          <tr class="TituloTabla">
+            <th style="text-align: center" colspan="2">CATEGORIAS</th>
+          </tr>
+          </thead>
+          <tbody>
+          <%contador_categorias=0%>
+          <%@categorias_escuelas.each do |ce|%>
+                <%if ce.numero.to_i > 0%>
+                  <tr class="TituloTabla">
+                      <td><%=h (ce.descripcion) ? "#{ce.descripcion}" : "NE"%></td>
+                      <td><%=h separa_miles(ce.numero)%></td>
+                      <%contador_categorias+=ce.numero.to_i%>
+                  </tr>
+              <%end%>
+            <%end%>
+
+           <tr>
+             <th>SIN ESPECIFICAR</th>
+             <th><%= @escuelas.size - contador_categorias %></th>
+           </tr>
+
+          <tr>
+            <th>TOTAL DE ESCUELAS</th>
+            <th><%=h @escuelas.size%></th>
+          </tr>
+          </tbody>
+      </table>
   </div>
   </div>
