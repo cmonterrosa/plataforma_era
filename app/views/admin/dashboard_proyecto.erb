@@ -39,6 +39,8 @@
           <% total_eje1 = 0.0 %>
           <% total_obtenido_eje1 = 0.0 %>
           <% @total_obtenido_proyecto_eje1 = 0 %>
+          <% @puntaje_pregunta_diagnostico_eje1 = 0 %>
+          <% @puntaje_pregunta_proyecto_eje1 = 0%>
           <table width="98%" border="0" cellspacing="0" cellpadding="0" class="sample" >
             <tr class="tdiagnostico">
               <td colspan="11" align="center" ><label>EJE: 1 &nbsp; <b>DESARROLLO DE COMPETENCIAS</b></label></td>
@@ -114,6 +116,8 @@
         <% total_eje2 = 0.0 %>
         <% total_obtenido_eje2 = 0.0 %>
         <% @total_obtenido_proyecto_eje2 = 0 %>
+        <% @puntaje_pregunta_diagnostico_eje2 = 0 %>
+        <% @puntaje_pregunta_proyecto_eje2 = 0%>
         <table width="98%" border="0" cellspacing="0" cellpadding="0" class="sample" >
           <tr class="tdiagnostico">
             <td colspan="11" align="center" ><label>EJE: 2 &nbsp; <b>ENTORNO SALUDABLE</b></label></td>
@@ -191,6 +195,8 @@
         <% total_eje3 = 0.0 %>
         <% total_obtenido_eje3 = 0.0 %>
         <% @total_obtenido_proyecto_eje3 = 0 %>
+        <% @puntaje_pregunta_diagnostico_eje3 = 0 %>
+        <% @puntaje_pregunta_proyecto_eje3 = 0%>
         <table width="98%" border="0" cellspacing="0" cellpadding="0" class="sample" >
           <tr class="tdiagnostico">
             <td colspan="11" align="center" ><label>EJE: 3 &nbsp; <b>HUELLA ECOLOGICA</b></label></td>
@@ -252,7 +258,7 @@
 
             <tr class="d1">
               <td>&nbsp;</td>
-              <td align="center"><%= @total_puntos_eje3 - total_eje3 %></td>
+              <td align="center"><%= @total_puntos_eje3 - total_eje3 %> %></td>
               <td colspan="2"></td>
               <% obtenidos_sin_evidencias = (@ptos_obtenidos_eje3.to_f > 0) ? (@ptos_obtenidos_eje3 - total_obtenido_eje3) : 0 %>
               <td align="center"><%= obtenidos_sin_evidencias %></td>
@@ -279,6 +285,8 @@
         <% total_eje4 = 0.0 %>
         <% total_obtenido_eje4 = 0.0 %>
         <% @total_obtenido_proyecto_eje4 = 0 %>
+        <% @puntaje_pregunta_diagnostico_eje4 = 0 %>
+        <% @puntaje_pregunta_proyecto_eje4 = 0%>
         <table width="98%" border="0" cellspacing="0" cellpadding="0" class="sample" >
           <tr class="tdiagnostico">
             <td colspan="11" align="center" ><label>EJE: 4 &nbsp; <b>CONSUMO RESPONSABLE / SALUDABLE</b></label></td>
@@ -367,6 +375,8 @@
         <% total_eje5 = 0.0 %>
         <% total_obtenido_eje5 = 0.0 %>
         <% @total_obtenido_proyecto_eje5 = 0 %>
+        <% @puntaje_pregunta_diagnostico_eje5 = 0 %>
+        <% @puntaje_pregunta_proyecto_eje5 = 0%>
         <table width="98%" border="0" cellspacing="0" cellpadding="0" class="sample" >
           <tr class="tdiagnostico">
             <td colspan="11" align="center" ><label>EJE: 5 &nbsp; <b>PARTICIPACIÓN COMUNITARIA</b></label></td>

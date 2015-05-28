@@ -32,7 +32,7 @@
 
 
     <!-- Agregamos si fue beneficiada -->
-    <%if current_user.has_role?("adminplat")%>
+    <%if current_user.has_role?("adminplat") && @user.login != "esys"%>
         <div class="grid-12-12">
               <label>¿Ha sido beneficiada en el presente ciclo: <%=CICLO_ESCOLAR%>?</label><br />
               

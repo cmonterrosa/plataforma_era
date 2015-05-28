@@ -11,7 +11,7 @@ class Evaluacion < ActiveRecord::Base
 
 ###--- DESARROLLO DE COMPETENCIAS
 def puntaje_eje1_p1(tipo=nil,avance=nil)
-  valido = false
+  valido = valido_a1 = false
   docentes_capacitados=0
 
   eje1 = CatalogoEje.find_by_clave("EJE1")
@@ -37,7 +37,11 @@ def puntaje_eje1_p1(tipo=nil,avance=nil)
 
   if docentes_capacitados > 0
     valido = evidencia_valida?(eje1.id, 1, @diagnostico) if @diagnostico
-    valido ||= evidencia_valida?(eje1.id, 1, nil, @proyecto, avance) if @proyecto && avance
+    if @proyecto
+      valido_a1 = evidencia_valida?(eje1.id, 1, nil, @proyecto, 1)
+      valido ||= evidencia_valida?(eje1.id, 1, nil, @proyecto, avance) if valido_a1 && avance == "2"
+      valido ||= evidencia_valida?(eje1.id, 1, nil, @proyecto, avance) if valido_a1
+    end
     @eje1_p1 = (((docentes_capacitados / @escuela.total_personal_docente.to_f ) * 100) * $competencia_p1).round(3)
   end
 
@@ -45,7 +49,7 @@ def puntaje_eje1_p1(tipo=nil,avance=nil)
 end
 
 def puntaje_eje1_p2(tipo=nil,avance=nil)
-  valido = false
+  valido = valido_a1 = false
   docentes_aplican_conocimiento=0
   eje1 = CatalogoEje.find_by_clave("EJE1")
   if tipo == "proyecto"
@@ -70,7 +74,11 @@ def puntaje_eje1_p2(tipo=nil,avance=nil)
 
   if docentes_aplican_conocimiento.to_i > 0
     valido = evidencia_valida?(eje1.id, 2, @diagnostico) if @diagnostico
-    valido ||= evidencia_valida?(eje1.id, 2, nil, @proyecto, avance) if @proyecto && avance
+    if @proyecto
+      valido_a1 = evidencia_valida?(eje1.id, 2, nil, @proyecto, 1)
+      valido ||= evidencia_valida?(eje1.id, 2, nil, @proyecto, avance) if valido_a1 && avance == "2"
+      valido ||= evidencia_valida?(eje1.id, 2, nil, @proyecto, avance) if valido_a1
+    end
     @eje1_p2 = (((docentes_aplican_conocimiento.to_f / @escuela.total_personal_docente.to_f ) * 100) * $competencia_p2).round(3)
   end
 
@@ -78,7 +86,7 @@ def puntaje_eje1_p2(tipo=nil,avance=nil)
 end
 
 def puntaje_eje1_p3(tipo=nil,avance=nil)
-  valido = false
+  valido = valido_a1 = false
   docentes_involucran_actividades = 0
   eje1 = CatalogoEje.find_by_clave("EJE1")
   if tipo == "proyecto"
@@ -103,7 +111,11 @@ def puntaje_eje1_p3(tipo=nil,avance=nil)
 
   if docentes_involucran_actividades.to_i > 0
     valido = evidencia_valida?(eje1.id, 3, @diagnostico) if @diagnostico
-    valido ||= evidencia_valida?(eje1.id, 3, nil, @proyecto, avance) if @proyecto && avance
+    if @proyecto
+      valido_a1 = evidencia_valida?(eje1.id, 3, nil, @proyecto, 1)
+      valido ||= evidencia_valida?(eje1.id, 3, nil, @proyecto, avance) if valido_a1 && avance == "2"
+      valido ||= evidencia_valida?(eje1.id, 3, nil, @proyecto, avance) if valido_a1
+    end
     @eje1_p3 = (((docentes_involucran_actividades.to_f / @escuela.total_personal_docente.to_f ) * 100) * $competencia_p3).round(3)
   end
 
@@ -111,7 +123,7 @@ def puntaje_eje1_p3(tipo=nil,avance=nil)
 end
 
 def puntaje_eje1_p4(tipo=nil,avance=nil)
-  valido = false
+  valido = valido_a1 = false
   alumnos_capacitacion_docente = 0
   eje1 = CatalogoEje.find_by_clave("EJE1")
   if tipo == "proyecto"
@@ -137,7 +149,11 @@ def puntaje_eje1_p4(tipo=nil,avance=nil)
 
   if alumnos_capacitacion_docente.to_i > 0
     valido = evidencia_valida?(eje1.id, 4, @diagnostico) if @diagnostico
-    valido ||= evidencia_valida?(eje1.id, 4, nil, @proyecto, avance) if @proyecto && avance
+    if @proyecto
+      valido_a1 = evidencia_valida?(eje1.id, 4, nil, @proyecto, 1)
+      valido ||= evidencia_valida?(eje1.id, 4, nil, @proyecto, avance) if valido_a1 && avance == "2"
+      valido ||= evidencia_valida?(eje1.id, 4, nil, @proyecto, avance) if valido_a1
+    end
     @eje1_p4 = (((alumnos_capacitacion_docente.to_f / (@escuela.alu_hom.to_i + @escuela.alu_muj.to_i) ).to_f * 100) * $competencia_p4).round(3)
   end
 
@@ -145,7 +161,7 @@ def puntaje_eje1_p4(tipo=nil,avance=nil)
 end
 
 def puntaje_eje1_p5(tipo=nil,avance=nil)
-  valido = false
+  valido = valido_a1 = false
   alumnos_capacitacion_dep = 0
   eje1 = CatalogoEje.find_by_clave("EJE1")
   if tipo == "proyecto"
@@ -170,7 +186,11 @@ def puntaje_eje1_p5(tipo=nil,avance=nil)
 
   if alumnos_capacitacion_dep.to_i > 0
     valido = evidencia_valida?(eje1.id, 5, @diagnostico) if @diagnostico
-    valido ||= evidencia_valida?(eje1.id, 5, nil, @proyecto, avance) if @proyecto && avance
+    if @proyecto
+      valido_a1 = evidencia_valida?(eje1.id, 5, nil, @proyecto, 1)
+      valido ||= evidencia_valida?(eje1.id, 5, nil, @proyecto, avance) if valido_a1 && avance == "2"
+      valido ||= evidencia_valida?(eje1.id, 5, nil, @proyecto, avance) if valido_a1
+    end
     @eje1_p5 = (((alumnos_capacitacion_dep.to_f / (@escuela.alu_hom.to_f + @escuela.alu_muj.to_f) ).to_f * 100) * $competencia_p5).round(3)
   end
 
@@ -179,7 +199,7 @@ end
 
 ###--- ENTORNO SALUDABLE
 def puntaje_eje2_p2(tipo=nil,avance=nil)
-  valido = false
+  valido = valido_a1 = false
   numero_espacios = 0
   eje2 = CatalogoEje.find_by_clave("EJE2")
   if tipo == "proyecto"
@@ -203,15 +223,20 @@ def puntaje_eje2_p2(tipo=nil,avance=nil)
   end
 
   if numero_espacios.to_i > 0
+#    valido = isValido(eje, num_preg, proyecto, avance)
     valido = evidencia_valida?(eje2.id, 2, @diagnostico) if @diagnostico
-    valido ||= evidencia_valida?(eje2.id, 2, nil, @proyecto, avance) if @proyecto && avance
+    if @proyecto
+      valido_a1 = evidencia_valida?(eje2.id, 2, nil, @proyecto, 1)
+      valido ||= evidencia_valida?(eje2.id, 2, nil, @proyecto, avance) if valido_a1 && avance == "2"
+      valido ||= evidencia_valida?(eje2.id, 2, nil, @proyecto, avance) if valido_a1
+    end
     @eje2_p2 = (((numero_espacios.to_f / Espacio.all.size.to_f) * 100) * $entorno_p2).round(3)
   end
   return valido ? @eje2_p2 : 0
 end
 
 def puntaje_eje2_p3(tipo=nil,avance=nil)
-  valido = false
+  valido = valido_a1 = false
   reforesta = ""
   eje2 = CatalogoEje.find_by_clave("EJE2")
   if tipo == "proyecto"
@@ -231,14 +256,18 @@ def puntaje_eje2_p3(tipo=nil,avance=nil)
 
   if reforesta == "SI"
     valido = evidencia_valida?(eje2.id, 3, @diagnostico) if @diagnostico
-    valido ||= evidencia_valida?(eje2.id, 3, nil, @proyecto, avance) if @proyecto && avance
+    if @proyecto
+      valido_a1 = evidencia_valida?(eje2.id, 3, nil, @proyecto, 1)
+      valido ||= evidencia_valida?(eje2.id, 3, nil, @proyecto, avance) if valido_a1 && avance == "2"
+      valido ||= evidencia_valida?(eje2.id, 3, nil, @proyecto, avance) if valido_a1
+    end
     @eje2_p3 = $entorno_p3 * 100
   end
   return valido ? @eje2_p3 : 0
 end
 
 def puntaje_eje2_p5(tipo=nil,avance=nil)
-  valido = false
+  valido = valido_a1 = false
   @s_acciones = []
   eje2 = CatalogoEje.find_by_clave("EJE2")
   if tipo == "proyecto"
@@ -265,7 +294,11 @@ def puntaje_eje2_p5(tipo=nil,avance=nil)
 
   unless @s_acciones.include?("NING")
     valido = evidencia_valida?(eje2.id, 5, @diagnostico) if @diagnostico
-    valido ||= evidencia_valida?(eje2.id, 5, nil, @proyecto, avance) if @proyecto && avance
+    if @proyecto
+      valido_a1 = evidencia_valida?(eje2.id, 5, nil, @proyecto, 1)
+      valido ||= evidencia_valida?(eje2.id, 5, nil, @proyecto, avance) if valido_a1 && avance == "2"
+      valido ||= evidencia_valida?(eje2.id, 5, nil, @proyecto, avance) if valido_a1
+    end
 
     if @escuela.nivel_descripcion == "BACHILLERATO"
       num_acciones = Accione.count(:id, :conditions => ["clave not in ('AC02', 'NING')"])
@@ -281,7 +314,7 @@ end
 
 ##-- HUELLA ECOLOGICA
 def puntaje_eje3_p1(tipo=nil,avance=nil)
-  valido = false
+  valido = valido_a1 = false
   ahorra_energia = ""
   eje3 = CatalogoEje.find_by_clave("EJE3")
   if tipo == "proyecto"
@@ -301,7 +334,11 @@ def puntaje_eje3_p1(tipo=nil,avance=nil)
 
   if ahorra_energia == "SI"
     valido = evidencia_valida?(eje3.id, 1, @diagnostico) if @diagnostico
-    valido ||= evidencia_valida?(eje3.id, 1, nil, @proyecto, avance) if @proyecto && avance
+    if @proyecto
+      valido_a1 = evidencia_valida?(eje3.id, 1, nil, @proyecto, 1)
+      valido ||= evidencia_valida?(eje3.id, 1, nil, @proyecto, avance) if valido_a1 && avance == "2"
+      valido ||= evidencia_valida?(eje3.id, 1, nil, @proyecto, avance) if valido_a1
+    end
     @eje3_p1 = ($huella_p1 * 100).to_f
   end
 
@@ -347,7 +384,7 @@ def puntaje_eje3_p5(tipo=nil,avance=nil)
 end
 
 def puntaje_eje3_p7(tipo=nil,avance=nil)
-  valido = false
+  valido = valido_a1 = false
   separa_residuos = ""
   eje3 = CatalogoEje.find_by_clave("EJE3")
   if tipo == "proyecto"
@@ -367,14 +404,18 @@ def puntaje_eje3_p7(tipo=nil,avance=nil)
 
   if separa_residuos == "SI"
     valido = evidencia_valida?(eje3.id, 7, @diagnostico) if @diagnostico
-    valido ||= evidencia_valida?(eje3.id, 7, nil, @proyecto, avance) if @proyecto && avance
+    if @proyecto
+      valido_a1 = evidencia_valida?(eje3.id, 7, nil, @proyecto, 1)
+      valido ||= evidencia_valida?(eje3.id, 7, nil, @proyecto, avance) if valido_a1 && avance == "2"
+      valido ||= evidencia_valida?(eje3.id, 7, nil, @proyecto, avance) if valido_a1
+    end
     @eje3_p7 = ($huella_p7 * 100).to_f
   end
   return valido ? @eje3_p7 : 0
 end
 
 def puntaje_eje3_p8(tipo=nil,avance=nil)
-  valido = false
+  valido = valido_a1 = false
   elabora_compostas = ""
   eje3 = CatalogoEje.find_by_clave("EJE3")
   if tipo == "proyecto"
@@ -394,7 +435,11 @@ def puntaje_eje3_p8(tipo=nil,avance=nil)
 
   if elabora_compostas == "SI"
     valido = evidencia_valida?(eje3.id, 8, @diagnostico) if @diagnostico
-    valido ||= evidencia_valida?(eje3.id, 8, nil, @proyecto, avance) if @proyecto && avance
+    if @proyecto
+      valido_a1 = evidencia_valida?(eje3.id, 8, nil, @proyecto, 1)
+      valido ||= evidencia_valida?(eje3.id, 8, nil, @proyecto, avance) if valido_a1 && avance == "2"
+      valido ||= evidencia_valida?(eje3.id, 8, nil, @proyecto, avance) if valido_a1
+    end
     @eje3_p8 = ($huella_p8 * 100).to_f
   end
 
@@ -402,7 +447,7 @@ def puntaje_eje3_p8(tipo=nil,avance=nil)
 end
 
 def puntaje_eje3_p9(tipo=nil,avance=nil)
-  valido = false
+  valido = valido_a1 = false
   @s_inorganicos = []
   eje3 = CatalogoEje.find_by_clave("EJE3")
   if tipo == "proyecto"
@@ -429,7 +474,11 @@ def puntaje_eje3_p9(tipo=nil,avance=nil)
 
   unless @s_inorganicos.include?("NING")
     valido = evidencia_valida?(eje3.id, 9, @diagnostico) if @diagnostico
-    valido ||= evidencia_valida?(eje3.id, 9, nil, @proyecto, avance) if @proyecto && avance
+    if @proyecto
+      valido_a1 = evidencia_valida?(eje3.id, 9, nil, @proyecto, 1)
+      valido ||= evidencia_valida?(eje3.id, 9, nil, @proyecto, avance) if valido_a1 && avance == "2"
+      valido ||= evidencia_valida?(eje3.id, 9, nil, @proyecto, avance) if valido_a1
+    end
     @eje3_p9 = ptos_inorganicos(@s_inorganicos.size.to_i)
   end
 
@@ -440,7 +489,8 @@ end
 ##-- CONSUMO RESPONSABLE / SALUDABLE
 
 def puntaje_eje4_p2(tipo=nil, avance=nil)
-    valido = false
+    valido = valido_a1 = false
+    eje4 = CatalogoEje.find_by_clave("EJE4")
     capacitacion_alim_bebidas=""
     if tipo == "proyecto"
       @proyecto = Proyecto.find(self.proyecto_id)
@@ -457,7 +507,13 @@ def puntaje_eje4_p2(tipo=nil, avance=nil)
     end
 
   if @consumo && capacitacion_alim_bebidas
-    valido = evidencia_valida?(4, 2, @diagnostico, @proyecto, avance )
+    valido = evidencia_valida?(eje4.id, 2, @diagnostico) if @diagnostico
+    if @proyecto
+      valido_a1 = evidencia_valida?(eje4.id, 2, nil, @proyecto, 1)
+      valido ||= evidencia_valida?(eje4.id, 2, nil, @proyecto, avance) if valido_a1 && avance == "2"
+      valido ||= evidencia_valida?(eje4.id, 2, nil, @proyecto, avance) if valido_a1
+    end
+#    valido = evidencia_valida?(4, 2, @diagnostico, @proyecto, avance )
     @eje4_p3 = $consumo_p3 * 100
   end
 
@@ -465,7 +521,7 @@ def puntaje_eje4_p2(tipo=nil, avance=nil)
 end
 
 def puntaje_eje4_p3(tipo=nil, avance=nil)
-  valido = false
+  valido = valido_a1 = false
   eje4 = CatalogoEje.find_by_clave("EJE4")
   conocen_lineamientos_grales=""
   if tipo == "proyecto"
@@ -483,7 +539,13 @@ def puntaje_eje4_p3(tipo=nil, avance=nil)
   end
 
   if @consumo && conocen_lineamientos_grales
-    valido = evidencia_valida?(4, 3, @diagnostico, @proyecto, avance )
+    valido = evidencia_valida?(eje4.id, 3, @diagnostico) if @diagnostico
+    if @proyecto
+      valido_a1 = evidencia_valida?(eje4.id, 3, nil, @proyecto, 1)
+      valido ||= evidencia_valida?(eje4.id, 3, nil, @proyecto, avance) if valido_a1 && avance == "2"
+      valido ||= evidencia_valida?(eje4.id, 3, nil, @proyecto, avance) if valido_a1
+    end
+#    valido = evidencia_valida?(4, 3, @diagnostico, @proyecto, avance )
     @eje4_p2 = $consumo_p2 * 100
   end
   return valido ? @eje4_p2 : 0
@@ -653,7 +715,7 @@ def puntaje_eje4_p6(tipo=nil, avance=nil)
 end
 
 def puntaje_eje4_p7(tipo=nil, avance=nil)
-  valido = false
+  valido = valido_a1 = false
   eje4 = CatalogoEje.find_by_clave("EJE4")
   if tipo == "proyecto"
       @proyecto = Proyecto.find(self.proyecto_id)
@@ -671,8 +733,14 @@ def puntaje_eje4_p7(tipo=nil, avance=nil)
   end
 
   if @consumo_diagnostico || @consumo_proyecto
+    valido = evidencia_valida?(eje4.id, 7, @diagnostico) if @diagnostico
+    if @proyecto
+      valido_a1 = evidencia_valida?(eje4.id, 7, nil, @proyecto, 1)
+      valido ||= evidencia_valida?(eje4.id, 7, nil, @proyecto, avance) if valido_a1 && avance == "2"
+      valido ||= evidencia_valida?(eje4.id, 7, nil, @proyecto, avance) if valido_a1
+    end
     @eje4_p7 = ptos_afisica(@s_afisicas).to_f
-    valido = evidencia_valida?(4, 7, @diagnostico, @proyecto, avance )
+#    valido = evidencia_valida?(4, 7, @diagnostico, @proyecto, avance )
   end
     return valido ? @eje4_p7 : 0
 end
@@ -709,7 +777,7 @@ end
 ##-- PARTICIPACION COMUNITARIA
 
 def puntaje_eje5_p2(tipo=nil, avance=nil)
-  valido = false
+  valido = valido_a1 = false
   eje5 = CatalogoEje.find_by_clave("EJE5")
   num_padres_familia= capacitacion_salud_ma = 0
     if tipo == "proyecto"
@@ -732,7 +800,13 @@ def puntaje_eje5_p2(tipo=nil, avance=nil)
   end
 
  if num_padres_familia > 0
-    valido = evidencia_valida?(eje5.id, 2, @diagnostico, @proyecto, avance)
+#    valido = evidencia_valida?(eje5.id, 2, @diagnostico, @proyecto, avance)
+    valido = evidencia_valida?(eje5.id, 2, @diagnostico) if @diagnostico
+    if @proyecto
+      valido_a1 = evidencia_valida?(eje5.id, 2, nil, @proyecto, 1)
+      valido ||= evidencia_valida?(eje5.id, 2, nil, @proyecto, avance) if valido_a1 && avance == "2"
+      valido ||= evidencia_valida?(eje5.id, 2, nil, @proyecto, avance) if valido_a1
+    end
     @eje5_p2 = (((capacitacion_salud_ma.to_f / num_padres_familia.to_f ) * 100) * $participacion_p2.to_f).round(3)
   end
 
@@ -740,7 +814,7 @@ def puntaje_eje5_p2(tipo=nil, avance=nil)
 end
 
 def puntaje_eje5_p3(tipo=nil, avance=nil)
-  valido = false
+  valido = valido_a1 = false
   eje5 = CatalogoEje.find_by_clave("EJE5")
    @eje5_p3 = capacitacion_salud = capacitacion_medioambiente =  0
     if tipo == "proyecto"
@@ -763,7 +837,13 @@ def puntaje_eje5_p3(tipo=nil, avance=nil)
   end
 
  if (capacitacion_salud.to_i + capacitacion_medioambiente.to_i) > 0
-    valido = evidencia_valida?(eje5.id, 3, @diagnostico, @proyecto, avance)
+    valido = evidencia_valida?(eje5.id, 3, @diagnostico) if @diagnostico
+    if @proyecto
+      valido_a1 = evidencia_valida?(eje5.id, 3, nil, @proyecto, 1)
+      valido ||= evidencia_valida?(eje5.id, 3, nil, @proyecto, avance) if valido_a1 && avance == "2"
+      valido ||= evidencia_valida?(eje5.id, 3, nil, @proyecto, avance) if valido_a1
+    end
+#    valido = evidencia_valida?(eje5.id, 3, @diagnostico, @proyecto, avance)
     @eje5_p3 = ptos_capacitaciones(capacitacion_salud) +  ptos_capacitaciones(capacitacion_medioambiente)
   end
 
@@ -771,7 +851,7 @@ def puntaje_eje5_p3(tipo=nil, avance=nil)
 end
 
 def puntaje_eje5_p4(tipo=nil, avance=nil)
-  valido = false
+  valido = valido_a1 = false
   eje5 = CatalogoEje.find_by_clave("EJE5")
    @eje5_p4 = capacitaciones_padres =  0
     if tipo == "proyecto"
@@ -791,14 +871,20 @@ def puntaje_eje5_p4(tipo=nil, avance=nil)
   end
 
   if capacitaciones_padres.to_i > 0
-    valido = evidencia_valida?(eje5.id, 4, @diagnostico, @proyecto, avance)
+    valido = evidencia_valida?(eje5.id, 4, @diagnostico) if @diagnostico
+    if @proyecto
+      valido_a1 = evidencia_valida?(eje5.id, 4, nil, @proyecto, 1)
+      valido ||= evidencia_valida?(eje5.id, 4, nil, @proyecto, avance) if valido_a1 && avance == "2"
+      valido ||= evidencia_valida?(eje5.id, 4, nil, @proyecto, avance) if valido_a1
+    end
+#    valido = evidencia_valida?(eje5.id, 4, @diagnostico, @proyecto, avance)
     @eje5_p4 = ptos_proyectos(capacitaciones_padres.to_i)
   end
   return valido ? @eje5_p4 : 0
 end
 
 def puntaje_eje5_p5(tipo=nil, avance=nil)
-    valido = false
+    valido = valido_a1 = false
     eje5 = CatalogoEje.find_by_clave("EJE5")
     @eje5_p5 = proyectos =  0
     if tipo == "proyecto"
@@ -818,7 +904,13 @@ def puntaje_eje5_p5(tipo=nil, avance=nil)
     end
 
     if proyectos.to_i > 0
-      valido = evidencia_valida?(eje5.id, 5, @diagnostico, @proyecto, avance)
+#      valido = evidencia_valida?(eje5.id, 5, @diagnostico, @proyecto, avance)
+      valido = evidencia_valida?(eje5.id, 5, @diagnostico) if @diagnostico
+      if @proyecto
+        valido_a1 = evidencia_valida?(eje5.id, 5, nil, @proyecto, 1)
+        valido ||= evidencia_valida?(eje5.id, 5, nil, @proyecto, avance) if valido_a1 && avance == "2"
+        valido ||= evidencia_valida?(eje5.id, 5, nil, @proyecto, avance) if valido_a1
+      end
       @eje5_p5 = ptos_proyectos(proyectos.to_i)
     else
       clean_adjuntos(5,@diagnostico.id, 5) if @diagnostico
@@ -827,7 +919,7 @@ def puntaje_eje5_p5(tipo=nil, avance=nil)
 end
 
 def puntaje_eje5_p6(tipo=nil, avance=nil)
-    valido = false
+    valido = valido_a1 = false
     eje5 = CatalogoEje.find_by_clave("EJE5")
     @eje5_p6 = proyectos =  0
     if tipo == "proyecto"
@@ -847,7 +939,13 @@ def puntaje_eje5_p6(tipo=nil, avance=nil)
     end
 
     if proyectos.to_i > 0
-      valido = evidencia_valida?(eje5.id, 6, @diagnostico, @proyecto, avance)
+#      valido = evidencia_valida?(eje5.id, 6, @diagnostico, @proyecto, avance)
+      valido = evidencia_valida?(eje5.id, 6, @diagnostico) if @diagnostico
+      if @proyecto
+        valido_a1 = evidencia_valida?(eje5.id, 6, nil, @proyecto, 1)
+        valido ||= evidencia_valida?(eje5.id, 6, nil, @proyecto, avance) if valido_a1 && avance == "2"
+        valido ||= evidencia_valida?(eje5.id, 6, nil, @proyecto, avance) if valido_a1
+      end
       @eje5_p6 = ptos_proyectos(proyectos.to_i)
     else
       clean_adjuntos(5,@diagnostico.id, 6) if @diagnostico
@@ -856,7 +954,7 @@ def puntaje_eje5_p6(tipo=nil, avance=nil)
 end
 
 def puntaje_eje5_p7(tipo=nil, avance=nil)
-    valido = false
+    valido = valido_a1 = false
     eje5 = CatalogoEje.find_by_clave("EJE5")
     @eje5_p7 = proyectos =  0
     if tipo == "proyecto"
@@ -876,7 +974,13 @@ def puntaje_eje5_p7(tipo=nil, avance=nil)
     end
 
     if proyectos.to_i > 0
-      valido = evidencia_valida?(eje5.id, 7, @diagnostico, @proyecto, avance)
+#      valido = evidencia_valida?(eje5.id, 7, @diagnostico, @proyecto, avance)
+      valido = evidencia_valida?(eje5.id, 7, @diagnostico) if @diagnostico
+      if @proyecto
+        valido_a1 = evidencia_valida?(eje5.id, 7, nil, @proyecto, 1)
+        valido ||= evidencia_valida?(eje5.id, 7, nil, @proyecto, avance) if valido_a1 && avance == "2"
+        valido ||= evidencia_valida?(eje5.id, 7, nil, @proyecto, avance) if valido_a1
+      end
       @eje5_p7 = ptos_proyectos(proyectos.to_i)
     else
       clean_adjuntos(5,@diagnostico.id, 7) if @diagnostico

@@ -66,10 +66,10 @@
           <%end%>
 
           <div class="grid-12-12 clear"></div>
-          
-          <% form_for :avance, @avance, :url => { :action => "ver_avance", :controller => "avances", :num_avance => Base64.encode64("1"), :escuela => @escuela}, :html => { :target => "_blank"} do |f| -%>
+
+          <% form_for :avance, @avance, :url => { :action => "ver_avance", :controller => "admin", :escuela => @escuela}, :class => 'fancybox fancybox.iframe', :title => "" do |f| -%>
             <div class="grid-center">
-              <input type="submit" title="VISUALIZAR 1ER. AVANCE" value="VISUALIZAR 1ER. AVANCE" />
+              <input type="submit" title="VISUALIZAR AVANCE" value="VISUALIZAR AVANCE" />
             </div>
           <%end%>
       <%end%>
@@ -83,17 +83,9 @@
           
           <div class="grid-12-12 clear"></div>
           
-          <% form_for :avance, @avance, :url => { :action => "ver_avance", :controller => "avances", :num_avance => Base64.encode64("1"), :escuela => @escuela}, :html => { :target => "_blank"} do |f| -%>
+          <% form_for :avance, @avance, :url => { :action => "ver_avance", :controller => "admin", :escuela => @escuela}, :class => 'fancybox fancybox.iframe', :title => "" do |f| -%>
             <div class="grid-center">
-              <input type="submit" title="VISUALIZAR 1ER. AVANCE" value="VISUALIZAR 1ER. AVANCE" />
-            </div>
-          <%end%>
-
-          <div class="grid-12-12 clear"></div>
-          
-          <% form_for :avance, @avance, :url => { :action => "ver_avance", :controller => "avances", :num_avance => Base64.encode64("2"), :escuela => @escuela }, :html => { :target => "_blank"} do |f| -%>
-            <div class="grid-center">
-              <input type="submit" title="VISUALIZAR 2DO. AVANCE" value="VISUALIZAR 2DO. AVANCE" />
+              <input type="submit" title="VISUALIZAR AVANCE" value="VISUALIZAR AVANCE" />
             </div>
           <%end%>
       <%end%>
