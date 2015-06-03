@@ -448,7 +448,7 @@ class AdminController < ApplicationController
         total_alumnos = alu_hom + alu_muj
 
 
-        csv << [ quitar_comas(i.clave), quitar_comas(i.nombre), i.zona_escolar,  sector, quitar_comas(i.nivel_descripcion), quitar_comas(i.sostenimiento), quitar_comas(i.domicilio), quitar_comas(i.localidad), quitar_comas(i.municipio), quitar_comas(i.region_descripcion), quitar_comas(i.modalidad),
+        csv << [ quitar_comas(i.clave), quitar_comas(i.nombre), quitar_comas(i.zona_escolar),  sector, quitar_comas(i.nivel_descripcion), quitar_comas(i.sostenimiento), quitar_comas(i.domicilio), quitar_comas(i.localidad), quitar_comas(i.municipio), quitar_comas(i.region_descripcion), quitar_comas(i.modalidad),
                  quitar_comas(i.email), quitar_comas(i.email_responsable_proyecto), quitar_comas(i.telefono), quitar_comas(i.telefono_director), i.user_created_at, i.alu_hom,
                  i.alu_muj, i.grupos, total_alumnos, i.doc_hom, i.doc_muj, i.total_personal_docente_apoyo, i.total_personal_admvo,
                  i.total_personal_apoyo, "#{estatus_actual}", docentes_capacitados, docentes_involucrados, alumnos_capacitados, superficie_areas_verdes,
