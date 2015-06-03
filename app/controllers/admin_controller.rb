@@ -273,7 +273,7 @@ class AdminController < ApplicationController
     render :partial => "show_results", :layout => true
   end
 
-  def total_escuelas_registradas
+  def total_escuelas_registradas_xls
 #    @escuelas = User.find(:all, :select => "users.created_at as user_created_at, users.login, users.id as user_id, e.*", :joins => "users, escuelas e", :conditions => "users.login = e.clave AND (users.blocked is NULL OR  users.blocked !=1)")
     @escuelas = User.find_by_sql("SELECT us.created_at as user_created_at, us.login, us.id as user_id, es.* from users us
                                   INNER JOIN escuelas es ON us.login = es.clave

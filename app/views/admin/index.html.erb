@@ -19,7 +19,7 @@
        <%if current_user.has_role?("adminplat")%>
           <!-- Listado -->
         <div class="grid-3-12">
-       <%=link_to image_tag('admin/listado.png', :size => "128x128", :mouseover => 'admin/listado2.png') , {:action => "total_escuelas_registradas", :controller => "admin"}, :title => "Descargar listado de escuelas registradas"%>
+       <%=link_to image_tag('admin/listado.png', :size => "128x128", :mouseover => 'admin/listado2.png') , {:action => "total_escuelas_registradas_xls", :controller => "admin"}, :title => "Descargar listado de escuelas registradas"%>
           <label style="font-family:verdana;font-size:14px;">Listado General de Escuelas</label>
         </div>
 
