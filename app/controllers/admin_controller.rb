@@ -277,10 +277,10 @@ class AdminController < ApplicationController
                                   INNER JOIN escuelas es ON us.login = es.clave
                                   AND (us.blocked is NULL OR us.blocked !=1)")
       csv_string = FasterCSV.generate(:col_sep => "\t") do |csv|
-      csv << ["CLAVE_ESCUELA", "NOMBRE", "ZONA_ESCOLAR", "SECTOR", "NIVEL", "SOSTENIMIENTO", "DOMICILIO", "LOCALIDAD", "MUNICIPIO", "REGION", "MODALIDAD",
+      csv << ["CLAVE_ESCUELA", "ESTATUS_ACTUAL", "NOMBRE", "ZONA_ESCOLAR", "SECTOR", "NIVEL", "SOSTENIMIENTO", "DOMICILIO", "LOCALIDAD", "MUNICIPIO", "REGION", "MODALIDAD",
               "CORREO_ESCUELA", "CORREO_RESPONSABLE", "TELEFONO_ESCUELA", "TELEFONO_DIRECTOR", "FECHA_HORA_CAPTURA", "ALU_HOMBRES",
               "ALU_MUJERES", "GRUPOS", "TOTAL_ALUMNOS", "DOCENTES_H", "DOCENTES_M", "TOTAL_DOCENTE_APOYO", "TOTAL_PERSONAL_ADMVO",
-              "TOTAL_PERSONAL_APOYO", "ESTATUS_ACTUAL", "DOCENTES_CAPACITADOS", "DOCENTES_INVOLUCRADOS", "ALUMNOS_CAPACITADOS", "SUPERFICIE_AREAS_VERDES",
+              "TOTAL_PERSONAL_APOYO", "DOCENTES_CAPACITADOS", "DOCENTES_INVOLUCRADOS", "ALUMNOS_CAPACITADOS", "SUPERFICIE_AREAS_VERDES",
               "ARBOLES_ADULTOS", "ACCIONES_MANUAL_DE_SALUD", "CAPACITACION_AHORRO_DE_ENERGIA", "CONSUMO_ENERGIA_ELECTRICA", "FOCOS_AHORRADORES",
               "RED_PUBLICA_AGUA", "RECIPIENTES_RESIDUOS_SOLIDOS", "SEPARA_RESIDUOS_ORGANICOS_INORGANICOS", "ELABORA_COMPOSTAS", "FRECUENCIA_ACTIVACION_FISICA",
               "MINUTOS/MOMENTOS_ACTIVACION_FISICA", "NUM_PADRES_FAMILIA_TUTORES", "NUM_PADRES_FAMILIA_TUTORES_CAPACITADOS", "PROYECTO",
@@ -405,7 +405,7 @@ class AdminController < ApplicationController
 
         @estatus = Estatu.find(:first, :conditions => ["id = ?", i.estatu_id.to_i]) if i.estatu_id
         if @estatus.nil?
-          estatus_actual = "No existe información"
+          estatus_actual = ""
         else
           estatus_actual = @estatus.descripcion
         end
@@ -448,13 +448,13 @@ class AdminController < ApplicationController
         total_alumnos = alu_hom + alu_muj
 
 
-        csv << [ quitar_comas(i.clave), quitar_comas(i.nombre), quitar_comas(i.zona_escolar),  sector, quitar_comas(i.nivel_descripcion), quitar_comas(i.sostenimiento), quitar_comas(i.domicilio), quitar_comas(i.localidad), quitar_comas(i.municipio), quitar_comas(i.region_descripcion), quitar_comas(i.modalidad),
+        csv << [ quitar_comas(i.clave), estatus_actual,quitar_comas(i.nombre), quitar_comas(i.zona_escolar),  quitar_comas(sector), quitar_comas(i.nivel_descripcion), quitar_comas(i.sostenimiento), quitar_comas(i.domicilio), quitar_comas(i.localidad), quitar_comas(i.municipio), quitar_comas(i.region_descripcion), quitar_comas(i.modalidad),
                  quitar_comas(i.email), quitar_comas(i.email_responsable_proyecto), quitar_comas(i.telefono), quitar_comas(i.telefono_director), i.user_created_at, i.alu_hom,
                  i.alu_muj, i.grupos, total_alumnos, i.doc_hom, i.doc_muj, i.total_personal_docente_apoyo, i.total_personal_admvo,
-                 i.total_personal_apoyo, "#{estatus_actual}", docentes_capacitados, docentes_involucrados, alumnos_capacitados, superficie_areas_verdes,
-                 arboles_adultos, acciones, capacitacion_ahorro_energia, consumo_energia, focos_ahorradores,
+                 i.total_personal_apoyo, docentes_capacitados, docentes_involucrados, alumnos_capacitados, quitar_comas(superficie_areas_verdes),
+                 arboles_adultos, quitar_comas(acciones), quitar_comas(capacitacion_ahorro_energia), consumo_energia, focos_ahorradores,
                  red_publica_agua, recip_residuos_solidos, separa_residuos_org_inorg, elabora_compostas, frecuencia_afisica,
-                 "#{minutos_afisica}  #{momentos_afisica}", num_padres_familia, capacitacion_salud_ma, proyecto_descripcion,
+                 "#{minutos_afisica}  #{momentos_afisica}", num_padres_familia, capacitacion_salud_ma, quitar_comas(proyecto_descripcion),
 #                 e_diagnostico.puntaje_eje1, e_diagnostico.puntaje_eje2, e_diagnostico.puntaje_eje3, e_diagnostico.puntaje_eje4, e_diagnostico.puntaje_eje5,
                  diag_ptaje_eje1, diag_ptaje_eje2, diag_ptaje_eje3, diag_ptaje_eje4, diag_ptaje_eje5,
                  a1_proy_ptaje_eje1, a1_proy_ptaje_eje2, a1_proy_ptaje_eje3, a1_proy_ptaje_eje4, a1_proy_ptaje_eje5,
@@ -992,8 +992,11 @@ class AdminController < ApplicationController
 
 
  def quitar_comas(string)
-   string.gsub(/,/, '') if string
+  if string && string.class==String
+       string.gsub(/,/, '')
+    else
+      string
+    end
  end
-
 
 end
