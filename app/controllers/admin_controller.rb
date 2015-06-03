@@ -1,6 +1,8 @@
 #!/bin/env ruby
 # encoding: utf-8
+require 'rubygems'
 require 'fastercsv'
+
 class AdminController < ApplicationController
   #protect_from_forgery
   require_role [:directivo], :only => [:show_escuelas]
