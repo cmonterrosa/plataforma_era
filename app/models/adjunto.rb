@@ -8,8 +8,16 @@ class Adjunto < ActiveRecord::Base
    belongs_to :proyecto
    #validates_presence_of :tipodoc_id, :message => "Seleccione un tipo de archivo"
    validates_inclusion_of :file_type, :in => ['image/jpeg', 'image/jpg',
-                                                             'image/png', 'image/gif',
+                                                             'image/png', 'image/gif', 'image/pjpeg',
                                                              'application/msword',
+                                                             'application/doc',
+                                                             'application/vnd.msword',
+                                                             'application/vnd.ms-word',
+                                                             'application/winword',
+                                                             'application/word',
+                                                             'application/x-msw6',
+                                                             'application/x-msword',
+                                                             'zz-application/zz-winassoc-doc',
                                                              'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
                                                              'application/pdf', 'video/3gpp', 'video/mp4', 'video/quicktime', 'video/mpeg',
                                                              'application/vnd.ms-excel',
@@ -120,9 +128,14 @@ class Adjunto < ActiveRecord::Base
   end
 
   def set_file_type
-    fotografia = ['image/jpeg', 'image/jpg','image/png', 'image/gif']
+    fotografia = ['image/jpeg', 'image/jpg','image/png', 'image/gif',  'image/pjpeg']
     video = ['video/3gpp', 'video/mp4', 'video/quicktime','video/mpeg']
-    documento = ['application/pdf', 'application/msword', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/vnd.openxmlformats-officedoc', 'application/vnd.openxmlformats-officedocument.presentationml.presentation', 'application/vnd.ms-powerpoint']
+    documento = ['application/pdf', 'application/msword', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/vnd.openxmlformats-officedoc', 'application/vnd.openxmlformats-officedocument.presentationml.presentation', 'application/vnd.ms-powerpoint',   'application/vnd.ms-word',
+                                                             'application/winword',
+                                                             'application/word',
+                                                             'application/x-msw6',
+                                                             'application/x-msword',
+                                                             'zz-application/zz-winassoc-doc',]
     self.tipodoc_id = Tipodoc.find_by_descripcion("FOTOGRAFIA").id if fotografia.include?(self.file_type) && Tipodoc.find_by_descripcion("FOTOGRAFIA")
     self.tipodoc_id = Tipodoc.find_by_descripcion("VIDEO").id if video.include?(self.file_type) && Tipodoc.find_by_descripcion("VIDEO")
     self.tipodoc_id = Tipodoc.find_by_descripcion("DOCUMENTO").id if documento.include?(self.file_type) && Tipodoc.find_by_descripcion("DOCUMENTO")
