@@ -144,6 +144,7 @@ class DiagnosticosController < ApplicationController
 
     # -- Consumos --
     @consumo = @diagnostico.consumo if @diagnostico.consumo
+    @consumo ||= Consumo.find(:first, :conditions => ["diagnostico_id = ?", @diagnostico.id]) if @diagnostico
     if @escuela.nivel_descripcion == "BACHILLERATO"
       @establecimientos = Establecimiento.find(:all, :conditions => ["nivel not in ('BASICA')"])
     else

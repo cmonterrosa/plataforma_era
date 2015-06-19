@@ -503,7 +503,7 @@ def puntaje_eje4_p2(tipo=nil, avance=nil)
       @consumo = @diagnostico.consumo if @diagnostico.consumo
       @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
       @user = User.find_by_login(@escuela.clave) if @escuela
-      capacitacion_alim_bebidas =  (@consumo.capacitacion_alim_bebidas == "SI")? true : false
+      capacitacion_alim_bebidas =  (@consumo && @consumo.capacitacion_alim_bebidas == "SI")? true : false
     end
 
   if @consumo && capacitacion_alim_bebidas
@@ -535,7 +535,7 @@ def puntaje_eje4_p3(tipo=nil, avance=nil)
     @consumo = @diagnostico.consumo if @diagnostico.consumo
     @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
     @user = User.find_by_login(@escuela.clave) if @escuela
-    conocen_lineamientos_grales =  (@consumo.conocen_lineamientos_grales == "SI")? true : false
+    conocen_lineamientos_grales =  (@consumo && @consumo.conocen_lineamientos_grales == "SI")? true : false
   end
 
   if @consumo && conocen_lineamientos_grales
@@ -759,7 +759,7 @@ def puntaje_eje4_p8(tipo=nil, avance=nil)
       @consumo_diagnostico = @diagnostico.consumo if @diagnostico.consumo
       @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
       @user = User.find_by_login(@escuela.clave) if @escuela
-      minutos_activacion_fisica = (@consumo_diagnostico.minutos_activacion_fisica) ? @consumo_diagnostico.minutos_activacion_fisica : 0
+      minutos_activacion_fisica = (@consumo && @consumo_diagnostico.minutos_activacion_fisica) ? @consumo_diagnostico.minutos_activacion_fisica : 0
   end
 
   if @consumo_diagnostico || @consumo_proyecto
