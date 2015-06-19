@@ -149,16 +149,18 @@ class DiagnosticosController < ApplicationController
     else
       @establecimientos = Establecimiento.find(:all)
     end
-    @s_establecimientos = multiple_selected(@consumo.establecimientos) if @consumo.establecimientos
-    @s_preparacions = multiple_selected(@consumo.preparacions) if @consumo.preparacions
-    @s_utensilios = multiple_selected(@consumo.utensilios) if @consumo.utensilios
-    @s_higienes = multiple_selected(@consumo.higienes) if @consumo.higienes
-    @s_bebidas = multiple_selected(@consumo.bebidas) if @consumo.bebidas
-    @s_alimentos = multiple_selected(@consumo.alimentos) if @consumo.alimentos
-    @s_botanas = multiple_selected(@consumo.botanas) if @consumo.botanas
-    @s_reposterias = multiple_selected(@consumo.reposterias) if @consumo.reposterias
-    @s_materials = multiple_selected(@consumo.materials) if @consumo.materials
-    @s_afisicas = selected(@consumo.frecuencia_afisica) if @consumo.frecuencia_afisica
+    if @consumo
+      @s_establecimientos = multiple_selected(@consumo.establecimientos) if @consumo.establecimientos
+      @s_preparacions = multiple_selected(@consumo.preparacions) if @consumo.preparacions
+      @s_utensilios = multiple_selected(@consumo.utensilios) if @consumo.utensilios
+      @s_higienes = multiple_selected(@consumo.higienes) if @consumo.higienes
+      @s_bebidas = multiple_selected(@consumo.bebidas) if @consumo.bebidas
+      @s_alimentos = multiple_selected(@consumo.alimentos) if @consumo.alimentos
+      @s_botanas = multiple_selected(@consumo.botanas) if @consumo.botanas
+      @s_reposterias = multiple_selected(@consumo.reposterias) if @consumo.reposterias
+      @s_materials = multiple_selected(@consumo.materials) if @consumo.materials
+      @s_afisicas = selected(@consumo.frecuencia_afisica) if @consumo.frecuencia_afisica
+    end
     @cop2= diagnostico.puntaje_eje4_p2
     @cop3= diagnostico.puntaje_eje4_p3
     @cop4= diagnostico.puntaje_eje4_p4
