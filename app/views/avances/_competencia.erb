@@ -1,6 +1,7 @@
 
 <!-- Variables  -->
 <% totales = @escuela
+    totales ||= Escuela.find_by_clave(current_user.login) if current_user
     docentes_capacitados = @evidencia_diagnostico_p1 ? (@competencia_diagnostico.dctes_cap_salud + @competencia_diagnostico.dctes_cap_ma + @competencia_diagnostico.dctes_cap_ambos).to_i : 0
     if totales.nivel_descripcion == "BACHILLERATO"
       docentes = totales.perfil_ciencias_naturales
