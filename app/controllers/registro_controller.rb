@@ -31,9 +31,11 @@ class RegistroController < ApplicationController
       @select_ce = selected(@escuela.categoria_escuela) if @escuela.categoria_escuela
       @s_programas = multiple_selected_id(@escuela.programas) if @escuela.programas
       if @escuela.estatu_id
-        if @escuela.registro_completo || @escuela.estatu.jerarquia > Estatu.find_by_clave("esc-datos").jerarquia
-          flash[:warning] = "La escuela ha completado el registro con anterioridad"
-          redirect_to :action => "menu_reportes", :id => @escuela
+        unless current_user.has_role?("adminplat")
+            if @escuela.registro_completo || @escuela.estatu.jerarquia > Estatu.find_by_clave("esc-datos").jerarquia
+              flash[:warning] = "La escuela ha completado el registro con anterioridad"
+              redirect_to :action => "menu_reportes", :id => @escuela
+          end
         end
       end
     end
@@ -64,7 +66,8 @@ class RegistroController < ApplicationController
     if @escuela.save
       @escuela.update_bitacora!("esc-datos", current_user)
       flash[:notice] = "Registro guardado correctamente"
-      redirect_to :action => "menu_reportes", :id => @escuela
+      url_regreso = (current_user.has_role?("adminplat"))? {:controller => "admin", :action => "menu_escuela", :id => User.find_by_escuela_id(@escuela)} : {:action => "menu_reportes", :id => @escuela}
+      redirect_to url_regreso
     else
       flash[:error] = "No se puedo guardar, verifique el registro"
       render :action => "new_or_edit"

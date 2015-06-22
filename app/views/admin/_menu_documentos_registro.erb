@@ -28,6 +28,15 @@
 
       <div class="grid-12-12 clear"></div>
 
+      <!-- Editar Registro -->
+      <% form_for :escuela, @escuela, :url => { :action => "new_or_edit", :controller => "registro", :escuela => {:clave => @escuela.clave} }, :html => { :target => "_blank"} do |f| -%>
+      <div class="grid-center">
+        <input type="submit" title="EDITAR DATOS DEL REGISTRO" value="EDITAR DATOS DEL REGISTRO" />
+      </div>
+      <%end%>
+
+      <div class="grid-12-12 clear"></div>
+
       <!-- constancia -->
       <% form_for :escuela, @escuela, :url => { :action => "generar", :controller => "constancia", :id => @escuela }, :html => { :target => "_blank"} do |f| -%>
       <div class="grid-center">
