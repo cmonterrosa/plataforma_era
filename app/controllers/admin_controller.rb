@@ -536,6 +536,10 @@ class AdminController < ApplicationController
     @escuela = Escuela.find(params[:escuela])
     @diagnostico_id = Diagnostico.find_by_escuela_id(@escuela.id).id if @escuela
     if @escuela && @escuela.update_bitacora!("proy-aut", current_user)
+      # Enviamos correo con la notificacion
+      if usuario= User.find_by_escuela_id(@escuela.id)
+        UserMailer.deliver_project_authorized(usuario) if usuario.email_valid?
+      end
       flash[:notice] = "Proyecto autorizado"
     else
       flash[:error] = "Proyecto no se pudo autorizar"
