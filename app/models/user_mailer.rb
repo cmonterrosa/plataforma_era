@@ -11,6 +11,12 @@ class UserMailer < ActionMailer::Base
     @body[:url]  = "http://#{SITE_URL}/"
   end
 
+  def project_authorized(user)
+    setup_email(user)
+    @subject    += 'La etapa de proyecto ha sido autorizada!'
+    @body[:url]  = "http://#{SITE_URL}/"
+  end
+
  
   def reset_notification(user)
     setup_email(user)
