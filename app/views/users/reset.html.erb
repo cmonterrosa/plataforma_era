@@ -1,8 +1,9 @@
-<%= error_messages_for :user %>
-
 <!-- version fina -->
 <div class="container">
-<% form_for :user, @user, :url => { :action => "reset", :controller => "users"}, :html => {:class => "formee"} do |f| -%>
+  <%= error_messages_for :user %>
+
+  <%if @user%>
+  <% form_for :user, @user, :url => { :action => "reset", :controller => "users"}, :html => {:class => "formee"} do |f| -%>
       <fieldset>
         <legend>RECUPERACIÓN&nbsp;DE&nbsp;CONTRASEÑA</legend>
             <div class="grid-12-12">
@@ -40,8 +41,11 @@
            <div class="grid-12-12">
                    <input class="right" type="submit" title="CAMBIAR CONTRASEÑA" value="CAMBIAR CONTRASEÑA" />
            </div>
-        </div>
     </fieldset>
+  <%end%>
+
+  <%else%>
+      <h3 align="center">No se pudo realizar la operación, póngase en contacto para que sea atendido: <%=SITE_EMAIL%></h3>
   <%end%>
 </div>
 
