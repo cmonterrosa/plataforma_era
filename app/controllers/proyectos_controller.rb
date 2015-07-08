@@ -596,7 +596,9 @@ class ProyectosController < ApplicationController
       @consumo.materials = Material.find(@materials)
     end
 
-    @consumo.frecuencia_afisica_id = FrecuenciaAfisica.find_by_clave(params[:consumo][:frecuencia_afisica_id]).id if params[:consumo][:frecuencia_afisica_id]
+    if params[:consumo]
+      @consumo.frecuencia_afisica_id = FrecuenciaAfisica.find_by_clave(params[:consumo][:frecuencia_afisica_id]).id if params[:consumo][:frecuencia_afisica_id]
+    end
     @consumo.minutos_activacion_fisica = nil unless @consumo.frecuencia_afisica
 
     @eje = Eje.find(params[:eje_id]) if params[:eje_id]
