@@ -452,7 +452,7 @@ class AdminController < ApplicationController
         total_alumnos = alu_hom + alu_muj
 
 
-        csv << [ i.clave, primera_generacion, segunda_generacion, i.nombre, i.zona_escolar, sector, nivel_general, i.modalidad_alternativa, i.sostenimiento, i.domicilio.to_s.gsub(',', ' '), i.localidad.to_s.gsub(',', ' '), i.municipio, i.region_descripcion, i.modalidad.to_s.gsub(',', ' -'),
+        csv << [ i.clave, primera_generacion, segunda_generacion, i.nombre.to_s.gsub(',', ' -'), i.zona_escolar, sector, nivel_general, i.modalidad_alternativa, i.sostenimiento, i.domicilio.to_s.gsub(',', ' '), i.localidad.to_s.gsub(',', ' '), i.municipio, i.region_descripcion, i.modalidad.to_s.gsub(',', ' -'),
                  i.email, i.email_responsable_proyecto, i.telefono, i.telefono_director.to_s.gsub(',', ' -'), i.user_created_at, i.alu_hom,
                  i.alu_muj, total_alumnos, i.grupos, i.total_personal_docente, i.total_personal_admvo,
                  i.total_personal_apoyo, "#{estatus_actual}", docentes_capacitados, docentes_involucrados, alumnos_capacitados, superficie_areas_verdes,
