@@ -39,6 +39,11 @@ class Escuela < ActiveRecord::Base
         self.update_attributes!(:estatu_id => @estatus_nuevo.id)
         @bitacora = Bitacora.create(:user_id => usuario.id, :estatu_id => @estatus_nuevo.id, :escuela_id => self.id) if usuario && @estatus_nuevo
       end
+      else
+        if @estatus_actual.nil?
+          self.update_attributes!(:estatu_id => @estatus_nuevo.id)
+          @bitacora = Bitacora.create(:user_id => usuario.id, :estatu_id => @estatus_nuevo.id, :escuela_id => self.id) if usuario && @estatus_nuevo
+        end
       end
     end
 
