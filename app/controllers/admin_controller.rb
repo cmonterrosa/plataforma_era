@@ -272,8 +272,9 @@ class AdminController < ApplicationController
 
   def total_escuelas_registradas
 #    @escuelas = User.find(:all, :select => "users.created_at as user_created_at, users.login, users.id as user_id, e.*", :joins => "users, escuelas e", :conditions => "users.login = e.clave AND (users.blocked is NULL OR  users.blocked !=1)")
-    @escuelas = User.find_by_sql("SELECT us.created_at as user_created_at, us.login, us.id as user_id, es.* from users us
+    @escuelas = User.find_by_sql("SELECT us.created_at as user_created_at, us.login, us.id as user_id, es.*, est.descripcion as estatus_actual from users us
                                   INNER JOIN escuelas es ON us.login = es.clave
+                                  LEFT JOIN estatus est ON es.estatu_id = est.id
                                   AND (us.blocked is NULL OR us.blocked !=1)")
       csv_string = FasterCSV.generate(:col_sep => "\t") do |csv|
       csv << ["CLAVE_ESCUELA",  "PRIMERA_GENERACION", "SEGUNDA_GENERACION", "NOMBRE", "ZONA_ESCOLAR", "SECTOR", "NIVEL", "MODALIDAD_ALTERNATIVA", "SOSTENIMIENTO", "DOMICILIO", "LOCALIDAD", "MUNICIPIO", "REGION", "MODALIDAD",
@@ -290,7 +291,7 @@ class AdminController < ApplicationController
 
       @escuelas.each do |i|
         diagnostico = Diagnostico.find(:first, :conditions => ["user_id = ?", i.user_id]) if i.user_id
-        proyecto = Proyecto.find(:first, :conditions => ["diagnostico_id = ?", diagnostico.id]) if diagnostico
+        proyecto = Proyecto.find(:first, :select => "id, diagnostico_id, descripcion", :conditions => ["diagnostico_id = ?", diagnostico.id]) if diagnostico
         proyecto_descripcion = (proyecto) ? proyecto.descripcion : ""
         # campos diagnostico
         unless diagnostico.nil?
@@ -392,12 +393,12 @@ class AdminController < ApplicationController
         a1_proyecto ||= Evaluacion.new #(:puntaje_eje1 => 0, :puntaje_eje2 => 0, :puntaje_eje3 => 0, :puntaje_eje4 => 0, :puntaje_eje5 => 0)
         a2_proyecto ||= Evaluacion.new #(:puntaje_eje1 => 0, :puntaje_eje2 => 0, :puntaje_eje3 => 0, :puntaje_eje4 => 0, :puntaje_eje5 => 0)
 
-        @estatus = Estatu.find(:first, :conditions => ["id = ?", i.estatu_id.to_i]) if i.estatu_id
-        if @estatus.nil?
-          estatus_actual = "No existe información"
-        else
-          estatus_actual = @estatus.descripcion
-        end
+#        @estatus = Estatu.find(:first, :conditions => ["id = ?", i.estatu_id.to_i]) if i.estatu_id
+#        if @estatus.nil?
+#          estatus_actual = "No existe información"
+#        else
+#          estatus_actual = @estatus.descripcion
+#        end
 
         total_diagnostico = 0.0
         (1..5).each do |num|
@@ -455,7 +456,7 @@ class AdminController < ApplicationController
         csv << [ i.clave, primera_generacion, segunda_generacion, i.nombre.to_s.gsub(',', ' -'), i.zona_escolar, sector, nivel_general, i.modalidad_alternativa, i.sostenimiento, i.domicilio.to_s.gsub(',', ' '), i.localidad.to_s.gsub(',', ' '), i.municipio, i.region_descripcion, i.modalidad.to_s.gsub(',', ' -'),
                  i.email, i.email_responsable_proyecto, i.telefono, i.telefono_director.to_s.gsub(',', ' -'), i.user_created_at, i.alu_hom,
                  i.alu_muj, total_alumnos, i.grupos, i.total_personal_docente, i.total_personal_admvo,
-                 i.total_personal_apoyo, "#{estatus_actual}", docentes_capacitados, docentes_involucrados, alumnos_capacitados, superficie_areas_verdes,
+                 i.total_personal_apoyo, "#{i.estatus_actual}", docentes_capacitados, docentes_involucrados, alumnos_capacitados, superficie_areas_verdes,
                  arboles_nativos, arboles_no_nativos, acciones, capacitacion_ahorro_energia, consumo_energia, focos_ahorradores,
                  abastecimientos_agua, separa_residuos_org_inorg, elabora_compostas, frecuencia_afisica,
                  "#{minutos_afisica}  #{momentos_afisica}", num_padres_familia, capacitacion_salud_ma, proyecto_descripcion,
