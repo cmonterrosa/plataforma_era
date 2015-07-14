@@ -35,13 +35,17 @@
     <%if current_user.has_role?("adminplat") && @user.login != "esys"%>
         <div class="grid-12-12">
               <label>¿Ha sido beneficiada en el presente ciclo: <%=CICLO_ESCOLAR%>?</label><br />
-              
               <label class="uper">SI <%= radio_button :escuela, :beneficiada, 1, :checked => (@user.escuela.beneficiada?) %></label>
               <label class="uper">NO <%= radio_button :escuela, :beneficiada, 0, :checked => (!@user.escuela.beneficiada?) %></label>
-              <!--
-              <label class="uper">SI <= radio_button :escuela, :beneficiada, "SI", @user.escuela.beneficiada %></label>&nbsp;&nbsp;
-              <label class="uper">NO <= radio_button :escuela,  :beneficiada, "NO", @user.escuela.beneficiada%></label>
-              -->
+        </div>
+     <%end%>
+
+    <!-- Ha subido evidencias de Internet -->
+    <%if current_user.has_role?("adminplat")%>
+        <div class="grid-12-12">
+              <label>¿Ha subido evidencias de Internet?</label><br />
+              <label class="uper">SI <%= radio_button :escuela, :evidencias_internet, 1, :checked => (@user.escuela.evidencias_internet?) %></label>
+              <label class="uper">NO <%= radio_button :escuela, :evidencias_internet, 0, :checked => (!@user.escuela.evidencias_internet?) %></label>
         </div>
      <%end%>
 
