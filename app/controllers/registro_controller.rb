@@ -92,11 +92,19 @@ class RegistroController < ApplicationController
   end
 
   def reporte_final
-    @user= User.find(params[:id])
+    @user= User.find(params[:id]) if params[:id]
     @escuela = @user.escuela if @user
-    unless @escuela.ever_had_status?("avance2")
+    @diagnostico = Diagnostico.find_by_escuela_id(@escuela) if @escuela
+    @proyecto = Proyecto.find_by_diagnostico_id(@diagnostico) if @diagnostico
+    if @escuela.ever_had_status?("avance2")
+       logger.info "Se genero reporte final para: #{@escuela.clave}"
+    else
+      if @proyecto && @proyecto.avance == 3
+         logger.info "Se genero reporte final para: #{@escuela.clave}"
+      else
        flash[:notice] = "La escuela aún no ha concluido el proceso de certificación"
        redirect_to :controller => "home"
+      end
     end
   end
   
