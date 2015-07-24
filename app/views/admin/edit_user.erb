@@ -50,6 +50,21 @@
      <%end%>
 
 
+    
+    <%if current_user.has_role?("adminplat")%>
+        <!-- Sostenimiento -->
+        <div class="grid-12-12">
+              <label class="uper">SOSTENIMIENTO: <%= text_field :escuela, :sostenimiento, :value => @user.escuela.sostenimiento %></label>
+        </div>
+    
+
+        <!-- Modalidad Alternativa -->
+        <div class="grid-12-12">
+          <label class="uper">MODALIDAD&nbsp;ALTERNATIVA: <%= text_field :escuela, :modalidad_alternativa, :value => @user.escuela.modalidad_alternativa %></label>
+        </div>
+    <%end%>
+
+
 
           
 
