@@ -10,7 +10,7 @@
   <%@escuela ||= @user.escuela%>
   <%@escuela ||= Escuela.find_by_clave(@user.login)%>
   <%@diagnostico = Diagnostico.find_by_escuela_id(@escuela_id) if @escuela%>
-  <%@evaluaciones = Evaluacion.find(:all, :conditions => ["diagnostico_id = ?", @diagnostico]) if @diagnostico%>
+  <%@evaluaciones = Evaluacion.find(:all, :conditions => ["diagnostico_id = ?", @diagnostico.id]) if @diagnostico%>
 
   <%if @evaluaciones%>
     <tr>
