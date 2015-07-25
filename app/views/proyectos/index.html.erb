@@ -6,6 +6,30 @@
             <p id="pdf_link"><%= link_to image_tag("/images/botones/print_proyect.png", :mouseover => "/images/botones/print_proyect2.png" ), { :action => "proyect_to_pdf.pdf" }, :target => "_blank" %></p>
         </div>
         <div class ="grid-4-12 clear"></div>
+
+        <div class ="grid-12-12">
+          <div class="formee" style="text-align:center" >
+            <fieldset>
+              <h2 style="color: #105cb6; font-weight: bold;">IMPRIMIR ACCIONES DEL PROYECTO:</h2>
+              <% @ejes.each do |eje| %>
+                <% case eje.catalogo_eje.clave
+                  when "EJE1" %>
+                    <label><%= link_to "   EJE 1.- DESARROLLO DE COMPETENCIAS.", {:controller => "avances", :action => "avance_to_pdf", :id => "#{Base64.encode64(@diagnostico.id.to_s)}.pdf", :evidencia => false, :eje => "EJE1"}, :style => "color:#dd4b39; text-decoration: none;", :title => "IMPRIMIR EJE1", :target => "_blank" %></label><br />
+                  <% when "EJE2" %>
+                    <label><%= link_to "   EJE 2.- ENTORNO SALUDABLE.", {:controller => "avances", :action => "avance_to_pdf", :id => "#{Base64.encode64(@diagnostico.id.to_s)}.pdf", :evidencia => false, :eje => "EJE2" }, :style => "color:#dd4b39; text-decoration: none;", :title => "IMPRIMIR EJE2", :target => "_blank" %></label><br />
+                  <% when "EJE3" %>
+                    <label><%= link_to "   EJE 3.- HUELLA ECOLÓGICA.", {:controller => "avances", :action => "avance_to_pdf", :id => "#{Base64.encode64(@diagnostico.id.to_s)}.pdf", :evidencia => false, :eje => "EJE3"}, :style => "color:#dd4b39; text-decoration: none;", :title => "IMPRIMIR EJE3", :target => "_blank" %></label><br />
+                  <% when "EJE4" %>
+                    <label><%= link_to "   EJE 4.- CONSUMO RESPONSABLE / SALUDABLE.", {:controller => "avances", :action => "avance_to_pdf", :id => "#{Base64.encode64(@diagnostico.id.to_s)}.pdf", :evidencia => false, :eje => "EJE4"}, :style => "color:#dd4b39; text-decoration: none;", :title => "IMPRIMIR EJE4", :target => "_blank" %></label><br />
+                  <% when "EJE5" %>
+                    <label><%= link_to "   EJE 5.- PARTICIPACIÓN COMUNITARIA.", {:controller => "avances", :action => "avance_to_pdf", :id => "#{Base64.encode64(@diagnostico.id.to_s)}.pdf", :evidencia => false, :eje => "EJE5"}, :style => "color:#dd4b39; text-decoration: none;", :title => "IMPRIMIR EJE5", :target => "_blank" %></label><br />
+                <% else %>
+                <% end %>
+              <% end %>
+            </fieldset>
+          </div>
+        </div>
+        
       <%else%>
 
       <%= render :partial => "informacion_proyectos"%>
