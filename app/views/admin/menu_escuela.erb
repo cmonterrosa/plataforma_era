@@ -94,6 +94,27 @@
       <%end%>
     </fieldset>
 
+    <!-- Puntaje Obtenido-->
+    <fieldset style="line-height: 0px;" >
+      <legend><p class="titulos" >&nbsp;Puntaje&nbsp;Obtenido&nbsp;</p></legend>
+      <div class="grid-3-12">
+        <label style=" font-weight: bold; color: teal">Diagnóstico</label><br />
+        <label style=" font-style: italic"><%= @total_puntaje_diagnostico %> </label>
+      </div>
+      <div class="grid-3-12">
+        <label style=" font-weight: bold; color: teal">Proyecto</label><br />
+        <label style=" font-style: italic;"><%= @total_puntaje_proyecto %></label>
+      </div>
+      <div class="grid-2-12">
+        <label style=" font-weight: bold; color: teal">Total</label><br />
+        <label style=" font-style: italic;"><%= @total_puntaje_diagnostico + @total_puntaje_proyecto %></label>
+      </div>
+      <div class="grid-4-12">
+        <label style=" font-weight: bold; color: teal">Nivel de Certificación</label><br />
+        <label style=" font-style: italic;"></label>
+      </div>
+    </fieldset>
+
     <!-- Menu -->
     <div class="titulos"><p> Menú de opciones</p></div>
         

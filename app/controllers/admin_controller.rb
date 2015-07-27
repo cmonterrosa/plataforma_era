@@ -596,12 +596,65 @@ class AdminController < ApplicationController
    ################################################################################################
 
   def menu_escuela
-     @user = User.find(params[:id])
-     @escuela = @user.escuela if @user
-     @diagnostico = Diagnostico.find_by_user_id(@user.id) if @user
-     @proyecto = Proyecto.find_by_diagnostico_id(@diagnostico.id) if @diagnostico
-     
-   end
+    @user = User.find(params[:id])
+    @escuela = @user.escuela if @user
+    @diagnostico = Diagnostico.find_by_user_id(@user.id) if @user
+    @proyecto = Proyecto.find_by_diagnostico_id(@diagnostico.id) if @diagnostico
+
+    proyecto = Evaluacion.new(:proyecto_id => @proyecto.id) if @proyecto
+    diagnostico = Evaluacion.new(:diagnostico_id => @diagnostico.id) if @diagnostico
+
+    if @diagnostico
+      @puntaje_total_diagnostico_eje1 = diagnostico.puntaje_total_obtenido_eje1
+      @puntaje_total_diagnostico_eje2 = diagnostico.puntaje_total_obtenido_eje2
+      @puntaje_total_diagnostico_eje3 = diagnostico.puntaje_total_obtenido_eje3
+      @puntaje_total_diagnostico_eje4 = diagnostico.puntaje_total_obtenido_eje4
+      @puntaje_total_diagnostico_eje5 = diagnostico.puntaje_total_obtenido_eje5
+    end
+    @puntaje_total_diagnostico_eje1 ||= 0.0
+    @puntaje_total_diagnostico_eje2 ||= 0.0
+    @puntaje_total_diagnostico_eje3 ||= 0.0
+    @puntaje_total_diagnostico_eje4 ||= 0.0
+    @puntaje_total_diagnostico_eje5 ||= 0.0
+
+    @total_puntaje_diagnostico = @puntaje_total_diagnostico_eje1 + @puntaje_total_diagnostico_eje2 + @puntaje_total_diagnostico_eje3 + @puntaje_total_diagnostico_eje4 + @puntaje_total_diagnostico_eje5
+    @total_puntaje_diagnostico ||= 0.0
+
+    if @proyecto && @proyecto.competencia
+      @puntaje_total_proyecto_eje1 = proyecto.puntaje_total_obtenido_eje1("proyecto", 2) unless Evaluacion.find_by_proyecto_id_and_avance(@proyecto.id, 2).nil?
+      @puntaje_total_proyecto_eje1 ||= proyecto.puntaje_total_obtenido_eje1("proyecto", 1) unless Evaluacion.find_by_proyecto_id_and_avance(@proyecto.id, 1).nil?
+    end
+    @puntaje_total_proyecto_eje1 ||= 0
+
+    if @proyecto && @proyecto.entorno
+      @puntaje_total_proyecto_eje2 = proyecto.puntaje_total_obtenido_eje2("proyecto", 2) unless Evaluacion.find_by_proyecto_id_and_avance(@proyecto.id, 2).nil?
+      @puntaje_total_proyecto_eje2 ||= proyecto.puntaje_total_obtenido_eje2("proyecto", 1) unless Evaluacion.find_by_proyecto_id_and_avance(@proyecto.id, 1).nil?
+    end
+    @puntaje_total_proyecto_eje2 ||= 0
+
+    if @proyecto && @proyecto.huella
+      @puntaje_total_proyecto_eje3 = proyecto.puntaje_total_obtenido_eje3("proyecto", 2) unless Evaluacion.find_by_proyecto_id_and_avance(@proyecto.id, 2).nil?
+      @puntaje_total_proyecto_eje3 ||= proyecto.puntaje_total_obtenido_eje3("proyecto", 1) unless Evaluacion.find_by_proyecto_id_and_avance(@proyecto.id, 1).nil?
+    end
+    @puntaje_total_proyecto_eje3 ||= 0
+
+    if @proyecto && @proyecto.consumo
+      @puntaje_total_proyecto_eje4 = proyecto.puntaje_total_obtenido_eje4("proyecto", 2) unless Evaluacion.find_by_proyecto_id_and_avance(@proyecto.id, 2).nil?
+      @puntaje_total_proyecto_eje4 ||= proyecto.puntaje_total_obtenido_eje4("proyecto", 1) unless Evaluacion.find_by_proyecto_id_and_avance(@proyecto.id, 1).nil?
+    end
+    @puntaje_total_proyecto_eje4 ||= 0
+
+    if @proyecto && @proyecto.participacion
+      @puntaje_total_proyecto_eje5 = proyecto.puntaje_total_obtenido_eje5("proyecto", 2) unless Evaluacion.find_by_proyecto_id_and_avance(@proyecto.id, 2).nil?
+      @puntaje_total_proyecto_eje5 ||= proyecto.puntaje_total_obtenido_eje5("proyecto", 1) unless Evaluacion.find_by_proyecto_id_and_avance(@proyecto.id, 1).nil?
+    end
+    @puntaje_total_proyecto_eje5 ||= 0
+    
+    @total_puntaje_proyecto = @puntaje_total_proyecto_eje1 + @puntaje_total_proyecto_eje2 + @puntaje_total_proyecto_eje3 + @puntaje_total_proyecto_eje4 + @puntaje_total_proyecto_eje5
+    @total_puntaje_proyecto ||= 0.0
+
+  end
+   
 
   def show_bitacora
       @user = User.find(params[:id]) 

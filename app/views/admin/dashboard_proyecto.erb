@@ -43,7 +43,7 @@
           <% @puntaje_pregunta_proyecto_eje1 = 0%>
           <table width="98%" border="0" cellspacing="0" cellpadding="0" class="sample" >
             <tr class="tdiagnostico">
-              <td colspan="11" align="center" ><label>EJE: 1 &nbsp; <b>DESARROLLO DE COMPETENCIAS</b></label></td>
+              <td colspan="10" align="center" ><label>EJE: 1 &nbsp; <b>DESARROLLO DE COMPETENCIAS</b></label></td>
             </tr>
             <% unless @preguntas_eje1.empty?  %>
               <tr class="d0" style=" font-weight: bold; " >
@@ -51,7 +51,7 @@
                 <td width="10%" style="vertical-align: middle;"align="center">PUNTAJE PREGUNTA</td>
                 <td width="10%" style="vertical-align: middle;"align="center">PUNTAJE DIAGNÓSTICO</td>
                 <td width="10%" style="vertical-align: middle;" align="center">PUNTAJE AVANCE</td>
-                <td width="10%" style="vertical-align: middle;" align="center">PUNTAJE OBTENIDO</td>
+                <!--<td width="10%" style="vertical-align: middle;" align="center">PUNTAJE OBTENIDO</td>-->
                 <td width="3%" style="vertical-align: middle;" align="center">&nbsp;</td>
                 <td width="32%" style="vertical-align: middle;" align="center">DESCRIPCIÓN EVIDENCIA</td>
                 <td width="20%" style="vertical-align: middle;" align="center" colspan="4">ACCIONES</td>
@@ -68,7 +68,7 @@
                   <% @total_obtenido_proyecto_eje1 += @puntaje_pregunta_proyecto_eje1 %>
                   <td align="center" style="font-size: 14px;" rowspan="<%=h detalle_preguntas_eje1.size + 1%>"><%= @puntaje_pregunta_diagnostico_eje1 %></td>
                   <td align="center" style="font-size: 14px;" rowspan="<%=h detalle_preguntas_eje1.size + 1%>"><%= @puntaje_pregunta_proyecto_eje1 %></td>
-                  <td align="center" style="font-size: 14px;" rowspan="<%=h detalle_preguntas_eje1.size + 1%>"><%= @puntaje_pregunta_diagnostico_eje1 + @puntaje_pregunta_proyecto_eje1 %></td>
+                  <!--<td align="center" style="font-size: 14px;" rowspan="<%=h detalle_preguntas_eje1.size + 1%>"><%= @puntaje_pregunta_diagnostico_eje1 + @puntaje_pregunta_proyecto_eje1 %></td>-->
                 </tr>
 
                 <%detalle_preguntas_eje1.each do |eje|%>
@@ -95,14 +95,14 @@
                   </tr>
                 <%end%>
                 <tr>
-                  <td colspan="11">&nbsp;</td>
+                  <td colspan="10">&nbsp;</td>
                 </tr>
               <%end%>
               <tr>
                 <td align="right" ><b>TOTALES:</b></td>
                 <td align="center"><b><%= @total_puntos_eje1 %></b></td>
-                <td colspan="2"></td>
-                <td align="center"><b><%= @puntaje_diagnostico_eje1 + @total_obtenido_proyecto_eje1 %></b></td>
+                <td></td>
+                <td align="center"><b><%= @total_obtenido_proyecto_eje1 %></b></td>
                 <td colspan="6"></td>
               </tr>
             <%end%>
@@ -120,7 +120,7 @@
         <% @puntaje_pregunta_proyecto_eje2 = 0%>
         <table width="98%" border="0" cellspacing="0" cellpadding="0" class="sample" >
           <tr class="tdiagnostico">
-            <td colspan="11" align="center" ><label>EJE: 2 &nbsp; <b>ENTORNO SALUDABLE</b></label></td>
+            <td colspan="10" align="center" ><label>EJE: 2 &nbsp; <b>ENTORNO SALUDABLE</b></label></td>
           </tr>
           <% unless @preguntas_eje2.empty?  %>
             <tr class="d0" style=" font-weight: bold; " >
@@ -128,7 +128,7 @@
               <td width="10%" style="vertical-align: middle;"align="center">PUNTAJE PREGUNTA</td>
               <td width="10%" style="vertical-align: middle;"align="center">PUNTAJE DIAGNÓSTICO</td>
               <td width="10%" style="vertical-align: middle;" align="center">PUNTAJE AVANCE</td>
-              <td width="10%" style="vertical-align: middle;" align="center">PUNTAJE OBTENIDO</td>
+              <!--<td width="10%" style="vertical-align: middle;" align="center">PUNTAJE OBTENIDO</td>-->
               <td width="3%" style="vertical-align: middle;" align="center">&nbsp;</td>
               <td width="32%" style="vertical-align: middle;" align="center">DESCRIPCIÓN EVIDENCIA</td>
               <td width="20%" style="vertical-align: middle;" align="center" colspan="4">ACCIONES</td>
@@ -146,7 +146,7 @@
                 <% @total_obtenido_proyecto_eje2 += @puntaje_pregunta_proyecto_eje2 %>
                 <td align="center" style="font-size: 14px;" rowspan="<%=h detalle_preguntas_eje2.size + 1%>"><%= @puntaje_pregunta_diagnostico_eje2 %></td>
                 <td align="center" style="font-size: 14px;" rowspan="<%=h detalle_preguntas_eje2.size + 1%>"><%= @puntaje_pregunta_proyecto_eje2 %></td>
-                <td align="center" style="font-size: 14px;" rowspan="<%=h detalle_preguntas_eje2.size + 1%>"><%= @puntaje_pregunta_diagnostico_eje2 + @puntaje_pregunta_proyecto_eje2 %></td>
+                <!--<td align="center" style="font-size: 14px;" rowspan="<%=h detalle_preguntas_eje2.size + 1%>"><%= @puntaje_pregunta_diagnostico_eje2 + @puntaje_pregunta_proyecto_eje2 %></td>-->
               </tr>
 
               <%detalle_preguntas_eje2.each do |eje|%>
@@ -174,14 +174,14 @@
               <%end%>
 
               <tr>
-                <td colspan="11">&nbsp;</td>
+                <td colspan="10">&nbsp;</td>
               </tr>
             <%end%>
             <tr>
               <td align="right" ><b>TOTALES:</b></td>
               <td align="center"><b><%= @total_puntos_eje2 %></b></td>
-              <td colspan="2"></td>
-              <td align="center"><b><%= @puntaje_diagnostico_eje2 + @total_obtenido_proyecto_eje2 %></b></td>
+              <td></td>
+              <td align="center"><b><%= @total_obtenido_proyecto_eje2 %></b></td>
               <td colspan="6"></td>
             </tr>
           <% end %>
@@ -199,20 +199,19 @@
         <% @puntaje_pregunta_proyecto_eje3 = 0%>
         <table width="98%" border="0" cellspacing="0" cellpadding="0" class="sample" >
           <tr class="tdiagnostico">
-            <td colspan="11" align="center" ><label>EJE: 3 &nbsp; <b>HUELLA ECOLOGICA</b></label></td>
+            <td colspan="10" align="center" ><label>EJE: 3 &nbsp; <b>HUELLA ECOLOGICA</b></label></td>
           </tr>
-          <% unless @preguntas_eje3.empty?  %>
-            <tr class="d0" style=" font-weight: bold; " >
+          <tr class="d0" style=" font-weight: bold; " >
               <td width="5%" style="vertical-align: middle;" align="center">NP</td>
               <td width="10%" style="vertical-align: middle;"align="center">PUNTAJE PREGUNTA</td>
               <td width="10%" style="vertical-align: middle;"align="center">PUNTAJE DIAGNÓSTICO</td>
               <td width="10%" style="vertical-align: middle;" align="center">PUNTAJE AVANCE</td>
-              <td width="10%" style="vertical-align: middle;" align="center">PUNTAJE OBTENIDO</td>
+              <!--<td width="10%" style="vertical-align: middle;" align="center">PUNTAJE OBTENIDO</td>-->
               <td width="3%" style="vertical-align: middle;" align="center">&nbsp;</td>
               <td width="32%" style="vertical-align: middle;" align="center">DESCRIPCIÓN EVIDENCIA</td>
               <td width="20%" style="vertical-align: middle;" align="center" colspan="4">ACCIONES</td>
-            </tr>
-
+          </tr>
+          <% unless @preguntas_eje3.empty?  %>
             <%@preguntas_eje3.sort{|p1,p2| p1.numero_pregunta <=> p2.numero_pregunta}.each do |p|%>
               <tr class="d1" style="font-size: 14px;">
                 <% total_eje3 += (eval("$huella_p#{p.numero_pregunta}").to_f * 100).to_f %>
@@ -225,7 +224,7 @@
                 <% @total_obtenido_proyecto_eje3 += @puntaje_pregunta_proyecto_eje3 %>
                 <td align="center" style="font-size: 14px;" rowspan="<%=h detalle_preguntas_eje3.size + 1%>"><%= @puntaje_pregunta_diagnostico_eje3 %></td>
                 <td align="center" style="font-size: 14px;" rowspan="<%=h detalle_preguntas_eje3.size + 1%>"><%= @puntaje_pregunta_proyecto_eje3 %></td>
-                <td align="center" style="font-size: 14px;" rowspan="<%=h detalle_preguntas_eje3.size + 1%>"><%= @puntaje_pregunta_diagnostico_eje3 + @puntaje_pregunta_proyecto_eje3 %></td>
+                <!--<td align="center" style="font-size: 14px;" rowspan="<%=h detalle_preguntas_eje3.size + 1%>"><%= @puntaje_pregunta_diagnostico_eje3 + @puntaje_pregunta_proyecto_eje3 %></td>-->
               </tr>
 
               <%detalle_preguntas_eje3.each do |eje|%>
@@ -252,29 +251,28 @@
                 </tr>
               <%end%>
               <tr>
-                <td colspan="11">&nbsp;</td>
+                <td colspan="10">&nbsp;</td>
               </tr>
             <%end%>
-
-            <tr class="d1">
+          <% end %>
+              <tr class="d1">
               <td>&nbsp;</td>
-              <td align="center"><%= @total_puntos_eje3 - total_eje3 %> %></td>
-              <td colspan="2"></td>
+              <td align="center"><%= @total_puntos_eje3 - total_eje3 %></td>
+              <td>&nbsp;</td>
               <% obtenidos_sin_evidencias = (@ptos_obtenidos_eje3.to_f > 0) ? (@ptos_obtenidos_eje3 - total_obtenido_eje3) : 0 %>
               <td align="center"><%= obtenidos_sin_evidencias %></td>
               <td colspan="6">PUNTOS POR PREGUNTAS SIN EVIDENCIAS</td>
             </tr>
             <tr>
-              <td colspan="11">&nbsp;</td>
+              <td colspan="10">&nbsp;</td>
             </tr>
             <tr>
               <td align="right" ><b>TOTALES:</b></td>
               <td align="center"><b><%= @total_puntos_eje3 %></b></td>
-              <td colspan="2"></td>
-              <td align="center"><b><%= @puntaje_diagnostico_eje3 + @total_obtenido_proyecto_eje3 + obtenidos_sin_evidencias %></b></td>
+              <td>&nbsp;</td>
+              <td align="center"><b><%= @total_obtenido_proyecto_eje3 + obtenidos_sin_evidencias %></b></td>
               <td colspan="6"></td>
             </tr>
-          <% end %>
         </table>
       </div>
     <% end %>
@@ -289,20 +287,19 @@
         <% @puntaje_pregunta_proyecto_eje4 = 0%>
         <table width="98%" border="0" cellspacing="0" cellpadding="0" class="sample" >
           <tr class="tdiagnostico">
-            <td colspan="11" align="center" ><label>EJE: 4 &nbsp; <b>CONSUMO RESPONSABLE / SALUDABLE</b></label></td>
+            <td colspan="10" align="center" ><label>EJE: 4 &nbsp; <b>CONSUMO RESPONSABLE / SALUDABLE</b></label></td>
           </tr>
-          <% unless @preguntas_eje4.empty?  %>
-            <tr class="d0" style=" font-weight: bold; " >
+          <tr class="d0" style=" font-weight: bold; " >
               <td width="5%" style="vertical-align: middle;" align="center">NP</td>
               <td width="10%" style="vertical-align: middle;"align="center">PUNTAJE PREGUNTA</td>
               <td width="10%" style="vertical-align: middle;"align="center">PUNTAJE DIAGNÓSTICO</td>
               <td width="10%" style="vertical-align: middle;" align="center">PUNTAJE AVANCE</td>
-              <td width="10%" style="vertical-align: middle;" align="center">PUNTAJE OBTENIDO</td>
+              <!--<td width="10%" style="vertical-align: middle;" align="center">PUNTAJE OBTENIDO</td>-->
               <td width="3%" style="vertical-align: middle;" align="center">&nbsp;</td>
               <td width="32%" style="vertical-align: middle;" align="center">DESCRIPCIÓN EVIDENCIA</td>
               <td width="20%" style="vertical-align: middle;" align="center" colspan="4">ACCIONES</td>
-            </tr>
-
+          </tr>
+          <% unless @preguntas_eje4.empty?  %>
             <%@preguntas_eje4.sort{|p1,p2| p1.numero_pregunta <=> p2.numero_pregunta}.each do |p|%>
               <tr class="d1" style="font-size: 14px;">
                 <% total_eje4 += (eval("$consumo_p#{p.numero_pregunta}").to_f * 100).to_f %>
@@ -315,7 +312,7 @@
                 <% @total_obtenido_proyecto_eje4 += @puntaje_pregunta_proyecto_eje4 %>
                 <td align="center" style="font-size: 14px;" rowspan="<%=h detalle_preguntas_eje4.size + 1%>"><%= @puntaje_pregunta_diagnostico_eje4 %></td>
                 <td align="center" style="font-size: 14px;" rowspan="<%=h detalle_preguntas_eje4.size + 1%>"><%= @puntaje_pregunta_proyecto_eje4 %></td>
-                <td align="center" style="font-size: 14px;" rowspan="<%=h detalle_preguntas_eje4.size + 1%>"><%= @puntaje_pregunta_diagnostico_eje4 + @puntaje_pregunta_proyecto_eje4 %></td>
+                <!--<td align="center" style="font-size: 14px;" rowspan="<%=h detalle_preguntas_eje4.size + 1%>"><%= @puntaje_pregunta_diagnostico_eje4 + @puntaje_pregunta_proyecto_eje4 %></td>-->
               </tr>
 
               <%detalle_preguntas_eje4.each do |eje|%>
@@ -342,29 +339,28 @@
                 </tr>
               <%end%>
               <tr>
-                <td colspan="11">&nbsp;</td>
+                <td colspan="10">&nbsp;</td>
               </tr>
             <%end%>
-
-            <tr class="d1">
+          <% end %>
+              <tr class="d1">
               <td>&nbsp;</td>
               <td align="center"><%= @total_puntos_eje4 - total_eje4 %></td>
-              <td colspan="2"></td>
+              <td></td>
               <% obtenidos_sin_evidencias = (@ptos_obtenidos_eje4.to_f > 0) ? (@ptos_obtenidos_eje4 - total_obtenido_eje4) : 0 %>
               <td align="center"><%= obtenidos_sin_evidencias %></td>
               <td colspan="6">PUNTOS POR PREGUNTAS SIN EVIDENCIAS</td>
             </tr>
             <tr>
-              <td colspan="11">&nbsp;</td>
+              <td colspan="10">&nbsp;</td>
             </tr>
             <tr>
               <td align="right" ><b>TOTALES:</b></td>
               <td align="center"><b><%= @total_puntos_eje4 %></b></td>
-              <td colspan="2"></td>
-              <td align="center"><b><%= @puntaje_diagnostico_eje4 + @total_obtenido_proyecto_eje4 + obtenidos_sin_evidencias %></b></td>
+              <td></td>
+              <td align="center"><b><%= @total_obtenido_proyecto_eje4 + obtenidos_sin_evidencias %></b></td>
               <td colspan="6"></td>
             </tr>
-          <% end %>
         </table>
       </div>
     <% end %>
@@ -379,20 +375,19 @@
         <% @puntaje_pregunta_proyecto_eje5 = 0%>
         <table width="98%" border="0" cellspacing="0" cellpadding="0" class="sample" >
           <tr class="tdiagnostico">
-            <td colspan="11" align="center" ><label>EJE: 5 &nbsp; <b>PARTICIPACIÓN COMUNITARIA</b></label></td>
+            <td colspan="10" align="center" ><label>EJE: 5 &nbsp; <b>PARTICIPACIÓN COMUNITARIA</b></label></td>
           </tr>
-          <% unless @preguntas_eje5.empty?  %>
-            <tr class="d0" style=" font-weight: bold; " >
+          <tr class="d0" style=" font-weight: bold; " >
               <td width="5%" style="vertical-align: middle;" align="center">NP</td>
               <td width="10%" style="vertical-align: middle;"align="center">PUNTAJE PREGUNTA</td>
               <td width="10%" style="vertical-align: middle;"align="center">PUNTAJE DIAGNÓSTICO</td>
               <td width="10%" style="vertical-align: middle;" align="center">PUNTAJE AVANCE</td>
-              <td width="10%" style="vertical-align: middle;" align="center">PUNTAJE OBTENIDO</td>
+              <!--<td width="10%" style="vertical-align: middle;" align="center">PUNTAJE OBTENIDO</td>-->
               <td width="3%" style="vertical-align: middle;" align="center">&nbsp;</td>
               <td width="32%" style="vertical-align: middle;" align="center">DESCRIPCIÓN EVIDENCIA</td>
               <td width="20%" style="vertical-align: middle;" align="center" colspan="4">ACCIONES</td>
-            </tr>
-
+          </tr>
+          <% unless @preguntas_eje5.empty?  %>
             <%@preguntas_eje5.sort{|p1,p2| p1.numero_pregunta <=> p2.numero_pregunta}.each do |p|%>
               <tr class="d1" style="font-size: 14px;">
                 <% total_eje5 += (eval("$participacion_p#{p.numero_pregunta}").to_f * 100).to_f %>
@@ -405,7 +400,7 @@
                 <% @total_obtenido_proyecto_eje5 += @puntaje_pregunta_proyecto_eje5 %>
                 <td align="center" style="font-size: 14px;" rowspan="<%=h detalle_preguntas_eje5.size + 1%>"><%= @puntaje_pregunta_diagnostico_eje5 %></td>
                 <td align="center" style="font-size: 14px;" rowspan="<%=h detalle_preguntas_eje5.size + 1%>"><%= @puntaje_pregunta_proyecto_eje5 %></td>
-                <td align="center" style="font-size: 14px;" rowspan="<%=h detalle_preguntas_eje5.size + 1%>"><%= @puntaje_pregunta_diagnostico_eje5 + @puntaje_pregunta_proyecto_eje5 %></td>
+                <!--<td align="center" style="font-size: 14px;" rowspan="<%=h detalle_preguntas_eje5.size + 1%>"><%= @puntaje_pregunta_diagnostico_eje5 + @puntaje_pregunta_proyecto_eje5 %></td>-->
               </tr>
 
               <%detalle_preguntas_eje5.each do |eje|%>
@@ -432,29 +427,28 @@
                 </tr>
               <%end%>
               <tr>
-                <td colspan="11">&nbsp;</td>
+                <td colspan="10">&nbsp;</td>
               </tr>
             <%end%>
-
-            <tr class="d1">
+          <% end %>
+              <tr class="d1">
               <td>&nbsp;</td>
               <td align="center"><%= @total_puntos_eje5 - total_eje5 %></td>
-              <td colspan="2"></td>
+              <td></td>
               <% obtenidos_sin_evidencias = (@ptos_obtenidos_eje5.to_f > 0) ? (@ptos_obtenidos_eje5 - total_obtenido_eje5) : 0 %>
               <td align="center"><%= obtenidos_sin_evidencias %></td>
               <td colspan="6">PUNTOS POR PREGUNTAS SIN EVIDENCIAS</td>
             </tr>
             <tr>
-              <td colspan="11">&nbsp;</td>
+              <td colspan="10">&nbsp;</td>
             </tr>
             <tr>
               <td align="right" ><b>TOTALES:</b></td>
               <td align="center"><b><%= @total_puntos_eje5 %></b></td>
-              <td colspan="2"></td>
-              <td align="center"><b><%= @puntaje_diagnostico_eje5 + @total_obtenido_proyecto_eje5 + obtenidos_sin_evidencias %></b></td>
+              <td></td>
+              <td align="center"><b><%= @total_obtenido_proyecto_eje5 + obtenidos_sin_evidencias %></b></td>
               <td colspan="6"></td>
             </tr>
-          <% end %>
         </table>
       </div>
     <% end %>

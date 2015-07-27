@@ -178,6 +178,7 @@ class AvancesController < ApplicationController
   def concluir
     @proyecto = Proyecto.find(params[:id]) if params[:id]
     @proyecto.avance = (params[:avance].to_i + 1) if params[:avance]
+#    @proyecto.avance = params[:avance].to_i if params[:avance]
     @escuela = Escuela.find(@proyecto.diagnostico.escuela_id)
     avance = (params[:avance].to_i == 1)? "avance1" : nil
     avance ||= (params[:avance].to_i == 2)? "avance2" : nil
