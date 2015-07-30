@@ -604,7 +604,7 @@ class AdminController < ApplicationController
     proyecto = Evaluacion.new(:proyecto_id => @proyecto.id) if @proyecto
     diagnostico = Evaluacion.new(:diagnostico_id => @diagnostico.id) if @diagnostico
 
-    if @diagnostico
+    if @diagnostico && @diagnostico.oficializado
       @puntaje_total_diagnostico_eje1 = diagnostico.puntaje_total_obtenido_eje1
       @puntaje_total_diagnostico_eje2 = diagnostico.puntaje_total_obtenido_eje2
       @puntaje_total_diagnostico_eje3 = diagnostico.puntaje_total_obtenido_eje3
