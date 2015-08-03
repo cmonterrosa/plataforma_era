@@ -11,7 +11,7 @@
           <div class="formee" style="text-align:center" >
             <fieldset>
               <h2 style="color: #105cb6; font-weight: bold;">IMPRIMIR ACCIONES DEL PROYECTO:</h2>
-              <% @ejes.each do |eje| %>
+              <% @ejes.sort_by { |hsh| hsh[:catalogo_eje_id] }.each do |eje| %>
                 <% case eje.catalogo_eje.clave
                   when "EJE1" %>
                     <label><%= link_to "   EJE 1.- DESARROLLO DE COMPETENCIAS.", {:controller => "avances", :action => "avance_to_pdf", :id => "#{Base64.encode64(@diagnostico.id.to_s)}.pdf", :evidencia => false, :eje => "EJE1"}, :style => "color:#dd4b39; text-decoration: none;", :title => "IMPRIMIR EJE1", :target => "_blank" %></label><br />
