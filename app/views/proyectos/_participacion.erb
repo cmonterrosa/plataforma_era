@@ -301,4 +301,8 @@ capacitacion_medioambiente = @evidencia_diagnostico_p3 ? @participacion_diagnost
   meta.add( Validate.Presence );
   meta.add( Validate.Length, { maximum: 350 } );
 
+  var capacitacion_salud_ma = new LiveValidation( 'participacion_capacitacion_salud_ma' );
+  capacitacion_salud_ma.add( Validate.Presence );
+  capacitacion_salud_ma.add( Validate.Numericality, { maximum: <%= max_padres_familia %> }, { onlyInteger: true } );
+
 </script>
