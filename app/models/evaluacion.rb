@@ -611,10 +611,10 @@ def puntaje_eje4_p5(tipo=nil, avance=nil)
       @s_botanas = multiple_selected(@consumo_proyecto.botanas) if @consumo_proyecto.botanas
       @s_reposterias = multiple_selected(@consumo_proyecto.reposterias) if @consumo_proyecto.reposterias
       ## Diagnostico ###
-      @s_bebidas += multiple_selected(@consumo_proyecto.bebidas) if @consumo_diagnostico && @consumo_diagnostico.bebidas
-      @s_alimentos += multiple_selected(@consumo_proyecto.alimentos) if @consumo_diagnostico && @consumo_diagnostico.alimentos
-      @s_botanas += multiple_selected(@consumo_proyecto.botanas) if @consumo_diagnostico && @consumo_diagnostico.botanas
-      @s_reposterias += multiple_selected(@consumo_proyecto.reposterias) if @consumo_diagnostico && @consumo_diagnostico.reposterias
+      @s_bebidas += multiple_selected(@consumo_diagnostico.bebidas) if @consumo_diagnostico && @consumo_diagnostico.bebidas
+      @s_alimentos += multiple_selected(@consumo_diagnostico.alimentos) if @consumo_diagnostico && @consumo_diagnostico.alimentos
+      @s_botanas += multiple_selected(@consumo_diagnostico.botanas) if @consumo_diagnostico && @consumo_diagnostico.botanas
+      @s_reposterias += multiple_selected(@consumo_diagnostico.reposterias) if @consumo_diagnostico && @consumo_diagnostico.reposterias
     else
       @diagnostico = Diagnostico.find(self.diagnostico_id)
       @consumo_diagnostico = @diagnostico.consumo if @diagnostico.consumo
@@ -627,42 +627,41 @@ def puntaje_eje4_p5(tipo=nil, avance=nil)
       @s_reposterias = multiple_selected(@consumo_diagnostico.reposterias) if @consumo_diagnostico && @consumo_diagnostico.reposterias
     end
 
-  if @consumo_diagnostico || @consumo_proyecto
-  @b_saludables = Bebida.find_all_by_tipo("SALUDABLE")
-  @select_bebidas = 0
-  @s_bebidas.each do |bebida|
-    @select_bebidas+=1 if @b_saludables.any? { |b| b[:clave] == bebida }
-  end
-  @bebidas = @select_bebidas.to_f > 0 ? (((@select_bebidas.to_f / @s_bebidas.size.to_f)* 100)* $consumo_p5).round(3) : 0
+    if @consumo_diagnostico || @consumo_proyecto
+      @b_saludables = Bebida.find_all_by_tipo("SALUDABLE")
+      @select_bebidas = 0
+      @s_bebidas.each do |bebida|
+        @select_bebidas+=1 if @b_saludables.any? { |b| b[:clave] == bebida }
+      end
+      @bebidas = @select_bebidas.to_f > 0 ? (((@select_bebidas.to_f / @s_bebidas.size.to_f)* 100)* $consumo_p5).round(3) : 0
 
-  @a_saludables = Alimento.find_all_by_tipo("SALUDABLE")
-  @select_alimentos = 0
-  @s_alimentos.each do |alimento|
-    @select_alimentos+=1 if @a_saludables.any? { |b| b[:clave] == alimento }
-  end
-  @alimentos = @select_alimentos.to_f > 0 ? (((@select_alimentos.to_f / @s_alimentos.size.to_f)* 100)* $consumo_p5).round(3) : 0
+      @a_saludables = Alimento.find_all_by_tipo("SALUDABLE")
+      @select_alimentos = 0
+      @s_alimentos.each do |alimento|
+        @select_alimentos+=1 if @a_saludables.any? { |b| b[:clave] == alimento }
+      end
+      @alimentos = @select_alimentos.to_f > 0 ? (((@select_alimentos.to_f / @s_alimentos.size.to_f)* 100)* $consumo_p5).round(3) : 0
 
-  @bo_saludables = Botana.find_all_by_tipo("SALUDABLE")
-  @select_botanas = 0
-  @s_botanas.each do |botana|
-    @select_botanas+=1 if @bo_saludables.any? { |b| b[:clave] == botana }
-  end
-  @botanas = @select_botanas.to_f > 0 ? (((@select_botanas.to_f / @s_botanas.size.to_f)* 100)* $consumo_p5).round(3) : 0
+      @bo_saludables = Botana.find_all_by_tipo("SALUDABLE")
+      @select_botanas = 0
+      @s_botanas.each do |botana|
+        @select_botanas+=1 if @bo_saludables.any? { |b| b[:clave] == botana }
+      end
+      @botanas = @select_botanas.to_f > 0 ? (((@select_botanas.to_f / @s_botanas.size.to_f)* 100)* $consumo_p5).round(3) : 0
 
-  @r_saludables = Reposteria.find_all_by_tipo("SALUDABLE")
-  @select_reposterias = 0
-  @s_reposterias.each do |reposteria|
-    @select_reposterias+=1 if @r_saludables.any? { |b| b[:clave] == reposteria }
-  end
-  @reposterias =  @select_reposterias.to_f > 0 ? (((@select_reposterias.to_f / @s_reposterias.size.to_f)* 100)* $consumo_p5).round(3) : 0
+      @r_saludables = Reposteria.find_all_by_tipo("SALUDABLE")
+      @select_reposterias = 0
+      @s_reposterias.each do |reposteria|
+        @select_reposterias+=1 if @r_saludables.any? { |b| b[:clave] == reposteria }
+      end
+      @reposterias =  @select_reposterias.to_f > 0 ? (((@select_reposterias.to_f / @s_reposterias.size.to_f)* 100)* $consumo_p5).round(3) : 0
 
-  if (@bebidas + @alimentos + @botanas + @reposterias).to_f > 0
-    @eje4_p5 = (@bebidas + @alimentos + @botanas + @reposterias).to_f
-  else
-    @eje4_p5 = 0
-  end
-  end
-
+      if (@bebidas + @alimentos + @botanas + @reposterias).to_f > 0
+        @eje4_p5 = (@bebidas + @alimentos + @botanas + @reposterias).to_f
+      else
+        @eje4_p5 = 0
+      end
+    end
   return @eje4_p5
 end
 
@@ -789,7 +788,7 @@ def puntaje_eje5_p2(tipo=nil, avance=nil)
       num_padres_familia+=@participacion_proyecto.num_padres_familia.to_i if @participacion_proyecto && @participacion_proyecto.num_padres_familia
       num_padres_familia+=@participacion_diagnostico.num_padres_familia.to_i if @participacion_diagnostico && @participacion_diagnostico.num_padres_familia
       capacitacion_salud_ma+=@participacion_proyecto.capacitacion_salud_ma.to_f if @participacion_proyecto && @participacion_proyecto.capacitacion_salud_ma
-      capacitacion_salud_ma+=@participacion_diagnostico.capacitacion_salud_ma.to_f if @participacion_diagnostico && @participacion_diagnostico.capacitacion_salud_ma
+      capacitacion_salud_ma+=@participacion_diagnostico.capacitacion_salud_ma.to_f if @participacion_diagnostico && @participacion_diagnostico.capacitacion_salud_ma && evidencia_valida?(eje5.id, 2, @proyecto.diagnostico, nil, nil)
   else
       @diagnostico = Diagnostico.find(self.diagnostico_id)
       @participacion_diagnostico = @diagnostico.participacion if @diagnostico.participacion
