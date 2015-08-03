@@ -2,8 +2,8 @@ class CreateNivelCertificacions < ActiveRecord::Migration
   def self.up
     create_table :nivel_certificacions do |t|
       t.integer :nivel
-      t.float   :minimo
-      t.float   :maximo
+      t.decimal   :minimo, :precision => 5, :scale => 2
+      t.decimal   :maximo, :precision => 5, :scale => 2
     end
 
     NivelCertificacion.create(:nivel => 1, :minimo => 16.67, :maximo => 33.33)
