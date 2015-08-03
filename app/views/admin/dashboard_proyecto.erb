@@ -215,8 +215,17 @@
             <%@preguntas_eje3.sort{|p1,p2| p1.numero_pregunta <=> p2.numero_pregunta}.each do |p|%>
               <tr class="d1" style="font-size: 14px;">
                 <% total_eje3 += (eval("$huella_p#{p.numero_pregunta}").to_f * 100).to_f %>
-                <% total_obtenido_eje3 += eval("@huella_p#{p.numero_pregunta}").to_f %>
-                <%detalle_preguntas_eje3 = Adjunto.find(:all, :conditions => ["proyecto_id = ? and eje_id = ? and numero_pregunta = ? and avance = ?", p.proyecto_id, @eje3.id, p.numero_pregunta, @avance])%>
+                <%# total_obtenido_eje3 += eval("@huella_p#{p.numero_pregunta}").to_f %>
+                <% @total_obtenido_se_eje3 = 0.0 %>
+                <%
+                  np=0
+                  [3,5].each do |np|
+                    pregunta_puntaje_proyecto_eje3 = ( eval("@p_proyecto.puntaje_eje3_p#{np}('proyecto', #{@avance})").to_f > 0.0 ) ? (( eval("@p_proyecto.puntaje_eje3_p#{np}('proyecto', #{@avance})").to_f - eval("@p_diagnostico.puntaje_eje3_p#{np}").to_f )) : 0
+                      #( eval("@p_proyecto.puntaje_eje3_p#{np}('proyecto', #{@avance})").to_f )
+                    @total_obtenido_se_eje3 += pregunta_puntaje_proyecto_eje3
+                  end
+                %>
+                <% detalle_preguntas_eje3 = Adjunto.find(:all, :conditions => ["proyecto_id = ? and eje_id = ? and numero_pregunta = ? and avance = ?", p.proyecto_id, @eje3.id, p.numero_pregunta, @avance]) %>
                 <td align="center" rowspan="<%= detalle_preguntas_eje3.size + 1%>"><%= p.numero_pregunta %></td>
                 <td align="center" style="font-size: 14px;" rowspan="<%=h detalle_preguntas_eje3.size + 1%>"><%= eval("$huella_p#{p.numero_pregunta}").to_f * 100 %></td>
                 <% @puntaje_pregunta_diagnostico_eje3 = eval("@p_diagnostico.puntaje_eje3_p#{p.numero_pregunta}").to_f%>
@@ -259,8 +268,8 @@
               <td>&nbsp;</td>
               <td align="center"><%= @total_puntos_eje3 - total_eje3 %></td>
               <td>&nbsp;</td>
-              <% obtenidos_sin_evidencias = (@ptos_obtenidos_eje3.to_f > 0) ? (@ptos_obtenidos_eje3 - total_obtenido_eje3) : 0 %>
-              <td align="center"><%= obtenidos_sin_evidencias %></td>
+              <%# obtenidos_sin_evidencias = (@ptos_obtenidos_eje3.to_f > 0) ? (@ptos_obtenidos_eje3 - total_obtenido_eje3) : 0 %>
+              <td align="center"><%= @total_obtenido_se_eje3 %></td>
               <td colspan="6">PUNTOS POR PREGUNTAS SIN EVIDENCIAS</td>
             </tr>
             <tr>
@@ -270,7 +279,7 @@
               <td align="right" ><b>TOTALES:</b></td>
               <td align="center"><b><%= @total_puntos_eje3 %></b></td>
               <td>&nbsp;</td>
-              <td align="center"><b><%= @total_obtenido_proyecto_eje3 + obtenidos_sin_evidencias %></b></td>
+              <td align="center"><b><%= @total_obtenido_proyecto_eje3 + @total_obtenido_se_eje3 %></b></td>
               <td colspan="6"></td>
             </tr>
         </table>
@@ -303,7 +312,15 @@
             <%@preguntas_eje4.sort{|p1,p2| p1.numero_pregunta <=> p2.numero_pregunta}.each do |p|%>
               <tr class="d1" style="font-size: 14px;">
                 <% total_eje4 += (eval("$consumo_p#{p.numero_pregunta}").to_f * 100).to_f %>
-                <% total_obtenido_eje4 += eval("@consumo_p#{p.numero_pregunta}").to_f %>
+                <% @total_obtenido_se_eje4 = 0 %>
+                <%
+                  np=0
+                  [4, 5, 6, 8].each do |np|
+                    pregunta_puntaje_proyecto_eje4 = ( eval("@p_proyecto.puntaje_eje4_p#{np}('proyecto', #{@avance})").to_f > 0.0 ) ? (( eval("@p_proyecto.puntaje_eje4_p#{np}('proyecto', #{@avance})").to_f - eval("@p_diagnostico.puntaje_eje4_p#{np}").to_f )) : 0
+                      #( eval("@p_proyecto.puntaje_eje4_p#{np}('proyecto', #{@avance})").to_f )
+                    @total_obtenido_se_eje4 += pregunta_puntaje_proyecto_eje4
+                  end
+                %>
                 <%detalle_preguntas_eje4 = Adjunto.find(:all, :conditions => ["proyecto_id = ? and eje_id = ? and numero_pregunta = ? and avance = ?", p.proyecto_id, @eje4.id, p.numero_pregunta, @avance])%>
                 <td align="center" rowspan="<%= detalle_preguntas_eje4.size + 1%>"><%= p.numero_pregunta %></td>
                 <td align="center" style="font-size: 14px;" rowspan="<%=h detalle_preguntas_eje4.size + 1%>"><%= eval("$consumo_p#{p.numero_pregunta}").to_f * 100 %></td>
@@ -347,8 +364,8 @@
               <td>&nbsp;</td>
               <td align="center"><%= @total_puntos_eje4 - total_eje4 %></td>
               <td></td>
-              <% obtenidos_sin_evidencias = (@ptos_obtenidos_eje4.to_f > 0) ? (@ptos_obtenidos_eje4 - total_obtenido_eje4) : 0 %>
-              <td align="center"><%= obtenidos_sin_evidencias %></td>
+              <%# obtenidos_sin_evidencias = (@ptos_obtenidos_eje4.to_f > 0) ? (@ptos_obtenidos_eje4 - total_obtenido_eje4) : 0 %>
+              <td align="center"><%= @total_obtenido_se_eje4 %></td>
               <td colspan="6">PUNTOS POR PREGUNTAS SIN EVIDENCIAS</td>
             </tr>
             <tr>
@@ -358,7 +375,7 @@
               <td align="right" ><b>TOTALES:</b></td>
               <td align="center"><b><%= @total_puntos_eje4 %></b></td>
               <td></td>
-              <td align="center"><b><%= @total_obtenido_proyecto_eje4 + obtenidos_sin_evidencias %></b></td>
+              <td align="center"><b><%= @total_obtenido_proyecto_eje4 + @total_obtenido_se_eje4 %></b></td>
               <td colspan="6"></td>
             </tr>
         </table>
