@@ -1,0 +1,20 @@
+<!-- Mensaje donde de despliegan observaciones de evidencias -->
+
+<%@escuela = Escuela.find(:first, :select => "id, clave", :conditions => ["clave = ?", current_user.login]) if current_user%>
+<%@diagnostico= Diagnostico.find(:first, :conditions => ["escuela_id = ?", @escuela.id]) if @escuela%>
+<%@evaluaciones = Evaluacion.find(:all, :conditions => ["diagnostico_id = ?", @diagnostico.id]) if @diagnostico%>
+
+
+<%if @evaluaciones && !@evaluaciones.empty?%>
+  <div class="formee-msg-warning">
+                <h3>Observaciones de evidencias del diagnóstico:</h3>
+
+                <%@evaluaciones.each do |e|%>
+                <ul>
+                   <li><b>VALIDADO POR:</b> <%=User.find(e.user_id).nombre%> - <b>FECHA:</b> <%=e.created_at.strftime("%d/%m/%Y %H:%M")%>  </li><br />
+                   <li><b>OBSERVACIONES:</b> <%=e.observaciones%></li><br />
+                   <li><%=link_to "REVISAR DETALLES", :action => "reporte_evidencias_diagnostico", :controller => "upload", :id => current_user.id, :diagnostico => @diagnostico%></li>
+                </ul>
+               <%end%>
+  </div>
+<%end%>
