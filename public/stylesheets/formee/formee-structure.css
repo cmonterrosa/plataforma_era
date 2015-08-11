@@ -212,7 +212,7 @@ Structure
 	top:3px;
 }
 
-.formee-msg-info, .formee-msg-warning, .formee-msg-error, .formee-msg-success, .formee-msg-suggest {
+.formee-msg-info, .formee-msg-warning, .formee-msg-error, .formee-msg-success, .formee-msg-suggest, .formee-msg-description {
 /*	padding:20px 20px 15px 38px;*/
         padding:2px 20px 0px 35px;
 	border: 1px solid #ccc;
@@ -224,7 +224,7 @@ Structure
 	clear:both;
         text-align: justify;
 }
-.formee-msg-info li, .formee-msg-warning li, .formee-msg-error li, .formee-msg-success li, .formee-msg-suggest {
+.formee-msg-info li, .formee-msg-warning li, .formee-msg-error li, .formee-msg-success li, .formee-msg-suggest li .formee-msg-description li {
 	list-style: none;
 	padding:0;	
 	margin-bottom: -1.6%;
