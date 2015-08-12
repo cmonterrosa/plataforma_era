@@ -635,13 +635,15 @@ class AdminController < ApplicationController
     @puntaje_total_proyecto_eje1 = 0
     if @proyecto && @proyecto.competencia
 #      evaluacion = Evaluacion.find_by_proyecto_id(@proyecto.id)
-      evaluacion = Evaluacion.find(:last, :conditions => ["proyecto_id = ?", @proyecto.id])
-      @preguntas_eje1 = Adjunto.find(:all, :conditions => ["user_id = ? and proyecto_id = ? and eje_id = ? and avance = ?",  @user, @proyecto.id, 1, evaluacion.avance], :group => "numero_pregunta")
+      evaluacion = Evaluacion.find(:last, :conditions => ["proyecto_id = ?", @proyecto.id], :order => "updated_at")
+      @preguntas_eje1 = Adjunto.find(:all, :conditions => ["user_id = ? and proyecto_id = ? and eje_id = ? and avance = ?",  @user, @proyecto.id, 1, evaluacion.avance], :group => "numero_pregunta") if evaluacion
 
-      @preguntas_eje1.each do |p|
-        @pregunta_puntaje_proyecto_eje1 = ( eval("proyecto.puntaje_eje1_p#{p.numero_pregunta}('proyecto', #{evaluacion.avance})").to_f > 0.0 ) ? (( eval("proyecto.puntaje_eje1_p#{p.numero_pregunta}('proyecto', #{evaluacion.avance})").to_f - eval("diagnostico.puntaje_eje1_p#{p.numero_pregunta}").to_f )) : 0
-        @puntaje_total_proyecto_eje1 += @pregunta_puntaje_proyecto_eje1
-      end unless evaluacion.avance.nil?
+      if evaluacion
+        @preguntas_eje1.each do |p|
+          @pregunta_puntaje_proyecto_eje1 = ( eval("proyecto.puntaje_eje1_p#{p.numero_pregunta}('proyecto', #{evaluacion.avance})").to_f > 0.0 ) ? (( eval("proyecto.puntaje_eje1_p#{p.numero_pregunta}('proyecto', #{evaluacion.avance})").to_f - eval("diagnostico.puntaje_eje1_p#{p.numero_pregunta}").to_f )) : 0
+          @puntaje_total_proyecto_eje1 += @pregunta_puntaje_proyecto_eje1
+        end
+      end
 
     end
 
@@ -649,30 +651,34 @@ class AdminController < ApplicationController
     if @proyecto && @proyecto.entorno
 #      evaluacion = Evaluacion.find_by_proyecto_id(@proyecto.id)
       evaluacion = Evaluacion.find(:last, :conditions => ["proyecto_id = ?", @proyecto.id])
-      @preguntas_eje2 = Adjunto.find(:all, :conditions => ["user_id = ? and proyecto_id = ? and eje_id = ? and avance = ?",  @user, @proyecto.id, 2, evaluacion.avance], :group => "numero_pregunta")
-
-      @preguntas_eje2.each do |p|
-        @pregunta_puntaje_proyecto_eje2 = ( eval("proyecto.puntaje_eje2_p#{p.numero_pregunta}('proyecto', #{evaluacion.avance})").to_f > 0.0 ) ? (( eval("proyecto.puntaje_eje2_p#{p.numero_pregunta}('proyecto', #{evaluacion.avance})").to_f - eval("diagnostico.puntaje_eje2_p#{p.numero_pregunta}").to_f )) : 0
-        @puntaje_total_proyecto_eje2 += @pregunta_puntaje_proyecto_eje2
-      end unless evaluacion.avance.nil?
-
+      @preguntas_eje2 = Adjunto.find(:all, :conditions => ["user_id = ? and proyecto_id = ? and eje_id = ? and avance = ?",  @user, @proyecto.id, 2, evaluacion.avance], :group => "numero_pregunta") if evaluacion
+      if evaluacion
+        @preguntas_eje2.each do |p|
+          @pregunta_puntaje_proyecto_eje2 = ( eval("proyecto.puntaje_eje2_p#{p.numero_pregunta}('proyecto', #{evaluacion.avance})").to_f > 0.0 ) ? (( eval("proyecto.puntaje_eje2_p#{p.numero_pregunta}('proyecto', #{evaluacion.avance})").to_f - eval("diagnostico.puntaje_eje2_p#{p.numero_pregunta}").to_f )) : 0
+          @puntaje_total_proyecto_eje2 += @pregunta_puntaje_proyecto_eje2
+        end
+      end
     end
 
     @puntaje_total_proyecto_eje3 = 0
     if @proyecto && @proyecto.huella
 #      evaluacion = Evaluacion.find_by_proyecto_id(@proyecto.id)
       evaluacion = Evaluacion.find(:last, :conditions => ["proyecto_id = ?", @proyecto.id])
-      @preguntas_eje3 = Adjunto.find(:all, :conditions => ["user_id = ? and proyecto_id = ? and eje_id = ? and avance = ?",  @user, @proyecto.id, 3, evaluacion.avance], :group => "numero_pregunta")
+      @preguntas_eje3 = Adjunto.find(:all, :conditions => ["user_id = ? and proyecto_id = ? and eje_id = ? and avance = ?",  @user, @proyecto.id, 3, evaluacion.avance], :group => "numero_pregunta") if evaluacion
 
-      @preguntas_eje3.each do |p|
-        @pregunta_puntaje_proyecto_eje3 = ( eval("proyecto.puntaje_eje3_p#{p.numero_pregunta}('proyecto', #{evaluacion.avance})").to_f > 0.0 ) ? (( eval("proyecto.puntaje_eje3_p#{p.numero_pregunta}('proyecto', #{evaluacion.avance})").to_f - eval("diagnostico.puntaje_eje3_p#{p.numero_pregunta}").to_f )) : 0
-        @puntaje_total_proyecto_eje3 += @pregunta_puntaje_proyecto_eje3
-      end unless evaluacion.avance.nil?
+      if evaluacion
+        @preguntas_eje3.each do |p|
+          @pregunta_puntaje_proyecto_eje3 = ( eval("proyecto.puntaje_eje3_p#{p.numero_pregunta}('proyecto', #{evaluacion.avance})").to_f > 0.0 ) ? (( eval("proyecto.puntaje_eje3_p#{p.numero_pregunta}('proyecto', #{evaluacion.avance})").to_f - eval("diagnostico.puntaje_eje3_p#{p.numero_pregunta}").to_f )) : 0
+          @puntaje_total_proyecto_eje3 += @pregunta_puntaje_proyecto_eje3
+        end
+      end
 
-      [3,5].each do |np|
-        @pregunta_puntaje_proyecto_eje3 = ( eval("proyecto.puntaje_eje3_p#{np}('proyecto', #{evaluacion.avance})").to_f > 0.0 ) ? (( eval("proyecto.puntaje_eje3_p#{np}('proyecto', #{evaluacion.avance})").to_f - eval("diagnostico.puntaje_eje3_p#{np}").to_f )) : 0
-        @puntaje_total_proyecto_eje3 += @pregunta_puntaje_proyecto_eje3
-      end unless evaluacion.avance.nil?
+      if evaluacion
+        [3,5].each do |np|
+          @pregunta_puntaje_proyecto_eje3 = ( eval("proyecto.puntaje_eje3_p#{np}('proyecto', #{evaluacion.avance})").to_f > 0.0 ) ? (( eval("proyecto.puntaje_eje3_p#{np}('proyecto', #{evaluacion.avance})").to_f - eval("diagnostico.puntaje_eje3_p#{np}").to_f )) : 0
+          @puntaje_total_proyecto_eje3 += @pregunta_puntaje_proyecto_eje3
+        end
+      end
       
     end
 
@@ -680,30 +686,37 @@ class AdminController < ApplicationController
     if @proyecto && @proyecto.consumo
 #      evaluacion = Evaluacion.find_by_proyecto_id(@proyecto.id)
       evaluacion = Evaluacion.find(:last, :conditions => ["proyecto_id = ?", @proyecto.id])
-      @preguntas_eje4 = Adjunto.find(:all, :conditions => ["user_id = ? and proyecto_id = ? and eje_id = ? and avance = ?",  @user, @proyecto.id, 4, evaluacion.avance], :group => "numero_pregunta")
+      @preguntas_eje4 = Adjunto.find(:all, :conditions => ["user_id = ? and proyecto_id = ? and eje_id = ? and avance = ?",  @user, @proyecto.id, 4, evaluacion.avance], :group => "numero_pregunta") if evaluacion
 
-      @preguntas_eje4.each do |p|
-        @pregunta_puntaje_proyecto_eje4 = ( eval("proyecto.puntaje_eje4_p#{p.numero_pregunta}('proyecto', #{evaluacion.avance})").to_f > 0.0 ) ? (( eval("proyecto.puntaje_eje4_p#{p.numero_pregunta}('proyecto', #{evaluacion.avance})").to_f - eval("diagnostico.puntaje_eje4_p#{p.numero_pregunta}").to_f )) : 0
-        @puntaje_total_proyecto_eje4 += @pregunta_puntaje_proyecto_eje4
-      end unless evaluacion.avance.nil?
+      if evaluacion
+        @preguntas_eje4.each do |p|
+          @pregunta_puntaje_proyecto_eje4 = ( eval("proyecto.puntaje_eje4_p#{p.numero_pregunta}('proyecto', #{evaluacion.avance})").to_f > 0.0 ) ? (( eval("proyecto.puntaje_eje4_p#{p.numero_pregunta}('proyecto', #{evaluacion.avance})").to_f - eval("diagnostico.puntaje_eje4_p#{p.numero_pregunta}").to_f )) : 0
+          @puntaje_total_proyecto_eje4 += @pregunta_puntaje_proyecto_eje4
+        end
+      end
+
       np=0
-      [4,5,6,8].each do |np|
-        @pregunta_puntaje_proyecto_eje4 = ( eval("proyecto.puntaje_eje4_p#{np}('proyecto', #{evaluacion.avance})").to_f > 0.0 ) ? (( eval("proyecto.puntaje_eje4_p#{np}('proyecto', #{evaluacion.avance})").to_f - eval("diagnostico.puntaje_eje4_p#{np}").to_f )) : 0
-        @puntaje_total_proyecto_eje4 += @pregunta_puntaje_proyecto_eje4
-        a=0
-      end unless evaluacion.avance.nil?
+      if evaluacion
+        [4,5,6,8].each do |np|
+          @pregunta_puntaje_proyecto_eje4 = ( eval("proyecto.puntaje_eje4_p#{np}('proyecto', #{evaluacion.avance})").to_f > 0.0 ) ? (( eval("proyecto.puntaje_eje4_p#{np}('proyecto', #{evaluacion.avance})").to_f - eval("diagnostico.puntaje_eje4_p#{np}").to_f )) : 0
+          @puntaje_total_proyecto_eje4 += @pregunta_puntaje_proyecto_eje4
+          a=0
+        end
+      end
     end
 
     @puntaje_total_proyecto_eje5 = 0
     if @proyecto && @proyecto.participacion
 #      evaluacion = Evaluacion.find_by_proyecto_id(@proyecto.id)
       evaluacion = Evaluacion.find(:last, :conditions => ["proyecto_id = ?", @proyecto.id])
-      @preguntas_eje5 = Adjunto.find(:all, :conditions => ["user_id = ? and proyecto_id = ? and eje_id = ? and avance = ?",  @user, @proyecto.id, 5, evaluacion.avance], :group => "numero_pregunta")
+      @preguntas_eje5 = Adjunto.find(:all, :conditions => ["user_id = ? and proyecto_id = ? and eje_id = ? and avance = ?",  @user, @proyecto.id, 5, evaluacion.avance], :group => "numero_pregunta") if evaluacion
 
-      @preguntas_eje5.each do |p|
-        @pregunta_puntaje_proyecto_eje5 = ( eval("proyecto.puntaje_eje5_p#{p.numero_pregunta}('proyecto', #{evaluacion.avance})").to_f > 0.0 ) ? (( eval("proyecto.puntaje_eje5_p#{p.numero_pregunta}('proyecto', #{evaluacion.avance})").to_f - eval("diagnostico.puntaje_eje5_p#{p.numero_pregunta}").to_f )) : 0
-        @puntaje_total_proyecto_eje5 += @pregunta_puntaje_proyecto_eje5
-      end unless evaluacion.avance.nil?
+      if evaluacion
+        @preguntas_eje5.each do |p|
+          @pregunta_puntaje_proyecto_eje5 = ( eval("proyecto.puntaje_eje5_p#{p.numero_pregunta}('proyecto', #{evaluacion.avance})").to_f > 0.0 ) ? (( eval("proyecto.puntaje_eje5_p#{p.numero_pregunta}('proyecto', #{evaluacion.avance})").to_f - eval("diagnostico.puntaje_eje5_p#{p.numero_pregunta}").to_f )) : 0
+          @puntaje_total_proyecto_eje5 += @pregunta_puntaje_proyecto_eje5
+      end
+      end
     end
     
     @total_puntaje_proyecto = @puntaje_total_proyecto_eje1 + @puntaje_total_proyecto_eje2 + @puntaje_total_proyecto_eje3 + @puntaje_total_proyecto_eje4 + @puntaje_total_proyecto_eje5
