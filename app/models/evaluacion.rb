@@ -746,6 +746,8 @@ end
 
 def puntaje_eje4_p8(tipo=nil, avance=nil)
   @eje4_p8 = minutos_activacion_fisica =0
+  valido = valido_a1 = false
+  eje4 = CatalogoEje.find_by_clave("EJE4")
   if tipo == "proyecto"
       @proyecto = Proyecto.find(self.proyecto_id)
       @consumo_proyecto = @proyecto.consumo if @proyecto.consumo
@@ -767,9 +769,15 @@ def puntaje_eje4_p8(tipo=nil, avance=nil)
     else
       @eje4_p8 = ptos_minutos(minutos_activacion_fisica).to_f
     end
+    valido = evidencia_valida?(eje4.id, 7, @diagnostico) if @diagnostico
+    if @proyecto
+      valido_a1 = evidencia_valida?(eje4.id, 7, nil, @proyecto, 1)
+      valido ||= evidencia_valida?(eje4.id, 7, nil, @proyecto, avance) if valido_a1 && avance == "2"
+      valido ||= evidencia_valida?(eje4.id, 7, nil, @proyecto, avance) if valido_a1
+    end
   end
 
-  return @eje4_p8
+  return valido ? @eje4_p8 : 0
 end
 
 
