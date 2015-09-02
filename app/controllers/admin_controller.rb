@@ -1233,7 +1233,7 @@ class AdminController < ApplicationController
       modalidad = (escuela) ? escuela.nivel_descripcion : ""
       sostenimiento = (escuela) ? escuela.sostenimiento : ""
       beneficiada = (escuela.beneficiada) ? "SI" : "NO"
-      csv << [r.rank, r.nivel_certificacion, r.puntaje_total, clave_escuela, nombre_escuela, r.municipio, r.localidad, nivel_educativo, modalidad, sostenimiento, beneficiada]
+      csv << [r.rank, r.nivel_certificacion, r.puntaje_total, clave_escuela, nombre_director, nombre_escuela, r.municipio, r.localidad, nivel_educativo, modalidad, sostenimiento, beneficiada]
    end
      
    end
