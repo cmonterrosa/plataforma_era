@@ -1255,19 +1255,20 @@ class AdminController < ApplicationController
 
 
  def get_ranking_escuelas_realtime
-  @escuelas = Escuela.find_by_sql("SELECT es.id, es.clave, es.nombre, es.localidad, es.municipio, es.nivel_id from users us INNER JOIN escuelas es ON us.login = es.clave AND (us.blocked is NULL OR us.blocked !=1) AND (es.beneficiada IS NULL or es.beneficiada=0)")
+  @escuelas = Escuela.find_by_sql("SELECT es.id, es.clave, es.nombre, es.localidad, es.municipio, es.nivel_id, es.nombre_director from users us INNER JOIN escuelas es ON us.login = es.clave AND (us.blocked is NULL OR us.blocked !=1) AND (es.beneficiada IS NULL or es.beneficiada=0)")
   @escuelas = @escuelas.sort{|a, b| a.puntaje_actual <=> b.puntaje_actual}.reverse
   contador=1
   nivel3 = (1..100)
   nivel2 = (101..250)
   nivel1 = (251..9999)
+  niveles_certificacion = NivelCertificacion.find(:all)
   @escuelas.each do |e|
-     e["nivel_certificacion"] ||= (nivel3.include?(contador)) ? 3 : nil if e.puntaje_actual >= 0
-     e["nivel_certificacion"] ||= (nivel2.include?(contador)) ? 2 : nil if e.puntaje_actual >= 0
-     e["nivel_certificacion"] ||= (nivel1.include?(contador)) ? 1 : nil if e.puntaje_actual >= 0
-     e["nivel_certificacion"] ||= (e.puntaje_actual < 0) ? 0 : 1
-     e["rank"] = contador
-     contador+=1
+    niveles_certificacion.each do |nivel|
+      e["nivel_certificacion"] = nivel.nivel if (nivel.minimo.to_f..nivel.maximo.to_f).include?(e.puntaje_actual.to_f)
+    end
+    e["nivel_certificacion"] ||= 0
+    e["rank"] = contador
+    contador+=1
    end
    return @escuelas
  end
