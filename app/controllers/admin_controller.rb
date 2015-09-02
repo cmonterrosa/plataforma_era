@@ -1223,11 +1223,12 @@ class AdminController < ApplicationController
  def download_corte_ranking
    @corte = Corte.find(params[:id])
    csv_string = FasterCSV.generate(:col_sep => "\t") do |csv|
-   csv << ["RANK", "NIVEL_CERTIFICACION", "PUNTAJE_TOTAL", "CLAVE", "NOMBRE_ESCUELA", "MUNICIPIO",  "LOCALIDAD", "NIVEL_EDUCATIVO", "MODALIDAD", "SOSTENIMIENTO", "BENEFICIADA"]
+   csv << ["RANK", "NIVEL_CERTIFICACION", "PUNTAJE_TOTAL", "CLAVE", "NOMBRE_ESCUELA", "NOMBRE_DIRECTOR", "MUNICIPIO",  "LOCALIDAD", "NIVEL_EDUCATIVO", "MODALIDAD", "SOSTENIMIENTO", "BENEFICIADA"]
    @corte.ranking_historicos.each do |r|
       escuela = Escuela.find(r.escuela_id) if r.escuela_id
       clave_escuela = (escuela) ? escuela.clave : ""
       nombre_escuela = (escuela) ? escuela.nombre : ""
+      nombre_director = (escuela) ? escuela.nombre_director : ""
       nivel_educativo = (escuela.nivel) ? escuela.nivel.descripcion : ""
       modalidad = (escuela) ? escuela.nivel_descripcion : ""
       sostenimiento = (escuela) ? escuela.sostenimiento : ""
@@ -1258,9 +1259,6 @@ class AdminController < ApplicationController
   @escuelas = Escuela.find_by_sql("SELECT es.id, es.clave, es.nombre, es.localidad, es.municipio, es.nivel_id, es.nombre_director from users us INNER JOIN escuelas es ON us.login = es.clave AND (us.blocked is NULL OR us.blocked !=1) AND (es.beneficiada IS NULL or es.beneficiada=0)")
   @escuelas = @escuelas.sort{|a, b| a.puntaje_actual <=> b.puntaje_actual}.reverse
   contador=1
-  nivel3 = (1..100)
-  nivel2 = (101..250)
-  nivel1 = (251..9999)
   niveles_certificacion = NivelCertificacion.find(:all)
   @escuelas.each do |e|
     niveles_certificacion.each do |nivel|
