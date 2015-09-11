@@ -7,7 +7,7 @@ class Entorno < ActiveRecord::Base
   validates_presence_of :evidencia_pregunta_1, :if => "self.superficie_terreno_escuela_av.to_f > 0"
   validates_presence_of :evidencia_pregunta_2, :if => "!self.escuelas_espacios.empty?"
   validates_presence_of :evidencia_pregunta_3, :if => "self.escuela_reforesta == 'SI'"
-  validates_presence_of :evidencia_pregunta_5, :if => :valida_acciones
+  validates_presence_of :evidencia_pregunta_5, :if => "!self.acciones.empty? && valida_acciones"
 
 #  attr_accessible :num_avance
 
