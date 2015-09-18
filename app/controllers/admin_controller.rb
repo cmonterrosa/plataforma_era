@@ -12,6 +12,10 @@ class AdminController < ApplicationController
   def index
   end
 
+  def index_old
+    
+  end
+
   def catalogos
   end
 

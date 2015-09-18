@@ -1,0 +1,106 @@
+<!-- Menú de administrador -->
+<div class="titulos">
+  <p>
+    Menú de Administración | <span style="font-size: 10px; color: navy;"><%=link_to "Menu Nuevo", :action => "index"-%></span>
+  </p>
+</div>
+
+<table width="90%" border="0" cellspacing="0" cellpadding="0" align="center">
+    <tr align="center">
+      <td>
+        <div class="grid-3-12">
+       <!-- Búsqueda de Escuela -->
+       <%=link_to image_tag('admin/escuela.png', :size => "128x128", :mouseover => 'admin/escuela2.png') , {:action => "show_users", :controller => "admin"}, :title => "Mostrar escuelas"%>
+       <label style="font-family:verdana;font-size:14px;">Escuelas</label>
+        </div>
+
+
+       <!-- Respaldos -->
+       <%if current_user.has_role?("adminplat")%>
+          <!-- Listado -->
+        <div class="grid-3-12">
+       <%=link_to image_tag('admin/listado.png', :size => "128x128", :mouseover => 'admin/listado2.png') , {:action => "total_escuelas_registradas", :controller => "admin"}, :title => "Descargar listado de escuelas registradas"%>
+          <label style="font-family:verdana;font-size:14px;">Listado General de Escuelas</label>
+        </div>
+
+
+       <!-- Comentarios -->
+       <div class="grid-3-12">
+       <%=link_to image_tag('admin/comentarios.png', :size => "128x128", :size => "128x128", :mouseover => 'admin/comentarios2.png') , {:action => "show_comentarios", :controller => "admin"}, :title => "Mostrar comentarios"%>
+         <label style="font-family:verdana;font-size:14px;">Comentarios</label>
+       </div>
+
+
+        <div class="grid-12-12 clear"></div>
+
+        <!-- Catalogos -->
+        <div class="grid-3-12">
+       <%=link_to image_tag('admin/catalogos.png', :size => "128x128", :mouseover => 'admin/catalogos1.png') , {:action => "catalogos", :controller => "admin"}, :title => "Catálogos para agregar escuela comunitaria"%>
+          <label style="font-family:verdana;font-size:14px;">Catálogos</label>
+        </div>
+
+        <!-- Niveles -->
+        <div class="grid-3-12">
+          <%=link_to image_tag('admin/niveles.png', :size => "128x128", :mouseover => 'admin/niveles2.png') , {:action => "report_by_niveles", :controller => "admin"}, :title => "Reporte General por niveles educativos"%>
+          <label style="font-family:verdana;font-size:14px;">Clasificación por Niveles Educativos</label>
+        </div>
+
+
+        <!-- Galeria -->
+        <div class="grid-3-12">
+          <%=link_to image_tag('admin/galeria.png', :size => "128x128", :mouseover => 'admin/galeria2.png') , {:action => "global", :controller => "galeria"}, :title => "Galeria de fotos"%>
+          <label style="font-family:verdana;font-size:14px;">Galería</label>
+        </div>
+
+
+
+          <div class="grid-3-12">
+            <%=link_to image_tag('admin/respaldos.png', :size => "128x128", :size => "128x128", :mouseover => 'admin/respaldos2.png') , {:action => "show_respaldos", :controller => "admin"}, :title => "Respaldos de bases de datos"%>
+            <label style="font-family:verdana;font-size:14px;">Respaldos</label>
+          </div>
+          <div class="grid-12-12 clear"></div>
+
+          <div class="grid-3-12">
+            <%=link_to image_tag('admin/usuarios.png', :size => "128x128", :size => "128x128", :mouseover => 'admin/usuarios2.png') , {:action => "show_roles", :controller => "admin"}, :title => "Mostrar roles y usuarios"%>
+            <label style="font-family:verdana;font-size:14px;">Evaluadores</label>
+          </div>
+
+          <div class="grid-3-12">
+            <%=link_to image_tag('admin/ranking.png', :size => "128x128", :size => "128x128", :mouseover => 'admin/ranking2.png') , {:action => "ranking", :controller => "admin"}, :title => "Ranking de escuelas"%>
+            <label style="font-family:verdana;font-size:14px;">Ranking&nbsp;Tiempo&nbsp;Real</label>
+          </div>
+
+           <div class="grid-4-12">
+            <%=link_to image_tag('admin/corte_ranking.png', :size => "128x128", :size => "128x128", :mouseover => 'admin/corte_ranking.png') , {:action => "cortes_ranking", :controller => "admin"}, :title => "Cortes de Ranking de escuelas"%>
+             <label style="font-family:verdana;font-size:14px;">Ranking&nbsp;Histórico</label>
+          </div>
+
+         <%end%>
+
+         
+       
+
+
+      </td>
+
+    </tr>
+
+  <!-- TITULOS -->
+  <%#*<tr align="center" style="font-family: verdana; font-size: 14px;" >%>
+    <%#*<td>Escuelas</td>%>
+    <%#if current_user.has_role?("admin")%>
+      <%#*<td>Perfiles</td>%>
+    <%#end%>
+    <%#*<td>Comentarios</td>%>
+    <%#*<td>Indicadores</td>%>
+    <%#*<td>Listado General de Escuelas</td>%>
+    <%#*<td><label>Catálogos</label></td>%>
+  <%#*</tr>%>
+</table>
+<br/>
+
+<!--
+<div class="titulocalendario">
+  <= link_to image_tag("botones/regresar_menu_ant.png", :border =>0) , :controller => "home", :action => "index"%><br />
+</div>
+-->
