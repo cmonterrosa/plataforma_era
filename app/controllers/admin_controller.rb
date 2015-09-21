@@ -47,6 +47,7 @@ class AdminController < ApplicationController
       redirect_to :action => "show_roles", :controller => "admin"
     else
       flash[:error]  = "No se puedo crear usuario, verifique los datos"
+      @roles = Role.find(:all, :conditions => ["name in (?)", ["revisor", "enlaceevaluador"]])
       render :action => 'new_from_admin'
     end
   end
