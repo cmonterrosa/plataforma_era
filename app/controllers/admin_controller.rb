@@ -10,6 +10,9 @@ class AdminController < ApplicationController
   
   
   def index
+    if current_user.has_role?(:enlaceevaluador)
+      redirect_to :action => "index_old"
+    end
   end
 
   def index_old

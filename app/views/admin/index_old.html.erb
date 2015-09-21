@@ -1,7 +1,10 @@
 <!-- Menú de administrador -->
 <div class="titulos">
   <p>
-    Menú de Administración | <span style="font-size: 10px; color: navy;"><%=link_to "Menu Nuevo", :action => "index"-%></span>
+    Menú de Administración 
+    <%if current_user.has_role?(:adminplat)%>
+       | <span style="font-size: 10px; color: navy;"><%=link_to "Menu Nuevo", :action => "index"-%></span>
+    <%end%>
   </p>
 </div>
 
