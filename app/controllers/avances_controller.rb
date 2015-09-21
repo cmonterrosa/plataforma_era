@@ -1,8 +1,7 @@
 require 'base64'
 class AvancesController < ApplicationController
   layout :set_layout
-#  @@eje = ""
-#  @@proyectos = ""
+
 
   def list
     @escuela_id = Escuela.find_by_clave(current_user.login.upcase).id if current_user
@@ -222,7 +221,7 @@ class AvancesController < ApplicationController
   def avance_to_pdf
 #    @num_avance = Base64.decode64(params[:num_avance]) if params[:num_avance]
     @evidencia = params[:evidencia] if params[:evidencia]
-    if current_user.has_role?("adminplat")
+    if current_user.has_role?(:adminplat) || current_user.has_role?(:enlaceevaluador)
       @escuela_id = Escuela.find(params[:escuela]).id if params[:escuela]
     else
       @escuela_id = Escuela.find_by_clave(current_user.login.upcase).id if current_user

@@ -64,9 +64,11 @@
               <input type="submit" title="HABILITAR 1ER. AVANCE" value="HABILITAR 1ER. AVANCE" />
             </div>
           <%end%>
+      <%end%>
 
           <div class="grid-12-12 clear"></div>
 
+      <%if @proyecto.avance == 2 && (current_user.has_role?(:adminplat) || current_user.has_role?(:enlaceevaluador))%>
           <% form_for :avance, @avance, :url => { :action => "ver_avance", :controller => "admin", :escuela => @escuela}, :class => 'fancybox fancybox.iframe', :title => "" do |f| -%>
             <div class="grid-center">
               <input type="submit" title="VISUALIZAR AVANCE" value="VISUALIZAR AVANCE" />
@@ -80,9 +82,10 @@
               <input type="submit" title="HABILITAR 2DO. AVANCE" value="HABILITAR 2DO. AVANCE" />
             </div>
           <%end%>
+       <%end%>
           
           <div class="grid-12-12 clear"></div>
-          
+       <%if @proyecto.avance == 3 && (current_user.has_role?(:adminplat) || current_user.has_role?(:enlaceevaluador))%>
           <% form_for :avance, @avance, :url => { :action => "ver_avance", :controller => "admin", :escuela => @escuela}, :class => 'fancybox fancybox.iframe', :title => "" do |f| -%>
             <div class="grid-center">
               <input type="submit" title="VISUALIZAR AVANCE" value="VISUALIZAR AVANCE" />

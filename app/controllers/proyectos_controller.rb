@@ -4,7 +4,7 @@ class ProyectosController < ApplicationController
 
 #  before_filter :check_is_available, :except => "proyect_to_pdf"
 
-  require_role [:escuela, :adminplat]
+  require_role [:escuela, :adminplat], :except => "proyect_to_pdf"
 #  skip_before_filter :verify_authenticity_token, :only => [:save_first_section, :second_section_proyect]
 
 
