@@ -1231,19 +1231,21 @@ class AdminController < ApplicationController
  def download_corte_ranking
    @corte = Corte.find(params[:id])
    csv_string = FasterCSV.generate(:col_sep => "\t") do |csv|
-   csv << ["RANK", "NIVEL_CERTIFICACION", "PUNTAJE_TOTAL", "CLAVE", "NOMBRE_ESCUELA", "NOMBRE_DIRECTOR", "MUNICIPIO",  "LOCALIDAD", "NIVEL_EDUCATIVO", "MODALIDAD", "SOSTENIMIENTO", "BENEFICIADA"]
+   csv << ["RANK", "NIVEL_CERTIFICACION", "PUNTAJE_TOTAL", "CLAVE", "NOMBRE_ESCUELA", "NOMBRE_DIRECTOR", "MUNICIPIO",  "LOCALIDAD", "NIVEL_EDUCATIVO", "MODALIDAD", "MODALIDAD ALTERNATIVA", "SOSTENIMIENTO", "BENEFICIADA"]
    @corte.ranking_historicos.each do |r|
       escuela = Escuela.find(r.escuela_id) if r.escuela_id
-      clave_escuela = (escuela) ? escuela.clave : ""
-      nombre_escuela = (escuela) ? escuela.nombre : ""
-      nombre_director = (escuela) ? escuela.nombre_director : ""
-      nivel_educativo = (escuela.nivel) ? escuela.nivel.descripcion : ""
-      modalidad = (escuela) ? escuela.nivel_descripcion : ""
-      sostenimiento = (escuela) ? escuela.sostenimiento : ""
-      beneficiada = (escuela.beneficiada) ? "SI" : "NO"
-      csv << [r.rank, r.nivel_certificacion, r.puntaje_total, clave_escuela, nombre_escuela, nombre_director,  r.municipio, r.localidad, nivel_educativo, modalidad, sostenimiento, beneficiada]
+      if escuela
+          clave_escuela = (escuela.clave) ? escuela.clave : ""
+          nombre_escuela = (escuela.nombre) ? escuela.nombre.gsub(',', ' -') : ""
+          nombre_director = (escuela.nombre_director) ? escuela.nombre_director.gsub(',', ' -') : ""
+          nivel_educativo = (escuela.nivel) ? escuela.nivel.descripcion.gsub(',', ' -') : ""
+          modalidad = (escuela.nivel_descripcion) ? escuela.nivel_descripcion.gsub(',', ' -') : ""
+          modalidad_alternativa = (escuela.modalidad_alternativa) ? escuela.modalidad_alternativa.gsub(',', ' -') : ""
+          sostenimiento = (escuela.sostenimiento) ? escuela.sostenimiento.gsub(',', ' -') : ""
+          beneficiada = (escuela.beneficiada) ? "SI" : "NO"
+          csv << [r.rank, r.nivel_certificacion, r.puntaje_total, clave_escuela, nombre_escuela, nombre_director,  r.municipio, r.localidad, nivel_educativo, modalidad, modalidad_alternativa, sostenimiento, beneficiada]
+        end
    end
-     
    end
    send_data to_iso(csv_string), type => "application/xls",
                :filename => "Ranking_Escuelas_Corte_#{@corte.created_at.strftime("%d-%m-%Y_%I%M_%p")}.xls",
