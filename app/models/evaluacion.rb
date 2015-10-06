@@ -920,7 +920,7 @@ def puntaje_eje5_p5(tipo=nil, avance=nil)
       end
       @eje5_p5 = ptos_proyectos(proyectos.to_i)
     else
-      clean_adjuntos(5,@diagnostico.id, 5) if @diagnostico
+      #clean_adjuntos(5,@diagnostico.id, 5) if @diagnostico
     end
     return valido ? @eje5_p5 : 0
 end
@@ -955,7 +955,7 @@ def puntaje_eje5_p6(tipo=nil, avance=nil)
       end
       @eje5_p6 = ptos_proyectos(proyectos.to_i)
     else
-      clean_adjuntos(5,@diagnostico.id, 6) if @diagnostico
+      #clean_adjuntos(5,@diagnostico.id, 6) if @diagnostico
     end
     return valido ? @eje5_p6 : 0
 end
@@ -990,7 +990,7 @@ def puntaje_eje5_p7(tipo=nil, avance=nil)
       end
       @eje5_p7 = ptos_proyectos(proyectos.to_i)
     else
-      clean_adjuntos(5,@diagnostico.id, 7) if @diagnostico
+      #clean_adjuntos(5,@diagnostico.id, 7) if @diagnostico
     end
     return valido ? @eje5_p7 : 0
 end
@@ -1160,16 +1160,22 @@ def puntaje_total_novidencias
 #### Aqui hacemos una consulta para obtener el ppuntaje de las no evidencias
 end
 
-def clean_adjuntos(eje,diagnostico, numero_pregunta)
-       puts("=> BUSCANDO ARCHIVOS")
-       contador_archivos=0
-       @adjuntos = Adjunto.find(:all, :conditions =>["eje_id =? AND diagnostico_id = ? AND numero_pregunta = ?", eje,diagnostico,numero_pregunta]).each do |a|
-#       file_exists = File.exists?(a.full_path)
-       deleted =  a.destroy 
-       (deleted) ?  contador_archivos+=1 : nil
+def clean_adjuntos(eje,diagnostico, numero_pregunta, user=nil)
+  puts("=> Entra a metodo de borrado de archivos")
+end
+
+def clean_adjuntos_anterior(eje,diagnostico, numero_pregunta, user=nil)
+       if user
+        contador_archivos=0
+        @adjuntos = Adjunto.find(:all, :select => "id, eje_id, diagnostico_id, numero_pregunta", :conditions =>["eje_id =? AND diagnostico_id = ? AND numero_pregunta = ?", eje,diagnostico,numero_pregunta])
+         unless @adjuntos.empty?
+         @adjuntos.each do |a|
+           (a.destroy) ?  contador_archivos+=1 : nil
+          end
+            puts("=> ADJUNTOS BORRADOS: #{contador_archivos}")
+         end
        end
-      puts("=> ADJUNTOS BORRADOS: #{contador_archivos}")
-   end
+end
 
 
 
