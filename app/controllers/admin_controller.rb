@@ -1217,7 +1217,7 @@ class AdminController < ApplicationController
                                :nivel_certificacion => e["nivel_certificacion"],
                                :escuela_id => e.id,
                                :clave => e.clave,
-                               :puntaje_total => e.puntaje_actual,
+                               :puntaje_total => e['puntaje_final'],
                                :municipio => e.municipio,
                                :localidad => e.localidad
                                )
@@ -1231,7 +1231,7 @@ class AdminController < ApplicationController
  def download_corte_ranking
    @corte = Corte.find(params[:id])
    csv_string = FasterCSV.generate(:col_sep => "\t") do |csv|
-   csv << ["RANK", "NIVEL_CERTIFICACION", "PUNTAJE_TOTAL", "CLAVE", "NOMBRE_ESCUELA", "NOMBRE_DIRECTOR", "MUNICIPIO",  "LOCALIDAD", "NIVEL_EDUCATIVO", "MODALIDAD", "MODALIDAD ALTERNATIVA", "SOSTENIMIENTO", "BENEFICIADA"]
+   csv << ["RANK", "NIVEL_CERTIFICACION", "PUNTAJE_TOTAL", "CLAVE", "NOMBRE_ESCUELA", "NOMBRE_DIRECTOR", "MUNICIPIO",  "LOCALIDAD", "NIVEL_EDUCATIVO", "MODALIDAD", "MODALIDAD ALTERNATIVA", "SOSTENIMIENTO", "DIAGNOSTICO EVALUADO", "PROYECTO EVALUADO", "BENEFICIADA"]
    @corte.ranking_historicos.each do |r|
       escuela = Escuela.find(r.escuela_id) if r.escuela_id
       if escuela
@@ -1243,7 +1243,18 @@ class AdminController < ApplicationController
           modalidad_alternativa = (escuela.modalidad_alternativa) ? escuela.modalidad_alternativa.gsub(',', ' -') : ""
           sostenimiento = (escuela.sostenimiento) ? escuela.sostenimiento.gsub(',', ' -') : ""
           beneficiada = (escuela.beneficiada) ? "SI" : "NO"
-          csv << [r.rank, r.nivel_certificacion, r.puntaje_total, clave_escuela, nombre_escuela, nombre_director,  r.municipio, r.localidad, nivel_educativo, modalidad, modalidad_alternativa, sostenimiento, beneficiada]
+
+         ### Si se ha evaluado diagnostico y proyecto ####
+         diagnostico = Diagnostico.find(:first, :select => "id, escuela_id", :conditions => ["escuela_id = ?", escuela])
+         proyecto = Proyecto.find(:first, :select => "id, diagnostico_id", :conditions => ["diagnostico_id = ?", diagnostico ]) if diagnostico
+         evaluacion_diagnostico = Evaluacion.find(:first, :conditions => ["diagnostico_id = ?", diagnostico.id]) if diagnostico
+         evaluacion_proyecto = Evaluacion.find(:first, :conditions => ["proyecto_id = ?", proyecto.id]) if proyecto
+
+         evaluacion_diagnostico = (evaluacion_diagnostico) ? "SI" : "NO"
+         evaluacion_proyecto = (evaluacion_proyecto) ? "SI" : "NO"
+
+
+         csv << [r.rank, r.nivel_certificacion, r.puntaje_total, clave_escuela, nombre_escuela, nombre_director,  r.municipio, r.localidad, nivel_educativo, modalidad, modalidad_alternativa, sostenimiento, evaluacion_diagnostico, evaluacion_proyecto, beneficiada]
         end
    end
    end
@@ -1266,17 +1277,21 @@ class AdminController < ApplicationController
 
 
  def get_ranking_escuelas_realtime
-  @escuelas = Escuela.find_by_sql("SELECT es.id, es.clave, es.nombre, es.localidad, es.municipio, es.nivel_id, es.nombre_director from users us INNER JOIN escuelas es ON us.login = es.clave AND (us.blocked is NULL OR us.blocked !=1) AND (es.beneficiada IS NULL or es.beneficiada=0)")
-  @escuelas = @escuelas.sort{|a, b| a.puntaje_actual <=> b.puntaje_actual}.reverse
+  @escuelas = Escuela.find_by_sql("SELECT es.id, es.clave, es.nombre, es.localidad, es.municipio, es.nivel_id, es.nombre_director from users us INNER JOIN escuelas es ON us.escuela_id = es.id AND (us.blocked is NULL OR us.blocked !=1) AND (es.beneficiada IS NULL or es.beneficiada=0)")
+#  @escuelas = @escuelas.sort{|a, b| a.puntaje_actual <=> b.puntaje_actual}.reverse
   contador=1
   niveles_certificacion = NivelCertificacion.find(:all)
   @escuelas.each do |e|
+    e['puntaje_final'] = e.puntaje_actual
     niveles_certificacion.each do |nivel|
-      e["nivel_certificacion"] = nivel.nivel if (nivel.minimo.to_f..nivel.maximo.to_f).include?(e.puntaje_actual.to_f)
+       e["nivel_certificacion"] = nivel.nivel  if (nivel.minimo.to_f..nivel.maximo.to_f).include?(e['puntaje_final'].to_f)
     end
     e["nivel_certificacion"] ||= 0
-    e["rank"] = contador
-    contador+=1
+   end
+   @escuelas = @escuelas.sort{|a, b| a['puntaje_final'] <=> b['puntaje_final']}.reverse
+   @escuelas.each do |e|
+     e["rank"] = contador
+     contador+=1
    end
    return @escuelas
  end
