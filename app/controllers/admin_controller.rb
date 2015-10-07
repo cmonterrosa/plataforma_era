@@ -1127,7 +1127,20 @@ class AdminController < ApplicationController
        end
        @evaluacion.avance = @avance.to_i
        @evaluacion.activa = true
-       @evidencias_sin_evaluar = Adjunto.count(:id, :conditions => ["proyecto_id = ? AND avance = ? AND validado IS NULL", @evaluacion.proyecto_id, @avance]) if @evaluacion.proyecto_id
+        
+        #### Ejes trabajados ####
+        ejes=[]
+        if @evaluacion.proyecto
+          (@evaluacion.proyecto.competencia) ? ejes << 1 : nil
+          (@evaluacion.proyecto.entorno) ? ejes << 2 : nil
+          (@evaluacion.proyecto.huella) ? ejes << 3 : nil
+          (@evaluacion.proyecto.consumo) ? ejes << 4 : nil
+          (@evaluacion.proyecto.participacion) ? ejes << 5 : nil
+          @evidencias_sin_evaluar = Adjunto.count(:id, :conditions => ["proyecto_id = ? AND avance = ? AND validado IS NULL AND eje_id in (?)", @evaluacion.proyecto_id, @avance, ejes])
+        end
+
+       @evidencias_sin_evaluar ||= 0
+       #@evidencias_sin_evaluar = Adjunto.count(:id, :conditions => ["proyecto_id = ? AND avance = ? AND validado IS NULL", @evaluacion.proyecto_id, @avance]) if @evaluacion.proyecto_id
        @concluido = (@evidencias_sin_evaluar.to_i > 0 )? false : true
        if (@concluido)
            desactivar_registro_proyecto(@evaluacion.proyecto_id, @avance)
