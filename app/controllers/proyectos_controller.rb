@@ -30,7 +30,7 @@ class ProyectosController < ApplicationController
     notice = (@proyecto_habilitado) ? "Bienvenido a la captura del proyecto" : "La fase de captura de proyecto aún no se encuentra disponible"
     if @diagnostico_concluido && @proyecto_habilitado
        @proyecto = Proyecto.find_by_diagnostico_id(@diagnostico)
-       @ejes = Eje.find(:all, :conditions => ["proyecto_id = ?", @proyecto.id ]) if @proyecto
+       @ejes = Eje.find(:all, :select => "DISTINCT proyecto_id, catalogo_eje_id", :conditions => ["proyecto_id = ?", @proyecto.id ]) if @proyecto
     else
       flash[:warning] = notice
       redirect_to :action => "index", :controller => "diagnosticos"
