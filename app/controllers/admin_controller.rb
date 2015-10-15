@@ -731,9 +731,8 @@ class AdminController < ApplicationController
 
     @total_certificacion = @total_puntaje_diagnostico + @total_puntaje_proyecto
 
-    @nivelc.each do |nivel|
-      @nivel_certificacion = nivel.nivel if (nivel.minimo.to_f..nivel.maximo.to_f).include?(@total_certificacion.to_f)
-    end
+    @nivel_certificacion = NivelCertificacion.find(:first, :conditions => ["? between minimo AND maximo", @total_certificacion.round(2)])
+    @nivel_certificacion = @nivel_certificacion.nivel if @nivel_certificacion
     @nivel_certificacion ||= 0
 
   end
@@ -1297,7 +1296,7 @@ class AdminController < ApplicationController
   @escuelas.each do |e|
     e['puntaje_final'] = e.puntaje_actual
     niveles_certificacion.each do |nivel|
-       e["nivel_certificacion"] = nivel.nivel  if (nivel.minimo.to_f..nivel.maximo.to_f).include?(e['puntaje_final'].to_f)
+       e["nivel_certificacion"] = nivel.nivel  if (nivel.minimo.to_f..nivel.maximo.to_f).include?((e['puntaje_final'].to_f).round(2))
     end
     e["nivel_certificacion"] ||= 0
    end
