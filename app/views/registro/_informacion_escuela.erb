@@ -129,7 +129,7 @@
       <label>La institución educativa participa en algún programa: ¿Cúal? <em class="formee-req">*</em></label>
       <fieldset style="padding: 5px 5px 5px 5px;">
         <div id="programas">
-          <% Programa.find(:all).each do |c| %>
+          <% @programas.each do |c| %>
             <%= check_box_tag "programas[#{c.id}]", c.clave, @s_programas.include?(c.id) ? true : false, :onclick => "checkRadioD(this, 'escuela_programa_desc')" %>&nbsp;<%= c.descripcion %><br />
           <% end %>
         </div>
@@ -147,9 +147,17 @@
     </div>
 
     <!-- director -->
-    <div class="grid-12-12">
+    <div class="grid-6-12">
       <label>Nombre completo del director: <em class="formee-req">*</em></label>
       <%= f.text_field  :nombre_director%>
+    </div>
+    <div class="grid-3-12">
+      <label>RFC: <em class="formee-req">*</em></label>
+      <%= f.text_field  :rfc_director%>
+    </div>
+    <div class="grid-3-12">
+      <label>CURP: <em class="formee-req">*</em></label>
+      <%= f.text_field  :curp_director%>
     </div>
 
     <div class="grid-6-12">
@@ -233,6 +241,15 @@
         </fieldset>
       </div>
 
+    <div class="grid-8-12">
+      <fieldset>
+        <legend style=" font-size: 14px;" >&nbsp;Total&nbsp;Padres&nbsp;de&nbsp;Familia&nbsp;o&nbsp;Tutores&nbsp;</legend>
+        <div class="grid-4-12">
+          <label>Padres de Familia o Tutores: <em class="formee-req">*</em></label>
+            <%= f.text_field :padres_tutores %>
+        </div>
+      </fieldset>
+    </div>
     
     
     <!-- submit -->
@@ -281,6 +298,11 @@
   programa_desc.add( Validate.Presence );
   var nombre_director = new LiveValidation( 'escuela_nombre_director', {onlyOnSubmit: true} );
   nombre_director.add( Validate.Presence );
+  var rfc_director = new LiveValidation( 'escuela_rfc_director', {onlyOnSubmit: true} );
+  rfc_director.add( Validate.Presence );
+  var curp_director = new LiveValidation( 'escuela_curp_director', {onlyOnSubmit: true} );
+  curp_director.add( Validate.Presence );
+  curp_director.add( Validate.Curp );
   <%#*var proyecto_nombre = new LiveValidation( 'escuela_nombre_proyecto', {onlyOnSubmit: true } );%>
   <%#*proyecto_nombre.add( Validate.Presence );%>
   var email = new LiveValidation( 'escuela_email' );
@@ -311,6 +333,9 @@
   var total_personal_apoyo = new LiveValidation( 'escuela_total_personal_apoyo');
   total_personal_apoyo.add( Validate.Presence );
   total_personal_apoyo.add( Validate.Numericality, { minimum: 0, onlyInteger: true } );
+  var padres_tutores = new LiveValidation( 'escuela_padres_tutores');
+  padres_tutores.add( Validate.Presence );
+  padres_tutores.add( Validate.Numericality, { minimum: 0, onlyInteger: true } );
 
 jQuery(function(){
   <%#*jQuery("#total_personal").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });%>

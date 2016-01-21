@@ -705,7 +705,14 @@ var Validate = {
     	Validate.Format(value, {failureMessage: message, pattern: /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i} );
     	return true;
     },
-    
+
+    Curp: function(value, paramsObj){
+    	var paramsObj = paramsObj || {};
+//    	var message = paramsObj.failureMessage || "Must be a valid email address!";
+    	var message = paramsObj.failureMessage || "Debe ser una curp válida!";
+    	Validate.Format(value, {failureMessage: message, pattern: /[A-Z]{4}\d{6}[HM][A-Z]{2}[B-DF-HJ-NP-TV-Z]{3}[A-Z0-9][0-9]/i} );
+    	return true;
+    },
     /**
      *	validates the length of the value
      *	

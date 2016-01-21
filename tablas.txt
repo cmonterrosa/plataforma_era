@@ -1,0 +1,164 @@
+--catalogos:
+--acciones
+--alimentos
+--bebidas
+--botanas
+--catalogo_accions
+--catalogo_ejes
+--catalogo_institucions
+--categoria_escuelas
+--ciclos
+--dcapacitadoras
+--directivos
+--elimina_residuos
+--energia_electricas
+--espacios
+--estatus
+--establecimientos
+--frecuencia_afisicas
+--generacions
+--higienes
+--indicadores
+--inorganicos
+--lineas_accions
+--materials
+--nivels
+--preparacions
+--programas
+--reposterias
+--roles
+--roles_users
+--servicio_aguas
+--schema_migrations
+--tipodocs
+--users
+--users_catalogo_accions
+--utensilios
+
+--info:
+--actividads
+--adjuntos
+--alumnos_capacitados
+--antecedentes
+--avances
+--bitacoras
+--capacitacion_padres
+--comentarios
+--competencias
+--consumos
+--consumos_alimentos
+--consumos_bebidas
+--consumos_botanas
+--consumos_establecimientos
+--consumos_higienes
+--consumos_materials
+--consumos_preparacions
+--consumos_reposterias
+--consumos_utensilios
+--cortes
+--diagnosticos
+--docentes_capacitados
+--ejes
+--entornos
+--entornos_acciones
+--escuelas_espacios
+--escuelas_generacions
+--escuelas_programas
+--escuelas_users
+--evaluacions
+--huellas
+--huellas_elimina_residuos
+--huellas_inorganicos
+--huellas_servicio_aguas
+--mensajes
+--nivel_certificacions
+--participacions
+--pescolars
+--proyectos
+--ranking_historicos
+
+--sql para reiniciar tablas:
+
+truncate actividads;
+go
+truncate adjuntos;
+go
+truncate alumnos_capacitados;
+go
+truncate antecedentes;
+go
+truncate avances;
+go
+truncate bitacoras;
+go
+truncate capacitacion_padres;
+go
+truncate comentarios;
+go
+truncate competencias;
+go
+truncate consumos;
+go
+truncate consumos_alimentos;
+go
+truncate consumos_bebidas;
+go
+truncate consumos_botanas;
+go
+truncate consumos_establecimientos;
+go
+truncate consumos_higienes;
+go
+truncate consumos_materials;
+go
+truncate consumos_preparacions;
+go
+truncate consumos_reposterias;
+go
+truncate consumos_utensilios;
+go
+truncate cortes;
+go
+truncate diagnosticos;
+go
+truncate docentes_capacitados;
+go
+truncate ejes;
+go
+truncate entornos;
+go
+truncate entornos_acciones;
+go
+truncate escuelas_espacios;
+go
+truncate escuelas_generacions;
+go
+truncate escuelas_programas;
+go
+truncate escuelas_users;
+go
+truncate evaluacions;
+go
+truncate huellas;
+go
+truncate huellas_elimina_residuos;
+go
+truncate huellas_inorganicos;
+go
+truncate huellas_servicio_aguas;
+go
+truncate mensajes;
+go
+truncate nivel_certificacions;
+go
+truncate participacions;
+go
+truncate pescolars;
+go
+truncate proyectos;
+go
+truncate ranking_historicos;
+go
+delete from users where escuela_id is not null
+go
+delete from roles_users where user_id not in (select id from users where escuela_id is null)
