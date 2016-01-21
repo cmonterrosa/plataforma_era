@@ -147,39 +147,38 @@
     </div>
 
     <!-- director -->
-    <div class="grid-6-12">
-      <label>Nombre completo del director: <em class="formee-req">*</em></label>
-      <%= f.text_field  :nombre_director%>
-    </div>
-    <div class="grid-3-12">
-      <label>RFC: <em class="formee-req">*</em></label>
-      <%= f.text_field  :rfc_director%>
-    </div>
-    <div class="grid-3-12">
-      <label>CURP: <em class="formee-req">*</em></label>
-      <%= f.text_field  :curp_director%>
+    <div class="grid-12-12">
+        <fieldset>
+          <legend style=" font-size: 14px;" >&nbsp;Datos&nbsp;del&nbsp;Director:&nbsp;</legend>
+          <div class="grid-6-12">
+            <label>Nombre completo del director: <em class="formee-req">*</em></label>
+              <%= f.text_field  :nombre_director%>
+          </div>
+          <div class="grid-3-12">
+            <label>RFC: <em class="formee-req">*</em></label>
+            <%= f.text_field  :rfc_director%>
+          </div>
+          <div class="grid-3-12">
+            <label>CURP: <em class="formee-req">*</em></label>
+            <%= f.text_field  :curp_director%>
+          </div>
+          <div class="grid-3-12">
+            <label>Teléfono del director (lada): </label>
+            <%= f.text_field :telefono_director%>
+          </div>
+          <div class="grid-6-12"></div>
+        </fieldset>
     </div>
 
+       <!-- responsables -->
     <div class="grid-6-12">
-      <label>Teléfono del director (lada): </label>
-      <%= f.text_field :telefono_director%>
+      <label>Nombre completo del responsable del proyecto: <em class="formee-req">*</em></label>
+      <%= f.text_field :responsables_proyecto %>
     </div>
 
     <div class="grid-6-12">
       <label>Correo electrónico de la escuela: <em class="formee-req">*</em></label>
       <%= f.text_field :email%>
-    </div>
-
-    <!-- nombre del proyecto -->
-    <%#*<div class="grid-12-12">%>
-      <%#*<label>Nombre del proyecto: <em class="formee-req">*</em></label>%>
-      <%#= f.text_field :nombre_proyecto %>
-    <%#*</div>%>
-
-    <!-- responsables -->
-    <div class="grid-12-12">
-      <label>Nombre completo del responsable del proyecto: <em class="formee-req">*</em></label>
-      <%= f.text_field :responsables_proyecto %>
     </div>
 
     <!-- telefono y correo electronico de responsables -->
@@ -192,6 +191,8 @@
       <label>Correo electrónico (proyecto): <em class="formee-req">*</em></label>
       <%= f.text_field :email_responsable_proyecto%>
     </div>
+
+    <div class="grid-12-12 clear"></div>
 
     <!-- total de personal docente apoyo-->
       <div class="grid-8-12">
@@ -241,11 +242,11 @@
         </fieldset>
       </div>
 
-    <div class="grid-8-12">
+    <div class="grid-6-12">
       <fieldset>
         <legend style=" font-size: 14px;" >&nbsp;Total&nbsp;Padres&nbsp;de&nbsp;Familia&nbsp;o&nbsp;Tutores&nbsp;</legend>
+        <label>&nbsp; Padres de Familia o Tutores: <em class="formee-req">*</em></label><br />
         <div class="grid-4-12">
-          <label>Padres de Familia o Tutores: <em class="formee-req">*</em></label>
             <%= f.text_field :padres_tutores %>
         </div>
       </fieldset>
