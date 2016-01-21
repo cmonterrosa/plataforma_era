@@ -28,7 +28,7 @@ class RegistroController < ApplicationController
       flash[:error] = "No existe escuela"
       redirect_to :controller => "home"
     else
-      @programas = @escuela.nivel.clave = 4 ? Programa.find_by_sql("select * from programas where nivel is null or nivel not in ('MS')") : Programa.find_by_sql("select * from programas where nivel is null or nivel not in ('B')")
+      @programas = @escuela.nivel.clave != 4 ? Programa.find_by_sql("SELECT * FROM programas WHERE nivel IS NULL OR nivel NOT IN ('MS') ORDER BY id ASC") : Programa.find_by_sql("SELECT * FROM programas WHERE nivel IS NULL OR nivel NOT IN ('B') ORDER BY id and nivel DESC ")
       @select_ce = selected(@escuela.categoria_escuela) if @escuela.categoria_escuela
       @s_programas = multiple_selected_id(@escuela.programas) if @escuela.programas
       if @escuela.estatu_id
