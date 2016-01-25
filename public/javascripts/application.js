@@ -39,7 +39,7 @@ function checkRadioD(radio_buttom, obj_desc){
 
     if(typeof radio_buttom == "object"){
         radio = radio_buttom;
-
+        
         if(radio.value == "OTR"){
             if(radio.checked){
                 enableTextarea(desc);
@@ -67,12 +67,15 @@ function checkRadioD(radio_buttom, obj_desc){
         }
     }
     else{
-        for(var i=1; i <= getNumCheckbox(radio_buttom); i++){
-            radio2 = document.getElementById(radio_buttom + "_" + i);
-            if(radio2.checked && radio2.value == "OTR"){
-                enableTextarea(desc);
-                break;
+        radio2 = document.getElementById('programas');
+        for(var i=0; i < radio2.childNodes.length; i++){
+            if(radio2.childNodes[i].nodeName == 'INPUT'){
+                if(radio2.childNodes[i].value == "OTR" && radio2.childNodes[i].checked){
+                    enableTextarea(desc);
+//                    break;
+                }
             }
+            
         }
     }
 }
@@ -594,7 +597,7 @@ function checkBoxToSelct(cBox){
             if(elemCount[i].value == "OTRA"){
                 txtDesc.disabled = false;
                 txtDesc.style.display = "inline";
-                validacion = new LiveValidation(cBox+"sOTRA", {onlyOnSubmit: true });
+                validacion = new LiveValidation(cBox+"sOTRA", {onlyOnSubmit: true});
                 validacion.add( Validate.Presence);
                 otra_desc = true;
             }
