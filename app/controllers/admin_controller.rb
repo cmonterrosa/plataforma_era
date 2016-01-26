@@ -518,7 +518,7 @@ class AdminController < ApplicationController
   def menu_diagnostico
     @escuela = Escuela.find(params[:id])
     @diagnostico = Diagnostico.find_by_escuela_id(@escuela.id)
-    render :partial => "show_diagnostico", :layout => "era2014"
+    render :partial => "show_diagnostico", :layout => "era2016"
   end
 
   ###############################################################################

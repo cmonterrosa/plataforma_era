@@ -472,7 +472,7 @@ class AvancesController < ApplicationController
   private
 
   def set_layout
-    (action_name == 'avance_to_pdf' or action_name == 'ver_avance')? 'reporte_avance' : 'era2014'
+    (action_name == 'avance_to_pdf' or action_name == 'ver_avance')? 'reporte_avance' : 'era2016'
   end
 
   #### Funcion que guarda los proyectos escolares por tipo #####

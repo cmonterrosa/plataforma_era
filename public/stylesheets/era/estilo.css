@@ -104,7 +104,8 @@
 	background-position: right;
 }
 .fnd_bar_sub {
-	background-image: url(/images/era/bar_sub.png);
+	background-image: url(/images/era/fnd_transp.png);
+
 	background-repeat: no-repeat;
 	height: 50px;
 	width: 900px;
@@ -118,8 +119,8 @@
 	width: 890px;
 }
 .fnd_cert {
-	background-image: url(/images/era/fnds/fondo22.jpg);
-	background-repeat: no-repeat;
+	background-image: url(/images/era/bar_sub.png);
+        /*background-repeat: no-repeat;*/
 	background-position: center top;
 	/*height: 1012px;*/
 	width: 900px;

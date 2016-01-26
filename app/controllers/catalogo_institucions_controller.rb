@@ -1,5 +1,5 @@
 class CatalogoInstitucionsController < ApplicationController
-  layout 'era2014'
+  layout 'era2016'
   # GET /catalogo_institucions
   # GET /catalogo_institucions.xml
   def index
