@@ -89,6 +89,7 @@ class RegistroController < ApplicationController
       flash[:error] = "Error al generar reporte de registro"
       redirect_to :controller => "home"
     end
+    @programas = @escuela.programas_disponibles
     @select_ce = selected(@escuela.categoria_escuela) if @escuela.categoria_escuela
     @s_programas = multiple_selected_id(@escuela.programas) if @escuela.programas
   end
@@ -114,7 +115,7 @@ class RegistroController < ApplicationController
 
   def set_layout
     layout = (action_name == 'reporte_final')? 'reporte_final' : nil
-    layout ||= (action_name == 'formato_registro')? 'reporte' : 'era2014'
+    layout ||= (action_name == 'formato_registro')? 'reporte' : 'era2016'
     return layout
   end
 
