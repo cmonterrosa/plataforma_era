@@ -38,7 +38,6 @@ truncate ejes;
 truncate entornos;
 truncate entornos_acciones;
 truncate escuelas_espacios;
-truncate escuelas_generacions;
 truncate escuelas_programas;
 truncate escuelas_users;
 truncate evaluacions;
@@ -52,10 +51,24 @@ truncate participacions;
 truncate pescolars;
 truncate proyectos;
 truncate ranking_historicos;"
-@truncates.each do |t|
+  @truncates.each do |t|
           execute(t.strip)
   end
-  end
+
+    puts("################ CREANDO NUEVA GENERACION ##################")
+    @nuevo_ciclo = (Ciclo.find_by_descripcion("2015-2016"))? Ciclo.find_by_descripcion("2015-2016") : Ciclo.new(:descripcion => "2015-2016", :activo => true)
+    @nuevo_ciclo.update_attributes(:activo => true)
+    @ciclo_anterior = Ciclo.find_by_descripcion("2014-2015")
+    if @nuevo_ciclo.save
+      @ciclo_anterior.update_attributes!(:activo => false) if @ciclo_anterior
+      @nueva_generacion = Generacion.find(:first, :conditions => ["ciclo_id = ?", @nuevo_ciclo])
+      @nueva_generacion ||= Generacion.new(:ciclo_id => @nuevo_ciclo.id, :descripcion => "TERCERA")
+      @nueva_generacion.save
+    end
+
+
+
+end
 
   def self.down
     puts("############### NO TIENE ACCION REVERSIVA ###############")
