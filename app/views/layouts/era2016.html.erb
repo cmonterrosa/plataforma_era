@@ -325,7 +325,7 @@ a:active {
                     <%end%>
                     <%nombre ||= (@esc = Escuela.find_by_clave(current_user.login)) ? @esc.nombre : nil %>
                     <%nombre ||= current_user.nombre %>
-                    <%=h link_to "#{nombre}", {:controller => "escuelas", :action => "information_edit" }, :style => "color:#088A08; text-decoration: none;", :title => "MODIFICA LA INFORMACIÓN DE TU CUENTA"%>
+                    <%=h link_to "#{nombre}", {:controller => "escuelas", :action => "information_edit" }, :style => "color: navy; text-decoration: none;", :title => "MODIFICA LA INFORMACIÓN DE TU CUENTA"%>
                   </a>
                 </td>
                 
