@@ -393,4 +393,13 @@ class Escuela < ActiveRecord::Base
     return valid
   end
 
+  def programas_disponibles
+    ms = Nivel.find_by_descripcion("MEDIA SUPERIOR")
+    if self.nivel == ms
+        Programa.find(:all, :conditions => "nivel IS NULL OR nivel = 'MS'")
+    else
+      Programa.find(:all, :conditions => "nivel IS NULL OR nivel != 'MS'")
+    end
+  end
+
 end
