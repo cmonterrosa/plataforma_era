@@ -27,14 +27,13 @@ class ConstanciaController < ApplicationController
     if @escuela
       param=Hash.new {|k, v| k[v] = {:tipo=>"",:valor=>""}}
       #-- Parametros
-      param["P_ESCUELA"]={:tipo=>"String", :valor=>clean_string(@escuela.nombre)}
-      #param["P_FECHA"]={:tipo=>"String", :valor=>DateTime.now.strftime("%d de %B de %Y").upcase}
+      param["P_ESCUELA"]={:tipo=>"String", :valor=>clean_string(to_iso(@escuela.nombre))}
       param["P_FECHA"]={:tipo=>"String", :valor=>fecha_string}
-      param["P_PROCEDENCIA"]={:tipo=>"String", :valor=>@escuela.municipio}
-      param["P_DIRECTOR"]= (@escuela.nombre_director) ? {:tipo=>"String", :valor=>@escuela.nombre_director} : {:tipo=>"String", :valor=>" "}
+      param["P_PROCEDENCIA"]={:tipo=>"String", :valor=>to_iso(@escuela.municipio)}
+      param["P_DIRECTOR"]= (@escuela.nombre_director) ? {:tipo=>"String", :valor=>to_iso(@escuela.nombre_director)} : {:tipo=>"String", :valor=>" "}
       param["P_CLAVE"]={:tipo=>"String", :valor=>@escuela.clave}
-      param["P_LOCALIDAD"]={:tipo=>"String", :valor=>@escuela.localidad}
-      param["P_MUNICIPIO"]={:tipo=>"String", :valor=>@escuela.municipio}
+      param["P_LOCALIDAD"]={:tipo=>"String", :valor=>to_iso(@escuela.localidad)}
+      param["P_MUNICIPIO"]={:tipo=>"String", :valor=>to_iso(@escuela.municipio)}
       if File.exists?(REPORTS_DIR + "/carta_compromiso.jasper")
         send_doc_jdbc("carta_compromiso", "carta_compromiso", param, output_type = 'pdf')
       else
