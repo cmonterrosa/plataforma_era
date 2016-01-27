@@ -3,8 +3,8 @@ class TruncateUsuarios < ActiveRecord::Migration
     puts("###############  ELIMINANDO USUARIOS ###############")
     @usuarios = User.find(:all, :select => "id, login, escuela_id", :conditions => ["escuela_id IS NOT NULL"])
     @usuarios.each do |u|
-      u.roles.destroy && puts("=>Roles eliminados de #{u.login}") if u.login
-      u.destroy && puts("=> Usuario eliminado")
+      u.roles.destroy #&& puts("=>Roles eliminados de #{u.login}") if u.login
+      u.destroy #&& puts("=> Usuario eliminado")
     end
 
     puts("############### LIMPIANDO TABLA DE ESCUELAS ###############")
@@ -63,12 +63,27 @@ truncate ranking_historicos;"
       @ciclo_anterior.update_attributes!(:activo => false) if @ciclo_anterior
       @nueva_generacion = Generacion.find(:first, :conditions => ["ciclo_id = ?", @nuevo_ciclo])
       @nueva_generacion ||= Generacion.new(:ciclo_id => @nuevo_ciclo.id, :descripcion => "TERCERA")
-      @nueva_generacion.save
+      @nueva_generacion.save && puts("SE CREO #{@nueva_generacion.descripcion} GENERACION")
     end
 
+    puts("################## REAJUSTANDO ESTATUS ###############")
+    @estatuses = Estatu.find(:all, :conditions => ["descripcion in (?)", ['avance2', 'proy-eva2']])
+    @estatuses.each{|e| e.destroy}
 
-
-end
+    puts("##########  CARGANDO INFORMACION DE PUNTAJES DE CICLOS ANTERIORES ########")
+    File.open("#{RAILS_ROOT}/db/migrate/catalogos/generaciones_escuelas2015.csv").each_line { |line|
+      # CLAVE	1ER GENERACIÓN	2DA GENERACIÓN	NOMBRE_ESCUELA	NOMBRE_DIRECTOR	BENEFICIADA	ESTATUS_ACTUAL	PROYECTO	DIAGNOSTICO_EJE1	DIAGNOSTICO_EJE2	DIAGNOSTICO_EJE3	DIAGNOSTICO_EJE4	DIAGNOSTICO_EJE5	TOTAL_DIAGNOSTICO	TOTAL_PROYECTO	TOTAL_GENERAL
+      clave, primera_g, segunda_g, nombre, nombre_director, beneficiada, estatus, proyecto, diagnostico_eje1, diagnostico_eje2, diagnostico_eje3, diagnostico_eje4, diagnostico_eje5, total_diagnostico, total_proyecto, total_general = line.split(",")
+      begin
+        @escuela = Escuela.find(:first, :conditions => ["clave = ?", clave.strip])
+        if @escuela
+          puts("=> PROCESANDO: #{@escuela.clave}")
+        end
+      rescue => e
+          puts e
+      end
+     }
+  end
 
   def self.down
     puts("############### NO TIENE ACCION REVERSIVA ###############")
