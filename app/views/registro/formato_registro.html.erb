@@ -1,4 +1,4 @@
-<div class="formee" style="font-size: 12px;">
+<div class="formee" style="font-size: 11px;">
   <table class="subreport" width="100%" border="0" align="center" cellpadding="1" cellspacing="1" style="BORDER-RIGHT: #3a3a3a 1px solid; BORDER-TOP: #3a3a3a 1px solid; BORDER-LEFT: #3a3a3a 1px solid; BORDER-BOTTOM: #3a3a3a 1px solid;">
     <tr>
       <td align="center"><h5 class="reporte" >FORMATO DE REGISTRO&nbsp;CICLO ESCOLAR: <%=CICLO_ESCOLAR%></h5></td>
@@ -7,48 +7,52 @@
       <td>
         <% form_for :escuela, @escuela, :html => {:class => "formee", :name => "escuela"} do |f| -%>
         <fieldset class="report" >
-          <div id="prellenado" style="background:#ebf7aa;">
-            <div class="grid-4-12">
+          <div id="prellenado" style="background: rgba(255, 255, 0, 0.2);">
+            <div class="grid-2-12">
               <label style=" font-weight: bold;">Clave:</label>
               <label style=" font-style: italic;"><%= @escuela.clave %></label>
             </div>
-            <div class="grid-8-12">
+            <div class="grid-6-12">
               <label style=" font-weight: bold;">Nombre de la Escuela:</label>
               <label style=" font-style: italic;"><%= @escuela.nombre %></label>
             </div>
-            <div class="grid-4-12">
+            <div class="grid-2-12">
               <label style=" font-weight: bold;">Zona Escolar:</label>
               <label style=" font-style: italic;"><%= @escuela.zona_escolar %></label>
             </div>
-            <div class="grid-4-12">
+            <div class="grid-2-12">
               <label style=" font-weight: bold;">Sector:</label>
               <label style=" font-style: italic;"><%= @escuela.sector %></label>
             </div>
-            <div class="grid-4-12">
+            <div class="grid-3-12">
               <label style=" font-weight: bold;">Turno:</label>
               <label style=" font-style: italic;"><%= @escuela.turno %></label>
             </div>
-            <div class="grid-4-12">
+            <div class="grid-3-12">
               <label style=" font-weight: bold;">Nivel:</label>
               <label style=" font-style: italic;"><%= @escuela.nivel.descripcion if @escuela.nivel.descripcion %></label>
             </div>
-            <div class="grid-8-12">
+            <div class="grid-3-12">
               <label style=" font-weight: bold;">Modalidad:</label>
               <label style=" font-style: italic;"><%= @escuela.modalidad %></label>
             </div>
-            <div class="grid-8-12">
+            <div class="grid-5-12">
               <label style=" font-weight: bold;">Domicilio:</label>
               <label style=" font-style: italic;"><%= @escuela.domicilio %></label>
             </div>
-            <div class="grid-4-12">
-              <label style=" font-weight: bold;">Telefono:</label>
-              <label style=" font-style: italic;"><%= @escuela.telefono %></label>
-            </div>
+
+            <%if @escuela.telefono && @escuela.telefono.size > 1%>
+              <div class="grid-2-12">
+                <label style=" font-weight: bold;">Telefono:</label>
+                <label style=" font-style: italic;"><%= @escuela.telefono %></label>
+              </div>
+            <%end%>
+
             <div class="grid-4-12">
               <label style=" font-weight: bold;">Localidad:</label>
               <label style=" font-style: italic;"><%= @escuela.localidad %></label>
             </div>
-            <div class="grid-4-12">
+            <div class="grid-3-12">
               <label style=" font-weight: bold;">Municipio:</label>
               <label style=" font-style: italic;"><%= @escuela.municipio %></label>
             </div>
