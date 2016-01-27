@@ -1,7 +1,7 @@
-<div class="formee">
+<div class="formee" style="font-size: 12px;">
   <table class="subreport" width="100%" border="0" align="center" cellpadding="1" cellspacing="1" style="BORDER-RIGHT: #3a3a3a 1px solid; BORDER-TOP: #3a3a3a 1px solid; BORDER-LEFT: #3a3a3a 1px solid; BORDER-BOTTOM: #3a3a3a 1px solid;">
     <tr>
-      <td align="center"><h5 class="reporte" >FORMATO DE REGISTRO</h5></td>
+      <td align="center"><h5 class="reporte" >FORMATO DE REGISTRO&nbsp;CICLO ESCOLAR: <%=CICLO_ESCOLAR%></h5></td>
     </tr>
     <tr>
       <td>
@@ -44,7 +44,7 @@
               <label style=" font-weight: bold;">Telefono:</label>
               <label style=" font-style: italic;"><%= @escuela.telefono %></label>
             </div>
-            <div class="grid-8-12">
+            <div class="grid-4-12">
               <label style=" font-weight: bold;">Localidad:</label>
               <label style=" font-style: italic;"><%= @escuela.localidad %></label>
             </div>
@@ -53,96 +53,75 @@
               <label style=" font-style: italic;"><%= @escuela.municipio %></label>
             </div>
           </div>
-          <div class="grid-6-12">
+          <div class="grid-3-12">
             <label>Categoría: <em class="formee-req">*</em></label>
             <%= f.text_field :categoria_escuela_id, :value => @escuela.categoria_escuela.descripcion, :class => "rpt" %>
           </div>
           <% unless @escuela.categoria_desc.empty? %>
-          <div class="grid-6-12">
+          <div class="grid-3-12">
             <%=f.text_area :categoria_desc, :placeholder => "Especifique...", :class => "rpt" %>
           </div>
           <% end %>
-          <div class="grid-12-12 clear"></div>
-          <div class="grid-6-12">
-            <label>La institución educativa participa en algún programa: ¿Cúal?<em class="formee-req">*</em></label>
-            <fieldset style="padding: 5px 5px 5px 5px;margin: 5px 5px 5px 5px;" class="rpt">
-              <div id="programas">
-                <% Programa.find(:all).each do |c| %>
-                  <%= check_box_tag "programas[#{c.id}]", c.clave, @s_programas.include?(c.id) ? true : false, :onclick => "checkRadioD(this, 'escuela_programa_desc')" %>&nbsp;<%= c.descripcion %><br />
-                <% end %>
+          
+              <div class="grid-12-12">
+                <label>La institución educativa participa en algún programa: ¿Cúal?<em class="formee-req">*</em></label>
+                    <fieldset style="padding: 5px 5px 5px 5px;margin: 5px 5px 5px 5px;" class="rpt">
+                      <div id="programas">
+                        <% @programas.each do |c| %>
+                          <%= check_box_tag "programas[#{c.id}]", c.clave, @s_programas.include?(c.id) ? true : false, :onclick => "checkRadioD(this, 'escuela_programa_desc')" %>&nbsp;<%= c.descripcion %><br />
+                        <% end %>
+                      </div>
+                  </fieldset>
               </div>
-            </fieldset>
-            <%# @descripcion = [] %>
-            <%# @s_programas.each do |selected| %>
-            <%# @selecion = Programa.find_by_clave(selected)%>
-            <%# @descripcion.empty? ? @descripcion << "" : @descripcion << " , "%>
-            <%# @descripcion << @selecion.descripcion %>
-            <%#*<div style="overflow:auto; width:370px;">%>
-              <%#*<select id="programas" name="programas[]" style="width:auto;" multiple="multiple" size="5" >%>
-                <%#= options_from_collection_for_select(Programa.find(:all), :clave, :descripcion, @s_programas)%>
-              <%#*</select>%>
-            <%#*</div>%>
-            <%# end %>
-            <%#= text_area  :select, :valor, :class => "rpt", :value => @descripcion %>
-          </div>
-          <% unless @escuela.programa_desc.empty? %>
-          <div class="grid-6-12">
-            <img src="/images/era/space.png" alt="" width="10" height="40" />
-            <%= f.text_area :programa_desc, :placeholder => "Especifique...", :class => "rpt" %>
-          </div>
-          <% end %>
-          <div class="grid-12-12">
-            <label>Nombre del director: <em class="formee-req">*</em></label>
-            <%= f.text_field  :nombre_director, :class => "rpt" %>
-          </div>
-          <div class="grid-6-12">
-            <label>Teléfono del director (lada): </label>
-              <%= f.text_field :telefono_director, :class => "rpt" %>
-          </div>
-          <div class="grid-6-12">
+              <% unless @escuela.programa_desc.empty? %>
+                  <div class="grid-6-12">
+                    <img src="/images/era/space.png" alt="" width="10" height="40" />
+                    <%= f.text_area :programa_desc, :placeholder => "Especifique...", :class => "rpt" %>
+                  </div>
+              <% end %>
+
+              <!-- director -->
+              <div class="grid-12-12">
+                <fieldset>
+                  <legend style=" font-size: 14px;" >&nbsp;Datos&nbsp;del&nbsp;Director:&nbsp;</legend>
+                    <div class="grid-5-12">
+                      <label>Nombre completo del director: <em class="formee-req">*</em></label>
+                      <%= f.text_field  :nombre_director%>
+                    </div>
+                    <div class="grid-2-12">
+                      <label>RFC: <em class="formee-req">*</em></label>
+                        <%= f.text_field  :rfc_director%>
+                    </div>
+                    <div class="grid-3-12">
+                        <label>CURP: <em class="formee-req">*</em></label>
+                        <%= f.text_field  :curp_director%>
+                    </div>
+                    <div class="grid-2-12">
+                      <label>Tel. del director (lada): </label>
+                      <%= f.text_field :telefono_director%>
+                    </div>
+                </fieldset>
+           </div>
+
+          <div class="grid-4-12">
             <label>Correo electrónico de la escuela: <em class="formee-req">*</em></label>
             <%= f.text_field :email, :class => "rpt" %>
           </div>
-          <%#*<div class="grid-12-12">%>
-            <%#*<label>Nombre del proyecto: <em class="formee-req">*</em></label>%>
-            <%#= f.text_field :nombre_proyecto, :class => "rpt" %>
-          <%#*</div>%>
-          <div class="grid-12-12">
+          
+          <div class="grid-8-12">
             <label>Nombre del responsable del proyecto: <em class="formee-req">*</em></label>
             <%= f.text_field :responsables_proyecto, :class => "rpt" %>
           </div>
-          <div class="grid-6-12">
+          <div class="grid-4-12">
             <label>Teléfono (lada): </label>
             <%= f.text_field :tel_responsable_proyecto, :class => "rpt" %>
           </div>
-          <div class="grid-6-12">
+          <div class="grid-8-12">
             <label>Correo electrónico (proyecto): <em class="formee-req">*</em></label>
             <%= f.text_field :email_responsable_proyecto, :class => "rpt" %>
           </div>
-          <!--<div class="grid-3-12">
-            <label>Total personal docente: <em class="formee-req">*</em></label>
-            <%= f.text_field :total_personal_docente, :class => "rpt"  %>
-          </div>
-          <div class="grid-3-12">
-            <label>Total de alumnos: <em class="formee-req">*</em></label><br />
-            <div class="grid-5-12">
-              <label>Mujeres: </label>
-              <%= f.text_field :alu_muj, :class => "rpt"  %>
-            </div>
-            <div class="grid-2-12"></div>
-            <div class="grid-5-12">
-              <label>Hombres: </label>
-              <%= f.text_field :alu_hom, :class => "rpt"  %>
-            </div>
-          </div>
-          <div class="grid-3-12">
-            <label>Total personal admvo: <em class="formee-req">*</em></label>
-            <%= f.text_field :total_personal_admvo, :class => "rpt"  %>
-          </div>
-          <div class="grid-3-12">
-            <label>Total personal de apoyo: <em class="formee-req">*</em></label>
-            <%= f.text_field :total_personal_apoyo, :class => "rpt"  %>
-          </div>-->
+     
+          
           <div class="grid-8-12">
             <fieldset  style="padding: 5px 5px 5px 5px;margin: 5px 5px 5px 5px;">
               <legend style=" font-size: 14px;" >Total personal:</legend>
@@ -177,7 +156,7 @@
       <div class="grid-4-12">
         <fieldset  style="padding: 5px 5px 5px 5px;margin: 5px 5px 5px 5px;">
           <legend style=" font-size: 14px;" >Total de alumnos:</legend>
-          <div class="grid-2-12"></div>
+          <div class="grid-1-12"></div>
           <div class="grid-3-12">
             <label>Mujeres: <em class="formee-req">*</em></label>
             <%= f.text_field :alu_muj, :class => "rpt" %>
@@ -187,9 +166,20 @@
             <label>Hombres: <em class="formee-req">*</em></label>
             <%= f.text_field :alu_hom, :class => "rpt" %>
           </div>
-          <div class="grid-2-12"></div>
+          <div class="grid-1-12"></div>
         </fieldset>
       </div>
+
+         <div class="grid-6-12">
+          <fieldset>
+            <legend style=" font-size: 14px;" >&nbsp;Total&nbsp;Padres&nbsp;de&nbsp;Familia&nbsp;o&nbsp;Tutores&nbsp;</legend>
+            <label>&nbsp; Padres de Familia o Tutores: <em class="formee-req">*</em></label><br />
+            <div class="grid-4-12">
+              <%= f.text_field :padres_tutores %>
+            </div>
+          </fieldset>
+         </div>
+
         </fieldset>
         <%end%>
       </td>
