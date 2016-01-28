@@ -6,7 +6,7 @@ class PublicController < ApplicationController
     Nivel.establish_connection(RAILS_ENV)
     Escuela.establish_connection(RAILS_ENV)
     @niveles = Nivel.find(:all, :conditions => ["descripcion <> ?", "OTRO"])
-    @generaciones = Generacion.find(:all, :order => "ciclo_id")
+    @generaciones = Generacion.find(:all, :order => "ciclo_id DESC")
     @sostenimientos = Escuela.find(:all, :select => "sostenimiento", :group => "sostenimiento")
   end
 
