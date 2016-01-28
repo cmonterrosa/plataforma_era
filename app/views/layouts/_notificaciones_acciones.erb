@@ -1,34 +1,34 @@
 <!-- NOTIFICACIONES DE ACCIONES -->
           <%if flash[:notice]%>
          <div class="formee-msg-success">
-              <h3>Operación realizada exitosamente:</h3>
               <ul>
-                <li><%=flash[:notice]%></li>
+                <h3>Operación realizada exitosamente:</h3><br />
+                <li><%=flash[:notice]%></li><br />
               </ul>
          </div>
 
            <%elsif flash[:warning]%>
               <div class="formee-msg-warning">
-                <h3>Atención:</h3>
                 <ul>
-                  <li><%=flash[:warning]%></li>
+                  <h3>Atención:</h3><br />
+                  <li><%=flash[:warning]%></li><br />
                 </ul>
               </div>
 
               <%elsif flash[:info]%>
               <div class="formee-msg-info">
-                <h3>Información:</h3>
                 <ul>
-                  <li><%=flash[:info]%></li>
+                  <h3>Información:</h3><br />
+                  <li><%=flash[:info]%></li><br />
                 </ul>
               </div>
 
 
               <%elsif flash[:error]%>
               <div class="formee-msg-error">
-                <h3>Operación no realizada:</h3>
                 <ul>
-                  <li><%=flash[:error]%></li>
+                  <h3>Operación no realizada:</h3><br />
+                  <li><%=flash[:error]%></li><br />
                 </ul>
               </div>
             <%end%>

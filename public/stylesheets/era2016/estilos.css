@@ -1,0 +1,226 @@
+@charset "UTF-8";
+.mn_principal {
+	width: 1040px;
+	margin-right: auto;
+	margin-left: auto;
+	padding-right: 0px;
+	padding-left: 0px;
+	height: 55px;
+	margin-top: 0px;
+}
+.mn_principal_era {
+	width: 1040px;
+	margin-right: auto;
+	margin-left: auto;
+	padding-right: 0px;
+	padding-left: 0px;
+	height: 124px;
+	margin-top: 0px;
+}
+.mn_inicio {
+	height: 55px;
+	width: 164px;
+}
+.txtGlobal {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 17px;
+	color: #2A2A2A;
+	text-align: justify;
+}
+.txtGlobalNg {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 17px;
+	color: #2A2A2A;
+	text-align: justify;
+	font-weight: bold;
+}
+.txtMnGlobal {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 20px;
+	color: #2A2A2A;
+	text-align: justify;
+}
+.txtMnGlobalNg {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 22px;
+	color: #2A2A2A;
+	text-align: justify;
+	font-weight: bold;
+}
+.txtGlobalVñt {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	color: #2A2A2A;
+	text-align: justify;
+	list-style-type: disc;
+	padding-left: 5px;
+}
+.linea {
+	background-color: #009335;
+	width: 1024px;
+	height: 1px;
+	aling: center;
+	margin-right: auto;
+	margin-left: auto;
+}
+.cont {
+	float: right;
+}.ar_ubic {
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	color: #333;
+	height: 20px;
+}
+.arbol {
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	color: #01882A;
+	width: 1024px;
+	margin-right: auto;
+	margin-left: auto;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+.container_toggle {
+	position: relative;
+	width: 1024px;
+	margin: 0 auto;
+}
+div.sepContainer1 {
+	height: 4px;
+	background:#e1e8ed;
+	border-left:20px solid #bfd6e4;
+	display: block;
+	margin: 10px 0 30px 0;
+}
+/* TOGGLE -------------------------------------------------*/
+.toggle-trigger {
+	text-decoration: none;
+	color: #414550;
+	font-weight: bold;
+	padding: 10px 10px 10px 25px;
+	cursor: pointer;
+	border: 1px solid #b7c7d1;
+	background: #dae4ea url(../era2016/toggle.png) no-repeat 5px 10px;
+	-webkit-transition: all 0.3s ease;
+	-moz-transition: all 0.3s ease-in-out;
+	-o-transition: all 0.3s ease-in-out;
+	-ms-transition: all 0.3s ease-in-out;
+	transition: all 0.3s ease-in-out;
+}
+.toggle-trigger.active {
+	border-bottom:1px solid #b7c7d1;
+	background:#bfd6e4 url(../era2016/toggle.png) no-repeat 5px -75px;
+}
+.toggle-trigger:hover {
+	background-color:#bfd6e4;
+}
+.toggle-container {
+	margin-bottom: 0px;
+	padding: 5px 10px;
+	border-bottom: 1px solid #ccc;
+	border-right: 1px solid #ccc;
+	border-left: 1px solid #ccc;
+}
+.imagenfondo{
+    background-image: url(/images/era2016/img_era9.jpg);
+    background-repeat: no-repeat;
+    width: auto;
+    height: 474px;
+}
+
+
+/***** Agregado para login form ******/
+
+#content {	float: left; width: 100%;}
+
+#mask {
+	display: none;
+	background: #000;
+	position: fixed; left: 0; top: 0;
+	z-index: 10;
+	width: 100%; height: 100%;
+	opacity: 0.8;
+	z-index: 999;
+}
+
+.login-popup{
+	display:none;
+	background: #333;
+	padding: 10px;
+	border: 2px solid #ddd;
+	float: left;
+	font-size: 1.2em;
+	position: fixed;
+	top: 50%; left: 50%;
+	z-index: 99999;
+	box-shadow: 0px 0px 20px #999;
+	-moz-box-shadow: 0px 0px 20px #999; /* Firefox */
+    -webkit-box-shadow: 0px 0px 20px #999; /* Safari, Chrome */
+	border-radius:3px 3px 3px 3px;
+    -moz-border-radius: 3px; /* Firefox */
+    -webkit-border-radius: 3px; /* Safari, Chrome */
+}
+
+img.btn_close {
+	float: right;
+	margin: -28px -28px 0 0;
+}
+
+fieldset {
+	border:none;
+}
+
+form.signin .textbox label {
+	display:block;
+	padding-bottom:7px;
+}
+
+form.signin .textbox span {
+	display:block;
+}
+
+form.signin p, form.signin span {
+	color:#999;
+	font-size:14px;
+	line-height:18px;
+}
+
+form.signin .textbox input {
+	background:#666666;
+	border-bottom:1px solid #333;
+	border-left:1px solid #000;
+	border-right:1px solid #333;
+	border-top:1px solid #000;
+	color:#fff;
+	border-radius: 3px 3px 3px 3px;
+	-moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+	font:13px Arial, Helvetica, sans-serif;
+	padding:6px 6px 4px;
+	width:250px;
+}
+
+form.signin input:-moz-placeholder { color:#bbb; text-shadow:0 0 2px #000; }
+form.signin input::-webkit-input-placeholder { color:#bbb; text-shadow:0 0 2px #000;  }
+
+.button {
+	background: -moz-linear-gradient(center top, #f3f3f3, #dddddd);
+	background: -webkit-gradient(linear, left top, left bottom, from(#f3f3f3), to(#dddddd));
+	background:  -o-linear-gradient(top, #f3f3f3, #dddddd);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#f3f3f3', EndColorStr='#dddddd');
+	border-color:#000;
+	border-width:1px;
+	border-radius:4px 4px 4px 4px;
+	-moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+	color:#333;
+	cursor:pointer;
+	display:inline-block;
+	padding:6px 6px 4px;
+	margin-top:10px;
+	font-size:14px;
+	width:260px;
+}
+
+.button:hover { background:#ddd; }

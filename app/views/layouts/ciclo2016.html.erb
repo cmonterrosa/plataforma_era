@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+  <meta charset="utf-8">
+  <title>Educar con Responsabilidad Ambiental - Certificación de Escuelas Saludables y Sustentables</title>
+  <meta name="secretaria de educacion" content="secretaria de educacion">
+  <meta name="secretaria de educacion" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+</head>
+
+<link rel="shortcut icon" href="/images/era2016/favicon.png">
+  
+<!-- TOOLTIPS -->
+<%= javascript_include_tag 'prototype'%>
+<%= javascript_include_tag 'BubbleTooltips' %>
+<%= stylesheet_link_tag "bt.css" %>
+
+<!-- formee -->
+<%=javascript_include_tag "formee/jquery-1.6.4.min.js" %>
+<%=javascript_include_tag "formee/formee.js" %>
+
+<%=javascript_include_tag "livevalidation/livevalidation_standalone.js" %>
+
+<%=javascript_include_tag "fancybox/jquery.fancybox.js" %>
+<%=javascript_include_tag "validate/jquery.validate.js" %>
+<%=javascript_include_tag "validate/jquery.validation.functions.js" %>
+
+<!-- Validaciones nuevas -->
+<%=javascript_include_tag "validaciones_ciclo2015" %>
+<%=javascript_include_tag :defaults %>
+
+<%= stylesheet_link_tag "formee/formee-structure.css" %>
+<%= stylesheet_link_tag "formee/formee-style.css" %>
+
+<%= stylesheet_link_tag "livevalidation/validation.css" %>
+<%= stylesheet_link_tag "fancybox/jquery.fancybox.css" %>
+<%= stylesheet_link_tag "validate/jquery.validate.css" %>
+
+<%= stylesheet_link_tag "era2016/base.css" %>
+<%= stylesheet_link_tag "era2016/skeleton.css" %>
+<%= stylesheet_link_tag "era2016/screen.css" %>
+<%= stylesheet_link_tag "era2016/estilos.css" %>
+<%= stylesheet_link_tag "era2016/prettyPhoto.cs" %>
+
+<%= stylesheet_link_tag "era2016/estilos.cs" %>
+
+<!-- Paginate -->
+<%= stylesheet_link_tag "paginate/style.css" %>
+
+<!-- Progress bar -->
+<%= stylesheet_link_tag "progressbar/css3-progress-bar-ie.css" %>
+<%= stylesheet_link_tag "progressbar/css3-progress-bar.css" %>
+
+<!-- Acordeon -->
+<%= stylesheet_link_tag "acordeon/style.css" %>
+
+<script type="text/javascript">
+  jQuery.noConflict();
+</script>
+
+<!-- Inicio de fancy -->
+<script type="text/javascript">
+  jQuery(document).ready(function() {
+    jQuery('.fancybox').fancybox();
+  });
+</script>
+
+<!-- login_form -->
+<script type="text/javascript">
+jQuery(document).ready(function() {
+	jQuery('a.login-window').click(function() {
+
+		// Getting the variable's value from a link
+		var loginBox = jQuery(this).attr('href');
+
+		//Fade in the Popup and add close button
+		jQuery(loginBox).fadeIn(300);
+
+		//Set the center alignment padding + border
+		var popMargTop = (jQuery(loginBox).height() + 24) / 2;
+		var popMargLeft = (jQuery(loginBox).width() + 24) / 2;
+
+		jQuery(loginBox).css({
+			'margin-top' : -popMargTop,
+			'margin-left' : -popMargLeft
+		});
+
+		// Add the mask to body
+		jQuery('body').append('<div id="mask"></div>');
+		jQuery('#mask').fadeIn(300);
+
+		return false;
+	});
+
+	// When clicking on the button close or the mask layer the popup closed
+	jQuery('a.close, #mask').live('click', function() {
+	  jQuery('#mask , .login-popup').fadeOut(300 , function() {
+		jQuery('#mask').remove();
+	});
+	return false;
+	});
+});
+</script>
+<!-- fin login_form -->
+
+<body onload="enableTooltips();">
+  <div id="header">
+    <div class="container header">
+      <header>
+        <div class="container">
+        <!--  <div class="info">-->
+          <div class="encabezado">
+            <div class="logo_SE"></div>
+            <div class="logo_E"></div>
+            <div class="logo_CU"></div>
+          </div>
+        </div>
+      </header>
+    </div>
+  </div>
+
+  <div id="copyright_era">
+    <div class="mn_principal_era">
+      <img src="/images/era2016/lg_esys.png" width="227" height="124" />
+      <%= link_to image_tag("/images/era2016/mn_esys_quees2.png", :size => "199x124", :mouseover => "/images/era2016/mn_esys_quees.png", :mouseout => "/images/era2016/mn_esys_quees2.png", :border => 0, :alt => "¿Qué es la certificación?"), {:controller => "home" } %>
+      <%= link_to image_tag("/images/era2016/mn_esys_niveles2.png", :size => "199x124", :mouseover => "/images/era2016/mn_esys_niveles.png", :mouseout =>"/images/era2016/mn_esys_niveles2.png", :border => 0, :alt => "Estadisticas por nivel educativo"), {:action => "index_report", :controller => "public"} %>
+      <%= link_to image_tag("/images/era2016/mn_esys_manual2.png", :size => "199x124", :mouseover => "/images/era2016/mn_esys_manual.png", :mouseout =>"/images/era2016/mn_esys_manual2.png", :border => 0, :alt => "Manual de Certificación"), {:controller => "home", :action => "certificacion_manual" } %>
+      <% if logged_in? %>
+        <%= link_to image_tag("/images/era2016/mn_esys_cerrarsesion2.png", :size => "200x124", :mouseover => "/images/era2016/mn_esys_cerrarsesion.png", :mouseout => "/images/era2016/mn_esys_cerrarsesion2.png", :border => 0, :alt => "Cerrar sesión", :class => "login-window"), {:controller => "sessions", :action => "destroy" } %>
+      <% else %>
+        <a href="#login-box" class="login-window"><img src="/images/era2016/mn_esys_sesion2.png" width="200" height="124" alt="" onMouseOver="this.src='/images/era2016/mn_esys_sesion.png';" onMouseOut="this.src='/images/era2016/mn_esys_sesion2.png';"/></a>
+        <%#= link_to image_tag("/images/era2016/mn_esys_sesion2.png", :size => "200x124", :mouseover => "/images/era2016/mn_esys_sesion.png", :mouseout => "/images/era2016/mn_esys_sesion2.png", :border => 0, :alt => "Iniciar sesión"), {:controller => "sessions", :action => "new" } %>
+      <% end %>
+    </div>
+  </div>
+
+  <% unless logged_in? %>
+    <% if current_page?(:controller => 'home', :action => 'index') or current_page?('/') %>
+      <div class="copyright" style="text-align:center;" >
+        <img src="/images/era2016/img_era9.jpg" width="1700" height="auto" border="0" />
+      </div>
+    <% end %>
+    <div class="blankSeparator"></div>
+  <% else %>
+    <div id="copyright_era_mn">
+      <div class="mn_principal_era">
+        <%= link_to image_tag("/images/era2016/sub_mn_esys_registro2.png", :size => "174x124", :mouseover => "/images/era2016/sub_mn_esys_registro1.png", :mouseout =>"/images/era2016/sub_mn_esys_registro2.png", :border => 0, :alt => "Consulta el Registro de Datos"), {:controller => "registro", :action => "index"} %>
+        <%= link_to image_tag("/images/era2016/sub_mn_esys_diagnostico2.png", :size => "221x124", :mouseover => "/images/era2016/sub_mn_esys_diagnostico1.png", :mouseout =>"/images/era2016/sub_mn_esys_diagnostico2.png", :border => 0, :alt => "Consulta el Diagnóstico"), {:controller => "diagnosticos", :action => "index"} %>
+        <%= link_to image_tag("/images/era2016/sub_mn_esys_proyecto2.png", :size => "207x124", :mouseover => "/images/era2016/sub_mn_esys_proyecto1.png", :mouseout =>"/images/era2016/sub_mn_esys_proyecto2.png", :border => 0, :alt => "Consulta el Proyecto"), {:controller => "proyectos", :action => "index"} %>
+        <%= link_to image_tag("/images/era2016/sub_mn_esys_evidencias2.png", :size => "243x124", :mouseover => "/images/era2016/sub_mn_esys_evidencias1.png", :mouseout =>"/images/era2016/sub_mn_esys_evidencias2.png", :border => 0, :alt => "Avance de Evidencias"), {:controller => "proyectos", :action => "index"} %>
+        <%= link_to image_tag("/images/era2016/sub_mn_esys_mensajeria2.png", :size => "179x124", :mouseover => "/images/era2016/sub_mn_esys_mensajeria1.png", :mouseout =>"/images/era2016/sub_mn_esys_mensajeria2.png", :border => 0, :alt => "Plataforma de Mensajes"), {:controller => "mensajes", :action => "list"} %>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="container">
+
+    <!-- CONTENIDO PRICINCIPAL -->
+    <%= render :partial => "layouts/notificaciones_acciones" %>
+    <%= yield %>
+
+  </div>
+  
+  <div id="gris">
+    <div class="container">
+    <!--  <div class="info">-->
+      <div class="two_third lastcolumn"><img src="/images/era2016/img_dep.jpg" alt="" width="1024" height="200" usemap="#Map2Map" border="0" />
+        <map name="Map2Map">
+          <area shape="rect" coords="3,6,129,45" href="http://www.semarnat.gob.mx/Pages/Inicio.aspx" target="_blank" />
+          <area shape="rect" coords="512,5,616,56" href="http://www.conafor.gob.mx/portal/" target="_blank" />
+          <area shape="rect" coords="927,56,1021,95" href="http://www.conanp.gob.mx/" target="_blank" />
+          <area shape="rect" coords="9,156,99,189" href="http://www.difchiapas.gob.mx/" target="_blank" />
+          <area shape="rect" coords="102,61,190,91" href="http://www.cna.gob.mx/" />
+          <area shape="rect" coords="824,57,880,110" href="http://www.conabio.gob.mx/" target="_blank" />
+          <area shape="rect" coords="138,153,230,192" href="http://www.secretariadelcampo.gob.mx" target="_blank" />
+          <area shape="rect" coords="258,155,406,189" href="http://www.pueblosyculturas.chiapas.gob.mx" target="_blank" />
+          <area shape="rect" coords="593,153,746,191" href="http://www.sedepas.chiapas.gob.mx/" target="_blank" />
+          <area shape="rect" coords="160,5,294,47" href="http://www.semahn.chiapas.gob.mx/portal/" target="_blank" />
+          <area shape="rect" coords="853,5,1020,47" href="http://www.planeacion.chiapas.gob.mx/" target="_blank" />
+          <area shape="rect" coords="319,9,464,51" href="http://portal.salud.gob.mx/" target="_blank" />
+          <area shape="rect" coords="507,64,648,112" href="http://www.sagarpa.gob.mx/Paginas/default.aspx" target="_blank" />
+          <area shape="rect" coords="655,10,801,48" href="http://www.sectur.gob.mx/" target="_blank" />
+          <area shape="rect" coords="5,105,246,139" href="http://www.spdfs.chiapas.gob.mx/" target="_blank" />
+          <area shape="rect" coords="236,56,403,91" href="http://www.sedespi.chiapas.gob.mx/" target="_blank" />
+          <area shape="rect" coords="332,105,497,140" href="http://www.cocytech.gob.mx/" target="_blank" />
+          <area shape="rect" coords="426,156,564,192" href="http://www.iner.chiapas.gob.mx/" target="_blank" />
+          <area shape="rect" coords="660,95,821,133" href="http://www.conecultachiapas.gob.mx/" target="_blank" />
+          <area shape="rect" coords="846,117,1021,149" href="http://www.juventudydeporte.chiapas.gob.mx/" target="_blank" />
+          <area shape="rect" coords="764,157,996,192" href="http://www.inifech.gob.mx/inifech.php" target="_blank" />
+        </map>
+        <map name="Map2">
+          <area shape="rect" coords="3,27,183,90" href="http://www.semarnat.gob.mx/Pages/Inicio.aspx" target="_blank" />
+          <area shape="rect" coords="208,21,358,85" href="http://www.conafor.gob.mx/portal/" target="_blank" />
+          <area shape="rect" coords="385,29,518,86" href="http://www.conanp.gob.mx/" target="_blank" />
+          <area shape="rect" coords="543,33,667,84" href="http://www.difchiapas.gob.mx/" target="_blank" />
+          <area shape="rect" coords="698,49,827,81" href="http://www.cna.gob.mx/" />
+          <area shape="rect" coords="852,11,916,110" href="http://www.unicach.edu.mx" target="_blank" />
+          <area shape="rect" coords="945,28,1021,102" href="http://www.conabio.gob.mx/" target="_blank" />
+          <area shape="rect" coords="3,138,95,177" href="http://www.secretariadelcampo.gob.mx" target="_blank" />
+          <area shape="rect" coords="130,136,228,180" href="http://www.salud.chiapas.gob.mx" target="_blank" />
+          <area shape="rect" coords="258,138,424,180" href="http://www.pueblosyculturas.chiapas.gob.mx" target="_blank" />
+          <area shape="rect" coords="459,138,627,180" href="http://www.sedepas.chiapas.gob.mx/" target="_blank" />
+          <area shape="rect" coords="659,138,807,179" href="http://www.semahn.chiapas.gob.mx/portal/" target="_blank" />
+          <area shape="rect" coords="838,138,1022,179" href="http://www.planeacion.chiapas.gob.mx/" target="_blank" />
+        </map>
+      </div>
+    </div>
+  </div>
+
+  <div id="copyright_era">
+    <div class="blankSeparator"></div>
+    <div class="container">
+      <div class="two_third lastcolumn">
+        <div class="one_half">
+          <h2><img src="/images/era2016/ico_ubi_era.png" width="483" height="52" /></h2>
+        </div>
+        <div class="one_half lastcolumn">
+          <table width="490" border="0" cellpadding="0" cellspacing="0">
+            <tr>
+              <td><img src="/images/era2016/ico_tel_era.png" width="134" height="39" /></td>
+              <td valign="middle"><img src="/images/era2016/ico_correo_era.png" width="110" height="26" /></td>
+              <td valign="middle"><a href="#" target="_blank"><img src="/images/era2016/ico_twitter.png" width="35" height="28" alt="" onMouseOver="this.src='/images/era2016/ico_twitter_a.png';" onMouseOut="this.src='/images/era2016/ico_twitter.png';" /></a></td>
+              <td align="center" valign="middle"><a href="#" target="_blank"><img src="/images/era2016/ico_Facebook.png" width="35" height="28" alt="" onMouseOver="this.src='/images/era2016/ico_Facebook_a.png';" onMouseOut="this.src='/images/era2016/ico_Facebook.png';" /></a></td>
+              <td align="right" valign="middle"><a href="#" target="_blank"><img src="/images/era2016/ico_YouTube.png" width="35" height="28" alt="" onMouseOver="this.src='/images/era2016/ico_YouTube_a.png';" onMouseOut="this.src='/images/era2016/ico_YouTube.png';" /></a></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- form para login -->
+  <div id="login-box" class="login-popup">
+    <a href="#" class="close"><img src="/images/login/close_pop.png" class="btn_close" title="Cerrar Ventana" alt="Cerrar" /></a>
+    <% form_for :user, @user, :url => { :action => "create", :controller => "sessions"}, :html => {:class => "signin"} do |f| -%>
+      <fieldset class="textbox">
+        <label class="username">
+          <span>Clave de la Escuela:</span>
+          <%= f.text_field :login, :placeholder => "Clave de la escuela" %>
+        </label>
+
+        <label class="password">
+          <span>Contraseña:</span>
+          <%= f.password_field :password, :placeholder => "Contraseña" %>
+        </label>
+
+        <button class="submit button" type="submit">Iniciar Sesión</button>
+
+        <p>
+          <br />
+          <%= link_to "¿No estás registrado? ", {:action => "new", :controller => "users"}, :style => "font-family: Arial, sans-serif;font-size:13px;color:#427fed; text-decoration: none;"%> <br />
+          <%=link_to " ¿Olvidaste tu contraseña? ", {:action => "forgot", :controller => "users"}, :style => "font-family: Arial, sans-serif;font-size:13px;color:#427fed; text-decoration: none;"%>
+        </p>
+      </fieldset>
+    <% end %>
+  </div>
+  <!-- fin login -->
+  
+</body>
+</html>

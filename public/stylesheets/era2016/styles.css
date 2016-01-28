@@ -1,0 +1,85 @@
+body {
+	background-image:url(fondo.jpg);
+	font-family: 'Helvetic', cursive;
+}
+
+.divContenedor{
+	width: 1024px;
+	margin: 10px auto 10px auto;
+	text-align: left;
+}
+
+.divContenedor label{
+	
+	font-weight: bold;
+	padding: 10px 20px;
+	display: block;
+	cursor: pointer;
+	color: #FFF;
+	line-height: 25px;
+	font-size: 20px;
+	background: rgba(0,0,0,0.4);
+	-webkit-transition: 0.3s ease-in-out;
+	-moz-transition: 0.3s ease-in-out;
+	-o-transition: 0.3s ease-in-out;
+	-ms-transition: 0.3s ease-in-out;
+	transition: 0.3s ease-in-out;
+}
+
+.divContenedor label:hover{
+	background: #80d08f;
+	color:#333;
+	padding-left: 30px;
+	
+}
+
+.divContenedor input[type="radio"]:checked + label,
+.divContenedor input[type="radio"]:checked + label:hover{
+	background: #009335;
+	color: #333;
+}
+
+.divContenedor input{
+	display: none;
+}
+
+.divContenedor .texto{
+	margin-top: -1px;
+	overflow: hidden;
+	height: 0px;
+	background-color: #f6f6f6;
+	-webkit-transition: 0.3s ease-in-out;
+	-moz-transition: 0.3s ease-in-out;
+	-o-transition: 0.3s ease-in-out;
+	-ms-transition: 0.3s ease-in-out;
+	transition: 0.3s ease-in-out;
+}
+
+.divContenedor .texto p{
+	color: black;
+	line-height: 23px;
+	font-size: 14px;
+	padding: 20px;
+	font-family: 'Open Sans', sans-serif;
+}
+
+.divContenedor input[type="radio"]:checked ~ .texto{
+	height: auto;
+}
+
+#nebaris{
+	background-color: #000;
+	color: white;
+	padding: 15px;
+	text-align: center;
+	margin-top: 120px;
+	font-family: helvetica;
+}
+
+#nebaris a{
+	color:rgb(178, 255, 178);
+}
+
+#nebaris a:hover{
+	color:white;
+}

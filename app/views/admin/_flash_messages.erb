@@ -1,17 +1,17 @@
-            <%if flash[:notice]%>
-            <div class="formee-msg-success">
-              <h3>Operación realizada exitosamente:</h3>
-              <ul>
-                <li><%=flash[:notice]%></li>
-              </ul>
-            </div>
-            <%elsif flash[:error]%>
-            <div class="formee-msg-error">
-              <h3>Error:</h3>
-              <ul>
-                <li><%=flash[:error]%></li>
-              </ul>
-            </div>
-            <%else%>
-            <%#*<p></p>%>
-            <%end%>
+<% if flash[:notice] %>
+  <div class="formee-msg-success">
+    <ul>
+      <h3>Operación realizada exitosamente:</h3><br />
+      <li><%=flash[:notice]%></li><br />
+    </ul>
+    </div>
+<% elsif flash[:error] %>
+    <div class="formee-msg-error">
+      <ul>
+        <h3>Error:</h3><br />
+        <li><%= flash[:error] %></li><br />
+      </ul>
+    </div>
+<% else %>
+  <%#*<p></p>%>
+<% end %>

@@ -1,41 +1,18 @@
-<div class="container">
+<div class="grid-1-12"></div>
+<div class="grid-10-12">
 <% form_for :user, @user, :url => { :action => "forgot", :controller => "users"}, :html => {:class => "formee"} do |f| -%>
-      <fieldset>
-        <legend>Recuperar&nbsp;contraseña</legend>
-            <div class="grid-8-12">
-               <label>Escriba la dirección de correo electrónico con la cual se registró:</label>
-               <!-- <input type="text" value="Escriba la clave completa" /> -->
-               <%=f.text_field :email%>
-            </div>
+  <fieldset>
+    <div class="grid-12-12"><legend>Recuperar&nbsp;contraseña</legend></div>
+    <div class="grid-8-12">
+      <label>Escriba la dirección de correo electrónico con la cual se registró:</label>
+      <%= f.text_field :email%>
+    </div>
      
-           <div class="grid-8-12">
-                   <input class="right" type="submit" title="ENVIAR" value="ENVIAR" />
-           </div>
-        </div>
-    </fieldset>
-  <%end%>
+    <div class="grid-4-12">
+      <br />
+      <input style="vertical-align: text-bottom;" type="submit" title="ENVIAR" value="ENVIAR" />
+    </div>
+  </fieldset>
+<% end %>
 </div>
-
-
-
-
-
-<!--
-
-<= error_messages_for :user %>
-
-< form_for :user do |f| -%>
-  <p>
-    Reset Password Request
-  </p>
-  <p>
-    <label for="email">Email</label><br />
-    <= f.text_field :email %>
-  </p>
-  <p>
-    <= link_to "Cancel", login_path %>
-    <= submit_tag 'Submit' %>
-  </p>
-< end -%>
-
--->
+<div class="grid-1-12"></div>

@@ -30,22 +30,22 @@ Structure
 	border: 2px solid #d4d4d4;
 	position: relative;
 	height:100%;
-	padding: 1.3em 0;
-	margin: 0 0 4em;
+	/*padding: 1.3em 0;
+	margin: 0 0 4em;*/
 }
 .formee fieldset.report {
 	border: 1px solid #7b7b7b;
 	position: relative;
 	height:100%;
-	padding: 1.2em 0;
-	margin: 0 0 4em;
+	/*padding: 1.2em 0;
+	margin: 0 0 4em;*/
 }
 .formee fieldset.report {
 	border: 1px solid #3a3a3a;
 	position: relative;
 	height:100%;
-	padding: 1.2em 0;
-	margin: 0 0 4em;
+	/*padding: 1.2em 0;
+	margin: 0 0 4em;*/
 }
 .formee legend {
 	margin-left:1%;
@@ -229,8 +229,8 @@ Structure
 	padding:0;	
 	margin-bottom: -1.6%;
 /*	font-size:1.4em;*/
-      font-size:0.9em;
-	line-height:1.5em;
+        font-size: 1em;
+	line-height: 0.5em;
 	vertical-align: top;
 }
 

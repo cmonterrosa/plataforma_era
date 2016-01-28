@@ -1,60 +1,52 @@
-<!-- Mensaje de inicio -->
-<!--
-  <= render :partial => "firefox"%>
--->
-
-
 <%=render :partial => "observaciones_evidencias"%>
 
-
-<tr>
-  <td colspan="3"><img src="/images/era/space.png" alt="" width="10" height="10" /></td>
-</tr>
-
-<!-- titulo de certificacion -->
-<tr>
-  <td align="left">
-    <img alt="" src="/images/era/btns_cert/tit_1.png" width="299px" height="43" />
-  </td>
-  <%unless logged_in?%>
-  <td>
-    <%=link_to image_tag("era/inicio1.png", :size => "250x120", :mouseover => "era/inicio2.png", :border => 0, :alt => "Iniciar sesión"), {:controller => "sessions", :action => "new" }, :title => "INGRESA A LA PLATAFORMA"%>
-  </td>
-  <td>
-    <%=link_to image_tag("era/registro1.png", :size => "250x120", :mouseover => "era/registro2.png", :border => 0, :alt => "Registro de escuelas"), {:controller => "users", :action => "new" }, :title => "REGISTRA A TU ESCUELA, ES FÁCIL y RÁPIDO"%>
-  </td>
-  <%else%>
-    <td colspan="2" >&nbsp;</td>
-  <%end%>
-</tr>
-
-
-<tr>
-  <td colspan="3" align="center">
-  <div class="formee-msg-description CuadroDescripcionCert" style="background: rgba(255,255,255,0.6);">
-    <ul>
-      <li>
-          <p>
-            La certificación de escuelas saludables y sustentables es un programa que acredita las acciones realizadas por las instituciones educativa,
-            reconoce el trabajo, la experiencia y la suma de esfuerzos en la realización de proyectos; que fomenten valores,
-            actitudes y prácticas saludables y sustentables, las cuales impacten en su entorno inmediato y los empodere para ejercer una responsabilidad ambiental
-            dentro de su comunidad, a través de la implementación  de los cinco ejes prioritarios del proceso de certificación: <strong>Desarrollo de Competencias,
-            Entorno Saludable, Huella Ecológica,  Consumo Responsable/Saludable y  Participación Comunitaria. </strong>
-          </p>
-          <strong>OBJETIVO GENERAL:</strong>
-          <p>Reconocer el trabajo, la experiencia y la suma de esfuerzos de las comunidades educativas en la realización de proyectos desde su escuela,
-             fomentando valores, actitudes y prácticas saludables y sustentables.</p>
-          <strong>COMPONENTES DE LA CERTIFICACIÓN:</strong>
-          <p>Para acreditar las acciones realizadas por las instituciones educativas es necesario abordar los tres componentes de la  certificación, los cuales son:</p>
-          <p><strong>Ejes rectores:</strong> Son la base del desarrollo de  las competencias para el cuidado y preservación de la salud y medio ambiente.</p>
-          <p><strong>Líneas de acción:</strong>  Acciones sustantivas de cada eje. Orientan las actividades a desarrollar para alcanzar los niveles de certificación.</p>
-          <p><strong>Indicadores:</strong> Punto de referencia de las líneas de acción.  Permite conocer de manera cuantitativa y cualitativa el logro del impacto o
-                                          efectos esperados con respecto al proyecto.</p>
-        </li>
-      </ul>
-    </div>
-  </td>
-</tr>
-
-
-
+<div class="info">
+  <%#*<div class="two_third lastcolumn">%>
+  <div class="txtGlobal">
+    <table width="1024" border="1">
+      <tr>
+        <%unless logged_in?%>
+          <td width="512" align="center">
+            <%#=link_to image_tag("/images/era2016/btn_esys_sesion2.png", :size => "336x160", :mouseover => "/images/era2016/btn_esys_sesion.png", :mouseout => "/images/era2016/btn_esys_sesion2.png", :border => 0, :alt => "Iniciar sesión"), {:controller => "sessions", :action => "new" } %>
+            <a href="#login-box" class="login-window" alt="Iniciar sesión"><img src="/images/era2016/btn_esys_sesion2.png" width="336" height="160" alt="" onMouseOver="this.src='/images/era2016/btn_esys_sesion.png';" onMouseOut="this.src='/images/era2016/btn_esys_sesion2.png';"/></a>
+          </td>
+          <td align="center">
+            <%=link_to image_tag("/images/era2016/btn_esys_registro2.png", :size => "336x160", :mouseover => "/images/era2016/btn_esys_registro.png", :mouseout => "/images/era2016/btn_esys_sesion2.png",  :border => 0, :alt => "Registro de escuelas"), {:controller => "users", :action => "new" } %>
+          </td>
+        <%else%>
+          <td colspan="2" >&nbsp;</td>
+        <%end%>
+      </tr>
+      <tr>
+        <td colspan="2" class="txtMnGlobalNg">&nbsp;</td>
+      </tr>
+      <tr>
+        <td colspan="2" class="txtMnGlobalNg">¿Qué es la Certificación?</td>
+      </tr>
+      <tr>
+        <td colspan="2">&nbsp;</td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <ul>
+            <li>
+              <p class="txtGlobal">La certificación de escuelas saludables y sustentables es un programa que acredita las acciones realizadas por las instituciones educativa, reconoce el trabajo, la experiencia y la suma de esfuerzos en la realización de proyectos; que fomenten valores, actitudes y prácticas saludables y sustentables, las cuales impacten en su entorno inmediato y los empodere para ejercer una responsabilidad ambiental dentro de su comunidad, a través de la implementación de los cinco ejes prioritarios del proceso de certificación: <span class="txtGlobalNg">Desarrollo de Competencias, Entorno Saludable, Huella Ecológica, Consumo Responsable/Saludable y Participación Comunitaria.</span></p>
+              <span class="txtGlobalNg">OBJETIVO GENERAL:</span>
+              <p class="txtGlobal">Reconocer el trabajo, la experiencia y la suma de esfuerzos de las comunidades educativas en la realización de proyectos desde su escuela, fomentando valores, actitudes y prácticas saludables y sustentables.</p>
+              <span class="txtGlobalNg">COMPONENTES DE LA CERTIFICACIÓN:</span>
+              <p class="txtGlobal">Para acreditar las acciones realizadas por las instituciones educativas es necesario abordar los tres componentes de la certificación, los cuales son:</p>
+              <span class="txtGlobalNg">Ejes rectores:</span><p class="txtGlobal">Son la base del desarrollo de las competencias para el cuidado y preservación de la salud y medio ambiente.</p>
+              <span class="txtGlobalNg">Líneas de acción:</span><p class="txtGlobal">Acciones sustantivas de cada eje. Orientan las actividades a desarrollar para alcanzar los niveles de certificación.</p>
+              <span class="txtGlobalNg">Indicadores:</span><p class="txtGlobal">Punto de referencia de las líneas de acción. Permite conocer de manera cuantitativa y cualitativa el logro del impacto o efectos esperados con respecto al proyecto.</p>
+            </li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2"><br />&nbsp;<br /></td>
+      </tr>
+      <tr>
+      </tr>
+    </table>
+  </div>
+</div>

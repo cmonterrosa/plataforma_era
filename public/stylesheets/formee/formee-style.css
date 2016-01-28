@@ -17,7 +17,7 @@ Style
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
 	border-radius: 12px;
-        line-height: 2em;
+        line-height: 2.5em;
         background:#7f7f7f;
         background:rgba(255,255,255,0.8);
        
@@ -64,7 +64,7 @@ Style
 /* form elements  */
 .formee-lbl, .formee label {
 	color: #505050;
-	font-size:1.3em;
+	font-size:1.8em;
 	line-height: 1.3em;
 	vertical-align:middle;
         font-weight: bold;
@@ -91,7 +91,7 @@ Style
 	border-color:#c6c6c6 #dadada #eaeaea;
 	background: #fafafa;
 	color:#999;
-	font-size:1.2em;
+	font-size:1.8em;
 	font-family:inherit;
 /*      width: 100%;
       height:100%;*/
@@ -106,12 +106,13 @@ Style
 	border-color:#acacac;
 	background: #f2f2f2;
 	color: #2e2e2e;
-	font-size:1.2em;
+	font-size:11px;
 	font-family:inherit;
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
 	border-radius: 4px;
-      text-transform: uppercase;
+        text-transform: uppercase;
+        font-style: italic;
 }
 .formee select.rpt {
 /*	border-color:#c6c6c6 #dadada #eaeaea;*/
@@ -123,7 +124,11 @@ Style
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
 	border-radius: 4px;
-      text-transform: uppercase;
+        text-transform: uppercase;
+}
+.formee label.rpt {
+    font-weight: normal;
+    font-size: 12px;
 }
 .formee .formee-txt:hover, .formee input[type="text"]:hover, .formee input[type="password"]:hover, .formee input[type="file"]:hover, .formee textarea:hover, .formee select:hover {
 	color:#666;
@@ -181,27 +186,32 @@ form .formee-txt:focus, .formee input[type="text"]:focus, .formee input[type="pa
 /*	background: #d1ecf7 url(/images/formee/form-ic-info.png) no-repeat 12px 23px;*/
       background: #d1ecf7 url(/images/formee/form-ic-info.png) no-repeat 12px 7px;
 	border-color:#bcdfef;
+        height: auto;
 }
 .formee-msg-warning {
 /*	background: #fff6bf url(/images/formee/form-ic-warning.png) no-repeat 12px 23px;*/
       background: #fff6bf url(/images/formee/form-ic-warning.png) no-repeat 12px 7px;
 	border-color:#fceb77;
+        height: auto;
 }
 .formee-msg-error {
 /*	background: #fad0d0 url(/images/formee/form-ic-error.png) no-repeat 12px 23px;*/
       background: #fad0d0 url(/images/formee/form-ic-error.png) no-repeat 12px 7px;
 	border-color:#f6abab;
+        height: auto;
 }
 .formee-msg-success {
 /*	background: #e5f8ce url(/images/formee/form-ic-success.png) no-repeat 12px 23px;*/
       background: #e5f8ce url(/images/formee/form-ic-success.png) no-repeat 12px 7px;
 	border-color:#d0f1a6;
+        height: auto;
 }
 .formee-msg-suggest {
 /*	background: #d1ecf7 url(/images/formee/form-ic-info.png) no-repeat 12px 23px;*/
 /*      background: #d1ecf7 url(/images/formee/form-ic-info.png) no-repeat 12px 7px;*/
         background: orange;
 	border-color: orangered;
+        height: 45px;
 }
 
 .formee-msg-description {
@@ -229,7 +239,7 @@ form .formee-txt:focus, .formee input[type="text"]:focus, .formee input[type="pa
 
 /* form buttons */
 .formee-button, .formee input[type="submit"], .formee input[type="button"], .formee input[type="reset"] {
- font-size: 1.4em;
+ font-size: 1.8em;
   line-height: 1.4em;
   font-weight: bolder;
   text-transform: uppercase;
@@ -676,4 +686,10 @@ hr {
     border: 0;
     border-bottom: 1px dashed #ccc; 
     background: #999;
-} 
+}
+
+.checkbox{
+    color: black;
+    font-size: 11px;
+    padding: 5px;
+}

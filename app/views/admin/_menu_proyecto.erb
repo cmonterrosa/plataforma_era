@@ -1,15 +1,15 @@
  <%if flash[:notice]%>
             <div class="formee-msg-success">
-              <h3>Operación realizada exitosamente:</h3>
-              <ul>
-                <li><%=flash[:notice]%></li>
+             <ul>
+                <h3>Operación realizada exitosamente:</h3><br />
+                <li><%=flash[:notice]%></li><br />
               </ul>
             </div>
             <%elsif flash[:error]%>
             <div class="formee-msg-error">
-              <h3>Error:</h3>
               <ul>
-                <li><%=flash[:error]%></li>
+                <h3>Error:</h3><br />
+                <li><%=flash[:error]%></li><br />
               </ul>
             </div>
  <%end%>
