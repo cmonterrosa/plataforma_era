@@ -39,10 +39,10 @@ Style
 	font-family: 'Open Sans', arial;
         -webkit-font-smoothing: antialiased;
         /*color: #555;*/
-        font-size: 22px;
-        font-weight: 300;
-        margin-top: 0;
-        margin-bottom: 20px;
+        font-size: 17px;
+        /*font-weight: 300;*/
+        /*margin-top: 0;*/
+        margin-bottom: 2px;
 }
 
 .formee h4 {
