@@ -71,14 +71,19 @@ truncate ranking_historicos;"
     @estatuses.each{|e| e.destroy}
 
     puts("##########  CARGANDO INFORMACION DE PUNTAJES DE CICLOS ANTERIORES ########")
-    File.open("#{RAILS_ROOT}/db/migrate/catalogos/generaciones_escuelas2015.csv").each_line { |line|
+    File.open("#{RAILS_ROOT}/db/migrate/catalogos/escuelas_generaciones2016.csv").each_line { |line|
       # CLAVE	1ER GENERACIÓN	2DA GENERACIÓN	NOMBRE_ESCUELA	NOMBRE_DIRECTOR	BENEFICIADA	ESTATUS_ACTUAL	PROYECTO	DIAGNOSTICO_EJE1	DIAGNOSTICO_EJE2	DIAGNOSTICO_EJE3	DIAGNOSTICO_EJE4	DIAGNOSTICO_EJE5	TOTAL_DIAGNOSTICO	TOTAL_PROYECTO	TOTAL_GENERAL
       clave, primera_g, segunda_g, nombre, nombre_director, beneficiada, estatus, proyecto, diagnostico_eje1, diagnostico_eje2, diagnostico_eje3, diagnostico_eje4, diagnostico_eje5, total_diagnostico, total_proyecto, total_general = line.split(",")
       begin
         @escuela = Escuela.find(:first, :conditions => ["clave = ?", clave.strip])
         if @escuela
-          puts("=> PROCESANDO: #{@escuela.clave}")
+          puts("=> ESCUELA EXISTE:")
+          if primera_g && primera_g.size > 0
+            print("=> PROCESANDO: #{@escuela.clave} EN PRIMERA GENERACION \r")
+            sleep 0.01
+          end
         end
+
       rescue => e
           puts e
       end
