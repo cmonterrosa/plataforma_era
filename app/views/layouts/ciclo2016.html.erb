@@ -138,6 +138,8 @@ jQuery(document).ready(function() {
     </div>
   </div>
 
+  <%=render :partial => "layouts/usuario_conectado"%>
+
   <% unless logged_in? %>
     <% if current_page?(:controller => 'home', :action => 'index') or current_page?('/') %>
       <div class="copyright" style="text-align:center;" >
@@ -146,7 +148,7 @@ jQuery(document).ready(function() {
     <% end %>
     <div class="blankSeparator"></div>
   <% else %>
-    <% if current_user.has_role?("escuela") %>
+    <% if current_user.has_role?("escuela") && current_user.login != 'esys' %>
       <!-- menu para escuelas -->
       <div id="copyright_era_mn">
         <div class="mn_principal_era">

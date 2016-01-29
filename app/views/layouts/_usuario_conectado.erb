@@ -1,0 +1,32 @@
+<!-- Usuario Conectado -->
+<%if logged_in?%>
+  <%if current_user.has_role?("directivo")%>
+    <%nombre= (@esc = Directivo.find_by_clave(current_user.login)) ? @esc.descripcion : nil%>
+   <%end%>
+  <%nombre ||= (@esc = Escuela.find_by_clave(current_user.login)) ? @esc.nombre : nil %>
+  <%nombre ||= current_user.nombre %>
+  <div class="titulos">
+    <p>
+      <span style="font-size: 10px; color: #404040;">CONECTADO COMO: <%=h nombre%></span> |
+
+         <!-- Verificamos si tiene mensajes en su bandeja -->
+        <%if current_user.numero_mensaje_bandeja > 0%>
+            <!--
+            <=image_tag("mensajes/mensajes_recibidos_small.png", :style => "margin: -4px;")%>&nbsp;
+            -->
+            <a href="/home" class="Txt_arbol">
+              &nbsp;<%=link_to "(#{current_user.numero_mensaje_bandeja}) MENSAJES NUEVOS", {:action => "recibidos", :controller => "mensajes"}, :style => "font-size: 10px; text-decoration: none; color: #e51414;", :title => "BANDEJA DE ENTRADA"%>
+            </a>
+         <%else%>
+            <!-- comento temporalmente la imagen -->
+            <!--
+            <=image_tag("mensajes/mensajes.png")%>&nbsp;
+            -->
+            <a href="/home" class="Txt_arbol">
+                &nbsp;<%=link_to "MENSAJES", {:action => "list", :controller => "mensajes"}, :style => "font-size: 10px; text-decoration: none; color: #027bed;", :title => "NO HAY MENSAJES NUEVOS"%>
+            </a>
+         <%end%>
+      <span style="font-size: 10px; color: navy;"> &nbsp;|&nbsp;<%=link_to "CERRAR SESIÓN", {:action => "destroy", :controller => "sessions"}, :style => "text-decoration: none; color: green;", :title => "¿ESTÁ SEGURO(A) QUE DESEA SALIR DE LA PLATAFORMA"%></span>
+    </p>
+  </div>
+<%end%>
