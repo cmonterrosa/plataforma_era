@@ -44,6 +44,8 @@
 <%= stylesheet_link_tag "era2016/estilos.css" %>
 <%= stylesheet_link_tag "era2016/prettyPhoto.cs" %>
 
+<%= stylesheet_link_tag "era/diagnostico.css" %>
+
 <%= stylesheet_link_tag "era2016/estilos.css" %>
 
 <!-- Paginate -->
@@ -144,15 +146,18 @@ jQuery(document).ready(function() {
     <% end %>
     <div class="blankSeparator"></div>
   <% else %>
-    <div id="copyright_era_mn">
-      <div class="mn_principal_era">
-        <%= link_to image_tag("/images/era2016/sub_mn_esys_registro2.png", :size => "174x124", :mouseover => "/images/era2016/sub_mn_esys_registro1.png", :mouseout =>"/images/era2016/sub_mn_esys_registro2.png", :border => 0, :alt => "Consulta el Registro de Datos"), {:controller => "registro", :action => "index"} %>
-        <%= link_to image_tag("/images/era2016/sub_mn_esys_diagnostico2.png", :size => "221x124", :mouseover => "/images/era2016/sub_mn_esys_diagnostico1.png", :mouseout =>"/images/era2016/sub_mn_esys_diagnostico2.png", :border => 0, :alt => "Consulta el Diagnóstico"), {:controller => "diagnosticos", :action => "index"} %>
-        <%= link_to image_tag("/images/era2016/sub_mn_esys_proyecto2.png", :size => "207x124", :mouseover => "/images/era2016/sub_mn_esys_proyecto1.png", :mouseout =>"/images/era2016/sub_mn_esys_proyecto2.png", :border => 0, :alt => "Consulta el Proyecto"), {:controller => "proyectos", :action => "index"} %>
-        <%= link_to image_tag("/images/era2016/sub_mn_esys_evidencias2.png", :size => "243x124", :mouseover => "/images/era2016/sub_mn_esys_evidencias1.png", :mouseout =>"/images/era2016/sub_mn_esys_evidencias2.png", :border => 0, :alt => "Avance de Evidencias"), {:controller => "proyectos", :action => "index"} %>
-        <%= link_to image_tag("/images/era2016/sub_mn_esys_mensajeria2.png", :size => "179x124", :mouseover => "/images/era2016/sub_mn_esys_mensajeria1.png", :mouseout =>"/images/era2016/sub_mn_esys_mensajeria2.png", :border => 0, :alt => "Plataforma de Mensajes"), {:controller => "mensajes", :action => "list"} %>
+    <% if current_user.has_role?("escuela") %>
+      <!-- menu para escuelas -->
+      <div id="copyright_era_mn">
+        <div class="mn_principal_era">
+          <%= link_to image_tag("/images/era2016/sub_mn_esys_registro2.png", :size => "174x124", :mouseover => "/images/era2016/sub_mn_esys_registro1.png", :mouseout =>"/images/era2016/sub_mn_esys_registro2.png", :border => 0, :alt => "Consulta el Registro de Datos"), {:controller => "registro", :action => "index"} %>
+          <%= link_to image_tag("/images/era2016/sub_mn_esys_diagnostico2.png", :size => "221x124", :mouseover => "/images/era2016/sub_mn_esys_diagnostico1.png", :mouseout =>"/images/era2016/sub_mn_esys_diagnostico2.png", :border => 0, :alt => "Consulta el Diagnóstico"), {:controller => "diagnosticos", :action => "index"} %>
+          <%= link_to image_tag("/images/era2016/sub_mn_esys_proyecto2.png", :size => "207x124", :mouseover => "/images/era2016/sub_mn_esys_proyecto1.png", :mouseout =>"/images/era2016/sub_mn_esys_proyecto2.png", :border => 0, :alt => "Consulta el Proyecto"), {:controller => "proyectos", :action => "index"} %>
+          <%= link_to image_tag("/images/era2016/sub_mn_esys_evidencias2.png", :size => "243x124", :mouseover => "/images/era2016/sub_mn_esys_evidencias1.png", :mouseout =>"/images/era2016/sub_mn_esys_evidencias2.png", :border => 0, :alt => "Avance de Evidencias"), {:controller => "proyectos", :action => "index"} %>
+          <%= link_to image_tag("/images/era2016/sub_mn_esys_mensajeria2.png", :size => "179x124", :mouseover => "/images/era2016/sub_mn_esys_mensajeria1.png", :mouseout =>"/images/era2016/sub_mn_esys_mensajeria2.png", :border => 0, :alt => "Plataforma de Mensajes"), {:controller => "mensajes", :action => "list"} %>
+        </div>
       </div>
-    </div>
+    <% end %>
   <% end %>
 
   <div class="container">

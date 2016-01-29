@@ -1,6 +1,6 @@
 <div class="formee">
   <fieldset>
-    <legend style="text-align: center; margin-left: 32%" >&nbsp;IMPRESIÓN&nbsp;DE&nbsp;DOCUMENTOS&nbsp;</legend>
+    <legend>&nbsp;IMPRESIÓN&nbsp;DE&nbsp;DOCUMENTOS&nbsp;</legend><br />
     <!-- constancia -->
     <% form_for :escuela, @escuela, :url => { :action => "formato_registro", :controller => "registro", :id => "#{@escuela.clave}.pdf" }, :html => { :target => "_blank"} do -%>
       <div class="grid-center">

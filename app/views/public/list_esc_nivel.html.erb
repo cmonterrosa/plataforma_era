@@ -1,15 +1,16 @@
 <div class="formee">
-  <div class="grid-12-12 clear"></div>
-  <div class="grid-12-12">
-    <div class="titulos">Listado de Escuelas del Nivel <%= @nivel_descripcion %></div>
-    <div class="titulos"><%=h @generacion.descripcion%> GENERACIÓN </div>
-    <div class="titulos"><%= @descripcion_sostenimiento%></div>
-  </div>
-  <div class="grid-12-12 clear"></div>
+  <fieldset>
+    <div class="txtGlobal" style="text-align: center;">
+      <br />
+      <span class="txtGlobalNg" style="text-align: center;">LISTADOS DE ESCUELAS DEL NIVEL <%= @nivel_descripcion %></span>
+      <p class="txtGlobal" style="text-align: center;"><%=h @generacion.descripcion%> GENERACIÓN</p>
+      <p class="txtGlobal" style="text-align: center;"><%= @descripcion_sostenimiento%></p>
+    </div>
+  </fieldset>
 </div>
 
 <div id="divlista">
-  <table width="95%" border="0" cellspacing="0" cellpadding="5" class="sample" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid" align="center">
+  <table width="100%" border="0" cellspacing="0" cellpadding="5" class="sample" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid" align="center">
     <tr style="background-color:#2E6AB1;color:white;">
       <th style="vertical-align: middle;">Clave</th>
       <th style="vertical-align: middle;">Nombre</th>
@@ -17,7 +18,7 @@
       <th style="vertical-align: middle;">Modalidad</th>
     </tr>
 <% clase=0 %>
-<% @escuelas.each do |escuela|%>
+<% @escuelas.each do |escuela| %>
       <tr class="d<%=invert_class(clase)%>">
       <td align="center"><%=h(escuela.clave)%></td>
       <td align="justify"><%=h(escuela.nombre)%></td>
@@ -25,7 +26,7 @@
       <td align="justify"><%=h escuela.modalidad? ? escuela.modalidad : "NO EXISTE INFORMACIÓN" %> </td>
       <% clase = invert_class(clase) %>
     </tr>
-<%end%>
+<% end %>
     <% if @escuelas.total_entries > @escuelas.per_page.to_i %>
     <tr class="d<%=invert_class(clase)%>" align="center" >
       <td colspan="7" style="padding: 0;">
@@ -46,3 +47,4 @@
 <div class="titulos">
   <%= link_to image_tag("botones/btn_regresar.png", :mouseover => "botones/btn_regresar1.png") , :controller => "public", :action => "report_by_niveles_libre", :sostenimiento => @sostenimiento, :generacion => @generacion %><br />
 </div>
+<br />

@@ -1,25 +1,16 @@
-<div class="container">
-  <div class="formee">
-
-  <%for generacion in @generaciones%>
+<div class="formee">
+  <% for generacion in @generaciones%>
     <fieldset>
-        <legend>&nbsp;ESCUELAS QUE SON PARTE DE LA &nbsp;<%=generacion.descripcion.upcase%>&nbsp;GENERACIÓN</legend>
-            <%for sostenimiento in @sostenimientos%>
-                <div class="grid-form-login">
-                    <div class="grid-8-12">
-                      <label><b><%=link_to "#{sostenimiento.sostenimiento}", {:action => "report_by_niveles_libre", :sostenimiento => sostenimiento.sostenimiento, :generacion => generacion}, :style => "color: navy;"-%> </b></label>
-                    </div>
-                </div>
-            <%end%>
-            <div class="grid-form-login">
-                    <div class="grid-8-12">
-                      <label><b><%=link_to "TOTALES #{generacion.descripcion} GENERACIÓN", {:action => "report_by_niveles_libre", :sostenimiento => "all",  :generacion => generacion}, :style => "color: green;"-%> </b></label>
-                    </div>
-            </div>
-
+      <legend>&nbsp;ESCUELAS QUE SON PARTE DE LA &nbsp;<%=generacion.descripcion.upcase%>&nbsp;GENERACIÓN</legend>
+      <div class="txtGlobal" style="text-align: center;">
+        <% for sostenimiento in @sostenimientos%>
+          <span class="txtGlobalNg"><%=link_to "#{sostenimiento.sostenimiento}", {:action => "report_by_niveles_libre", :sostenimiento => sostenimiento.sostenimiento, :generacion => generacion}, :style => "color: navy;"-%></span><br /><br />
+        <% end %>
+        <span class="txtGlobalNg"><%=link_to "TOTALES #{generacion.descripcion} GENERACIÓN", {:action => "report_by_niveles_libre", :sostenimiento => "all",  :generacion => generacion}, :style => "color: green;"-%></span>
+      </div>
+      <br />
     </fieldset>
-<%end%>
-  </div>
+  <% end %>
 </div>
 
 
