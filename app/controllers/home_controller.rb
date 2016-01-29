@@ -45,6 +45,8 @@ def dispatch
     if @usuario=current_user
         if @usuario.has_role?(:admin)
           redirect_to :controller => "admin"
+        elsif@usuario.has_role?(:adminplat)
+          redirect_to :controller => "admin"
         elsif @usuario.has_role?(:enlaceevaluador)
           redirect_to :controller => "admin"
         elsif @usuario.has_role?(:revisor)
