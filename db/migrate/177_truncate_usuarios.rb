@@ -73,16 +73,45 @@ truncate ranking_historicos;"
     puts("##########  CARGANDO INFORMACION DE PUNTAJES DE CICLOS ANTERIORES ########")
     File.open("#{RAILS_ROOT}/db/migrate/catalogos/escuelas_generaciones2016.csv").each_line { |line|
       # CLAVE	1ER GENERACIÓN	2DA GENERACIÓN	NOMBRE_ESCUELA	NOMBRE_DIRECTOR	BENEFICIADA	ESTATUS_ACTUAL	PROYECTO	DIAGNOSTICO_EJE1	DIAGNOSTICO_EJE2	DIAGNOSTICO_EJE3	DIAGNOSTICO_EJE4	DIAGNOSTICO_EJE5	TOTAL_DIAGNOSTICO	TOTAL_PROYECTO	TOTAL_GENERAL
-      clave, primera_g, segunda_g, nombre, nombre_director, beneficiada, estatus, proyecto, diagnostico_eje1, diagnostico_eje2, diagnostico_eje3, diagnostico_eje4, diagnostico_eje5, total_diagnostico, total_proyecto, total_general = line.split(",")
+      clave, primera_g, segunda_g, nombre_director, beneficiada, estatus,  diagnostico_eje1, diagnostico_eje2, diagnostico_eje3, diagnostico_eje4, diagnostico_eje5, total_diagnostico, total_proyecto, total_general, proyecto, proyecto_ex = line.split(",")
+
       begin
         @escuela = Escuela.find(:first, :conditions => ["clave = ?", clave.strip])
         if @escuela
-          puts("=> ESCUELA EXISTE:")
-          if primera_g && primera_g.size > 0
-            print("=> PROCESANDO: #{@escuela.clave} EN PRIMERA GENERACION \r")
-            sleep 0.01
+          @completed=nil
+          if (primera_g && primera_g.size > 0) || (segunda_g && segunda_g.size > 0)
+            while @completed.nil?
+                print("=> PROCESANDO: #{@escuela.clave}  \r")
+                ciclo_id = (primera_g && primera_g.strip.size > 0) ? 1 : nil
+                ciclo_id ||= (segunda_g && segunda_g.strip.size > 0) ? 2 : nil
+                beneficiada = (beneficiada && beneficiada == 'SI')? true :false
+                if estatus
+                    estatu_id = (Estatu.find(:first, :conditions => ["descripcion LIKE ?", "#{estatus.strip}"])) ? Estatu.find(:first, :conditions => ["descripcion LIKE ?", "#{estatus.strip}"]).id : nil
+                end
+                nombre_proyecto =  (proyecto_ex && proyecto_ex.strip.size > 0) ? proyecto.strip + " " + proyecto_ex.strip : proyecto
+                beneficiada = (beneficiada && beneficiada == 'SI')? true :false
+                @antecedente = Antecedente.new(:escuela_id => @escuela.id,
+                  :clave => @escuela.clave,
+                  :ciclo_id => ciclo_id,
+                  :beneficiada => beneficiada,
+                  :estatu_id => estatu_id,
+                  :nombre_proyecto => nombre_proyecto.strip,
+                  :nombre_director => nombre_director.strip,
+                  :diagnostico_eje1 => diagnostico_eje1.strip,
+                  :diagnostico_eje2 => diagnostico_eje2.strip,
+                  :diagnostico_eje3 => diagnostico_eje3.strip,
+                  :diagnostico_eje4 => diagnostico_eje4.strip,
+                  :diagnostico_eje5 => diagnostico_eje5.strip,
+                  :puntaje_diagnostico => total_diagnostico.strip,
+                  :puntaje_proyecto => total_proyecto,
+                  :puntaje_final => total_general
+                )
+                if @antecedente.save
+                  @completed = true
+                end
+            end
           end
-        end
+      end
 
       rescue => e
           puts e
