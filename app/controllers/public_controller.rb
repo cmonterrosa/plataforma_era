@@ -21,6 +21,7 @@ class PublicController < ApplicationController
     @generacion= Generacion.find(params[:generacion]) if params[:generacion]
     @sostenimiento = "TODOS" if params[:sostenimiento] && params[:sostenimiento] == "all"
     @sostenimiento ||= params[:sostenimiento] if params[:sostenimiento]
+    @nivel = 'EM' if params[:token] && params[:token] == "EM"
     @descripcion_sostenimiento = (@sostenimiento == "TODOS") ? "TODOS LOS SOSTENIMIENTOS" : "SOSTENIMIENTO #{@sostenimiento}"
   end
 

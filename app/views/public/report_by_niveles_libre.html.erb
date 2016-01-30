@@ -5,6 +5,10 @@
       <span class="txtGlobalNg" style="text-align: center;">ESTADÍSTICAS POR ESTATUS</span>
       <p class="txtGlobal" style="text-align: center;"><%=h @generacion.descripcion%> GENERACIÓN</p>
       <p class="txtGlobal" style="text-align: center;"><%= @descripcion_sostenimiento%></p>
+      <%if @nivel && @nivel == 'MS'%>
+          <p class="txtGlobal" style="text-align: center;"><%= @descripcion_sostenimiento%></p>
+      <%end%>
+
     </div>
   </fieldset>
 </div>

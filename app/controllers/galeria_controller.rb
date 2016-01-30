@@ -6,7 +6,7 @@ class GaleriaController < ApplicationController
        flash[:notice] = "No existen imagenes"
        redirect_to :controller => "home"
        else
-        render :partial => "galeria", :layout => "era2016"
+        render :partial => "galeria", :layout => "ciclo2016"
      end
   end
 
@@ -19,7 +19,7 @@ class GaleriaController < ApplicationController
        flash[:notice] = "No existen imagenes"
        redirect_to :controller => "home"
      else
-       render :partial => "galeria", :layout => "era2016"
+       render :partial => "galeria", :layout => "ciclo2016"
      end
    end
 

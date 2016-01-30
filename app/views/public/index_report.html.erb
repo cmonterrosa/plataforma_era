@@ -1,7 +1,7 @@
 <div class="formee">
   <% for generacion in @generaciones%>
     <fieldset>
-      <legend>&nbsp;ESCUELAS QUE SON PARTE DE LA &nbsp;<%=generacion.descripcion.upcase%>&nbsp;GENERACIÓN</legend>
+      <legend>&nbsp;<b>(&nbsp;<%=generacion.descripcion.upcase%>&nbsp;GENERACIÓN)&nbsp;&nbsp;&nbsp; </b><%=h link_to "TODAS LAS ESCUELAS", {:action => "index_report"}, :style => "color: green;"%>  | &nbsp;<%=h link_to "ESCUELAS DE EDUCACION MEDIA", {:action => "index_report", :token => "EM"}, :style => "color: green;"%> </legend>
       <div class="txtGlobal" style="text-align: center;">
         <% for sostenimiento in @sostenimientos%>
           <span class="txtGlobalNg"><%=link_to "#{sostenimiento.sostenimiento}", {:action => "report_by_niveles_libre", :sostenimiento => sostenimiento.sostenimiento, :generacion => generacion}, :style => "color: navy;"-%></span><br /><br />
