@@ -1,0 +1,67 @@
+<!-- spinner -->
+<div class="grid-12-12">
+  <img alt="spinner" id="spinner" src="/images/loading_spinner.gif" style="display:none;" />
+</div>
+
+<div class="container">
+<% form_for :detalle, @detalle, :url => { :action => "generar_estadistica", :controller => "public"}, :html => {:class => "formee", :id => "new_tramite"} do |f| -%>
+  <fieldset>
+    <legend>&nbsp;ESTADISTICA&nbsp;DE&nbsp;ESCUELAS&nbsp;</legend>
+      <div class="grid-12-12">
+          <%= error_messages_for :detalle %>
+      </div>
+
+      
+      <div class="grid-4-12">
+        <div class="grid-4-12">
+          <label><b>CICLO ESCOLAR: </b><em class="formee-req">*</em></label>
+        </div>
+        <div class="grid-8-12"><%= select(:detalle, :ciclo_id, @ciclos.collect {|p| [ p.descripcion, p.id ] }, { :include_blank => true })%></div>
+      </div>
+
+      <div class="grid-4-12">
+        <div class="grid-4-12">
+          <label><b>SOSTENIMIENTO: </b><em class="formee-req">*</em></label>
+        </div>
+        <div class="grid-8-12">
+            <%= select(:detalle, :sostenimiento, ["ESTATAL", "FEDERAL", "PARTICULAR", "TODOS"], :include_blank => true) %>
+        </div>
+
+      </div>
+
+      <div class="grid-4-12">
+            <!-- Inicia checkbox -->
+            <div class="grid-12-12">
+              <label><b>SELECCIONA EL O LOS NIVELES EDUCATIVOS: <em class="formee-req"> *</em></b></label>
+            </div>
+            <!-- Línea campo -->
+            <fieldset style="padding: 5px 5px 5px 5px; color: black; font-size: 11px;">
+                <div id="nivels" class="grid-12-12">
+                  <% Nivel.find(:all).each do |c| %>
+                    <%= check_box_tag "niveles[#{c.id}]", c.clave, nil %>&nbsp;<%= c.descripcion %><br />
+                  <% end %>
+                </div>
+            </fieldset>
+      </div>
+
+      
+      <div class="grid-6-12">
+        <input class="right" type="submit" title="GUARDAR" value="GUARDAR" />
+      </div>
+ </fieldset>
+<%end%>
+</div>
+
+
+
+<%= observe_form('new_tramite', :update => "resultados",
+                          :on => "change",
+                          :loading => "Element.show('spinner')",
+                          :complete => "Element.hide('spinner')",
+                          :url => {:action => :get_detalle_estadisticas})%>
+
+
+
+<div id="resultados">
+
+</div>

@@ -10,6 +10,26 @@ class PublicController < ApplicationController
     @sostenimientos = Escuela.find(:all, :select => "sostenimiento", :group => "sostenimiento")
   end
 
+  def select_parametros
+    @niveles = Nivel.find(:all)
+    @ciclos = Ciclo.find(:all)
+  end
+
+  def get_detalle_estadisticas
+    if (params[:detalle][:ciclo_id] && params[:detalle][:ciclo_id].size > 0) && (params[:detalle][:sostenimiento] && params[:detalle][:sostenimiento].size > 0) && (params[:niveles] && !params[:niveles].empty?)
+      @ciclo = Ciclo.find(params[:detalle][:ciclo_id])
+      @ciclo ||= Ciclo.find_by_descripcion(GENERACION) if GENERACION
+      @generacion = Generacion.find(:first, :conditions => ["ciclo_id = ?", @ciclo], :order => "ciclo_id DESC")
+      @sostenimientos = Escuela.find(:all, :conditions => ["sostenimiento = ?", params[:detalle][:sostenimiento]], :select => "sostenimiento", :group => "sostenimiento")
+      @sostenimientos ||= Escuela.find(:all, :select => "sostenimiento", :group => "sostenimiento")
+      @niveles = Nivel.find(:all, :conditions => ["id in (?)", params[:niveles]])
+      @niveles ||= Nivel.find(:all, :conditions => ["descripcion <> ?", "OTRO"])
+      render :partial => "report_by_niveles_libre", :layout => "only_jquery"
+    else
+      render :text => ""
+    end
+  end
+
 
 
   def report_by_niveles_libre
@@ -23,6 +43,7 @@ class PublicController < ApplicationController
     @sostenimiento ||= params[:sostenimiento] if params[:sostenimiento]
     @nivel = 'EM' if params[:token] && params[:token] == "EM"
     @descripcion_sostenimiento = (@sostenimiento == "TODOS") ? "TODOS LOS SOSTENIMIENTOS" : "SOSTENIMIENTO #{@sostenimiento}"
+    render :partial => "report_by_niveles_libre", :layout => "only_jquery"
   end
 
   def list_esc_nivel
