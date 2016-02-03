@@ -1077,3 +1077,46 @@ function showEje(img, obj){
         img.src = "/images/acordeon/arrow_up.png"
     }
 }
+
+//**** Mostrar brigadas eje 1 pregunta 3 y 6 ***//
+function showImageCheckbox(txtField, divChkbx, divImagen){
+    var textField = document.getElementById(txtField);
+    var divCheckbox = document.getElementById(divChkbx);
+    var divImage = document.getElementById(divImagen);
+    var textValue = textField.value;
+    if(parseInt(textValue) == 0){
+        var MtpSelect = document.getElementById(divChkbx+'s');
+        var elements = MtpSelect.getElementsByTagName("input");
+        for (var i = 0; i < elements.length; i++){
+            elements[i].checked = false;
+            elements[i].disabled = false;
+        }
+    }
+
+    if(parseInt(textValue) > 0){
+        divImage.style.display = "block";
+        divCheckbox.style.display = "block";
+    }
+    else{
+        divImage.style.display = "none";
+        divCheckbox.style.display = "none";
+    }
+}
+
+function checkBoxToSelctB(cBox){
+    var select, elemCount, checkBox;
+    checkBox = document.getElementById(cBox+"s");
+    elemCount = checkBox.getElementsByTagName("input");
+
+    for(var i=0; i < (elemCount.length - 1); i++){
+        select = document.getElementById(cBox+"_"+elemCount[i].value);
+        if(elemCount[i].checked){
+            select.style.display = "inline";
+            select.disabled = false;
+        }
+        else{
+            select.style.display = "none";
+            select.disabled = true;
+        }
+    }
+}

@@ -1,0 +1,69 @@
+<tr>
+  <td align="justify">
+    <label class="uper">5.- Del total de alumnos, ¿cuántos recibieron capacitación relacionada con temas de salud y medio ambiente por parte de otras <b>instituciones y/o dependencias</b> en el último ciclo escolar?<em class="formee-req"> *</em></label>
+  </td>
+</tr>
+<tr>
+  <td align="left" >
+    <div class="grid-1-12"></div>
+    <div class="grid-2-12"><label class="uperSub">SALUD: </label><%= f.text_field :alumn_cap_salud, :style => "text-align: center;", :onkeyup => "showImageDctesAlumn('alumnos', 'acapacitadora', 'eje1_p5');" %></div>
+    <div class="grid-2-12"><label class="uperSub">AMBIENTE: </label><%= f.text_field :alumn_cap_ma, :style => "text-align: center;", :onkeyup => "showImageDctesAlumn('alumnos', 'acapacitadora', 'eje1_p5');" %></div>
+    <div class="grid-2-12"><label class="uperSub">AMBOS: </label><%= f.text_field :alumn_cap_ambos, :style => "text-align: center;", :onkeyup => "showImageDctesAlumn('alumnos', 'acapacitadora', 'eje1_p5');" %></div>
+    <div class="grid-1-12"></div>
+    <div class="grid-3-12" style="text-align: justify;"><label class="uperSub">TOTAL&nbsp;CAPACITADOS: </label>
+      <input id="total_alumn" name="total_alumn" type="text" style="border-width: 0; width: 55px; font-size: 15px; text-align: center; color: black; background-color: #e6f8e0;" />
+    </div>
+    <div class="grid-1-12"></div>
+    <div class="grid-12-12" id="acapacitadora" style="display: none;">
+      <label class="uper">¿QUE&nbsp;INSTITUCIONES&nbsp;O&nbsp;DEPENDENCIAS&nbsp;IMPARTIERON&nbsp;ESTAS CAPACITACIONES?</label>
+      <!-- Línea campo -->
+      <fieldset style="padding: 5px 5px 5px 5px;">
+        <div id="acapacitadoras" class="checkbox">
+          <% Dcapacitadora.find(:all).each do |c| %>
+            <% @valor = nil %>
+            <% @competencia.alumnos_capacitados.each do |x| %>
+              <% if x[:dcapacitadora_id] == c.id %>
+                <% @valor = x.numero  %>
+                <% @desc_dep = x.descripcion_dep %>
+              <% end %>
+            <% end %>
+            <%= check_box_tag "acapacitadoras[#{c.id}]", c.clave, @s_acapacitadoras.include?(c.id) ? true : false, :onclick => "checkBoxToSelct('acapacitadora');" %>&nbsp;<%= c.descripcion %>
+            &nbsp;NÚM.&nbsp;DE&nbsp;CAPACITACIONES:&nbsp;<%= select "acapacitadora", "#{c.clave}", (1..9), {:selected => @valor}, {:style => "display: none; width: 40px; font-size: 12px;"}%><br />
+            <% if c.clave == "OTRA" %>&nbsp;DESCRIPCIÓN:&nbsp;<input name="acapacitadoras<%= c.clave %>" id="acapacitadoras<%= c.clave %>" size="35px" style="text-align: justify; display: none; text-transform: uppercase;" value="<%=h @desc_dep ? @desc_dep : "" %>" /><% end %>
+          <% end %>
+        </div>
+      </fieldset>
+    </div>
+    <div class="grid-12-12" id="eje1_p5" style="display: none; text-align: center;">
+      <%=link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta5", :id => "pregunta5"),
+                          {:controller => "upload", :diagnostico => @diagnostico, :eje => 1, :numero_pregunta => 5, :action => "list_evidencias" },
+                           :title => "EVIDENCIA DE LA PREGUNTA 5", :class => "fancybox fancybox.iframe"%>
+    </div>
+  </td>
+</tr>
+
+<script type="text/javascript">
+  showImageDctesAlumn('alumnos', 'acapacitadora', 'eje1_p5');
+  checkBoxToSelct('acapacitadora');
+
+  var alumn_cap_salud = new LiveValidation( 'competencia_alumn_cap_salud' );
+  alumn_cap_salud.add( Validate.Presence );
+  alumn_cap_salud.add( Validate.Numericality, { onlyInteger: true } );
+
+  var alumn_cap_ma = new LiveValidation( 'competencia_alumn_cap_ma' );
+  alumn_cap_ma.add( Validate.Presence );
+  alumn_cap_ma.add( Validate.Numericality, { onlyInteger: true } );
+
+  var alumn_cap_ambos = new LiveValidation( 'competencia_alumn_cap_ambos' );
+  alumn_cap_ambos.add( Validate.Presence );
+  alumn_cap_ambos.add( Validate.Numericality, { onlyInteger: true } );
+
+  var total_alumn = new LiveValidation( 'total_alumn' );
+  total_alumn.add( Validate.Presence );
+  total_alumn.add( Validate.Numericality, { maximum: parseInt(document.getElementById("val_max_alu").value), onlyInteger: true } );
+
+  jQuery(function(){
+    jQuery("#acapacitadoras").validate({ expression: "if (skipSelect2(SelfID, 'total_alumn')) return true; else return false;", message: "Seleccione una opción!" });
+  });
+  
+</script>

@@ -5,23 +5,13 @@ jQuery(document).ready(function() {
 </script>
 
 <!-- Mensaje de validaciones de evidencias -->
-  <tr>
-    <td align="center">
-      <table>
-        <tr>
-          <td colspan="4">
-            <%if flash[:evidencias]%>
-            <div id="evidencias" class="formee-msg-error">
-              <h2 style="text-align: center;">No se encontraron evidencias:</h2>
-              <%flash[:evidencias].split(",").each do |e|%>
-                <ul>
-                  <li style="font-size: 14px;">&times; <%=e%>.</li>
-                </ul>
-              <%end%>
-            </div>
-            <%end%>
-          </td>
-        </tr>
-      </table>
-    </td>
- </tr>
+<% if flash[:evidencias]%>
+  <div id="evidencias" class="formee-msg-error">
+    <ul>
+      <h2>No se encontraron evidencias: &nbsp; &nbsp; &nbsp;</h2>
+      <% flash[:evidencias].split(",").each do |e| %>
+        <li>&times; <%= e %>.</li><br/>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

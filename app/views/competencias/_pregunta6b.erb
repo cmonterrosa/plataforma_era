@@ -1,0 +1,27 @@
+<tr>
+  <td align="justify">
+    <label class="uper">6.- Del total de alumnos, ¿cuántos se involucran en actividades extracurriculares en materia de salud y ambiente que promueva la escuela?<em class="formee-req"> *</em></label>
+  </td>
+</tr>
+<tr>
+  <td align="center">
+    <div class="grid-4-12"></div>
+    <div class="grid-2-12">
+      <%= f.text_field :alumnos_involucran_actividades, :style => "text-align: center;", :onkeyup => "showImageNum('competencia_alumnos_involucran_actividades', 'eje1_p6');" %>
+    </div>
+    <div class="grid-2-12" id="eje1_p6" style="display: none;">
+      <%=link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta6", :id => "pregunta6"),
+                          {:controller => "upload", :diagnostico => @diagnostico, :eje => 1, :numero_pregunta => 6, :action => "list_evidencias" },
+                           :title => "EVIDENCIA DE LA PREGUNTA 6", :class => "fancybox fancybox.iframe"%>
+    </div>
+    <div class="grid-4-12"></div>
+  </td>
+</tr>
+
+<script type="text/javascript">
+  showImageNum('competencia_alumnos_involucran_actividades', 'eje1_p6');
+
+  var alumnos_involucran_actividades = new LiveValidation( 'competencia_alumnos_involucran_actividades' );
+  alumnos_involucran_actividades.add( Validate.Presence );
+  alumnos_involucran_actividades.add( Validate.Numericality, { maximum: parseInt(document.getElementById("val_max_alu").value), onlyInteger: true } );
+</script>

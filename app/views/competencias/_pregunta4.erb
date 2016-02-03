@@ -1,0 +1,27 @@
+<tr>
+  <td width="49%" align="justify">
+    <label class="uper">4.- Del total de alumnos, ¿cuántos recibieron capacitación relacionada con temas salud y medio ambiente por parte de los docentes en el último ciclo escolar?<em class="formee-req"> *</em></label>
+  </td>
+</tr>
+<tr>
+  <td align="center">
+    <div class="grid-4-12"></div>
+    <div class="grid-2-12">
+      <%= f.text_field :alumn_cap_dctes, :style => "text-align: center;", :onkeyup => "showImageNum('competencia_alumn_cap_dctes', 'eje1_p4');" %>
+    </div>
+    <div class="grid-2-12" id="eje1_p4" style="display: none;">
+    <%=link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta4", :id => "pregunta4"),
+                        {:controller => "upload", :diagnostico => @diagnostico, :eje => 1, :numero_pregunta => 4, :action => "list_evidencias" },
+                         :title => "EVIDENCIA DE LA PREGUNTA 4", :class => "fancybox fancybox.iframe"%>
+    </div>
+    <div class="grid-4-12"></div>
+  </td>
+</tr>
+
+<script type="text/javascript">
+  showImageNum('competencia_alumn_cap_dctes', 'eje1_p4');
+
+  var alumn_cap_dctes = new LiveValidation( 'competencia_alumn_cap_dctes' );
+  alumn_cap_dctes.add( Validate.Presence );
+  alumn_cap_dctes.add( Validate.Numericality, { maximum: parseInt(document.getElementById("val_max_alu").value), onlyInteger: true } );
+</script>

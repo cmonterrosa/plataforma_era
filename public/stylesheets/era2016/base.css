@@ -287,15 +287,15 @@ label, legend {
 	font-size: 13px;
         color: black;
 }
-input[type="checkbox"] {
+/*input[type="checkbox"] {
 	display: inline;
-}
+}*/
 label span, legend span {
 	font-weight: normal;
 	font-size: 13px;
 	color: #444 ;
 }
-input[type="text"], input[type="password"], input[type="email"], textarea, select {
+/*input[type="text"], input[type="password"], input[type="email"], textarea, select {
 	padding: 10px 10px;
 	outline: none;
 	overflow: hidden;
@@ -320,7 +320,7 @@ textarea {
 }
 select {
 	width: 220px;
-}
+}*/
 /* Header Responsive Menu Form Style */
 	
 .header form {

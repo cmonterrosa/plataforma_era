@@ -130,7 +130,7 @@ jQuery(document).ready(function() {
       <%= link_to image_tag("/images/era2016/mn_esys_niveles2.png", :size => "199x124", :mouseover => "/images/era2016/mn_esys_niveles.png", :mouseout =>"/images/era2016/mn_esys_niveles2.png", :border => 0, :alt => "Estadisticas por nivel educativo"), {:action => "index_report", :controller => "public"} %>
       <%= link_to image_tag("/images/era2016/mn_esys_manual2.png", :size => "199x124", :mouseover => "/images/era2016/mn_esys_manual.png", :mouseout =>"/images/era2016/mn_esys_manual2.png", :border => 0, :alt => "Manual de Certificación"), {:controller => "home", :action => "certificacion_manual" } %>
       <% if logged_in? %>
-        <%= link_to image_tag("/images/era2016/mn_esys_cerrarsesion2.png", :size => "200x124", :mouseover => "/images/era2016/mn_esys_cerrarsesion.png", :mouseout => "/images/era2016/mn_esys_cerrarsesion2.png", :border => 0, :alt => "Cerrar sesión", :class => "login-window"), {:controller => "sessions", :action => "destroy" } %>
+        <%= link_to image_tag("/images/era2016/mn_esys_cerrarsesion2.png", :size => "200x124", :mouseover => "/images/era2016/mn_esys_cerrarsesion.png", :mouseout => "/images/era2016/mn_esys_cerrarsesion2.png", :border => 0, :alt => "Cerrar sesión", :class => "login-window"), {:controller => "sessions", :action => "destroy"}, {:confirm => "¿ESTÁ SEGURO(A) QUE DESEA SALIR DE LA PLATAFORMA?" } %>
       <% else %>
         <a href="#login-box" class="login-window"><img src="/images/era2016/mn_esys_sesion2.png" width="200" height="124" alt="" onMouseOver="this.src='/images/era2016/mn_esys_sesion.png';" onMouseOut="this.src='/images/era2016/mn_esys_sesion2.png';"/></a>
         <%#= link_to image_tag("/images/era2016/mn_esys_sesion2.png", :size => "200x124", :mouseover => "/images/era2016/mn_esys_sesion.png", :mouseout => "/images/era2016/mn_esys_sesion2.png", :border => 0, :alt => "Iniciar sesión"), {:controller => "sessions", :action => "new" } %>
@@ -138,7 +138,7 @@ jQuery(document).ready(function() {
     </div>
   </div>
 
-  <%=render :partial => "layouts/usuario_conectado"%>
+  <%= render :partial => "layouts/usuario_conectado"%>
 
   <% unless logged_in? %>
     <% if current_page?(:controller => 'home', :action => 'index') or current_page?('/') %>
@@ -148,7 +148,8 @@ jQuery(document).ready(function() {
     <% end %>
     <div class="blankSeparator"></div>
   <% else %>
-    <% if current_user.has_role?("escuela") && current_user.login != 'esys' %>
+    <% if current_user.has_role?("escuela") and !current_user.has_role?("admin")%>
+    <%# if current_user.has_role?("escuela") %>
       <!-- menu para escuelas -->
       <div id="copyright_era_mn">
         <div class="mn_principal_era">

@@ -1,264 +1,60 @@
+<!-- inicio valores ocultos usados -->
+<% totales = Escuela.find_by_clave(current_user.login.upcase)
+if totales.nivel_descripcion == "BACHILLERATO"
+  docentes = totales.perfil_ciencias_naturales
+else
+  docentes = totales.total_personal_docente
+end %>
+<input id="val_max_doc" name="val_max_doc" type="hidden" value="<%= docentes %>" />
+<input id="val_max_alu" name="val_max_alu" type="hidden" value="<%= totales.alu_hom + totales.alu_muj%>" />
+<!-- fin valores ocultos usados -->
+
 <%= render :partial => "informacion_competencias"%>
 
 <% form_for :competencia, @competencia, :url => { :action => "save", :id => @competencia, :diagnostico => @diagnostico.id }, :html => {:class => "formee", :name => "competencia", :id => "competencia"} do |f| -%>
-<table class="principal" width="100%" border="0" align="center" cellpadding="2" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
-  <tr bgcolor="#003366" style="opacity: 0.7;" >
-    <td align="center"><h4>EJE 1: DESARROLLO DE COMPETENCIAS</h4></td>
-  </tr>
-  <tr align="center">
-    <td align="center">
-      <table class="subprincipal" width="100%" border="0" cellpadding="4" cellspacing="1" style="BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; BORDER-BOTTOM: #cccccc 1px solid;">
-        <tr>
-          <td width="49%" align="justify"><label class="uper">1.- ¿Cuántos docentes se han capacitado en el último ciclo escolar? en materia de: <em class="formee-req"> *</em></label></td>
-          <td>&nbsp;</td>
-          <td width="49%" align="justify"><label class="uper">2.- De los docentes capacitados, ¿cuántos aplican con sus alumnos los conocimientos adquiridos?<em class="formee-req"> *</em></label></td>
-        </tr>
-            <% totales = Escuela.find_by_clave(current_user.login.upcase)
-               if totales.nivel_descripcion == "BACHILLERATO"
-                    docentes = totales.perfil_ciencias_naturales
-               else
-                    docentes = totales.total_personal_docente
-               end
-            %>
-            <input id="val_max_doc" name="val_max_doc" type="hidden" value="<%= docentes %>" />
-            <input id="val_max_alu" name="val_max_alu" type="hidden" value="<%= totales.alu_hom + totales.alu_muj%>" />
-        <tr>
-          <td align="left" style="vertical-align:middle;" >
-            <div class="grid-1-12"></div>
-            <div class="grid-2-12">SALUD: <%= f.text_field :dctes_cap_salud, :style => "text-align: center;", :onkeyup => "showImageDctesAlumn('docentes', 'dcapacitadora', 'eje1_p1');" %></div>
-            <div class="grid-2-12">AMBIENTE: <%= f.text_field :dctes_cap_ma, :style => "text-align: center;", :onkeyup => "showImageDctesAlumn('docentes', 'dcapacitadora', 'eje1_p1');" %></div>
-            <div class="grid-2-12">AMBOS: <%= f.text_field :dctes_cap_ambos, :style => "text-align: center;", :onkeyup => "showImageDctesAlumn('docentes', 'dcapacitadora', 'eje1_p1');" %></div>
-            <div class="grid-1-12"></div>
-            <div class="grid-3-12" style="text-align:center;">TOTAL&nbsp;CAPACITADOS:
-              <input id="total_docentes" name="total_docentes" type="text" style="border-width: 0; width: 55px; font-size: 15px; text-align: center; color: black; background-color: #e6f8e0;" onkeyup="showImageDctesAlumn('docentes', 'dcapacitadora', 'eje1_p1');" />
-            </div>
-            
-            <div class="grid-12-12" id="dcapacitadora" style="display: none;">
-              <label class="uper">¿QUE&nbsp;INSTITUCIONES&nbsp;O&nbsp;DEPENDENCIAS&nbsp;IMPARTIERON&nbsp;ESTAS&nbsp;CAPACITACIONES?</label>
-            
-              <fieldset style="padding: 5px 5px 5px 5px;">
-                <div id="dcapacitadoras" class="grid-12-12">
-                  <% Dcapacitadora.find(:all).each do |c| %>
-                    <% @valor = nil %>
-                    <% @competencia.docentes_capacitados.each do |x| %>
-                      <% if x[:dcapacitadora_id] == c.id %>
-                        <% @valor = x.numero  %>
-                        <% @desc_dep = x.descripcion_dep %>
-                      <% end %>
-                    <% end %>
-                    <%= check_box_tag "dcapacitadoras[#{c.id}]", c.clave, @s_dcapacitadoras.include?(c.id) ? true : false, :onclick => "checkBoxToSelct('dcapacitadora');" %>&nbsp;<%= c.descripcion %>
-                    &nbsp;NÚM.&nbsp;DE&nbsp;CAPACITACIONES:&nbsp;<%= select "dcapacitadora", "#{c.clave}", (1..9), {:selected => @valor}, {:style => "display: none; width:40px;"}%><br /><br />
-                    <% if c.clave == "OTRA" %>&nbsp;DESCRIPCIÓN:&nbsp;<input name="dcapacitadoras<%= c.clave %>" id="dcapacitadoras<%= c.clave %>" size="35px" style="text-align:justify; display: none; text-transform: uppercase;" value="<%=h @desc_dep ? @desc_dep : "" %>" /><% end %>
-                    <%= linea_horizontal %>
-                  <% end %>
-                </div>
-              </fieldset>
-            </div>
-
-            <div class="grid-12-12" id="eje1_p1" style="display: none; text-align: center;">
-              <%=link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta1", :id => "pregunta1"),
-                                                              {:controller => "upload", :diagnostico => @diagnostico, :eje => 1, :numero_pregunta => 1, :action => "list_evidencias" },
-                                                              :title => "EVIDENCIA DE LA PREGUNTA 1", :class => "fancybox fancybox.iframe"%>
-            </div>
-          </td>
-          <td>&nbsp;</td>
-          <td align="justify" style="vertical-align:top;" >
-            <div class="grid-3-12"></div>
-            <div class="grid-2-12">
-              <%= f.text_field :dctes_aplican_conocimto, :style => "text-align: center;", :onkeyup => "showImageNum('competencia_dctes_aplican_conocimto', 'eje1_p2');" %>
-            </div>
-            <div class="grid-1-12"></div>
-            <div class="grid-6-12" id="eje1_p2" style="display: none;">
-              <%=link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta2", :id => "pregunta2"),
-                                                              {:controller => "upload", :diagnostico => @diagnostico, :eje => 1, :numero_pregunta => 2, :action => "list_evidencias" },
-                                                              :title => "EVIDENCIA DE LA PREGUNTA 2", :class => "fancybox fancybox.iframe"%>
-            </div>
-          </td>
-        </tr>
-
-        <tr>
-          <td width="49%" align="justify"><label class="uper">3.- Del total de docentes, ¿cuántos se involucran en actividades extracurriculares en materia de salud y medio ambiente que promueve la escuela?<em class="formee-req"> *</em></label></td>
-          <td>&nbsp;</td>
-          <td width="49%" align="justify"><label class="uper">4.- Del total de alumnos, ¿cuántos recibieron capacitación relacionada con temas salud y medio ambiente por parte de los docentes en el último ciclo escolar?<em class="formee-req"> *</em></label></td>
-        </tr>
-        <tr>
-          <td align="center" >
-            <div class="grid-3-12"></div>
-            <div class="grid-2-12">
-              <%= f.text_field :dctes_invol_act, :style => "text-align: center;", :onkeyup => "showImageNum('competencia_dctes_invol_act', 'eje1_p3');" %>
-            </div>
-            <div class="grid-1-12"></div>
-            <div class="grid-6-12" id="eje1_p3" style="display: none;">
-              <%=link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta3", :id => "pregunta3"),
-                                                              {:controller => "upload", :diagnostico => @diagnostico, :eje => 1, :numero_pregunta => 3, :action => "list_evidencias" },
-                                                              :title => "EVIDENCIA DE LA PREGUNTA 3", :class => "fancybox fancybox.iframe"%>
-            </div>
-          </td>
-          <td>&nbsp;</td>
-          <td align="center">
-            <div class="grid-3-12"></div>
-            <div class="grid-2-12">
-              <%= f.text_field :alumn_cap_dctes, :style => "text-align: center;", :onkeyup => "showImageNum('competencia_alumn_cap_dctes', 'eje1_p4');" %>
-            </div>
-            <div class="grid-1-12"></div>
-            <div class="grid-6-12" id="eje1_p4" style="display: none;">
-              <%=link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta4", :id => "pregunta4"),
-                                                              {:controller => "upload", :diagnostico => @diagnostico, :eje => 1, :numero_pregunta => 4, :action => "list_evidencias" },
-                                                              :title => "EVIDENCIA DE LA PREGUNTA 4", :class => "fancybox fancybox.iframe"%>
-              <!--<%= text_field :verifica, :pregunta4, :class => "ninguno", :style => "width:15px;", :disabled => "disabled", :value => :verifica_pregunta4? ? '0': :verifica_pregunta4 %> Archivo(s) cargado(s)-->
-            </div>
-          </td>
-        </tr>
-
-        <tr>
-          <td width="49%" align="justify"><label class="uper">5.- Del total de alumnos, ¿cuántos recibieron capacitación relacionada con temas de salud y medio ambiente por parte de otras <b>instituciones y/o dependencias</b> en el último ciclo escolar?<em class="formee-req"> *</em></label></td>
-          <td>&nbsp;</td>
-          <td width="49%" align="justify">&nbsp;</td>
-        </tr>
-        <tr>
-          <td align="left" >
-            <div class="grid-1-12"></div>
-            <div class="grid-2-12">SALUD: <%= f.text_field :alumn_cap_salud, :style => "text-align: center;", :onkeyup => "showImageDctesAlumn('alumnos', 'acapacitadora', 'eje1_p5');" %></div>
-            <div class="grid-2-12">AMBIENTE: <%= f.text_field :alumn_cap_ma, :style => "text-align: center;", :onkeyup => "showImageDctesAlumn('alumnos', 'acapacitadora', 'eje1_p5');" %></div>
-            <div class="grid-2-12">AMBOS: <%= f.text_field :alumn_cap_ambos, :style => "text-align: center;", :onkeyup => "showImageDctesAlumn('alumnos', 'acapacitadora', 'eje1_p5');" %></div>
-            <div class="grid-1-12"></div>
-            <div class="grid-3-12" style="text-align:center;">TOTAL&nbsp;CAPACITADOS:
-              <input id="total_alumn" name="total_alumn" type="text" style="border-width: 0; width: 55px; font-size: 15px; text-align: center; color: black; background-color: #e6f8e0;" />
-            </div>
-            <div class="grid-1-12"></div>
-            <!-- Línea pregunta -->
-            <div class="grid-12-12" id="acapacitadora" style="display: none;">
-              <label class="uper">¿QUE&nbsp;INSTITUCIONES&nbsp;O&nbsp;DEPENDENCIAS&nbsp;IMPARTIERON&nbsp;ESTAS CAPACITACIONES?</label>
-              <!-- Línea campo -->
-              <fieldset style="padding: 5px 5px 5px 5px;">
-                <div id="acapacitadoras" class="grid-12-12">
-                  <% Dcapacitadora.find(:all).each do |c| %>
-                  <% @valor = nil %>
-                    <% @competencia.alumnos_capacitados.each do |x| %>
-                      <% if x[:dcapacitadora_id] == c.id %>
-                        <% @valor = x.numero  %>
-                        <% @desc_dep = x.descripcion_dep %>
-                      <% end %>
-                    <% end %>
-                    <%= check_box_tag "acapacitadoras[#{c.id}]", c.clave, @s_acapacitadoras.include?(c.id) ? true : false, :onclick => "checkBoxToSelct('acapacitadora');" %>&nbsp;<%= c.descripcion %>
-                    &nbsp;NÚM.&nbsp;DE&nbsp;CAPACITACIONES:&nbsp;<%= select "acapacitadora", "#{c.clave}", (1..9), {:selected => @valor}, {:style => "display: none; width: 40px;"}%><br /><br />
-                    <% if c.clave == "OTRA" %>&nbsp;DESCRIPCIÓN:&nbsp;<input name="acapacitadoras<%= c.clave %>" id="acapacitadoras<%= c.clave %>" size="35px" style="text-align: justify; display: none; text-transform: uppercase;" value="<%=h @desc_dep ? @desc_dep : "" %>" /><% end %>
-                    <%=linea_horizontal%>
-                  <% end %>
-                </div>
-              </fieldset>
-            </div>
-            <div class="grid-12-12" id="eje1_p5" style="display: none; text-align: center;">
-              <%=link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta5", :id => "pregunta5"),
-                                                              {:controller => "upload", :diagnostico => @diagnostico, :eje => 1, :numero_pregunta => 5, :action => "list_evidencias" },
-                                                              :title => "EVIDENCIA DE LA PREGUNTA 5", :class => "fancybox fancybox.iframe"%>              
-            </div>
-          </td>
-          <td>&nbsp;</td>
-          <td align="center">&nbsp;</td>
-        </tr>
-
-      </table>
-    </td>
-  </tr>
-  <tr>
-    <td colspan="3">&nbsp;</td>
-  </tr>
-  
-  <%= render :partial => "diagnosticos/errores_evidencias"%>
-
-  <tr>
-    <td align="right">
-      <table>
-        <tr>
-          <td>
-            <input id="button4" onclick="to_uppercase();" class="buttonText" type="submit" title="Guardar y Regresar" value="Guardar y Regresar" />
-          </td>
-          <td>
-            <a href="<%= diagnosticos_path%>" id="buttonc" class="buttonText"><img src="/images/formee/form-ic-error.png"/>&nbsp;&nbsp;Regresar sin Guardar</a>
-          </td>
-        </tr>
-        <tr>
-          <td colspan="2" >&nbsp;</td>
-        </tr>
-      </table>
-    </td>
-  </tr>
-</table>
+  <table class="principal" width="100%" align="center" >
+    <tr bgcolor="#003366" style="opacity: 0.7;" >
+      <td align="center"><h4>EJE 1: DESARROLLO DE COMPETENCIAS</h4></td>
+    </tr>
+    <tr align="center">
+      <td align="center">
+        <table class="subprincipal" width="100%">
+          <%= render :partial => "pregunta1", :locals => { :f => f } %>
+          <%= render :partial => "pregunta2", :locals => { :f => f } %>
+          <% if @diagnostico.escuela.nivel.clave != 4 %>
+            <%= render :partial => "pregunta3b", :locals => { :f => f } %>
+          <% else %>
+            <%= render :partial => "pregunta3m", :locals => { :f => f } %>
+          <% end %>
+          <%= render :partial => "pregunta4", :locals => { :f => f }%>
+          <%= render :partial => "pregunta5", :locals => { :f => f }%>
+          <% if @diagnostico.escuela.nivel.clave != 4 %>
+            <%= render :partial => "pregunta6b", :locals => { :f => f }%>
+          <% else %>
+            <%= render :partial => "pregunta6m", :locals => { :f => f }%>
+          <% end %>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td>&nbsp;</td>
+    </tr>
+    <%= render :partial => "diagnosticos/errores_evidencias"%>
+    <tr>
+      <td>
+        <div class=" grid-6-12"></div>
+        <div class=" grid-3-12">
+          <input id="button4" onclick="to_uppercase();" class="buttonText" type="submit" title="Guardar y Regresar" value="Guardar y Regresar" />
+        </div>
+        <div class=" grid-3-12">
+          <a href="<%= diagnosticos_path%>" id="buttonc" class="buttonText"><img src="/images/formee/form-ic-error.png"/>&nbsp;&nbsp;Regresar sin Guardar</a>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>&nbsp;</td>
+    </tr>
+  </table>
 <% end %>
+<br />
 
- 
-<script type="text/javascript">
-  showImageDctesAlumn('docentes', 'dcapacitadora', 'eje1_p1');
-  showImageDctesAlumn('alumnos', 'acapacitadora', 'eje1_p5');
-  showImageNum('competencia_dctes_aplican_conocimto', 'eje1_p2');
-  showImageNum('competencia_dctes_invol_act', 'eje1_p3');
-  showImageNum('competencia_alumn_cap_dctes', 'eje1_p4');
-  <%#*showImageDctesAlumn('alumnos', 'acapacitadora', 'eje1_p5');%>
-    
-  checkBoxToSelct('dcapacitadora');
-  checkBoxToSelct('acapacitadora');
-
-  var dctes_cap_salud = new LiveValidation('competencia_dctes_cap_salud');
-  dctes_cap_salud.add( Validate.Presence );
-  dctes_cap_salud.add( Validate.Numericality, { onlyInteger: true } );
-  
-  var dctes_cap_ma = new LiveValidation('competencia_dctes_cap_ma');
-  dctes_cap_ma.add( Validate.Presence );
-  dctes_cap_ma.add( Validate.Numericality, { onlyInteger: true } );
-
-  var dctes_cap_ambos = new LiveValidation('competencia_dctes_cap_ambos');
-  dctes_cap_ambos.add( Validate.Presence );
-  dctes_cap_ambos.add( Validate.Numericality, { onlyInteger: true } );
-
-  var total_docentes = new LiveValidation('total_docentes');
-  total_docentes.add( Validate.Presence );
-  total_docentes.add( Validate.Numericality, { maximum: parseInt(document.getElementById("val_max_doc").value), onlyInteger: true} );
-
-  var dctes_aplican_conocimto = new LiveValidation('competencia_dctes_aplican_conocimto');
-  dctes_aplican_conocimto.add( Validate.Presence );
-  dctes_aplican_conocimto.add( Validate.Numericality, { maximum: parseInt(document.getElementById("total_docentes").value), onlyInteger: true } );
- 
-  var dctes_invol_act = new LiveValidation( 'competencia_dctes_invol_act' );
-  dctes_invol_act.add( Validate.Presence );
-  dctes_invol_act.add( Validate.Numericality, { maximum: parseInt(document.getElementById("val_max_doc").value), onlyInteger: true} );
-
-  var alumn_cap_dctes = new LiveValidation( 'competencia_alumn_cap_dctes' );
-  alumn_cap_dctes.add( Validate.Presence );
-  alumn_cap_dctes.add( Validate.Numericality, { maximum: parseInt(document.getElementById("val_max_alu").value), onlyInteger: true } );
-
-  var alumn_cap_salud = new LiveValidation( 'competencia_alumn_cap_salud' );
-  alumn_cap_salud.add( Validate.Presence );
-  alumn_cap_salud.add( Validate.Numericality, { onlyInteger: true } );
-
-  var alumn_cap_ma = new LiveValidation( 'competencia_alumn_cap_ma' );
-  alumn_cap_ma.add( Validate.Presence );
-  alumn_cap_ma.add( Validate.Numericality, { onlyInteger: true } );
-
-  var alumn_cap_ambos = new LiveValidation( 'competencia_alumn_cap_ambos' );
-  alumn_cap_ambos.add( Validate.Presence );
-  alumn_cap_ambos.add( Validate.Numericality, { onlyInteger: true } );
-
-  var total_alumn = new LiveValidation( 'total_alumn' );
-  total_alumn.add( Validate.Presence );
-  total_alumn.add( Validate.Numericality, { maximum: parseInt(document.getElementById("val_max_alu").value), onlyInteger: true } );
-  
-  jQuery(function(){
-    jQuery("#dcapacitadoras").validate({ expression: "if (skipSelect2(SelfID, 'total_docentes')) return true; else return false;", message: "Seleccione una opción!" });
-    jQuery("#acapacitadoras").validate({ expression: "if (skipSelect2(SelfID, 'total_alumn')) return true; else return false;", message: "Seleccione una opción!" });
-  });
-  
-  jQuery("#competencia_dctes_cap_salud").keyup(function() {
-      dctes_aplican_conocimto.remove( Validate.Numericality, { maximum: parseInt(document.getElementById("total_docentes").value), onlyInteger: true } );
-      dctes_aplican_conocimto.add( Validate.Numericality, { maximum: parseInt(document.getElementById("total_docentes").value), onlyInteger: true } );
-  });
-  jQuery("#competencia_dctes_cap_ma").keyup(function() {
-      dctes_aplican_conocimto.remove( Validate.Numericality, { maximum: parseInt(document.getElementById("total_docentes").value), onlyInteger: true } );
-      dctes_aplican_conocimto.add( Validate.Numericality, { maximum: parseInt(document.getElementById("total_docentes").value), onlyInteger: true } );
-  });
-  jQuery("#competencia_dctes_cap_ambos").keyup(function() {
-      dctes_aplican_conocimto.remove( Validate.Numericality, { maximum: parseInt(document.getElementById("total_docentes").value), onlyInteger: true } );
-      dctes_aplican_conocimto.add( Validate.Numericality, { maximum: parseInt(document.getElementById("total_docentes").value), onlyInteger: true } );
-  });
-
-</script>

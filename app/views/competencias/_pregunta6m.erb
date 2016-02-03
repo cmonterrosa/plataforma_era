@@ -1,0 +1,49 @@
+<tr>
+  <td align="justify">
+    <label class="uper">6.- Del total de alumnos, ¿cuántos se involucran en actividades extracurriculares en materia de salud y ambiente que promueva la escuela?<em class="formee-req"> *</em></label>
+  </td>
+</tr>
+<tr>
+  <td align="justify">
+    <div class="grid-5-12"></div>
+    <div class="grid-2-12">
+      <%= f.text_field :alumnos_involucran_actividades, :style => "text-align: center;", :onkeyup => "showImageCheckbox('competencia_alumnos_involucran_actividades', 'abrigada', 'eje1_p6');" %>
+    </div>
+    <div class="grid-5-12"></div>
+    <div class="grid-12-12" id="abrigada" style="display: none;">
+      <label class="uperSub">&nbsp;BRIGADAS:&nbsp;</label>
+      <fieldset style="padding: 5px 5px 5px 5px;">
+        <div id="abrigadas" class="checkbox">
+          <% Brigada.find(:all).each do |c| %>
+            <% @valor = nil %>
+            <% @competencia.alumnos_brigadas.each do |x| %>
+              <% if x[:brigada_id] == c.id %>
+                <% @valor = x.numero  %>
+              <% end %>
+            <% end %>
+            <%= check_box_tag "abrigadas[#{c.id}]", c.clave, @s_abrigadas.include?(c.id) ? true : false, :onclick => "checkBoxToSelctB('abrigada');" %>&nbsp;<%= c.descripcion %>
+            &nbsp;NÚM.&nbsp;DE&nbsp;CAPACITACIONES:&nbsp;<%= select "abrigada", "#{c.clave}", (1..9), {:selected => @valor}, {:style => "display: none; width:40px; font-size:12px;"}%><br />
+          <% end %>
+        </div>
+      </fieldset>
+    </div>
+    <div class="grid-12-12" id="eje1_p6" style="display: none; text-align: center;">
+    <%=link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta6", :id => "pregunta6"),
+                        {:controller => "upload", :diagnostico => @diagnostico, :eje => 1, :numero_pregunta => 6, :action => "list_evidencias" },
+                         :title => "EVIDENCIA DE LA PREGUNTA 6", :class => "fancybox fancybox.iframe"%>
+    </div>
+  </td>
+</tr>
+
+<script type="text/javascript">
+  showImageCheckbox('competencia_alumnos_involucran_actividades', 'abrigada', 'eje1_p6');
+  checkBoxToSelctB('abrigada');
+
+  var alumnos_involucran_actividades = new LiveValidation( 'competencia_alumnos_involucran_actividades' );
+  alumnos_involucran_actividades.add( Validate.Presence );
+  alumnos_involucran_actividades.add( Validate.Numericality, { maximum: parseInt(document.getElementById("val_max_alu").value), onlyInteger: true } );
+
+  jQuery(function(){
+    jQuery("#abrigadas").validate({ expression: "if (skipSelect2(SelfID, 'competencia_alumnos_involucran_actividades')) return true; else return false;", message: "Seleccione una opción!" });
+  });
+</script>

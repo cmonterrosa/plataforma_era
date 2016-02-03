@@ -1,0 +1,27 @@
+<tr>
+  <td align="justify">
+    <label class="uper">2.- De los docentes capacitados, ¿cuántos aplican con sus alumnos los conocimientos adquiridos?<em class="formee-req"> *</em></label>
+  </td>
+</tr>
+<tr>
+  <td align="center" style="vertical-align:top;" >
+    <div class="grid-4-12"></div>
+    <div class="grid-2-12">
+      <%= f.text_field :dctes_aplican_conocimto, :style => "text-align: center;", :onkeyup => "showImageNum('competencia_dctes_aplican_conocimto', 'eje1_p2');" %>
+    </div>
+    <div class="grid-2-12" id="eje1_p2" style="display: none;">
+      <%=link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta2", :id => "pregunta2"),
+                          {:controller => "upload", :diagnostico => @diagnostico, :eje => 1, :numero_pregunta => 2, :action => "list_evidencias" },
+                          :title => "EVIDENCIA DE LA PREGUNTA 2", :class => "fancybox fancybox.iframe"%>
+    </div>
+    <div class="grid-4-12"></div>
+  </td>
+</tr>
+
+<script type="text/javascript">
+  showImageNum('competencia_dctes_aplican_conocimto', 'eje1_p2');
+
+  var dctes_aplican_conocimto = new LiveValidation('competencia_dctes_aplican_conocimto');
+  dctes_aplican_conocimto.add( Validate.Presence );
+  dctes_aplican_conocimto.add( Validate.Numericality, { maximum: parseInt(document.getElementById("total_docentes").value), onlyInteger: true } );
+</script>

@@ -197,6 +197,44 @@ def puntaje_eje1_p5(tipo=nil,avance=nil)
   return valido ? @eje1_p5 : 0
 end
 
+def puntaje_eje1_p6(tipo=nil,avance=nil)
+  valido = valido_a1 = false
+  alumnos_involucran_actividades = 0
+  eje1 = CatalogoEje.find_by_clave("EJE1")
+  if tipo == "proyecto"
+     @proyecto = Proyecto.find(self.proyecto_id)
+     @competencia_proyecto = @proyecto.competencia if @proyecto.competencia
+     @competencia_diagnostico = @proyecto.diagnostico.competencia if @proyecto.diagnostico.competencia
+     @escuela = Escuela.find_by_clave(@proyecto.diagnostico.escuela.clave) if @proyecto
+     @user = User.find_by_login(@escuela.clave) if @escuela
+     alumnos_involucran_actividades += (@competencia_proyecto.alumnos_involucran_actividades.to_i) if @competencia_proyecto
+     if Adjunto.count(:id, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ? and validado = ?", @user, @proyecto.diagnostico.id, eje1.id, 6, true]).to_i > 0
+       alumnos_involucran_actividades += (@competencia_diagnostico.alumnos_involucran_actividades.to_i) if @competencia_diagnostico
+     end
+  else
+    @diagnostico = Diagnostico.find(self.diagnostico_id)
+    @competencia_diagnostico = @diagnostico.competencia if @diagnostico.competencia
+    @escuela = Escuela.find_by_clave(@diagnostico.escuela.clave) if @diagnostico
+    @user = User.find_by_login(@escuela.clave) if @escuela
+    if Adjunto.count(:id, :conditions => ["user_id = ? and diagnostico_id = ? and eje_id = ? and numero_pregunta = ? and validado = ?", @user, @diagnostico.id, eje1.id, 6, true]).to_i > 0
+      alumnos_involucran_actividades += (@competencia_diagnostico.alumnos_involucran_actividades.to_i) if @competencia_diagnostico
+    end
+  end
+  @user = User.find_by_login(@escuela.clave) if @escuela
+
+  if alumnos_involucran_actividades.to_i > 0
+    valido = evidencia_valida?(eje1.id, 6, @diagnostico) if @diagnostico
+    if @proyecto
+      valido_a1 = evidencia_valida?(eje1.id, 6, nil, @proyecto, 1)
+      valido ||= evidencia_valida?(eje1.id, 6, nil, @proyecto, avance) if valido_a1 && avance == "2"
+      valido ||= evidencia_valida?(eje1.id, 6, nil, @proyecto, avance) if valido_a1
+    end
+    @eje1_p6 = (((alumnos_involucran_actividades.to_f / (@escuela.alu_hom.to_i + @escuela.alu_muj.to_i) ).to_f * 100) * $competencia_p6).round(3)
+  end
+
+  return valido ? @eje1_p6 : 0
+end
+
 ###--- ENTORNO SALUDABLE
 def puntaje_eje2_p2(tipo=nil,avance=nil)
   valido = valido_a1 = false

@@ -1,5 +1,6 @@
 <!-- Carga de Evidencias -->
 <div class="container" style="width: 94%">
+  
   <div class="formee-msg-warning">
     <h3>Información importante:</h3>
     <ul>
@@ -18,44 +19,29 @@
     <ul>
       <li>&nbsp;- Videos o animaciones (3gp, mp4, mov, mpeg):</li>
     </ul>
-    
- </div>
+  </div>
 
-
-<%form_for(@uploaded_file, :url => {:action => "create_evidencia", :diagnostico => @diagnostico, :eje => @eje, :numero_pregunta => @numero_pregunta}, :html => {:multipart => true, :class => "formee" }) do |f| -%>
-  <fieldset>
-
-    <legend>Cargar&nbsp;Nueva&nbsp;Evidencia&nbsp;para&nbsp;el&nbsp;Eje:&nbsp;<%=@eje%></legend>
-
-    <%#*<div class="grid-form">%>
-      <%#*<label>Tipo de archivo: <em class="formee-req">*</em></label>%>
-      <%#= f.select :tipodoc_id, Tipodoc.all.collect{|a| [a.descripcion, a.id]}, :prompt => 'Seleccione una opción'%>
-    <%#*</div>%>
-    
-    <div class="grid-form">
-      <label>Número de Pregunta: <%=h @numero_pregunta %></label>
-    </div>
-    
-
-
-    <div class="grid-form">
-      <label>Archivo: <em class="formee-req">*</em></label>
-       <%= f.file_field :inputfile %>
-    </div>
-    
-
-    <div class="grid-form">
-       <label>Descripción detallada: <em class="formee-req">*</em></label>
-      <%= f.text_area :descripcion, :placeholder => "Escriba la descripción del archivo", :style => "height: 11em;" %>
-    </div>
-
-    <div class="grid-12-12 clear"></div>
-
-    <div class="grid-form">
-      <input class="right" type="submit" title="CARGAR ARCHIVO" value="CARGAR ARCHIVO" />
-    </div>
-  </fieldset>
-<%end%>
+  <% form_for(@uploaded_file, :url => {:action => "create_evidencia", :diagnostico => @diagnostico, :eje => @eje, :numero_pregunta => @numero_pregunta}, :html => {:multipart => true, :class => "formee" }) do |f| -%>
+    <fieldset>
+      <legend>Cargar&nbsp;Nueva&nbsp;Evidencia&nbsp;para&nbsp;el&nbsp;Eje:&nbsp;<%=@eje%></legend>
+      <div class="grid-form">
+        <label>Número de Pregunta: <%=h @numero_pregunta %></label>
+      </div>
+      <div class="grid-form">
+        <label>Archivo: <em class="formee-req">*</em></label>
+        <%= f.file_field :inputfile %>
+      </div>
+      <div class="grid-form">
+        <label>Descripción detallada: <em class="formee-req">*</em></label>
+        <%= f.text_area :descripcion, :placeholder => "Escriba la descripción del archivo", :style => "height: 11em;" %>
+      </div>
+      <div class="grid-12-12 clear"></div>
+      <div class="grid-form">
+        <input class="right" type="submit" title="CARGAR ARCHIVO" value="CARGAR ARCHIVO" />
+      </div>
+    </fieldset>
+  <% end %>
+  
 </div>
 
 <script type="text/javascript">

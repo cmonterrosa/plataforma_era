@@ -6,9 +6,13 @@ class CompetenciasController < ApplicationController
     @diagnostico = Diagnostico.find(params[:id]) if params[:id]
     @diagnostico ||= Diagnostico.new
     @competencia = @diagnostico.competencia || Competencia.new
+    @dcapacitadoras = @diagnostico.escuela.nivel.clave != 4 ? Programa.find_by_sql("SELECT * FROM dcapacitadoras") : Programa.find_by_sql("SELECT * FROM dcapacitadoras WHERE clave NOT IN ('CEFC')")
 
     @s_dcapacitadoras = multiple_selected_dcapacitadora(@competencia.docentes_capacitados) if @competencia.docentes_capacitados
     @s_acapacitadoras = multiple_selected_dcapacitadora(@competencia.alumnos_capacitados) if @competencia.alumnos_capacitados
+    @s_dbrigadas = multiple_selected_brigada(@competencia.docentes_brigadas) if @competencia.docentes_brigadas
+    @s_abrigadas = multiple_selected_brigada(@competencia.alumnos_brigadas) if @competencia.alumnos_brigadas
+    a=10
   end
 
   def save
@@ -18,6 +22,7 @@ class CompetenciasController < ApplicationController
     @diagnostico = @competencia.diagnostico = Diagnostico.find(params[:diagnostico])
     validador = verifica_evidencias(@diagnostico,1)
     if validador["valido"]
+      #--- checkbox docentes capacitados
       if params[:dcapacitadoras]
         @s_docentes = []
         params[:dcapacitadoras].each_key { |id| @s_docentes << id }
@@ -36,6 +41,7 @@ class CompetenciasController < ApplicationController
         @competencia.docentes_capacitados.each { |i| i.delete } if @competencia.docentes_capacitados
       end
 
+      #--- checkbox alumnos capacitados
       if params[:acapacitadoras]
         @s_alumnos = []
         params[:acapacitadoras].each_key { |id| @s_alumnos << id }
@@ -54,15 +60,54 @@ class CompetenciasController < ApplicationController
         @competencia.alumnos_capacitados.each { |i| i.delete } if @competencia.alumnos_capacitados
       end
 
+      #--- checkbox docentes brigadas
+      if params[:dbrigadas]
+        @s_docentesb = []
+        params[:dbrigadas].each_key { |id| @s_docentesb << id }
+        @competencia.docentes_brigadas.each { |docente| docente.delete if @s_docentesb.include?("#{docente.brigada_id.to_s}") == false }
+        params[:dbrigadas].each_key do |dcap|
+          brigada = Brigada.find(dcap)
+          docente_brigada = DocentesBrigada.find_by_brigada_id_and_competencia_id(brigada.id, @competencia.id)
+          docente_brigada ||= DocentesBrigada.new
+          docente_brigada.competencia_id = @competencia
+          docente_brigada.brigada_id = brigada.id
+          docente_brigada.numero = params[:dbrigada][:"#{brigada.clave}"].to_i
+          @competencia.docentes_brigadas << docente_brigada
+        end
+      else
+        @competencia.docentes_brigadas.each { |i| i.delete } if @competencia.docentes_brigadas
+      end
+
+      #--- checkbox alumnos brigadas
+      if params[:abrigadas]
+        @s_alumnosb = []
+        params[:abrigadas].each_key { |id| @s_alumnosb << id }
+        @competencia.alumnos_brigadas.each { |alumno| alumno.delete if @s_alumnosb.include?("#{alumno.brigada_id.to_s}") == false }
+        params[:abrigadas].each_key do |dcap|
+          brigada = Brigada.find(dcap)
+          alumno_brigada = AlumnosBrigada.find_by_brigada_id_and_competencia_id(brigada.id, @competencia.id)
+          alumno_brigada ||= AlumnosBrigada.new
+          alumno_brigada.competencia_id = @competencia
+          alumno_brigada.brigada_id = brigada.id
+          alumno_brigada.numero = params[:abrigada][:"#{brigada.clave}"].to_i
+          @competencia.alumnos_brigadas << alumno_brigada
+        end
+      else
+        @competencia.alumnos_brigadas.each { |i| i.delete } if @competencia.alumnos_brigadas
+      end
+
       if @competencia.save
         flash[:notice] = "Registro guardado correctamente"
         redirect_to :controller => "diagnosticos"
       else
         flash[:error] = "No se pudo guardar, verifique los datos"
         flash[:evidencias] = @competencia.errors.full_messages.join(", ")
-        
+
+        @dcapacitadoras = @diagnostico.escuela.nivel.clave != 4 ? Programa.find_by_sql("SELECT * FROM dcapacitadoras") : Programa.find_by_sql("SELECT * FROM dcapacitadoras WHERE clave NOT IN ('CEFC')")
         @s_dcapacitadoras = multiple_selected_dcapacitadora(@competencia.docentes_capacitados) if @competencia.docentes_capacitados
         @s_acapacitadoras = multiple_selected_dcapacitadora(@competencia.alumnos_capacitados) if @competencia.alumnos_capacitados
+        @s_dbrigadas = multiple_selected_brigada(@competencia.docentes_brigadas) if @competencia.docentes_brigadas
+        @s_abrigadas = multiple_selected_brigada(@competencia.alumnos_brigadas) if @competencia.alumnos_brigadas
         render :action => "new_or_edit", :id => @diagnostico.id
       end
     else
