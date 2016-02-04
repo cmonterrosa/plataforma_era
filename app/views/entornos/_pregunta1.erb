@@ -1,0 +1,90 @@
+<tr>
+  <td align="justify">
+    <label class="uper">1.- ¿Cuál es la superficie total del terreno de la escuela en metros cuadrados?<em class="formee-req"> *</em></label>
+  </td>
+</tr>
+<tr>
+  <td align="center" style="vertical-align:middle;" >
+    <div class="grid-4-12"></div>
+    <div class="grid-2-12"><%= f.text_field :superficie_terreno_escuela, :onkeyup => "showImageNum('entorno_superficie_terreno_escuela', 'eje2_p1');", :style => "text-align: right;" %></div>
+    <div class="grid-2-12" style="text-align: left;"><label class="uper" style="padding: 10px 0;" >M&sup2;</label></div>
+    <div class="grid-4-12"></div>
+
+    <div class="grid-9-12" style="text-align: justify;" ><label class="uper" style="font-weight: normal">1.1.- ¿Cuál es la superficie total construida de la escuela?<em class="formee-req"> *</em></label></div>
+    <div class="grid-2-12"><%= f.text_field :superficie_construida, :style => "text-align: right;" %></div>
+    <div class="grid-1-12" style="text-align: left;"><label class="uper" style="padding: 10px 0;" >M&sup2;</label></div>
+    
+    <div class="grid-9-12" style="text-align: justify;" ><label class="uper" style="font-weight: normal">1.2.- ¿Qué superficie (mts. cuadrados) de la escuela se destina para áreas verdes? (Espacio cubierto por vegetación que brindan beneficios tanto al ambiente en el que se encuentran como a las personas localizadas cerca de ellos). <em class="formee-req"> *</em></label></div>
+    <div class="grid-2-12"><%= f.text_field :superficie_terreno_escuela_av, :style => "text-align: right;" %></div>
+    <div class="grid-1-12" style="text-align: left;"><label class="uper" style="padding: 10px 0;" >M&sup2;</label></div>
+
+    <div class="grid-9-12" style="text-align: justify;" ><label class="uper" style="font-weight: normal">1.3.- ¿Cuál es la superficie total del área de recreo o  no construida?<em class="formee-req"> *</em></label></div>
+    <div class="grid-2-12"><%= f.text_field :superficie_noconstruida, :style => "text-align: right;" %></div>
+    <div class="grid-1-12" style="text-align: left;"><label class="uper" style="padding: 10px 0;" >M&sup2;</label></div>
+
+    <div class="grid-9-12" style="text-align: justify;" ><label class="uper" style="font-weight: normal">1.4.- ¿Cuenta con áreas extensas arboladas?<em class="formee-req"> *</em></label></div>
+    <div class="grid-3-12">
+      <span id="areas" class="InputGroup">
+        <label class="uper">SI <%= f.radio_button :areas_arboladas, "SI", :onclick => "radioButtonTotxtFieldF(this, 'entorno_areas_arboladas_num', 'areas_arboladas');" %></label>&nbsp;&nbsp;
+        <label class="uper">NO <%= f.radio_button :areas_arboladas, "NO", :onclick => "radioButtonTotxtFieldF(this, 'entorno_areas_arboladas_num', 'areas_arboladas');" %></label>
+      </span>
+    </div>
+    <div class="grid-9-12" style="text-align: justify;" ></div>
+    <div id="areas_arboladas" style="display:none;">
+      <div class="grid-2-12">
+        <%= f.text_field :areas_arboladas_num, :onkeyup => "", :style => "text-align: right;", :disabled => "disabled" %>
+      </div>
+      <div class="grid-1-12" style="text-align: left;"><label class="uper" style="padding: 10px 0;" >M&sup2;</label></div>
+    </div>
+
+    <div id="eje2_p1" class="grid-12-12" style="text-align: center; display: none;" >
+      <%= link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta1", :id => "pregunta1"),
+                           { :controller => "upload", :diagnostico => @diagnostico, :eje => 2, :numero_pregunta => 1, :action => "list_evidencias" },
+                             :title => "EVIDENCIA DE LA PREGUNTA 1", :class => "fancybox fancybox.iframe"%>
+    </div>
+  </td>
+</tr>
+
+<script type="text/javascript">
+  
+  showImageNum('entorno_superficie_terreno_escuela', 'eje2_p1');
+  radioButtonTotxtFieldF("entorno_areas_arboladas_si", 'entorno_areas_arboladas_num', 'areas_arboladas');
+  radioButtonTotxtFieldF("entorno_areas_arboladas_no", 'entorno_areas_arboladas_num', 'areas_arboladas');
+
+  var superficie_terreno_escuela = new LiveValidation( 'entorno_superficie_terreno_escuela' );
+  superficie_terreno_escuela.add( Validate.Presence );
+  superficie_terreno_escuela.add( Validate.Numericality, { minimum: 10 } );
+
+  var superficie_construida = new LiveValidation( 'entorno_superficie_construida' );
+  superficie_construida.add( Validate.Presence );
+  superficie_construida.add( Validate.Numericality );
+
+  var superficie_terreno_escuela_av = new LiveValidation( 'entorno_superficie_terreno_escuela_av' );
+  superficie_terreno_escuela_av.add( Validate.Presence );
+  superficie_terreno_escuela_av.add( Validate.Numericality );
+
+  var superficie_noconstruida = new LiveValidation( 'entorno_superficie_noconstruida' );
+  superficie_noconstruida.add( Validate.Presence );
+  superficie_noconstruida.add( Validate.Numericality );
+
+  jQuery(function(){
+    jQuery("#areas").validate({ expression: "if (isChecked(SelfID)) return true; else return false;", message: "Seleccione una opción!" });
+  });
+  
+  <%#*superficie_terreno_escuela_av.add( Validate.Numericality, { maximum: parseInt(document.getElementById('entorno_superficie_terreno_escuela').value) } );%>
+
+  <%#*function addRemValidation(){%>
+    <%#*var sTotal, sConstruida, sAreasVerdes, sNoConstruida, sAreasArboladas;%>
+    
+    <%#*if(parseInt(sTotal) > 10){%>
+      <%#*sTotal = document.getElementById("entorno_superficie_terreno_escuela").value;%>
+      <%#*sConstruida = document.getElementById("entorno_superficie_construida").value;%>
+      <%#*sAreasVerdes = document.getElementById("entorno_superficie_terreno_escuela_av").value;%>
+      <%#*sNoConstruida = document.getElementById("entorno_superficie_noconstruida").value;%>
+    <%#*}%>
+    <%#*else{%>
+      <%#*dctes_aplican_conocimto.remove( Validate.Numericality, { maximum: parseInt(document.getElementById("total_docentes").value), onlyInteger: true } );%>
+    <%#*}%>
+  <%#*}%>
+  
+</script>
