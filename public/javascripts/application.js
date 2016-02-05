@@ -738,6 +738,8 @@ function checkBoxTotextField(cBox, div, check){
                 divEv.style.display = "inline";
                 checkV.checked = false;
             }
+            else
+                divEv.style.display = "none";
     }
 
 
@@ -780,6 +782,32 @@ function radioButtonTotxtField(radio, txtF, div){
             validacion = new LiveValidation(txtF);
             validacion.add( Validate.Presence );
             validacion.add( Validate.Numericality, {onlyInteger: true} );
+        }
+        else{
+            txtField.value = "";
+            txtField.disabled = true;
+            divEv.style.display = "none";
+        }
+    }
+}
+
+function radioButtonTotxtFieldF(radio, txtF, div){
+    var txtField, divEv, radioB, validacion;
+    if(typeof radio == "object")
+        radioB = radio;
+    else
+        radioB = document.getElementById(radio);
+
+    txtField = document.getElementById(txtF);
+    divEv = document.getElementById(div);
+
+    if(radioB.checked){
+         if(radioB.value == "SI"){
+            divEv.style.display = "block";
+            txtField.disabled = false;
+            validacion = new LiveValidation(txtF);
+            validacion.add( Validate.Presence );
+            validacion.add( Validate.Numericality);
         }
         else{
             txtField.value = "";

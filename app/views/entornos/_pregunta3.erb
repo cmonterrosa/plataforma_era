@@ -1,0 +1,66 @@
+<tr>
+  <td align="justify">
+    <%#*<label class="uper">4.- ¿La escuela cuenta con árboles nativos y propios de la región? (Consultar listado de arboles nativos más comunes de clic <a href="/arboles_nativos_no_nativos.pdf" class="fancybox fancybox.iframe" target="_blank" style="color: black; text-decoration: underline;">Aquí</a>.)<em class="formee-req"> *</em></label>%>
+    <label class="uper">3.- ¿Cuántos árboles adultos se encuentran dentro del terreno de la escuela?<em class="formee-req"> *</em></label>
+  </td>
+</tr>
+<tr>
+  <td align="justify" style="vertical-align:middle;" >
+
+    <div class="grid-5-12"></div>
+    <div class="grid-2-12"><%= f.text_field :arboles_adultos, :style => "text-align: right;" %></div>
+    <div class="grid-5-12"></div>
+    
+    <div class="grid-8-12" style="text-align: justify;" ><label class="uper" style="font-weight: normal">3.1.- ¿La escuela cuenta con árboles nativos y propios de la región? (Consultar listado de arboles nativos más comunes de clic <a href="/arboles_nativos_no_nativos.pdf" class="fancybox fancybox.iframe" target="_blank" style="color: black; text-decoration: underline;">Aquí</a>.)<em class="formee-req"> *</em></label></div>
+    <div class="grid-1-12" ></div>
+    <div class="grid-3-12" >
+      <div  class="checkbox"><%= f.check_box :arboles_nativos, { :onclick => "ena_txtField(this, 'arboles_nativos');" }, "NO", "SI" %>&nbsp;NO CUENTA CON ÁRBOLES NATIVOS</div><br />
+    </div>
+
+    <div id="arboles_nativos">
+      <div class="grid-1-12"></div>
+      <div class="grid-2-12"><label class="uperSub">CANTIDAD:&nbsp;</label><%= f.text_field :arboles_nativos_num, :style => "text-align: center;" %></div>
+      <div class="grid-8-12"><label class="uperSub">NOMBRE&nbsp;COMÚN:&nbsp;</label><%= f.text_area :arboles_nativos_desc, :style => "text-align: justify;" %></div>
+      <div class="grid-1-12"></div>
+    </div>
+
+    <div class="grid-8-12" style="text-align: justify;" ><label class="uper" style="font-weight: normal">3.2.- ¿Árboles no nativos e impropios de la región existentes en la escuela? (Consultar listado de arboles nativos más comunes de clic <a href="/arboles_nativos_no_nativos.pdf" class="fancybox fancybox.iframe" target="_blank" style="color: black; text-decoration: underline;">Aquí</a>.)<em class="formee-req"> *</em></label></div>
+    <div class="grid-1-12" ></div>
+    <div class="grid-3-12">
+      <div  class="checkbox"><%= f.check_box :arboles_no_nativos, { :onclick => "ena_txtField(this, 'arboles_no_nativos');" }, "NO", "SI" %>&nbsp;NO CUENTA CON ÁRBOLES NO NATIVOS E IMPROPIOS</div>
+    </div>
+
+    <div id="arboles_no_nativos">
+      <div class="grid-1-12"></div>
+      <div class="grid-2-12"><label class="uperSub">CANTIDAD:&nbsp;</label><%= f.text_field :arboles_no_nativos_num, :style => "text-align: center;" %></div>
+      <div class="grid-8-12"><label class="uperSub">NOMBRE&nbsp;COMÚN:&nbsp;</label><%= f.text_area :arboles_no_nativos_desc, :style => "text-align: justify;" %></div>
+      <div class="grid-1-12"></div>
+    </div>
+
+  </td>
+</tr>
+
+<script type="text/javascript">
+  
+  ena_txtField('entorno_arboles_nativos', 'arboles_nativos');
+  ena_txtField('entorno_arboles_no_nativos', 'arboles_no_nativos');
+
+  var arboles_adultos = new LiveValidation( 'entorno_arboles_adultos' );
+  arboles_adultos.add( Validate.Presence );
+  arboles_adultos.add( Validate.Numericality, { minimum: 1, onlyInteger: true } );
+
+  var arboles_nativos_num = new LiveValidation( 'entorno_arboles_nativos_num' );
+  arboles_nativos_num.add( Validate.Presence );
+  arboles_nativos_num.add( Validate.Numericality, { minimum: 1, onlyInteger: true } );
+
+  var arboles_nativos_desc = new LiveValidation( 'entorno_arboles_nativos_desc' );
+  arboles_nativos_desc.add( Validate.Presence );
+
+  var arboles_no_nativos_num = new LiveValidation( 'entorno_arboles_no_nativos_num' );
+  arboles_no_nativos_num.add( Validate.Presence );
+  arboles_no_nativos_num.add( Validate.Numericality, { minimum: 1, onlyInteger: true }  );
+
+  var arboles_no_nativos_desc = new LiveValidation( 'entorno_arboles_no_nativos_desc' );
+  arboles_no_nativos_desc.add( Validate.Presence );
+  
+</script>
