@@ -21,9 +21,17 @@ class PublicController < ApplicationController
       @ciclo ||= Ciclo.find_by_descripcion(GENERACION) if GENERACION
       @generacion = Generacion.find(:first, :conditions => ["ciclo_id = ?", @ciclo], :order => "ciclo_id DESC")
       @sostenimientos = Escuela.find(:all, :conditions => ["sostenimiento = ?", params[:detalle][:sostenimiento]], :select => "sostenimiento", :group => "sostenimiento")
+      @sostenimiento ||= params[:detalle][:sostenimiento] if params[:detalle][:sostenimiento]
       @sostenimientos ||= Escuela.find(:all, :select => "sostenimiento", :group => "sostenimiento")
-      @niveles = Nivel.find(:all, :conditions => ["id in (?)", params[:niveles]])
+      @niveles_ids = []
+      @niveles_descripcions = []
+      params[:niveles].each_key { |id|
+        @niveles_ids << id
+        @niveles_descripcions << Nivel.find_by_id(id).descripcion if Nivel.exists?(id)
+      }
+      @niveles = Nivel.find(:all, :conditions => ["id in (?)", @niveles_ids]) unless @niveles_ids.empty?
       @niveles ||= Nivel.find(:all, :conditions => ["descripcion <> ?", "OTRO"])
+      @descripcion_sostenimiento = params[:detalle][:sostenimiento] if params[:detalle][:sostenimiento]
       render :partial => "report_by_niveles_libre", :layout => "only_jquery"
     else
       render :text => ""

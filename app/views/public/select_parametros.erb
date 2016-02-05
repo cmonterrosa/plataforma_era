@@ -1,7 +1,15 @@
-<!-- spinner -->
-<div class="grid-12-12">
-  <img alt="spinner" id="spinner" src="/images/loading_spinner.gif" style="display:none;" />
+<div class="formee-msg-info">
+  <ul>
+    <h3> &nbsp; ESTADÍSTICAS</h3><br />
+    <li>
+      Nota: Las escuelas contabilizadas son únicamente las que están participando en la tercera generación (ciclo 2015-2016),
+      sin embargo, al seleccionar algún ciclo anterior, solo de manera informativa nos mostrará cual además de formar
+      parte del actual, participó en dicha generacion. El estatus mostrado correspondo de igual forma a la actual generación.
+    </li><br />
+  </ul>
 </div>
+
+
 
 <div class="container">
 <% form_for :detalle, @detalle, :url => { :action => "generar_estadistica", :controller => "public"}, :html => {:class => "formee", :id => "new_tramite"} do |f| -%>
@@ -12,14 +20,14 @@
       </div>
 
       
-      <div class="grid-4-12">
+      <div class="grid-6-12">
         <div class="grid-4-12">
           <label><b>CICLO ESCOLAR: </b><em class="formee-req">*</em></label>
         </div>
         <div class="grid-8-12"><%= select(:detalle, :ciclo_id, @ciclos.collect {|p| [ p.descripcion, p.id ] }, { :include_blank => true })%></div>
       </div>
 
-      <div class="grid-4-12">
+      <div class="grid-6-12">
         <div class="grid-4-12">
           <label><b>SOSTENIMIENTO: </b><em class="formee-req">*</em></label>
         </div>
@@ -29,7 +37,7 @@
 
       </div>
 
-      <div class="grid-4-12">
+      <div class="grid-12-12">
             <!-- Inicia checkbox -->
             <div class="grid-12-12">
               <label><b>SELECCIONA EL O LOS NIVELES EDUCATIVOS: <em class="formee-req"> *</em></b></label>
@@ -38,16 +46,17 @@
             <fieldset style="padding: 5px 5px 5px 5px; color: black; font-size: 11px;">
                 <div id="nivels" class="grid-12-12">
                   <% Nivel.find(:all).each do |c| %>
-                    <%= check_box_tag "niveles[#{c.id}]", c.clave, nil %>&nbsp;<%= c.descripcion %><br />
+                    <%= check_box_tag "niveles[#{c.id}]", c.clave, nil %>&nbsp;<%= c.descripcion %>&nbsp;&nbsp;&nbsp;
                   <% end %>
                 </div>
             </fieldset>
       </div>
 
-      
-      <div class="grid-6-12">
-        <input class="right" type="submit" title="GUARDAR" value="GUARDAR" />
+      <!--
+      <div class="grid-12-12">
+        <input class="right" type="submit" title="GENERAR" value="GUARDAR" />
       </div>
+      -->
  </fieldset>
 <%end%>
 </div>
@@ -58,10 +67,15 @@
                           :on => "change",
                           :loading => "Element.show('spinner')",
                           :complete => "Element.hide('spinner')",
+                          :condition => "$('detalle_ciclo_id').value != '' && $('detalle_sostenimiento').value != ''",
                           :url => {:action => :get_detalle_estadisticas})%>
 
 
+<!-- spinner -->
+<div class="grid-12-12">
+  <img alt="spinner" id="spinner" src="/images/loading_spinner.gif" style="display:none;" />
+</div>
 
-<div id="resultados">
+<div id="resultados" class="container">
 
 </div>
