@@ -982,16 +982,17 @@ function edMultiSelect(cBox, objSelect, divQuestion){
                     txtField.value = "";
                     txtField.disabled = true;
                     txtField.style.display = "none";
+                    divPreg.style.display = "none";
                 }
                 else{
                     txtField.disabled = false;
                     txtField.style.display = "inline";
+                    divPreg.style.display = "block";
                 }
             }
 
         }
         SelectM.style.display = "block";
-        divPreg.style.display = "block";
     }
 }
 

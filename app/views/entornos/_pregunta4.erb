@@ -12,14 +12,14 @@
           <label class="uper">NO <%= f.radio_button :escuela_reforesta, "NO", :onclick => "radioButtonTotxtField(this, 'entorno_escuela_reforesta_num', 'reforesta');" %></label>
         </span>
       </div>
-      <div id="reforesta" style="display:none;" class="checkbox">
-        <div class="grid-3-12" style="text-align: right;">CANTIDAD DE ARBOLES SEMBRADOS:</div>
+      <div id="reforesta" style="display:none;">
+        <div class="grid-3-12" style=" text-align: right;"><label class="uperSub">CANTIDAD DE ARBOLES SEMBRADOS:</label></div>
         <div class="grid-2-12"><%= f.text_field :escuela_reforesta_num, :style => "text-align: center;", :disabled => "disabled" %></div>
 
-        <div id="eje3_p3" class="grid-12-12" style="text-align: center;">
-          <%= link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta3", :id => "pregunta3"),
-                               {:controller => "upload", :diagnostico => @diagnostico, :eje => 2, :numero_pregunta => 3, :action => "list_evidencias" },
-                                :title => "EVIDENCIA DE LA PREGUNTA 3", :class => "fancybox fancybox.iframe"%>
+        <div id="eje3_p4" class="grid-12-12" style="text-align: center;">
+          <%= link_to image_tag("era/btns_cert/upload.png", :mouseover => "era/btns_cert/upload1.png", :border => 0, :name => "pregunta4", :id => "pregunta4"),
+                               {:controller => "upload", :diagnostico => @diagnostico, :eje => 2, :numero_pregunta => 4, :action => "list_evidencias" },
+                                :title => "EVIDENCIA DE LA PREGUNTA 4", :class => "fancybox fancybox.iframe"%>
         </div>
       </div>
   </td>

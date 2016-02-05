@@ -63,9 +63,27 @@ module Functions
   $competencia_p6 = 0.02941
 
   # Puntajes de preguntas del Eje 2 Entornos
-  $entorno_p2 = 0.03125
-  $entorno_p3 = 0.03125
-  $entorno_p5 = 0.03125
+  $entorno_p2 = 0.0588
+
+  def ptos_espacios(porcentaje)
+    case porcentaje
+    when 0
+      return 0
+    when 1
+      return 1.176
+    when 2
+      return 2.352
+    when 3
+      return 3.528
+    when 4
+      return 4.704
+    when 5
+      return 5.88
+    end
+  end
+
+  $entorno_p4 = 0.02941
+  $entorno_p5 = 0.02941
 
   # Puntajes de preguntas del Eje 3 Huella Ecológica
   $huella_p1 = 0.03125

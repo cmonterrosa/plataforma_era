@@ -268,12 +268,12 @@ def puntaje_eje2_p2(tipo=nil,avance=nil)
       valido ||= evidencia_valida?(eje2.id, 2, nil, @proyecto, avance) if valido_a1 && avance == "2"
       valido ||= evidencia_valida?(eje2.id, 2, nil, @proyecto, avance) if valido_a1
     end
-    @eje2_p2 = (((numero_espacios.to_f / Espacio.all.size.to_f) * 100) * $entorno_p2).round(3)
+    @eje2_p2 = ptos_espacios(numero_espacios.to_i)
   end
   return valido ? @eje2_p2 : 0
 end
 
-def puntaje_eje2_p3(tipo=nil,avance=nil)
+def puntaje_eje2_p4(tipo=nil,avance=nil)
   valido = valido_a1 = false
   reforesta = ""
   eje2 = CatalogoEje.find_by_clave("EJE2")
@@ -293,15 +293,15 @@ def puntaje_eje2_p3(tipo=nil,avance=nil)
   end
 
   if reforesta == "SI"
-    valido = evidencia_valida?(eje2.id, 3, @diagnostico) if @diagnostico
+    valido = evidencia_valida?(eje2.id, 4, @diagnostico) if @diagnostico
     if @proyecto
-      valido_a1 = evidencia_valida?(eje2.id, 3, nil, @proyecto, 1)
-      valido ||= evidencia_valida?(eje2.id, 3, nil, @proyecto, avance) if valido_a1 && avance == "2"
-      valido ||= evidencia_valida?(eje2.id, 3, nil, @proyecto, avance) if valido_a1
+      valido_a1 = evidencia_valida?(eje2.id, 4, nil, @proyecto, 1)
+      valido ||= evidencia_valida?(eje2.id, 4, nil, @proyecto, avance) if valido_a1 && avance == "2"
+      valido ||= evidencia_valida?(eje2.id, 4, nil, @proyecto, avance) if valido_a1
     end
-    @eje2_p3 = $entorno_p3 * 100
+    @eje2_p4 = $entorno_p4 * 100
   end
-  return valido ? @eje2_p3 : 0
+  return valido ? @eje2_p4 : 0
 end
 
 def puntaje_eje2_p5(tipo=nil,avance=nil)

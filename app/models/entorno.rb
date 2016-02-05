@@ -4,9 +4,9 @@ class Entorno < ActiveRecord::Base
   has_and_belongs_to_many :acciones, :join_table => 'entornos_acciones'
   has_many :escuelas_espacios
 
-  validates_presence_of :evidencia_pregunta_1, :if => "self.superficie_terreno_escuela_av.to_f > 0"
+  validates_presence_of :evidencia_pregunta_1, :if => "self.superficie_terreno_escuela.to_f > 0"
   validates_presence_of :evidencia_pregunta_2, :if => "!self.escuelas_espacios.empty?"
-  validates_presence_of :evidencia_pregunta_3, :if => "self.escuela_reforesta == 'SI'"
+  validates_presence_of :evidencia_pregunta_4, :if => "self.escuela_reforesta == 'SI'"
   validates_presence_of :evidencia_pregunta_5, :if => "!self.acciones.empty? && valida_acciones"
 
 #  attr_accessible :num_avance
@@ -49,9 +49,9 @@ class Entorno < ActiveRecord::Base
     (contador > 0)?  true : false
   end
 
-  def evidencia_pregunta_3
+  def evidencia_pregunta_4
     current_eje = 2
-    numero_pregunta=3
+    numero_pregunta=4
     if self.proyecto
       contador = 1 unless Entorno.find_by_proyecto_id(self.proyecto.id)
       contador ||= 1 if self.num_avance == 0

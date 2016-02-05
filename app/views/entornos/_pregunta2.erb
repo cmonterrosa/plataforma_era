@@ -28,8 +28,8 @@
 </tr>
 
 <script type="text/javascript">
-  edMultiSelect('entorno_no_espacios', 'espacios', 'eje2_p2');
   checkBoxTotextField('espacios', 'eje2_p2', 'entorno_no_espacios');
+  edMultiSelect('entorno_no_espacios', 'espacios', 'eje2_p2');
 
   jQuery(function(){
     jQuery("#espacios").validate({ expression: "if (skipSelectEspacios(SelfID, 'entorno_no_espacios')) return true; else return false;", message: "Seleccione una opción!" });

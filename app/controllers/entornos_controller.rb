@@ -34,6 +34,7 @@ class EntornosController < ApplicationController
     validador = verifica_evidencias(@diagnostico,2)
     
     if validador["valido"]
+      @entorno.areas_arboladas_num = nil if @entorno.areas_arboladas == "NO"
       @entorno.arboles_nativos_num = @entorno.arboles_nativos_desc = nil if @entorno.arboles_nativos == "NO"
       @entorno.arboles_no_nativos_num = @entorno.arboles_no_nativos_desc = nil if @entorno.arboles_no_nativos == "NO"
       @entorno.escuela_reforesta_num = nil if @entorno.escuela_reforesta == "NO"
